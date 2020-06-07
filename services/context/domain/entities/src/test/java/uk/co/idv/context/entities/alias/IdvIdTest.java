@@ -1,7 +1,5 @@
 package uk.co.idv.context.entities.alias;
 
-import nl.jqno.equalsverifier.EqualsVerifier;
-import nl.jqno.equalsverifier.Warning;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -82,21 +80,6 @@ class IdvIdTest {
         given(alias.getType()).willReturn("other-type");
 
         assertThat(IdvId.isIdvId(alias)).isFalse();
-    }
-
-    @Test
-    void shouldTestEquals() {
-        EqualsVerifier.forClass(IdvId.class)
-                .suppress(Warning.STRICT_INHERITANCE)
-                .withNonnullFields("value")
-                .verify();
-    }
-
-    @Test
-    void shouldTestToString() {
-        Alias alias = IdvIdMother.build();
-
-        assertThat(alias.toString()).isEqualTo("IdvId(value=90b585c6-170f-42a6-ac7c-83d294bdab3f)");
     }
 
 }

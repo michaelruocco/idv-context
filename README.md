@@ -1,5 +1,7 @@
 # Verification Context
 
+[![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/verification-context?branch=master)](https://bettercodehub.com/)
+
 ## Useful commands
 
 ```gradle
