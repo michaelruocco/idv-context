@@ -13,9 +13,9 @@ class DefaultAliasFactoryTest {
 
     @Test
     void shouldBuildIdvId() {
-        final String value = UUID.randomUUID().toString();
+        String value = UUID.randomUUID().toString();
 
-        final Alias alias = factory.build(IdvId.TYPE, value);
+        Alias alias = factory.build(IdvId.TYPE, value);
 
         assertThat(alias).isInstanceOf(IdvId.class);
         assertThat(alias.getValue()).isEqualTo(value);
@@ -23,9 +23,9 @@ class DefaultAliasFactoryTest {
 
     @Test
     void shouldBuildCreditCardNumber() {
-        final String value = "4929001111111111";
+        String value = "4929001111111111";
 
-        final Alias alias = factory.build(CreditCardNumber.TYPE, value);
+        Alias alias = factory.build(CreditCardNumber.TYPE, value);
 
         assertThat(alias).isInstanceOf(CreditCardNumber.class);
         assertThat(alias.getValue()).isEqualTo(value);
@@ -33,9 +33,9 @@ class DefaultAliasFactoryTest {
 
     @Test
     void shouldBuildDebitCardNumber() {
-        final String value = "4929991111111111";
+        String value = "4929991111111111";
 
-        final Alias alias = factory.build(DebitCardNumber.TYPE, value);
+        Alias alias = factory.build(DebitCardNumber.TYPE, value);
 
         assertThat(alias).isInstanceOf(DebitCardNumber.class);
         assertThat(alias.getValue()).isEqualTo(value);
@@ -43,9 +43,9 @@ class DefaultAliasFactoryTest {
 
     @Test
     void shouldThrowExceptionForUnsupportedAliasType() {
-        final String type = "not-supported";
+        String type = "not-supported";
 
-        final Throwable error = catchThrowable(() -> factory.build(type, "ABC123"));
+        Throwable error = catchThrowable(() -> factory.build(type, "ABC123"));
 
         assertThat(error)
                 .isInstanceOf(AliasTypeNotSupportedException.class)

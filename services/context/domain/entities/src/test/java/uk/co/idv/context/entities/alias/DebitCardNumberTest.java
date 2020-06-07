@@ -10,21 +10,21 @@ class DebitCardNumberTest {
 
     @Test
     void shouldReturnType() {
-        final Alias cardNumber = DebitCardNumberMother.withValue(VALUE);
+        Alias cardNumber = DebitCardNumberMother.withValue(VALUE);
 
         assertThat(cardNumber.getType()).isEqualTo("debit-card-number");
     }
 
     @Test
     void shouldReturnValue() {
-        final Alias cardNumber = DebitCardNumberMother.withValue(VALUE);
+        Alias cardNumber = DebitCardNumberMother.withValue(VALUE);
 
         assertThat(cardNumber.getValue()).isEqualTo(VALUE);
     }
 
     @Test
     void isCardNumber() {
-        final Alias cardNumber = DebitCardNumberMother.withValue(VALUE);
+        Alias cardNumber = DebitCardNumberMother.withValue(VALUE);
 
         assertThat(cardNumber.isCardNumber()).isTrue();
     }

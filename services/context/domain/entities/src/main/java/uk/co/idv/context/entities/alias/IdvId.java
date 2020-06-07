@@ -40,7 +40,7 @@ public class IdvId implements Alias {
         return value;
     }
 
-    public static boolean isIdvId(final Alias alias) {
+    public static boolean isIdvId(Alias alias) {
         return alias.isType(TYPE);
     }
 

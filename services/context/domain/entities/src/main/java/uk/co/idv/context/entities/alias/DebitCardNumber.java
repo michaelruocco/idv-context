@@ -4,7 +4,7 @@ public class DebitCardNumber extends CardNumber {
 
     static final String TYPE = "debit-card-number";
 
-    protected DebitCardNumber(final String value) {
+    protected DebitCardNumber(String value) {
         super(TYPE, value);
     }
 
