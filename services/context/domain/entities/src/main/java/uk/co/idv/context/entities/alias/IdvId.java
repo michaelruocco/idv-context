@@ -13,11 +13,11 @@ public class IdvId implements Alias {
 
     private final UUID value;
 
-    public IdvId(String value) {
+    protected IdvId(String value) {
         this(UUID.fromString(value));
     }
 
-    public IdvId(UUID value) {
+    protected IdvId(UUID value) {
         this.value = value;
     }
 

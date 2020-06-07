@@ -4,7 +4,7 @@ public class CreditCardNumber extends CardNumber {
 
     static final String TYPE = "credit-card-number";
 
-    public CreditCardNumber(final String value) {
+    protected CreditCardNumber(final String value) {
         super(TYPE, value);
     }
 
