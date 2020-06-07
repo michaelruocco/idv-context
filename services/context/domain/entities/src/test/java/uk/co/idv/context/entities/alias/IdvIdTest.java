@@ -1,0 +1,102 @@
+package uk.co.idv.context.entities.alias;
+
+import nl.jqno.equalsverifier.EqualsVerifier;
+import nl.jqno.equalsverifier.Warning;
+import org.junit.jupiter.api.Test;
+
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+
+class IdvIdTest {
+
+    @Test
+    void shouldThrowExceptionIfValueIsNotValidUuid() {
+        String value = "not-valid-uuid";
+
+        Throwable error = catchThrowable(() -> new IdvId(value));
+
+        assertThat(error)
+                .isInstanceOf(IllegalArgumentException.class)
+                .hasMessage(String.format("Invalid UUID string: %s", value));
+    }
+
+    @Test
+    void shouldTakeValidUuidStringAsConstructorArgument() {
+        String value = UUID.randomUUID().toString();
+
+        Alias alias = new IdvId(value);
+
+        assertThat(alias.getValue()).isEqualTo(value);
+    }
+
+    @Test
+    void shouldReturnType() {
+        Alias alias = IdvIdMother.build();
+
+        String type = alias.getType();
+
+        assertThat(type).isEqualTo("idv-id");
+    }
+
+    @Test
+    void isNotCardNumber() {
+        Alias alias = IdvIdMother.build();
+
+        boolean cardNumber = alias.isCardNumber();
+
+        assertThat(cardNumber).isFalse();
+    }
+
+    @Test
+    void shouldReturnValueAsString() {
+        UUID value = UUID.randomUUID();
+
+        Alias alias = IdvIdMother.withValue(value);
+
+        assertThat(alias.getValue()).isEqualTo(value.toString());
+    }
+
+    @Test
+    void shouldReturnValueAsUuid() {
+        UUID value = UUID.randomUUID();
+
+        IdvId alias = IdvIdMother.withValue(value);
+
+        assertThat(alias.getValueAsUuid()).isEqualTo(value);
+    }
+
+    @Test
+    void shouldReturnTrueIfAliasIsIdvId() {
+        Alias alias = IdvIdMother.build();
+
+        assertThat(IdvId.isIdvId(alias)).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfAliasIsAnyOtherAliasType() {
+        Alias alias = mock(Alias.class);
+        given(alias.getType()).willReturn("other-type");
+
+        assertThat(IdvId.isIdvId(alias)).isFalse();
+    }
+
+    @Test
+    void shouldTestEquals() {
+        EqualsVerifier.forClass(IdvId.class)
+                .suppress(Warning.STRICT_INHERITANCE)
+                .withNonnullFields("value")
+                .verify();
+    }
+
+    @Test
+    void shouldTestToString() {
+        Alias alias = IdvIdMother.build();
+
+        assertThat(alias.toString()).isEqualTo("IdvId(value=90b585c6-170f-42a6-ac7c-83d294bdab3f)");
+    }
+
+}

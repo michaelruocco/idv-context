@@ -1,0 +1,128 @@
+plugins {
+    id "idea"
+    id "java-library"
+    id "com.diffplug.gradle.spotless" version "4.3.0"
+    id "com.github.ben-manes.versions" version "0.28.0"
+    id "com.vanniktech.dependency.graph.generator" version "0.5.0"
+    id "pl.allegro.tech.build.axion-release" version "1.12.0"
+}
+
+scmVersion {
+    versionCreator "versionWithBranch"
+    tag {
+        prefix = "verification-context"
+    }
+}
+project.version = scmVersion.version
+
+allprojects {
+    apply plugin: "idea"
+    apply plugin: "jacoco"
+
+    group "com.github.michaelruocco"
+
+    repositories {
+        mavenCentral()
+    }
+
+    jacoco {
+        toolVersion = "0.8.5"
+    }
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'com.diffplug.gradle.spotless'
+
+    version = rootProject.version
+    archivesBaseName = "${rootProject.name}-${project.name}"
+
+    sourceCompatibility = 13
+    targetCompatibility = 13
+
+    ext {
+        junitVersion = "5.6.2"
+        lombokVersion = "1.18.12"
+        slf4jVersion = "1.7.30"
+        assertjVersion = "3.16.1"
+        equalsVerifierVersion = "3.3"
+    }
+
+    dependencies {
+        compileOnly "org.projectlombok:lombok:${lombokVersion}"
+        annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+        testCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+        testAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+        implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+
+        testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
+        testImplementation "org.junit.jupiter:junit-jupiter-engine:${junitVersion}"
+        testImplementation "org.assertj:assertj-core:${assertjVersion}"
+        testImplementation "org.mockito:mockito-core:3.3.3"
+        testImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"
+    }
+
+    tasks.withType(Test) {
+        useJUnitPlatform()
+    }
+
+    test {
+        systemProperty "org.slf4j.simpleLogger.defaultLogLevel", "debug"
+        testLogging {
+            events "failed"
+            exceptionFormat "full"
+        }
+    }
+
+    spotless {
+        java {
+            removeUnusedImports()
+            trimTrailingWhitespace()
+            indentWithSpaces(4)
+            endWithNewline()
+
+            replace 'Not enough space after if', 'if(', 'if ('
+            replaceRegex 'Too much space after if', 'if +\\(', 'if ('
+
+            replace 'Not enough space after for', 'for(', 'for ('
+            replaceRegex 'Too much space after for', 'for +\\(', 'for ('
+
+            replace 'Not enough space after while', 'while(', 'while ('
+            replaceRegex 'Too much space after while', 'while +\\(', 'while ('
+        }
+    }
+}
+
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
+
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination file("${buildDir}/reports/jacoco/report.xml")
+        html.enabled false
+        csv.enabled false
+    }
+}
+
+codeCoverageReport.dependsOn {
+    subprojects*.test
+    subprojects.findAll { it.tasks.findByName("integrationTest") != null }.integrationTest
+}
+
+dependencyUpdates.resolutionStrategy {
+    componentSelection { rules ->
+        rules.all { ComponentSelection selection ->
+            boolean rejected = ["alpha", "beta", "rc", "cr", "m", "preview"].any { qualifier ->
+                selection.candidate.version ==~ /(?i).*[.-]${qualifier}[.\d-]*/
+            }
+            if (rejected) {
+                selection.reject("Release candidate")
+            }
+        }
+    }
+}
