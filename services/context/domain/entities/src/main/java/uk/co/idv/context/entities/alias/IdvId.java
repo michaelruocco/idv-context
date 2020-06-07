@@ -9,7 +9,7 @@ import java.util.UUID;
 @ToString
 public class IdvId implements Alias {
 
-    public static final String TYPE = "idv-id";
+    static final String TYPE = "idv-id";
 
     private final UUID value;
 

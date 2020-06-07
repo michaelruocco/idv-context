@@ -4,6 +4,4 @@ plugins {
 
 dependencies {
     api 'org.javamoney:moneta:1.4'
-
-    testImplementation "nl.jqno.equalsverifier:equalsverifier:${equalsVerifierVersion}"
 }
