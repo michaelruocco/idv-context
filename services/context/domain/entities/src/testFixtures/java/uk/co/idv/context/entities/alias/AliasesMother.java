@@ -2,17 +2,17 @@ package uk.co.idv.context.entities.alias;
 
 import java.util.Arrays;
 
-public class AliasesMother {
+public interface AliasesMother {
 
-    public static Aliases empty() {
+    static Aliases empty() {
         return with();
     }
 
-    public static Aliases build() {
-        return with(IdvIdMother.build(), CreditCardNumberMother.build());
+    static Aliases idvIdAndCreditCardNumber() {
+        return with(IdvIdMother.idvId(), CreditCardNumberMother.creditCardNumber());
     }
 
-    public static Aliases with(Alias... aliases) {
+    static Aliases with(Alias... aliases) {
         return new Aliases(Arrays.asList(aliases));
     }
 

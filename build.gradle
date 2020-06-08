@@ -45,7 +45,6 @@ subprojects {
         lombokVersion = "1.18.12"
         slf4jVersion = "1.7.30"
         assertjVersion = "3.16.1"
-        equalsVerifierVersion = "3.3"
     }
 
     dependencies {

@@ -33,7 +33,7 @@ class IdvIdTest {
 
     @Test
     void shouldReturnType() {
-        Alias alias = IdvIdMother.build();
+        Alias alias = IdvIdMother.idvId();
 
         String type = alias.getType();
 
@@ -42,7 +42,7 @@ class IdvIdTest {
 
     @Test
     void isNotCardNumber() {
-        Alias alias = IdvIdMother.build();
+        Alias alias = IdvIdMother.idvId();
 
         boolean cardNumber = alias.isCardNumber();
 
@@ -69,7 +69,7 @@ class IdvIdTest {
 
     @Test
     void shouldReturnTrueIfAliasIsIdvId() {
-        Alias alias = IdvIdMother.build();
+        Alias alias = IdvIdMother.idvId();
 
         assertThat(IdvId.isIdvId(alias)).isTrue();
     }

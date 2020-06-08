@@ -11,8 +11,8 @@ class AliasesTest {
 
     @Test
     void shouldBeIterable() {
-        Alias idvId = IdvIdMother.build();
-        Alias creditCardNumber = CreditCardNumberMother.build();
+        Alias idvId = IdvIdMother.idvId();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
 
         Aliases aliases = AliasesMother.with(idvId, creditCardNumber);
 
@@ -24,8 +24,8 @@ class AliasesTest {
 
     @Test
     void shouldReturnStream() {
-        Alias idvId = IdvIdMother.build();
-        Alias creditCardNumber = CreditCardNumberMother.build();
+        Alias idvId = IdvIdMother.idvId();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
 
         Aliases aliases = AliasesMother.with(idvId, creditCardNumber);
 
@@ -37,8 +37,8 @@ class AliasesTest {
 
     @Test
     void shouldReturnSize() {
-        Alias idvId = IdvIdMother.build();
-        Alias creditCardNumber = CreditCardNumberMother.build();
+        Alias idvId = IdvIdMother.idvId();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
 
         Aliases aliases = AliasesMother.with(idvId, creditCardNumber);
 
@@ -54,7 +54,7 @@ class AliasesTest {
 
     @Test
     void shouldEmptyOptionalIfIdvIdAliasNotPresent() {
-        Alias creditCardNumber = CreditCardNumberMother.build();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
         Aliases aliases = AliasesMother.with(creditCardNumber);
 
         Optional<UUID> value = aliases.getIdvIdValue();
@@ -64,7 +64,7 @@ class AliasesTest {
 
     @Test
     void shouldReturnIdvIdAliasValueIfPresent() {
-        IdvId idvId = IdvIdMother.build();
+        IdvId idvId = IdvIdMother.idvId();
         Aliases aliases = AliasesMother.with(idvId);
 
         Optional<UUID> value = aliases.getIdvIdValue();
@@ -74,7 +74,7 @@ class AliasesTest {
 
     @Test
     void shouldReturnTrueIfContainsAlias() {
-        Alias idvId = IdvIdMother.build();
+        Alias idvId = IdvIdMother.idvId();
 
         Aliases aliases = AliasesMother.with(idvId);
 
@@ -83,19 +83,19 @@ class AliasesTest {
 
     @Test
     void shouldReturnFalseIfDoesNotContainAlias() {
-        Alias idvId = IdvIdMother.build();
+        Alias idvId = IdvIdMother.idvId();
 
         Aliases aliases = AliasesMother.with(idvId);
 
-        Alias creditCardNumber = CreditCardNumberMother.build();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
         assertThat(aliases.contains(creditCardNumber)).isFalse();
     }
 
     @Test
     void shouldAddAlias() {
-        Alias idvId = IdvIdMother.build();
+        Alias idvId = IdvIdMother.idvId();
         Aliases aliases = AliasesMother.with(idvId);
-        Alias creditCardNumber = CreditCardNumberMother.build();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
 
         aliases.add(creditCardNumber);
 
@@ -104,14 +104,32 @@ class AliasesTest {
 
     @Test
     void shouldAddAliases() {
-        Alias idvId = IdvIdMother.build();
+        Alias idvId = IdvIdMother.idvId();
         Aliases aliases = AliasesMother.with(idvId);
-        Alias creditCardNumber = CreditCardNumberMother.build();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
         Aliases aliasesToAdd = AliasesMother.with(creditCardNumber);
 
         aliases.add(aliasesToAdd);
 
         assertThat(aliases).containsExactly(idvId, creditCardNumber);
+    }
+
+    @Test
+    void shouldNotDuplicateAliasesOnConstruction() {
+        Alias idvId = IdvIdMother.idvId();
+        Aliases aliases = AliasesMother.with(idvId, idvId);
+
+        assertThat(aliases).containsExactly(idvId);
+    }
+
+    @Test
+    void shouldNotAddDuplicateAliases() {
+        Alias idvId = IdvIdMother.idvId();
+        Aliases aliases = AliasesMother.with(idvId);
+
+        aliases.add(idvId);
+
+        assertThat(aliases).containsExactly(idvId);
     }
 
 }
