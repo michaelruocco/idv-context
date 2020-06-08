@@ -8,8 +8,8 @@ public interface EmailAddressesMother {
         return with();
     }
 
-    static EmailAddresses build() {
-        return with("joe.bloggs@hotmail.com", "bugs.bunny@live.co.uk");
+    static EmailAddresses two() {
+        return with("joe.bloggs@hotmail.co.uk", "joebloggs@yahoo.co.uk");
     }
 
     static EmailAddresses with(String... values) {

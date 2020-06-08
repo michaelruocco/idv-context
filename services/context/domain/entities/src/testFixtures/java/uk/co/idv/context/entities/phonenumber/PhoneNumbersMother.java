@@ -4,10 +4,6 @@ import java.util.Arrays;
 
 public interface PhoneNumbersMother {
 
-    static PhoneNumbers empty() {
-        return with();
-    }
-
     static PhoneNumbers mobileAndOther() {
         return with(
                 MobilePhoneNumberMother.mobile(),

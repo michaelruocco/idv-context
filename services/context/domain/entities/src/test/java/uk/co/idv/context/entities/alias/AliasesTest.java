@@ -2,10 +2,10 @@ package uk.co.idv.context.entities.alias;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 class AliasesTest {
 
@@ -53,13 +53,13 @@ class AliasesTest {
     }
 
     @Test
-    void shouldEmptyOptionalIfIdvIdAliasNotPresent() {
+    void shouldThrowIdvIdNotFoundExceptionIfIdvIdNotPresent() {
         Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
         Aliases aliases = AliasesMother.with(creditCardNumber);
 
-        Optional<UUID> value = aliases.getIdvIdValue();
+        Throwable error = catchThrowable(aliases::getIdvIdValue);
 
-        assertThat(value).isEmpty();
+        assertThat(error).isInstanceOf(IdvIdNotFoundException.class);
     }
 
     @Test
@@ -67,9 +67,9 @@ class AliasesTest {
         IdvId idvId = IdvIdMother.idvId();
         Aliases aliases = AliasesMother.with(idvId);
 
-        Optional<UUID> value = aliases.getIdvIdValue();
+        UUID value = aliases.getIdvIdValue();
 
-        assertThat(value).contains(idvId.getValueAsUuid());
+        assertThat(value).isEqualTo(idvId.getValueAsUuid());
     }
 
     @Test

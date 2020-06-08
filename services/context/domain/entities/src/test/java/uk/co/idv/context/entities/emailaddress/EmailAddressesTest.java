@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class EmailAddressesTest {
 
-    private final String email1 = "joe.bloggs@hotmail.com";
-    private final String email2 = "bugs.bunny@live.co.uk";
+    private final String email1 = "joe.bloggs@hotmail.co.uk";
+    private final String email2 = "joebloggs@yahoo.co.uk";
 
     private final EmailAddresses numbers = EmailAddressesMother.with(email1, email2);
 

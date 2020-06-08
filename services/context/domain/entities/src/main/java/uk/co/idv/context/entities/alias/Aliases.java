@@ -6,7 +6,6 @@ import lombok.ToString;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -45,14 +44,15 @@ public class Aliases implements Iterable<Alias> {
         return aliases.size();
     }
 
-    public Optional<UUID> getIdvIdValue() {
-        return getIdvId().map(IdvId::getValueAsUuid);
+    public UUID getIdvIdValue() {
+        return getIdvId().getValueAsUuid();
     }
 
-    public Optional<IdvId> getIdvId() {
+    public IdvId getIdvId() {
         return getAliasesByType(IdvId.TYPE)
                 .findFirst()
-                .map(alias -> (IdvId) alias);
+                .map(alias -> (IdvId) alias)
+                .orElseThrow(IdvIdNotFoundException::new);
     }
 
     private Stream<Alias> getAliasesByType(String type) {
