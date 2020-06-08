@@ -1,10 +1,10 @@
 rootProject.name = 'verification-context'
 
-include ':context-entities'
-project(':context-entities').projectDir = file('services/context/domain/entities')
+include ':entities'
+project(':entities').projectDir = file('domain/entities')
 
-include ':context-use-cases'
-project(':context-use-cases').projectDir = file('services/context/domain/use-cases')
+include ':use-cases'
+project(':use-cases').projectDir = file('domain/use-cases')
 
-include ':context-in-memory-repository'
-project(':context-in-memory-repository').projectDir = file('services/context/adapter/repository/in-memory')
+include ':in-memory-repository'
+project(':in-memory-repository').projectDir = file('adapter/repository/in-memory')
