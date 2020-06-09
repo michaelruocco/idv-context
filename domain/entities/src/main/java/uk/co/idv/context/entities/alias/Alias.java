@@ -12,4 +12,8 @@ public interface Alias {
         return getType().equals(type);
     }
 
+    default String format() {
+        return String.format("%s|%s", getType(), getValue());
+    }
+
 }

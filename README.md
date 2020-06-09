@@ -7,8 +7,8 @@
 
 ## Todo
 
-* Add create context request
-* Implement simple identity retrieval from repository
+*  Implement loading identity on the fly
+*  Implement selecting identity loader based on BeginVerificationRequest
 
 ## Useful commands
 

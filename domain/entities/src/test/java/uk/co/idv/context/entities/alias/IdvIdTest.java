@@ -6,8 +6,6 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 class IdvIdTest {
 
@@ -72,14 +70,6 @@ class IdvIdTest {
         Alias alias = IdvIdMother.idvId();
 
         assertThat(IdvId.isIdvId(alias)).isTrue();
-    }
-
-    @Test
-    void shouldReturnFalseIfAliasIsAnyOtherAliasType() {
-        Alias alias = mock(Alias.class);
-        given(alias.getType()).willReturn("other-type");
-
-        assertThat(IdvId.isIdvId(alias)).isFalse();
     }
 
 }

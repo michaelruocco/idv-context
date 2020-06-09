@@ -18,16 +18,16 @@ class InMemoryIdentityDaoTest {
 
     @Test
     void shouldReturnEmptyOptionalIfIdentityNotFound() {
-        final Alias alias = CreditCardNumberMother.creditCardNumber();
+        Alias alias = CreditCardNumberMother.creditCardNumber();
 
         assertThat(dao.load(alias)).isEmpty();
     }
 
     @Test
     void shouldLoadSavedIdentityByAliases() {
-        final Alias idvId = IdvIdMother.idvId();
-        final Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        final Identity identity = IdentityMother.withAliases(AliasesMother.with(idvId, creditCardNumber));
+        Alias idvId = IdvIdMother.idvId();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Identity identity = IdentityMother.withAliases(AliasesMother.with(idvId, creditCardNumber));
 
         dao.save(identity);
 
@@ -37,13 +37,13 @@ class InMemoryIdentityDaoTest {
 
     @Test
     void shouldNotBeAbleToLoadByAliasThatHasBeenDeleted() {
-        final Alias idvId = IdvIdMother.idvId();
-        final Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        final Identity original = IdentityMother.withAliases(AliasesMother.with(idvId, creditCardNumber));
+        Alias idvId = IdvIdMother.idvId();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Identity original = IdentityMother.withAliases(AliasesMother.with(idvId, creditCardNumber));
         dao.save(original);
 
-        final Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
-        final Identity updated = IdentityMother.withAliases(AliasesMother.with(idvId, debitCardNumber));
+        Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        Identity updated = IdentityMother.withAliases(AliasesMother.with(idvId, debitCardNumber));
         dao.save(updated);
 
         assertThat(dao.load(idvId)).contains(updated);

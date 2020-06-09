@@ -16,38 +16,34 @@ public class InMemoryIdentityRepository implements IdentityRepository {
     private final Map<String, Identity> identities = new HashMap<>();
 
     @Override
-    public void save(final Identity updated) {
-        final Optional<Identity> existing = load(updated.getIdvId());
+    public void save(Identity updated) {
+        Optional<Identity> existing = load(updated.getIdvId());
         existing.ifPresent(value -> removeDeletedAliasEntries(value, updated));
-        final Collection<String> keys = toKeys(updated);
+        Collection<String> keys = toKeys(updated);
         keys.forEach(key -> identities.put(key, updated));
     }
 
     @Override
-    public Optional<Identity> load(final Alias alias) {
-        final String key = toKey(alias);
+    public Optional<Identity> load(Alias alias) {
+        String key = alias.format();
         return Optional.ofNullable(identities.get(key));
     }
 
-    private void removeDeletedAliasEntries(final Identity existing, final Identity updated) {
-        final Aliases aliasesToRemove = existing.getAliasesNotPresent(updated);
-        final Collection<String> keysToRemove = toKeys(aliasesToRemove);
+    private void removeDeletedAliasEntries(Identity existing, Identity updated) {
+        Aliases aliasesToRemove = existing.getAliasesNotPresent(updated);
+        Collection<String> keysToRemove = toKeys(aliasesToRemove);
         keysToRemove.forEach(identities::remove);
     }
 
-    private static Collection<String> toKeys(final Identity identity) {
-        final Aliases aliases = identity.getAliases();
+    private static Collection<String> toKeys(Identity identity) {
+        Aliases aliases = identity.getAliases();
         return toKeys(aliases);
     }
 
-    private static Collection<String> toKeys(final Aliases aliases) {
+    private static Collection<String> toKeys(Aliases aliases) {
         return aliases.stream()
-                .map(InMemoryIdentityRepository::toKey)
+                .map(Alias::format)
                 .collect(Collectors.toList());
-    }
-
-    private static String toKey(final Alias alias) {
-        return String.format("%s-%s", alias.getType(), alias.getValue());
     }
 
 }

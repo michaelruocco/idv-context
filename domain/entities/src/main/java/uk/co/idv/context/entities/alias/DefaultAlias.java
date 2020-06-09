@@ -1,18 +1,19 @@
 package uk.co.idv.context.entities.alias;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+
+@Builder
 @Data
-public abstract class CardNumber implements Alias {
+public class DefaultAlias implements Alias {
 
     private final String type;
     private final String value;
 
     @Override
     public boolean isCardNumber() {
-        return true;
+        return false;
     }
 
 }

@@ -1,12 +1,10 @@
 package uk.co.idv.context.entities.alias;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
+import lombok.Data;
 
 import java.util.UUID;
 
-@EqualsAndHashCode
-@ToString
+@Data
 public class IdvId implements Alias {
 
     static final String TYPE = "idv-id";

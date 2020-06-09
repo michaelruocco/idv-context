@@ -36,6 +36,10 @@ public interface IdentityMother {
         return builder().emailAddresses(emailAddresses).build();
     }
 
+    static Identity build() {
+        return builder().build();
+    }
+
     static Identity.IdentityBuilder builder() {
         return Identity.builder()
                 .country(CountryCode.GB)
