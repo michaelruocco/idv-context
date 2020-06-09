@@ -4,4 +4,5 @@ plugins {
 
 dependencies {
     api 'org.javamoney:moneta:1.4'
+    api 'com.neovisionaries:nv-i18n:1.27'
 }

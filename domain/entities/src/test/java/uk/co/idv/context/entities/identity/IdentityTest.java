@@ -1,5 +1,6 @@
 package uk.co.idv.context.entities.identity;
 
+import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
@@ -18,6 +19,15 @@ import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class IdentityTest {
+
+    @Test
+    void shouldReturnCountry() {
+        CountryCode country = CountryCode.GB;
+
+        Identity identity = IdentityMother.withCountry(country);
+
+        assertThat(identity.getCountry()).isEqualTo(country);
+    }
 
     @Test
     void shouldReturnAliases() {

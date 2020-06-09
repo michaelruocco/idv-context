@@ -7,7 +7,6 @@
 
 ## Todo
 
-* Add channel entities
 * Add activity entities
 * Add create context request
 * Implement simple identity retrieval from repository

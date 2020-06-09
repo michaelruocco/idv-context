@@ -1,5 +1,6 @@
 package uk.co.idv.context.entities.identity;
 
+import com.neovisionaries.i18n.CountryCode;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
@@ -10,6 +11,10 @@ import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 
 public interface IdentityMother {
+
+    static Identity withCountry(CountryCode country) {
+        return builder().country(country).build();
+    }
 
     static Identity withAliases(Alias... aliases) {
         return withAliases(AliasesMother.with(aliases));
@@ -33,6 +38,7 @@ public interface IdentityMother {
 
     static Identity.IdentityBuilder builder() {
         return Identity.builder()
+                .country(CountryCode.GB)
                 .aliases(AliasesMother.idvIdAndCreditCardNumber())
                 .phoneNumbers(PhoneNumbersMother.mobileAndOther())
                 .emailAddresses(EmailAddressesMother.two());

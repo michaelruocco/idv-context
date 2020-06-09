@@ -1,5 +1,6 @@
 package uk.co.idv.context.entities.identity;
 
+import com.neovisionaries.i18n.CountryCode;
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.alias.Alias;
@@ -13,6 +14,7 @@ import java.util.UUID;
 @Data
 public class Identity {
 
+    private final CountryCode country;
     private final Aliases aliases;
     private final PhoneNumbers phoneNumbers;
     private final EmailAddresses emailAddresses;
