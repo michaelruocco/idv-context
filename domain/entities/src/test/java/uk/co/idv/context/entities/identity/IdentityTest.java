@@ -17,6 +17,8 @@ import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 
 class IdentityTest {
 
@@ -101,6 +103,20 @@ class IdentityTest {
         Identity identity = IdentityMother.withEmailAddresses(emailAddresses);
 
         assertThat(identity.getEmailAddresses()).isEqualTo(emailAddresses);
+    }
+
+    @Test
+    void shouldReturnAliasesNotPresentInOtherIdentity() {
+        Aliases aliases = mock(Aliases.class);
+        Aliases otherAliases = mock(Aliases.class);
+        Aliases expectedAliases = mock(Aliases.class);
+        given(aliases.notPresent(otherAliases)).willReturn(expectedAliases);
+        Identity identity = IdentityMother.withAliases(aliases);
+        Identity other = IdentityMother.withAliases(otherAliases);
+
+        Aliases notPresent = identity.getAliasesNotPresent(other);
+
+        assertThat(notPresent).isEqualTo(expectedAliases);
     }
 
 }

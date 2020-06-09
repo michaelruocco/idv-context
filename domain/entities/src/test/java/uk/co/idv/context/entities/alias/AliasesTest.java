@@ -115,6 +115,18 @@ class AliasesTest {
     }
 
     @Test
+    void shouldReturnAliasesNotPresent() {
+        Alias idvId = IdvIdMother.idvId();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Aliases aliases = AliasesMother.with(idvId, creditCardNumber);
+        Aliases comparison = AliasesMother.with(idvId);
+
+        Aliases notPresent = aliases.notPresent(comparison);
+
+        assertThat(notPresent).containsExactly(creditCardNumber);
+    }
+
+    @Test
     void shouldNotDuplicateAliasesOnConstruction() {
         Alias idvId = IdvIdMother.idvId();
         Aliases aliases = AliasesMother.with(idvId, idvId);

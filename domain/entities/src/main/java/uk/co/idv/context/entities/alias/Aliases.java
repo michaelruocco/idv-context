@@ -2,6 +2,7 @@ package uk.co.idv.context.entities.alias;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -32,12 +33,16 @@ public class Aliases implements Iterable<Alias> {
         return aliases.stream();
     }
 
+    public void add(Aliases aliasesToAdd) {
+        aliasesToAdd.stream().forEach(this::add);
+    }
+
     public void add(Alias alias) {
         aliases.add(alias);
     }
 
-    public void add(Aliases aliasesToAdd) {
-        aliasesToAdd.stream().forEach(this::add);
+    public Aliases notPresent(Aliases comparison) {
+        return new Aliases(CollectionUtils.subtract(this.aliases, comparison.aliases));
     }
 
     public int size() {

@@ -35,4 +35,8 @@ public class Identity {
         return phoneNumbers.getMobileNumbers();
     }
 
+    public Aliases getAliasesNotPresent(Identity other) {
+        return aliases.notPresent(other.getAliases());
+    }
+
 }
