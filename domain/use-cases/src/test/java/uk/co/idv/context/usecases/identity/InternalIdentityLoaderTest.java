@@ -13,12 +13,12 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class DefaultIdentityLoaderTest {
+class InternalIdentityLoaderTest {
 
     private final IdentityRepository repository = mock(IdentityRepository.class);
 
 
-    private final IdentityLoader loader = new DefaultIdentityLoader(repository);
+    private final IdentityLoader loader = new InternalIdentityLoader(repository);
 
     @Test
     void shouldLoadIdentityIfIdentityExists() {
@@ -50,7 +50,7 @@ class DefaultIdentityLoaderTest {
 
     private LoadIdentityRequest givenRequestWithAlias(Alias alias) {
         LoadIdentityRequest request = mock(LoadIdentityRequest.class);
-        given(request.getAlias()).willReturn(alias);
+        given(request.getProvidedAlias()).willReturn(alias);
         return request;
     }
 

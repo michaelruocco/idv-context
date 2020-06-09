@@ -5,13 +5,13 @@ import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.identity.Identity;
 
 @RequiredArgsConstructor
-public class DefaultIdentityLoader implements IdentityLoader {
+public class InternalIdentityLoader implements IdentityLoader {
 
     private final IdentityRepository repository;
 
     @Override
     public Identity load(LoadIdentityRequest request) {
-        Alias alias = request.getAlias();
+        Alias alias = request.getProvidedAlias();
         return repository.load(alias).orElseThrow(() -> new IdentityNotFoundException(alias));
     }
 

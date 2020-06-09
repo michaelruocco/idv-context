@@ -97,9 +97,9 @@ class AliasesTest {
         Aliases aliases = AliasesMother.with(idvId);
         Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
 
-        aliases.add(creditCardNumber);
+        Aliases addedAliases = aliases.add(creditCardNumber);
 
-        assertThat(aliases).containsExactly(idvId, creditCardNumber);
+        assertThat(addedAliases).containsExactly(idvId, creditCardNumber);
     }
 
     @Test
@@ -109,9 +109,9 @@ class AliasesTest {
         Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
         Aliases aliasesToAdd = AliasesMother.with(creditCardNumber);
 
-        aliases.add(aliasesToAdd);
+        Aliases addedAliases = aliases.add(aliasesToAdd);
 
-        assertThat(aliases).containsExactly(idvId, creditCardNumber);
+        assertThat(addedAliases).containsExactly(idvId, creditCardNumber);
     }
 
     @Test

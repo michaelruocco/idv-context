@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 import org.apache.commons.collections4.CollectionUtils;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
@@ -15,6 +16,10 @@ import java.util.stream.Stream;
 public class Aliases implements Iterable<Alias> {
 
     private final Collection<Alias> aliases;
+
+    public Aliases(Alias... aliases) {
+        this(Arrays.asList(aliases));
+    }
 
     public Aliases(Collection<Alias> aliases) {
         this.aliases = new LinkedHashSet<>(aliases);
@@ -33,12 +38,14 @@ public class Aliases implements Iterable<Alias> {
         return aliases.stream();
     }
 
-    public void add(Aliases aliasesToAdd) {
-        aliasesToAdd.stream().forEach(this::add);
+    public Aliases add(final Aliases aliasesToAdd) {
+        final Collection<Alias> updatedAliases = new LinkedHashSet<>(aliases);
+        aliasesToAdd.forEach(updatedAliases::add);
+        return new Aliases(updatedAliases);
     }
 
-    public void add(Alias alias) {
-        aliases.add(alias);
+    public Aliases add(Alias alias) {
+        return add(new Aliases(alias));
     }
 
     public Aliases notPresent(Aliases comparison) {

@@ -7,8 +7,8 @@
 
 ## Todo
 
-*  Implement loading identity on the fly
-*  Implement selecting identity loader based on BeginVerificationRequest
+*   Implement loading identity on the fly
+*   Implement selecting identity loader based on BeginVerificationRequest/PolicyKey
 
 ## Useful commands
 
