@@ -15,7 +15,7 @@ public class DeRsaTest {
     void shouldReturnId() {
         Channel rsa = DeRsaMother.rsa();
 
-        assertThat(rsa.getId()).isEqualTo("RSA");
+        assertThat(rsa.getId()).isEqualTo("rsa");
     }
 
     @Test

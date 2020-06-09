@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public interface Rsa extends Channel {
 
-    String ID = "RSA";
+    String ID = "rsa";
 
     @Override
     default String getId() {

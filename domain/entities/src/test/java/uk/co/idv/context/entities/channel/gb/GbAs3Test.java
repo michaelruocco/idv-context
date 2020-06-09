@@ -12,7 +12,7 @@ class GbAs3Test {
     void shouldReturnId() {
         Channel channel = GbAs3Mother.as3();
 
-        assertThat(channel.getId()).isEqualTo("AS3");
+        assertThat(channel.getId()).isEqualTo("as3");
     }
 
     @Test

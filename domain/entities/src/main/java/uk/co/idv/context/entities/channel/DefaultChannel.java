@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Builder
 @Data
-public class SimpleChannel implements Channel {
+public class DefaultChannel implements Channel {
 
     private final String id;
     private final CountryCode country;

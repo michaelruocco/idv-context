@@ -5,35 +5,35 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class SimpleChannelTest {
+class DefaultChannelTest {
 
     private static final String ID = "my-channel";
-    private static final CountryCode COUNTRY = CountryCode.GB;
-
     @Test
     void shouldReturnId() {
-        Channel channel = SimpleChannelMother.withId(ID);
+        Channel channel = DefaultChannelMother.withId(ID);
 
         assertThat(channel.getId()).isEqualTo(ID);
     }
 
     @Test
     void shouldReturnCountry() {
-        Channel channel = SimpleChannelMother.withCountry(COUNTRY);
+        CountryCode country = CountryCode.GB;
 
-        assertThat(channel.getCountry()).isEqualTo(COUNTRY);
+        Channel channel = DefaultChannelMother.withCountry(country);
+
+        assertThat(channel.getCountry()).isEqualTo(country);
     }
 
     @Test
     void shouldReturnTrueIfIdMatches() {
-        Channel channel = SimpleChannelMother.withId(ID);
+        Channel channel = DefaultChannelMother.withId(ID);
 
         assertThat(channel.hasId(ID)).isTrue();
     }
 
     @Test
     void shouldReturnFalseIfIdDoesNotMatch() {
-        Channel channel = SimpleChannelMother.withId(ID);
+        Channel channel = DefaultChannelMother.withId(ID);
 
         assertThat(channel.hasId("other-id")).isFalse();
     }
