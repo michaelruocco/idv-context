@@ -5,6 +5,8 @@ import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.channel.Channel;
 
+import java.time.Duration;
+
 public interface LoadIdentityRequest {
 
     Alias getProvidedAlias();
@@ -14,6 +16,8 @@ public interface LoadIdentityRequest {
     Channel getChannel();
 
     CountryCode getCountry();
+
+    Duration getDataLoadTimeout();
 
     LoadIdentityRequest setAliases(Aliases aliases);
 

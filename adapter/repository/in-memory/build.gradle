@@ -1,5 +1,5 @@
 dependencies {
-    api project(':use-cases')
+    api project(":use-cases")
 
-    testImplementation testFixtures(project(':entities'))
+    testImplementation testFixtures(project(":entities"))
 }

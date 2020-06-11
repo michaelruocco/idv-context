@@ -26,4 +26,16 @@ public class PhoneNumbersTest {
         assertThat(numbers.getMobileNumbers()).containsExactly(mobileNumber);
     }
 
+    @Test
+    void shouldReturnIsEmptyFalseIfNotEmpty() {
+        assertThat(numbers.isEmpty()).isFalse();
+    }
+
+    @Test
+    void shouldReturnIsEmptyTrueIfEmpty() {
+        PhoneNumbers emptyNumbers = PhoneNumbersMother.empty();
+
+        assertThat(emptyNumbers.isEmpty()).isTrue();
+    }
+
 }

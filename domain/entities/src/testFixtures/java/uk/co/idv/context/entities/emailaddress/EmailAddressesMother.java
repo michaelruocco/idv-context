@@ -1,7 +1,5 @@
 package uk.co.idv.context.entities.emailaddress;
 
-import java.util.Arrays;
-
 public interface EmailAddressesMother {
 
     static EmailAddresses empty() {
@@ -13,7 +11,7 @@ public interface EmailAddressesMother {
     }
 
     static EmailAddresses with(String... values) {
-        return new EmailAddresses(Arrays.asList(values));
+        return new EmailAddresses(values);
     }
 
 }

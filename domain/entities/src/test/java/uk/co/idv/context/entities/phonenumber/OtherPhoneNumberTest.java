@@ -24,7 +24,7 @@ class OtherPhoneNumberTest {
 
     @Test
     void shouldReturnIsMobileFalse() {
-        final PhoneNumber number = OtherPhoneNumberMother.other();
+        PhoneNumber number = OtherPhoneNumberMother.other();
 
         assertThat(number.isMobile()).isFalse();
     }

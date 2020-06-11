@@ -38,8 +38,8 @@ public class Aliases implements Iterable<Alias> {
         return aliases.stream();
     }
 
-    public Aliases add(final Aliases aliasesToAdd) {
-        final Collection<Alias> updatedAliases = new LinkedHashSet<>(aliases);
+    public Aliases add(Aliases aliasesToAdd) {
+        Collection<Alias> updatedAliases = new LinkedHashSet<>(aliases);
         aliasesToAdd.forEach(updatedAliases::add);
         return new Aliases(updatedAliases);
     }

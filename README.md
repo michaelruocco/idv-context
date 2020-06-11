@@ -18,8 +18,13 @@
 ```
 
 ```gradle
-// runs tests and builds code and applies rules to clean up code formatting etc
-./gradlew clean spotlessApply build
+// runs tests (including integration tests which in some cases can be slower) and builds code
+./gradlew clean build integrationTest
+```
+
+```gradle
+// runs all tests and builds code and applies rules to clean up code formatting etc
+./gradlew clean spotlessApply build integrationTests
 ```
 
 ```gradle

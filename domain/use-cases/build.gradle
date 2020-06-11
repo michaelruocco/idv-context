@@ -1,9 +1,19 @@
 plugins {
     id "java-test-fixtures"
+    id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+}
+
+testSets {
+    integrationTest
 }
 
 dependencies {
-    api project(':entities')
+    api project(":entities")
 
-    testFixturesApi testFixtures(project(':entities'))
+    implementation "org.awaitility:awaitility:4.0.3"
+    implementation "org.slf4j:slf4j-simple:${slf4jVersion}"
+
+    testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
+
+    testFixturesApi testFixtures(project(":entities"))
 }

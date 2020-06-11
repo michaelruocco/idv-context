@@ -27,7 +27,7 @@ public class Identity {
         return aliases.getIdvId();
     }
 
-    public boolean hasAlias(final Alias alias) {
+    public boolean hasAlias(Alias alias) {
         return aliases.contains(alias);
     }
 

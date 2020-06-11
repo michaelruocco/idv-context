@@ -4,6 +4,7 @@ import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Collectors;
@@ -16,7 +17,10 @@ public class PhoneNumbers implements Iterable<PhoneNumber> {
 
     private final Collection<PhoneNumber> numbers;
 
-    @Override
+    public PhoneNumbers(PhoneNumber... numbers) {
+        this(Arrays.asList(numbers));
+    }
+
     public Iterator<PhoneNumber> iterator() {
         return numbers.iterator();
     }
@@ -29,6 +33,10 @@ public class PhoneNumbers implements Iterable<PhoneNumber> {
         return new PhoneNumbers(numbers.stream()
                 .filter(PhoneNumber::isMobile)
                 .collect(Collectors.toList()));
+    }
+
+    public boolean isEmpty() {
+        return numbers.isEmpty();
     }
 
 }

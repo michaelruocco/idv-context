@@ -6,8 +6,8 @@ import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
-import uk.co.idv.context.entities.phonenumber.PhoneNumber;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.context.entities.phonenumber.PhoneNumber;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 
 public interface IdentityMother {

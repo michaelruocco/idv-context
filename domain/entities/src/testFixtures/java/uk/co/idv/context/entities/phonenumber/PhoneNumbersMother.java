@@ -1,7 +1,5 @@
 package uk.co.idv.context.entities.phonenumber;
 
-import java.util.Arrays;
-
 public interface PhoneNumbersMother {
 
     static PhoneNumbers mobileAndOther() {
@@ -11,8 +9,12 @@ public interface PhoneNumbersMother {
         );
     }
 
+    static PhoneNumbers empty() {
+        return with();
+    }
+
     static PhoneNumbers with(PhoneNumber... numbers) {
-        return new PhoneNumbers(Arrays.asList(numbers));
+        return new PhoneNumbers(numbers);
     }
 
 }

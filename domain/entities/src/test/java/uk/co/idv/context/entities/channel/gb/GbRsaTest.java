@@ -27,7 +27,7 @@ public class GbRsaTest {
 
     @Test
     void shouldReturnIssuerSessionIdIfSet() {
-        final UUID id = UUID.randomUUID();
+        UUID id = UUID.randomUUID();
 
         Rsa rsa = GbRsaMother.withIssuerSessionId(id);
 

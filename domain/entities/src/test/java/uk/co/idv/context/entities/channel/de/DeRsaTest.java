@@ -27,7 +27,7 @@ public class DeRsaTest {
 
     @Test
     void shouldReturnIssuerSessionIdIfSet() {
-        final UUID id = UUID.randomUUID();
+        UUID id = UUID.randomUUID();
 
         Rsa rsa = DeRsaMother.withIssuerSessionId(id);
 
@@ -43,7 +43,7 @@ public class DeRsaTest {
 
     @Test
     void shouldReturnDsSessionIdIfSet() {
-        final UUID id = UUID.randomUUID();
+        UUID id = UUID.randomUUID();
 
         Rsa rsa = DeRsaMother.withDsSessionId(id);
 

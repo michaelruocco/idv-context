@@ -10,10 +10,10 @@ import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.entities.phonenumber.MobilePhoneNumberMother;
 import uk.co.idv.context.entities.phonenumber.OtherPhoneNumberMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumber;
-import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
