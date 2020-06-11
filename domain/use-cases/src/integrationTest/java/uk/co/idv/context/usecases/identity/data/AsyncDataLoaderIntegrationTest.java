@@ -28,7 +28,7 @@ import static uk.co.idv.context.usecases.identity.data.DurationCalculator.millis
 @Slf4j
 public class AsyncDataLoaderIntegrationTest {
 
-    private static final Duration TIMEOUT = Duration.ofMillis(1500);
+    private static final Duration TIMEOUT = Duration.ofMillis(1750);
     private static final int NUMBER_OF_RUNS = 100;
 
     @Test
