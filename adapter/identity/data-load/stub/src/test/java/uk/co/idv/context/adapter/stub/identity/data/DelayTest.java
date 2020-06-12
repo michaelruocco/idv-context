@@ -21,4 +21,13 @@ class DelayTest {
         assertThat(Duration.between(start, end).toMillis()).isGreaterThanOrEqualTo(millis);
     }
 
+    @Test
+    void shouldReturnDuration() {
+        long millis = 5;
+
+        Delay delay = new Delay(millis);
+
+        assertThat(delay.getDuration().toMillis()).isEqualTo(millis);
+    }
+
 }

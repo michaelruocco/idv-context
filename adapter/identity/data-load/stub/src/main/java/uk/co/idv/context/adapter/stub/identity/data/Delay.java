@@ -1,5 +1,6 @@
 package uk.co.idv.context.adapter.stub.identity.data;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -7,6 +8,7 @@ import java.time.Duration;
 
 @RequiredArgsConstructor
 @Slf4j
+@Data
 public class Delay {
 
     private final Duration duration;
