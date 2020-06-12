@@ -75,5 +75,4 @@ class StubIdentityFinderConfigTest {
 
         assertThat(config.getEmailAddressDelay()).isEqualTo(OTHER_DELAY);
     }
-
 }
