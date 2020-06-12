@@ -23,7 +23,7 @@ class DefaultFindIdentityRequestTest {
     void shouldReturnProvidedAlias() {
         Alias alias = DefaultAliasMother.build();
 
-        FindIdentityRequest request = LoadIdentityRequestMother.withProvidedAlias(alias);
+        FindIdentityRequest request = FindIdentityRequestMother.withProvidedAlias(alias);
 
         assertThat(request.getProvidedAlias()).isEqualTo(alias);
     }
@@ -32,7 +32,7 @@ class DefaultFindIdentityRequestTest {
     void shouldReturnChannel() {
         Channel channel = DefaultChannelMother.build();
 
-        FindIdentityRequest request = LoadIdentityRequestMother.withChannel(channel);
+        FindIdentityRequest request = FindIdentityRequestMother.withChannel(channel);
 
         assertThat(request.getChannel()).isEqualTo(channel);
     }
@@ -41,14 +41,14 @@ class DefaultFindIdentityRequestTest {
     void shouldReturnCountryFromChannel() {
         Channel channel = DefaultChannelMother.build();
 
-        FindIdentityRequest request = LoadIdentityRequestMother.withChannel(channel);
+        FindIdentityRequest request = FindIdentityRequestMother.withChannel(channel);
 
         assertThat(request.getCountry()).isEqualTo(channel.getCountry());
     }
 
     @Test
     void shouldCopyAllOtherAttributesWhenSettingAliases() {
-        FindIdentityRequest request = LoadIdentityRequestMother.build();
+        FindIdentityRequest request = FindIdentityRequestMother.build();
         Aliases aliases = AliasesMother.idvIdAndCreditCardNumber();
 
         FindIdentityRequest updatedRequest = request.setAliases(aliases);

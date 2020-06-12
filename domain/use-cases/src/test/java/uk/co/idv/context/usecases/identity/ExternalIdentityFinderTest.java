@@ -9,9 +9,10 @@ import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.context.usecases.identity.data.AliasLoader;
+import uk.co.idv.context.usecases.identity.data.AliasSupplier;
 import uk.co.idv.context.usecases.identity.data.AsyncDataLoader;
 import uk.co.idv.context.usecases.identity.data.DataFutures;
+import uk.co.idv.context.usecases.identity.data.DataSupplierFactory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -23,18 +24,20 @@ class ExternalIdentityFinderTest {
     private final Aliases updatedAliases = mock(Aliases.class);
     private final FindIdentityRequest request = mock(FindIdentityRequest.class);
     private final FindIdentityRequest updatedRequest = mock(FindIdentityRequest.class);
-    private final AliasLoader aliasLoader = mock(AliasLoader.class);
+    private final DataSupplierFactory factory = mock(DataSupplierFactory.class);
+    private final AliasSupplier aliasSupplier = mock(AliasSupplier.class);
     private final AsyncDataLoader dataLoader = mock(AsyncDataLoader.class);
     private final DataFutures dataFutures = mock(DataFutures.class);
 
     private final ExternalIdentityFinder identityFinder = ExternalIdentityFinder.builder()
-            .aliasLoader(aliasLoader)
+            .factory(factory)
             .dataLoader(dataLoader)
             .build();
 
     @BeforeEach
     void setUp() {
-        given(aliasLoader.load(request)).willReturn(aliases);
+        given(factory.aliasesSupplier(request)).willReturn(aliasSupplier);
+        given(aliasSupplier.get()).willReturn(aliases);
         given(aliases.add(request.getProvidedAlias())).willReturn(updatedAliases);
         given(request.setAliases(updatedAliases)).willReturn(updatedRequest);
         given(updatedRequest.getAliases()).willReturn(updatedAliases);
