@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
-import uk.co.idv.context.usecases.identity.LoadIdentityRequest;
+import uk.co.idv.context.usecases.identity.FindIdentityRequest;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -24,13 +24,13 @@ public class AsyncDataLoader {
     private final Executor executor;
     private final DataSupplierFactory supplierFactory;
 
-    public DataFutures loadData(LoadIdentityRequest request) {
+    public DataFutures loadData(FindIdentityRequest request) {
         DataFutures futures = initiateLoad(request);
         waitFor(request.getDataLoadTimeout(), futures.toArray());
         return futures;
     }
 
-    private DataFutures initiateLoad(LoadIdentityRequest request) {
+    private DataFutures initiateLoad(FindIdentityRequest request) {
         log.info("initiating async data loads for request {}", request);
         return DataFutures.builder()
                 .phoneNumbers(loadPhoneNumbers(request))
@@ -38,11 +38,11 @@ public class AsyncDataLoader {
                 .build();
     }
 
-    private CompletableFuture<PhoneNumbers> loadPhoneNumbers(LoadIdentityRequest request) {
+    private CompletableFuture<PhoneNumbers> loadPhoneNumbers(FindIdentityRequest request) {
         return supplyAsync(supplierFactory.phoneNumberSupplier(request));
     }
 
-    private CompletableFuture<EmailAddresses> loadEmailAddresses(LoadIdentityRequest request) {
+    private CompletableFuture<EmailAddresses> loadEmailAddresses(FindIdentityRequest request) {
         return supplyAsync(supplierFactory.emailAddressSupplier(request));
     }
 

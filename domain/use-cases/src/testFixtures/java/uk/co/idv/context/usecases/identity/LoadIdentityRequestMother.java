@@ -5,28 +5,28 @@ import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
-import uk.co.idv.context.usecases.identity.DefaultLoadIdentityRequest.DefaultLoadIdentityRequestBuilder;
+import uk.co.idv.context.usecases.identity.DefaultFindIdentityRequest.DefaultFindIdentityRequestBuilder;
 
 public interface LoadIdentityRequestMother {
 
-    static LoadIdentityRequest withProvidedAlias(Alias alias) {
+    static FindIdentityRequest withProvidedAlias(Alias alias) {
         return builder().providedAlias(alias).build();
     }
 
-    static LoadIdentityRequest withAliases(Aliases aliases) {
+    static FindIdentityRequest withAliases(Aliases aliases) {
         return builder().aliases(aliases).build();
     }
 
-    static LoadIdentityRequest withChannel(Channel channel) {
+    static FindIdentityRequest withChannel(Channel channel) {
         return builder().channel(channel).build();
     }
 
-    static LoadIdentityRequest build() {
+    static FindIdentityRequest build() {
         return builder().build();
     }
 
-    static DefaultLoadIdentityRequestBuilder builder() {
-        return DefaultLoadIdentityRequest.builder()
+    static DefaultFindIdentityRequestBuilder builder() {
+        return DefaultFindIdentityRequest.builder()
                 .providedAlias(DefaultAliasMother.build())
                 .channel(DefaultChannelMother.build());
     }

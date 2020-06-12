@@ -8,3 +8,6 @@ project(':use-cases').projectDir = file('domain/use-cases')
 
 include ':in-memory-repository'
 project(':in-memory-repository').projectDir = file('adapter/repository/in-memory')
+
+include ':identity-data-load-stub'
+project(':identity-data-load-stub').projectDir = file('adapter/identity/data-load/stub')

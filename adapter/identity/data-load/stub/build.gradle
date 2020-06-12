@@ -1,0 +1,17 @@
+plugins {
+    id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+}
+
+testSets {
+    integrationTest
+}
+
+dependencies {
+    api project(":use-cases")
+
+    implementation "org.slf4j:slf4j-simple:${slf4jVersion}"
+
+    testImplementation testFixtures(project(":use-cases"))
+
+    testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
+}
