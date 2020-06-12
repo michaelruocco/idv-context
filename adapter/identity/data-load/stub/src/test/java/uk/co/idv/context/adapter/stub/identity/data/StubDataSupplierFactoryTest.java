@@ -1,8 +1,10 @@
 package uk.co.idv.context.adapter.stub.identity.data;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.adapter.stub.identity.data.alias.StubAliasSupplier;
 import uk.co.idv.context.adapter.stub.identity.data.emailaddress.StubEmailAddressSupplier;
 import uk.co.idv.context.adapter.stub.identity.data.phonenumber.StubPhoneNumberSupplier;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.usecases.identity.FindIdentityRequest;
@@ -15,6 +17,15 @@ import static org.assertj.core.api.Assertions.assertThat;
 class StubDataSupplierFactoryTest {
 
     private final StubDataSupplierFactory factory = StubDataSupplierFactory.builder().build();
+
+    @Test
+    void shouldReturnStubbedAliasSupplier() {
+        FindIdentityRequest request = FindIdentityRequestMother.build();
+
+        Supplier<Aliases> supplier = factory.aliasesSupplier(request);
+
+        assertThat(supplier).isInstanceOf(StubAliasSupplier.class);
+    }
 
     @Test
     void shouldReturnStubbedPhoneNumberSupplier() {

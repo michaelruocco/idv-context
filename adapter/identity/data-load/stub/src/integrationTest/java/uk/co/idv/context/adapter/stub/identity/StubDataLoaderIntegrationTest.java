@@ -10,11 +10,15 @@ import uk.co.idv.context.usecases.identity.FindIdentityRequest;
 import uk.co.idv.context.usecases.identity.IdentityFinder;
 import uk.co.idv.context.usecases.identity.FindIdentityRequestMother;
 
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class StubDataLoaderIntegrationTest {
 
-    private final StubIdentityFinderConfig config = StubIdentityFinderConfig.build();
+    private final ExecutorService executor = Executors.newFixedThreadPool(1);
+    private final StubIdentityFinderConfig config = StubIdentityFinderConfig.build(executor);
     private final IdentityFinder finder = new StubIdentityFinder(config);
 
     @Test

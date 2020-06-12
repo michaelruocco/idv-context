@@ -2,6 +2,7 @@ package uk.co.idv.context.adapter.stub.identity;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.adapter.stub.identity.data.Delay;
 import uk.co.idv.context.adapter.stub.identity.data.StubDataSupplierFactory;
 import uk.co.idv.context.usecases.identity.data.AsyncDataLoader;
 import uk.co.idv.context.usecases.identity.data.DataFutures;
@@ -12,6 +13,8 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
@@ -24,11 +27,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StubAsyncDataLoaderIntegrationTest {
 
     private static final Duration TIMEOUT = Duration.ofMillis(1750);
+    private static final Delay PHONE_NUMBER_DELAY = new Delay(500);
+    private static final Delay EMAIL_ADDRESS_DELAY = new Delay(1500);
     private static final int NUMBER_OF_RUNS = 100;
+
+    private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
 
     @Test
     void shouldLoadStubbedData() {
-        StubIdentityFinderConfig config = StubIdentityFinderConfig.build();
+        StubIdentityFinderConfig config = StubIdentityFinderConfig.builder()
+                .executor(EXECUTOR)
+                .phoneNumberDelay(PHONE_NUMBER_DELAY)
+                .emailAddressDelay(EMAIL_ADDRESS_DELAY)
+                .build();
         DataSupplierFactory supplierFactory = toSupplierFactory(config);
         AsyncDataLoader loader = new AsyncDataLoader(config.getExecutor(), supplierFactory);
 
@@ -36,7 +47,7 @@ public class StubAsyncDataLoaderIntegrationTest {
         try {
             loadStubbedData(loader);
         } finally {
-            config.getExecutor().shutdown();
+            EXECUTOR.shutdown();
             Instant end = Instant.now();
             Duration duration = Duration.between(start, end);
             log.info("took {}ms", duration.toMillis());
