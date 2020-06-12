@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class StubDataLoaderIntegrationTest {
+public class StubIdentityFinderIntegrationTest {
 
     private final ExecutorService executor = Executors.newFixedThreadPool(1);
     private final StubIdentityFinderConfig config = StubIdentityFinderConfig.build(executor);
