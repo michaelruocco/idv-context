@@ -7,7 +7,7 @@
 
 ## Todo
 
-*   Implement loading identity on the fly
+*   Add Decorator for identity finder to check if identity exists and then publish identity updated event after loading on the fly
 *   Implement selecting identity loader based on BeginVerificationRequest/PolicyKey
 
 ## Useful commands
