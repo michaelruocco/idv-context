@@ -34,6 +34,7 @@ public class InMemoryIdentityRepository implements IdentityRepository {
         return aliases.stream().map(this::load)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
+                .distinct()
                 .collect(Collectors.toList());
     }
 

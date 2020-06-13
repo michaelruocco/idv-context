@@ -2,7 +2,7 @@ package uk.co.idv.context.usecases.identity.update;
 
 import uk.co.idv.context.entities.identity.Identity;
 
-public interface IdentityUpdate {
+public interface UpdateIdentity {
 
     Identity update(Identity identity);
 

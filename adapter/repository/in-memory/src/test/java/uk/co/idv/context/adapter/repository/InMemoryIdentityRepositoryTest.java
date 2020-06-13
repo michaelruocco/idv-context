@@ -2,6 +2,7 @@ package uk.co.idv.context.adapter.repository;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
 import uk.co.idv.context.entities.alias.DebitCardNumberMother;
@@ -67,6 +68,17 @@ class InMemoryIdentityRepositoryTest {
         Collection<Identity> identities = repository.load(AliasesMother.with(idvId1, idvId2));
 
         assertThat(identities).containsExactly(identity1, identity2);
+    }
+
+    @Test
+    void shouldOnlyReturnUniqueIdentitiesWhenLoadSavedIdentitiesByAliases() {
+        Aliases aliases = AliasesMother.idvIdAndCreditCardNumber();
+        Identity identity = IdentityMother.withAliases(aliases);
+        repository.save(identity);
+
+        Collection<Identity> identities = repository.load(aliases);
+
+        assertThat(identities).containsExactly(identity);
     }
 
 }

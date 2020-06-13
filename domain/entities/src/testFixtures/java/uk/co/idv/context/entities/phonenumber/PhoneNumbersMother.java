@@ -9,6 +9,10 @@ public interface PhoneNumbersMother {
         );
     }
 
+    static PhoneNumbers mobile() {
+        return with(MobilePhoneNumberMother.mobile1());
+    }
+
     static PhoneNumbers empty() {
         return with();
     }

@@ -25,7 +25,7 @@ class InternalFindIdentityTest {
 
     @Test
     void shouldReturnIdentityIfIdentityExists() {
-        Identity expectedIdentity = IdentityMother.build();
+        Identity expectedIdentity = IdentityMother.example();
         FindIdentityRequest request = givenRequestWithAlias(expectedIdentity.getIdvId());
         givenIdentityExists(expectedIdentity);
 

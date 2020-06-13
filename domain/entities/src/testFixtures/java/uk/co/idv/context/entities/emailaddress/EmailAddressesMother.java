@@ -6,6 +6,10 @@ public interface EmailAddressesMother {
         return with();
     }
 
+    static EmailAddresses one() {
+        return with("bugs.bunny@sky.co.uk");
+    }
+
     static EmailAddresses two() {
         return with("joe.bloggs@hotmail.co.uk", "joebloggs@yahoo.co.uk");
     }

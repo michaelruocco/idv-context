@@ -67,12 +67,6 @@ public class Aliases implements Iterable<Alias> {
                 .orElseThrow(IdvIdNotFoundException::new);
     }
 
-    public boolean containsIdvId() {
-        return getAliasesByType(IdvId.TYPE)
-                .findFirst()
-                .isPresent();
-    }
-
     private Stream<Alias> getAliasesByType(String type) {
         return aliases.stream().filter(alias -> alias.isType(type));
     }

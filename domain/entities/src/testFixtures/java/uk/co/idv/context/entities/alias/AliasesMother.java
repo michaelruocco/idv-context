@@ -12,6 +12,10 @@ public interface AliasesMother {
         return with(IdvIdMother.idvId(), CreditCardNumberMother.creditCardNumber());
     }
 
+    static Aliases idvIdAndDebitCardNumber() {
+        return with(IdvIdMother.idvId(), DebitCardNumberMother.debitCardNumber());
+    }
+
     static Aliases with(Alias... aliases) {
         return new Aliases(Arrays.asList(aliases));
     }

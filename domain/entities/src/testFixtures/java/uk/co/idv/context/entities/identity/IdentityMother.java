@@ -13,7 +13,7 @@ import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 public interface IdentityMother {
 
     static Identity withCountry(CountryCode country) {
-        return builder().country(country).build();
+        return exampleBuilder().country(country).build();
     }
 
     static Identity withAliases(Alias... aliases) {
@@ -21,7 +21,7 @@ public interface IdentityMother {
     }
 
     static Identity withAliases(Aliases aliases) {
-        return builder().aliases(aliases).build();
+        return exampleBuilder().aliases(aliases).build();
     }
 
     static Identity withPhoneNumbers(PhoneNumber... phoneNumbers) {
@@ -29,18 +29,26 @@ public interface IdentityMother {
     }
 
     static Identity withPhoneNumbers(PhoneNumbers phoneNumbers) {
-        return builder().phoneNumbers(phoneNumbers).build();
+        return exampleBuilder().phoneNumbers(phoneNumbers).build();
     }
 
     static Identity withEmailAddresses(EmailAddresses emailAddresses) {
-        return builder().emailAddresses(emailAddresses).build();
+        return exampleBuilder().emailAddresses(emailAddresses).build();
     }
 
-    static Identity build() {
-        return builder().build();
+    static Identity example() {
+        return exampleBuilder().build();
     }
 
-    static Identity.IdentityBuilder builder() {
+    static Identity example1() {
+        return exampleBuilder()
+                .aliases(AliasesMother.idvIdAndDebitCardNumber())
+                .phoneNumbers(PhoneNumbersMother.mobile())
+                .emailAddresses(EmailAddressesMother.one())
+                .build();
+    }
+
+    static Identity.IdentityBuilder exampleBuilder() {
         return Identity.builder()
                 .country(CountryCode.GB)
                 .aliases(AliasesMother.idvIdAndCreditCardNumber())

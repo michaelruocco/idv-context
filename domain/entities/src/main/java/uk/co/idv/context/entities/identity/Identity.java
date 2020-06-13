@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 
@@ -20,17 +19,6 @@ public class Identity {
     private final PhoneNumbers phoneNumbers;
     private final EmailAddresses emailAddresses;
 
-    public Identity setIdvId(IdvId idvId) {
-        if (aliases.containsIdvId()) {
-            throw new RuntimeException("identity can only have one idvId");
-        }
-        return Identity.builder()
-                .country(country)
-                .aliases(aliases.add(idvId))
-                .phoneNumbers(phoneNumbers)
-                .emailAddresses(emailAddresses)
-                .build();
-    }
     public UUID getIdvIdValue() {
         return aliases.getIdvIdValue();
     }
