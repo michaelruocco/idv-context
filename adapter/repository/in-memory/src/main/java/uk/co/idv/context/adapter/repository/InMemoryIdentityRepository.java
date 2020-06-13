@@ -29,6 +29,14 @@ public class InMemoryIdentityRepository implements IdentityRepository {
         return Optional.ofNullable(identities.get(key));
     }
 
+    @Override
+    public Collection<Identity> load(Aliases aliases) {
+        return aliases.stream().map(this::load)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toList());
+    }
+
     private void removeDeletedAliasEntries(Identity existing, Identity updated) {
         Aliases aliasesToRemove = existing.getAliasesNotPresent(updated);
         Collection<String> keysToRemove = toKeys(aliasesToRemove);

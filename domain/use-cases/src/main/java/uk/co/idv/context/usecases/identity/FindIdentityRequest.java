@@ -11,13 +11,13 @@ public interface FindIdentityRequest {
 
     Alias getProvidedAlias();
 
-    Aliases getAliases();
-
     Channel getChannel();
 
     CountryCode getCountry();
 
     Duration getDataLoadTimeout();
+
+    Aliases getAliases();
 
     FindIdentityRequest setAliases(Aliases aliases);
 
