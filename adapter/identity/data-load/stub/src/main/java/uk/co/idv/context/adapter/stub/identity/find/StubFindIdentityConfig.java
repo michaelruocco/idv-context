@@ -1,15 +1,17 @@
 package uk.co.idv.context.adapter.stub.identity.find;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import uk.co.idv.context.usecases.identity.find.data.Delay;
 import uk.co.idv.context.usecases.identity.find.data.TimeoutProvider;
 
 import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 
-@Data
 @Builder
+@Data
 public class StubFindIdentityConfig implements TimeoutProvider {
 
     private static final Delay NO_DELAY = new Delay(0);
@@ -18,6 +20,8 @@ public class StubFindIdentityConfig implements TimeoutProvider {
 
     @Builder.Default private final Delay phoneNumberDelay = NO_DELAY;
     @Builder.Default private final Delay emailAddressDelay = NO_DELAY;
+
+    @Getter(AccessLevel.NONE)
     @Builder.Default private final Duration timeout = Duration.ofSeconds(2);
 
     public static StubFindIdentityConfig build(ExecutorService executor) {

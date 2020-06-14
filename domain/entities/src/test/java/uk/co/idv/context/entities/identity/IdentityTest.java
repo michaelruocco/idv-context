@@ -121,13 +121,12 @@ class IdentityTest {
 
     @Test
     void shouldReturnHasIdvAliasFromAliases() {
-        boolean expectedHasIdvId = true;
         Aliases aliases = mock(Aliases.class);
-        given(aliases.hasIdvId()).willReturn(expectedHasIdvId);
+        given(aliases.hasIdvId()).willReturn(true);
 
         boolean hasIdvId = aliases.hasIdvId();
 
-        assertThat(hasIdvId).isEqualTo(expectedHasIdvId);
+        assertThat(hasIdvId).isTrue();
     }
 
     @Test

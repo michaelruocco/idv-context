@@ -1,11 +1,10 @@
-package uk.co.idv.context.usecases.identity.merge;
+package uk.co.idv.context.usecases.identity;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
-import uk.co.idv.context.usecases.identity.MultipleIdentitiesFoundException;
 
 import java.util.Arrays;
 import java.util.Collection;

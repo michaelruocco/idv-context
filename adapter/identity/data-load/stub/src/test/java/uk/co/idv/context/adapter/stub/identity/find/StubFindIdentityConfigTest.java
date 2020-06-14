@@ -3,6 +3,7 @@ package uk.co.idv.context.adapter.stub.identity.find;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.usecases.identity.find.data.Delay;
 
+import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -41,6 +42,15 @@ class StubFindIdentityConfigTest {
     }
 
     @Test
+    void shouldReturn2SecondTimeoutForAllChannelsIfNotSet() {
+        ExecutorService executor = mock(ExecutorService.class);
+
+        StubFindIdentityConfig config = StubFindIdentityConfig.build(executor);
+
+        assertThat(config.getTimeout("any-channel-id")).isEqualTo(Duration.ofSeconds(2));
+    }
+
+    @Test
     void shouldReturnNumberDelay() {
         StubFindIdentityConfig config = StubFindIdentityConfig.builder()
                 .phoneNumberDelay(OTHER_DELAY)
@@ -56,6 +66,17 @@ class StubFindIdentityConfigTest {
                 .build();
 
         assertThat(config.getEmailAddressDelay()).isEqualTo(OTHER_DELAY);
+    }
+
+    @Test
+    void shouldReturnTimeoutForAllChannelsIfSet() {
+        Duration timeout = Duration.ofSeconds(5);
+
+        StubFindIdentityConfig config = StubFindIdentityConfig.builder()
+                .timeout(timeout)
+                .build();
+
+        assertThat(config.getTimeout("any-channel-id")).isEqualTo(timeout);
     }
 
 }

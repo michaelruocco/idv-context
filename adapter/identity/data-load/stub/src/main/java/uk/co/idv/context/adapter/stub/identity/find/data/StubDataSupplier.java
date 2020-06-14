@@ -2,7 +2,7 @@ package uk.co.idv.context.adapter.stub.identity.find.data;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.adapter.stub.identity.find.StubDataLoadPolicy;
 import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequest;
 import uk.co.idv.context.usecases.identity.find.data.Delay;
 
@@ -28,11 +28,7 @@ public class StubDataSupplier<T> implements Supplier<T> {
     }
 
     private boolean shouldReturnStubbedData() {
-        return request.getAliases().stream().noneMatch(this::shouldReturnStubbedData);
-    }
-
-    private boolean shouldReturnStubbedData(Alias alias) {
-        return alias.getValue().endsWith("9");
+        return StubDataLoadPolicy.shouldLoad(request.getAliases());
     }
 
     private T loadStubbedData() {
