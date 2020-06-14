@@ -9,10 +9,9 @@ import uk.co.idv.context.usecases.identity.merge.MergeIdentities;
 import java.util.Collection;
 
 @Builder
-public class DefaultUpdateIdentity implements UpdateIdentity {
+public class ExternalUpdateIdentity implements UpdateIdentity {
 
     private final CreateIdentity create;
-    private final UpdateIdentity update;
     private final MergeIdentities merge;
     private final IdentityRepository repository;
 
@@ -31,10 +30,14 @@ public class DefaultUpdateIdentity implements UpdateIdentity {
             case 0:
                 return create.create(identity);
             case 1:
-                return update.update(identity);
+                return save(identity);
             default:
                 return merge.merge(identity, existingIdentities);
         }
     }
 
+    private Identity save(Identity identity) {
+        repository.save(identity);
+        return identity;
+    }
 }

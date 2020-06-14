@@ -17,7 +17,7 @@ public interface AliasesMother {
     }
 
     static Aliases creditCardNumberOnly() {
-        return with(DebitCardNumberMother.debitCardNumber());
+        return with(CreditCardNumberMother.creditCardNumber());
     }
 
     static Aliases with(Alias... aliases) {

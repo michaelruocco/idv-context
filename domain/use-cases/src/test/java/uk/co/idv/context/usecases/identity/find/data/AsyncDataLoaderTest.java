@@ -5,8 +5,6 @@ import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.context.usecases.identity.FindIdentityRequest;
-import uk.co.idv.context.usecases.identity.FindIdentityRequestMother;
 
 import java.time.Duration;
 import java.util.concurrent.Executor;
@@ -27,7 +25,7 @@ class AsyncDataLoaderTest {
 
     @Test
     void shouldReturnEmptyDataIfSuppliersDoNotCompleteSuccessfully() {
-        FindIdentityRequest request = FindIdentityRequestMother.withDataLoadTimeout(TIMEOUT);
+        AsyncDataLoadRequest request = AsyncDataLoadRequestMother.withTimeout(TIMEOUT);
         given(supplierFactory.phoneNumberSupplier(request)).willReturn(new FailingSupplier<>());
         given(supplierFactory.emailAddressSupplier(request)).willReturn(new FailingSupplier<>());
 
@@ -39,7 +37,7 @@ class AsyncDataLoaderTest {
 
     @Test
     void shouldReturnEmptyDataIfSuppliersDoNotCompleteWithinTimeout() {
-        FindIdentityRequest request = FindIdentityRequestMother.withDataLoadTimeout(TIMEOUT);
+        AsyncDataLoadRequest request = AsyncDataLoadRequestMother.withTimeout(TIMEOUT);
         Duration delayDuration = TIMEOUT.plusMillis(150);
         given(supplierFactory.phoneNumberSupplier(request)).willReturn(new DelayedSupplier<>(delayDuration, PhoneNumbersMother.mobileAndOther()));
         given(supplierFactory.emailAddressSupplier(request)).willReturn(new DelayedSupplier<>(delayDuration, EmailAddressesMother.one()));
@@ -52,7 +50,7 @@ class AsyncDataLoaderTest {
 
     @Test
     void shouldReturnDataIfSuppliersCompleteSuccessfully() {
-        FindIdentityRequest request = FindIdentityRequestMother.withDataLoadTimeout(TIMEOUT);
+        AsyncDataLoadRequest request = AsyncDataLoadRequestMother.withTimeout(TIMEOUT);
         PhoneNumbers expectedPhoneNumbers = PhoneNumbersMother.mobileAndOther();
         EmailAddresses expectedEmailAddresses = EmailAddressesMother.two();
         given(supplierFactory.phoneNumberSupplier(request)).willReturn(new SuccessfulSupplier<>(expectedPhoneNumbers));

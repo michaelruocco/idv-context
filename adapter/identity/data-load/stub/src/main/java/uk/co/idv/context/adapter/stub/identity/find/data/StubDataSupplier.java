@@ -2,7 +2,8 @@ package uk.co.idv.context.adapter.stub.identity.find.data;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.usecases.identity.FindIdentityRequest;
+import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequest;
 import uk.co.idv.context.usecases.identity.find.data.Delay;
 
 import java.time.Instant;
@@ -14,7 +15,7 @@ import static uk.co.idv.context.usecases.identity.find.data.DurationCalculator.m
 @Slf4j
 public class StubDataSupplier<T> implements Supplier<T> {
 
-    private final FindIdentityRequest request;
+    private final AsyncDataLoadRequest request;
     private final Delay delay;
     private final StubDataFactory<T> factory;
 
@@ -27,7 +28,11 @@ public class StubDataSupplier<T> implements Supplier<T> {
     }
 
     private boolean shouldReturnStubbedData() {
-        return !request.getProvidedAlias().getValue().endsWith("9");
+        return request.getAliases().stream().noneMatch(this::shouldReturnStubbedData);
+    }
+
+    private boolean shouldReturnStubbedData(Alias alias) {
+        return alias.getValue().endsWith("9");
     }
 
     private T loadStubbedData() {

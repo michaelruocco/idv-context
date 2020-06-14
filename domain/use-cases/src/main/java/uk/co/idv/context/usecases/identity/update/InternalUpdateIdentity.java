@@ -1,11 +1,11 @@
 package uk.co.idv.context.usecases.identity.update;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 
-@RequiredArgsConstructor
-public class SimpleUpdateIdentity implements UpdateIdentity {
+@Builder
+public class InternalUpdateIdentity implements UpdateIdentity {
 
     private final IdentityRepository repository;
 

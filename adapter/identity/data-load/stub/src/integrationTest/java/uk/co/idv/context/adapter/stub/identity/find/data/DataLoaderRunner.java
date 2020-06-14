@@ -2,9 +2,8 @@ package uk.co.idv.context.adapter.stub.identity.find.data;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.entities.alias.CreditCardNumberMother;
-import uk.co.idv.context.usecases.identity.DefaultFindIdentityRequest;
-import uk.co.idv.context.usecases.identity.FindIdentityRequest;
+import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequest;
+import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequestMother;
 import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoader;
 import uk.co.idv.context.usecases.identity.find.data.DataFutures;
 
@@ -25,17 +24,16 @@ public class DataLoaderRunner implements Supplier<DataFutures> {
     @Override
     public DataFutures get() {
         Instant start = Instant.now();
-        FindIdentityRequest request = buildRequest(timeout);
+        AsyncDataLoadRequest request = buildRequest(timeout);
         DataFutures futures = loader.loadData(request);
         Instant end = Instant.now();
         log.info("{} took {}ms", i, millisBetween(start, end));
         return futures;
     }
 
-    private static FindIdentityRequest buildRequest(Duration timeout) {
-        return DefaultFindIdentityRequest.builder()
-                .providedAlias(CreditCardNumberMother.creditCardNumber())
-                .dataLoadTimeout(timeout)
+    private static AsyncDataLoadRequest buildRequest(Duration timeout) {
+        return AsyncDataLoadRequestMother.builder()
+                .timeout(timeout)
                 .build();
     }
 

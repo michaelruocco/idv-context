@@ -23,15 +23,6 @@ class StubFindIdentityConfigTest {
     }
 
     @Test
-    void shouldReturnNoAliasDelayIfNotSet() {
-        ExecutorService executor = mock(ExecutorService.class);
-
-        StubFindIdentityConfig config = StubFindIdentityConfig.build(executor);
-
-        assertThat(config.getAliasDelay()).isEqualTo(NO_DELAY);
-    }
-
-    @Test
     void shouldReturnNoPhoneNumberDelayIfNotSet() {
         ExecutorService executor = mock(ExecutorService.class);
 
@@ -47,15 +38,6 @@ class StubFindIdentityConfigTest {
         StubFindIdentityConfig config = StubFindIdentityConfig.build(executor);
 
         assertThat(config.getEmailAddressDelay()).isEqualTo(NO_DELAY);
-    }
-
-    @Test
-    void shouldReturnAliasDelay() {
-        StubFindIdentityConfig config = StubFindIdentityConfig.builder()
-                .aliasDelay(OTHER_DELAY)
-                .build();
-
-        assertThat(config.getAliasDelay()).isEqualTo(OTHER_DELAY);
     }
 
     @Test

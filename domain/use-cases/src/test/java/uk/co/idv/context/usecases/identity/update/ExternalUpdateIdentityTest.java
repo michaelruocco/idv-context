@@ -12,20 +12,19 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class DefaultUpdateIdentityTest {
+class ExternalUpdateIdentityTest {
 
     private final CreateIdentity create = mock(CreateIdentity.class);
-    private final UpdateIdentity update = mock(UpdateIdentity.class);
     private final MergeIdentities merge = mock(MergeIdentities.class);
     private final IdentityRepository repository = mock(IdentityRepository.class);
 
-    private final UpdateIdentity externalUpdate = DefaultUpdateIdentity.builder()
+    private final UpdateIdentity update = ExternalUpdateIdentity.builder()
             .create(create)
-            .update(update)
             .merge(merge)
             .repository(repository)
             .build();
@@ -34,30 +33,35 @@ class DefaultUpdateIdentityTest {
     void shouldCreateIdentityIfNoExistingIdentities() {
         Identity identity = IdentityMother.example();
         givenNoExistingIdentities(identity.getAliases());
+        Identity expected = IdentityMother.example1();
+        given(create.create(identity)).willReturn(expected);
 
-        externalUpdate.update(identity);
+        Identity created = update.update(identity);
 
-        verify(create).create(identity);
+        assertThat(created).isEqualTo(expected);
     }
 
     @Test
     void shouldUpdateIdentityIfOneExistingIdentity() {
-        Identity updated = IdentityMother.example();
-        givenOneExistingIdentity(updated.getAliases());
+        Identity identity = IdentityMother.example();
+        givenOneExistingIdentity(identity.getAliases());
 
-        externalUpdate.update(updated);
+        Identity updated = update.update(identity);
 
-        verify(update).update(updated);
+        assertThat(updated).isEqualTo(identity);
+        verify(repository).save(identity);
     }
 
     @Test
     void shouldMergeWithAllExistingIdentitiesIfMoreThanOneExistingIdentity() {
-        Identity updated = IdentityMother.example();
-        Collection<Identity> existing = givenMoreThanOneExistingIdentity(updated.getAliases());
+        Identity identity = IdentityMother.example();
+        Collection<Identity> existing = givenMoreThanOneExistingIdentity(identity.getAliases());
+        Identity expected = IdentityMother.example1();
+        given(merge.merge(identity, existing)).willReturn(expected);
 
-        externalUpdate.update(updated);
+        Identity merged = update.update(identity);
 
-        verify(merge).merge(updated, existing);
+        assertThat(merged).isEqualTo(expected);
     }
 
     private void givenNoExistingIdentities(Aliases aliases) {

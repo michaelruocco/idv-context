@@ -1,8 +1,11 @@
 package uk.co.idv.context.usecases.identity.merge;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
+import uk.co.idv.context.usecases.identity.MultipleIdentitiesFoundException;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,13 +14,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MultipleIdentitiesFoundExceptionTest {
 
-    private final Identity identity = IdentityMother.withoutIdvId();
+    private final Aliases aliases = AliasesMother.idvIdAndDebitCardNumber();
     private final Collection<Identity> existingIdentities = Arrays.asList(
             IdentityMother.example(),
             IdentityMother.example1()
     );
 
-    private final MultipleIdentitiesFoundException error = new MultipleIdentitiesFoundException(identity, existingIdentities);
+    private final MultipleIdentitiesFoundException error = new MultipleIdentitiesFoundException(aliases, existingIdentities);
 
     @Test
     void shouldReturnMessage() {
@@ -25,8 +28,8 @@ class MultipleIdentitiesFoundExceptionTest {
     }
 
     @Test
-    void shouldReturnIdentity() {
-        assertThat(error.getIdentity()).isEqualTo(identity);
+    void shouldReturnAliases() {
+        assertThat(error.getAliases()).isEqualTo(aliases);
     }
 
     @Test

@@ -1,6 +1,7 @@
-package uk.co.idv.context.usecases.identity.merge;
+package uk.co.idv.context.usecases.identity;
 
 import lombok.Getter;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.identity.Identity;
 
 import java.util.Collection;
@@ -8,12 +9,12 @@ import java.util.Collection;
 @Getter
 public class MultipleIdentitiesFoundException extends RuntimeException {
 
-    private final Identity identity;
+    private final Aliases aliases;
     private final Collection<Identity> existingIdentities;
 
-    public MultipleIdentitiesFoundException(Identity identity, Collection<Identity> existingIdentities) {
+    public MultipleIdentitiesFoundException(Aliases aliases, Collection<Identity> existingIdentities) {
         super("multiple identities found");
-        this.identity = identity;
+        this.aliases = aliases;
         this.existingIdentities = existingIdentities;
     }
 

@@ -67,7 +67,6 @@ public class StubAsyncDataLoaderIntegrationTest {
 
     public static DataSupplierFactory toSupplierFactory(StubFindIdentityConfig config) {
         return StubDataSupplierFactory.builder()
-                .aliasDelay(config.getAliasDelay())
                 .phoneNumberDelay(config.getPhoneNumberDelay())
                 .emailAddressDelay(config.getEmailAddressDelay())
                 .build();

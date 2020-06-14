@@ -1,16 +1,14 @@
 package uk.co.idv.context.usecases.identity;
 
-import com.neovisionaries.i18n.CountryCode;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.channel.Channel;
+import uk.co.idv.context.entities.identity.Identity;
 
-public interface FindIdentityRequest {
+public interface UpsertIdentityRequest {
 
-    String getChannelId();
+    Identity getIdentity();
 
     Channel getChannel();
-
-    CountryCode getCountry();
 
     Aliases getAliases();
 

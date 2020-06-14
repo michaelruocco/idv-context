@@ -8,11 +8,13 @@ import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 @Builder
 public class ExternalIdentityService implements IdentityService {
 
+    private final UpsertIdentityRequestConverter converter;
     private final FindIdentity find;
     private final UpdateIdentity update;
 
-    public Identity find(FindIdentityRequest request) {
-        Identity identity = find.find(request);
+    public Identity upsert(UpsertIdentityRequest upsertRequest) {
+        FindIdentityRequest findRequest = converter.toFindRequest(upsertRequest);
+        Identity identity = find.find(findRequest);
         return update.update(identity);
     }
 

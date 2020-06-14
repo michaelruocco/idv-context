@@ -37,8 +37,7 @@ public class StubFindIdentityIntegrationTest {
         Identity identity = finder.find(request);
 
         Aliases expectedAliases = AliasesMother.idvIdAndCreditCardNumber();
-
-        assertThat(identity.getAliases()).isEqualTo(expectedAliases.add(request.getProvidedAlias()));
+        assertThat(identity.getAliases()).isEqualTo(expectedAliases.add(request.getAliases()));
     }
 
     @Test
