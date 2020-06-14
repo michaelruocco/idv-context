@@ -7,8 +7,9 @@
 
 ## Todo
 
-*   Add Decorator for identity finder to check if identity exists and then publish identity updated event after loading on the fly
-*   Implement selecting identity loader based on BeginVerificationRequest/PolicyKey
+*   Implement selecting identity loader based on Channel
+*   Add manual application and corresponding config module
+*   Write "end to end" integration test for identity upsert
 
 ## Useful commands
 
