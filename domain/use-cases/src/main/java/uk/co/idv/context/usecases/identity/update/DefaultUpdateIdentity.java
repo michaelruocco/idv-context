@@ -9,7 +9,7 @@ import uk.co.idv.context.usecases.identity.merge.MergeIdentities;
 import java.util.Collection;
 
 @Builder
-public class ExternalUpdateIdentity implements UpdateIdentity {
+public class DefaultUpdateIdentity implements UpdateIdentity {
 
     private final CreateIdentity create;
     private final UpdateIdentity update;
