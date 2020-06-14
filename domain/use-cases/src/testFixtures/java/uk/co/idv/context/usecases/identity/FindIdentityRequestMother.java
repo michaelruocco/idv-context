@@ -23,6 +23,10 @@ public interface FindIdentityRequestMother {
         return builder().channel(channel).build();
     }
 
+    static FindIdentityRequest withDataLoadTimeout(Duration timeout) {
+        return builder().dataLoadTimeout(timeout).build();
+    }
+
     static FindIdentityRequest build() {
         return builder().build();
     }

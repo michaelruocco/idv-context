@@ -8,22 +8,21 @@ import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 
 import java.util.concurrent.CompletableFuture;
 
+import static java.util.concurrent.CompletableFuture.completedFuture;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 class DataFuturesTest {
 
-    private final CompletableFuture<PhoneNumbers> phoneNumbersFuture = mock(CompletableFuture.class);
-    private final CompletableFuture<EmailAddresses> emailAddressesFuture = mock(CompletableFuture.class);
-
-    private final DataFutures futures = DataFutures.builder()
-            .phoneNumbers(phoneNumbersFuture)
-            .emailAddresses(emailAddressesFuture)
-            .build();
-
     @Test
     void shouldReturnCompletableFuturesToArray() {
+        CompletableFuture<PhoneNumbers> phoneNumbersFuture = completedFuture(PhoneNumbersMother.mobileAndOther());
+        CompletableFuture<EmailAddresses> emailAddressesFuture = completedFuture(EmailAddressesMother.two());
+
+        DataFutures futures = DataFutures.builder()
+                .phoneNumbers(phoneNumbersFuture)
+                .emailAddresses(emailAddressesFuture)
+                .build();
+
         assertThat(futures.toArray()).containsExactly(
                 phoneNumbersFuture,
                 emailAddressesFuture
@@ -31,23 +30,25 @@ class DataFuturesTest {
     }
 
     @Test
-    void shouldPassEmptyDataAsDefaultOnGetPhoneNumbersNow() {
-        PhoneNumbers expectedNumbers = PhoneNumbersMother.mobileAndOther();
-        given(phoneNumbersFuture.getNow(PhoneNumbersMother.empty())).willReturn(expectedNumbers);
+    void shouldReturnEmptyDataIfPhoneNumbersFutureFailed() {
+        CompletableFuture<PhoneNumbers> future = CompletableFuture.failedFuture(new Exception());
 
-        PhoneNumbers numbers = futures.getPhoneNumbersNow();
+        DataFutures futures = DataFutures.builder()
+                .phoneNumbers(future)
+                .build();
 
-        assertThat(numbers).isEqualTo(expectedNumbers);
+        assertThat(futures.getPhoneNumbersNow()).isEqualTo(PhoneNumbersMother.empty());
     }
 
     @Test
-    void shouldPassEmptyDataAsDefaultOnGetEmailAddressesNow() {
-        EmailAddresses expectedAddresses = EmailAddressesMother.two();
-        given(emailAddressesFuture.getNow(EmailAddressesMother.empty())).willReturn(expectedAddresses);
+    void shouldReturnEmptyDataIfEmailAddressFutureFailed() {
+        CompletableFuture<EmailAddresses> future = CompletableFuture.failedFuture(new Exception());
 
-        EmailAddresses addresses = futures.getEmailAddressesNow();
+        DataFutures futures = DataFutures.builder()
+                .emailAddresses(future)
+                .build();
 
-        assertThat(addresses).isEqualTo(expectedAddresses);
+        assertThat(futures.getEmailAddressesNow()).isEqualTo(EmailAddressesMother.empty());
     }
 
 }

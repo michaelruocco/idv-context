@@ -5,7 +5,8 @@ plugins {
 dependencies {
     api project(":entities")
 
-    implementation "org.slf4j:slf4j-simple:${slf4jVersion}"
-
     testFixturesApi testFixtures(project(":entities"))
+    testFixturesImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
