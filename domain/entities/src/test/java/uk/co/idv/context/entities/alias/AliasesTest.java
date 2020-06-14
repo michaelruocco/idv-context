@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 class AliasesTest {
 
@@ -92,6 +93,24 @@ class AliasesTest {
     }
 
     @Test
+    void shouldReturnTrueIfContainsIdvIdAlias() {
+        Alias idvId = IdvIdMother.idvId();
+
+        Aliases aliases = AliasesMother.with(idvId);
+
+        assertThat(aliases.hasIdvId()).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfDoesNotContainIdvIdAlias() {
+        Alias alias = CreditCardNumberMother.creditCardNumber();
+
+        Aliases aliases = AliasesMother.with(alias);
+
+        assertThat(aliases.hasIdvId()).isFalse();
+    }
+
+    @Test
     void shouldAddAlias() {
         Alias idvId = IdvIdMother.idvId();
         Aliases aliases = AliasesMother.with(idvId);
@@ -112,6 +131,20 @@ class AliasesTest {
         Aliases addedAliases = aliases.add(aliasesToAdd);
 
         assertThat(addedAliases).containsExactly(idvId, creditCardNumber);
+    }
+
+    @Test
+    void shouldThrowExceptionIfIdvIdAliasAddedWhenOneIsAlreadyPresent() {
+        Alias existingIdvId = IdvIdMother.withValue("16d333b4-e339-46ad-b554-7de646b29f03");
+        Aliases aliases = AliasesMother.with(existingIdvId);
+
+        Alias idvId = IdvIdMother.withValue("16d333b4-e339-46ad-b554-7de646b29f03");
+        IdvIdAlreadyPresentException error = catchThrowableOfType(
+                () -> aliases.add(idvId),
+                IdvIdAlreadyPresentException.class
+        );
+        assertThat(error.getExistingIdvId()).isEqualTo(existingIdvId);
+        assertThat(error.getIdvIdToAdd()).isEqualTo(idvId);
     }
 
     @Test
@@ -136,12 +169,12 @@ class AliasesTest {
 
     @Test
     void shouldNotAddDuplicateAliases() {
-        Alias idvId = IdvIdMother.idvId();
-        Aliases aliases = AliasesMother.with(idvId);
+        Alias alias = CreditCardNumberMother.creditCardNumber();
+        Aliases aliases = AliasesMother.with(alias);
 
-        aliases.add(idvId);
+        aliases.add(alias);
 
-        assertThat(aliases).containsExactly(idvId);
+        assertThat(aliases).containsExactly(alias);
     }
 
 }

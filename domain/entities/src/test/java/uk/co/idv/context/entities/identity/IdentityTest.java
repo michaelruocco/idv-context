@@ -119,4 +119,29 @@ class IdentityTest {
         assertThat(notPresent).isEqualTo(expectedAliases);
     }
 
+    @Test
+    void shouldReturnHasIdvAliasFromAliases() {
+        boolean expectedHasIdvId = true;
+        Aliases aliases = mock(Aliases.class);
+        given(aliases.hasIdvId()).willReturn(expectedHasIdvId);
+
+        boolean hasIdvId = aliases.hasIdvId();
+
+        assertThat(hasIdvId).isEqualTo(expectedHasIdvId);
+    }
+
+    @Test
+    void shouldCopyAllOtherAttributesWhenSettingIdvIdAlias() {
+        Aliases aliases = mock(Aliases.class);
+        Identity identity = IdentityMother.withAliases(aliases);
+        IdvId idvId = IdvIdMother.idvId();
+        Aliases updatedAliases = mock(Aliases.class);
+        given(aliases.add(idvId)).willReturn(updatedAliases);
+
+        Identity updatedIdentity = identity.setIdvId(idvId);
+
+        assertThat(updatedIdentity).isEqualToIgnoringGivenFields(updatedIdentity, "aliases");
+        assertThat(updatedIdentity.getAliases()).isEqualTo(updatedAliases);
+    }
+
 }

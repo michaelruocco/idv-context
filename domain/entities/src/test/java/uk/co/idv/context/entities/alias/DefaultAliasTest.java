@@ -43,6 +43,24 @@ class DefaultAliasTest {
     }
 
     @Test
+    void shouldReturnTrueIfTypeIsIdvId() {
+        String type = "idv-id";
+
+        Alias alias = DefaultAliasMother.withType(type);
+
+        assertThat(alias.isIdvId()).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfTypeIsNotIdvId() {
+        String type = "other-type";
+
+        Alias alias = DefaultAliasMother.withType(type);
+
+        assertThat(alias.isIdvId()).isFalse();
+    }
+
+    @Test
     void isNotCardNumber() {
         Alias alias = DefaultAliasMother.build();
 

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -45,6 +46,9 @@ public class Aliases implements Iterable<Alias> {
     }
 
     public Aliases add(Alias alias) {
+        if (alias.isIdvId() && hasIdvId()) {
+            throw new IdvIdAlreadyPresentException(alias, getIdvId());
+        }
         return add(new Aliases(alias));
     }
 
@@ -61,10 +65,17 @@ public class Aliases implements Iterable<Alias> {
     }
 
     public IdvId getIdvId() {
-        return getAliasesByType(IdvId.TYPE)
-                .findFirst()
+        return getAliasByType(IdvId.TYPE)
                 .map(alias -> (IdvId) alias)
                 .orElseThrow(IdvIdNotFoundException::new);
+    }
+
+    public boolean hasIdvId() {
+        return getAliasByType(IdvId.TYPE).isPresent();
+    }
+
+    private Optional<Alias> getAliasByType(String type) {
+        return getAliasesByType(type).findFirst();
     }
 
     private Stream<Alias> getAliasesByType(String type) {

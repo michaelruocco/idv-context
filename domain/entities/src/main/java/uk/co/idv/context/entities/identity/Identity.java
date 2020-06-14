@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 
@@ -37,6 +38,19 @@ public class Identity {
 
     public Aliases getAliasesNotPresent(Identity other) {
         return aliases.notPresent(other.getAliases());
+    }
+
+    public boolean hasIdvId() {
+        return aliases.hasIdvId();
+    }
+
+    public Identity setIdvId(IdvId idvId) {
+        return Identity.builder()
+                .aliases(aliases.add(idvId))
+                .country(country)
+                .phoneNumbers(phoneNumbers)
+                .emailAddresses(emailAddresses)
+                .build();
     }
 
 }

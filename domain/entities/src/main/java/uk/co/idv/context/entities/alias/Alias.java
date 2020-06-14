@@ -8,6 +8,10 @@ public interface Alias {
 
     boolean isCardNumber();
 
+    default boolean isIdvId() {
+        return isType(IdvId.TYPE);
+    }
+
     default boolean isType(String type) {
         return getType().equals(type);
     }

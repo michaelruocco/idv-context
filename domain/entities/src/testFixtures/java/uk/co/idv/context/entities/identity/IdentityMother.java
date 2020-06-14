@@ -40,6 +40,12 @@ public interface IdentityMother {
         return exampleBuilder().build();
     }
 
+    static Identity withoutIdvId() {
+        return exampleBuilder()
+                .aliases(AliasesMother.creditCardNumberOnly())
+                .build();
+    }
+
     static Identity example1() {
         return exampleBuilder()
                 .aliases(AliasesMother.idvIdAndDebitCardNumber())

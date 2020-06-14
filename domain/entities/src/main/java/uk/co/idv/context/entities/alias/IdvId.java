@@ -42,4 +42,8 @@ public class IdvId implements Alias {
         return alias.isType(TYPE);
     }
 
+    public static IdvId random() {
+        return new IdvId(UUID.randomUUID());
+    }
+
 }
