@@ -9,7 +9,6 @@ import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 class ExternalIdentityServiceTest {
 
@@ -32,15 +31,6 @@ class ExternalIdentityServiceTest {
         Identity identity = service.find(request);
 
         assertThat(identity).isEqualTo(updatedIdentity);
-    }
-
-    @Test
-    void shouldUpdateIdentity() {
-        Identity identity = IdentityMother.example();
-
-        service.update(identity);
-
-        verify(update).update(identity);
     }
 
 }

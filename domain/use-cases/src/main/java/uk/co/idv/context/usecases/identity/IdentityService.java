@@ -6,6 +6,4 @@ public interface IdentityService {
 
     Identity find(FindIdentityRequest request);
 
-    void update(Identity identity);
-
 }

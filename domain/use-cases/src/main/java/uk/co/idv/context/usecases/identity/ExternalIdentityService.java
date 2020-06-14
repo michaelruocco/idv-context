@@ -13,15 +13,6 @@ public class ExternalIdentityService implements IdentityService {
 
     public Identity find(FindIdentityRequest request) {
         Identity identity = find.find(request);
-        return updateAgainstExistingIdentities(identity);
-    }
-
-    @Override
-    public void update(Identity identity) {
-        updateAgainstExistingIdentities(identity);
-    }
-
-    private Identity updateAgainstExistingIdentities(Identity identity) {
         return update.update(identity);
     }
 
