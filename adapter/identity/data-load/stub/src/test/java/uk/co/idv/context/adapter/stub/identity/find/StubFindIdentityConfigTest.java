@@ -1,7 +1,7 @@
 package uk.co.idv.context.adapter.stub.identity.find;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.adapter.stub.identity.find.data.Delay;
+import uk.co.idv.context.usecases.identity.find.data.Delay;
 
 import java.util.concurrent.ExecutorService;
 

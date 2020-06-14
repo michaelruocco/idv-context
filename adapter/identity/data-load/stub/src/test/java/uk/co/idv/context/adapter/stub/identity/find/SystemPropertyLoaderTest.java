@@ -3,7 +3,7 @@ package uk.co.idv.context.adapter.stub.identity.find;
 import org.junit.jupiter.api.Test;
 import org.junitpioneer.jupiter.ClearSystemProperty;
 import org.junitpioneer.jupiter.SetSystemProperty;
-import uk.co.idv.context.adapter.stub.identity.find.data.Delay;
+import uk.co.idv.context.usecases.identity.find.data.Delay;
 
 import java.time.Duration;
 
