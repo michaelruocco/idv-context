@@ -6,6 +6,6 @@ import java.util.Collection;
 
 public interface MergeIdentities {
 
-    Identity merge(Identity identity, Collection<Identity> identities);
+    Identity merge(Identity identity, Collection<Identity> existingIdentities);
 
 }
