@@ -83,7 +83,7 @@ public class StubAsyncDataLoaderIntegrationTest {
         try {
             return future.get(TIMEOUT.plusSeconds(30).toMillis(), TimeUnit.MILLISECONDS);
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
-            throw new RuntimeException(e);
+            throw new AsyncResultsException(e);
         }
     }
 
