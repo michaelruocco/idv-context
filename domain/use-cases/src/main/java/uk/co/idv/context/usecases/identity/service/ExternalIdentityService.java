@@ -13,7 +13,9 @@ import uk.co.idv.context.usecases.identity.service.update.UpdateIdentity;
 @Builder
 public class ExternalIdentityService implements IdentityService {
 
-    private final UpdateIdentityRequestConverter converter;
+    @Builder.Default
+    private final UpdateIdentityRequestConverter converter = new UpdateIdentityRequestConverter();
+
     private final ExternalFindIdentity externalFind;
     private final InternalFindIdentity internalFind;
     private final UpdateIdentity update;

@@ -9,7 +9,8 @@ import uk.co.idv.context.usecases.identity.IdentityRepository;
 @Slf4j
 public class CreateIdentity {
 
-    private final RandomIdvIdGenerator idGenerator;
+    @Builder.Default
+    private final RandomIdvIdGenerator idGenerator = new RandomIdvIdGenerator();
     private final IdentityRepository repository;
 
     public Identity create(Identity identity) {
