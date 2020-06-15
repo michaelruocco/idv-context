@@ -8,8 +8,6 @@
 ## Todo
 
 *   Implement selecting identity loader based on Channel
-*   Add manual application and corresponding config module
-*   Write "end to end" integration test for identity upsert
 
 ## Useful commands
 

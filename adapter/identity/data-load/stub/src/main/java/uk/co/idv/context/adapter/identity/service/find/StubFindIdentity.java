@@ -9,6 +9,10 @@ import uk.co.idv.context.usecases.identity.service.find.data.FindIdentityRequest
 
 public class StubFindIdentity {
 
+    private StubFindIdentity() {
+        // factory method only
+    }
+
     public static ExternalFindIdentity build(StubFindIdentityConfig config) {
         return ExternalFindIdentity.builder()
                 .converter(new FindIdentityRequestConverter(config))
