@@ -4,8 +4,6 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import uk.co.idv.context.usecases.identity.ExternalFindSupplier;
-import uk.co.idv.context.usecases.identity.service.find.ExternalFindIdentity;
 import uk.co.idv.context.usecases.identity.service.find.data.Delay;
 import uk.co.idv.context.usecases.identity.service.find.data.TimeoutProvider;
 
@@ -14,7 +12,7 @@ import java.util.concurrent.ExecutorService;
 
 @Builder
 @Data
-public class StubFindIdentityConfig implements TimeoutProvider, ExternalFindSupplier {
+public class StubFindIdentityConfig implements TimeoutProvider {
 
     private static final Delay NO_DELAY = new Delay(0);
 
@@ -35,11 +33,6 @@ public class StubFindIdentityConfig implements TimeoutProvider, ExternalFindSupp
     @Override
     public Duration getTimeout(String channelId) {
         return timeout;
-    }
-
-    @Override
-    public ExternalFindIdentity get() {
-        return new StubFindIdentity(this);
     }
 
 }

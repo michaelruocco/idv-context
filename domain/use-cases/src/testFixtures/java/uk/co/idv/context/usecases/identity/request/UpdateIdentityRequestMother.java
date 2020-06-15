@@ -4,7 +4,7 @@ import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
-import uk.co.idv.context.usecases.identity.UpdateIdentityRequest;
+import uk.co.idv.context.usecases.identity.service.update.UpdateIdentityRequest;
 import uk.co.idv.context.usecases.identity.request.DefaultUpdateIdentityRequest.DefaultUpdateIdentityRequestBuilder;
 
 public interface UpdateIdentityRequestMother {

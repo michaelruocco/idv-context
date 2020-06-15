@@ -1,0 +1,16 @@
+plugins {
+    id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+}
+
+testSets {
+    integrationTest
+}
+
+dependencies {
+    implementation project(":manual-config")
+
+    integrationTestImplementation project(":identity-data-load-stub")
+    integrationTestImplementation project(":in-memory-repository")
+    integrationTestImplementation testFixtures(project(":use-cases"))
+
+}

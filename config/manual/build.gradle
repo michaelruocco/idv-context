@@ -1,0 +1,6 @@
+dependencies {
+    api project(":use-cases")
+
+    implementation project(":in-memory-repository")
+    implementation project(":identity-data-load-stub")
+}

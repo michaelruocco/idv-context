@@ -2,7 +2,7 @@ package uk.co.idv.context.usecases.identity.service;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.usecases.identity.request.ExternalFindIdentityRequest;
-import uk.co.idv.context.usecases.identity.UpdateIdentityRequest;
+import uk.co.idv.context.usecases.identity.service.update.UpdateIdentityRequest;
 
 @RequiredArgsConstructor
 public class UpdateIdentityRequestConverter {

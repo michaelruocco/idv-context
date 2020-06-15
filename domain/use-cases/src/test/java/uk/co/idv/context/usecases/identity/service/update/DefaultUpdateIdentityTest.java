@@ -5,6 +5,7 @@ import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
+import uk.co.idv.context.usecases.identity.request.UpdateIdentityRequestMother;
 import uk.co.idv.context.usecases.identity.service.create.CreateIdentity;
 import uk.co.idv.context.usecases.identity.service.merge.MergeIdentities;
 
@@ -23,7 +24,7 @@ class DefaultUpdateIdentityTest {
     private final MergeIdentities merge = mock(MergeIdentities.class);
     private final IdentityRepository repository = mock(IdentityRepository.class);
 
-    private final UpdateIdentity update = UpdateIdentity.builder()
+    private final UpdateIdentity update = DefaultUpdateIdentity.builder()
             .create(create)
             .merge(merge)
             .repository(repository)
@@ -32,11 +33,12 @@ class DefaultUpdateIdentityTest {
     @Test
     void shouldCreateIdentityIfNoExistingIdentities() {
         Identity identity = IdentityMother.example();
+        UpdateIdentityRequest request = UpdateIdentityRequestMother.withIdentity(identity);
         givenNoExistingIdentities(identity.getAliases());
         Identity expected = IdentityMother.example1();
         given(create.create(identity)).willReturn(expected);
 
-        Identity created = update.update(identity);
+        Identity created = update.update(request);
 
         assertThat(created).isEqualTo(expected);
     }
@@ -44,9 +46,10 @@ class DefaultUpdateIdentityTest {
     @Test
     void shouldUpdateIdentityIfOneExistingIdentity() {
         Identity identity = IdentityMother.example();
+        UpdateIdentityRequest request = UpdateIdentityRequestMother.withIdentity(identity);
         givenOneExistingIdentity(identity.getAliases());
 
-        Identity updated = update.update(identity);
+        Identity updated = update.update(request);
 
         assertThat(updated).isEqualTo(identity);
         verify(repository).save(identity);
@@ -55,11 +58,12 @@ class DefaultUpdateIdentityTest {
     @Test
     void shouldMergeWithAllExistingIdentitiesIfMoreThanOneExistingIdentity() {
         Identity identity = IdentityMother.example();
+        UpdateIdentityRequest request = UpdateIdentityRequestMother.withIdentity(identity);
         Collection<Identity> existing = givenMoreThanOneExistingIdentity(identity.getAliases());
         Identity expected = IdentityMother.example1();
         given(merge.merge(identity, existing)).willReturn(expected);
 
-        Identity merged = update.update(identity);
+        Identity merged = update.update(request);
 
         assertThat(merged).isEqualTo(expected);
     }

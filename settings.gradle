@@ -11,3 +11,9 @@ project(':in-memory-repository').projectDir = file('adapter/repository/in-memory
 
 include ':identity-data-load-stub'
 project(':identity-data-load-stub').projectDir = file('adapter/identity/data-load/stub')
+
+include ':manual-config'
+project(':manual-config').projectDir = file('config/manual')
+
+include ':manual-app'
+project(':manual-app').projectDir = file('app/manual')

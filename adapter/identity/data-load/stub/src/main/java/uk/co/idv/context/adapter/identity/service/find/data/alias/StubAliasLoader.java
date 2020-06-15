@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.adapter.identity.service.find.StubDataLoadPolicy;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
-import uk.co.idv.context.usecases.identity.FindIdentityRequest;
+import uk.co.idv.context.usecases.identity.service.find.FindIdentityRequest;
 import uk.co.idv.context.usecases.identity.service.find.data.AliasLoader;
 
 @Slf4j

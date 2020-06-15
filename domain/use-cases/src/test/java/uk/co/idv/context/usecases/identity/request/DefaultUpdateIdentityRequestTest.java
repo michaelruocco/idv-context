@@ -5,7 +5,7 @@ import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
-import uk.co.idv.context.usecases.identity.UpdateIdentityRequest;
+import uk.co.idv.context.usecases.identity.service.update.UpdateIdentityRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -36,6 +36,15 @@ class DefaultUpdateIdentityRequestTest {
         UpdateIdentityRequest request = UpdateIdentityRequestMother.withChannel(channel);
 
         assertThat(request.getChannel()).isEqualTo(channel);
+    }
+
+    @Test
+    void shouldReturnChannelIdFromChannel() {
+        Channel channel = DefaultChannelMother.build();
+
+        UpdateIdentityRequest request = UpdateIdentityRequestMother.withChannel(channel);
+
+        assertThat(request.getChannelId()).isEqualTo(channel.getId());
     }
 
 }

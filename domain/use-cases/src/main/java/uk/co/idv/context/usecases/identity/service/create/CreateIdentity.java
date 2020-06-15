@@ -13,6 +13,12 @@ public class CreateIdentity {
     private final RandomIdvIdGenerator idGenerator = new RandomIdvIdGenerator();
     private final IdentityRepository repository;
 
+    public static CreateIdentity build(IdentityRepository repository) {
+        return CreateIdentity.builder()
+                .repository(repository)
+                .build();
+    }
+
     public Identity create(Identity identity) {
         Identity identityWithId = allocateIdvIdIfRequired(identity);
         repository.save(identityWithId);

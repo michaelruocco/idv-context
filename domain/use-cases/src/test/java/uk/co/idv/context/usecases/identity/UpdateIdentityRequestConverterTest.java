@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.usecases.identity.request.ExternalFindIdentityRequest;
 import uk.co.idv.context.usecases.identity.request.UpdateIdentityRequestMother;
 import uk.co.idv.context.usecases.identity.service.UpdateIdentityRequestConverter;
+import uk.co.idv.context.usecases.identity.service.find.FindIdentityRequest;
+import uk.co.idv.context.usecases.identity.service.update.UpdateIdentityRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -9,7 +9,6 @@ testSets {
 dependencies {
     api project(":use-cases")
 
-    implementation "org.slf4j:slf4j-simple:${slf4jVersion}"
     implementation testFixtures(project(":use-cases"))
 
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"

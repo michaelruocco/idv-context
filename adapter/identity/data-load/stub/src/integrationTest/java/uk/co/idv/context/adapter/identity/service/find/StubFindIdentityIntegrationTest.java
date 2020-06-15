@@ -19,7 +19,7 @@ public class StubFindIdentityIntegrationTest {
 
     private final ExecutorService executor = Executors.newFixedThreadPool(1);
     private final StubFindIdentityConfig config = StubFindIdentityConfig.build(executor);
-    private final ExternalFindIdentity find = new StubFindIdentity(config);
+    private final ExternalFindIdentity find = StubFindIdentity.build(config);
 
     @Test
     void shouldFindStubbedIdentityWithCountryCode() {

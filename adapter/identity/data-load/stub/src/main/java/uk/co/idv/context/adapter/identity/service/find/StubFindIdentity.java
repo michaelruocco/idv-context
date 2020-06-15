@@ -7,16 +7,14 @@ import uk.co.idv.context.usecases.identity.service.find.data.AsyncDataLoader;
 import uk.co.idv.context.usecases.identity.service.find.data.DataSupplierFactory;
 import uk.co.idv.context.usecases.identity.service.find.data.FindIdentityRequestConverter;
 
-public class StubFindIdentity extends ExternalFindIdentity {
+public class StubFindIdentity {
 
-    public StubFindIdentity(StubFindIdentityConfig config) {
-        this(config, toSupplierFactory(config));
-    }
-
-    public StubFindIdentity(StubFindIdentityConfig config, DataSupplierFactory factory) {
-        super(new FindIdentityRequestConverter(config),
-                new StubAliasLoader(),
-                new AsyncDataLoader(config.getExecutor(), factory));
+    public static ExternalFindIdentity build(StubFindIdentityConfig config) {
+        return ExternalFindIdentity.builder()
+                .converter(new FindIdentityRequestConverter(config))
+                .aliasLoader(new StubAliasLoader())
+                .dataLoader(new AsyncDataLoader(config.getExecutor(), toSupplierFactory(config)))
+                .build();
     }
 
     private static DataSupplierFactory toSupplierFactory(final StubFindIdentityConfig config) {

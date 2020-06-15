@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.identity;
+package uk.co.idv.context.usecases.identity.service.update;
 
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.channel.Channel;
@@ -11,5 +11,11 @@ public interface UpdateIdentityRequest {
     Channel getChannel();
 
     Aliases getAliases();
+
+    default String getChannelId() {
+        return getChannel().getId();
+    }
+
+    UpdateIdentityRequest setIdentity(Identity identity);
 
 }

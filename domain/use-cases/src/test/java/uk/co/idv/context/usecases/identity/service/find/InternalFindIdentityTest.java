@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
-import uk.co.idv.context.usecases.identity.FindIdentityRequest;
 import uk.co.idv.context.usecases.identity.request.ExternalFindIdentityRequestMother;
 import uk.co.idv.context.usecases.identity.IdentityNotFoundException;
 import uk.co.idv.context.usecases.identity.IdentityRepository;

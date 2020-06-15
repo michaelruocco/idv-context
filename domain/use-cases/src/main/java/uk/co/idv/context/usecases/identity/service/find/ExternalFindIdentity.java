@@ -6,7 +6,6 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.identity.request.ExternalFindIdentityRequest;
-import uk.co.idv.context.usecases.identity.FindIdentityRequest;
 import uk.co.idv.context.usecases.identity.service.find.data.AliasLoader;
 import uk.co.idv.context.usecases.identity.service.find.data.AsyncDataLoadRequest;
 import uk.co.idv.context.usecases.identity.service.find.data.AsyncDataLoader;
