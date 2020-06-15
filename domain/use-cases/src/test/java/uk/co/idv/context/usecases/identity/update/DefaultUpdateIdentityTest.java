@@ -17,13 +17,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class ExternalUpdateIdentityTest {
+class DefaultUpdateIdentityTest {
 
     private final CreateIdentity create = mock(CreateIdentity.class);
     private final MergeIdentities merge = mock(MergeIdentities.class);
     private final IdentityRepository repository = mock(IdentityRepository.class);
 
-    private final UpdateIdentity update = ExternalUpdateIdentity.builder()
+    private final UpdateIdentity update = DefaultUpdateIdentity.builder()
             .create(create)
             .merge(merge)
             .repository(repository)

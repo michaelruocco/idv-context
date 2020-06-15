@@ -4,24 +4,24 @@ import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
-import uk.co.idv.context.usecases.identity.DefaultUpsertIdentityRequest.DefaultUpsertIdentityRequestBuilder;
+import uk.co.idv.context.usecases.identity.DefaultUpdateIdentityRequest.DefaultUpdateIdentityRequestBuilder;
 
-public interface UpsertIdentityRequestMother {
+public interface UpdateIdentityRequestMother {
 
-    static UpsertIdentityRequest withIdentity(Identity identity) {
+    static UpdateIdentityRequest withIdentity(Identity identity) {
         return builder().identity(identity).build();
     }
 
-    static UpsertIdentityRequest withChannel(Channel channel) {
+    static UpdateIdentityRequest withChannel(Channel channel) {
         return builder().channel(channel).build();
     }
 
-    static UpsertIdentityRequest build() {
+    static UpdateIdentityRequest build() {
         return builder().build();
     }
 
-    static DefaultUpsertIdentityRequestBuilder builder() {
-        return DefaultUpsertIdentityRequest.builder()
+    static DefaultUpdateIdentityRequestBuilder builder() {
+        return DefaultUpdateIdentityRequest.builder()
                 .channel(DefaultChannelMother.build())
                 .identity(IdentityMother.example());
     }

@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class UpsertIdentityRequestConverterTest {
+class UpdateIdentityRequestConverterTest {
 
     private final UpsertIdentityRequestConverter converter = new UpsertIdentityRequestConverter();
 
     @Test
     void shouldPopulateAliasesOnFindRequest() {
-        UpsertIdentityRequest upsertRequest = UpsertIdentityRequestMother.build();
+        UpdateIdentityRequest upsertRequest = UpdateIdentityRequestMother.build();
 
         FindIdentityRequest findRequest = converter.toFindRequest(upsertRequest);
 
@@ -19,7 +19,7 @@ class UpsertIdentityRequestConverterTest {
 
     @Test
     void shouldPopulateChannelOnFindRequest() {
-        UpsertIdentityRequest upsertRequest = UpsertIdentityRequestMother.build();
+        UpdateIdentityRequest upsertRequest = UpdateIdentityRequestMother.build();
 
         FindIdentityRequest findRequest = converter.toFindRequest(upsertRequest);
 

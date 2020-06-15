@@ -23,18 +23,29 @@ class ExternalIdentityServiceTest {
             .build();
 
     @Test
-    void shouldFindExternalIdentityAndThenReturnAfterUpdatingAgainstExistingIdentities() {
+    void shouldFindIdentityAndThenReturnAfterUpdatingAgainstExistingIdentities() {
         Identity foundIdentity = IdentityMother.example();
-        UpsertIdentityRequest upsertRequest = UpsertIdentityRequestMother.build();
+        UpdateIdentityRequest upsertRequest = UpdateIdentityRequestMother.build();
         FindIdentityRequest findRequest = FindIdentityRequestMother.build();
         given(converter.toFindRequest(upsertRequest)).willReturn(findRequest);
         given(find.find(findRequest)).willReturn(foundIdentity);
         Identity updatedIdentity = IdentityMother.example1();
         given(update.update(foundIdentity)).willReturn(updatedIdentity);
 
-        Identity identity = service.upsert(upsertRequest);
+        Identity identity = service.update(upsertRequest);
 
         assertThat(identity).isEqualTo(updatedIdentity);
+    }
+
+    @Test
+    void shouldFindIdentity() {
+        Identity expectedIdentity = IdentityMother.example();
+        FindIdentityRequest request = FindIdentityRequestMother.build();
+        given(find.find(request)).willReturn(expectedIdentity);
+
+        Identity identity = service.find(request);
+
+        assertThat(identity).isEqualTo(expectedIdentity);
     }
 
 }

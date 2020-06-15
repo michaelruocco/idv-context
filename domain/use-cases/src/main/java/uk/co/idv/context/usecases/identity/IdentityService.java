@@ -4,6 +4,8 @@ import uk.co.idv.context.entities.identity.Identity;
 
 public interface IdentityService {
 
-    Identity upsert(UpsertIdentityRequest request);
+    Identity update(UpdateIdentityRequest request);
+
+    Identity find(FindIdentityRequest request);
 
 }

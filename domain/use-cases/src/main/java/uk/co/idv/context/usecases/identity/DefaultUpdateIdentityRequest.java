@@ -8,7 +8,7 @@ import uk.co.idv.context.entities.identity.Identity;
 
 @Builder
 @Data
-public class DefaultUpsertIdentityRequest implements UpsertIdentityRequest {
+public class DefaultUpdateIdentityRequest implements UpdateIdentityRequest {
 
     private final Identity identity;
     private final Channel channel;

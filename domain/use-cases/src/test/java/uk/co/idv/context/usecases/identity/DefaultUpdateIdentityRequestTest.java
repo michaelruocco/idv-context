@@ -8,13 +8,13 @@ import uk.co.idv.context.entities.identity.IdentityMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DefaultUpsertIdentityRequestTest {
+class DefaultUpdateIdentityRequestTest {
 
     @Test
     void shouldReturnIdentity() {
         Identity identity = IdentityMother.example();
 
-        UpsertIdentityRequest request = UpsertIdentityRequestMother.withIdentity(identity);
+        UpdateIdentityRequest request = UpdateIdentityRequestMother.withIdentity(identity);
 
         assertThat(request.getIdentity()).isEqualTo(identity);
     }
@@ -23,7 +23,7 @@ class DefaultUpsertIdentityRequestTest {
     void shouldReturnAliasesFromIdentity() {
         Identity identity = IdentityMother.example();
 
-        UpsertIdentityRequest request = UpsertIdentityRequestMother.withIdentity(identity);
+        UpdateIdentityRequest request = UpdateIdentityRequestMother.withIdentity(identity);
 
         assertThat(request.getAliases()).isEqualTo(identity.getAliases());
     }
@@ -32,7 +32,7 @@ class DefaultUpsertIdentityRequestTest {
     void shouldReturnChannel() {
         Channel channel = DefaultChannelMother.build();
 
-        UpsertIdentityRequest request = UpsertIdentityRequestMother.withChannel(channel);
+        UpdateIdentityRequest request = UpdateIdentityRequestMother.withChannel(channel);
 
         assertThat(request.getChannel()).isEqualTo(channel);
     }
