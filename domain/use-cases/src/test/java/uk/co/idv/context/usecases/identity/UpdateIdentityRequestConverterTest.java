@@ -1,29 +1,32 @@
 package uk.co.idv.context.usecases.identity;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.usecases.identity.request.ExternalFindIdentityRequest;
+import uk.co.idv.context.usecases.identity.request.UpdateIdentityRequestMother;
+import uk.co.idv.context.usecases.identity.service.UpdateIdentityRequestConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class UpdateIdentityRequestConverterTest {
 
-    private final UpsertIdentityRequestConverter converter = new UpsertIdentityRequestConverter();
+    private final UpdateIdentityRequestConverter converter = new UpdateIdentityRequestConverter();
 
     @Test
     void shouldPopulateAliasesOnFindRequest() {
-        UpdateIdentityRequest upsertRequest = UpdateIdentityRequestMother.build();
+        UpdateIdentityRequest updateRequest = UpdateIdentityRequestMother.build();
 
-        FindIdentityRequest findRequest = converter.toFindRequest(upsertRequest);
+        FindIdentityRequest findRequest = converter.toFindRequest(updateRequest);
 
-        assertThat(findRequest.getAliases()).isEqualTo(upsertRequest.getAliases());
+        assertThat(findRequest.getAliases()).isEqualTo(updateRequest.getAliases());
     }
 
     @Test
     void shouldPopulateChannelOnFindRequest() {
-        UpdateIdentityRequest upsertRequest = UpdateIdentityRequestMother.build();
+        UpdateIdentityRequest updateRequest = UpdateIdentityRequestMother.build();
 
-        FindIdentityRequest findRequest = converter.toFindRequest(upsertRequest);
+        ExternalFindIdentityRequest findRequest = converter.toFindRequest(updateRequest);
 
-        assertThat(findRequest.getChannel()).isEqualTo(upsertRequest.getChannel());
+        assertThat(findRequest.getChannel()).isEqualTo(updateRequest.getChannel());
     }
 
 }
