@@ -6,6 +6,7 @@ import uk.co.idv.context.adapter.identity.find.external.StubFindIdentityConfig;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.IdvIdMother;
+import uk.co.idv.context.entities.channel.gb.GbAs3Mother;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
@@ -48,7 +49,7 @@ public class ManualAppIntegrationTest {
                 .phoneNumbers(PhoneNumbersMother.empty())
                 .build();
 
-        UpdateIdentityRequest request = UpdateIdentityRequestMother.withIdentity(identity);
+        UpdateIdentityRequest request = as3UpdateRequest(identity);
         UpdateIdentity update = appConfig.updateIdentity();
 
         Identity created = update.update(request);
@@ -67,7 +68,7 @@ public class ManualAppIntegrationTest {
                 .phoneNumbers(PhoneNumbersMother.empty())
                 .build();
 
-        UpdateIdentityRequest request = UpdateIdentityRequestMother.withIdentity(identity);
+        UpdateIdentityRequest request = as3UpdateRequest(identity);
         UpdateIdentity update = appConfig.updateIdentity();
         Identity created = update.update(request);
 
@@ -91,6 +92,13 @@ public class ManualAppIntegrationTest {
         );
 
         assertThat(error.getAliases()).isEqualTo(aliases);
+    }
+
+    private UpdateIdentityRequest as3UpdateRequest(Identity identity) {
+        return UpdateIdentityRequestMother.builder()
+                .channel(GbAs3Mother.as3())
+                .identity(identity)
+                .build();
     }
 
 }
