@@ -13,6 +13,11 @@ public class GbRsa implements Rsa {
     private final UUID issuerSessionId;
 
     @Override
+    public String getId() {
+        return "gb-rsa";
+    }
+
+    @Override
     public Optional<UUID> getIssuerSessionId() {
         return Optional.ofNullable(issuerSessionId);
     }

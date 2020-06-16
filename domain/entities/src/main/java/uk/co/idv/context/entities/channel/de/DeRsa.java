@@ -14,6 +14,11 @@ public class DeRsa implements Rsa {
     private final UUID dsSessionId;
 
     @Override
+    public String getId() {
+        return "de-rsa";
+    }
+
+    @Override
     public Optional<UUID> getIssuerSessionId() {
         return Optional.ofNullable(issuerSessionId);
     }

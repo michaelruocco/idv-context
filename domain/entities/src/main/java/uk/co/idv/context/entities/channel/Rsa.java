@@ -5,13 +5,6 @@ import java.util.UUID;
 
 public interface Rsa extends Channel {
 
-    String ID = "rsa";
-
-    @Override
-    default String getId() {
-        return ID;
-    }
-
     Optional<UUID> getIssuerSessionId();
 
     Optional<UUID> getDsSessionId();

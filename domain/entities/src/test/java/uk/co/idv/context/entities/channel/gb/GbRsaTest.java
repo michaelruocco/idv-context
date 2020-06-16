@@ -15,7 +15,7 @@ public class GbRsaTest {
     void shouldReturnId() {
         Channel rsa = GbRsaMother.rsa();
 
-        assertThat(rsa.getId()).isEqualTo("rsa");
+        assertThat(rsa.getId()).isEqualTo("gb-rsa");
     }
 
     @Test
