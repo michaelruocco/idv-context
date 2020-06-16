@@ -2,7 +2,7 @@ package uk.co.idv.app.manual;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.config.manual.ManualConfig;
-import uk.co.idv.context.adapter.identity.service.find.StubFindIdentityConfig;
+import uk.co.idv.context.adapter.identity.find.external.StubFindIdentityConfig;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.IdvIdMother;
@@ -13,11 +13,11 @@ import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 import uk.co.idv.context.usecases.identity.IdentityNotFoundException;
 import uk.co.idv.context.usecases.identity.request.FindIdentityRequestMother;
 import uk.co.idv.context.usecases.identity.request.UpdateIdentityRequestMother;
-import uk.co.idv.context.usecases.identity.service.find.FindIdentity;
-import uk.co.idv.context.usecases.identity.service.find.FindIdentityRequest;
-import uk.co.idv.context.usecases.identity.service.find.data.Delay;
-import uk.co.idv.context.usecases.identity.service.update.UpdateIdentity;
-import uk.co.idv.context.usecases.identity.service.update.UpdateIdentityRequest;
+import uk.co.idv.context.usecases.identity.find.FindIdentity;
+import uk.co.idv.context.usecases.identity.find.FindIdentityRequest;
+import uk.co.idv.context.usecases.identity.find.data.Delay;
+import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
+import uk.co.idv.context.usecases.identity.update.UpdateIdentityRequest;
 
 import java.time.Duration;
 import java.util.UUID;

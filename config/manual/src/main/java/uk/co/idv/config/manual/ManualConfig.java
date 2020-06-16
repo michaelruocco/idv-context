@@ -1,15 +1,15 @@
 package uk.co.idv.config.manual;
 
 import lombok.Builder;
-import uk.co.idv.context.adapter.identity.service.find.StubFindIdentity;
-import uk.co.idv.context.adapter.identity.service.find.StubFindIdentityConfig;
+import uk.co.idv.context.adapter.identity.find.external.StubFindIdentity;
+import uk.co.idv.context.adapter.identity.find.external.StubFindIdentityConfig;
 import uk.co.idv.context.adapter.repository.InMemoryIdentityRepository;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
-import uk.co.idv.context.usecases.identity.service.find.FindIdentity;
-import uk.co.idv.context.usecases.identity.service.find.InternalFindIdentity;
-import uk.co.idv.context.usecases.identity.service.update.DefaultUpdateIdentity;
-import uk.co.idv.context.usecases.identity.service.update.ExternalUpdateIdentity;
-import uk.co.idv.context.usecases.identity.service.update.UpdateIdentity;
+import uk.co.idv.context.usecases.identity.find.FindIdentity;
+import uk.co.idv.context.usecases.identity.find.internal.InternalFindIdentity;
+import uk.co.idv.context.usecases.identity.update.DefaultUpdateIdentity;
+import uk.co.idv.context.usecases.identity.update.external.ExternalUpdateIdentity;
+import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 
 @Builder
 public class ManualConfig {

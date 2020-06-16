@@ -4,8 +4,9 @@ import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
-import uk.co.idv.context.usecases.identity.service.find.FindIdentityRequest;
-import uk.co.idv.context.usecases.identity.request.DefaultFindIdentityRequest.DefaultFindIdentityRequestBuilder;
+import uk.co.idv.context.usecases.identity.find.DefaultFindIdentityRequest;
+import uk.co.idv.context.usecases.identity.find.FindIdentityRequest;
+import uk.co.idv.context.usecases.identity.find.DefaultFindIdentityRequest.DefaultFindIdentityRequestBuilder;
 
 public interface FindIdentityRequestMother {
 
