@@ -3,7 +3,6 @@ package uk.co.idv.context.usecases.identity.request;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
-import uk.co.idv.context.entities.channel.DefaultChannelMother;
 import uk.co.idv.context.usecases.identity.find.DefaultFindIdentityRequest;
 import uk.co.idv.context.usecases.identity.find.FindIdentityRequest;
 import uk.co.idv.context.usecases.identity.find.DefaultFindIdentityRequest.DefaultFindIdentityRequestBuilder;
@@ -18,18 +17,13 @@ public interface FindIdentityRequestMother {
         return builder().aliases(aliases).build();
     }
 
-    static FindIdentityRequest withChannelId(String channelId) {
-        return builder().channelId(channelId).build();
-    }
-
     static FindIdentityRequest build() {
         return builder().build();
     }
 
     static DefaultFindIdentityRequestBuilder builder() {
         return DefaultFindIdentityRequest.builder()
-                .aliases(AliasesMother.creditCardNumberOnly())
-                .channelId(DefaultChannelMother.build().getId());
+                .aliases(AliasesMother.creditCardNumberOnly());
     }
 
 }

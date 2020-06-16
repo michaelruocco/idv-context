@@ -9,6 +9,5 @@ import uk.co.idv.context.entities.alias.Aliases;
 public class DefaultFindIdentityRequest implements FindIdentityRequest {
 
     private final Aliases aliases;
-    private final String channelId;
 
 }

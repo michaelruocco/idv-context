@@ -18,13 +18,4 @@ class DefaultFindIdentityRequestTest {
         assertThat(request.getAliases()).isEqualTo(aliases);
     }
 
-    @Test
-    void shouldReturnChannelId() {
-        String channelId = "my-channel-id";
-
-        FindIdentityRequest request = FindIdentityRequestMother.withChannelId(channelId);
-
-        assertThat(request.getChannelId()).isEqualTo(channelId);
-    }
-
 }
