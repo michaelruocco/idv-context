@@ -45,7 +45,7 @@ class CompositeChannelUpdateIdentityTest {
         Throwable error = catchThrowable(() -> compositeUpdate.update(request));
 
         assertThat(error)
-                .isInstanceOf(UpdateNotConfiguredForChannelException.class)
+                .isInstanceOf(ChannelNotConfiguredForIdentityUpdateException.class)
                 .hasMessage(channelId);
     }
 

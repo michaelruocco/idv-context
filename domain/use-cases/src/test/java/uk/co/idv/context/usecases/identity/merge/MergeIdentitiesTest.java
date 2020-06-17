@@ -3,7 +3,6 @@ package uk.co.idv.context.usecases.identity.merge;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
-import uk.co.idv.context.usecases.identity.MultipleIdentitiesFoundException;
 
 import java.util.Arrays;
 import java.util.Collection;

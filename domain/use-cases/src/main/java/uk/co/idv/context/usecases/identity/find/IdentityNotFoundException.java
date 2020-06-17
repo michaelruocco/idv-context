@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.identity;
+package uk.co.idv.context.usecases.identity.find;
 
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;

@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.identity;
+package uk.co.idv.context.usecases.identity.merge;
 
 import lombok.Getter;
 import uk.co.idv.context.entities.alias.Aliases;

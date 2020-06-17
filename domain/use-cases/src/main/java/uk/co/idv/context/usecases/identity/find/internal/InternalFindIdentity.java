@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
-import uk.co.idv.context.usecases.identity.IdentityNotFoundException;
-import uk.co.idv.context.usecases.identity.MultipleIdentitiesFoundException;
+import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
+import uk.co.idv.context.usecases.identity.merge.MultipleIdentitiesFoundException;
 import uk.co.idv.context.usecases.identity.find.FindIdentity;
 import uk.co.idv.context.usecases.identity.find.FindIdentityRequest;
 

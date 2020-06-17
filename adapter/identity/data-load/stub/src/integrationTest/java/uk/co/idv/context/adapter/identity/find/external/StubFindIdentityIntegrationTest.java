@@ -3,6 +3,7 @@ package uk.co.idv.context.adapter.identity.find.external;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.alias.DebitCardNumberMother;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
@@ -36,7 +37,7 @@ public class StubFindIdentityIntegrationTest {
 
         Identity identity = find.find(request);
 
-        Aliases expectedAliases = AliasesMother.idvIdAndCreditCardNumber();
+        Aliases expectedAliases = AliasesMother.with(DebitCardNumberMother.debitCardNumber1());
         assertThat(identity.getAliases()).isEqualTo(expectedAliases.add(request.getAliases()));
     }
 

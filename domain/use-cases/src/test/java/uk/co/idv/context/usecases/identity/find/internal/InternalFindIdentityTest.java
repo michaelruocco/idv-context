@@ -6,9 +6,9 @@ import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.usecases.identity.find.FindIdentityRequest;
 import uk.co.idv.context.usecases.identity.request.ExternalFindIdentityRequestMother;
-import uk.co.idv.context.usecases.identity.IdentityNotFoundException;
+import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
-import uk.co.idv.context.usecases.identity.MultipleIdentitiesFoundException;
+import uk.co.idv.context.usecases.identity.merge.MultipleIdentitiesFoundException;
 
 import java.util.Arrays;
 import java.util.Collection;

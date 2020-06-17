@@ -48,4 +48,5 @@ public class DefaultUpdateIdentity implements UpdateIdentity {
         repository.save(identity);
         return identity;
     }
+
 }

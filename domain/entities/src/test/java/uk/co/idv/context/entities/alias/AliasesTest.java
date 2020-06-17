@@ -50,7 +50,7 @@ class AliasesTest {
     void shouldCreateEmptyInstance() {
         Aliases aliases = AliasesMother.empty();
 
-        assertThat(aliases).isEmpty();
+        assertThat(aliases.isEmpty()).isTrue();
     }
 
     @Test
@@ -175,6 +175,37 @@ class AliasesTest {
         aliases.add(alias);
 
         assertThat(aliases).containsExactly(alias);
+    }
+
+    @Test
+    void shouldReturnOnlyCreditCardNumberAliases() {
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        Aliases aliases = AliasesMother.with(creditCardNumber, debitCardNumber);
+
+        Aliases creditCardNumbers = aliases.getCreditCardNumbers();
+
+        assertThat(creditCardNumbers).containsExactly(creditCardNumber);
+    }
+
+    @Test
+    void shouldReturnValueOfFirstAlias() {
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        Aliases aliases = AliasesMother.with(creditCardNumber, debitCardNumber);
+
+        String firstValue = aliases.getFirstValue();
+
+        assertThat(firstValue).isEqualTo(creditCardNumber.getValue());
+    }
+
+    @Test
+    void shouldThrowExceptionIfAttemptToGetFirstValueFromEmptyAliases() {
+        Aliases aliases = AliasesMother.empty();
+
+        Throwable error = catchThrowable(aliases::getFirstValue);
+
+        assertThat(error).isInstanceOf(EmptyAliasesException.class);
     }
 
 }

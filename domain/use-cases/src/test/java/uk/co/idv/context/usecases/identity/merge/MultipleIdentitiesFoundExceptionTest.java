@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.identity;
+package uk.co.idv.context.usecases.identity.merge;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Aliases;

@@ -25,7 +25,7 @@ public class CompositeChannelUpdateIdentity implements UpdateIdentity {
         String channelId = request.getChannelId();
         return selectUpdate(channelId)
                 .map(update -> update.update(request))
-                .orElseThrow(() -> new UpdateNotConfiguredForChannelException(channelId));
+                .orElseThrow(() -> new ChannelNotConfiguredForIdentityUpdateException(channelId));
     }
 
     private void add(ChannelUpdateIdentity update) {

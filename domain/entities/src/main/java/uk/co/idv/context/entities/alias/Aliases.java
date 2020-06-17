@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @EqualsAndHashCode
@@ -60,6 +61,10 @@ public class Aliases implements Iterable<Alias> {
         return aliases.size();
     }
 
+    public boolean isEmpty() {
+        return aliases.isEmpty();
+    }
+
     public UUID getIdvIdValue() {
         return getIdvId().getValueAsUuid();
     }
@@ -72,6 +77,17 @@ public class Aliases implements Iterable<Alias> {
 
     public boolean hasIdvId() {
         return getAliasByType(IdvId.TYPE).isPresent();
+    }
+
+    public Aliases getCreditCardNumbers() {
+        Collection<Alias> creditCardNumbers = getAliasesByType(CreditCardNumber.TYPE).collect(Collectors.toList());
+        return new Aliases(creditCardNumbers);
+    }
+
+    public String getFirstValue() {
+        return aliases.stream().findFirst()
+                .map(Alias::getValue)
+                .orElseThrow(EmptyAliasesException::new);
     }
 
     private Optional<Alias> getAliasByType(String type) {
