@@ -7,15 +7,15 @@ import java.util.UUID;
 @Data
 public class IdvId implements Alias {
 
-    static final String TYPE = "idv-id";
+    public static final String TYPE = "idv-id";
 
     private final UUID value;
 
-    protected IdvId(String value) {
+    public IdvId(String value) {
         this(UUID.fromString(value));
     }
 
-    protected IdvId(UUID value) {
+    public IdvId(UUID value) {
         this.value = value;
     }
 

@@ -1,0 +1,10 @@
+dependencies {
+    api project(":use-cases")
+    api "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:2.11.0"
+
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.0"
+
+    testImplementation "com.github.michaelruocco:file-loader:5.0.1"
+    testImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.17.0"
+    testImplementation testFixtures(project(":use-cases"))
+}
