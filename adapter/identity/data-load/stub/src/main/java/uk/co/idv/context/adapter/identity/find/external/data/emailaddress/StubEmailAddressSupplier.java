@@ -10,7 +10,7 @@ import uk.co.idv.context.usecases.identity.find.data.Delay;
 public class StubEmailAddressSupplier extends StubDataSupplier<EmailAddresses> {
 
     public StubEmailAddressSupplier(AsyncDataLoadRequest request, Delay delay) {
-        super(request, delay, new StubEmailAddressFactory());
+        super(request.getAliases(), delay, new StubEmailAddressFactory());
     }
 
 }

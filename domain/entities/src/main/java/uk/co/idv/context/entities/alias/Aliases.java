@@ -90,6 +90,10 @@ public class Aliases implements Iterable<Alias> {
                 .orElseThrow(EmptyAliasesException::new);
     }
 
+    public boolean hasAnyValuesEndingWith(String suffix) {
+        return aliases.stream().anyMatch(alias -> alias.valueEndsWith(suffix));
+    }
+
     private Optional<Alias> getAliasByType(String type) {
         return getAliasesByType(type).findFirst();
     }

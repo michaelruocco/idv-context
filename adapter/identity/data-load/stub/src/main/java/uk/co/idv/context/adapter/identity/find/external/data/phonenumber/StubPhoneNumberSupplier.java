@@ -10,7 +10,7 @@ import uk.co.idv.context.usecases.identity.find.data.Delay;
 public class StubPhoneNumberSupplier extends StubDataSupplier<PhoneNumbers> {
 
     public StubPhoneNumberSupplier(AsyncDataLoadRequest request, Delay delay) {
-        super(request, delay, new StubPhoneNumberFactory());
+        super(request.getAliases(), delay, new StubPhoneNumberFactory());
     }
 
 }

@@ -43,7 +43,7 @@ class StubDataSupplierTest {
     }
 
     private StubDataSupplier<PhoneNumbers> buildSupplier(AsyncDataLoadRequest request) {
-        return new StubDataSupplier<>(request, delay, factory);
+        return new StubDataSupplier<>(request.getAliases(), delay, factory);
     }
 
 }

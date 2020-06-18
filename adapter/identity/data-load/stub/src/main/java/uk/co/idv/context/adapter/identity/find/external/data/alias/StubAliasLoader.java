@@ -1,7 +1,6 @@
 package uk.co.idv.context.adapter.identity.find.external.data.alias;
 
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.adapter.identity.find.external.StubDataLoadPolicy;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.DebitCardNumberMother;
@@ -14,7 +13,7 @@ public class StubAliasLoader implements AliasLoader {
     @Override
     public Aliases load(FindIdentityRequest request) {
         Aliases aliases = request.getAliases();
-        if (StubDataLoadPolicy.shouldLoad(aliases)) {
+        if (!aliases.hasAnyValuesEndingWith("9")) {
             return loadStubbedData(aliases);
         }
         return loadEmptyData();

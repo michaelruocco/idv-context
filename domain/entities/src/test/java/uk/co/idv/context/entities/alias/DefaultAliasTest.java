@@ -78,4 +78,22 @@ class DefaultAliasTest {
         assertThat(formatted).isEqualTo("default-alias|11111111");
     }
 
+    @Test
+    void shouldReturnTrueIfValueEndsWithSpecifiedSuffix() {
+        Alias alias = DefaultAliasMother.withValue("my-value-123");
+
+        boolean endsWith = alias.valueEndsWith("123");
+
+        assertThat(endsWith).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfValueDoesNotEndWithSpecifiedSuffix() {
+        Alias alias = DefaultAliasMother.withValue("my-value-123");
+
+        boolean endsWith = alias.valueEndsWith("789");
+
+        assertThat(endsWith).isFalse();
+    }
+
 }

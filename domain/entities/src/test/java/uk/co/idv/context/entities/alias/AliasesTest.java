@@ -208,4 +208,22 @@ class AliasesTest {
         assertThat(error).isInstanceOf(EmptyAliasesException.class);
     }
 
+    @Test
+    void shouldReturnTrueIfContainsAliasWithValueEndingWithSpecifiedSuffix() {
+        Aliases aliases = AliasesMother.with(DefaultAliasMother.withValue("123456789"));
+
+        boolean hasAliasEndsWith = aliases.hasAnyValuesEndingWith("9");
+
+        assertThat(hasAliasEndsWith).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfDoesNotContainAliasWithValueEndingWithSpecifiedSuffix() {
+        Aliases aliases = AliasesMother.with(DefaultAliasMother.withValue("123456789"));
+
+        boolean hasAliasEndsWith = aliases.hasAnyValuesEndingWith("1");
+
+        assertThat(hasAliasEndsWith).isFalse();
+    }
+
 }
