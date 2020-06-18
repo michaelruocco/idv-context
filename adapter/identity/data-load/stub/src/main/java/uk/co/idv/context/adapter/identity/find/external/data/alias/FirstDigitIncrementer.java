@@ -7,6 +7,10 @@ public class FirstDigitIncrementer {
 
     private static final Pattern FIRST_DIGIT_PATTERN = Pattern.compile("\\d{1}");
 
+    private FirstDigitIncrementer() {
+        // utility class
+    }
+
     public static String incrementFirstDigit(String value) {
         Matcher matcher = FIRST_DIGIT_PATTERN.matcher(value);
         if (matcher.find()) {
