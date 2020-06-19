@@ -1,0 +1,29 @@
+
+{
+  "idvId": "90b585c6-170f-42a6-ac7c-83d294bdab3f",
+  "country": "GB",
+  "aliases": [
+    {
+      "type": "idv-id",
+      "value": "90b585c6-170f-42a6-ac7c-83d294bdab3f"
+    },
+    {
+      "type": "credit-card-number",
+      "value": "4929111111111111"
+    }
+  ],
+  "phoneNumbers": [
+    {
+      "type": "mobile",
+      "value": "+447089111111"
+    },
+    {
+      "type": "other",
+      "value": "+441604222222"
+    }
+  ],
+  "emailAddresses": [
+    "joe.bloggs@hotmail.co.uk",
+    "joebloggs@yahoo.co.uk"
+  ]
+}
