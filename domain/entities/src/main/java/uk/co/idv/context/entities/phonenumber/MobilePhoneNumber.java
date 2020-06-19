@@ -13,4 +13,8 @@ public class MobilePhoneNumber extends AbstractPhoneNumber {
         return true;
     }
 
+    public static boolean isMobile(String type) {
+        return TYPE.equals(type);
+    }
+
 }
