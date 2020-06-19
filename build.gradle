@@ -125,3 +125,15 @@ dependencyUpdates.resolutionStrategy {
         }
     }
 }
+
+import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
+
+def verificationContextGenerator = new Generator(
+        "verificationContext",
+        { dependency -> dependency.getModuleGroup().startsWith("com.github.michaelruocco") },
+        { dependency -> true }
+)
+
+dependencyGraphGenerator {
+    generators = [Generator.ALL, verificationContextGenerator]
+}

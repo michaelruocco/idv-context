@@ -42,7 +42,6 @@ public interface IdentityMother {
 
     static Identity minimal() {
         return exampleBuilder()
-                .country(null)
                 .aliases(AliasesMother.idvIdOnly())
                 .phoneNumbers(PhoneNumbersMother.empty())
                 .emailAddresses(EmailAddressesMother.empty())
