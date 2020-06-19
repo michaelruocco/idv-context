@@ -1,9 +1,8 @@
-package uk.co.idv.context.adapter.json.alias.idvid;
+package uk.co.idv.context.adapter.json.alias;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.adapter.json.alias.AliasModule;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
@@ -14,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class AliasesSerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper().registerModules(new AliasModule());
+    private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new AliasModule());
     private static final String JSON = ContentLoader.loadContentFromClasspath("alias/aliases.json");
     private static final Aliases ALIASES = AliasesMother.with(DefaultAliasMother.build());
 

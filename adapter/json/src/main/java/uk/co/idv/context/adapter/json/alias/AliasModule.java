@@ -17,7 +17,7 @@ import uk.co.idv.context.entities.alias.IdvId;
 public class AliasModule extends SimpleModule {
 
     public AliasModule() {
-        super("aliases-module", Version.unknownVersion());
+        super("alias-module", Version.unknownVersion());
         setUpDefaults();
         setUpIdvId();
         setUpCardNumbers();

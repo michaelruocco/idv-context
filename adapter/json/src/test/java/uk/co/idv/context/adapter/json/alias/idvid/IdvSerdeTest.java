@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 public class IdvSerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper().registerModules(new AliasModule());
+    private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new AliasModule());
     private static final String JSON = ContentLoader.loadContentFromClasspath("alias/idv-id.json");
     private static final Alias ALIAS = IdvIdMother.idvId();
 
