@@ -5,29 +5,43 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
-import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
+import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
 public class IdentitySerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new IdentityModule());
-    private static final String JSON = ContentLoader.loadContentFromClasspath("identity/identity.json");
-    private static final Identity IDENTITY = IdentityMother.example();
 
     @Test
     void shouldSerialize() throws JsonProcessingException {
-        String json = MAPPER.writeValueAsString(IDENTITY);
+        Identity identity = IdentityMother.example();
 
-        assertThatJson(json).isEqualTo(JSON);
+        String json = MAPPER.writeValueAsString(identity);
+
+        String expectedJson = loadContentFromClasspath("identity/identity.json");
+        assertThatJson(json).isEqualTo(expectedJson);
     }
 
     @Test
     void shouldDeserialize() throws JsonProcessingException {
-        final Identity identity = MAPPER.readValue(JSON, Identity.class);
+        Identity expectedIdentity = IdentityMother.example();
+        String json = loadContentFromClasspath("identity/identity.json");
 
-        assertThat(identity).isEqualTo(IDENTITY);
+        Identity identity = MAPPER.readValue(json, Identity.class);
+
+        assertThat(identity).isEqualTo(expectedIdentity);
+    }
+
+    @Test
+    void shouldDeserializeMinimal() throws JsonProcessingException {
+        Identity expectedIdentity = IdentityMother.minimal();
+        String json = loadContentFromClasspath("identity/minimal-identity.json");
+
+        Identity identity = MAPPER.readValue(json, Identity.class);
+
+        assertThat(identity).isEqualTo(expectedIdentity);
     }
 
 }

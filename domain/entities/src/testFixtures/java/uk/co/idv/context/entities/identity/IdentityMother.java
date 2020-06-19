@@ -40,6 +40,15 @@ public interface IdentityMother {
         return exampleBuilder().build();
     }
 
+    static Identity minimal() {
+        return exampleBuilder()
+                .country(null)
+                .aliases(AliasesMother.idvIdOnly())
+                .phoneNumbers(PhoneNumbersMother.empty())
+                .emailAddresses(EmailAddressesMother.empty())
+                .build();
+    }
+
     static Identity withoutIdvId() {
         return exampleBuilder()
                 .aliases(AliasesMother.creditCardNumberOnly())

@@ -25,17 +25,21 @@ public class IdentityDeserializer extends StdDeserializer<Identity> {
     public Identity deserialize(final JsonParser parser, final DeserializationContext context) {
         final JsonNode node = JsonParserConverter.toNode(parser);
         return Identity.builder()
-                .country(CountryCode.getByCode(node.get("country").asText()))
+                .country(toCountry(node))
                 .aliases(toAliases(node, parser))
                 .phoneNumbers(toPhoneNumbers(node, parser))
                 .emailAddresses(toEmailAddresses(node, parser))
                 .build();
     }
 
+    private static CountryCode toCountry(JsonNode node) {
+        return Optional.ofNullable(node.get("country"))
+                .map(country -> CountryCode.getByCode(country.asText()))
+                .orElse(null);
+    }
+
     private static Aliases toAliases(final JsonNode node, final JsonParser parser) {
-        return Optional.ofNullable(node.get("aliases"))
-                .map(aliases -> toObject(aliases, parser, Aliases.class))
-                .orElseGet(Aliases::new);
+        return toObject(node.get("aliases"), parser, Aliases.class);
     }
 
     private static PhoneNumbers toPhoneNumbers(final JsonNode node, final JsonParser parser) {
