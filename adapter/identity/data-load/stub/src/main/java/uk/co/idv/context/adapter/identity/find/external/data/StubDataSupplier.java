@@ -3,7 +3,7 @@ package uk.co.idv.context.adapter.identity.find.external.data;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.usecases.identity.find.data.Delay;
+import uk.co.idv.context.usecases.identity.find.external.data.Delay;
 
 import java.time.Duration;
 import java.time.Instant;

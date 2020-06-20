@@ -1,25 +1,25 @@
 package uk.co.idv.context.usecases.identity.find.external;
 
 import com.neovisionaries.i18n.CountryCode;
-import lombok.Builder;
-import lombok.Data;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.channel.Channel;
-import uk.co.idv.context.usecases.identity.find.FindIdentityRequest;
 
-@Builder
-@Data
-public class ExternalFindIdentityRequest implements FindIdentityRequest {
+import java.util.Collection;
 
-    private final Aliases aliases;
-    private final Channel channel;
+public interface ExternalFindIdentityRequest {
 
-    public String getChannelId() {
-        return channel.getId();
-    }
+    Aliases getAliases();
 
-    public CountryCode getCountry() {
-        return channel.getCountry();
-    }
+    Collection<String> getRequested();
+
+    Channel getChannel();
+
+    String getChannelId();
+
+    CountryCode getCountry();
+
+    boolean emailAddressesRequested();
+
+    boolean phoneNumbersRequested();
 
 }

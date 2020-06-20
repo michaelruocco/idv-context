@@ -6,9 +6,9 @@ import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.adapter.identity.find.external.data.phonenumber.StubPhoneNumberFactory;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequest;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequestMother;
-import uk.co.idv.context.usecases.identity.find.data.Delay;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoadRequest;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoadRequestMother;
+import uk.co.idv.context.usecases.identity.find.external.data.Delay;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

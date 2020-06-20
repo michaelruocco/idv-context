@@ -4,8 +4,8 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import uk.co.idv.context.usecases.identity.find.data.Delay;
-import uk.co.idv.context.usecases.identity.find.data.TimeoutProvider;
+import uk.co.idv.context.usecases.identity.find.external.data.Delay;
+import uk.co.idv.context.usecases.identity.find.external.data.TimeoutProvider;
 
 import java.time.Duration;
 import java.util.concurrent.ExecutorService;

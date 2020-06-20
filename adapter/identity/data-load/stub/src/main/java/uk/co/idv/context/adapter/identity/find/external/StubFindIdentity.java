@@ -3,9 +3,9 @@ package uk.co.idv.context.adapter.identity.find.external;
 import uk.co.idv.context.adapter.identity.find.external.data.StubDataSupplierFactory;
 import uk.co.idv.context.adapter.identity.find.external.data.alias.StubAliasLoader;
 import uk.co.idv.context.usecases.identity.find.external.ExternalFindIdentity;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoader;
-import uk.co.idv.context.usecases.identity.find.data.DataSupplierFactory;
-import uk.co.idv.context.usecases.identity.find.data.FindIdentityRequestConverter;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoader;
+import uk.co.idv.context.usecases.identity.find.external.data.DataSupplierFactory;
+import uk.co.idv.context.usecases.identity.find.external.data.FindIdentityRequestConverter;
 
 public class StubFindIdentity {
 

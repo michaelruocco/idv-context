@@ -9,11 +9,11 @@ import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.context.usecases.identity.find.data.AliasLoader;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequest;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoader;
-import uk.co.idv.context.usecases.identity.find.data.DataFutures;
-import uk.co.idv.context.usecases.identity.find.data.FindIdentityRequestConverter;
+import uk.co.idv.context.usecases.identity.find.external.data.AliasLoader;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoadRequest;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoader;
+import uk.co.idv.context.usecases.identity.find.external.data.DataFutures;
+import uk.co.idv.context.usecases.identity.find.external.data.FindIdentityRequestConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -23,7 +23,7 @@ class ExternalFindIdentityTest {
 
     private final Aliases loadedAliases = mock(Aliases.class);
     private final Aliases updatedAliases = mock(Aliases.class);
-    private final ExternalFindIdentityRequest findRequest = mock(ExternalFindIdentityRequest.class);
+    private final DefaultExternalFindIdentityRequest findRequest = mock(DefaultExternalFindIdentityRequest.class);
     private final AsyncDataLoadRequest loadRequest = mock(AsyncDataLoadRequest.class);
     private final DataFutures dataFutures = mock(DataFutures.class);
 

@@ -7,7 +7,7 @@ import uk.co.idv.context.entities.alias.DebitCardNumberMother;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.context.usecases.identity.find.external.ExternalFindIdentityRequest;
+import uk.co.idv.context.usecases.identity.find.external.DefaultExternalFindIdentityRequest;
 import uk.co.idv.context.usecases.identity.find.external.ExternalFindIdentity;
 import uk.co.idv.context.usecases.identity.request.ExternalFindIdentityRequestMother;
 
@@ -24,7 +24,7 @@ public class StubFindIdentityIntegrationTest {
 
     @Test
     void shouldFindStubbedIdentityWithCountryCode() {
-        ExternalFindIdentityRequest request = ExternalFindIdentityRequestMother.build();
+        DefaultExternalFindIdentityRequest request = ExternalFindIdentityRequestMother.build();
 
         Identity identity = find.find(request);
 
@@ -33,7 +33,7 @@ public class StubFindIdentityIntegrationTest {
 
     @Test
     void shouldFindStubbedIdentityWithAliases() {
-        ExternalFindIdentityRequest request = ExternalFindIdentityRequestMother.build();
+        DefaultExternalFindIdentityRequest request = ExternalFindIdentityRequestMother.build();
 
         Identity identity = find.find(request);
 
@@ -43,7 +43,7 @@ public class StubFindIdentityIntegrationTest {
 
     @Test
     void shouldFindStubbedIdentityWithPhoneNumbers() {
-        ExternalFindIdentityRequest request = ExternalFindIdentityRequestMother.build();
+        DefaultExternalFindIdentityRequest request = ExternalFindIdentityRequestMother.build();
 
         Identity identity = find.find(request);
 
@@ -52,7 +52,7 @@ public class StubFindIdentityIntegrationTest {
 
     @Test
     void shouldFindStubbedIdentityWithEmailAddresses() {
-        ExternalFindIdentityRequest request = ExternalFindIdentityRequestMother.build();
+        DefaultExternalFindIdentityRequest request = ExternalFindIdentityRequestMother.build();
 
         Identity identity = find.find(request);
 

@@ -4,13 +4,14 @@ import lombok.Builder;
 import uk.co.idv.context.adapter.identity.find.external.StubFindIdentity;
 import uk.co.idv.context.adapter.identity.find.external.StubFindIdentityConfig;
 import uk.co.idv.context.adapter.repository.InMemoryIdentityRepository;
+import uk.co.idv.context.usecases.eligibility.ChannelCreateEligibility;
+import uk.co.idv.context.usecases.eligibility.CompositeCreateEligibility;
+import uk.co.idv.context.usecases.eligibility.CreateEligibility;
+import uk.co.idv.context.usecases.eligibility.ExternalCreateEligibility;
+import uk.co.idv.context.usecases.eligibility.InternalCreateEligibility;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
-import uk.co.idv.context.usecases.identity.find.FindIdentity;
-import uk.co.idv.context.usecases.identity.find.internal.InternalFindIdentity;
-import uk.co.idv.context.usecases.identity.update.ChannelUpdateIdentity;
-import uk.co.idv.context.usecases.identity.update.CompositeChannelUpdateIdentity;
-import uk.co.idv.context.usecases.identity.update.DefaultUpdateIdentity;
-import uk.co.idv.context.usecases.identity.update.external.ExternalUpdateIdentity;
+import uk.co.idv.context.usecases.identity.find.external.ExternalFindIdentity;
+import uk.co.idv.context.usecases.identity.find.internal.FindIdentity;
 import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 
 import java.util.Collections;
@@ -23,33 +24,41 @@ public class ManualConfig {
 
     private final StubFindIdentityConfig stubConfig;
 
-    public UpdateIdentity updateIdentity() {
-        return new CompositeChannelUpdateIdentity(
-                rsaUpdate(),
-                as3Update()
+    public CreateEligibility createEligibility() {
+        return new CompositeCreateEligibility(
+                rsaCreateEligibility(),
+                as3CreateEligibility()
         );
     }
 
-    private ChannelUpdateIdentity rsaUpdate() {
-        return ChannelUpdateIdentity.builder()
-                .supportedChannelIds(Collections.singleton("uk-rsa"))
-                .update(DefaultUpdateIdentity.build(repository))
-                .build();
-    }
-
-    private ChannelUpdateIdentity as3Update() {
-        UpdateIdentity update = ExternalUpdateIdentity.builder()
-                .externalFind(StubFindIdentity.build(stubConfig))
-                .update(DefaultUpdateIdentity.build(repository))
-                .build();
-        return ChannelUpdateIdentity.builder()
-                .supportedChannelIds(Collections.singleton("as3"))
-                .update(update)
-                .build();
-    }
-
     public FindIdentity findIdentity() {
-        return new InternalFindIdentity(repository);
+        return new FindIdentity(repository);
+    }
+
+    public UpdateIdentity updateIdentity() {
+        return UpdateIdentity.build(repository);
+    }
+
+    private ChannelCreateEligibility rsaCreateEligibility() {
+        return ChannelCreateEligibility.builder()
+                .supportedChannelIds(Collections.singleton("gb-rsa"))
+                .create(internalCreateEligibility())
+                .build();
+    }
+
+    private ChannelCreateEligibility as3CreateEligibility() {
+        return ChannelCreateEligibility.builder()
+                .supportedChannelIds(Collections.singleton("as3"))
+                .create(externalCreateEligibility(StubFindIdentity.build(stubConfig)))
+                .build();
+    }
+
+    private ExternalCreateEligibility externalCreateEligibility(ExternalFindIdentity find) {
+        return new ExternalCreateEligibility(find, updateIdentity());
+    }
+
+    private InternalCreateEligibility internalCreateEligibility() {
+        return new InternalCreateEligibility(repository);
     }
 
 }

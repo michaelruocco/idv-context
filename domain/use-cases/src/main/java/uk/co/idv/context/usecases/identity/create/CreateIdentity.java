@@ -9,12 +9,12 @@ import uk.co.idv.context.usecases.identity.IdentityRepository;
 @Slf4j
 public class CreateIdentity {
 
-    @Builder.Default
-    private final RandomIdvIdGenerator idGenerator = new RandomIdvIdGenerator();
+    private final RandomIdvIdGenerator idGenerator;
     private final IdentityRepository repository;
 
     public static CreateIdentity build(IdentityRepository repository) {
         return CreateIdentity.builder()
+                .idGenerator(new RandomIdvIdGenerator())
                 .repository(repository)
                 .build();
     }

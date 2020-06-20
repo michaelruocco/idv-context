@@ -2,10 +2,10 @@ package uk.co.idv.context.adapter.identity.find.external.data;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequest;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequestMother;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoader;
-import uk.co.idv.context.usecases.identity.find.data.DataFutures;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoadRequest;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoadRequestMother;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoader;
+import uk.co.idv.context.usecases.identity.find.external.data.DataFutures;
 
 import java.time.Duration;
 import java.time.Instant;

@@ -3,10 +3,10 @@ package uk.co.idv.context.adapter.identity.find.external.data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.identity.find.external.StubFindIdentityConfig;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoader;
-import uk.co.idv.context.usecases.identity.find.data.DataFutures;
-import uk.co.idv.context.usecases.identity.find.data.DataSupplierFactory;
-import uk.co.idv.context.usecases.identity.find.data.Delay;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoader;
+import uk.co.idv.context.usecases.identity.find.external.data.DataFutures;
+import uk.co.idv.context.usecases.identity.find.external.data.DataSupplierFactory;
+import uk.co.idv.context.usecases.identity.find.external.data.Delay;
 
 import java.time.Duration;
 import java.time.Instant;

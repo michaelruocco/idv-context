@@ -5,8 +5,8 @@ import uk.co.idv.context.adapter.identity.find.external.data.emailaddress.StubEm
 import uk.co.idv.context.adapter.identity.find.external.data.phonenumber.StubPhoneNumberSupplier;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequest;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequestMother;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoadRequest;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoadRequestMother;
 
 import java.util.function.Supplier;
 

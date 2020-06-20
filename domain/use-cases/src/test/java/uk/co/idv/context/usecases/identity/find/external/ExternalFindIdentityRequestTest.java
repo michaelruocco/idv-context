@@ -5,7 +5,6 @@ import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
-import uk.co.idv.context.usecases.identity.find.FindIdentityRequest;
 import uk.co.idv.context.usecases.identity.request.ExternalFindIdentityRequestMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -16,7 +15,7 @@ class ExternalFindIdentityRequestTest {
     void shouldReturnAliases() {
         Aliases aliases = AliasesMother.idvIdAndDebitCardNumber();
 
-        FindIdentityRequest request = ExternalFindIdentityRequestMother.withAliases(aliases);
+        ExternalFindIdentityRequest request = ExternalFindIdentityRequestMother.withAliases(aliases);
 
         assertThat(request.getAliases()).isEqualTo(aliases);
     }

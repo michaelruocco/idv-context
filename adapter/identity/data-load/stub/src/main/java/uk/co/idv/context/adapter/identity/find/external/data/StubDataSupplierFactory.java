@@ -3,11 +3,11 @@ package uk.co.idv.context.adapter.identity.find.external.data;
 import lombok.Builder;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
-import uk.co.idv.context.usecases.identity.find.data.AsyncDataLoadRequest;
-import uk.co.idv.context.usecases.identity.find.data.DataSupplierFactory;
+import uk.co.idv.context.usecases.identity.find.external.data.AsyncDataLoadRequest;
+import uk.co.idv.context.usecases.identity.find.external.data.DataSupplierFactory;
 import uk.co.idv.context.adapter.identity.find.external.data.phonenumber.StubPhoneNumberSupplier;
 import uk.co.idv.context.adapter.identity.find.external.data.emailaddress.StubEmailAddressSupplier;
-import uk.co.idv.context.usecases.identity.find.data.Delay;
+import uk.co.idv.context.usecases.identity.find.external.data.Delay;
 
 import java.util.function.Supplier;
 

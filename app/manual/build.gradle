@@ -12,5 +12,4 @@ dependencies {
     integrationTestImplementation project(":identity-data-load-stub")
     integrationTestImplementation project(":in-memory-repository")
     integrationTestImplementation testFixtures(project(":use-cases"))
-
 }

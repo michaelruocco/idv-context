@@ -5,8 +5,9 @@ import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
+import uk.co.idv.context.usecases.identity.find.external.DefaultExternalFindIdentityRequest;
+import uk.co.idv.context.usecases.identity.find.external.DefaultExternalFindIdentityRequest.DefaultExternalFindIdentityRequestBuilder;
 import uk.co.idv.context.usecases.identity.find.external.ExternalFindIdentityRequest;
-import uk.co.idv.context.usecases.identity.find.external.ExternalFindIdentityRequest.ExternalFindIdentityRequestBuilder;
 
 public interface ExternalFindIdentityRequestMother {
 
@@ -22,12 +23,12 @@ public interface ExternalFindIdentityRequestMother {
         return builder().channel(channel).build();
     }
 
-    static ExternalFindIdentityRequest build() {
+    static DefaultExternalFindIdentityRequest build() {
         return builder().build();
     }
 
-    static ExternalFindIdentityRequestBuilder builder() {
-        return ExternalFindIdentityRequest.builder()
+    static DefaultExternalFindIdentityRequestBuilder builder() {
+        return DefaultExternalFindIdentityRequest.builder()
                 .aliases(AliasesMother.creditCardNumberOnly())
                 .channel(DefaultChannelMother.build());
     }

@@ -30,3 +30,10 @@
 // check that dependencies are up to date
 ./gradlew dependencyUpdates
 ```
+
+```gradle
+// generate dependency graph images at build/reports/dependency-graph
+./gradlew generateDependencyGraph
+./gradlew generateDependencyGraphVerificationContext
+
+```
