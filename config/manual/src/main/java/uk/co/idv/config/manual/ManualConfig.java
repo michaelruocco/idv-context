@@ -1,17 +1,17 @@
 package uk.co.idv.config.manual;
 
 import lombok.Builder;
-import uk.co.idv.context.adapter.identity.find.external.StubFindIdentity;
-import uk.co.idv.context.adapter.identity.find.external.StubFindIdentityConfig;
+import uk.co.idv.context.adapter.eligibility.external.StubFindIdentity;
+import uk.co.idv.context.adapter.eligibility.external.StubFindIdentityConfig;
 import uk.co.idv.context.adapter.repository.InMemoryIdentityRepository;
 import uk.co.idv.context.usecases.eligibility.ChannelCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CompositeCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
-import uk.co.idv.context.usecases.eligibility.ExternalCreateEligibility;
-import uk.co.idv.context.usecases.eligibility.InternalCreateEligibility;
+import uk.co.idv.context.usecases.eligibility.external.ExternalCreateEligibility;
+import uk.co.idv.context.usecases.eligibility.internal.InternalCreateEligibility;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
-import uk.co.idv.context.usecases.identity.find.external.ExternalFindIdentity;
-import uk.co.idv.context.usecases.identity.find.internal.FindIdentity;
+import uk.co.idv.context.usecases.eligibility.external.ExternalFindIdentity;
+import uk.co.idv.context.usecases.identity.find.FindIdentity;
 import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 
 import java.util.Collections;

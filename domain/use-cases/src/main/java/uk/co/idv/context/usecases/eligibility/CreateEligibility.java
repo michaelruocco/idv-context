@@ -5,4 +5,5 @@ import uk.co.idv.context.entities.eligibility.Eligibility;
 public interface CreateEligibility {
 
     Eligibility create(CreateEligibilityRequest request);
+
 }

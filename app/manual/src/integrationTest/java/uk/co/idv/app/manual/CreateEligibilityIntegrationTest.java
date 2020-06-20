@@ -2,7 +2,7 @@ package uk.co.idv.app.manual;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.config.manual.ManualConfig;
-import uk.co.idv.context.adapter.identity.find.external.StubFindIdentityConfig;
+import uk.co.idv.context.adapter.eligibility.external.StubFindIdentityConfig;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.channel.gb.GbAs3Mother;
@@ -14,8 +14,8 @@ import uk.co.idv.context.usecases.eligibility.CreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
 import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequestMother;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
-import uk.co.idv.context.usecases.identity.find.external.data.Delay;
-import uk.co.idv.context.usecases.identity.find.internal.FindIdentity;
+import uk.co.idv.context.usecases.eligibility.external.data.Delay;
+import uk.co.idv.context.usecases.identity.find.FindIdentity;
 import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 
 import java.time.Duration;

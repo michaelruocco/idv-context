@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.channel.Channel;
-import uk.co.idv.context.usecases.identity.find.external.ExternalFindIdentityRequest;
+import uk.co.idv.context.usecases.eligibility.external.ExternalFindIdentityRequest;
 
 import java.util.Collection;
 

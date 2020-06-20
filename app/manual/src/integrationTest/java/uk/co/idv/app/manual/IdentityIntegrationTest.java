@@ -12,7 +12,7 @@ import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.context.usecases.identity.find.internal.FindIdentity;
+import uk.co.idv.context.usecases.identity.find.FindIdentity;
 import uk.co.idv.context.usecases.identity.merge.MultipleIdentitiesFoundException;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
 import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
