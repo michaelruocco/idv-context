@@ -54,7 +54,10 @@ public class ManualConfig {
     }
 
     private ExternalCreateEligibility externalCreateEligibility(ExternalFindIdentity find) {
-        return new ExternalCreateEligibility(find, updateIdentity());
+        return ExternalCreateEligibility.builder()
+                .find(find)
+                .update(updateIdentity())
+                .build();
     }
 
     private InternalCreateEligibility internalCreateEligibility() {

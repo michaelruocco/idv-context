@@ -1,14 +1,18 @@
 package uk.co.idv.context.usecases.eligibility.external;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import uk.co.idv.context.entities.eligibility.Eligibility;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
+import uk.co.idv.context.usecases.eligibility.EligibilityFactory;
 import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 
-@RequiredArgsConstructor
+@Builder
 public class ExternalCreateEligibility implements CreateEligibility {
+
+    @Builder.Default
+    private final EligibilityFactory factory = new EligibilityFactory();
 
     private final ExternalFindIdentity find;
     private final UpdateIdentity update;
@@ -17,12 +21,7 @@ public class ExternalCreateEligibility implements CreateEligibility {
     public Eligibility create(CreateEligibilityRequest request) {
         Identity original = find.find(request);
         Identity updated = update.update(original);
-        return Eligibility.builder()
-                .channel(request.getChannel())
-                .aliases(request.getAliases())
-                .requested(request.getRequested())
-                .identity(updated)
-                .build();
+        return factory.build(request, updated);
     }
 
 }
