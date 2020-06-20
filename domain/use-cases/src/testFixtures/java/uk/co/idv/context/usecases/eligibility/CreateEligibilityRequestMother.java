@@ -31,7 +31,11 @@ public interface CreateEligibilityRequestMother {
         return CreateEligibilityRequest.builder()
                 .aliases(AliasesMother.creditCardNumberOnly())
                 .channel(DefaultChannelMother.build())
-                .requested(EligibilityMother.allRequested());
+                .requested(allRequested());
+    }
+
+    static Collection<String> allRequested() {
+        return EligibilityMother.allRequested();
     }
 
 }
