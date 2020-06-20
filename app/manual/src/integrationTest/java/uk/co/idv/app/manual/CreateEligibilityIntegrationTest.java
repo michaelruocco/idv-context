@@ -2,7 +2,7 @@ package uk.co.idv.app.manual;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.config.manual.ManualConfig;
-import uk.co.idv.context.adapter.eligibility.external.StubFindIdentityConfig;
+import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.channel.gb.GbAs3Mother;
@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 public class CreateEligibilityIntegrationTest {
 
-    private final StubFindIdentityConfig stubConfig = StubFindIdentityConfig.builder()
+    private final ExternalFindIdentityStubConfig stubConfig = ExternalFindIdentityStubConfig.builder()
             .executor(Executors.newFixedThreadPool(2))
             .timeout(Duration.ofMillis(250))
             .phoneNumberDelay(new Delay(350))

@@ -12,8 +12,8 @@ project(':in-memory-repository').projectDir = file('adapter/repository/in-memory
 include ':json'
 project(':json').projectDir = file('adapter/json')
 
-include ':external-identity-stub'
-project(':external-identity-stub').projectDir = file('adapter/identity/external/stub')
+include ':external-find-identity-stub'
+project(':external-find-identity-stub').projectDir = file('adapter/identity/external/find-stub')
 
 include ':manual-config'
 project(':manual-config').projectDir = file('config/manual')

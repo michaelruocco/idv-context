@@ -1,8 +1,8 @@
 package uk.co.idv.config.manual;
 
 import lombok.Builder;
-import uk.co.idv.context.adapter.eligibility.external.StubFindIdentity;
-import uk.co.idv.context.adapter.eligibility.external.StubFindIdentityConfig;
+import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStub;
+import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.context.adapter.repository.InMemoryIdentityRepository;
 import uk.co.idv.context.usecases.eligibility.ChannelCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CompositeCreateEligibility;
@@ -22,7 +22,7 @@ public class ManualConfig {
     @Builder.Default
     private final IdentityRepository repository = new InMemoryIdentityRepository();
 
-    private final StubFindIdentityConfig stubConfig;
+    private final ExternalFindIdentityStubConfig stubConfig;
 
     public CreateEligibility createEligibility() {
         return new CompositeCreateEligibility(
@@ -49,7 +49,7 @@ public class ManualConfig {
     private ChannelCreateEligibility as3CreateEligibility() {
         return ChannelCreateEligibility.builder()
                 .supportedChannelIds(Collections.singleton("as3"))
-                .create(externalCreateEligibility(StubFindIdentity.build(stubConfig)))
+                .create(externalCreateEligibility(ExternalFindIdentityStub.build(stubConfig)))
                 .build();
     }
 

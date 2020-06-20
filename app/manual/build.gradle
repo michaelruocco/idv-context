@@ -10,6 +10,6 @@ dependencies {
     implementation project(":manual-config")
 
     integrationTestImplementation project(":in-memory-repository")
-    integrationTestImplementation project(":external-identity-stub")
+    integrationTestImplementation project(":external-find-identity-stub")
     integrationTestImplementation testFixtures(project(":use-cases"))
 }
