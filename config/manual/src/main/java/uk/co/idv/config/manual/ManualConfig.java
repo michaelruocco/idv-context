@@ -60,8 +60,8 @@ public class ManualConfig {
                 .build();
     }
 
-    private InternalCreateEligibility internalCreateEligibility() {
-        return new InternalCreateEligibility(repository);
+    private CreateEligibility internalCreateEligibility() {
+        return InternalCreateEligibility.build(repository);
     }
 
 }

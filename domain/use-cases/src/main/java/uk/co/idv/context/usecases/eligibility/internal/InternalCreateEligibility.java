@@ -1,6 +1,6 @@
 package uk.co.idv.context.usecases.eligibility.internal;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import uk.co.idv.context.entities.eligibility.Eligibility;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
@@ -9,18 +9,17 @@ import uk.co.idv.context.usecases.eligibility.EligibilityFactory;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 import uk.co.idv.context.usecases.identity.find.FindIdentity;
 
-@RequiredArgsConstructor
+@Builder
 public class InternalCreateEligibility implements CreateEligibility {
 
+    @Builder.Default
+    private final EligibilityFactory factory = new EligibilityFactory();
     private final FindIdentity find;
-    private final EligibilityFactory factory;
 
-    public InternalCreateEligibility(FindIdentity find) {
-        this(find, new EligibilityFactory());
-    }
-
-    public InternalCreateEligibility(IdentityRepository repository) {
-        this(new FindIdentity(repository));
+    public static CreateEligibility build(IdentityRepository repository) {
+        return InternalCreateEligibility.builder()
+                .find(new FindIdentity(repository))
+                .build();
     }
 
     @Override
