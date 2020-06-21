@@ -8,8 +8,11 @@ import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.channel.gb.GbAs3Mother;
 import uk.co.idv.context.entities.channel.gb.GbRsaMother;
 import uk.co.idv.context.entities.eligibility.Eligibility;
+import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
+import uk.co.idv.context.entities.phonenumber.MobilePhoneNumberMother;
+import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
 import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequestMother;
@@ -86,20 +89,44 @@ public class CreateEligibilityIntegrationTest {
         assertThat(identity.getEmailAddresses()).isNotEmpty();
     }
 
+
     @Test
-    void shouldFindIdentityWithExternalDataAfterAs3EligibilityRequest() {
+    void shouldAddWithExternalDataToIdentityIfIdentityExistsForAs3() {
         CreateEligibilityRequest request = CreateEligibilityRequestMother.builder()
                 .aliases(AliasesMother.creditCardNumberOnly())
                 .channel(GbAs3Mother.as3())
                 .build();
+
         Eligibility eligibility = createEligibility.create(request);
-        Identity created = eligibility.getIdentity();
 
-        Identity identity = findIdentity.find(request.getAliases());
-
-        assertThat(identity.getIdvId()).isEqualTo(created.getIdvId());
+        Identity identity = eligibility.getIdentity();
+        assertThat(identity.hasIdvId()).isTrue();
         assertThat(identity.getPhoneNumbers()).isEmpty();
         assertThat(identity.getEmailAddresses()).isNotEmpty();
+    }
+
+    @Test
+    void shouldFindIdentityWithExternalDataAfterAs3EligibilityRequest() {
+        Aliases aliases = AliasesMother.creditCardNumberOnly();
+        Identity identity = IdentityMother.exampleBuilder()
+                .aliases(aliases)
+                .phoneNumbers(PhoneNumbersMother.with(MobilePhoneNumberMother.withNumber("+447890123456")))
+                .emailAddresses(EmailAddressesMother.with("test@email.com"))
+                .build();
+        Identity existing = updateIdentity.update(identity);
+        CreateEligibilityRequest request = CreateEligibilityRequestMother.builder()
+                .aliases(aliases)
+                .channel(GbAs3Mother.as3())
+                .build();
+        createEligibility.create(request);
+
+        Identity updated = findIdentity.find(request.getAliases());
+
+        assertThat(updated.getIdvId()).isEqualTo(existing.getIdvId());
+        assertThat(updated.getPhoneNumbers()).containsExactlyElementsOf(existing.getPhoneNumbers());
+        assertThat(updated.getEmailAddresses()).containsExactlyElementsOf(
+                EmailAddressesMother.two().add(existing.getEmailAddresses())
+        );
     }
 
 }
