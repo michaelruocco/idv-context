@@ -31,7 +31,7 @@ public class CreateEligibilityIntegrationTest {
     private final ExternalFindIdentityStubConfig stubConfig = ExternalFindIdentityStubConfig.builder()
             .executor(Executors.newFixedThreadPool(2))
             .timeout(Duration.ofMillis(250))
-            .phoneNumberDelay(new Delay(350))
+            .phoneNumberDelay(new Delay(400))
             .emailAddressDelay(new Delay(100))
             .build();
 

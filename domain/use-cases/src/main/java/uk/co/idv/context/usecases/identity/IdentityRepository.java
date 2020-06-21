@@ -15,4 +15,6 @@ public interface IdentityRepository {
 
     void save(Identity identity);
 
+    void delete(Alias alias);
+
 }

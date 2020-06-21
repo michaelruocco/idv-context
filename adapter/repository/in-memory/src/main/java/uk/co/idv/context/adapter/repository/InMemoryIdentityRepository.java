@@ -24,6 +24,11 @@ public class InMemoryIdentityRepository implements IdentityRepository {
     }
 
     @Override
+    public void delete(Alias alias) {
+        identities.remove(alias.format());
+    }
+
+    @Override
     public Optional<Identity> load(Alias alias) {
         String key = alias.format();
         return Optional.ofNullable(identities.get(key));

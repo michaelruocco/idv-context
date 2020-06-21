@@ -80,4 +80,15 @@ class InMemoryIdentityRepositoryTest {
         assertThat(identities).containsExactly(identity);
     }
 
+    @Test
+    void shouldDeleteSavedIdentitiesByAliases() {
+        Alias idvId = IdvIdMother.idvId();
+        Identity identity = IdentityMother.withAliases(AliasesMother.with(idvId));
+        repository.save(identity);
+
+        repository.delete(idvId);
+
+        assertThat(repository.load(idvId)).isEmpty();
+    }
+
 }
