@@ -41,16 +41,28 @@ public class Aliases implements Iterable<Alias> {
     }
 
     public Aliases add(Aliases aliasesToAdd) {
-        Collection<Alias> updatedAliases = new LinkedHashSet<>(aliases);
-        aliasesToAdd.forEach(updatedAliases::add);
-        return new Aliases(updatedAliases);
+        Collection<Alias> updated = new LinkedHashSet<>(aliases);
+        aliasesToAdd.forEach(this::validate);
+        aliasesToAdd.forEach(updated::add);
+        return new Aliases(updated);
     }
 
     public Aliases add(Alias alias) {
-        if (alias.isIdvId() && hasIdvId()) {
-            throw new IdvIdAlreadyPresentException(alias, getIdvId());
-        }
+        validate(alias);
         return add(new Aliases(alias));
+    }
+
+    private void validate(Alias alias) {
+        if (!isValid(alias)) {
+            throw new IdvIdAlreadyPresentException(getIdvId(), alias);
+        }
+    }
+
+    private boolean isValid(Alias alias) {
+        if (alias.isIdvId() && hasIdvId()) {
+            return getIdvId().equals(alias);
+        }
+        return true;
     }
 
     public Aliases notPresent(Aliases comparison) {

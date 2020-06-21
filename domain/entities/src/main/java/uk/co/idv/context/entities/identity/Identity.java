@@ -53,4 +53,20 @@ public class Identity {
                 .build();
     }
 
+    public Identity addData(Identity other) {
+        if (!hasSameCountry(other)) {
+            throw new CountryMismatchException(country, other.getCountry());
+        }
+        return Identity.builder()
+                .aliases(aliases.add(other.getAliases()))
+                .country(country)
+                .phoneNumbers(phoneNumbers.add(other.getPhoneNumbers()))
+                .emailAddresses(emailAddresses.add(other.getEmailAddresses()))
+                .build();
+    }
+
+    private boolean hasSameCountry(Identity other) {
+        return country == other.getCountry();
+    }
+
 }

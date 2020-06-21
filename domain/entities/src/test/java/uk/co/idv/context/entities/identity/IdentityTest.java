@@ -7,6 +7,7 @@ import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
 import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.context.entities.alias.IdvIdAlreadyPresentException;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
@@ -17,6 +18,7 @@ import uk.co.idv.context.entities.phonenumber.PhoneNumber;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -141,6 +143,67 @@ class IdentityTest {
 
         assertThat(updatedIdentity).isEqualToIgnoringGivenFields(updatedIdentity, "aliases");
         assertThat(updatedIdentity.getAliases()).isEqualTo(updatedAliases);
+    }
+
+    @Test
+    void shouldThrowExceptionIfAttemptToAddAllDataAndBothIdentitiesHaveDifferentIdvIds() {
+        Identity identity = IdentityMother.example();
+        Identity other = IdentityMother.example1();
+
+        IdvIdAlreadyPresentException error = catchThrowableOfType(
+                () -> identity.addData(other),
+                IdvIdAlreadyPresentException.class
+        );
+
+        assertThat(error.getExistingIdvId()).isEqualTo(identity.getIdvId());
+        assertThat(error.getIdvIdToAdd()).isEqualTo(other.getIdvId());
+    }
+
+    @Test
+    void shouldThrowExceptionIfAttemptToAddAllDataAndBothIdentitiesHaveDifferentCountries() {
+        Identity identity = IdentityMother.example();
+        Identity other = IdentityMother.withCountry(CountryCode.DE);
+
+        CountryMismatchException error = catchThrowableOfType(
+                () -> identity.addData(other),
+                CountryMismatchException.class
+        );
+
+        assertThat(error.getExistingCountry()).isEqualTo(identity.getCountry());
+        assertThat(error.getCountryToAdd()).isEqualTo(other.getCountry());
+    }
+
+    @Test
+    void shouldAddAllAliasesFromBothIdentities() {
+        Identity identity = IdentityMother.withoutIdvId();
+        Identity other = IdentityMother.example1();
+
+        Identity added = identity.addData(other);
+
+        Aliases expected = identity.getAliases().add(other.getAliases());
+        assertThat(added.getAliases()).containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    void shouldAddAllPhoneNumbersFromBothIdentities() {
+        Identity identity = IdentityMother.withoutIdvId();
+        Identity other = IdentityMother.example1();
+
+        Identity added = identity.addData(other);
+
+        PhoneNumbers expected = identity.getPhoneNumbers().add(other.getPhoneNumbers());
+        assertThat(added.getPhoneNumbers()).containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    void shouldAddAllEmailAddressesFromBothIdentities() {
+        Identity identity = IdentityMother.withoutIdvId();
+        Identity other = IdentityMother.example1();
+
+        Identity added = identity.addData(other);
+
+        EmailAddresses expected = identity.getEmailAddresses().add(other.getEmailAddresses());
+        assertThat(added.getEmailAddresses()).containsExactlyElementsOf(expected);
     }
 
 }

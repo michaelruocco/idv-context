@@ -38,4 +38,18 @@ public class PhoneNumbersTest {
         assertThat(emptyNumbers.isEmpty()).isTrue();
     }
 
+    @Test
+    void shouldAddEmailAddressesWithoutDuplicates() {
+        PhoneNumber mobileNumber1 = MobilePhoneNumberMother.withNumber("+447089131313");
+        PhoneNumbers otherNumbers = new PhoneNumbers(mobileNumber, mobileNumber1);
+
+        PhoneNumbers mergedNumbers = numbers.add(otherNumbers);
+
+        assertThat(mergedNumbers.stream()).containsExactly(
+                mobileNumber,
+                otherNumber,
+                mobileNumber1
+        );
+    }
+
 }

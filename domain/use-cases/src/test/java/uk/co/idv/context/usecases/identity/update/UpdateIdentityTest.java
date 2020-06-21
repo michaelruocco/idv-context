@@ -7,6 +7,7 @@ import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 import uk.co.idv.context.usecases.identity.create.CreateIdentity;
 import uk.co.idv.context.usecases.identity.merge.MergeIdentities;
+import uk.co.idv.context.usecases.identity.save.SaveIdentity;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -15,16 +16,17 @@ import java.util.Collections;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
 
 class UpdateIdentityTest {
 
     private final CreateIdentity create = mock(CreateIdentity.class);
+    private final SaveIdentity save = mock(SaveIdentity.class);
     private final MergeIdentities merge = mock(MergeIdentities.class);
     private final IdentityRepository repository = mock(IdentityRepository.class);
 
     private final UpdateIdentity update = UpdateIdentity.builder()
             .create(create)
+            .save(save)
             .merge(merge)
             .repository(repository)
             .build();
@@ -44,12 +46,13 @@ class UpdateIdentityTest {
     @Test
     void shouldUpdateIdentityIfOneExistingIdentity() {
         Identity identity = IdentityMother.example();
-        givenOneExistingIdentity(identity.getAliases());
+        Identity existing = givenOneExistingIdentity(identity.getAliases());
+        Identity saved = IdentityMother.example1();
+        given(save.save(identity, existing)).willReturn(saved);
 
         Identity updated = update.update(identity);
 
-        assertThat(updated).isEqualTo(identity);
-        verify(repository).save(identity);
+        assertThat(updated).isEqualTo(saved);
     }
 
     @Test
@@ -68,10 +71,12 @@ class UpdateIdentityTest {
         given(repository.load(aliases)).willReturn(Collections.emptyList());
     }
 
-    private void givenOneExistingIdentity(Aliases aliases) {
+    private Identity givenOneExistingIdentity(Aliases aliases) {
+        Identity identity = IdentityMother.example();
         given(repository.load(aliases)).willReturn(
-                Collections.singleton(IdentityMother.example())
+                Collections.singleton(identity)
         );
+        return identity;
     }
 
     private Collection<Identity> givenMoreThanOneExistingIdentity(Aliases aliases) {

@@ -7,6 +7,7 @@ import lombok.ToString;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
@@ -31,6 +32,13 @@ public class EmailAddresses implements Iterable<String> {
 
     public boolean isEmpty() {
         return values.isEmpty();
+    }
+
+    public EmailAddresses add(EmailAddresses others) {
+        Collection<String> mergedValues = new LinkedHashSet<>();
+        mergedValues.addAll(this.values);
+        mergedValues.addAll(others.values);
+        return new EmailAddresses(mergedValues);
     }
 
 }

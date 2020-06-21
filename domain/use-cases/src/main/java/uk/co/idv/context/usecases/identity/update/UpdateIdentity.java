@@ -1,10 +1,12 @@
 package uk.co.idv.context.usecases.identity.update;
 
 import lombok.Builder;
+import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 import uk.co.idv.context.usecases.identity.create.CreateIdentity;
 import uk.co.idv.context.usecases.identity.merge.MergeIdentities;
+import uk.co.idv.context.usecases.identity.save.SaveIdentity;
 
 import java.util.Collection;
 
@@ -13,15 +15,8 @@ public class UpdateIdentity {
 
     private final CreateIdentity create;
     private final MergeIdentities merge;
+    private final SaveIdentity save;
     private final IdentityRepository repository;
-
-    public static UpdateIdentity build(IdentityRepository repository) {
-        return UpdateIdentity.builder()
-                .create(CreateIdentity.build(repository))
-                .merge(new MergeIdentities())
-                .repository(repository)
-                .build();
-    }
 
     public Identity update(Identity identity) {
         return checkAgainstExistingIdentities(identity);
@@ -37,15 +32,10 @@ public class UpdateIdentity {
             case 0:
                 return create.create(identity);
             case 1:
-                return save(identity);
+                return save.save(identity, IterableUtils.get(existingIdentities, 0));
             default:
                 return merge.merge(identity, existingIdentities);
         }
-    }
-
-    private Identity save(Identity identity) {
-        repository.save(identity);
-        return identity;
     }
 
 }

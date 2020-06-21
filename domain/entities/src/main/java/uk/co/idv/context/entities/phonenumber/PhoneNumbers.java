@@ -7,6 +7,7 @@ import lombok.ToString;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -27,6 +28,13 @@ public class PhoneNumbers implements Iterable<PhoneNumber> {
 
     public Stream<PhoneNumber> stream() {
         return numbers.stream();
+    }
+
+    public PhoneNumbers add(PhoneNumbers others) {
+        Collection<PhoneNumber> mergedNumbers = new LinkedHashSet<>();
+        mergedNumbers.addAll(this.numbers);
+        mergedNumbers.addAll(others.numbers);
+        return new PhoneNumbers(mergedNumbers);
     }
 
     public PhoneNumbers getMobileNumbers() {

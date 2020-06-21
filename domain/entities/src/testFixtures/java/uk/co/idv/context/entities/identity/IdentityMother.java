@@ -56,7 +56,7 @@ public interface IdentityMother {
 
     static Identity example1() {
         return exampleBuilder()
-                .aliases(AliasesMother.idvIdAndDebitCardNumber())
+                .aliases(AliasesMother.idvIdAndDebitCardNumber1())
                 .phoneNumbers(PhoneNumbersMother.mobile())
                 .emailAddresses(EmailAddressesMother.one())
                 .build();

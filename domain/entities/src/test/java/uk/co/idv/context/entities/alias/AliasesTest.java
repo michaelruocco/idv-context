@@ -134,11 +134,22 @@ class AliasesTest {
     }
 
     @Test
-    void shouldThrowExceptionIfIdvIdAliasAddedWhenOneIsAlreadyPresent() {
+    void shouldIgnoreAddingDuplicateAlias() {
+        Alias existingIdvId = IdvIdMother.withValue("16d333b4-e339-46ad-b554-7de646b29f03");
+        Aliases aliases = AliasesMother.with(existingIdvId);
+        Alias duplicatedIdvId = IdvIdMother.withValue("16d333b4-e339-46ad-b554-7de646b29f03");
+
+        Aliases updatedAliases = aliases.add(duplicatedIdvId);
+
+        assertThat(updatedAliases).containsExactlyElementsOf(aliases);
+    }
+
+    @Test
+    void shouldThrowExceptionIfDifferentIdvIdAliasAddedWhenAlreadyPresent() {
         Alias existingIdvId = IdvIdMother.withValue("16d333b4-e339-46ad-b554-7de646b29f03");
         Aliases aliases = AliasesMother.with(existingIdvId);
 
-        Alias idvId = IdvIdMother.withValue("16d333b4-e339-46ad-b554-7de646b29f03");
+        Alias idvId = IdvIdMother.withValue("0c0dedac-ed60-49e4-bca4-c01295113a09");
         IdvIdAlreadyPresentException error = catchThrowableOfType(
                 () -> aliases.add(idvId),
                 IdvIdAlreadyPresentException.class

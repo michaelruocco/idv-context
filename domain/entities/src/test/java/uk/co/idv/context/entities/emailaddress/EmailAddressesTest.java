@@ -33,4 +33,14 @@ public class EmailAddressesTest {
         assertThat(emptyAddresses.isEmpty()).isTrue();
     }
 
+    @Test
+    void shouldAddEmailAddressesWithoutDuplicates() {
+        String email3 = "third@email.co.uk";
+        EmailAddresses otherAddresses = new EmailAddresses(email2, email3);
+
+        EmailAddresses mergedAddresses = addresses.add(otherAddresses);
+
+        assertThat(mergedAddresses.stream()).containsExactly(email1, email2, email3);
+    }
+
 }

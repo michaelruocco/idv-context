@@ -5,6 +5,8 @@ plugins {
 dependencies {
     api project(":entities")
 
+    implementation 'org.apache.commons:commons-collections4:4.4'
+
     testFixturesApi testFixtures(project(":entities"))
     testFixturesImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
