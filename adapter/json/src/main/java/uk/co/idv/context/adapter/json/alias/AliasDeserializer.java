@@ -31,15 +31,11 @@ public class AliasDeserializer extends StdDeserializer<Alias> {
     public Alias deserialize(final JsonParser parser, final DeserializationContext context) {
         final JsonNode node = JsonParserConverter.toNode(parser);
         final String type = extractType(node);
-        return toAlias(node, parser, type);
+        return JsonNodeConverter.toObject(node, parser, toMappingType(type));
     }
 
     private static String extractType(final JsonNode node) {
         return node.get("type").asText();
-    }
-
-    private Alias toAlias(final JsonNode node, final JsonParser parser, final String type) {
-        return JsonNodeConverter.toObject(node, parser, toMappingType(type));
     }
 
     private Class<? extends Alias> toMappingType(final String name) {
