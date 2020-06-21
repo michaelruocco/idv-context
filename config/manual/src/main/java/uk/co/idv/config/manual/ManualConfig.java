@@ -9,14 +9,8 @@ import uk.co.idv.context.usecases.eligibility.CompositeCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
 import uk.co.idv.context.usecases.eligibility.external.ExternalCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.internal.InternalCreateEligibility;
+import uk.co.idv.context.usecases.identity.IdentityFacade;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
-import uk.co.idv.context.usecases.eligibility.external.ExternalFindIdentity;
-import uk.co.idv.context.usecases.identity.create.CreateIdentity;
-import uk.co.idv.context.usecases.identity.find.FindIdentity;
-import uk.co.idv.context.usecases.identity.merge.MergeIdentities;
-import uk.co.idv.context.usecases.identity.save.ExternalSaveIdentity;
-import uk.co.idv.context.usecases.identity.save.InternalSaveIdentity;
-import uk.co.idv.context.usecases.identity.save.SaveIdentity;
 import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 
 import java.util.Collections;
@@ -36,12 +30,8 @@ public class ManualConfig {
         );
     }
 
-    public FindIdentity findIdentity() {
-        return new FindIdentity(repository);
-    }
-
-    public UpdateIdentity updateIdentity() {
-        return updateIdentity(new InternalSaveIdentity(repository));
+    public IdentityFacade identityFacade() {
+        return IdentityFacade.build(repository);
     }
 
     private ChannelCreateEligibility rsaCreateEligibility() {
@@ -54,23 +44,14 @@ public class ManualConfig {
     private ChannelCreateEligibility as3CreateEligibility() {
         return ChannelCreateEligibility.builder()
                 .supportedChannelIds(Collections.singleton("as3"))
-                .create(externalCreateEligibility(ExternalFindIdentityStub.build(stubConfig)))
+                .create(externalCreateEligibility())
                 .build();
     }
 
-    private ExternalCreateEligibility externalCreateEligibility(ExternalFindIdentity find) {
+    private ExternalCreateEligibility externalCreateEligibility() {
         return ExternalCreateEligibility.builder()
-                .find(find)
-                .update(updateIdentity(new ExternalSaveIdentity(repository)))
-                .build();
-    }
-
-    private UpdateIdentity updateIdentity(SaveIdentity save) {
-        return UpdateIdentity.builder()
-                .create(CreateIdentity.build(repository))
-                .save(save)
-                .merge(new MergeIdentities())
-                .repository(repository)
+                .find(ExternalFindIdentityStub.build(stubConfig))
+                .update(UpdateIdentity.buildExternal(repository))
                 .build();
     }
 

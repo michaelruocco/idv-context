@@ -12,10 +12,9 @@ import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.context.usecases.identity.find.FindIdentity;
+import uk.co.idv.context.usecases.identity.IdentityFacade;
 import uk.co.idv.context.usecases.identity.merge.MultipleIdentitiesFoundException;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
-import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 
 import java.util.UUID;
 
@@ -27,15 +26,14 @@ public class IdentityIntegrationTest {
     private final ManualConfig appConfig = ManualConfig.builder()
             .build();
 
-    private final UpdateIdentity update = appConfig.updateIdentity();
-    private final FindIdentity find = appConfig.findIdentity();
+    private final IdentityFacade facade = appConfig.identityFacade();
 
     @Test
     void shouldThrowExceptionIfIdentityNotFound() {
         Aliases aliases = AliasesMother.with(IdvIdMother.withValue(UUID.randomUUID()));
 
         IdentityNotFoundException error = catchThrowableOfType(
-                () -> find.find(aliases),
+                () -> facade.find(aliases),
                 IdentityNotFoundException.class
         );
 
@@ -51,7 +49,7 @@ public class IdentityIntegrationTest {
                 .phoneNumbers(PhoneNumbersMother.empty())
                 .build();
 
-        Identity created = update.update(identity);
+        Identity created = facade.update(identity);
 
         assertThat(created.hasIdvId()).isTrue();
     }
@@ -64,9 +62,9 @@ public class IdentityIntegrationTest {
                 .emailAddresses(EmailAddressesMother.empty())
                 .phoneNumbers(PhoneNumbersMother.empty())
                 .build();
-        Identity created = update.update(identity);
+        Identity created = facade.update(identity);
 
-        Identity found = find.find(aliases);
+        Identity found = facade.find(aliases);
 
         assertThat(found).isEqualTo(created);
     }
@@ -74,12 +72,12 @@ public class IdentityIntegrationTest {
     @Test
     void shouldThrowExceptionOnUpdateIfMultipleIdentitiesExist() {
         Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Identity creditIdentity = update.update(IdentityMother.withAliases(creditCardNumber));
+        Identity creditIdentity = facade.update(IdentityMother.withAliases(creditCardNumber));
         Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
-        Identity debitIdentity = update.update(IdentityMother.withAliases(debitCardNumber));
+        Identity debitIdentity = facade.update(IdentityMother.withAliases(debitCardNumber));
 
         MultipleIdentitiesFoundException error = catchThrowableOfType(
-                () -> update.update(IdentityMother.withAliases(creditCardNumber, debitCardNumber)),
+                () -> facade.update(IdentityMother.withAliases(creditCardNumber, debitCardNumber)),
                 MultipleIdentitiesFoundException.class
         );
 
