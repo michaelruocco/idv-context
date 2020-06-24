@@ -1,7 +1,7 @@
 plugins {
     id "idea"
     id "java-library"
-    id "com.diffplug.gradle.spotless" version "4.3.1"
+    id "com.diffplug.gradle.spotless" version "4.4.0"
     id "com.github.ben-manes.versions" version "0.28.0"
     id "com.vanniktech.dependency.graph.generator" version "0.5.0"
     id "pl.allegro.tech.build.axion-release" version "1.12.0"

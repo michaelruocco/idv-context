@@ -5,6 +5,6 @@ dependencies {
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.0"
 
     testImplementation "com.github.michaelruocco:file-loader:5.0.1"
-    testImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.18.0"
+    testImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.18.1"
     testImplementation testFixtures(project(":use-cases"))
 }
