@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.identity.create;
+package uk.co.idv.context.usecases.identity.idvid;
 
 import uk.co.idv.context.entities.alias.IdvId;
 

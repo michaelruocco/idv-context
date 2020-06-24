@@ -24,7 +24,7 @@ public class Identity {
         return aliases.getIdvIdValue();
     }
 
-    public Alias getIdvId() {
+    public IdvId getIdvId() {
         return aliases.getIdvId();
     }
 
@@ -45,18 +45,27 @@ public class Identity {
     }
 
     public Identity setIdvId(IdvId idvId) {
-        return Identity.builder()
+        return copy()
                 .aliases(aliases.add(idvId))
-                .country(country)
-                .phoneNumbers(phoneNumbers)
-                .emailAddresses(emailAddresses)
                 .build();
     }
 
-    public Identity addData(Identity other) {
-        if (!hasSameCountry(other)) {
-            throw new CountryMismatchException(country, other.getCountry());
+    public Identity removeIdvId() {
+        return copy()
+                .aliases(aliases.remove(getIdvId()))
+                .build();
+    }
+
+    public Identity addData(Identities others) {
+        Identity merged = copy().build();
+        for (Identity existing : others) {
+            merged = merged.addData(existing.removeIdvId());
         }
+        return merged;
+    }
+
+    public Identity addData(Identity other) {
+        validateHasSameCountry(other);
         return Identity.builder()
                 .aliases(aliases.add(other.getAliases()))
                 .country(country)
@@ -65,8 +74,22 @@ public class Identity {
                 .build();
     }
 
+    private void validateHasSameCountry(Identity other) {
+        if (!hasSameCountry(other)) {
+            throw new CountryMismatchException(country, other.getCountry());
+        }
+    }
+
     private boolean hasSameCountry(Identity other) {
         return country == other.getCountry();
+    }
+
+    private IdentityBuilder copy() {
+        return Identity.builder()
+                .aliases(aliases)
+                .country(country)
+                .phoneNumbers(phoneNumbers)
+                .emailAddresses(emailAddresses);
     }
 
 }

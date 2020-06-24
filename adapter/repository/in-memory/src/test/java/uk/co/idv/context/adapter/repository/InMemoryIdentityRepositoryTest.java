@@ -7,11 +7,10 @@ import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
 import uk.co.idv.context.entities.alias.DebitCardNumberMother;
 import uk.co.idv.context.entities.alias.IdvIdMother;
+import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
-
-import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -64,7 +63,7 @@ class InMemoryIdentityRepositoryTest {
         Identity identity2 = IdentityMother.withAliases(AliasesMother.with(idvId2));
         repository.save(identity2);
 
-        Collection<Identity> identities = repository.load(AliasesMother.with(idvId1, idvId2));
+        Identities identities = repository.load(AliasesMother.with(idvId1, idvId2));
 
         assertThat(identities).containsExactly(identity1, identity2);
     }
@@ -75,20 +74,20 @@ class InMemoryIdentityRepositoryTest {
         Identity identity = IdentityMother.withAliases(aliases);
         repository.save(identity);
 
-        Collection<Identity> identities = repository.load(aliases);
+        Identities identities = repository.load(aliases);
 
         assertThat(identities).containsExactly(identity);
     }
 
     @Test
     void shouldDeleteSavedIdentitiesByAliases() {
-        Alias idvId = IdvIdMother.idvId();
-        Identity identity = IdentityMother.withAliases(AliasesMother.with(idvId));
+        Aliases aliases = AliasesMother.idvIdOnly();
+        Identity identity = IdentityMother.withAliases(aliases);
         repository.save(identity);
 
-        repository.delete(idvId);
+        repository.delete(aliases);
 
-        assertThat(repository.load(idvId)).isEmpty();
+        assertThat(repository.load(aliases)).isEmpty();
     }
 
 }

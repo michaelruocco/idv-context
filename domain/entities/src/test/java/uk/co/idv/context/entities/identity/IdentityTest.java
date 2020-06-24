@@ -6,6 +6,7 @@ import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
+import uk.co.idv.context.entities.alias.DebitCardNumberMother;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdAlreadyPresentException;
 import uk.co.idv.context.entities.alias.IdvIdMother;
@@ -62,21 +63,35 @@ class IdentityTest {
 
     @Test
     void shouldReturnTrueIfHasAlias() {
-        IdvId idvId = IdvIdMother.idvId();
+        Alias alias = CreditCardNumberMother.creditCardNumber();
 
-        Identity identity = IdentityMother.withAliases(idvId);
+        Identity identity = IdentityMother.withAliases(alias);
 
-        assertThat(identity.hasAlias(idvId)).isTrue();
+        assertThat(identity.hasAlias(alias)).isTrue();
     }
 
     @Test
     void shouldReturnFalseIfDoesNotHaveAlias() {
-        IdvId idvId = IdvIdMother.idvId();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
 
-        Identity identity = IdentityMother.withAliases(idvId);
+        Identity identity = IdentityMother.withAliases(creditCardNumber);
 
-        Alias alias = CreditCardNumberMother.creditCardNumber();
-        assertThat(identity.hasAlias(alias)).isFalse();
+        Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        assertThat(identity.hasAlias(debitCardNumber)).isFalse();
+    }
+
+    @Test
+    void shouldReturnTrueIfHasIdvId() {
+        Identity identity = IdentityMother.withAliases(IdvIdMother.idvId());
+
+        assertThat(identity.hasIdvId()).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfDoesHaveIdvId() {
+        Identity identity = IdentityMother.withAliases(AliasesMother.empty());
+
+        assertThat(identity.hasIdvId()).isFalse();
     }
 
     @Test
@@ -174,7 +189,7 @@ class IdentityTest {
     }
 
     @Test
-    void shouldAddAllAliasesFromBothIdentities() {
+    void shouldAddAllAliasesFromOtherIdentity() {
         Identity identity = IdentityMother.withoutIdvId();
         Identity other = IdentityMother.example1();
 
@@ -185,7 +200,7 @@ class IdentityTest {
     }
 
     @Test
-    void shouldAddAllPhoneNumbersFromBothIdentities() {
+    void shouldAddAllPhoneNumbersFromOtherIdentity() {
         Identity identity = IdentityMother.withoutIdvId();
         Identity other = IdentityMother.example1();
 
@@ -196,7 +211,7 @@ class IdentityTest {
     }
 
     @Test
-    void shouldAddAllEmailAddressesFromBothIdentities() {
+    void shouldAddAllEmailAddressesFromOtherIdentity() {
         Identity identity = IdentityMother.withoutIdvId();
         Identity other = IdentityMother.example1();
 
@@ -204,6 +219,30 @@ class IdentityTest {
 
         EmailAddresses expected = identity.getEmailAddresses().add(other.getEmailAddresses());
         assertThat(added.getEmailAddresses()).containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    void shouldAddAllAliasesFromMoreThanOneOtherIdentity() {
+        Identity identity = IdentityMother.withAliases(AliasesMother.empty());
+        Identity other1 = IdentityMother.withAliases(AliasesMother.idvIdAndDebitCardNumber());
+        Identity other2 = IdentityMother.withAliases(AliasesMother.idvIdAndCreditCardNumber());
+
+        Identity added = identity.addData(IdentitiesMother.of(other1, other2));
+
+        assertThat(added.getAliases()).containsExactly(
+                DebitCardNumberMother.debitCardNumber(),
+                CreditCardNumberMother.creditCardNumber()
+        );
+    }
+
+    @Test
+    void shouldRemoveIdvId() {
+        Identity identity = IdentityMother.example();
+
+        Identity updated = identity.removeIdvId();
+
+        assertThat(updated).isEqualToIgnoringGivenFields(identity, "aliases");
+        assertThat(updated.getAliases()).containsExactlyElementsOf(identity.getAliases().remove(identity.getIdvId()));
     }
 
 }

@@ -3,14 +3,11 @@ package uk.co.idv.context.usecases.identity.find;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.identity.Identities;
+import uk.co.idv.context.entities.identity.IdentitiesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
-import uk.co.idv.context.usecases.identity.merge.MultipleIdentitiesFoundException;
-
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
@@ -50,7 +47,7 @@ class FindIdentityTest {
     @Test
     void shouldThrowExceptionIfMoreThanOneIdentityExists() {
         Aliases aliases = AliasesMother.idvIdAndDebitCardNumber();
-        Collection<Identity> existing = givenMoreThanOneExistingIdentity(aliases);
+        Identities existing = givenMoreThanOneExistingIdentity(aliases);
 
         MultipleIdentitiesFoundException error = catchThrowableOfType(
                 () -> loader.find(aliases),
@@ -58,27 +55,20 @@ class FindIdentityTest {
         );
 
         assertThat(error.getAliases()).isEqualTo(aliases);
-        assertThat(error.getExistingIdentities()).isEqualTo(existing);
+        assertThat(error.getIdentities()).isEqualTo(existing);
     }
 
     private void givenNoExistingIdentities(Aliases aliases) {
-        given(repository.load(aliases)).willReturn(Collections.emptyList());
+        given(repository.load(aliases)).willReturn(IdentitiesMother.empty());
     }
 
     private void givenOneExistingIdentity(Aliases aliases, Identity identity) {
-        given(repository.load(aliases)).willReturn(
-                Collections.singleton(identity)
-        );
+        given(repository.load(aliases)).willReturn(IdentitiesMother.of(identity));
     }
 
-    private Collection<Identity> givenMoreThanOneExistingIdentity(Aliases aliases) {
-        Collection<Identity> existing = Arrays.asList(
-                IdentityMother.example(),
-                IdentityMother.example()
-        );
-        given(repository.load(aliases)).willReturn(
-                existing
-        );
+    private Identities givenMoreThanOneExistingIdentity(Aliases aliases) {
+        Identities existing = IdentitiesMother.two();
+        given(repository.load(aliases)).willReturn(existing);
         return existing;
     }
 

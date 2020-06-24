@@ -1,7 +1,7 @@
 package uk.co.idv.context.usecases.identity.update;
 
 import lombok.Builder;
-import org.apache.commons.collections4.IterableUtils;
+import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 import uk.co.idv.context.usecases.identity.create.CreateIdentity;
@@ -9,8 +9,6 @@ import uk.co.idv.context.usecases.identity.merge.MergeIdentities;
 import uk.co.idv.context.usecases.identity.save.ExternalSaveIdentity;
 import uk.co.idv.context.usecases.identity.save.InternalSaveIdentity;
 import uk.co.idv.context.usecases.identity.save.SaveIdentity;
-
-import java.util.Collection;
 
 @Builder
 public class UpdateIdentity {
@@ -31,8 +29,8 @@ public class UpdateIdentity {
     public static UpdateIdentity build(IdentityRepository repository, SaveIdentity save) {
         return UpdateIdentity.builder()
                 .create(CreateIdentity.build(repository))
+                .merge(MergeIdentities.build(repository))
                 .save(save)
-                .merge(new MergeIdentities())
                 .repository(repository)
                 .build();
     }
@@ -42,18 +40,18 @@ public class UpdateIdentity {
     }
 
     private Identity checkAgainstExistingIdentities(Identity identity) {
-        Collection<Identity> existingIdentities = repository.load(identity.getAliases());
-        return handle(identity, existingIdentities);
+        Identities existing = repository.load(identity.getAliases());
+        return handle(identity, existing);
     }
 
-    private Identity handle(Identity identity, Collection<Identity> existingIdentities) {
-        switch (existingIdentities.size()) {
+    private Identity handle(Identity identity, Identities existing) {
+        switch (existing.size()) {
             case 0:
                 return create.create(identity);
             case 1:
-                return save.save(identity, IterableUtils.get(existingIdentities, 0));
+                return save.save(identity, existing.getFirst());
             default:
-                return merge.merge(identity, existingIdentities);
+                return merge.merge(identity, existing);
         }
     }
 

@@ -24,10 +24,6 @@ public interface AliasesMother {
         return with(CreditCardNumberMother.creditCardNumber());
     }
 
-    static Aliases debitCardNumberOnly() {
-        return with(DebitCardNumberMother.debitCardNumber());
-    }
-
     static Aliases idvIdOnly() {
         return with(IdvIdMother.idvId());
     }

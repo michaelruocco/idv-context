@@ -52,6 +52,12 @@ public class Aliases implements Iterable<Alias> {
         return add(new Aliases(alias));
     }
 
+    public Aliases remove(Alias alias) {
+        Collection<Alias> updated = new LinkedHashSet<>(aliases);
+        updated.remove(alias);
+        return new Aliases(updated);
+    }
+
     private void validate(Alias alias) {
         if (!isValid(alias)) {
             throw new IdvIdAlreadyPresentException(getIdvId(), alias);

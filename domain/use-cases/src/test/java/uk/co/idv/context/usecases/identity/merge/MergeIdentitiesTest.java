@@ -1,34 +1,42 @@
 package uk.co.idv.context.usecases.identity.merge;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.identity.Identities;
+import uk.co.idv.context.entities.identity.IdentitiesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
-
-import java.util.Arrays;
-import java.util.Collection;
+import uk.co.idv.context.usecases.identity.IdentityRepository;
+import uk.co.idv.context.usecases.identity.idvid.IdvIdAllocator;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowableOfType;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class MergeIdentitiesTest {
 
-    private final MergeIdentities merge = new MergeIdentities();
+    private final IdvIdAllocator allocator = mock(IdvIdAllocator.class);
+    private final IdentityRepository repository = mock(IdentityRepository.class);
+
+    private final MergeIdentities merge = MergeIdentities.builder()
+            .idvIdAllocator(allocator)
+            .repository(repository)
+            .build();
 
     @Test
-    void shouldThrowExceptionOnMerge() {
-        Identity identity = IdentityMother.withoutIdvId();
-        Collection<Identity> existingIdentities = Arrays.asList(
-                IdentityMother.example(),
-                IdentityMother.example1()
-        );
+    void shouldAllocateIdvIdToIdentity() {
+        Identity identity = mock(Identity.class);
+        Identity identityWithId = mock(Identity.class);
+        given(allocator.allocateIfRequired(identity)).willReturn(identityWithId);
+        Identities existing = IdentitiesMother.two();
+        Identity expectedMergedIdentity = IdentityMother.example();
+        given(identityWithId.addData(existing)).willReturn(expectedMergedIdentity);
 
-        MultipleIdentitiesFoundException error = catchThrowableOfType(
-                () -> merge.merge(identity, existingIdentities),
-                MultipleIdentitiesFoundException.class
-        );
+        Identity mergedIdentity = merge.merge(identity, existing);
 
-        assertThat(error.getAliases()).isEqualTo(identity.getAliases());
-        assertThat(error.getExistingIdentities()).isEqualTo(existingIdentities);
+        assertThat(mergedIdentity).isEqualTo(expectedMergedIdentity);
+        verify(repository).delete(existing.getIdvIds());
+        verify(repository).save(mergedIdentity);
     }
 
 }

@@ -13,6 +13,10 @@ public interface PhoneNumbersMother {
         return with(MobilePhoneNumberMother.mobile1());
     }
 
+    static PhoneNumbers other() {
+        return with(OtherPhoneNumberMother.other());
+    }
+
     static PhoneNumbers empty() {
         return with();
     }

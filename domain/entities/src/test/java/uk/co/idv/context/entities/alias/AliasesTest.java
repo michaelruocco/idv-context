@@ -237,4 +237,15 @@ class AliasesTest {
         assertThat(hasAliasEndsWith).isFalse();
     }
 
+
+    @Test
+    void shouldRemoveAlias() {
+        Alias alias = DefaultAliasMother.withValue("123456789");
+        Aliases aliases = AliasesMother.with(alias);
+
+        Aliases updated = aliases.remove(alias);
+
+        assertThat(updated).isEmpty();
+    }
+
 }

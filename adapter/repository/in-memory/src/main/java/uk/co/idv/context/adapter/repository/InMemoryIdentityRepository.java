@@ -2,6 +2,7 @@ package uk.co.idv.context.adapter.repository;
 
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 
@@ -18,14 +19,9 @@ public class InMemoryIdentityRepository implements IdentityRepository {
     @Override
     public void save(Identity updated) {
         Optional<Identity> existing = load(updated.getIdvId());
-        existing.ifPresent(value -> removeDeletedAliasEntries(value, updated));
+        existing.ifPresent(value -> deleteEntriesForRemovedAliases(value, updated));
         Collection<String> keys = toKeys(updated);
         keys.forEach(key -> identities.put(key, updated));
-    }
-
-    @Override
-    public void delete(Alias alias) {
-        identities.remove(alias.format());
     }
 
     @Override
@@ -35,18 +31,26 @@ public class InMemoryIdentityRepository implements IdentityRepository {
     }
 
     @Override
-    public Collection<Identity> load(Aliases aliases) {
-        return aliases.stream().map(this::load)
+    public Identities load(Aliases aliases) {
+        return new Identities(aliases.stream().map(this::load)
                 .filter(Optional::isPresent)
                 .map(Optional::get)
                 .distinct()
-                .collect(Collectors.toList());
+                .collect(Collectors.toList()));
     }
 
-    private void removeDeletedAliasEntries(Identity existing, Identity updated) {
+    @Override
+    public void delete(Aliases aliases) {
+        aliases.forEach(this::delete);
+    }
+
+    private void deleteEntriesForRemovedAliases(Identity existing, Identity updated) {
         Aliases aliasesToRemove = existing.getAliasesNotPresent(updated);
-        Collection<String> keysToRemove = toKeys(aliasesToRemove);
-        keysToRemove.forEach(identities::remove);
+        delete(aliasesToRemove);
+    }
+
+    private void delete(Alias alias) {
+        identities.remove(alias.format());
     }
 
     private static Collection<String> toKeys(Identity identity) {
