@@ -7,9 +7,9 @@ testSets {
 }
 
 dependencies {
-    implementation project(":manual-config")
+    implementation project(":identity-config")
 
-    integrationTestImplementation project(":in-memory-repository")
-    integrationTestImplementation project(":external-find-identity-stub")
-    integrationTestImplementation testFixtures(project(":use-cases"))
+    integrationTestImplementation project(":identity-in-memory-repository")
+    integrationTestImplementation project(":identity-external-find-stub")
+    integrationTestImplementation testFixtures(project(":identity-use-cases"))
 }

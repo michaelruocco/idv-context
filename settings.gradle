@@ -1,22 +1,22 @@
 rootProject.name = 'verification-context'
 
-include ':entities'
-project(':entities').projectDir = file('domain/entities')
+include ':identity-entities'
+project(':identity-entities').projectDir = file('identity/domain/entities')
 
-include ':use-cases'
-project(':use-cases').projectDir = file('domain/use-cases')
+include ':identity-use-cases'
+project(':identity-use-cases').projectDir = file('identity/domain/use-cases')
 
-include ':in-memory-repository'
-project(':in-memory-repository').projectDir = file('adapter/repository/in-memory')
+include ':identity-in-memory-repository'
+project(':identity-in-memory-repository').projectDir = file('identity/adapter/repository/in-memory')
 
-include ':json'
-project(':json').projectDir = file('adapter/json')
+include ':identity-json'
+project(':identity-json').projectDir = file('identity/adapter/json')
 
-include ':external-find-identity-stub'
-project(':external-find-identity-stub').projectDir = file('adapter/identity/external/find-stub')
+include ':identity-external-find-stub'
+project(':identity-external-find-stub').projectDir = file('identity/adapter/external/find-stub')
 
-include ':manual-config'
-project(':manual-config').projectDir = file('config/manual')
+include ':identity-config'
+project(':identity-config').projectDir = file('identity/config')
 
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')

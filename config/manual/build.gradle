@@ -1,6 +1,0 @@
-dependencies {
-    api project(":use-cases")
-
-    implementation project(":in-memory-repository")
-    implementation project(":external-find-identity-stub")
-}

@@ -7,9 +7,9 @@ testSets {
 }
 
 dependencies {
-    api project(":use-cases")
+    api project(":identity-use-cases")
 
-    implementation testFixtures(project(":use-cases"))
+    implementation testFixtures(project(":identity-use-cases"))
 
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
 }
