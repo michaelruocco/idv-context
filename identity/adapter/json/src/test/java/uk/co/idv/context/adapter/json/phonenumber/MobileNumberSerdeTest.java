@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.phonenumber.MobilePhoneNumberMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumber;
-import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class MobileNumberSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new PhoneNumberModule());
-    private static final String JSON = ContentLoader.loadContentFromClasspath("phonenumber/mobile-number.json");
+    private static final String JSON = MobilePhoneNumberJsonMother.mobile();
     private static final PhoneNumber NUMBER = MobilePhoneNumberMother.mobile();
 
     @Test

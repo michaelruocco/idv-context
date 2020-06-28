@@ -13,7 +13,7 @@ public class AliasSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new AliasModule());
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "should serialize alias {1}")
     @ArgumentsSource(AliasArgumentsProvider.class)
     void shouldSerialize(String expectedJson, Alias alias) throws JsonProcessingException {
         String json = MAPPER.writeValueAsString(alias);
@@ -21,7 +21,7 @@ public class AliasSerdeTest {
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "should deserialize alias {1}")
     @ArgumentsSource(AliasArgumentsProvider.class)
     void shouldDeserialize(String json, Alias expectedAlias) throws JsonProcessingException {
         Alias alias = MAPPER.readValue(json, Alias.class);

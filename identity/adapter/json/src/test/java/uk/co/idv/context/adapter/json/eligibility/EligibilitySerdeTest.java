@@ -5,7 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.eligibility.Eligibility;
 import uk.co.idv.context.entities.eligibility.EligibilityMother;
-import uk.co.mruoc.file.content.ContentLoader;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -13,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class EligibilitySerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new EligibilityModule());
-    private static final String JSON = ContentLoader.loadContentFromClasspath("eligibility/eligibility.json");
+    private static final String JSON = EligibilityJsonMother.build();
     private static final Eligibility ELIGIBILITY = EligibilityMother.build();
 
     @Test

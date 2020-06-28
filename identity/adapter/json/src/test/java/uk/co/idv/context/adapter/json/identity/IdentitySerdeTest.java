@@ -8,36 +8,31 @@ import uk.co.idv.context.entities.identity.IdentityMother;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
 public class IdentitySerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new IdentityModule());
+    private static final String JSON = IdentityJsonMother.example();
+    private static final Identity IDENTITY = IdentityMother.example();
 
     @Test
     void shouldSerialize() throws JsonProcessingException {
-        Identity identity = IdentityMother.example();
+        String json = MAPPER.writeValueAsString(IDENTITY);
 
-        String json = MAPPER.writeValueAsString(identity);
-
-        String expectedJson = loadContentFromClasspath("identity/identity.json");
-        assertThatJson(json).isEqualTo(expectedJson);
+        assertThatJson(json).isEqualTo(JSON);
     }
 
     @Test
     void shouldDeserialize() throws JsonProcessingException {
-        Identity expectedIdentity = IdentityMother.example();
-        String json = loadContentFromClasspath("identity/identity.json");
+        Identity identity = MAPPER.readValue(JSON, Identity.class);
 
-        Identity identity = MAPPER.readValue(json, Identity.class);
-
-        assertThat(identity).isEqualTo(expectedIdentity);
+        assertThat(identity).isEqualTo(IDENTITY);
     }
 
     @Test
     void shouldDeserializeMinimal() throws JsonProcessingException {
         Identity expectedIdentity = IdentityMother.minimal();
-        String json = loadContentFromClasspath("identity/minimal-identity.json");
+        String json = IdentityJsonMother.minimal();
 
         Identity identity = MAPPER.readValue(json, Identity.class);
 

@@ -13,7 +13,7 @@ public class ChannelSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new ChannelModule());
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "should serialize channel {1}")
     @ArgumentsSource(ChannelArgumentsProvider.class)
     void shouldSerialize(String expectedJson, Channel channel) throws JsonProcessingException {
         String json = MAPPER.writeValueAsString(channel);
@@ -21,7 +21,7 @@ public class ChannelSerdeTest {
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "should deserialize channel {1}")
     @ArgumentsSource(ChannelArgumentsProvider.class)
     void shouldDeserialize(String json, Channel expectedChannel) throws JsonProcessingException {
         Channel channel = MAPPER.readValue(json, Channel.class);
