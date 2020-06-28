@@ -11,7 +11,7 @@ import uk.co.idv.context.adapter.json.channel.gb.GbRsaChannelDeserializer;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannel;
 import uk.co.idv.context.entities.channel.de.DeRsa;
-import uk.co.idv.context.entities.channel.gb.GbAs3;
+import uk.co.idv.context.entities.channel.gb.As3;
 import uk.co.idv.context.entities.channel.gb.GbRsa;
 
 import java.util.Collections;
@@ -40,7 +40,7 @@ public class ChannelModule extends SimpleModule {
 
     private void setUpGbChannels() {
         addDeserializer(GbRsa.class, new GbRsaChannelDeserializer());
-        addDeserializer(GbAs3.class, new As3ChannelDeserializer());
+        addDeserializer(As3.class, new As3ChannelDeserializer());
     }
 
     private void setUpDeChannels() {

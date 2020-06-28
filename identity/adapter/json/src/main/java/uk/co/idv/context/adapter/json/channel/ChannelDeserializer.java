@@ -9,7 +9,7 @@ import uk.co.idv.context.adapter.json.JsonParserConverter;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannel;
 import uk.co.idv.context.entities.channel.de.DeRsa;
-import uk.co.idv.context.entities.channel.gb.GbAs3;
+import uk.co.idv.context.entities.channel.gb.As3;
 import uk.co.idv.context.entities.channel.gb.GbRsa;
 
 import java.util.Map;
@@ -45,7 +45,7 @@ public class ChannelDeserializer extends StdDeserializer<Channel> {
     private static Map<String, Class<? extends Channel>> buildMappings() {
         return Map.of(
                 GbRsa.ID, GbRsa.class,
-                GbAs3.ID, GbAs3.class,
+                As3.ID, As3.class,
                 DeRsa.ID, DeRsa.class
         );
     }

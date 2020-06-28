@@ -5,7 +5,7 @@ import uk.co.idv.config.manual.ManualConfig;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
-import uk.co.idv.context.entities.channel.gb.GbAs3Mother;
+import uk.co.idv.context.entities.channel.gb.As3Mother;
 import uk.co.idv.context.entities.channel.gb.GbRsaMother;
 import uk.co.idv.context.entities.eligibility.Eligibility;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
@@ -76,7 +76,7 @@ public class CreateEligibilityIntegrationTest {
     void shouldCreateIdentityWithExternalDataIfIdentityNotFoundForAs3() {
         CreateEligibilityRequest request = CreateEligibilityRequestMother.builder()
                 .aliases(AliasesMother.creditCardNumberOnly())
-                .channel(GbAs3Mother.as3())
+                .channel(As3Mother.as3())
                 .build();
 
         Eligibility eligibility = createEligibility.create(request);
@@ -99,7 +99,7 @@ public class CreateEligibilityIntegrationTest {
         Identity existing = facade.update(identity);
         CreateEligibilityRequest request = CreateEligibilityRequestMother.builder()
                 .aliases(aliases)
-                .channel(GbAs3Mother.as3())
+                .channel(As3Mother.as3())
                 .build();
         createEligibility.create(request);
 

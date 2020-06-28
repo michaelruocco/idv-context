@@ -6,18 +6,18 @@ import uk.co.idv.context.entities.channel.Channel;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class GbAs3Test {
+class As3Test {
 
     @Test
     void shouldReturnId() {
-        Channel channel = GbAs3Mother.as3();
+        Channel channel = As3Mother.as3();
 
         assertThat(channel.getId()).isEqualTo("as3");
     }
 
     @Test
     void shouldReturnCountry() {
-        Channel channel = GbAs3Mother.as3();
+        Channel channel = As3Mother.as3();
 
         assertThat(channel.getCountry()).isEqualTo(CountryCode.GB);
     }

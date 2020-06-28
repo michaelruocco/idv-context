@@ -5,7 +5,7 @@ import lombok.Data;
 import uk.co.idv.context.entities.channel.Channel;
 
 @Data
-public class GbAs3 implements Channel {
+public class As3 implements Channel {
 
     public static final String ID = "as3";
 
