@@ -1,7 +1,6 @@
 package uk.co.idv.context.adapter.eligibility.external;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.usecases.eligibility.external.data.Delay;
 
 import java.time.Duration;
 import java.util.concurrent.ExecutorService;
@@ -11,8 +10,8 @@ import static org.mockito.Mockito.mock;
 
 class ExternalFindIdentityStubConfigTest {
 
-    private static final Delay NO_DELAY = new Delay(0);
-    private static final Delay OTHER_DELAY = new Delay(5);
+    private static final Duration NO_DELAY = Duration.ZERO;
+    private static final Duration OTHER_DELAY = Duration.ofMillis(5);
 
     @Test
     void shouldReturnExecutor() {

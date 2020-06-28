@@ -1,7 +1,7 @@
 package uk.co.idv.app.manual;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.config.manual.ManualConfig;
+import uk.co.idv.config.identity.IdentityConfig;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
@@ -18,7 +18,6 @@ import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
 import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequestMother;
 import uk.co.idv.context.usecases.identity.IdentityFacade;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
-import uk.co.idv.context.usecases.eligibility.external.data.Delay;
 
 import java.time.Duration;
 import java.util.concurrent.Executors;
@@ -31,16 +30,16 @@ public class CreateEligibilityIntegrationTest {
     private final ExternalFindIdentityStubConfig stubConfig = ExternalFindIdentityStubConfig.builder()
             .executor(Executors.newFixedThreadPool(2))
             .timeout(Duration.ofMillis(250))
-            .phoneNumberDelay(new Delay(400))
-            .emailAddressDelay(new Delay(100))
+            .phoneNumberDelay(Duration.ofMillis(400))
+            .emailAddressDelay(Duration.ofMillis(100))
             .build();
 
-    private final ManualConfig appConfig = ManualConfig.builder()
+    private final IdentityConfig identityConfig = IdentityConfig.builder()
             .stubConfig(stubConfig)
             .build();
 
-    private final CreateEligibility createEligibility = appConfig.createEligibility();
-    private final IdentityFacade facade = appConfig.identityFacade();
+    private final CreateEligibility createEligibility = identityConfig.createEligibility();
+    private final IdentityFacade facade = identityConfig.identityFacade();
 
     @Test
     void shouldThrowExceptionIfIdentityNotFoundForRsa() {

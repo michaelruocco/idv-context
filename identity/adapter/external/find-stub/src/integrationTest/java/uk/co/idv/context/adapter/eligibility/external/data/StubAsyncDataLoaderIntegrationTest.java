@@ -6,7 +6,6 @@ import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubCo
 import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoader;
 import uk.co.idv.context.usecases.eligibility.external.data.DataFutures;
 import uk.co.idv.context.usecases.eligibility.external.data.DataSupplierFactory;
-import uk.co.idv.context.usecases.eligibility.external.data.Delay;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -27,8 +26,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 public class StubAsyncDataLoaderIntegrationTest {
 
     private static final Duration TIMEOUT = Duration.ofMillis(1750);
-    private static final Delay PHONE_NUMBER_DELAY = new Delay(500);
-    private static final Delay EMAIL_ADDRESS_DELAY = new Delay(1500);
+    private static final Duration PHONE_NUMBER_DELAY = Duration.ofMillis(500);
+    private static final Duration EMAIL_ADDRESS_DELAY = Duration.ofMillis(1500);
     private static final int NUMBER_OF_RUNS = 100;
 
     private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();

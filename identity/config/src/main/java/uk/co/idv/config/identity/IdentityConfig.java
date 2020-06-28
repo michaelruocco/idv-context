@@ -1,4 +1,4 @@
-package uk.co.idv.config.manual;
+package uk.co.idv.config.identity;
 
 import lombok.Builder;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStub;
@@ -16,7 +16,7 @@ import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 import java.util.Collections;
 
 @Builder
-public class ManualConfig {
+public class IdentityConfig {
 
     @Builder.Default
     private final IdentityRepository repository = new InMemoryIdentityRepository();

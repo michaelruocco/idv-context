@@ -1,7 +1,7 @@
 package uk.co.idv.app.manual;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.config.manual.ManualConfig;
+import uk.co.idv.config.identity.IdentityConfig;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
@@ -27,7 +27,7 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 public class IdentityIntegrationTest {
 
-    private final ManualConfig appConfig = ManualConfig.builder()
+    private final IdentityConfig appConfig = IdentityConfig.builder()
             .build();
 
     private final IdentityFacade facade = appConfig.identityFacade();

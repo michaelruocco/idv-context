@@ -10,10 +10,10 @@ public class ExternalSaveIdentity implements SaveIdentity {
     private final IdentityRepository repository;
 
     @Override
-    public Identity save(Identity newIdentity, Identity existingIdentity) {
-        Identity identityToSave = newIdentity.addData(existingIdentity);
-        repository.save(identityToSave);
-        return identityToSave;
+    public Identity save(Identity update, Identity existing) {
+        Identity save = update.addData(existing);
+        repository.save(save);
+        return save;
     }
 
 }
