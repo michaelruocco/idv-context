@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 
 import java.util.UUID;
 
-public class RsaPropertyExtractor {
+public class RsaFieldExtractor {
 
     private static final String ISSUER_SESSION_ID = "issuerSessionId";
     private static final String DS_SESSION_ID = "dsSessionId";

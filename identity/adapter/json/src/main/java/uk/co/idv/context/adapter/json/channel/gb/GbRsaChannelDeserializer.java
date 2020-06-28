@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.adapter.json.JsonParserConverter;
-import uk.co.idv.context.adapter.json.channel.RsaPropertyExtractor;
+import uk.co.idv.context.adapter.json.channel.RsaFieldExtractor;
 import uk.co.idv.context.entities.channel.gb.GbRsa;
 
 public class GbRsaChannelDeserializer extends StdDeserializer<GbRsa> {
@@ -18,7 +18,7 @@ public class GbRsaChannelDeserializer extends StdDeserializer<GbRsa> {
     public GbRsa deserialize(JsonParser parser, DeserializationContext context) {
         final JsonNode node = JsonParserConverter.toNode(parser);
         return GbRsa.builder()
-                .issuerSessionId(RsaPropertyExtractor.issuerSessionId(node))
+                .issuerSessionId(RsaFieldExtractor.issuerSessionId(node))
                 .build();
     }
 
