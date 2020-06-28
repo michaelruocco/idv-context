@@ -9,6 +9,10 @@ public class RsaFieldExtractor {
     private static final String ISSUER_SESSION_ID = "issuerSessionId";
     private static final String DS_SESSION_ID = "dsSessionId";
 
+    private RsaFieldExtractor() {
+        // utility class
+    }
+    
     public static UUID issuerSessionId(JsonNode node) {
         return extractOptionalUuid(ISSUER_SESSION_ID, node);
     }
