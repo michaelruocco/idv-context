@@ -2,19 +2,23 @@ package uk.co.idv.context.entities.channel.gb;
 
 import com.neovisionaries.i18n.CountryCode;
 import lombok.Builder;
+import lombok.Data;
 import uk.co.idv.context.entities.channel.Rsa;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Builder
+@Data
 public class GbRsa implements Rsa {
+
+    public static final String ID = "gb-rsa";
 
     private final UUID issuerSessionId;
 
     @Override
     public String getId() {
-        return "gb-rsa";
+        return ID;
     }
 
     @Override

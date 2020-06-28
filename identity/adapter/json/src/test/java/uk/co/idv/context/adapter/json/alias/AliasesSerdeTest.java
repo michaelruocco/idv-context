@@ -19,14 +19,14 @@ public class AliasesSerdeTest {
 
     @Test
     void shouldSerialize() throws JsonProcessingException {
-        final String json = MAPPER.writeValueAsString(ALIASES);
+        String json = MAPPER.writeValueAsString(ALIASES);
 
         assertThatJson(json).isEqualTo(JSON);
     }
 
     @Test
     void shouldDeserialize() throws JsonProcessingException {
-        final Aliases aliases = MAPPER.readValue(JSON, Aliases.class);
+        Aliases aliases = MAPPER.readValue(JSON, Aliases.class);
 
         assertThat(aliases).isEqualTo(ALIASES);
     }

@@ -1,0 +1,16 @@
+{
+  "channel": {
+    "id": "gb-rsa",
+    "country": "GB"
+  },
+  "aliases": [
+    {
+      "type": "credit-card-number",
+      "value": "4929111111111111"
+    }
+  ],
+  "requested": [
+    "phone-numbers",
+    "email-addresses"
+  ]
+}

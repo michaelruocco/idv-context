@@ -26,7 +26,7 @@ public class IdvSerdeTest {
 
     @Test
     void shouldDeserialize() throws JsonProcessingException {
-        final Alias alias = MAPPER.readValue(JSON, Alias.class);
+        Alias alias = MAPPER.readValue(JSON, Alias.class);
 
         assertThat(alias).isEqualTo(ALIAS);
     }

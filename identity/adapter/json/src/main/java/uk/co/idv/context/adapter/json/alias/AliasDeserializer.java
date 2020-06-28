@@ -22,23 +22,23 @@ public class AliasDeserializer extends StdDeserializer<Alias> {
         this(buildMappings());
     }
 
-    public AliasDeserializer(final Map<String, Class<? extends Alias>> mappings) {
+    public AliasDeserializer(Map<String, Class<? extends Alias>> mappings) {
         super(Alias.class);
         this.mappings = mappings;
     }
 
     @Override
-    public Alias deserialize(final JsonParser parser, final DeserializationContext context) {
+    public Alias deserialize(JsonParser parser, DeserializationContext context) {
         final JsonNode node = JsonParserConverter.toNode(parser);
         final String type = extractType(node);
         return JsonNodeConverter.toObject(node, parser, toMappingType(type));
     }
 
-    private static String extractType(final JsonNode node) {
+    private static String extractType(JsonNode node) {
         return node.get("type").asText();
     }
 
-    private Class<? extends Alias> toMappingType(final String name) {
+    private Class<? extends Alias> toMappingType(String name) {
         return mappings.getOrDefault(name, DefaultAlias.class);
     }
 

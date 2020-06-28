@@ -14,8 +14,8 @@ public class CreditCardNumberDeserializer extends StdDeserializer<CreditCardNumb
     }
 
     @Override
-    public CreditCardNumber deserialize(final JsonParser parser, final DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
+    public CreditCardNumber deserialize(JsonParser parser, DeserializationContext context) {
+        JsonNode node = JsonParserConverter.toNode(parser);
         return new CreditCardNumber(node.get("value").asText());
     }
 

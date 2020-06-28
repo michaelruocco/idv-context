@@ -17,11 +17,6 @@ public class IdentityModule extends SimpleModule {
         setUpIdentity();
     }
 
-    private void setUpIdentity() {
-        setMixInAnnotation(Identity.class, IdentityMixin.class);
-        addDeserializer(Identity.class, new IdentityDeserializer());
-    }
-
     @Override
     public Iterable<? extends Module> getDependencies() {
         return Arrays.asList(
@@ -29,6 +24,11 @@ public class IdentityModule extends SimpleModule {
                 new PhoneNumberModule(),
                 new EmailAddressModule()
         );
+    }
+
+    private void setUpIdentity() {
+        setMixInAnnotation(Identity.class, IdentityMixin.class);
+        addDeserializer(Identity.class, new IdentityDeserializer());
     }
 
 }

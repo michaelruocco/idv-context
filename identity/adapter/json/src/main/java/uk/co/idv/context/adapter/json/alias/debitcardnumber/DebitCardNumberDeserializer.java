@@ -14,8 +14,8 @@ public class DebitCardNumberDeserializer extends StdDeserializer<DebitCardNumber
     }
 
     @Override
-    public DebitCardNumber deserialize(final JsonParser parser, final DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
+    public DebitCardNumber deserialize(JsonParser parser, DeserializationContext context) {
+        JsonNode node = JsonParserConverter.toNode(parser);
         return new DebitCardNumber(node.get("value").asText());
     }
 
