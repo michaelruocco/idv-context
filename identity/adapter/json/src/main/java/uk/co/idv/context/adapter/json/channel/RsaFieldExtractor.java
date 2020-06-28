@@ -12,7 +12,7 @@ public class RsaFieldExtractor {
     private RsaFieldExtractor() {
         // utility class
     }
-    
+
     public static UUID issuerSessionId(JsonNode node) {
         return extractOptionalUuid(ISSUER_SESSION_ID, node);
     }
