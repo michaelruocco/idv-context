@@ -27,10 +27,10 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 public class IdentityIntegrationTest {
 
-    private final IdentityConfig appConfig = IdentityConfig.builder()
+    private final IdentityConfig config = IdentityConfig.builder()
             .build();
 
-    private final IdentityFacade facade = appConfig.identityFacade();
+    private final IdentityFacade facade = config.identityFacade();
 
     @Test
     void shouldThrowExceptionIfIdentityNotFound() {

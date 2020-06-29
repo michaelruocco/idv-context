@@ -14,7 +14,7 @@ dependencies {
 
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.18.1"
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
-    testImplementation testFixtures(project(":identity-use-cases"))
 
+    testFixturesApi testFixtures(project(":identity-use-cases"))
     testFixturesApi "com.github.michaelruocco:file-loader:5.0.1"
 }

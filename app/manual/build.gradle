@@ -12,4 +12,5 @@ dependencies {
     integrationTestImplementation project(":identity-in-memory-repository")
     integrationTestImplementation project(":identity-external-find-stub")
     integrationTestImplementation testFixtures(project(":identity-use-cases"))
+    integrationTestImplementation testFixtures(project(":identity-json"))
 }

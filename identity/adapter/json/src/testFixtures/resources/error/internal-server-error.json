@@ -1,0 +1,5 @@
+{
+  "status": 500,
+  "title": "Internal server error",
+  "message": "error message"
+}

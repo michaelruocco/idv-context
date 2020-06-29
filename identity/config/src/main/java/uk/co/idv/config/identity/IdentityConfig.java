@@ -3,6 +3,7 @@ package uk.co.idv.config.identity;
 import lombok.Builder;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStub;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
+import uk.co.idv.context.adapter.json.error.handler.IdentityErrorHandler;
 import uk.co.idv.context.adapter.repository.InMemoryIdentityRepository;
 import uk.co.idv.context.usecases.eligibility.ChannelCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CompositeCreateEligibility;
@@ -32,6 +33,10 @@ public class IdentityConfig {
 
     public IdentityFacade identityFacade() {
         return IdentityFacade.build(repository);
+    }
+
+    public IdentityErrorHandler identityErrorHandler() {
+        return new IdentityErrorHandler();
     }
 
     private ChannelCreateEligibility rsaCreateEligibility() {
