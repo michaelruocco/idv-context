@@ -36,7 +36,7 @@ class UnsupportedAliasTypeHandlerTest {
     }
 
     @Test
-    public void shouldPopulateUpdatedAndExistingIdvIds() {
+    public void shouldPopulateMessageWithAliasType() {
         String type = "my-type";
         UnsupportedAliasTypeExeception cause = new UnsupportedAliasTypeExeception(type);
 

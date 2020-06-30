@@ -16,12 +16,12 @@ Feature: Identity Maintenance
   Scenario: Get identity - Error - identity not found
     Given url 'http://localhost:8081/identities?aliasType=credit-card-number&aliasValue=4929111111111111'
     When method GET
-    Then status 500
+    Then status 404
     And match response ==
       """
       {
-        status: 500,
-        title: 'Internal server error',
+        status: 404,
+        title: 'Identity not found',
         message: 'credit-card-number|4929111111111111'
       }
       """

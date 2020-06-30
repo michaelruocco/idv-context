@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 
 import static uk.co.idv.context.adapter.json.error.aliastype.UnsupportedAliasTypeErrorJsonMother.unsupportedAliasTypeErrorJson;
 import static uk.co.idv.context.adapter.json.error.aliastype.UnsupportedAliasTypeErrorMother.unsupportedAliasTypeError;
+import static uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundErrorJsonMother.identityNotFoundErrorJson;
+import static uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundErrorMother.identityNotFoundError;
 import static uk.co.idv.context.adapter.json.error.internalserver.InternalServerErrorJsonMother.internalServerErrorJson;
 import static uk.co.idv.context.adapter.json.error.internalserver.InternalServerErrorMother.internalServerError;
 import static uk.co.idv.context.adapter.json.error.updateidvid.CannotUpdateIdvIdErrorJsonMother.cannotUpdateIdvIdErrorJson;
@@ -20,7 +22,8 @@ public class ErrorArgumentsProvider implements ArgumentsProvider {
         return Stream.of(
                 internalServerErrorArguments(),
                 cannotUpdateIdvIdErrorArguments(),
-                unsupportedAliasTypeErrorArguments()
+                unsupportedAliasTypeErrorArguments(),
+                identityNotFoundErrorArguments()
         );
     }
 
@@ -42,6 +45,13 @@ public class ErrorArgumentsProvider implements ArgumentsProvider {
         return Arguments.of(
                 unsupportedAliasTypeErrorJson(),
                 unsupportedAliasTypeError()
+        );
+    }
+
+    private static Arguments identityNotFoundErrorArguments() {
+        return Arguments.of(
+                identityNotFoundErrorJson(),
+                identityNotFoundError()
         );
     }
 

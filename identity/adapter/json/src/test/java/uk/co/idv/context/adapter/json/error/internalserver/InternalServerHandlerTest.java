@@ -6,9 +6,9 @@ import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InternalServerErrorHandlerTest {
+class InternalServerHandlerTest {
 
-    private final ErrorHandler handler = new InternalServerErrorHandler();
+    private final ErrorHandler handler = new InternalServerHandler();
 
     @Test
     void shouldSupportAnyThrowable() {

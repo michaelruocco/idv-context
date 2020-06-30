@@ -25,7 +25,6 @@ import uk.co.idv.context.usecases.identity.create.IdentityMustBelongToCountryExc
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
 import uk.co.idv.context.usecases.identity.save.CannotUpdateIdvIdException;
 
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -51,7 +50,7 @@ public class IdentityIntegrationTest {
 
     @Test
     void shouldThrowExceptionIfIdentityNotFound() {
-        Aliases aliases = AliasesMother.with(IdvIdMother.withValue(UUID.randomUUID()));
+        Aliases aliases = AliasesMother.with(IdvIdMother.idvId());
 
         IdentityNotFoundException error = catchThrowableOfType(
                 () -> facade.find(aliases),
