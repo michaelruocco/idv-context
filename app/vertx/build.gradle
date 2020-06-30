@@ -1,0 +1,35 @@
+plugins {
+    id "application"
+    id "com.github.johnrengelman.shadow" version "6.0.0"
+    id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+}
+
+ext {
+    vertxVersion = "4.0.0-milestone5"
+}
+
+testSets {
+    integrationTest
+}
+
+configurations {
+    testCompile.exclude module: "slf4j-simple"
+}
+
+dependencies {
+    implementation "io.vertx:vertx-web:${vertxVersion}"
+
+    implementation project(":identity-json")
+    implementation project(":identity-config")
+    implementation project(":identity-external-find-stub")
+
+    integrationTestImplementation "com.intuit.karate:karate-apache:0.9.5"
+    integrationTestImplementation "com.intuit.karate:karate-junit5:0.9.5"
+    integrationTestImplementation "org.awaitility:awaitility:4.0.3"
+}
+
+mainClassName = "uk.co.idv.app.vertx.Main"
+
+shadowJar {
+    archiveClassifier.set("standalone")
+}

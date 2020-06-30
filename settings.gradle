@@ -20,3 +20,6 @@ project(':identity-config').projectDir = file('identity/config')
 
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
+
+include ':vertx-app'
+project(':vertx-app').projectDir = file('app/vertx')

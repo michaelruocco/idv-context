@@ -74,6 +74,10 @@ public class Identity {
                 .build();
     }
 
+    public boolean hasCountry() {
+        return country != null;
+    }
+
     private void validateHasSameCountry(Identity other) {
         if (!hasSameCountry(other)) {
             throw new CountryMismatchException(country, other.getCountry());

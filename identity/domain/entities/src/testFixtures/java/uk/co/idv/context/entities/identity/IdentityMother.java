@@ -12,6 +12,10 @@ import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 
 public interface IdentityMother {
 
+    static Identity withoutCountry() {
+        return withCountry(null);
+    }
+
     static Identity withCountry(CountryCode country) {
         return exampleBuilder().country(country).build();
     }

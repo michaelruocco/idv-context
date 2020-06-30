@@ -23,6 +23,7 @@ allprojects {
 
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     jacoco {
@@ -71,6 +72,7 @@ subprojects {
         testLogging {
             events "failed"
             exceptionFormat "full"
+            showStandardStreams true
         }
     }
 

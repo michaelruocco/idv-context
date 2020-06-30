@@ -245,4 +245,20 @@ class IdentityTest {
         assertThat(updated.getAliases()).containsExactlyElementsOf(identity.getAliases().remove(identity.getIdvId()));
     }
 
+    @Test
+    void shouldReturnTrueIfHasCountry() {
+        CountryCode country = CountryCode.GB;
+
+        Identity identity = IdentityMother.withCountry(country);
+
+        assertThat(identity.hasCountry()).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfDoesNotHaveCountry() {
+        Identity identity = IdentityMother.withoutCountry();
+
+        assertThat(identity.hasCountry()).isFalse();
+    }
+
 }
