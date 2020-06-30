@@ -7,6 +7,7 @@
 
 ## Todo
 
+*   Implement proper error scenarios for countries do not match and identity does not belong to country
 *   Add karate feature tests eligibility endpoint
 *   Add lockout functionality
 

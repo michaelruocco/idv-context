@@ -88,7 +88,7 @@ public class CreateEligibilityIntegrationTest {
 
 
     @Test
-    void shouldAddWithExternalDataToIdentityIfIdentityExistsForAs3() {
+    void shouldAddExternalDataToIdentityIfIdentityExistsForAs3() {
         Aliases aliases = AliasesMother.creditCardNumberOnly();
         Identity identity = IdentityMother.exampleBuilder()
                 .aliases(aliases)
