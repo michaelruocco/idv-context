@@ -7,7 +7,8 @@
 
 ## Todo
 
-*   Implement selecting identity loader based on Channel
+*   Add karate feature tests eligibility endpoint
+*   Add lockout functionality
 
 ## Useful commands
 
