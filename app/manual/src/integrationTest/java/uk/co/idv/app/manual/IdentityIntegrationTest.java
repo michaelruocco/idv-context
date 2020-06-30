@@ -1,8 +1,10 @@
 package uk.co.idv.app.manual;
 
+import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.config.identity.IdentityConfig;
 import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.UnsupportedAliasTypeExeception;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumber;
@@ -13,16 +15,20 @@ import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.context.entities.identity.CountryMismatchException;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 import uk.co.idv.context.usecases.identity.IdentityFacade;
+import uk.co.idv.context.usecases.identity.create.IdentityMustBelongToCountryException;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
+import uk.co.idv.context.usecases.identity.save.CannotUpdateIdvIdException;
 
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 public class IdentityIntegrationTest {
@@ -31,6 +37,17 @@ public class IdentityIntegrationTest {
             .build();
 
     private final IdentityFacade facade = config.identityFacade();
+
+    @Test
+    void shouldThrowExceptionForUnsupportedAliasType() {
+        String type = "ABC";
+
+        Throwable error = catchThrowable(() -> facade.toAlias(type, "123"));
+
+        assertThat(error)
+                .isInstanceOf(UnsupportedAliasTypeExeception.class)
+                .hasMessage(type);
+    }
 
     @Test
     void shouldThrowExceptionIfIdentityNotFound() {
@@ -45,10 +62,18 @@ public class IdentityIntegrationTest {
     }
 
     @Test
+    void shouldThrowExceptionIfIdentityDoesBelongToCountry() {
+        Identity identity = IdentityMother.withoutCountry();
+
+        Throwable error = catchThrowable(() -> facade.update(identity));
+
+        assertThat(error).isInstanceOf(IdentityMustBelongToCountryException.class);
+    }
+
+    @Test
     void shouldAllocateIdvIdWhenIdentityCreated() {
-        Aliases aliases = AliasesMother.creditCardNumberOnly();
         Identity identity = IdentityMother.exampleBuilder()
-                .aliases(aliases)
+                .aliases(AliasesMother.creditCardNumberOnly())
                 .emailAddresses(EmailAddressesMother.empty())
                 .phoneNumbers(PhoneNumbersMother.empty())
                 .build();
@@ -74,6 +99,22 @@ public class IdentityIntegrationTest {
     }
 
     @Test
+    void cannotUpdateIdvIdOnIdentityAfterCreation() {
+        Alias alias = CreditCardNumberMother.creditCardNumber();
+        Identity initial = IdentityMother.withAliases(alias);
+        Identity created = facade.update(initial);
+
+        IdvId updated = IdvIdMother.idvId();
+        CannotUpdateIdvIdException error = catchThrowableOfType(
+                () -> facade.update(IdentityMother.withAliases(alias, updated)),
+                CannotUpdateIdvIdException.class
+        );
+
+        assertThat(error.getExisting()).isEqualTo(created.getIdvId());
+        assertThat(error.getUpdated()).isEqualTo(updated);
+    }
+
+    @Test
     void shouldMergeIdentities() {
         CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
         Identity creditIdentity = facade.update(buildCreditIdentity(creditCardNumber));
@@ -88,6 +129,29 @@ public class IdentityIntegrationTest {
         assertThat(idvId).isNotEqualTo(debitIdentity.getIdvId());
         assertThat(merged).isEqualTo(facade.find(AliasesMother.with(creditCardNumber)));
         assertThat(merged).isEqualTo(facade.find(AliasesMother.with(debitCardNumber)));
+    }
+
+    @Test
+    void shouldThrowExceptionIfAttemptToMergeTwoIdentitiesWithDifferentCountries() {
+        CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Identity gbIdentity = facade.update(IdentityMother.emptyBuilder()
+                .aliases(AliasesMother.with(creditCardNumber))
+                .country(CountryCode.GB)
+                .build());
+        DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        Identity deIdentity = facade.update(IdentityMother.emptyBuilder()
+                .aliases(AliasesMother.with(debitCardNumber))
+                .country(CountryCode.DE)
+                .build());
+        Identity mergeInput = buildMergeInput(creditCardNumber, debitCardNumber);
+
+        CountryMismatchException error = catchThrowableOfType(
+                () -> facade.update(mergeInput),
+                CountryMismatchException.class
+        );
+
+        assertThat(error.getCountryToAdd()).isEqualTo(deIdentity.getCountry());
+        assertThat(error.getExistingCountry()).isEqualTo(gbIdentity.getCountry());
     }
 
     @Test

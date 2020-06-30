@@ -3,12 +3,12 @@ Feature: Identity Maintenance
   Scenario: Get identity - Error - unsupported alias type
     Given url 'http://localhost:8081/identities?aliasType=ABC&aliasValue=123'
     When method GET
-    Then status 500
+    Then status 422
     And match response ==
       """
       {
-        status: 500,
-        title: 'Internal server error',
+        status: 422,
+        title: 'Unsupported alias type',
         message: 'ABC'
       }
       """
@@ -26,7 +26,7 @@ Feature: Identity Maintenance
       }
       """
 
-  Scenario: Update identity - Error - Country not provided
+  Scenario: Update identity - Error - Identity does not belong to country
     Given url 'http://localhost:8081/identities'
     And request
       """

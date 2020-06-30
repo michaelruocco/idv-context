@@ -4,7 +4,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
 public interface InternalServerErrorJsonMother {
 
-    static String internalServerError() {
+    static String internalServerErrorJson() {
         return loadContentFromClasspath("error/internal-server-error.json");
     }
 

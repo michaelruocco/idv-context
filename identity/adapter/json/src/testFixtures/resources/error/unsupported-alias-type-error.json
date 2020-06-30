@@ -1,0 +1,5 @@
+{
+  "status": 422,
+  "title": "Unsupported alias type",
+  "message": "my-type"
+}
