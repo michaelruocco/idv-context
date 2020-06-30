@@ -7,7 +7,7 @@ public class Main {
     private Main() {
         // utility class
     }
-    
+
     public static void main(String[] args) {
         Launcher.executeCommand("run", ApplicationVerticle.class.getName());
     }

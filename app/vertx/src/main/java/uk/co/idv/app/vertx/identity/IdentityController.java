@@ -57,7 +57,7 @@ public class IdentityController {
                 .end(body.encode());
     }
 
-    private String toLocation(final HttpServerRequest request, final Identity identity) {
+    private String toLocation(HttpServerRequest request, Identity identity) {
         return String.format("%s/%s", request.absoluteURI(), identity.getIdvIdValue());
     }
 
