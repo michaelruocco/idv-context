@@ -29,8 +29,4 @@ public class CreateIdentity {
         return identityWithId;
     }
 
-    private void validate(Identity identity) {
-
-    }
-
 }
