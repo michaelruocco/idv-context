@@ -29,7 +29,7 @@ class CannotUpdateIdvIdHandlerTest {
 
     @Test
     public void shouldReturnCannotUpdateIdvIdError() {
-        CannotUpdateIdvIdException cause = mock(CannotUpdateIdvIdException.class);
+        CannotUpdateIdvIdException cause = CannotUpdateIdvIdExceptionMother.build();
 
         ApiError error = handler.apply(cause);
 

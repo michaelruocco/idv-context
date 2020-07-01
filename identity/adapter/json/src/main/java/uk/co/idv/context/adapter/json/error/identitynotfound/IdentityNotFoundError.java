@@ -1,44 +1,28 @@
 package uk.co.idv.context.adapter.json.error.identitynotfound;
 
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.adapter.json.error.ApiError;
+import uk.co.idv.context.adapter.json.error.DefaultApiError;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 
-import java.util.Collections;
-import java.util.Map;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
+import static java.util.Collections.emptyMap;
+
 @Getter
-public class IdentityNotFoundError implements ApiError {
+public class IdentityNotFoundError extends DefaultApiError {
 
     private static final int STATUS = 404;
     private static final String TITLE = "Identity not found";
 
-    private final Aliases aliases;
-
-    @Override
-    public int getStatus() {
-        return STATUS;
+    public IdentityNotFoundError(Aliases aliases) {
+        super(STATUS, TITLE, toMessage(aliases), emptyMap());
     }
 
-    @Override
-    public String getTitle() {
-        return TITLE;
-    }
-
-    @Override
-    public String getMessage() {
+    private static String toMessage(Aliases aliases) {
         return aliases.stream()
                 .map(Alias::format)
                 .collect(Collectors.joining(","));
-    }
-
-    @Override
-    public Map<String, Object> getMeta() {
-        return Collections.emptyMap();
     }
 
 }
