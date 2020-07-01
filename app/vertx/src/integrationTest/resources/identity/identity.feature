@@ -1,7 +1,11 @@
 Feature: Identity Maintenance
 
+  Background:
+    * url baseUrl + '/identities'
+
   Scenario: Get identity - Error - unsupported alias type
-    Given url 'http://localhost:8081/identities?aliasType=ABC&aliasValue=123'
+    Given param aliasType = 'ABC'
+    And param aliasValue = '123'
     When method GET
     Then status 422
     And match response ==
@@ -14,7 +18,8 @@ Feature: Identity Maintenance
       """
 
   Scenario: Get identity - Error - identity not found
-    Given url 'http://localhost:8081/identities?aliasType=credit-card-number&aliasValue=4929111111111111'
+    Given param aliasType = 'credit-card-number'
+    And param aliasValue = '4929111111111111'
     When method GET
     Then status 404
     And match response ==
@@ -27,8 +32,7 @@ Feature: Identity Maintenance
       """
 
   Scenario: Update identity - Error - Identity does not belong to country
-    Given url 'http://localhost:8081/identities'
-    And request
+    Given request
       """
       {
         aliases: [
@@ -48,8 +52,7 @@ Feature: Identity Maintenance
       """
 
   Scenario: Create Identity - Success - Create with one alias
-    Given url 'http://localhost:8081/identities'
-    And request
+    Given request
       """
       {
         country: 'GB',
@@ -71,11 +74,10 @@ Feature: Identity Maintenance
         ]
       }
       """
-    And match responseHeaders.Location contains 'http://localhost:8081/identities/' + response.idvId
+    And match responseHeaders.Location contains baseUrl + '/identities/' + response.idvId
 
   Scenario: Create + Get identity - Success - Create with one alias, Get by alias
-    Given url 'http://localhost:8081/identities'
-    And request
+    Given request
       """
       {
         country: 'GB',
@@ -86,7 +88,8 @@ Feature: Identity Maintenance
       """
     And method POST
     And status 200
-    And url 'http://localhost:8081/identities?aliasType=credit-card-number&aliasValue=4929111111111111'
+    And param aliasType = 'credit-card-number'
+    And param aliasValue = '4929111111111111'
     When method GET
     Then status 200
     And match response ==
@@ -102,8 +105,7 @@ Feature: Identity Maintenance
       """
 
   Scenario: Create + Update identity - Error - idv id cannot be updated
-    Given url 'http://localhost:8081/identities'
-    And request
+    Given request
       """
       {
         country: 'GB',
@@ -145,8 +147,7 @@ Feature: Identity Maintenance
     And match response.meta.existing == existingIdvId
 
   Scenario: Create + Update identity - Success - Add new alias, phone number and email
-    Given url 'http://localhost:8081/identities'
-    And request
+    Given request
       """
       {
         country: 'GB',
@@ -195,8 +196,7 @@ Feature: Identity Maintenance
       """
 
   Scenario: Merge identities - Error - Cannot merge identities with different countries
-    Given url 'http://localhost:8081/identities'
-    And request
+    Given request
       """
       {
         country: 'GB',
@@ -240,8 +240,7 @@ Feature: Identity Maintenance
       """
 
   Scenario: Merge identities - Success - Two existing identities merged under new idv id with all aliases and data combined
-    Given url 'http://localhost:8081/identities'
-    And request
+    Given request
       """
       {
         country: 'GB',
