@@ -47,7 +47,33 @@ Feature: Identity Maintenance
       }
       """
 
-  Scenario: Create + Get identity - Success - Create with one alias, Get with IDV ID allocated
+  Scenario: Create Identity - Success - Create with one alias
+    Given url 'http://localhost:8081/identities'
+    And request
+      """
+      {
+        country: 'GB',
+        aliases: [
+          { type: 'credit-card-number', value: '4929111111111110' }
+        ]
+      }
+      """
+    When method POST
+    Then status 200
+    And match response ==
+      """
+      {
+        idvId: '#uuid',
+        country: 'GB',
+        aliases: [
+          { type: 'credit-card-number', value: '4929111111111110' },
+          { type: 'idv-id', value: '#uuid' }
+        ]
+      }
+      """
+    And match responseHeaders.Location contains 'http://localhost:8081/identities/' + response.idvId
+
+  Scenario: Create + Get identity - Success - Create with one alias, Get by alias
     Given url 'http://localhost:8081/identities'
     And request
       """
@@ -88,12 +114,14 @@ Feature: Identity Maintenance
       """
     And method POST
     And status 200
+    * def existingIdvId = response.idvId
+    * def newIdvId = 'dec2f278-b7e0-44fa-ab1f-f93f942bdf4d'
     And request
       """
       {
         country: 'GB',
         aliases: [
-          { type: 'idv-id', value: 'dec2f278-b7e0-44fa-ab1f-f93f942bdf4d' },
+          { type: 'idv-id', value: '#(newIdvId)' },
           { type: 'credit-card-number', value: '4929111111111112' }
         ]
       }
@@ -112,6 +140,9 @@ Feature: Identity Maintenance
         }
       }
       """
+    And match response.message == 'attempted to update existing value ' + existingIdvId + ' to ' + newIdvId
+    And match response.meta.new == newIdvId
+    And match response.meta.existing == existingIdvId
 
   Scenario: Create + Update identity - Success - Add new alias, phone number and email
     Given url 'http://localhost:8081/identities'
