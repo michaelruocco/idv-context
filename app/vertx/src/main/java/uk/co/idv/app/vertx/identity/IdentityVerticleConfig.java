@@ -1,6 +1,5 @@
 package uk.co.idv.app.vertx.identity;
 
-import io.vertx.core.DeploymentOptions;
 import io.vertx.core.Handler;
 import io.vertx.ext.web.RoutingContext;
 import lombok.RequiredArgsConstructor;
@@ -21,10 +20,6 @@ public class IdentityVerticleConfig {
 
     public IdentityController identityController() {
         return new IdentityController(config.identityFacade());
-    }
-
-    public DeploymentOptions deploymentOptions() {
-        return new IdentityDeploymentOptions();
     }
 
     public Handler<RoutingContext> errorHandler() {

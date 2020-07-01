@@ -5,8 +5,8 @@ import io.vertx.core.AbstractVerticle;
 import io.vertx.core.Promise;
 import io.vertx.core.json.jackson.DatabindCodec;
 import lombok.RequiredArgsConstructor;
+import uk.co.idv.app.vertx.identity.IdentityDeploymentOptions;
 import uk.co.idv.app.vertx.identity.IdentityVerticle;
-import uk.co.idv.app.vertx.identity.IdentityVerticleConfig;
 import uk.co.idv.context.adapter.json.eligibility.EligibilityModule;
 
 @RequiredArgsConstructor
@@ -36,8 +36,7 @@ public class ApplicationVerticle extends AbstractVerticle {
     }
 
     private void deployIdentity(Promise<String> deployment) {
-        IdentityVerticleConfig config = new IdentityVerticleConfig();
-        vertx.deployVerticle(new IdentityVerticle(config), config.deploymentOptions(), deployment);
+        vertx.deployVerticle(new IdentityVerticle(), new IdentityDeploymentOptions(), deployment);
     }
 
 }
