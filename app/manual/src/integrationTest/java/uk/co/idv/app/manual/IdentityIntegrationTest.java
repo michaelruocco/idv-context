@@ -149,8 +149,8 @@ public class IdentityIntegrationTest {
                 CountryMismatchException.class
         );
 
-        assertThat(error.getCountryToAdd()).isEqualTo(deIdentity.getCountry());
-        assertThat(error.getExistingCountry()).isEqualTo(gbIdentity.getCountry());
+        assertThat(error.getUpdated()).isEqualTo(deIdentity.getCountry());
+        assertThat(error.getExisting()).isEqualTo(gbIdentity.getCountry());
     }
 
     @Test

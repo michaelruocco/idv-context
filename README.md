@@ -8,6 +8,8 @@
 ## Todo
 
 *   Implement proper error scenarios for countries do not match and identity does not belong to country
+*   Change country mismatch exception to pass identities rathert than just countries
+*   Get karate tests starting up on random port
 *   Add karate feature tests eligibility endpoint
 *   Add lockout functionality
 

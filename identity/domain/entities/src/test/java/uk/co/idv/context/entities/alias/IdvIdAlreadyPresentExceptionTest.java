@@ -18,12 +18,12 @@ class IdvIdAlreadyPresentExceptionTest {
 
     @Test
     void shouldReturnExistingIdvId() {
-        assertThat(error.getExistingIdvId()).isEqualTo(existingIdvId);
+        assertThat(error.getExisting()).isEqualTo(existingIdvId);
     }
 
     @Test
     void shouldReturnIdvIdToAdd() {
-        assertThat(error.getIdvIdToAdd()).isEqualTo(idvIdToAdd);
+        assertThat(error.getUpdated()).isEqualTo(idvIdToAdd);
     }
 
 }

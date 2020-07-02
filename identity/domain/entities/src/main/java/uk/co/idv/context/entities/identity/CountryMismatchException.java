@@ -6,13 +6,13 @@ import lombok.Getter;
 @Getter
 public class CountryMismatchException extends RuntimeException {
 
-    private final CountryCode existingCountry;
-    private final CountryCode countryToAdd;
+    private final CountryCode existing;
+    private final CountryCode updated;
 
-    public CountryMismatchException(CountryCode existingCountry, CountryCode countryToAdd) {
-        super("countries do not match");
-        this.existingCountry = existingCountry;
-        this.countryToAdd = countryToAdd;
+    public CountryMismatchException(CountryCode existing, CountryCode updated) {
+        super("cannot merge identities if countries do not match");
+        this.existing = existing;
+        this.updated = updated;
     }
 
 }

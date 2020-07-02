@@ -1,0 +1,9 @@
+{
+  "status": 422,
+  "title": "Cannot merge identities if countries do not match",
+  "message": "attempted to merge identity from GB to DE",
+  "meta": {
+    "existing": "GB",
+    "new": "DE"
+  }
+}

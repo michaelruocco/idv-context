@@ -1,19 +1,18 @@
-package uk.co.idv.context.adapter.json.error.updateidvid;
+package uk.co.idv.context.adapter.json.error.country;
 
+import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.json.error.ApiError;
-import uk.co.idv.context.entities.alias.IdvId;
-import uk.co.idv.context.entities.alias.IdvIdMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
 
-class CannotUpdateIdvIdErrorTest {
+class CountryMismatchErrorTest {
 
-    private final IdvId existing = IdvIdMother.idvId1();
-    private final IdvId updated = IdvIdMother.idvId();
+    private final CountryCode existing = CountryCode.GB;
+    private final CountryCode updated = CountryCode.DE;
 
-    private final ApiError error = CannotUpdateIdvIdError.builder()
+    private final ApiError error = CountryMismatchError.builder()
             .existing(existing)
             .updated(updated)
             .build();
@@ -25,15 +24,15 @@ class CannotUpdateIdvIdErrorTest {
 
     @Test
     void shouldReturnTitle() {
-        assertThat(error.getTitle()).isEqualTo("Cannot update idv id");
+        assertThat(error.getTitle()).isEqualTo("Cannot merge identities if countries do not match");
     }
 
     @Test
     void shouldReturnMessage() {
         String expectedMessage = String.format(
-                "attempted to update existing value %s to %s",
-                existing.getValue(),
-                updated.getValue()
+                "attempted to merge identity from %s to %s",
+                existing,
+                updated
         );
 
         assertThat(error.getMessage()).isEqualTo(expectedMessage);
@@ -42,8 +41,8 @@ class CannotUpdateIdvIdErrorTest {
     @Test
     void shouldReturnMeta() {
         assertThat(error.getMeta()).contains(
-                entry("existing", existing.getValue()),
-                entry("new", updated.getValue())
+                entry("existing", existing),
+                entry("new", updated)
         );
     }
 

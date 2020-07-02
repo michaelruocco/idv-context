@@ -8,6 +8,8 @@ import java.util.stream.Stream;
 
 import static uk.co.idv.context.adapter.json.error.aliastype.UnsupportedAliasTypeErrorJsonMother.unsupportedAliasTypeErrorJson;
 import static uk.co.idv.context.adapter.json.error.aliastype.UnsupportedAliasTypeErrorMother.unsupportedAliasTypeError;
+import static uk.co.idv.context.adapter.json.error.country.CountryMismatchErrorJsonMother.countryMismatchErrorJson;
+import static uk.co.idv.context.adapter.json.error.country.CountryMismatchErrorMother.countryMismatchError;
 import static uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundErrorJsonMother.identityNotFoundErrorJson;
 import static uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundErrorMother.identityNotFoundError;
 import static uk.co.idv.context.adapter.json.error.internalserver.InternalServerErrorJsonMother.internalServerErrorJson;
@@ -23,7 +25,8 @@ public class ErrorArgumentsProvider implements ArgumentsProvider {
                 internalServerErrorArguments(),
                 cannotUpdateIdvIdErrorArguments(),
                 unsupportedAliasTypeErrorArguments(),
-                identityNotFoundErrorArguments()
+                identityNotFoundErrorArguments(),
+                countryMismatchErrorArguments()
         );
     }
 
@@ -52,6 +55,13 @@ public class ErrorArgumentsProvider implements ArgumentsProvider {
         return Arguments.of(
                 identityNotFoundErrorJson(),
                 identityNotFoundError()
+        );
+    }
+
+    private static Arguments countryMismatchErrorArguments() {
+        return Arguments.of(
+                countryMismatchErrorJson(),
+                countryMismatchError()
         );
     }
 

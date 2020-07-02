@@ -5,13 +5,13 @@ import lombok.Getter;
 @Getter
 public class IdvIdAlreadyPresentException extends RuntimeException {
 
-    private final IdvId existingIdvId;
-    private final Alias idvIdToAdd;
+    private final IdvId existing;
+    private final Alias updated;
 
-    public IdvIdAlreadyPresentException(IdvId existingIdvId, Alias idvIdToAdd) {
+    public IdvIdAlreadyPresentException(IdvId existing, Alias updated) {
         super("idvId already exists");
-        this.existingIdvId = existingIdvId;
-        this.idvIdToAdd = idvIdToAdd;
+        this.existing = existing;
+        this.updated = updated;
     }
 
 }

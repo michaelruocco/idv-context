@@ -170,8 +170,8 @@ class IdentityTest {
                 IdvIdAlreadyPresentException.class
         );
 
-        assertThat(error.getExistingIdvId()).isEqualTo(identity.getIdvId());
-        assertThat(error.getIdvIdToAdd()).isEqualTo(other.getIdvId());
+        assertThat(error.getExisting()).isEqualTo(identity.getIdvId());
+        assertThat(error.getUpdated()).isEqualTo(other.getIdvId());
     }
 
     @Test
@@ -184,8 +184,8 @@ class IdentityTest {
                 CountryMismatchException.class
         );
 
-        assertThat(error.getExistingCountry()).isEqualTo(identity.getCountry());
-        assertThat(error.getCountryToAdd()).isEqualTo(other.getCountry());
+        assertThat(error.getExisting()).isEqualTo(identity.getCountry());
+        assertThat(error.getUpdated()).isEqualTo(other.getCountry());
     }
 
     @Test

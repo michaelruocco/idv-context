@@ -154,8 +154,8 @@ class AliasesTest {
                 () -> aliases.add(idvId),
                 IdvIdAlreadyPresentException.class
         );
-        assertThat(error.getExistingIdvId()).isEqualTo(existingIdvId);
-        assertThat(error.getIdvIdToAdd()).isEqualTo(idvId);
+        assertThat(error.getExisting()).isEqualTo(existingIdvId);
+        assertThat(error.getUpdated()).isEqualTo(idvId);
     }
 
     @Test

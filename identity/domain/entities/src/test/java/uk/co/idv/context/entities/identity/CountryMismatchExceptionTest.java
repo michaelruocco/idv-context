@@ -7,24 +7,24 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CountryMismatchExceptionTest {
 
-    private final CountryCode existingCountry = CountryCode.DE;
-    private final CountryCode countryToAdd = CountryCode.GB;
+    private final CountryCode existing = CountryCode.DE;
+    private final CountryCode updated = CountryCode.GB;
 
-    private final CountryMismatchException error = new CountryMismatchException(existingCountry, countryToAdd);
+    private final CountryMismatchException error = new CountryMismatchException(existing, updated);
 
     @Test
     void shouldReturnMessage() {
-        assertThat(error.getMessage()).isEqualTo("countries do not match");
+        assertThat(error.getMessage()).isEqualTo("cannot merge identities if countries do not match");
     }
 
     @Test
     void shouldReturnExistingCountry() {
-        assertThat(error.getExistingCountry()).isEqualTo(existingCountry);
+        assertThat(error.getExisting()).isEqualTo(existing);
     }
 
     @Test
-    void shouldReturnCountryToAdd() {
-        assertThat(error.getCountryToAdd()).isEqualTo(countryToAdd);
+    void shouldReturnUpdatedCountry() {
+        assertThat(error.getUpdated()).isEqualTo(updated);
     }
 
 }

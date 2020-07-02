@@ -221,7 +221,7 @@ Feature: Identity Maintenance
     And request
       """
       {
-        country: 'GB',
+        country: 'DE',
         aliases: [
           { type: 'credit-card-number', value: '4929111111111115' },
           { type: 'debit-card-number', value: '4929111111111116' }
@@ -229,13 +229,17 @@ Feature: Identity Maintenance
       }
       """
     When method POST
-    Then status 500
+    Then status 422
     And match response ==
       """
       {
-        status: 500,
-        title: 'Internal server error',
-        message: 'countries do not match'
+        "status": 422,
+        "title": "Cannot merge identities if countries do not match",
+        "message": "attempted to merge identity from DE to GB",
+        "meta": {
+          "existing": "DE",
+          "new": "GB"
+        }
       }
       """
 
