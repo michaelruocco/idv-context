@@ -41,13 +41,12 @@ Feature: Identity Maintenance
       }
       """
     When method POST
-    Then status 500
+    Then status 400
     And match response ==
       """
       {
-        status: 500,
-        title: 'Internal server error',
-        message: 'identity must belong to country'
+        status: 400,
+        title: 'Cannot create an identity without a country'
       }
       """
 

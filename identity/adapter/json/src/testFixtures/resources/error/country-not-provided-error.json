@@ -1,0 +1,4 @@
+{
+  "status": 400,
+  "title": "Cannot create an identity without a country"
+}

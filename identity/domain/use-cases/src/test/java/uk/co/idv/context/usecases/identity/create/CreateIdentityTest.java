@@ -39,11 +39,11 @@ class CreateIdentityTest {
     @Test
     void shouldThrowExceptionIfValidatorThrowsException() {
         Identity identity = IdentityMother.withoutCountry();
-        given(validator.validate(identity)).willThrow(IdentityMustBelongToCountryException.class);
+        given(validator.validate(identity)).willThrow(CountryNotProvidedException.class);
 
         Throwable error = catchThrowable(() -> create.create(identity));
 
-        assertThat(error).isInstanceOf(IdentityMustBelongToCountryException.class);
+        assertThat(error).isInstanceOf(CountryNotProvidedException.class);
     }
 
 }

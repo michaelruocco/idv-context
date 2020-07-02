@@ -8,8 +8,10 @@ import java.util.stream.Stream;
 
 import static uk.co.idv.context.adapter.json.error.aliastype.UnsupportedAliasTypeErrorJsonMother.unsupportedAliasTypeErrorJson;
 import static uk.co.idv.context.adapter.json.error.aliastype.UnsupportedAliasTypeErrorMother.unsupportedAliasTypeError;
-import static uk.co.idv.context.adapter.json.error.country.CountryMismatchErrorJsonMother.countryMismatchErrorJson;
-import static uk.co.idv.context.adapter.json.error.country.CountryMismatchErrorMother.countryMismatchError;
+import static uk.co.idv.context.adapter.json.error.country.mismatch.CountryMismatchErrorJsonMother.countryMismatchErrorJson;
+import static uk.co.idv.context.adapter.json.error.country.mismatch.CountryMismatchErrorMother.countryMismatchError;
+import static uk.co.idv.context.adapter.json.error.country.notprovided.CountryNotProvidedErrorJsonMother.countryNotProvidedErrorJson;
+import static uk.co.idv.context.adapter.json.error.country.notprovided.CountryNotProvidedErrorMother.countryNotProvidedError;
 import static uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundErrorJsonMother.identityNotFoundErrorJson;
 import static uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundErrorMother.identityNotFoundError;
 import static uk.co.idv.context.adapter.json.error.internalserver.InternalServerErrorJsonMother.internalServerErrorJson;
@@ -26,7 +28,8 @@ public class ErrorArgumentsProvider implements ArgumentsProvider {
                 cannotUpdateIdvIdErrorArguments(),
                 unsupportedAliasTypeErrorArguments(),
                 identityNotFoundErrorArguments(),
-                countryMismatchErrorArguments()
+                countryMismatchErrorArguments(),
+                countryNotProvidedErrorArguments()
         );
     }
 
@@ -62,6 +65,13 @@ public class ErrorArgumentsProvider implements ArgumentsProvider {
         return Arguments.of(
                 countryMismatchErrorJson(),
                 countryMismatchError()
+        );
+    }
+
+    private static Arguments countryNotProvidedErrorArguments() {
+        return Arguments.of(
+                countryNotProvidedErrorJson(),
+                countryNotProvidedError()
         );
     }
 

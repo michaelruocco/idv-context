@@ -21,7 +21,7 @@ import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 import uk.co.idv.context.usecases.identity.IdentityFacade;
-import uk.co.idv.context.usecases.identity.create.IdentityMustBelongToCountryException;
+import uk.co.idv.context.usecases.identity.create.CountryNotProvidedException;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
 import uk.co.idv.context.usecases.identity.save.CannotUpdateIdvIdException;
 
@@ -66,7 +66,7 @@ public class IdentityIntegrationTest {
 
         Throwable error = catchThrowable(() -> facade.update(identity));
 
-        assertThat(error).isInstanceOf(IdentityMustBelongToCountryException.class);
+        assertThat(error).isInstanceOf(CountryNotProvidedException.class);
     }
 
     @Test

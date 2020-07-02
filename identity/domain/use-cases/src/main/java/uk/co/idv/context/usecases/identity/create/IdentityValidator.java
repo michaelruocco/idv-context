@@ -6,7 +6,7 @@ public class IdentityValidator {
 
     public boolean validate(Identity identity) {
         if (!identity.hasCountry()) {
-           throw new IdentityMustBelongToCountryException();
+           throw new CountryNotProvidedException();
         }
         return true;
     }

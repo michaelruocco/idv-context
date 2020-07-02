@@ -15,6 +15,9 @@ import java.util.Map;
 public interface ApiErrorMixin {
 
     @JsonInclude(Include.NON_EMPTY)
+    String getMessage();
+
+    @JsonInclude(Include.NON_EMPTY)
     Map<String, Object> getMeta();
 
 }

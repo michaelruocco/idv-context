@@ -27,7 +27,7 @@ class IdentityValidatorTest {
 
         Throwable error = catchThrowable(() -> validator.validate(identity));
 
-        assertThat(error).isInstanceOf(IdentityMustBelongToCountryException.class);
+        assertThat(error).isInstanceOf(CountryNotProvidedException.class);
     }
 
 }

@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.json.error.country;
+package uk.co.idv.context.adapter.json.error.country.mismatch;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.neovisionaries.i18n.CountryCode;

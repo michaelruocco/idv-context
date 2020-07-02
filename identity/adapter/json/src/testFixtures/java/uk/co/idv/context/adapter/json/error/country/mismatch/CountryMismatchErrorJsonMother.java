@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.json.error.country;
+package uk.co.idv.context.adapter.json.error.country.mismatch;
 
 import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
