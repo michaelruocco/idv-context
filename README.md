@@ -7,7 +7,10 @@
 
 ## Todo
 
-*   Add karate feature tests eligibility endpoint
+*   Add parent idv jackson config module
+*   Split up eligibility and identity config and add parent idv config module
+*   Handle invalid payloads
+*   Add get identity by idvId
 *   Add lockout module/functionality
 
 ## Useful commands

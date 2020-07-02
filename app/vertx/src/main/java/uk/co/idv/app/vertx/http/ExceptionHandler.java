@@ -1,4 +1,4 @@
-package uk.co.idv.app.vertx.identity;
+package uk.co.idv.app.vertx.http;
 
 import io.vertx.core.Handler;
 import io.vertx.core.http.HttpServerResponse;
@@ -10,11 +10,11 @@ import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.adapter.json.error.handler.IdentityErrorHandler;
 
 @RequiredArgsConstructor
-public class IdentityExceptionHandler implements Handler<RoutingContext> {
+public class ExceptionHandler implements Handler<RoutingContext> {
 
     private final ErrorHandler errorHandler;
 
-    public IdentityExceptionHandler() {
+    public ExceptionHandler() {
         this(new IdentityErrorHandler());
     }
 

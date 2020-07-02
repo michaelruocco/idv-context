@@ -2,14 +2,16 @@ package uk.co.idv.app.vertx;
 
 import com.fasterxml.jackson.databind.Module;
 import io.vertx.core.AbstractVerticle;
-import io.vertx.core.Promise;
+import io.vertx.core.Future;
 import io.vertx.core.json.jackson.DatabindCodec;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.app.vertx.identity.IdentityDeploymentOptions;
-import uk.co.idv.app.vertx.identity.IdentityVerticle;
+import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.app.vertx.http.HttpServerVerticle;
+import uk.co.idv.app.vertx.http.HttpServerOptions;
 import uk.co.idv.context.adapter.json.eligibility.EligibilityModule;
 
 @RequiredArgsConstructor
+@Slf4j
 public class ApplicationVerticle extends AbstractVerticle {
 
     private final Module module;
@@ -30,13 +32,12 @@ public class ApplicationVerticle extends AbstractVerticle {
     }
 
     private void deploy() {
-        Promise<String> deployment = Promise.promise();
-        deployIdentity(deployment);
-        deployment.future().succeeded();
+        Future<String> future = deployHttpServer();
+        future.succeeded();
     }
 
-    private void deployIdentity(Promise<String> deployment) {
-        vertx.deployVerticle(new IdentityVerticle(), new IdentityDeploymentOptions(), deployment);
+    private Future<String> deployHttpServer() {
+        return vertx.deployVerticle(HttpServerVerticle.class, new HttpServerOptions());
     }
 
 }

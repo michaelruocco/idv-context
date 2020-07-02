@@ -1,4 +1,4 @@
-package uk.co.idv.app.vertx.identity;
+package uk.co.idv.app.vertx.http.identity;
 
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;

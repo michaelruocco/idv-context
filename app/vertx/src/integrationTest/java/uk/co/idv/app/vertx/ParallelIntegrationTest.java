@@ -18,13 +18,20 @@ public class ParallelIntegrationTest {
     @Test
     void identityMaintenanceTest() {
         String reportDir = "build/reports/karate";
-        Results results = Runner.path("classpath:identity")
+        Results results = Runner.path(getFeaturePaths())
                 .reportDir(reportDir)
                 .parallel(5);
 
         assertThat(results.getFailCount())
                 .withFailMessage(results.getErrorMessages())
                 .isEqualTo(0);
+    }
+
+    private static String[] getFeaturePaths() {
+        return new String[]{
+                "classpath:identity",
+                "classpath:eligibility"
+        };
     }
 
 }

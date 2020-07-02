@@ -1,18 +1,19 @@
-package uk.co.idv.app.vertx.identity;
+package uk.co.idv.app.vertx.http.identity;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Promise;
 import io.vertx.core.http.HttpServer;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.app.vertx.http.HttpServerStartUpHandler;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class StartUpHandlerTest {
+class HttpServerStartUpHandlerTest {
 
     private final Promise<Void> promise = mock(Promise.class);
-    private final StartUpHandler handler = new StartUpHandler();
+    private final HttpServerStartUpHandler handler = new HttpServerStartUpHandler();
 
     @Test
     void shouldCompletePromiseIfResultIsSuccessful() {
