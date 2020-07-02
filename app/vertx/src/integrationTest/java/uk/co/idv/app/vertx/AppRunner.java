@@ -4,6 +4,7 @@ import java.time.Duration;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 import static org.awaitility.Awaitility.await;
+import static uk.co.idv.app.vertx.PortLoader.loadPort;
 
 public class AppRunner {
 
@@ -22,7 +23,7 @@ public class AppRunner {
         await().dontCatchUncaughtExceptions()
                 .atMost(5, SECONDS)
                 .pollInterval(Duration.ofMillis(250))
-                .until(PortReady.local(8081));
+                .until(PortReady.local(loadPort()));
     }
 
 }

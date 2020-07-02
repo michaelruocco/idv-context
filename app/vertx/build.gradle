@@ -13,7 +13,7 @@ testSets {
 }
 
 configurations {
-    testCompile.exclude module: "slf4j-simple"
+    integrationTestCompile.exclude module: "slf4j-simple"
 }
 
 dependencies {
@@ -32,4 +32,17 @@ mainClassName = "uk.co.idv.app.vertx.Main"
 
 shadowJar {
     archiveClassifier.set("standalone")
+}
+
+integrationTest {
+    systemProperty "http.port", getFreePort()
+}
+
+private static int getFreePort() {
+    ServerSocket socket = new ServerSocket(0)
+    try {
+        return socket.getLocalPort();
+    } finally {
+        socket.close();
+    }
 }

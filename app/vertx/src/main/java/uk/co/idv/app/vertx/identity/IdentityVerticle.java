@@ -7,6 +7,8 @@ import io.vertx.ext.web.handler.BodyHandler;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import static uk.co.idv.app.vertx.PortLoader.loadPort;
+
 @Slf4j
 @RequiredArgsConstructor
 public class IdentityVerticle extends AbstractVerticle {
@@ -25,11 +27,7 @@ public class IdentityVerticle extends AbstractVerticle {
         Router router = router();
         vertx.createHttpServer()
                 .requestHandler(router)
-                .listen(getPort(), result -> startUpHandler.handle(result, promise));
-    }
-
-    private int getPort() {
-        return config().getInteger("http.port", 8081);
+                .listen(loadPort(), result -> startUpHandler.handle(result, promise));
     }
 
     private Router router() {

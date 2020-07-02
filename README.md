@@ -7,7 +7,6 @@
 
 ## Todo
 
-*   Get karate tests starting up on random port
 *   Add karate feature tests eligibility endpoint
 *   Add lockout module/functionality
 
@@ -37,5 +36,4 @@
 // generate dependency graph images at build/reports/dependency-graph
 ./gradlew generateDependencyGraph
 ./gradlew generateDependencyGraphVerificationContext
-
 ```
