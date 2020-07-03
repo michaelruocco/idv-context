@@ -1,0 +1,5 @@
+{
+  "status": 422,
+  "title": "Eligibility not configured",
+  "message": "eligibility not configured for channel default-channel"
+}

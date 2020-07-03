@@ -12,6 +12,8 @@ import static uk.co.idv.context.adapter.json.error.country.mismatch.CountryMisma
 import static uk.co.idv.context.adapter.json.error.country.mismatch.CountryMismatchErrorMother.countryMismatchError;
 import static uk.co.idv.context.adapter.json.error.country.notprovided.CountryNotProvidedErrorJsonMother.countryNotProvidedErrorJson;
 import static uk.co.idv.context.adapter.json.error.country.notprovided.CountryNotProvidedErrorMother.countryNotProvidedError;
+import static uk.co.idv.context.adapter.json.error.eligibilitynotconfigured.EligibilityNotConfiguredErrorJsonMother.eligibilityNotConfiguredErrorJson;
+import static uk.co.idv.context.adapter.json.error.eligibilitynotconfigured.EligibilityNotConfiguredErrorMother.eligibilityNotConfiguredError;
 import static uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundErrorJsonMother.identityNotFoundErrorJson;
 import static uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundErrorMother.identityNotFoundError;
 import static uk.co.idv.context.adapter.json.error.internalserver.InternalServerErrorJsonMother.internalServerErrorJson;
@@ -29,7 +31,8 @@ public class ErrorArgumentsProvider implements ArgumentsProvider {
                 unsupportedAliasTypeErrorArguments(),
                 identityNotFoundErrorArguments(),
                 countryMismatchErrorArguments(),
-                countryNotProvidedErrorArguments()
+                countryNotProvidedErrorArguments(),
+                eligibilityNotConfiguredErrorArguments()
         );
     }
 
@@ -72,6 +75,13 @@ public class ErrorArgumentsProvider implements ArgumentsProvider {
         return Arguments.of(
                 countryNotProvidedErrorJson(),
                 countryNotProvidedError()
+        );
+    }
+
+    private static Arguments eligibilityNotConfiguredErrorArguments() {
+        return Arguments.of(
+                eligibilityNotConfiguredErrorJson(),
+                eligibilityNotConfiguredError()
         );
     }
 

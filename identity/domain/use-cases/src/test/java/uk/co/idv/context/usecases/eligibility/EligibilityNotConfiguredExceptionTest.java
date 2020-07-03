@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CreateEligibilityNotConfiguredExceptionTest {
+class EligibilityNotConfiguredExceptionTest {
 
     @Test
     void shouldReturnMessage() {
         String message = "my-message";
 
-        Throwable error = new CreateEligibilityNotConfiguredException(message);
+        Throwable error = new EligibilityNotConfiguredException(message);
 
         assertThat(error.getMessage()).isEqualTo(message);
     }

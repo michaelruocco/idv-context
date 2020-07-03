@@ -44,7 +44,7 @@ class CompositeCreateEligibilityTest {
         Throwable error = catchThrowable(() -> compositeCreate.create(request));
 
         assertThat(error)
-                .isInstanceOf(CreateEligibilityNotConfiguredException.class)
+                .isInstanceOf(EligibilityNotConfiguredException.class)
                 .hasMessage(channelId);
     }
 

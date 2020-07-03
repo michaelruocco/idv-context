@@ -25,7 +25,7 @@ public class CompositeCreateEligibility implements CreateEligibility {
         String channelId = request.getChannelId();
         return selectCreate(channelId)
                 .map(create -> create.create(request))
-                .orElseThrow(() -> new CreateEligibilityNotConfiguredException(channelId));
+                .orElseThrow(() -> new EligibilityNotConfiguredException(channelId));
     }
 
     private void add(ChannelCreateEligibility create) {

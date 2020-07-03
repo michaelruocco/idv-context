@@ -39,7 +39,7 @@ class IdentityNotFoundHandlerTest {
     }
 
     @Test
-    public void shouldReturnPopulateMessageWithAliases() {
+    public void shouldPopulateMessageWithAliases() {
         Alias alias = IdvIdMother.idvId();
         IdentityNotFoundException exception = new IdentityNotFoundException(AliasesMother.with(alias));
 
