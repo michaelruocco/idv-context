@@ -9,8 +9,9 @@
 
 *   Add parent idv jackson config module
 *   Split up eligibility and identity config and add parent idv config module
-*   Handle invalid payloads
+*   Handle create eligibility errors
 *   Add get identity by idvId
+*   Handle invalid payloads / Jackson failures
 *   Add lockout module/functionality
 
 ## Useful commands

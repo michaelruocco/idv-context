@@ -6,7 +6,7 @@ public class HttpServerOptions extends DeploymentOptions {
 
     public HttpServerOptions() {
         setWorker(true);
-        setInstances(1);
+        setWorkerPoolName("http-server-worker-pool");
         setWorkerPoolSize(10);
     }
 
