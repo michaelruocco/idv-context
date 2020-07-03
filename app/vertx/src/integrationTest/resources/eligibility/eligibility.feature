@@ -24,13 +24,13 @@ Feature: Identity Maintenance
       }
       """
     When method POST
-    Then status 500
+    Then status 422
     And match response ==
       """
       {
-        status: 500,
-        title: 'Internal server error',
-        message: 'default-channel'
+        status: 422,
+        title: 'Eligibility not configured',
+        message: 'eligibility not configured for channel default-channel'
       }
       """
 

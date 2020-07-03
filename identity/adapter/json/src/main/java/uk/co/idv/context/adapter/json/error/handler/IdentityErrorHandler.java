@@ -3,6 +3,7 @@ package uk.co.idv.context.adapter.json.error.handler;
 import uk.co.idv.context.adapter.json.error.aliastype.UnsupportedAliasTypeHandler;
 import uk.co.idv.context.adapter.json.error.country.mismatch.CountryMismatchHandler;
 import uk.co.idv.context.adapter.json.error.country.notprovided.CountryNotProvidedHandler;
+import uk.co.idv.context.adapter.json.error.eligibilitynotconfigured.EligibilityNotConfiguredHandler;
 import uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundHandler;
 import uk.co.idv.context.adapter.json.error.internalserver.InternalServerHandler;
 import uk.co.idv.context.adapter.json.error.updateidvid.CannotUpdateIdvIdHandler;
@@ -16,7 +17,8 @@ public class IdentityErrorHandler extends CompositeErrorHandler {
                 new UnsupportedAliasTypeHandler(),
                 new IdentityNotFoundHandler(),
                 new CountryMismatchHandler(),
-                new CountryNotProvidedHandler()
+                new CountryNotProvidedHandler(),
+                new EligibilityNotConfiguredHandler()
         );
     }
 
