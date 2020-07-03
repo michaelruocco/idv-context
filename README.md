@@ -7,8 +7,7 @@
 
 ## Todo
 
-*   Handle create eligibility errors
-*   Add get identity by idvId
+*   Add unit tests for vertx code
 *   Handle invalid payloads / Jackson failures
 *   Add lockout module/functionality
 

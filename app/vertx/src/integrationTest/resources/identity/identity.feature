@@ -103,6 +103,34 @@ Feature: Identity Maintenance
       }
       """
 
+  Scenario: Create + Get identity - Success - Create with one alias, Get by idv id
+    Given request
+      """
+      {
+        country: 'GB',
+        aliases: [
+          { type: 'credit-card-number', value: '4929111111111119' }
+        ]
+      }
+      """
+    And method POST
+    And status 200
+    * def idvId = response.idvId
+    And url baseUrl + '/identities/' + idvId
+    When method GET
+    Then status 200
+    And match response ==
+      """
+      {
+        idvId: '#(idvId)',
+        country: 'GB',
+        aliases: [
+          { type: 'credit-card-number', value: '4929111111111119' },
+          { type: 'idv-id', value: '#(idvId)' }
+        ]
+      }
+      """
+
   Scenario: Create + Update identity - Error - idv id cannot be updated
     Given request
       """

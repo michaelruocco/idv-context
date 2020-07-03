@@ -1,11 +1,10 @@
-package uk.co.idv.app.vertx.http.identity;
+package uk.co.idv.app.vertx.http;
 
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Promise;
 import io.vertx.core.http.HttpServer;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.app.vertx.http.HttpServerStartUpHandler;
 
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
