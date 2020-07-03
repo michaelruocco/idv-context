@@ -19,7 +19,7 @@ Feature: Identity Maintenance
 
   Scenario: Get identity - Error - identity not found
     Given param aliasType = 'credit-card-number'
-    And param aliasValue = '4929111111111111'
+    And param aliasValue = '4929111111111199'
     When method GET
     Then status 404
     And match response ==
@@ -27,7 +27,7 @@ Feature: Identity Maintenance
       {
         status: 404,
         title: 'Identity not found',
-        message: 'credit-card-number|4929111111111111'
+        message: 'credit-card-number|4929111111111199'
       }
       """
 
@@ -36,7 +36,7 @@ Feature: Identity Maintenance
       """
       {
         aliases: [
-          { type: 'credit-card-number', value: '4929111111111111' }
+          { type: 'credit-card-number', value: '4929111111111199' }
         ]
       }
       """

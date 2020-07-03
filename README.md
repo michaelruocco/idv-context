@@ -7,7 +7,6 @@
 
 ## Todo
 
-*   Add parent idv jackson config module
 *   Split up eligibility and identity config and add parent idv config module
 *   Handle create eligibility errors
 *   Add get identity by idvId

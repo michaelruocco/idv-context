@@ -10,7 +10,7 @@ import uk.co.idv.app.vertx.http.HttpServerVerticle;
 import uk.co.idv.app.vertx.http.HttpServerOptions;
 import uk.co.idv.config.identity.IdentityConfig;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
-import uk.co.idv.context.adapter.json.eligibility.EligibilityModule;
+import uk.co.idv.context.adapter.json.VerificationContextParentModule;
 
 import java.time.Duration;
 import java.util.concurrent.Executors;
@@ -22,7 +22,7 @@ public class ApplicationVerticle extends AbstractVerticle {
     private final Module module;
 
     public ApplicationVerticle() {
-        this(new EligibilityModule());
+        this(new VerificationContextParentModule());
     }
 
     @Override

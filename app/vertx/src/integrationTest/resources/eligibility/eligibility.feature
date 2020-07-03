@@ -72,7 +72,7 @@ Feature: Identity Maintenance
       {
         country: 'GB',
         aliases: [
-          { type: 'credit-card-number', value: '4928111111111111' }
+          { type: 'credit-card-number', value: '4928111111111112' }
         ]
       }
       """
@@ -84,62 +84,6 @@ Feature: Identity Maintenance
       {
         channel: {
           id: 'gb-rsa',
-          country: 'GB'
-        },
-        aliases: [
-          {
-            type: 'credit-card-number',
-            value: '4928111111111111'
-          }
-        ],
-        requested: [
-          'phone-numbers',
-          'email-addresses'
-        ]
-      }
-      """
-    When method POST
-    Then status 201
-    And match response ==
-      """
-      {
-        channel: {
-          id: 'gb-rsa',
-          country: 'GB'
-        },
-        aliases: [
-          {
-            type: 'credit-card-number',
-            value: '4928111111111111'
-          }
-        ],
-        requested: [
-          'phone-numbers',
-          'email-addresses'
-        ],
-        identity: {
-          idvId: '#uuid',
-          country: 'GB',
-          aliases: [
-            {
-              type: 'credit-card-number',
-              value: '4928111111111111'
-            },
-            {
-                type: 'idv-id',
-                value: '#uuid'
-            }
-          ]
-        }
-      }
-      """
-
-  Scenario: Create eligibility - Success - Create with external data lookup
-    Given request
-      """
-      {
-        channel: {
-          id: 'as3',
           country: 'GB'
         },
         aliases: [
@@ -160,7 +104,7 @@ Feature: Identity Maintenance
       """
       {
         channel: {
-          id: 'as3',
+          id: 'gb-rsa',
           country: 'GB'
         },
         aliases: [
@@ -182,8 +126,64 @@ Feature: Identity Maintenance
               value: '4928111111111112'
             },
             {
+                type: 'idv-id',
+                value: '#uuid'
+            }
+          ]
+        }
+      }
+      """
+
+  Scenario: Create eligibility - Success - Create with external data lookup
+    Given request
+      """
+      {
+        channel: {
+          id: 'as3',
+          country: 'GB'
+        },
+        aliases: [
+          {
+            type: 'credit-card-number',
+            value: '4928111111111113'
+          }
+        ],
+        requested: [
+          'phone-numbers',
+          'email-addresses'
+        ]
+      }
+      """
+    When method POST
+    Then status 201
+    And match response ==
+      """
+      {
+        channel: {
+          id: 'as3',
+          country: 'GB'
+        },
+        aliases: [
+          {
+            type: 'credit-card-number',
+            value: '4928111111111113'
+          }
+        ],
+        requested: [
+          'phone-numbers',
+          'email-addresses'
+        ],
+        identity: {
+          idvId: '#uuid',
+          country: 'GB',
+          aliases: [
+            {
+              type: 'credit-card-number',
+              value: '4928111111111113'
+            },
+            {
               type: 'debit-card-number',
-              value: '5928111111111112'
+              value: '5928111111111113'
             }
             {
               type: 'idv-id',
