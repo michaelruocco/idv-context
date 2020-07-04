@@ -1,33 +1,33 @@
 Feature: Identity Maintenance
 
   Background:
-    * url baseUrl + '/identities'
+    * url baseUrl + "/identities"
 
   Scenario: Get identity - Error - unsupported alias type
-    Given param aliasType = 'ABC'
-    And param aliasValue = '123'
+    Given param aliasType = "ABC"
+    And param aliasValue = "123"
     When method GET
     Then status 422
     And match response ==
       """
       {
-        status: 422,
-        title: 'Unsupported alias type',
-        message: 'ABC'
+        "status": 422,
+        "title": "Unsupported alias type",
+        "message": "ABC"
       }
       """
 
   Scenario: Get identity - Error - identity not found
-    Given param aliasType = 'credit-card-number'
-    And param aliasValue = '4929111111111199'
+    Given param aliasType = "credit-card-number"
+    And param aliasValue = "4929111111111199"
     When method GET
     Then status 404
     And match response ==
       """
       {
-        status: 404,
-        title: 'Identity not found',
-        message: 'credit-card-number|4929111111111199'
+        "status": 404,
+        "title": "Identity not found",
+        "message": "credit-card-number|4929111111111199"
       }
       """
 
@@ -35,8 +35,8 @@ Feature: Identity Maintenance
     Given request
       """
       {
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111199' }
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111199" }
         ]
       }
       """
@@ -45,8 +45,8 @@ Feature: Identity Maintenance
     And match response ==
       """
       {
-        status: 400,
-        title: 'Cannot create an identity without a country'
+        "status": 400,
+        "title": "Cannot create an identity without a country"
       }
       """
 
@@ -54,9 +54,9 @@ Feature: Identity Maintenance
     Given request
       """
       {
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111110' }
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111110" }
         ]
       }
       """
@@ -65,40 +65,40 @@ Feature: Identity Maintenance
     And match response ==
       """
       {
-        idvId: '#uuid',
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111110' },
-          { type: 'idv-id', value: '#uuid' }
+        "idvId": "#uuid",
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111110" },
+          { "type": "idv-id", "value": "#uuid" }
         ]
       }
       """
-    And match responseHeaders.Location contains baseUrl + '/identities/' + response.idvId
+    And match responseHeaders.Location contains baseUrl + "/identities/" + response.idvId
 
   Scenario: Create + Get identity - Success - Create with one alias, Get by alias
     Given request
       """
       {
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111111' }
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111111" }
         ]
       }
       """
     And method POST
     And status 200
-    And param aliasType = 'credit-card-number'
-    And param aliasValue = '4929111111111111'
+    And param aliasType = "credit-card-number"
+    And param aliasValue = "4929111111111111"
     When method GET
     Then status 200
     And match response ==
       """
       {
-        idvId: '#uuid',
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111111' },
-          { type: 'idv-id', value: '#uuid' }
+        "idvId": "#uuid",
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111111" },
+          { "type": "idv-id", "value": "#uuid" }
         ]
       }
       """
@@ -107,26 +107,26 @@ Feature: Identity Maintenance
     Given request
       """
       {
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111119' }
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111119" }
         ]
       }
       """
     And method POST
     And status 200
     * def idvId = response.idvId
-    And url baseUrl + '/identities/' + idvId
+    And url baseUrl + "/identities/" + idvId
     When method GET
     Then status 200
     And match response ==
       """
       {
-        idvId: '#(idvId)',
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111119' },
-          { type: 'idv-id', value: '#(idvId)' }
+        "idvId": "#(idvId)",
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111119" },
+          { "type": "idv-id", "value": "#(idvId)" }
         ]
       }
       """
@@ -135,23 +135,23 @@ Feature: Identity Maintenance
     Given request
       """
       {
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111112' }
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111112" }
         ]
       }
       """
     And method POST
     And status 200
     * def existingIdvId = response.idvId
-    * def newIdvId = 'dec2f278-b7e0-44fa-ab1f-f93f942bdf4d'
+    * def newIdvId = "dec2f278-b7e0-44fa-ab1f-f93f942bdf4d"
     And request
       """
       {
-        country: 'GB',
-        aliases: [
-          { type: 'idv-id', value: '#(newIdvId)' },
-          { type: 'credit-card-number', value: '4929111111111112' }
+        "country": "GB",
+        "aliases": [
+          { "type": "idv-id", "value": "#(newIdvId)" },
+          { "type": "credit-card-number", "value": "4929111111111112" }
         ]
       }
       """
@@ -161,15 +161,15 @@ Feature: Identity Maintenance
       """
       {
         status: 422,
-        title: 'Cannot update idv id',
-        message: '#ignore',
+        title: "Cannot update idv id",
+        message: "#ignore",
         meta: {
-          new: '#uuid',
-          existing: '#uuid'
+          new: "#uuid",
+          existing: "#uuid"
         }
       }
       """
-    And match response.message == 'attempted to update existing value ' + existingIdvId + ' to ' + newIdvId
+    And match response.message == "attempted to update existing value " + existingIdvId + " to " + newIdvId
     And match response.meta.new == newIdvId
     And match response.meta.existing == existingIdvId
 
@@ -177,9 +177,9 @@ Feature: Identity Maintenance
     Given request
       """
       {
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111113' }
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111113" }
         ]
       }
       """
@@ -188,16 +188,16 @@ Feature: Identity Maintenance
     And request
       """
       {
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111113' },
-          { type: 'debit-card-number', value: '4929111111111114' }
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111113" },
+          { "type": "debit-card-number", "value": "4929111111111114" }
         ],
-        emailAddresses: [
-          'joe.bloggs@hotmail.com'
+        "emailAddresses": [
+          "joe.bloggs@hotmail.com"
         ],
-        phoneNumbers: [
-          { type: 'mobile', value: '+4407808247742' }
+        "phoneNumbers": [
+          { "type": "mobile", "value": "+4407808247742" }
         ]
       }
       """
@@ -206,18 +206,18 @@ Feature: Identity Maintenance
     And match response ==
       """
       {
-        idvId: '#uuid',
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111113' },
-          { type: 'debit-card-number', value: '4929111111111114' },
-          { type: 'idv-id', value: '#uuid' }
+        "idvId": "#uuid",
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111113" },
+          { "type": "debit-card-number", "value": "4929111111111114" },
+          { "type": "idv-id", "value": "#uuid" }
         ],
-        emailAddresses: [
-          'joe.bloggs@hotmail.com'
+        "emailAddresses": [
+          "joe.bloggs@hotmail.com"
         ],
-        phoneNumbers: [
-          { type: 'mobile', value: '+4407808247742' }
+        "phoneNumbers": [
+          { "type": "mobile", "value": "+4407808247742" }
         ]
       }
       """
@@ -226,9 +226,9 @@ Feature: Identity Maintenance
     Given request
       """
       {
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111115' }
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111115" }
         ]
       }
       """
@@ -237,9 +237,9 @@ Feature: Identity Maintenance
     And request
       """
       {
-        country: 'DE',
-        aliases: [
-          { type: 'debit-card-number', value: '4929111111111116' }
+        "country": "DE",
+        "aliases": [
+          { "type": "debit-card-number", "value": "4929111111111116" }
         ]
       }
       """
@@ -248,10 +248,10 @@ Feature: Identity Maintenance
     And request
       """
       {
-        country: 'DE',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111115' },
-          { type: 'debit-card-number', value: '4929111111111116' }
+        "country": "DE",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111115" },
+          { "type": "debit-card-number", "value": "4929111111111116" }
         ]
       }
       """
@@ -274,15 +274,15 @@ Feature: Identity Maintenance
     Given request
       """
       {
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111117' }
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111117" }
         ],
-        emailAddresses: [
-          'merge1@one.com'
+        "emailAddresses": [
+          "merge1@one.com"
         ],
-        phoneNumbers: [
-          { type: 'mobile', value: '+4407808111111' }
+        "phoneNumbers": [
+          { "type": "mobile", "value": "+4407808111111" }
         ]
       }
       """
@@ -291,15 +291,15 @@ Feature: Identity Maintenance
     And request
       """
       {
-        country: 'GB',
-        aliases: [
-          { type: 'debit-card-number', value: '4929111111111118' }
+        "country": "GB",
+        "aliases": [
+          { "type": "debit-card-number", "value": "4929111111111118" }
         ],
-        emailAddresses: [
-          'merge2@two.com'
+        "emailAddresses": [
+          "merge2@two.com"
         ],
-        phoneNumbers: [
-          { type: 'mobile', value: '+4407808222222' }
+        "phoneNumbers": [
+          { "type": "mobile", "value": "+4407808222222" }
         ]
       }
       """
@@ -308,16 +308,16 @@ Feature: Identity Maintenance
     And request
       """
       {
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111117' },
-          { type: 'debit-card-number', value: '4929111111111118' }
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111117" },
+          { "type": "debit-card-number", "value": "4929111111111118" }
         ],
-        emailAddresses: [
-          'merge3@three.com'
+        "emailAddresses": [
+          "merge3@three.com"
         ],
-        phoneNumbers: [
-          { type: 'other', value: '+441604333333' }
+        "phoneNumbers": [
+          { "type": "other", "value": "+441604333333" }
         ]
       }
       """
@@ -326,22 +326,22 @@ Feature: Identity Maintenance
     And match response ==
       """
       {
-        idvId: '#uuid',
-        country: 'GB',
-        aliases: [
-          { type: 'credit-card-number', value: '4929111111111117' },
-          { type: 'debit-card-number', value: '4929111111111118' },
-          { type: 'idv-id', value: '#uuid' }
+        "idvId": "#uuid",
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111117" },
+          { "type": "debit-card-number", "value": "4929111111111118" },
+          { "type": "idv-id", "value": "#uuid" }
         ],
-        emailAddresses: [
-          'merge3@three.com',
-          'merge1@one.com',
-          'merge2@two.com'
+        "emailAddresses": [
+          "merge3@three.com",
+          "merge1@one.com",
+          "merge2@two.com"
         ],
-        phoneNumbers: [
-          { type: 'other', value: '+441604333333' },
-          { type: 'mobile', value: '+4407808111111' },
-          { type: 'mobile', value: '+4407808222222' }
+        "phoneNumbers": [
+          { "type": "other", "value": "+441604333333" },
+          { "type": "mobile", "value": "+4407808111111" },
+          { "type": "mobile", "value": "+4407808222222" }
         ]
       }
       """
