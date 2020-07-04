@@ -5,8 +5,6 @@ import uk.co.idv.context.adapter.json.error.DefaultApiError;
 
 import java.util.Map;
 
-import static java.util.Collections.emptyMap;
-
 @Getter
 public class EligibilityNotConfiguredError extends DefaultApiError {
 
@@ -14,7 +12,7 @@ public class EligibilityNotConfiguredError extends DefaultApiError {
     private static final String TITLE = "Eligibility not configured";
 
     public EligibilityNotConfiguredError(String channelId) {
-        super(STATUS, TITLE, toMessage(channelId), emptyMap());
+        super(STATUS, TITLE, toMessage(channelId), toMap(channelId));
     }
 
     private static String toMessage(String channelId) {

@@ -3,6 +3,7 @@ package uk.co.idv.context.adapter.json.error.eligibilitynotconfigured;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.json.error.ApiError;
 
+import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class EligibilityNotConfiguredErrorTest {
@@ -30,7 +31,9 @@ class EligibilityNotConfiguredErrorTest {
 
     @Test
     void shouldReturnMeta() {
-        assertThat(error.getMeta()).isEmpty();
+        assertThat(error.getMeta()).contains(
+                entry("channelId", CHANNEL_ID)
+        );
     }
 
 }

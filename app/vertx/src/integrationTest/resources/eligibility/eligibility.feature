@@ -30,7 +30,10 @@ Feature: Identity Maintenance
       {
         "status": 422,
         "title": "Eligibility not configured",
-        "message": "eligibility not configured for channel default-channel"
+        "message": "eligibility not configured for channel default-channel",
+        "meta": {
+          "channelId": "default-channel"
+        }
       }
       """
 
