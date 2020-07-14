@@ -9,6 +9,9 @@ project(':identity-use-cases').projectDir = file('identity/domain/use-cases')
 include ':identity-in-memory-repository'
 project(':identity-in-memory-repository').projectDir = file('identity/adapter/repository/in-memory')
 
+include ':identity-dynamo-db-repository'
+project(':identity-dynamo-db-repository').projectDir = file('identity/adapter/repository/dynamo-db')
+
 include ':identity-json'
 project(':identity-json').projectDir = file('identity/adapter/json')
 
@@ -21,5 +24,5 @@ project(':identity-config').projectDir = file('identity/config')
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
 
-include ':vertx-app'
-project(':vertx-app').projectDir = file('app/vertx')
+include ':spring-app'
+project(':spring-app').projectDir = file('app/spring')

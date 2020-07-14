@@ -22,48 +22,48 @@ class InMemoryIdentityRepositoryTest {
     void shouldReturnEmptyOptionalIfIdentityNotFound() {
         Alias alias = CreditCardNumberMother.creditCardNumber();
 
-        assertThat(repository.load(alias)).isEmpty();
+        assertThat(repository.load(toAliases(alias))).isEmpty();
     }
 
     @Test
     void shouldLoadSavedIdentityByAlias() {
         Alias idvId = IdvIdMother.idvId();
         Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Identity identity = IdentityMother.withAliases(AliasesMother.with(idvId, creditCardNumber));
+        Identity identity = IdentityMother.withAliases(toAliases(idvId, creditCardNumber));
 
-        repository.save(identity);
+        repository.create(identity);
 
-        assertThat(repository.load(idvId)).contains(identity);
-        assertThat(repository.load(creditCardNumber)).contains(identity);
+        assertThat(repository.load(toAliases(idvId))).contains(identity);
+        assertThat(repository.load(toAliases(creditCardNumber))).contains(identity);
     }
 
     @Test
     void shouldNotBeAbleToLoadByAliasThatHasBeenDeleted() {
         Alias idvId = IdvIdMother.idvId();
         Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Identity original = IdentityMother.withAliases(AliasesMother.with(idvId, creditCardNumber));
-        repository.save(original);
+        Identity original = IdentityMother.withAliases(toAliases(idvId, creditCardNumber));
+        repository.create(original);
 
         Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
-        Identity updated = IdentityMother.withAliases(AliasesMother.with(idvId, debitCardNumber));
-        repository.save(updated);
+        Identity updated = IdentityMother.withAliases(toAliases(idvId, debitCardNumber));
+        repository.update(updated, original);
 
-        assertThat(repository.load(idvId)).contains(updated);
-        assertThat(repository.load(debitCardNumber)).contains(updated);
-        assertThat(repository.load(creditCardNumber)).isEmpty();
+        assertThat(repository.load(toAliases(idvId))).contains(updated);
+        assertThat(repository.load(toAliases(debitCardNumber))).contains(updated);
+        assertThat(repository.load(toAliases(creditCardNumber))).isEmpty();
     }
 
     @Test
     void shouldLoadSavedIdentitiesByAliases() {
         Alias idvId1 = IdvIdMother.withValue("c91acc5a-501a-4dc7-9c02-f784916a8ca7");
-        Identity identity1 = IdentityMother.withAliases(AliasesMother.with(idvId1));
-        repository.save(identity1);
+        Identity identity1 = IdentityMother.withAliases(toAliases(idvId1));
+        repository.create(identity1);
 
         Alias idvId2 = IdvIdMother.withValue("dbb4d277-612b-4ec6-8c95-2e86a9c06a7f");
-        Identity identity2 = IdentityMother.withAliases(AliasesMother.with(idvId2));
-        repository.save(identity2);
+        Identity identity2 = IdentityMother.withAliases(toAliases(idvId2));
+        repository.create(identity2);
 
-        Identities identities = repository.load(AliasesMother.with(idvId1, idvId2));
+        Identities identities = repository.load(toAliases(idvId1, idvId2));
 
         assertThat(identities).containsExactly(identity1, identity2);
     }
@@ -72,7 +72,7 @@ class InMemoryIdentityRepositoryTest {
     void shouldOnlyReturnUniqueIdentitiesWhenLoadSavedIdentitiesByAliases() {
         Aliases aliases = AliasesMother.idvIdAndCreditCardNumber();
         Identity identity = IdentityMother.withAliases(aliases);
-        repository.save(identity);
+        repository.create(identity);
 
         Identities identities = repository.load(aliases);
 
@@ -83,11 +83,15 @@ class InMemoryIdentityRepositoryTest {
     void shouldDeleteSavedIdentitiesByAliases() {
         Aliases aliases = AliasesMother.idvIdOnly();
         Identity identity = IdentityMother.withAliases(aliases);
-        repository.save(identity);
+        repository.create(identity);
 
         repository.delete(aliases);
 
         assertThat(repository.load(aliases)).isEmpty();
+    }
+
+    private static Aliases toAliases(Alias... alias) {
+        return AliasesMother.with(alias);
     }
 
 }

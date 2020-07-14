@@ -25,7 +25,7 @@ public class CreateIdentity {
     public Identity create(Identity identity) {
         validator.validate(identity);
         Identity identityWithId = idvIdAllocator.allocateIfRequired(identity);
-        repository.save(identityWithId);
+        repository.create(identityWithId);
         return identityWithId;
     }
 

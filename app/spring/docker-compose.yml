@@ -1,0 +1,28 @@
+version: '3'
+services:
+
+  aws-services:
+    image: localstack/localstack:latest
+    container_name: aws-services
+    ports:
+      - 4569:4569
+    volumes:
+      - ./localstack/scripts:/docker-entrypoint-initaws.d
+      - ./localstack/tables:/opt/tables
+    environment:
+      - DEFAULT_REGION=eu-west-1
+      - SERVICES=dynamodb
+
+
+  verification-context-app:
+    image: michaelruocco/verification-context-spring-app
+    container_name: verification-context-app
+    ports:
+      - 8081:80
+    environment:
+      - SERVER_PORT=80
+      - AWS_ACCESS_KEY=abc
+      - AWS_SECRET_KEY=123
+      - AWS_DYNAMO_DB_ENDPOINT_URI=http://aws-services:4569
+    depends_on:
+      - aws-services

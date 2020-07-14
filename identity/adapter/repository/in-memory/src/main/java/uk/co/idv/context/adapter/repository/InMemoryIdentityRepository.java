@@ -17,17 +17,14 @@ public class InMemoryIdentityRepository implements IdentityRepository {
     private final Map<String, Identity> identities = new ConcurrentHashMap<>();
 
     @Override
-    public void save(Identity updated) {
-        Optional<Identity> existing = load(updated.getIdvId());
-        existing.ifPresent(value -> deleteEntriesForRemovedAliases(value, updated));
-        Collection<String> keys = toKeys(updated);
-        keys.forEach(key -> identities.put(key, updated));
+    public void create(Identity updated) {
+        batchUpdate(updated);
     }
 
     @Override
-    public Optional<Identity> load(Alias alias) {
-        String key = alias.format();
-        return Optional.ofNullable(identities.get(key));
+    public void update(Identity updated, Identity existing) {
+        deleteEntriesForRemovedAliases(updated, existing);
+        batchUpdate(updated);
     }
 
     @Override
@@ -44,7 +41,12 @@ public class InMemoryIdentityRepository implements IdentityRepository {
         aliases.forEach(this::delete);
     }
 
-    private void deleteEntriesForRemovedAliases(Identity existing, Identity updated) {
+    private Optional<Identity> load(Alias alias) {
+        String key = alias.format();
+        return Optional.ofNullable(identities.get(key));
+    }
+
+    private void deleteEntriesForRemovedAliases(Identity updated, Identity existing) {
         Aliases aliasesToRemove = existing.getAliasesNotPresent(updated);
         delete(aliasesToRemove);
     }
@@ -62,6 +64,11 @@ public class InMemoryIdentityRepository implements IdentityRepository {
         return aliases.stream()
                 .map(Alias::format)
                 .collect(Collectors.toList());
+    }
+
+    private void batchUpdate(Identity updated) {
+        Collection<String> keys = toKeys(updated);
+        keys.forEach(key -> identities.put(key, updated));
     }
 
 }

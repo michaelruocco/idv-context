@@ -6,10 +6,13 @@ import uk.co.idv.context.entities.alias.AliasFactory;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
+import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.usecases.identity.find.FindIdentity;
 import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
+
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -39,7 +42,7 @@ class IdentityFacadeTest {
     }
 
     @Test
-    void shouldFindIdentity() {
+    void shouldFindIdentityByAliases() {
         Aliases aliases = AliasesMother.idvIdAndDebitCardNumber();
         Identity expected = IdentityMother.example1();
         given(find.find(aliases)).willReturn(expected);
@@ -50,15 +53,42 @@ class IdentityFacadeTest {
     }
 
     @Test
-    void shouldConvertTypeAndValueToAlias() {
+    void shouldFindIdentityByAliasTypeAndValue() {
         String type = "my-alias-type";
         String value = "my-alias-value";
-        Alias expectedAlias = DefaultAliasMother.build();
-        given(aliasFactory.build(type, value)).willReturn(expectedAlias);
+        Alias alias = givenAliasCreatedForTypeAndValue(type, value);
+        Identity expectedIdentity = givenIdentityFoundForAlias(alias);
 
-        Alias alias = facade.toAlias(type, value);
+        Identity identity = facade.find(type, value);
 
-        assertThat(alias).isEqualTo(expectedAlias);
+        assertThat(identity).isEqualTo(expectedIdentity);
+    }
+
+    @Test
+    void shouldFindIdentityByIdvId() {
+        UUID idvIdValue = UUID.fromString("99cd7cbf-10da-4547-bbc3-e88e8364f60c");
+        Alias alias = givenAliasReturnedForIdvId(idvIdValue);
+        Identity expectedIdentity = givenIdentityFoundForAlias(alias);
+
+        Identity identity = facade.find(idvIdValue);
+
+        assertThat(identity).isEqualTo(expectedIdentity);
+    }
+
+    private Alias givenAliasReturnedForIdvId(UUID value) {
+        return givenAliasCreatedForTypeAndValue(IdvId.TYPE, value.toString());
+    }
+
+    private Alias givenAliasCreatedForTypeAndValue(String type, String value) {
+        Alias alias = DefaultAliasMother.build();
+        given(aliasFactory.build(type, value)).willReturn(alias);
+        return alias;
+    }
+
+    private Identity givenIdentityFoundForAlias(Alias alias) {
+        Identity identity = IdentityMother.example();
+        given(find.find(AliasesMother.with(alias))).willReturn(identity);
+        return identity;
     }
 
 }

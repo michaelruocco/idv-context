@@ -1,0 +1,7 @@
+dependencies {
+    api "com.amazonaws:aws-java-sdk-dynamodb:1.11.792"
+    implementation project(":identity-json")
+
+    testImplementation testFixtures(project(":identity-entities"))
+    testImplementation testFixtures(project(":identity-use-cases"))
+}

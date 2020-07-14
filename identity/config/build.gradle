@@ -1,7 +1,8 @@
 dependencies {
     api project(":identity-use-cases")
     api project(":identity-json")
-    
+
+    implementation project(":identity-dynamo-db-repository")
     implementation project(":identity-in-memory-repository")
     implementation project(":identity-external-find-stub")
 }

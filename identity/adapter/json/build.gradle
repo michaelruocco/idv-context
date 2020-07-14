@@ -8,8 +8,9 @@ ext {
 
 dependencies {
     api project(":identity-use-cases")
-    api "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
+    api "com.github.michaelruocco:json-adapter:0.1.2"
 
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:2.18.1"

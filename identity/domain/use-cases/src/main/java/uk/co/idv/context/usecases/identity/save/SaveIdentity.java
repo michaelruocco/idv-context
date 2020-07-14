@@ -4,6 +4,6 @@ import uk.co.idv.context.entities.identity.Identity;
 
 public interface SaveIdentity {
 
-    Identity save(Identity update, Identity existing);
+    Identity save(Identity updated, Identity existing);
 
 }

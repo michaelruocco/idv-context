@@ -6,9 +6,10 @@ import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 import uk.co.idv.context.usecases.identity.create.CreateIdentity;
 import uk.co.idv.context.usecases.identity.merge.MergeIdentities;
-import uk.co.idv.context.usecases.identity.save.ExternalSaveIdentity;
-import uk.co.idv.context.usecases.identity.save.InternalSaveIdentity;
+import uk.co.idv.context.usecases.identity.save.DefaultSaveIdentity;
 import uk.co.idv.context.usecases.identity.save.SaveIdentity;
+import uk.co.idv.context.usecases.identity.save.external.ExternalSaveIdentityStrategy;
+import uk.co.idv.context.usecases.identity.save.internal.InternalSaveIdentityStrategy;
 
 @Builder
 public class UpdateIdentity {
@@ -19,11 +20,11 @@ public class UpdateIdentity {
     private final IdentityRepository repository;
 
     public static UpdateIdentity buildInternal(IdentityRepository repository) {
-        return build(repository, new InternalSaveIdentity(repository));
+        return build(repository, new DefaultSaveIdentity(repository, new InternalSaveIdentityStrategy()));
     }
 
     public static UpdateIdentity buildExternal(IdentityRepository repository) {
-        return build(repository, new ExternalSaveIdentity(repository));
+        return build(repository, new DefaultSaveIdentity(repository, new ExternalSaveIdentityStrategy()));
     }
 
     public static UpdateIdentity build(IdentityRepository repository, SaveIdentity save) {

@@ -36,7 +36,7 @@ class MergeIdentitiesTest {
 
         assertThat(mergedIdentity).isEqualTo(expectedMergedIdentity);
         verify(repository).delete(existing.getIdvIds());
-        verify(repository).save(mergedIdentity);
+        verify(repository).create(mergedIdentity);
     }
 
 }

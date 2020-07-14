@@ -33,7 +33,7 @@ class CreateIdentityTest {
         Identity created = create.create(identity);
 
         assertThat(created).isEqualTo(identityWithId);
-        verify(repository).save(identityWithId);
+        verify(repository).create(identityWithId);
     }
 
     @Test

@@ -1,0 +1,55 @@
+plugins {
+    id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+    id "org.springframework.boot" version "2.3.0.RELEASE"
+    id "io.spring.dependency-management" version "1.0.9.RELEASE"
+    id "com.bmuschko.docker-remote-api" version "6.4.0"
+    id "com.avast.gradle.docker-compose" version "0.12.1"
+}
+
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+
+testSets {
+    integrationTest
+}
+
+configurations {
+    compile.exclude module: "slf4j-simple"
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-dependencies:2.3.0.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+    implementation project(":identity-json")
+    implementation project(":identity-config")
+    implementation project(":identity-external-find-stub")
+
+    integrationTestImplementation "com.intuit.karate:karate-apache:0.9.5"
+    integrationTestImplementation "com.intuit.karate:karate-junit5:0.9.5"
+    integrationTestImplementation "org.awaitility:awaitility:4.0.3"
+    integrationTestImplementation "org.testcontainers:junit-jupiter:1.14.3"
+}
+
+bootRun {
+    systemProperties = System.properties
+    args = ["--server.port=8081", "--spring.profiles.active=stubbed"]
+}
+
+docker {
+    registryCredentials {
+        username = System.getenv("DOCKER_USERNAME")
+        password = System.getenv("DOCKER_PASSWORD")
+    }
+}
+
+task buildImage(type: DockerBuildImage) {
+    inputDir.set(file('.'))
+    images.add('michaelruocco/verification-context-spring-app:latest')
+}
+
+task pushImage(type: DockerPushImage) {
+    images.set(buildImage.images)
+}

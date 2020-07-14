@@ -41,7 +41,7 @@ public class IdentityIntegrationTest {
     void shouldThrowExceptionForUnsupportedAliasType() {
         String type = "ABC";
 
-        Throwable error = catchThrowable(() -> facade.toAlias(type, "123"));
+        Throwable error = catchThrowable(() -> facade.find(type, "123"));
 
         assertThat(error)
                 .isInstanceOf(UnsupportedAliasTypeExeception.class)

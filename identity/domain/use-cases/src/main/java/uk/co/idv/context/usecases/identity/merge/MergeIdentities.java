@@ -42,7 +42,7 @@ public class MergeIdentities {
 
     private Identity save(Identity identity) {
         log.debug("saving merged identity {}", identity);
-        repository.save(identity);
+        repository.create(identity);
         return identity;
     }
 
