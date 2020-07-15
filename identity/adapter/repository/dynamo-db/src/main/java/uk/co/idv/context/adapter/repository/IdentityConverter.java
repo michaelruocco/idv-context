@@ -7,7 +7,6 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.Identity;
@@ -21,7 +20,11 @@ import java.util.stream.Collectors;
 public class IdentityConverter {
 
     private final Table table;
-    private final JsonConverter jsonConverter;
+    private final ItemConverter itemConverter;
+
+    public IdentityConverter(Table table, JsonConverter jsonConverter) {
+        this(table, new ItemConverter(jsonConverter));
+    }
 
     public TableWriteItems toBatchUpdateItems(Identity identity) {
         return new TableWriteItems(table.getTableName())
@@ -41,7 +44,7 @@ public class IdentityConverter {
     public Identities toIdentities(BatchGetItemOutcome outcome) {
         List<Item> items = outcome.getTableItems().get(table.getTableName());
         Collection<Identity> identityCollection = items.stream()
-                .map(this::toIdentity)
+                .map(itemConverter::toIdentity)
                 .distinct()
                 .collect(Collectors.toList());
         return new Identities(identityCollection);
@@ -50,29 +53,14 @@ public class IdentityConverter {
     private Collection<Item> toItems(Identity identity) {
         final Aliases aliases = identity.getAliases();
         return aliases.stream()
-                .map(alias -> toItem(identity, alias))
+                .map(alias -> itemConverter.toItem(identity, alias))
                 .collect(Collectors.toList());
     }
 
     private PrimaryKey[] toPrimaryKeys(Aliases aliases) {
         return aliases.stream()
-                .map(this::toKey)
+                .map(itemConverter::toPrimaryKey)
                 .toArray(PrimaryKey[]::new);
-    }
-
-    private PrimaryKey toKey(Alias alias) {
-        return new PrimaryKey("alias", alias.format());
-    }
-
-    private Item toItem(Identity identity, Alias alias) {
-        return new Item()
-                .withPrimaryKey("alias", alias.format())
-                .with("idvId", identity.getIdvIdValue().toString())
-                .withJSON("body", jsonConverter.toJson(identity));
-    }
-
-    private Identity toIdentity(Item item) {
-        return jsonConverter.toObject(item.getJSON("body"), Identity.class);
     }
 
 }
