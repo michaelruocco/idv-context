@@ -3,6 +3,8 @@ package uk.co.idv.app.manual;
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.config.identity.IdentityConfig;
+import uk.co.idv.config.repository.RepositoryConfig;
+import uk.co.idv.config.repository.inmemory.InMemoryRepositoryConfig;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.UnsupportedAliasTypeExeception;
 import uk.co.idv.context.entities.alias.Aliases;
@@ -32,10 +34,12 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 public class IdentityIntegrationTest {
 
-    private final IdentityConfig config = IdentityConfig.builder()
+    private final RepositoryConfig repositoryConfig = new InMemoryRepositoryConfig();
+    private final IdentityConfig identityConfig = IdentityConfig.builder()
+            .repository(repositoryConfig.identityRepository())
             .build();
 
-    private final IdentityFacade facade = config.identityFacade();
+    private final IdentityFacade facade = identityConfig.identityFacade();
 
     @Test
     void shouldThrowExceptionForUnsupportedAliasType() {

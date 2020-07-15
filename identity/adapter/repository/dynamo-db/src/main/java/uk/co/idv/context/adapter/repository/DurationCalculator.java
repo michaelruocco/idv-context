@@ -8,7 +8,7 @@ public class DurationCalculator {
     private DurationCalculator() {
         // utility class
     }
-    
+
     public static long millisBetweenNowAnd(Instant start) {
         return Duration.between(start, Instant.now()).toMillis();
     }

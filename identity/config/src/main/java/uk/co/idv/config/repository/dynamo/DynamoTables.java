@@ -41,9 +41,9 @@ public class DynamoTables {
             TableUtils.waitUntilActive(client, tableName, 30000, 500);
             log.info("table {} took {}ms to become active", tableName, millisBetweenNowAnd(start));
         } catch (InterruptedException e) {
-            log.error(e.getMessage(), e);
             Thread.currentThread().interrupt();
-            throw new RuntimeException(e);
+            log.error(e.getMessage(), e);
+            throw new DynamoException(e);
         }
     }
 
