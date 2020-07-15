@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.context.entities.alias.Aliases;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.stream.Collectors;
@@ -12,6 +13,10 @@ import java.util.stream.Collectors;
 public class Identities implements Iterable<Identity> {
 
     private final Collection<Identity> identities;
+
+    public Identities(Identity... identities) {
+        this(Arrays.asList(identities));
+    }
 
     @Override
     public Iterator<Identity> iterator() {
