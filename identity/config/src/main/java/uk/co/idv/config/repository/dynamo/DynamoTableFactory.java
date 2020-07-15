@@ -45,12 +45,4 @@ public class DynamoTableFactory {
                 .build();
     }
 
-    private AmazonDynamoDB build(Regions region) {
-        log.info("connecting to dynamodb region {}", region);
-        return AmazonDynamoDBClientBuilder.standard()
-                .withCredentials(credentialsProvider)
-                .withRegion(region)
-                .build();
-    }
-
 }
