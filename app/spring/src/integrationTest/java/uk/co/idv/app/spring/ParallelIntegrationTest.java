@@ -28,7 +28,6 @@ public class ParallelIntegrationTest {
 
     @BeforeAll
     static void setUp() {
-        log.info("AWS PROPERTIES {} {}", System.getProperty("aws.accessKeyId"), System.getProperty("aws.secretKey"));
         setUpAws();
         setUpApp();
     }

@@ -4,7 +4,6 @@ import lombok.Builder;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStub;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.context.adapter.json.error.handler.IdentityErrorHandler;
-import uk.co.idv.context.adapter.repository.InMemoryIdentityRepository;
 import uk.co.idv.context.usecases.eligibility.ChannelCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CompositeCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
@@ -19,8 +18,7 @@ import java.util.Collections;
 @Builder
 public class IdentityConfig {
 
-    @Builder.Default
-    private final IdentityRepository repository = new InMemoryIdentityRepository();
+    private final IdentityRepository repository;
 
     private final ExternalFindIdentityStubConfig stubConfig;
 

@@ -2,6 +2,8 @@ package uk.co.idv.app.manual;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.config.identity.IdentityConfig;
+import uk.co.idv.config.repository.RepositoryConfig;
+import uk.co.idv.config.repository.inmemory.InMemoryRepositoryConfig;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
@@ -27,6 +29,7 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 public class CreateEligibilityIntegrationTest {
 
+    private final RepositoryConfig repositoryConfig = new InMemoryRepositoryConfig();
     private final ExternalFindIdentityStubConfig stubConfig = ExternalFindIdentityStubConfig.builder()
             .executor(Executors.newFixedThreadPool(2))
             .timeout(Duration.ofMillis(250))
@@ -35,6 +38,7 @@ public class CreateEligibilityIntegrationTest {
             .build();
 
     private final IdentityConfig identityConfig = IdentityConfig.builder()
+            .repository(repositoryConfig.identityRepository())
             .stubConfig(stubConfig)
             .build();
 
