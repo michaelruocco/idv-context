@@ -1,9 +1,9 @@
 plugins {
     id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
-    id "org.springframework.boot" version "2.3.0.RELEASE"
+    id "org.springframework.boot" version "2.3.1.RELEASE"
     id "io.spring.dependency-management" version "1.0.9.RELEASE"
-    id "com.bmuschko.docker-remote-api" version "6.4.0"
-    id "com.avast.gradle.docker-compose" version "0.12.1"
+    id "com.bmuschko.docker-remote-api" version "6.5.0"
+    id "com.avast.gradle.docker-compose" version "0.13.0"
 }
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
@@ -18,7 +18,7 @@ configurations {
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-dependencies:2.3.0.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-dependencies:2.3.1.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'

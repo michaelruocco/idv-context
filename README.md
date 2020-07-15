@@ -7,7 +7,7 @@
 
 ## Todo
 
-*   Add unit tests for vertx code
+*   Add karate test for updating identity with alias removed
 *   Handle invalid payloads / Jackson failures
 *   Add lockout module/functionality
 

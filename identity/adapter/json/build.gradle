@@ -8,7 +8,7 @@ ext {
 
 dependencies {
     api project(":identity-use-cases")
-    api "com.github.michaelruocco:json-adapter:0.1.2"
+    api "com.github.michaelruocco:json-adapter:0.1.5"
 
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
