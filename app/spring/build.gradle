@@ -32,6 +32,7 @@ dependencies {
     integrationTestImplementation "org.awaitility:awaitility:4.0.3"
     integrationTestImplementation "org.testcontainers:junit-jupiter:1.14.3"
     integrationTestImplementation "com.amazonaws:aws-java-sdk-dynamodb:${awsSdkVersion}"
+    integrationTestImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
 }
 
 bootRun {

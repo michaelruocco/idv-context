@@ -9,8 +9,6 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Optional;
-
 @Slf4j
 @Builder
 public class DynamoTableFactory {
@@ -31,14 +29,11 @@ public class DynamoTableFactory {
     }
 
     private AmazonDynamoDB buildClient() {
-        return getEndpointConfiguration()
-                .map(this::build)
-                .orElseGet(() -> build(region));
+        return build(getEndpointConfiguration());
     }
 
-    private Optional<EndpointConfiguration> getEndpointConfiguration() {
-        return Optional.ofNullable(endpointUrl)
-                .map(endpoint -> new EndpointConfiguration(endpoint, region.getName()));
+    private EndpointConfiguration getEndpointConfiguration() {
+        return new EndpointConfiguration(endpointUrl, region.getName());
     }
 
     private AmazonDynamoDB build(EndpointConfiguration endpointConfiguration) {

@@ -16,7 +16,7 @@ import static uk.co.idv.app.spring.AppRunner.waitForAppStartupToComplete;
 
 @Testcontainers
 @Slf4j
-public class ParallelIntegrationTest {
+public class ParallelKarateIntegrationTest {
 
     private static final Regions REGION = Regions.EU_WEST_1;
     private static final String ENVIRONMENT = "idv-local";
