@@ -25,7 +25,21 @@
 
 ```gradle
 // runs all tests and builds code and applies rules to clean up code formatting etc
-./gradlew clean spotlessApply build integrationTests
+./gradlew clean spotlessApply build integrationTest
+```
+
+```gradle
+// runs all tests as above but also builds application docker image and
+// then runs application docker image with AWS local stack image to provide
+// a local instance of dynamo db for the service to use for data persistence
+// service will be running on port 8081 by default
+./gradlew clean spotlessApply build integrationTest buildImage composeUp
+```
+
+```gradle
+// runs spring application on your local machine on port 8081 by default
+// using an in memory repository in place of dynamo db database
+./gradlew bootRun
 ```
 
 ```gradle
