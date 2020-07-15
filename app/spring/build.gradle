@@ -39,6 +39,11 @@ bootRun {
     args = ["--server.port=8081", "--spring.profiles.active=stubbed"]
 }
 
+integrationTest {
+    systemProperty "aws.accessKeyId", "abc"
+    systemProperty "aws.secretKey", "123"
+}
+
 docker {
     registryCredentials {
         username = System.getenv("DOCKER_USERNAME")

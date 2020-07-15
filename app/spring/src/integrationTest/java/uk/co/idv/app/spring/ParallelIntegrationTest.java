@@ -28,6 +28,7 @@ public class ParallelIntegrationTest {
 
     @BeforeAll
     static void setUp() {
+        log.info("AWS PROPERTIES {} {}", System.getProperty("aws.accessKeyId"), System.getProperty("aws.secretKey"));
         setUpAws();
         setUpApp();
     }
@@ -66,8 +67,6 @@ public class ParallelIntegrationTest {
     private static void setApplicationProperties(int serverPort) {
         System.setProperty("environment", ENVIRONMENT);
         System.setProperty("server.port", Integer.toString(serverPort));
-        System.setProperty("aws.accessKeyId", "abc");
-        System.setProperty("aws.secretKey", "123");
         System.setProperty("aws.dynamo.db.endpoint.uri", AWS_SERVICES.getDynamoEndpointUri());
     }
 
