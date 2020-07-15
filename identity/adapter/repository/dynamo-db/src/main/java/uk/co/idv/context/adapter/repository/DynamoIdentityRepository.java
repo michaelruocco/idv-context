@@ -11,8 +11,9 @@ import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 
-import java.time.Duration;
 import java.time.Instant;
+
+import static uk.co.idv.context.adapter.repository.DurationCalculator.millisBetweenNowAnd;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -73,10 +74,6 @@ public class DynamoIdentityRepository implements IdentityRepository {
             return;
         }
         delete(aliasesToRemove);
-    }
-
-    private long millisBetweenNowAnd(Instant start) {
-        return Duration.between(start, Instant.now()).toMillis();
     }
 
 }

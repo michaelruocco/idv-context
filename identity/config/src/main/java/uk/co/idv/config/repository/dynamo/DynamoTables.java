@@ -7,8 +7,9 @@ import com.amazonaws.services.dynamodbv2.util.TableUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import java.time.Duration;
 import java.time.Instant;
+
+import static uk.co.idv.context.adapter.repository.DurationCalculator.millisBetweenNowAnd;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,17 +30,17 @@ public class DynamoTables {
         return getTable(tableName);
     }
 
-    public void waitForIdentityTableToBeActive() {
+    public void waitForTablesToBeActive() {
         waitForTableToBeActive(buildIdentityTableName());
     }
 
-    public void waitForTableToBeActive(String tableName) {
+    private void waitForTableToBeActive(String tableName) {
         try {
             log.info("waiting for {} table to become active", tableName);
             Instant start = Instant.now();
-            TableUtils.waitUntilActive(client, tableName, 59000, 1000);
-            log.info("table {} took {}ms to become active", tableName, Duration.between(start, Instant.now()).toMillis());
-        } catch (Exception e) {
+            TableUtils.waitUntilActive(client, tableName, 10000, 500);
+            log.info("table {} took {}ms to become active", tableName, millisBetweenNowAnd(start));
+        } catch (InterruptedException e) {
             log.error(e.getMessage(), e);
             Thread.currentThread().interrupt();
             throw new RuntimeException(e);

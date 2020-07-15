@@ -21,7 +21,7 @@ public class DynamoTableFactory {
     private final String environment = "idv-local";
 
     @Builder.Default
-    private final String region = Regions.EU_WEST_1.getName();
+    private final Regions region = Regions.EU_WEST_1;
 
     @Builder.Default
     private final AWSCredentialsProvider credentialsProvider = new DefaultAWSCredentialsProviderChain();
@@ -38,7 +38,7 @@ public class DynamoTableFactory {
 
     private Optional<EndpointConfiguration> getEndpointConfiguration() {
         return Optional.ofNullable(endpointUrl)
-                .map(endpoint -> new EndpointConfiguration(endpoint, region));
+                .map(endpoint -> new EndpointConfiguration(endpoint, region.getName()));
     }
 
     private AmazonDynamoDB build(EndpointConfiguration endpointConfiguration) {
@@ -50,7 +50,7 @@ public class DynamoTableFactory {
                 .build();
     }
 
-    private AmazonDynamoDB build(String region) {
+    private AmazonDynamoDB build(Regions region) {
         log.info("connecting to dynamodb region {}", region);
         return AmazonDynamoDBClientBuilder.standard()
                 .withCredentials(credentialsProvider)

@@ -13,7 +13,6 @@ services:
       - DEFAULT_REGION=eu-west-1
       - SERVICES=dynamodb
 
-
   verification-context-app:
     image: michaelruocco/verification-context-spring-app
     container_name: verification-context-app
