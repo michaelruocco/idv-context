@@ -133,6 +133,7 @@ dependencyUpdates.resolutionStrategy {
 sonarqube {
     properties {
         property "sonar.projectKey", "michaelruocco_verification-context"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/report.xml"
     }
 }
 
