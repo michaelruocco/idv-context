@@ -55,7 +55,10 @@ public class AsyncDataLoader {
         try {
             CompletableFuture<Void> combined = CompletableFuture.allOf(futures);
             combined.get(timeout.toMillis(), TimeUnit.MILLISECONDS);
-        } catch (InterruptedException | ExecutionException | TimeoutException e) {
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            log.debug(e.getMessage(), e);
+        } catch (ExecutionException | TimeoutException e) {
             log.debug(e.getMessage(), e);
         } finally {
             log.info("futures took {}ms to complete", millisBetweenNowAnd(start));
