@@ -13,12 +13,10 @@ import java.util.concurrent.ExecutorService;
 @Data
 public class ExternalFindIdentityStubConfig implements TimeoutProvider {
 
-    private static final Duration NO_DELAY = Duration.ZERO;
-
     private final ExecutorService executor;
 
-    @Builder.Default private final Duration phoneNumberDelay = NO_DELAY;
-    @Builder.Default private final Duration emailAddressDelay = NO_DELAY;
+    @Builder.Default private final Duration phoneNumberDelay = Duration.ZERO;
+    @Builder.Default private final Duration emailAddressDelay = Duration.ZERO;
 
     @Getter(AccessLevel.NONE)
     @Builder.Default private final Duration timeout = Duration.ofSeconds(2);

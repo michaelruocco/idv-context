@@ -6,8 +6,8 @@ import uk.co.idv.context.entities.alias.IdvId;
 @Getter
 public class CannotUpdateIdvIdException extends RuntimeException {
 
-    private final IdvId updated;
-    private final IdvId existing;
+    private transient final IdvId updated;
+    private transient final IdvId existing;
 
     public CannotUpdateIdvIdException(IdvId updated, IdvId existing) {
         super("cannot update idv id");

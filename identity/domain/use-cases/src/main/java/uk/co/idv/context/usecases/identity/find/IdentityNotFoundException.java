@@ -7,7 +7,7 @@ import java.util.stream.Collectors;
 
 public class IdentityNotFoundException extends RuntimeException {
 
-    private final Aliases aliases;
+    private transient final Aliases aliases;
 
     public IdentityNotFoundException(Alias alias) {
         this(new Aliases(alias));

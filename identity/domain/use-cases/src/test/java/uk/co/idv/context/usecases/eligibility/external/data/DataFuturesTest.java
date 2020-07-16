@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class DataFuturesTest {
 
     @Test
-    void shouldReturnCompletableFuturesToArray() {
+    void shouldReturnCombinedCompletableFutures() {
         CompletableFuture<PhoneNumbers> phoneNumbersFuture = completedFuture(PhoneNumbersMother.mobileAndOther());
         CompletableFuture<EmailAddresses> emailAddressesFuture = completedFuture(EmailAddressesMother.two());
 
@@ -23,10 +23,7 @@ class DataFuturesTest {
                 .emailAddresses(emailAddressesFuture)
                 .build();
 
-        assertThat(futures.toArray()).containsExactly(
-                phoneNumbersFuture,
-                emailAddressesFuture
-        );
+        assertThat(futures.allCombined().isDone()).isTrue();
     }
 
     @Test

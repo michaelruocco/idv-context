@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public class IdvIdAlreadyPresentException extends RuntimeException {
 
-    private final IdvId existing;
-    private final Alias updated;
+    private transient final IdvId existing;
+    private transient final Alias updated;
 
     public IdvIdAlreadyPresentException(IdvId existing, Alias updated) {
         super("idvId already exists");

@@ -22,11 +22,8 @@ public class DataFutures {
         return handleFuture(emailAddresses, new EmailAddresses());
     }
 
-    public CompletableFuture<?>[] toArray() {
-        return new CompletableFuture[]{
-                phoneNumbers,
-                emailAddresses
-        };
+    public CompletableFuture<Void> allCombined() {
+        return CompletableFuture.allOf(phoneNumbers, emailAddresses);
     }
 
     private static <T> T handleFuture(CompletableFuture<T> future, T defaultValue) {

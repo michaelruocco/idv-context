@@ -25,7 +25,7 @@ public class AsyncDataLoader {
 
     public DataFutures loadData(AsyncDataLoadRequest request) {
         DataFutures futures = initiateLoad(request);
-        waitFor(request.getTimeout(), futures.toArray());
+        waitFor(request.getTimeout(), futures.allCombined());
         return futures;
     }
 
@@ -49,12 +49,11 @@ public class AsyncDataLoader {
         return CompletableFuture.supplyAsync(supplier, executor);
     }
 
-    private void waitFor(Duration timeout, CompletableFuture<?>... futures) {
+    private void waitFor(Duration timeout, CompletableFuture<Void> future) {
         log.info("waiting for futures to complete with timeout {}", timeout);
         Instant start = Instant.now();
         try {
-            CompletableFuture<Void> combined = CompletableFuture.allOf(futures);
-            combined.get(timeout.toMillis(), TimeUnit.MILLISECONDS);
+            future.get(timeout.toMillis(), TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             log.debug(e.getMessage(), e);
