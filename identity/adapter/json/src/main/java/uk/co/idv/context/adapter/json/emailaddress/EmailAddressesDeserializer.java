@@ -15,8 +15,8 @@ public class EmailAddressesDeserializer extends StdDeserializer<EmailAddresses> 
     }
 
     @Override
-    public EmailAddresses deserialize(final JsonParser parser, final DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
+    public EmailAddresses deserialize(JsonParser parser, DeserializationContext context) {
+        JsonNode node = JsonParserConverter.toNode(parser);
         return new EmailAddresses(JsonNodeConverter.toStringCollection(node, parser));
     }
 

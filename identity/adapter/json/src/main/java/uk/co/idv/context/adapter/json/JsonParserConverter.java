@@ -12,7 +12,7 @@ public class JsonParserConverter {
         // utility class
     }
 
-    public static JsonNode toNode(final JsonParser parser) {
+    public static JsonNode toNode(JsonParser parser) {
         try {
             return parser.getCodec().readTree(parser);
         } catch (final IOException e) {

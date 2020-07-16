@@ -21,7 +21,7 @@ public class ExternalFindIdentityStub {
                 .build();
     }
 
-    private static DataSupplierFactory toSupplierFactory(final ExternalFindIdentityStubConfig config) {
+    private static DataSupplierFactory toSupplierFactory(ExternalFindIdentityStubConfig config) {
         return StubDataSupplierFactory.builder()
                 .phoneNumberDelay(config.getPhoneNumberDelay())
                 .emailAddressDelay(config.getEmailAddressDelay())

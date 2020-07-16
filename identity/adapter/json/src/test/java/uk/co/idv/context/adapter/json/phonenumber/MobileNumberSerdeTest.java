@@ -24,7 +24,7 @@ public class MobileNumberSerdeTest {
 
     @Test
     void shouldDeserialize() throws JsonProcessingException {
-        final PhoneNumber number = MAPPER.readValue(JSON, PhoneNumber.class);
+        PhoneNumber number = MAPPER.readValue(JSON, PhoneNumber.class);
 
         assertThat(number).isEqualTo(NUMBER);
     }

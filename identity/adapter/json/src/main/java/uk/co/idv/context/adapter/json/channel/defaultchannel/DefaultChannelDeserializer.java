@@ -16,7 +16,7 @@ public class DefaultChannelDeserializer extends StdDeserializer<DefaultChannel> 
 
     @Override
     public DefaultChannel deserialize(JsonParser parser, DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
+        JsonNode node = JsonParserConverter.toNode(parser);
         return DefaultChannel.builder()
                 .id(node.get("id").asText())
                 .country(extractCountry(node))

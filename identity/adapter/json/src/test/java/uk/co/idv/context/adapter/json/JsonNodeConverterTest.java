@@ -17,15 +17,15 @@ public class JsonNodeConverterTest {
 
     @Test
     void shouldThrowUncheckedIOExceptionIfJacksonThrowsIOException() throws IOException {
-        final JsonParser parser = mock(JsonParser.class);
-        final ObjectCodec codec = mock(ObjectCodec.class);
+        JsonParser parser = mock(JsonParser.class);
+        ObjectCodec codec = mock(ObjectCodec.class);
         given(parser.getCodec()).willReturn(codec);
-        final JsonNode node = mock(JsonNode.class);
+        JsonNode node = mock(JsonNode.class);
         given(node.traverse(codec)).willReturn(parser);
-        final Class<Object> type = Object.class;
+        Class<Object> type = Object.class;
         given(parser.readValueAs(type)).willThrow(IOException.class);
 
-        final Throwable error = catchThrowable(() -> JsonNodeConverter.toObject(node, parser, type));
+        Throwable error = catchThrowable(() -> JsonNodeConverter.toObject(node, parser, type));
 
         assertThat(error)
                 .isInstanceOf(UncheckedIOException.class)

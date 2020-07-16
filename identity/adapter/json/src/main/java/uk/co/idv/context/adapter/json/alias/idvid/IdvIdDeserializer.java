@@ -14,8 +14,8 @@ public class IdvIdDeserializer extends StdDeserializer<IdvId> {
     }
 
     @Override
-    public IdvId deserialize(final JsonParser parser, final DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
+    public IdvId deserialize(JsonParser parser, DeserializationContext context) {
+        JsonNode node = JsonParserConverter.toNode(parser);
         return new IdvId(node.get("value").asText());
     }
 

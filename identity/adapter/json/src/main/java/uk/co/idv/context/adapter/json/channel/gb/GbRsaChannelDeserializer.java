@@ -16,7 +16,7 @@ public class GbRsaChannelDeserializer extends StdDeserializer<GbRsa> {
 
     @Override
     public GbRsa deserialize(JsonParser parser, DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
+        JsonNode node = JsonParserConverter.toNode(parser);
         return GbRsa.builder()
                 .issuerSessionId(RsaFieldExtractor.issuerSessionId(node))
                 .build();

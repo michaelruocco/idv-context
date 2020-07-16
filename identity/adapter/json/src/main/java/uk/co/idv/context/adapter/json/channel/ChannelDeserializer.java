@@ -29,8 +29,8 @@ public class ChannelDeserializer extends StdDeserializer<Channel> {
 
     @Override
     public Channel deserialize(JsonParser parser, DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
-        final String type = extractId(node);
+        JsonNode node = JsonParserConverter.toNode(parser);
+        String type = extractId(node);
         return JsonNodeConverter.toObject(node, parser, toMappingType(type));
     }
 

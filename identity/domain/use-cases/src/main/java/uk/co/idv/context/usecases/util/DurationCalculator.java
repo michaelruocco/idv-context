@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.repository;
+package uk.co.idv.context.usecases.util;
 
 import java.time.Duration;
 import java.time.Instant;

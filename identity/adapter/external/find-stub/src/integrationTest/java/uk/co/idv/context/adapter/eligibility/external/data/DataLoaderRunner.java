@@ -11,6 +11,8 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.function.Supplier;
 
+import static uk.co.idv.context.usecases.util.DurationCalculator.millisBetweenNowAnd;
+
 @Slf4j
 @RequiredArgsConstructor
 public class DataLoaderRunner implements Supplier<DataFutures> {
@@ -24,8 +26,7 @@ public class DataLoaderRunner implements Supplier<DataFutures> {
         Instant start = Instant.now();
         AsyncDataLoadRequest request = buildRequest(timeout);
         DataFutures futures = loader.loadData(request);
-        Instant end = Instant.now();
-        log.debug("{} took {}ms", i, millisBetween(start, end));
+        log.debug("{} took {}ms", i, millisBetweenNowAnd(start));
         return futures;
     }
 
@@ -33,10 +34,6 @@ public class DataLoaderRunner implements Supplier<DataFutures> {
         return AsyncDataLoadRequestMother.builder()
                 .timeout(timeout)
                 .build();
-    }
-
-    private static long millisBetween(final Instant start, final Instant end) {
-        return Duration.between(start, end).toMillis();
     }
 
 }

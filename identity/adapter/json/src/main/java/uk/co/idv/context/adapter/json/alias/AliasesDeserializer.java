@@ -20,8 +20,8 @@ public class AliasesDeserializer extends StdDeserializer<Aliases> {
 
     @Override
     public Aliases deserialize(JsonParser parser, DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
-        final Collection<Alias> aliases = new ArrayList<>();
+        JsonNode node = JsonParserConverter.toNode(parser);
+        Collection<Alias> aliases = new ArrayList<>();
         for (JsonNode arrayNode : node) {
             aliases.add(JsonNodeConverter.toObject(arrayNode, parser, Alias.class));
         }

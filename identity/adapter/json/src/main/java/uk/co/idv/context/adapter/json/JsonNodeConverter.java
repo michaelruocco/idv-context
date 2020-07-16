@@ -14,11 +14,11 @@ public class JsonNodeConverter {
         // utility class
     }
 
-    public static Collection<String> toStringCollection(final JsonNode node, final JsonParser parser) {
+    public static Collection<String> toStringCollection(JsonNode node, JsonParser parser) {
         return Arrays.asList(toObject(node, parser, String[].class));
     }
 
-    public static <T> T toObject(final JsonNode node, final JsonParser parser, final Class<T> type) {
+    public static <T> T toObject(JsonNode node, JsonParser parser, Class<T> type) {
         try {
             return node.traverse(parser.getCodec()).readValueAs(type);
         } catch (final IOException e) {

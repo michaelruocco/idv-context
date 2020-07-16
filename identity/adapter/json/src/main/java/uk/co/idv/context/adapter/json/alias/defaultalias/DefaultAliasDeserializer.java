@@ -15,7 +15,7 @@ public class DefaultAliasDeserializer extends StdDeserializer<DefaultAlias> {
 
     @Override
     public DefaultAlias deserialize(JsonParser parser, DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
+        JsonNode node = JsonParserConverter.toNode(parser);
         return DefaultAlias.builder()
                 .type(node.get("type").asText())
                 .value(node.get("value").asText())

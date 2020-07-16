@@ -16,7 +16,7 @@ public class DeRsaChannelDeserializer extends StdDeserializer<DeRsa> {
 
     @Override
     public DeRsa deserialize(JsonParser parser, DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
+        JsonNode node = JsonParserConverter.toNode(parser);
         return DeRsa.builder()
                 .issuerSessionId(RsaFieldExtractor.issuerSessionId(node))
                 .dsSessionId(RsaFieldExtractor.deSessionId(node))

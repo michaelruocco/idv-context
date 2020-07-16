@@ -22,7 +22,7 @@ public class EligibilityDeserializer extends StdDeserializer<Eligibility> {
 
     @Override
     public Eligibility deserialize(JsonParser parser, DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
+        JsonNode node = JsonParserConverter.toNode(parser);
         return Eligibility.builder()
                 .channel(toChannel(node, parser))
                 .aliases(toAliases(node, parser))

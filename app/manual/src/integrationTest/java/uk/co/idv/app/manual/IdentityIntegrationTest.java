@@ -27,7 +27,6 @@ import uk.co.idv.context.usecases.identity.create.CountryNotProvidedException;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
 import uk.co.idv.context.usecases.identity.save.CannotUpdateIdvIdException;
 
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
@@ -115,6 +114,21 @@ public class IdentityIntegrationTest {
 
         assertThat(error.getExisting()).isEqualTo(created.getIdvId());
         assertThat(error.getUpdated()).isEqualTo(updated);
+    }
+
+    @Test
+    void canRemoveAliasOnUpdate() {
+        Alias idvId = IdvIdMother.idvId();
+        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        Identity initial = IdentityMother.withAliases(idvId, creditCardNumber, debitCardNumber);
+        Identity created = facade.update(initial);
+
+        Identity change = IdentityMother.withAliases(idvId, creditCardNumber);
+        Identity updated = facade.update(change);
+
+        assertThat(created.getAliases()).containsExactly(idvId, creditCardNumber, debitCardNumber);
+        assertThat(updated.getAliases()).containsExactly(idvId, creditCardNumber);
     }
 
     @Test

@@ -222,6 +222,44 @@ Feature: Identity Maintenance
       }
       """
 
+  Scenario: Create + Update identity - Success - Remove alias
+    Given request
+      """
+      {
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111120" },
+          { "type": "debit-card-number", "value": "4929111111111121" }
+        ],
+      }
+      """
+    And method POST
+    And status 201
+    * def idvId = response.idvId
+    And request
+      """
+      {
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111120" }
+          { "type": "idv-id", "value": "#(idvId)" }
+        ]
+      }
+      """
+    When method POST
+    Then status 201
+    And match response ==
+      """
+      {
+        "idvId": "#(idvId)",
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4929111111111120" },
+          { "type": "idv-id", "value": "#uuid" }
+        ]
+      }
+      """
+
   Scenario: Merge identities - Error - Cannot merge identities with different countries
     Given request
       """

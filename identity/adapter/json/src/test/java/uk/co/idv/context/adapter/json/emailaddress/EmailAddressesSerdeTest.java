@@ -17,14 +17,14 @@ public class EmailAddressesSerdeTest {
 
     @Test
     void shouldSerialize() throws JsonProcessingException {
-        final String json = MAPPER.writeValueAsString(EMAIL_ADDRESSES);
+        String json = MAPPER.writeValueAsString(EMAIL_ADDRESSES);
 
         assertThatJson(json).isEqualTo(JSON);
     }
 
     @Test
     void shouldDeserialize() throws JsonProcessingException {
-        final EmailAddresses emailAddresses = MAPPER.readValue(JSON, EmailAddresses.class);
+        EmailAddresses emailAddresses = MAPPER.readValue(JSON, EmailAddresses.class);
 
         assertThat(emailAddresses).isEqualTo(EMAIL_ADDRESSES);
     }

@@ -18,7 +18,7 @@ import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 
-import static uk.co.idv.context.adapter.repository.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.idv.context.usecases.util.DurationCalculator.millisBetweenNowAnd;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -42,37 +42,44 @@ public class DynamoIdentityRepository implements IdentityRepository {
     public Identities load(Aliases aliases) {
         Instant start = Instant.now();
         TableKeysAndAttributes keysAndAttributes = converter.toKeys(aliases);
-        BatchGetItemOutcome outcome = dynamoDb.batchGetItem(keysAndAttributes);
-        errorIfUnprocessedItems(outcome);
-        Identities identities = converter.toIdentities(outcome);
-        log.info("took {}ms to load {} identities using aliases {}",
-                millisBetweenNowAnd(start),
-                identities.size(),
-                aliases);
-        return identities;
+        try {
+            BatchGetItemOutcome outcome = dynamoDb.batchGetItem(keysAndAttributes);
+            errorIfUnprocessedItems(outcome);
+            return converter.toIdentities(outcome);
+        } finally {
+            log.info("took {}ms to load identities using aliases {}",
+                    millisBetweenNowAnd(start),
+                    aliases);
+        }
     }
 
     @Override
     public void delete(Aliases aliases) {
         Instant start = Instant.now();
         TableWriteItems items = converter.toBatchDeleteItems(aliases);
-        BatchWriteItemOutcome outcome = dynamoDb.batchWriteItem(items);
-        errorIfUnprocessedItems(outcome);
-        log.info("took {}ms to delete {} items using aliases {} items",
-                millisBetweenNowAnd(start),
-                items.getPrimaryKeysToDelete().size(),
-                aliases);
+        try {
+            BatchWriteItemOutcome outcome = dynamoDb.batchWriteItem(items);
+            errorIfUnprocessedItems(outcome);
+        } finally {
+            log.info("took {}ms to delete {} items using aliases {} items",
+                    millisBetweenNowAnd(start),
+                    items.getPrimaryKeysToDelete().size(),
+                    aliases);
+        }
     }
 
     private void batchUpdateItems(Identity updated) {
         Instant start = Instant.now();
         TableWriteItems items = converter.toBatchUpdateItems(updated);
-        BatchWriteItemOutcome outcome = dynamoDb.batchWriteItem(items);
-        errorIfUnprocessedItems(outcome);
-        log.info("took {}ms to update {} items for identity {}",
-                millisBetweenNowAnd(start),
-                items.getItemsToPut().size(),
-                updated);
+        try {
+            BatchWriteItemOutcome outcome = dynamoDb.batchWriteItem(items);
+            errorIfUnprocessedItems(outcome);
+        } finally {
+            log.info("took {}ms to update {} items for identity {}",
+                    millisBetweenNowAnd(start),
+                    items.getItemsToPut().size(),
+                    updated);
+        }
     }
 
     private void deleteEntriesForRemovedAliases(Identity updated, Identity existing) {

@@ -29,8 +29,8 @@ public class AliasDeserializer extends StdDeserializer<Alias> {
 
     @Override
     public Alias deserialize(JsonParser parser, DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
-        final String type = extractType(node);
+        JsonNode node = JsonParserConverter.toNode(parser);
+        String type = extractType(node);
         return JsonNodeConverter.toObject(node, parser, toMappingType(type));
     }
 

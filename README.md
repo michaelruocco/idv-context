@@ -7,7 +7,6 @@
 
 ## Todo
 
-*   Add karate test for updating identity with alias removed
 *   Handle invalid payloads / Jackson failures
 *   Add lockout module/functionality
 

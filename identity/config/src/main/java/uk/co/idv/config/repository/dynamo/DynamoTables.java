@@ -9,7 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 
 import java.time.Instant;
 
-import static uk.co.idv.context.adapter.repository.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.idv.context.usecases.util.DurationCalculator.millisBetweenNowAnd;
 
 @Slf4j
 @RequiredArgsConstructor

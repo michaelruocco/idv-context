@@ -14,6 +14,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 
+import static uk.co.idv.context.usecases.util.DurationCalculator.millisBetweenNowAnd;
+
 @RequiredArgsConstructor
 @Slf4j
 public class AsyncDataLoader {
@@ -56,13 +58,8 @@ public class AsyncDataLoader {
         } catch (InterruptedException | ExecutionException | TimeoutException e) {
             log.debug(e.getMessage(), e);
         } finally {
-            Instant end = Instant.now();
-            log.info("took {}ms for futures to complete", millisBetween(start, end));
+            log.info("futures took {}ms to complete", millisBetweenNowAnd(start));
         }
-    }
-
-    private static long millisBetween(final Instant start, final Instant end) {
-        return Duration.between(start, end).toMillis();
     }
 
 }

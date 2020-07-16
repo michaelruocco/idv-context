@@ -22,8 +22,8 @@ public class IdentityDeserializer extends StdDeserializer<Identity> {
     }
 
     @Override
-    public Identity deserialize(final JsonParser parser, final DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
+    public Identity deserialize(JsonParser parser, DeserializationContext context) {
+        JsonNode node = JsonParserConverter.toNode(parser);
         return Identity.builder()
                 .country(toCountry(node))
                 .aliases(toAliases(node, parser))

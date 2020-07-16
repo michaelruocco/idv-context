@@ -5,9 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.usecases.eligibility.external.data.Delay;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.util.function.Supplier;
+
+import static uk.co.idv.context.usecases.util.DurationCalculator.millisBetweenNowAnd;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -34,18 +35,13 @@ public class StubDataSupplier<T> implements Supplier<T> {
         Instant start = Instant.now();
         delay.execute();
         T data = factory.getPopulatedData();
-        Instant end = Instant.now();
-        log.debug("returning stubbed {} data {} took {}ms", name, data, millisBetween(start, end));
+        log.debug("returning stubbed {} data {} took {}ms", name, data, millisBetweenNowAnd(start));
         return data;
     }
 
     private T loadEmptyData() {
         log.debug("loading empty {} data", factory.getName());
         return factory.getEmptyData();
-    }
-
-    private static long millisBetween(final Instant start, final Instant end) {
-        return Duration.between(start, end).toMillis();
     }
 
 }

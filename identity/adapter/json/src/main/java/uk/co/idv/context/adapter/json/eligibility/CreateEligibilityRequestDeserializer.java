@@ -20,7 +20,7 @@ public class CreateEligibilityRequestDeserializer extends StdDeserializer<Create
 
     @Override
     public CreateEligibilityRequest deserialize(JsonParser parser, DeserializationContext context) {
-        final JsonNode node = JsonParserConverter.toNode(parser);
+        JsonNode node = JsonParserConverter.toNode(parser);
         return CreateEligibilityRequest.builder()
                 .channel(toChannel(node, parser))
                 .aliases(toAliases(node, parser))
