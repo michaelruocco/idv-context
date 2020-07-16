@@ -15,8 +15,8 @@ public class ExternalFindIdentityStubConfig implements TimeoutProvider {
 
     private final ExecutorService executor;
 
-    @Builder.Default private final Duration phoneNumberDelay = Duration.ZERO;
-    @Builder.Default private final Duration emailAddressDelay = Duration.ZERO;
+    @Builder.Default private final Duration phoneNumberDelay = Duration.ofSeconds(0);
+    @Builder.Default private final Duration emailAddressDelay = Duration.ofSeconds(0);
 
     @Getter(AccessLevel.NONE)
     @Builder.Default private final Duration timeout = Duration.ofSeconds(2);

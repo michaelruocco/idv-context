@@ -66,7 +66,7 @@ public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
         if (dynamoTables == null) {
             DynamoTableFactory factory = DynamoTableFactory.builder()
                     .endpointUrl(getDynamoEndpointUri())
-                    .region(region)
+                    .region(region.getName())
                     .environment(environment)
                     .build();
             dynamoTables = factory.build();

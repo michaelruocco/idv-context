@@ -3,7 +3,6 @@ package uk.co.idv.config.repository.dynamo;
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;
 import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
-import com.amazonaws.regions.Regions;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClientBuilder;
 import lombok.Builder;
@@ -14,12 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 public class DynamoTableFactory {
 
     private final String endpointUrl;
-
-    @Builder.Default
-    private final String environment = "idv-local";
-
-    @Builder.Default
-    private final Regions region = Regions.EU_WEST_1;
+    private final String environment;
+    private final String region;
 
     @Builder.Default
     private final AWSCredentialsProvider credentialsProvider = new DefaultAWSCredentialsProviderChain();
@@ -33,7 +28,7 @@ public class DynamoTableFactory {
     }
 
     private EndpointConfiguration getEndpointConfiguration() {
-        return new EndpointConfiguration(endpointUrl, region.getName());
+        return new EndpointConfiguration(endpointUrl, region);
     }
 
     private AmazonDynamoDB build(EndpointConfiguration endpointConfiguration) {

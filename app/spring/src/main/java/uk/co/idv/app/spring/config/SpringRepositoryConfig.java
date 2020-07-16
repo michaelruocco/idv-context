@@ -17,6 +17,8 @@ public class SpringRepositoryConfig {
     @Profile("!stubbed")
     public RepositoryConfig dynamoRepositoryConfig(JsonConverter jsonConverter) {
         DynamoTableFactory tableFactory = DynamoTableFactory.builder()
+                .environment(System.getProperty("environment", "idv-local"))
+                .region(System.getProperty("aws.region", "eu-west-1"))
                 .endpointUrl(System.getProperty("aws.dynamo.db.endpoint.uri", "http://localhost:4569"))
                 .environment(System.getProperty("environment", "idv-local"))
                 .build();
