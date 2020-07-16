@@ -28,7 +28,7 @@ class CannotUpdateIdvIdHandlerTest {
     }
 
     @Test
-    public void shouldReturnCannotUpdateIdvIdError() {
+    void shouldReturnCannotUpdateIdvIdError() {
         CannotUpdateIdvIdException cause = CannotUpdateIdvIdExceptionMother.build();
 
         ApiError error = handler.apply(cause);
@@ -37,7 +37,7 @@ class CannotUpdateIdvIdHandlerTest {
     }
 
     @Test
-    public void shouldPopulateUpdatedAndExistingIdvIds() {
+    void shouldPopulateUpdatedAndExistingIdvIds() {
         CannotUpdateIdvIdException cause = CannotUpdateIdvIdExceptionMother.build();
 
         CannotUpdateIdvIdError error = (CannotUpdateIdvIdError) handler.apply(cause);

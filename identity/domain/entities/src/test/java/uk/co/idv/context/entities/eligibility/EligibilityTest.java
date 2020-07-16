@@ -12,7 +12,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EligibilityTest {
+class EligibilityTest {
 
     @Test
     void shouldReturnChannel() {

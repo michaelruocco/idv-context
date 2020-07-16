@@ -32,9 +32,10 @@ class StubAliasLoaderTest {
 
         Aliases loadedAliases = loader.load(request);
 
-        assertThat(loadedAliases).hasSize(inputAliases.size() + 1);
-        assertThat(loadedAliases).containsAll(inputAliases);
-        assertThat(loadedAliases).contains(DebitCardNumberMother.withValue("5929111111111111"));
+        assertThat(loadedAliases)
+                .hasSize(inputAliases.size() + 1)
+                .containsAll(inputAliases)
+                .contains(DebitCardNumberMother.withValue("5929111111111111"));
     }
 
     @Test

@@ -5,7 +5,7 @@ import org.junitpioneer.jupiter.SetSystemProperty;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-public class ApplicationTest {
+class ApplicationTest {
 
     @Test
     @SetSystemProperty(key = "spring.profiles.active", value = "stubbed")

@@ -17,31 +17,31 @@ import java.util.stream.Stream;
 @ToString
 public class Aliases implements Iterable<Alias> {
 
-    private final Collection<Alias> aliases;
+    private final Collection<Alias> values;
 
-    public Aliases(Alias... aliases) {
-        this(Arrays.asList(aliases));
+    public Aliases(Alias... values) {
+        this(Arrays.asList(values));
     }
 
-    public Aliases(Collection<Alias> aliases) {
-        this.aliases = new LinkedHashSet<>(aliases);
+    public Aliases(Collection<Alias> values) {
+        this.values = new LinkedHashSet<>(values);
     }
 
     @Override
     public Iterator<Alias> iterator() {
-        return aliases.iterator();
+        return values.iterator();
     }
 
     public boolean contains(Alias alias) {
-        return aliases.contains(alias);
+        return values.contains(alias);
     }
 
     public Stream<Alias> stream() {
-        return aliases.stream();
+        return values.stream();
     }
 
     public Aliases add(Aliases aliasesToAdd) {
-        Collection<Alias> updated = new LinkedHashSet<>(aliases);
+        Collection<Alias> updated = new LinkedHashSet<>(values);
         aliasesToAdd.forEach(this::validate);
         aliasesToAdd.forEach(updated::add);
         return new Aliases(updated);
@@ -53,7 +53,7 @@ public class Aliases implements Iterable<Alias> {
     }
 
     public Aliases remove(Alias alias) {
-        Collection<Alias> updated = new LinkedHashSet<>(aliases);
+        Collection<Alias> updated = new LinkedHashSet<>(values);
         updated.remove(alias);
         return new Aliases(updated);
     }
@@ -72,15 +72,15 @@ public class Aliases implements Iterable<Alias> {
     }
 
     public Aliases notPresent(Aliases comparison) {
-        return new Aliases(CollectionUtils.subtract(this.aliases, comparison.aliases));
+        return new Aliases(CollectionUtils.subtract(this.values, comparison.values));
     }
 
     public int size() {
-        return aliases.size();
+        return values.size();
     }
 
     public boolean isEmpty() {
-        return aliases.isEmpty();
+        return values.isEmpty();
     }
 
     public UUID getIdvIdValue() {
@@ -103,13 +103,13 @@ public class Aliases implements Iterable<Alias> {
     }
 
     public String getFirstValue() {
-        return aliases.stream().findFirst()
+        return values.stream().findFirst()
                 .map(Alias::getValue)
                 .orElseThrow(EmptyAliasesException::new);
     }
 
     public boolean hasAnyValuesEndingWith(String suffix) {
-        return aliases.stream().anyMatch(alias -> alias.valueEndsWith(suffix));
+        return values.stream().anyMatch(alias -> alias.valueEndsWith(suffix));
     }
 
     private Optional<Alias> getAliasByType(String type) {
@@ -117,7 +117,7 @@ public class Aliases implements Iterable<Alias> {
     }
 
     private Stream<Alias> getAliasesByType(String type) {
-        return aliases.stream().filter(alias -> alias.isType(type));
+        return values.stream().filter(alias -> alias.isType(type));
     }
 
 }

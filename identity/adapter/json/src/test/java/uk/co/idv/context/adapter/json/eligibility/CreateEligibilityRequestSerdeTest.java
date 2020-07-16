@@ -9,7 +9,7 @@ import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequestMother;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class CreateEligibilityRequestSerdeTest {
+class CreateEligibilityRequestSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new EligibilityModule());
     private static final String JSON = CreateEligibilityRequestJsonMother.build();

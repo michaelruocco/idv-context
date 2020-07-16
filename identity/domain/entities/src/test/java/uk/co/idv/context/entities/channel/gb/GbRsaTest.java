@@ -9,7 +9,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GbRsaTest {
+class GbRsaTest {
 
     @Test
     void shouldReturnId() {

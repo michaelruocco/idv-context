@@ -18,7 +18,7 @@ class InternalServerHandlerTest {
     }
 
     @Test
-    public void shouldReturnInternalServerError() {
+    void shouldReturnInternalServerError() {
         Throwable cause = new Throwable();
 
         ApiError error = handler.apply(cause);
@@ -27,7 +27,7 @@ class InternalServerHandlerTest {
     }
 
     @Test
-    public void shouldReturnInternalServerErrorWithCauseMessage() {
+    void shouldReturnInternalServerErrorWithCauseMessage() {
         String expectedMessage = "my-message";
         Throwable cause = givenCauseWithMessage(expectedMessage);
 

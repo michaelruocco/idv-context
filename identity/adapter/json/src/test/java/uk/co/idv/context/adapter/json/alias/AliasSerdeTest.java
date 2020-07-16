@@ -9,7 +9,7 @@ import uk.co.idv.context.entities.alias.Alias;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class AliasSerdeTest {
+class AliasSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new AliasModule());
 

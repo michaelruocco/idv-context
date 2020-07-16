@@ -10,7 +10,7 @@ import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class OnlinePurchaseTest {
+class OnlinePurchaseTest {
 
     @Test
     void shouldReturnName() {

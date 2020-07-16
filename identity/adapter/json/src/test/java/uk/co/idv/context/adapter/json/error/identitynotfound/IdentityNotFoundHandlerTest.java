@@ -30,7 +30,7 @@ class IdentityNotFoundHandlerTest {
     }
 
     @Test
-    public void shouldReturnIdentityNotFoundError() {
+    void shouldReturnIdentityNotFoundError() {
         IdentityNotFoundException exception = new IdentityNotFoundException(AliasesMother.idvIdOnly());
 
         ApiError error = handler.apply(exception);
@@ -39,7 +39,7 @@ class IdentityNotFoundHandlerTest {
     }
 
     @Test
-    public void shouldPopulateMessageWithAliases() {
+    void shouldPopulateMessageWithAliases() {
         Alias alias = IdvIdMother.idvId();
         IdentityNotFoundException exception = new IdentityNotFoundException(AliasesMother.with(alias));
 

@@ -27,7 +27,7 @@ class UnsupportedAliasTypeHandlerTest {
     }
 
     @Test
-    public void shouldReturnUnsupportedAliasTypeError() {
+    void shouldReturnUnsupportedAliasTypeError() {
         UnsupportedAliasTypeExeception cause = mock(UnsupportedAliasTypeExeception.class);
 
         ApiError error = handler.apply(cause);
@@ -36,7 +36,7 @@ class UnsupportedAliasTypeHandlerTest {
     }
 
     @Test
-    public void shouldPopulateMessageWithAliasType() {
+    void shouldPopulateMessageWithAliasType() {
         String type = "my-type";
         UnsupportedAliasTypeExeception cause = new UnsupportedAliasTypeExeception(type);
 

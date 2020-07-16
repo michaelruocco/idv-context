@@ -27,7 +27,7 @@ class CountryNotProvidedHandlerTest {
     }
 
     @Test
-    public void shouldReturnCountryMismatchError() {
+    void shouldReturnCountryMismatchError() {
         CountryNotProvidedException cause = mock(CountryNotProvidedException.class);
 
         ApiError error = handler.apply(cause);

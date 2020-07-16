@@ -7,7 +7,7 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-public class ApiErrorSerializationTest {
+class ApiErrorSerializationTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new ApiErrorModule());
 

@@ -27,7 +27,7 @@ class EligibilityNotConfiguredHandlerTest {
     }
 
     @Test
-    public void shouldReturnEligibilityNotConfiguredError() {
+    void shouldReturnEligibilityNotConfiguredError() {
         EligibilityNotConfiguredException exception = new EligibilityNotConfiguredException("my-channel");
 
         ApiError error = handler.apply(exception);
@@ -36,7 +36,7 @@ class EligibilityNotConfiguredHandlerTest {
     }
 
     @Test
-    public void shouldPopulateMessageWithAliases() {
+    void shouldPopulateMessageWithAliases() {
         String channelId = "my-channel";
         Throwable exception = new EligibilityNotConfiguredException(channelId);
 

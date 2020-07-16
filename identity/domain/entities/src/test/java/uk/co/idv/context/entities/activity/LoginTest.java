@@ -6,7 +6,7 @@ import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LoginTest {
+class LoginTest {
 
     @Test
     void shouldReturnName() {

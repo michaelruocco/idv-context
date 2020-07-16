@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class JsonParserConverterTest {
+class JsonParserConverterTest {
 
     @Test
     void shouldConvertParserToNode() throws IOException {

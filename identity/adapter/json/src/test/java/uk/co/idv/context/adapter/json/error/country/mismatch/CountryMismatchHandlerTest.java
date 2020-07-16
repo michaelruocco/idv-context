@@ -28,7 +28,7 @@ class CountryMismatchHandlerTest {
     }
 
     @Test
-    public void shouldReturnCountryMismatchError() {
+    void shouldReturnCountryMismatchError() {
         CountryMismatchException cause = CountryMismatchExceptionMother.build();
 
         ApiError error = handler.apply(cause);
@@ -37,7 +37,7 @@ class CountryMismatchHandlerTest {
     }
 
     @Test
-    public void shouldPopulateUpdatedAndExistingIdvIds() {
+    void shouldPopulateUpdatedAndExistingIdvIds() {
         CountryMismatchException cause = CountryMismatchExceptionMother.build();
 
         CountryMismatchError error = (CountryMismatchError) handler.apply(cause);

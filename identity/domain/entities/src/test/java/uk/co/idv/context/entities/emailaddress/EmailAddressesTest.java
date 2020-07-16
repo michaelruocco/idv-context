@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class EmailAddressesTest {
+class EmailAddressesTest {
 
     private final String email1 = "joe.bloggs@hotmail.co.uk";
     private final String email2 = "joebloggs@yahoo.co.uk";

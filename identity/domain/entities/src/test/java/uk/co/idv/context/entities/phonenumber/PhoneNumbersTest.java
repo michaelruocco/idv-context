@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PhoneNumbersTest {
+class PhoneNumbersTest {
 
     private final PhoneNumber mobileNumber = MobilePhoneNumberMother.mobile();
     private final PhoneNumber otherNumber = OtherPhoneNumberMother.other();

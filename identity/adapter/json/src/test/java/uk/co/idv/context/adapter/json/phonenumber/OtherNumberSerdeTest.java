@@ -9,7 +9,7 @@ import uk.co.idv.context.entities.phonenumber.PhoneNumber;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class OtherNumberSerdeTest {
+class OtherNumberSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new PhoneNumberModule());
     private static final String JSON = OtherPhoneNumberJsonMother.other();

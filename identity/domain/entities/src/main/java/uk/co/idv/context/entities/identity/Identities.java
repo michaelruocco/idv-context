@@ -12,27 +12,27 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class Identities implements Iterable<Identity> {
 
-    private final Collection<Identity> identities;
+    private final Collection<Identity> values;
 
-    public Identities(Identity... identities) {
-        this(Arrays.asList(identities));
+    public Identities(Identity... values) {
+        this(Arrays.asList(values));
     }
 
     @Override
     public Iterator<Identity> iterator() {
-        return identities.iterator();
+        return values.iterator();
     }
 
     public Identity getFirst() {
-        return IterableUtils.get(identities, 0);
+        return IterableUtils.get(values, 0);
     }
 
     public int size() {
-        return identities.size();
+        return values.size();
     }
 
     public Aliases getIdvIds() {
-        return new Aliases(identities.stream()
+        return new Aliases(values.stream()
                 .map(Identity::getIdvId)
                 .collect(Collectors.toList()));
     }

@@ -9,7 +9,7 @@ import uk.co.idv.context.entities.identity.IdentityMother;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class IdentitySerdeTest {
+class IdentitySerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new IdentityModule());
     private static final String JSON = IdentityJsonMother.example();
