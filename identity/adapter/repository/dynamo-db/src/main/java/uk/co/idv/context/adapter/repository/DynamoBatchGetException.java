@@ -6,7 +6,7 @@ import lombok.Getter;
 @Getter
 public class DynamoBatchGetException extends RuntimeException {
 
-    private transient final BatchGetItemOutcome outcome;
+    private final transient BatchGetItemOutcome outcome;
 
     public DynamoBatchGetException(BatchGetItemOutcome outcome) {
         super(outcome.toString());

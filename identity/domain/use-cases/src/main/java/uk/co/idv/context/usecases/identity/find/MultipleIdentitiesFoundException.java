@@ -7,8 +7,8 @@ import uk.co.idv.context.entities.identity.Identities;
 @Getter
 public class MultipleIdentitiesFoundException extends RuntimeException {
 
-    private transient final Aliases aliases;
-    private transient final Identities identities;
+    private final transient Aliases aliases;
+    private final transient Identities identities;
 
     public MultipleIdentitiesFoundException(Aliases aliases, Identities identities) {
         super("multiple identities found");
