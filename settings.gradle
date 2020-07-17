@@ -21,6 +21,9 @@ project(':identity-external-find-stub').projectDir = file('identity/adapter/exte
 include ':identity-config'
 project(':identity-config').projectDir = file('identity/config')
 
+include ':lockout-entities'
+project(':lockout-entities').projectDir = file('lockout/domain/entities')
+
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
 
