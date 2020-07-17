@@ -50,7 +50,7 @@ public class StubAsyncDataLoaderIntegrationTest {
             Instant end = Instant.now();
             Duration duration = Duration.between(start, end);
             log.info("took {}ms", duration.toMillis());
-            assertThat(duration).isLessThan(TIMEOUT.plusMillis(1500));
+            assertThat(duration).isLessThan(TIMEOUT.plusSeconds(2));
         }
     }
 
