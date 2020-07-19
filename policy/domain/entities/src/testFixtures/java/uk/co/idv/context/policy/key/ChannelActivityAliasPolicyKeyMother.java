@@ -6,7 +6,7 @@ import java.util.Collections;
 
 public interface ChannelActivityAliasPolicyKeyMother {
 
-    static ChannelActivityAliasPolicyKey defaultChannelActivityKey() {
+    static ChannelActivityAliasPolicyKey defaultChannelActivityAliasKey() {
         return builder().build();
     }
 

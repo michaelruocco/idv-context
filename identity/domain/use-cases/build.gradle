@@ -5,7 +5,7 @@ plugins {
 dependencies {
     api project(":identity-entities")
 
-    implementation 'org.apache.commons:commons-collections4:4.4'
+    implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
 
     testFixturesApi testFixtures(project(":identity-entities"))
     testFixturesImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"

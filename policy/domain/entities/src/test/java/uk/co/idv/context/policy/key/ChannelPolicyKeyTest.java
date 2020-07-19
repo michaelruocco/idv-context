@@ -5,7 +5,8 @@ import uk.co.idv.context.policy.PolicyRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
+import static uk.co.idv.context.policy.key.ChannelPolicyKeyMother.defaultChannelKey;
+import static uk.co.idv.context.policy.key.MockPolicyRequestFactory.givenPolicyRequestApplyingTo;
 
 class ChannelPolicyKeyTest {
 
@@ -43,6 +44,7 @@ class ChannelPolicyKeyTest {
         PolicyKey key = ChannelPolicyKey.builder().build();
 
         assertThat(key.getActivityNames()).isEmpty();
+        assertThat(key.hasActivityNames()).isFalse();
     }
 
     @Test
@@ -50,33 +52,28 @@ class ChannelPolicyKeyTest {
         PolicyKey key = ChannelPolicyKey.builder().build();
 
         assertThat(key.getAliasTypes()).isEmpty();
-    }
-
-    @Test
-    void shouldApplyToPolicyRequestsWithMatchingChannelId() {
-        String channelId = "my-channel";
-        PolicyRequest request = mock(PolicyRequest.class);
-        given(request.getChannelId()).willReturn(channelId);
-        PolicyKey key = ChannelPolicyKey.builder()
-                .channelId(channelId)
-                .build();
-
-        boolean applies = key.appliesTo(request);
-
-        assertThat(applies).isTrue();
+        assertThat(key.hasAliasTypes()).isFalse();
     }
 
     @Test
     void shouldNotApplyToPolicyRequestsWithOtherChannelId() {
-        PolicyRequest request = mock(PolicyRequest.class);
+        PolicyKey key = defaultChannelKey();
+        PolicyRequest request = givenPolicyRequestApplyingTo(key);
         given(request.getChannelId()).willReturn("other-channel");
-        PolicyKey key = ChannelPolicyKey.builder()
-                .channelId("my-channel")
-                .build();
 
         boolean applies = key.appliesTo(request);
 
         assertThat(applies).isFalse();
+    }
+
+    @Test
+    void shouldApplyToPolicyRequestsWithMatchingChannelId() {
+        PolicyKey key = defaultChannelKey();
+        PolicyRequest request = givenPolicyRequestApplyingTo(key);
+
+        boolean applies = key.appliesTo(request);
+
+        assertThat(applies).isTrue();
     }
 
 }

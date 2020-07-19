@@ -16,6 +16,14 @@ public interface PolicyKey {
 
     Collection<String> getActivityNames();
 
+    default boolean hasActivityNames() {
+        return !getActivityNames().isEmpty();
+    }
+
     Collection<String> getAliasTypes();
+
+    default boolean hasAliasTypes() {
+        return !getAliasTypes().isEmpty();
+    }
 
 }

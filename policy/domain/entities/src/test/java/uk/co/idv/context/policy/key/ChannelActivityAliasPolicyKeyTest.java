@@ -8,7 +8,8 @@ import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
+import static uk.co.idv.context.policy.key.ChannelActivityAliasPolicyKeyMother.defaultChannelActivityAliasKey;
+import static uk.co.idv.context.policy.key.MockPolicyRequestFactory.givenPolicyRequestApplyingTo;
 
 class ChannelActivityAliasPolicyKeyTest {
 
@@ -50,6 +51,7 @@ class ChannelActivityAliasPolicyKeyTest {
                 .build();
 
         assertThat(key.getActivityNames()).isEqualTo(activityNames);
+        assertThat(key.hasActivityNames()).isTrue();
     }
 
     @Test
@@ -61,19 +63,36 @@ class ChannelActivityAliasPolicyKeyTest {
                 .build();
 
         assertThat(key.getAliasTypes()).isEqualTo(aliasTypes);
+        assertThat(key.hasAliasTypes()).isTrue();
     }
 
     @Test
-    void shouldNotApplyToPolicyRequestsWithMatchingChannelIdAndActivityNameOnly() {
-        String activityName = "my-activity";
-        PolicyKey key = ChannelActivityAliasPolicyKey.builder()
-                .channelId("my-channel")
-                .activityNames(Collections.singleton(activityName))
-                .aliasTypes(Collections.singleton("other-alias"))
-                .build();
-        PolicyRequest request = mock(PolicyRequest.class);
-        given(request.getChannelId()).willReturn(key.getChannelId());
-        given(request.getActivityName()).willReturn(activityName);
+    void shouldNotApplyToPolicyRequestsWithOtherChannelId() {
+        PolicyKey key = defaultChannelActivityAliasKey();
+        PolicyRequest request = givenPolicyRequestApplyingTo(key);
+        given(request.getChannelId()).willReturn("other-channel");
+
+        boolean applies = key.appliesTo(request);
+
+        assertThat(applies).isFalse();
+    }
+
+    @Test
+    void shouldNotApplyToPolicyRequestsWithOtherActivityName() {
+        PolicyKey key = defaultChannelActivityAliasKey();
+        PolicyRequest request = givenPolicyRequestApplyingTo(key);
+        given(request.getActivityName()).willReturn("other-activity");
+
+        boolean applies = key.appliesTo(request);
+
+        assertThat(applies).isFalse();
+    }
+
+    @Test
+    void shouldNotApplyToPolicyRequestsWithOtherAliasType() {
+        PolicyKey key = defaultChannelActivityAliasKey();
+        PolicyRequest request = givenPolicyRequestApplyingTo(key);
+        given(request.getAliasType()).willReturn("other-alias");
 
         boolean applies = key.appliesTo(request);
 
@@ -82,17 +101,8 @@ class ChannelActivityAliasPolicyKeyTest {
 
     @Test
     void shouldApplyToPolicyRequestsWithMatchingChannelIdAndActivityNameAndAliasType() {
-        String aliasType = "my-alias-type";
-        String activityName = "my-activity";
-        PolicyKey key = ChannelActivityAliasPolicyKey.builder()
-                .channelId("my-channel")
-                .activityNames(Collections.singleton(activityName))
-                .aliasTypes(Collections.singleton(aliasType))
-                .build();
-        PolicyRequest request = mock(PolicyRequest.class);
-        given(request.getChannelId()).willReturn(key.getChannelId());
-        given(request.getActivityName()).willReturn(activityName);
-        given(request.getAliasType()).willReturn(aliasType);
+        PolicyKey key = defaultChannelActivityAliasKey();
+        PolicyRequest request = givenPolicyRequestApplyingTo(key);
 
         boolean applies = key.appliesTo(request);
 
