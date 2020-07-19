@@ -8,6 +8,8 @@ public interface PolicyKey {
 
     boolean appliesTo(PolicyRequest request);
 
+    String getType();
+
     String getChannelId();
 
     int getPriority();

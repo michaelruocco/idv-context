@@ -10,6 +10,13 @@ import static org.mockito.Mockito.mock;
 class ChannelPolicyKeyTest {
 
     @Test
+    void shouldReturnType() {
+        PolicyKey key = ChannelPolicyKey.builder().build();
+
+        assertThat(key.getType()).isEqualTo("channel");
+    }
+
+    @Test
     void shouldReturnPriority() {
         int priority = 1;
 

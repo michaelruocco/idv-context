@@ -23,6 +23,11 @@ public class ChannelActivityPolicyKey implements PolicyKey {
     }
 
     @Override
+    public String getType() {
+        return "channel-activity";
+    }
+
+    @Override
     public Collection<String> getActivityNames() {
         return activityNames;
     }

@@ -6,33 +6,35 @@ import uk.co.idv.context.policy.PolicyRequest;
 
 import java.util.Collection;
 
-import static java.util.Collections.emptyList;
-
 @Builder
 @Data
-public class ChannelPolicyKey implements PolicyKey {
+public class ChannelActivityAliasPolicyKey implements PolicyKey {
 
     private final int priority;
     private final String channelId;
+    private final Collection<String> activityNames;
+    private final Collection<String> aliasTypes;
 
     @Override
     public boolean appliesTo(PolicyRequest request) {
-        return channelId.equals(request.getChannelId());
+        return channelId.equals(request.getChannelId()) &&
+                activityNames.contains(request.getActivityName()) &&
+                aliasTypes.contains(request.getAliasType());
     }
 
     @Override
     public String getType() {
-        return "channel";
+        return "channel-activity-alias";
     }
 
     @Override
     public Collection<String> getActivityNames() {
-        return emptyList();
+        return activityNames;
     }
 
     @Override
     public Collection<String> getAliasTypes() {
-        return emptyList();
+        return aliasTypes;
     }
 
 }

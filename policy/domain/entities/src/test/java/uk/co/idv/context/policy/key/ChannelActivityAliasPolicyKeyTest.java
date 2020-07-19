@@ -10,20 +10,20 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class ChannelActivityPolicyKeyTest {
+class ChannelActivityAliasPolicyKeyTest {
 
     @Test
     void shouldReturnType() {
-        PolicyKey key = ChannelActivityPolicyKey.builder().build();
+        PolicyKey key = ChannelActivityAliasPolicyKey.builder().build();
 
-        assertThat(key.getType()).isEqualTo("channel-activity");
+        assertThat(key.getType()).isEqualTo("channel-activity-alias");
     }
 
     @Test
     void shouldReturnPriority() {
         int priority = 1;
 
-        PolicyKey key = ChannelActivityPolicyKey.builder()
+        PolicyKey key = ChannelActivityAliasPolicyKey.builder()
                 .priority(priority)
                 .build();
 
@@ -34,7 +34,7 @@ class ChannelActivityPolicyKeyTest {
     void shouldReturnChannelId() {
         String channelId = "my-channel";
 
-        PolicyKey key = ChannelActivityPolicyKey.builder()
+        PolicyKey key = ChannelActivityAliasPolicyKey.builder()
                 .channelId(channelId)
                 .build();
 
@@ -45,7 +45,7 @@ class ChannelActivityPolicyKeyTest {
     void shouldReturnActivityNames() {
         Collection<String> activityNames = Collections.singleton("my-activity");
 
-        PolicyKey key = ChannelActivityPolicyKey.builder()
+        PolicyKey key = ChannelActivityAliasPolicyKey.builder()
                 .activityNames(activityNames)
                 .build();
 
@@ -53,22 +53,27 @@ class ChannelActivityPolicyKeyTest {
     }
 
     @Test
-    void shouldReturnEmptyAliasTypes() {
-        PolicyKey key = ChannelActivityPolicyKey.builder().build();
+    void shouldReturnAliasTypes() {
+        Collection<String> aliasTypes = Collections.singleton("my-alias");
 
-        assertThat(key.getAliasTypes()).isEmpty();
+        PolicyKey key = ChannelActivityAliasPolicyKey.builder()
+                .aliasTypes(aliasTypes)
+                .build();
+
+        assertThat(key.getAliasTypes()).isEqualTo(aliasTypes);
     }
 
     @Test
-    void shouldNotApplyToPolicyRequestsWithMatchingChannelIdOnly() {
-        String channelId = "my-channel";
-        PolicyKey key = ChannelActivityPolicyKey.builder()
-                .channelId(channelId)
-                .activityNames(Collections.singleton("my-activity"))
+    void shouldNotApplyToPolicyRequestsWithMatchingChannelIdAndActivityNameOnly() {
+        String activityName = "my-activity";
+        PolicyKey key = ChannelActivityAliasPolicyKey.builder()
+                .channelId("my-channel")
+                .activityNames(Collections.singleton(activityName))
+                .aliasTypes(Collections.singleton("other-alias"))
                 .build();
         PolicyRequest request = mock(PolicyRequest.class);
-        given(request.getChannelId()).willReturn(channelId);
-        given(request.getActivityName()).willReturn("other-activity");
+        given(request.getChannelId()).willReturn(key.getChannelId());
+        given(request.getActivityName()).willReturn(activityName);
 
         boolean applies = key.appliesTo(request);
 
@@ -76,15 +81,18 @@ class ChannelActivityPolicyKeyTest {
     }
 
     @Test
-    void shouldApplyToPolicyRequestsWithMatchingChannelIdAndActivityName() {
+    void shouldApplyToPolicyRequestsWithMatchingChannelIdAndActivityNameAndAliasType() {
+        String aliasType = "my-alias-type";
         String activityName = "my-activity";
-        PolicyKey key = ChannelActivityPolicyKey.builder()
+        PolicyKey key = ChannelActivityAliasPolicyKey.builder()
                 .channelId("my-channel")
                 .activityNames(Collections.singleton(activityName))
+                .aliasTypes(Collections.singleton(aliasType))
                 .build();
         PolicyRequest request = mock(PolicyRequest.class);
         given(request.getChannelId()).willReturn(key.getChannelId());
         given(request.getActivityName()).willReturn(activityName);
+        given(request.getAliasType()).willReturn(aliasType);
 
         boolean applies = key.appliesTo(request);
 
