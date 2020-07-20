@@ -1,6 +1,5 @@
-package uk.co.idv.context.policy.key;
+package uk.co.idv.context.policy;
 
-import uk.co.idv.context.policy.PolicyRequest;
 
 import java.util.Collection;
 

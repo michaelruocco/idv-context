@@ -1,6 +1,7 @@
 package uk.co.idv.context.policy.key;
 
 import org.apache.commons.collections4.IterableUtils;
+import uk.co.idv.context.policy.PolicyKey;
 import uk.co.idv.context.policy.PolicyRequest;
 
 import java.util.Collection;

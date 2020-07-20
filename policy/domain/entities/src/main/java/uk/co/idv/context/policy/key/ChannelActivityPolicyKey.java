@@ -2,6 +2,7 @@ package uk.co.idv.context.policy.key;
 
 import lombok.Builder;
 import lombok.Data;
+import uk.co.idv.context.policy.PolicyKey;
 import uk.co.idv.context.policy.PolicyRequest;
 
 import java.util.Collection;

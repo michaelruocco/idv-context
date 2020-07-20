@@ -1,6 +1,7 @@
 package uk.co.idv.context.policy.key;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.policy.PolicyKey;
 import uk.co.idv.context.policy.PolicyRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
