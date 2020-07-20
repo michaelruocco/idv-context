@@ -5,8 +5,6 @@ import java.util.Collection;
 
 public interface PolicyKey {
 
-    String ALL = "all";
-
     boolean appliesTo(PolicyRequest request);
 
     String getType();

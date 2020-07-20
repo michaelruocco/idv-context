@@ -58,7 +58,7 @@ class ChannelActivityPolicyKeyTest {
     void shouldReturnEmptyAliasTypes() {
         PolicyKey key = ChannelActivityPolicyKey.builder().build();
 
-        assertThat(key.getAliasTypes()).containsExactly(PolicyKey.ALL);
+        assertThat(key.getAliasTypes()).containsExactly(PolicyKeyConstants.ALL);
     }
 
     @Test

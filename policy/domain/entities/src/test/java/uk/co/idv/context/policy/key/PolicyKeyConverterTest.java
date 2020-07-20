@@ -8,6 +8,7 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.co.idv.context.policy.key.CollectionUtils.getFirst;
+import static uk.co.idv.context.policy.key.PolicyKeyConstants.ALL;
 
 class PolicyKeyConverterTest {
 
@@ -46,8 +47,8 @@ class PolicyKeyConverterTest {
     private static PolicyRequest toExpectedChannelRequest(PolicyKey key) {
         return PolicyRequest.builder()
                 .channelId(key.getChannelId())
-                .activityName(PolicyKey.ALL)
-                .aliasType(PolicyKey.ALL)
+                .activityName(ALL)
+                .aliasType(ALL)
                 .build();
     }
 
@@ -55,7 +56,7 @@ class PolicyKeyConverterTest {
         return PolicyRequest.builder()
                 .channelId(key.getChannelId())
                 .activityName(getFirst(key.getActivityNames()))
-                .aliasType(PolicyKey.ALL)
+                .aliasType(ALL)
                 .build();
     }
 

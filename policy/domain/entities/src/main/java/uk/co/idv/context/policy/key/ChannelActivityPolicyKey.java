@@ -8,6 +8,7 @@ import uk.co.idv.context.policy.PolicyRequest;
 import java.util.Collection;
 
 import static java.util.Collections.singleton;
+import static uk.co.idv.context.policy.key.PolicyKeyConstants.ALL;
 
 @Builder
 @Data

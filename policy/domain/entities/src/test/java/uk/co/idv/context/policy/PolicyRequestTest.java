@@ -5,7 +5,7 @@ import uk.co.idv.context.policy.PolicyRequest.PolicyRequestBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PolicyRequestTest {
+class PolicyRequestTest {
 
     private final PolicyRequestBuilder builder = PolicyRequest.builder();
 
