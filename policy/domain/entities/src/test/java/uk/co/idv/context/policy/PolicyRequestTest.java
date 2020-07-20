@@ -11,27 +11,27 @@ public class PolicyRequestTest {
 
     @Test
     void shouldReturnChannelId() {
-        final String channelId = "channel-id";
+        String channelId = "channel-id";
 
-        final PolicyRequest request = builder.channelId(channelId).build();
+        PolicyRequest request = builder.channelId(channelId).build();
 
         assertThat(request.getChannelId()).isEqualTo(channelId);
     }
 
     @Test
     void shouldReturnActivityName() {
-        final String activityName = "activity-name";
+        String activityName = "activity-name";
 
-        final PolicyRequest request = builder.activityName(activityName).build();
+        PolicyRequest request = builder.activityName(activityName).build();
 
         assertThat(request.getActivityName()).isEqualTo(activityName);
     }
 
     @Test
     void shouldReturnAliasType() {
-        final String aliasType = "alias-type";
+        String aliasType = "alias-type";
 
-        final PolicyRequest request = builder.aliasType(aliasType).build();
+        PolicyRequest request = builder.aliasType(aliasType).build();
 
         assertThat(request.getAliasType()).isEqualTo(aliasType);
     }

@@ -41,19 +41,17 @@ class ChannelPolicyKeyTest {
     }
 
     @Test
-    void shouldReturnEmptyActivityNames() {
+    void shouldReturnAllActivityName() {
         PolicyKey key = ChannelPolicyKey.builder().build();
 
-        assertThat(key.getActivityNames()).isEmpty();
-        assertThat(key.hasActivityNames()).isFalse();
+        assertThat(key.getActivityNames()).containsExactly(PolicyKey.ALL);
     }
 
     @Test
-    void shouldReturnEmptyAliasTypes() {
+    void shouldReturnAllAliasType() {
         PolicyKey key = ChannelPolicyKey.builder().build();
 
-        assertThat(key.getAliasTypes()).isEmpty();
-        assertThat(key.hasAliasTypes()).isFalse();
+        assertThat(key.getAliasTypes()).containsExactly(PolicyKey.ALL);
     }
 
     @Test

@@ -52,7 +52,6 @@ class ChannelActivityAliasPolicyKeyTest {
                 .build();
 
         assertThat(key.getActivityNames()).isEqualTo(activityNames);
-        assertThat(key.hasActivityNames()).isTrue();
     }
 
     @Test
@@ -64,7 +63,6 @@ class ChannelActivityAliasPolicyKeyTest {
                 .build();
 
         assertThat(key.getAliasTypes()).isEqualTo(aliasTypes);
-        assertThat(key.hasAliasTypes()).isTrue();
     }
 
     @Test

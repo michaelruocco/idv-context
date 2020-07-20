@@ -7,7 +7,7 @@ import uk.co.idv.context.policy.PolicyRequest;
 
 import java.util.Collection;
 
-import static java.util.Collections.emptyList;
+import static java.util.Collections.singleton;
 
 @Builder
 @Data
@@ -35,7 +35,7 @@ public class ChannelActivityPolicyKey implements PolicyKey {
 
     @Override
     public Collection<String> getAliasTypes() {
-        return emptyList();
+        return singleton(ALL);
     }
 
 }
