@@ -24,6 +24,9 @@ project(':identity-config').projectDir = file('identity/config')
 include ':policy-entities'
 project(':policy-entities').projectDir = file('policy/domain/entities')
 
+include ':policy-use-cases'
+project(':policy-use-cases').projectDir = file('policy/domain/use-cases')
+
 include ':lockout-entities'
 project(':lockout-entities').projectDir = file('lockout/domain/entities')
 
