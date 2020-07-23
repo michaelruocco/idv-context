@@ -23,7 +23,11 @@ class PolicyFacadeTest {
     private final UpdatePolicy<Policy> update = mock(UpdatePolicy.class);
     private final LoadPolicy<Policy> load = mock(LoadPolicy.class);
 
-    private final PolicyFacade<Policy> facade = new PolicyFacade<>(create, update, load);
+    private final PolicyFacade<Policy> facade = PolicyFacade.builder()
+            .create(create)
+            .update(update)
+            .load(load)
+            .build();
 
     @Test
     void shouldCreatePolicy() {

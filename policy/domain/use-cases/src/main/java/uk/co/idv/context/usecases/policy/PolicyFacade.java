@@ -1,6 +1,6 @@
 package uk.co.idv.context.usecases.policy;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.entities.policy.Policy;
 import uk.co.idv.context.entities.policy.PolicyKey;
@@ -11,7 +11,7 @@ import uk.co.idv.context.usecases.policy.update.UpdatePolicy;
 
 import java.util.UUID;
 
-@RequiredArgsConstructor
+@Builder
 public class PolicyFacade<T extends Policy> {
 
     private final CreatePolicy<T> create;
