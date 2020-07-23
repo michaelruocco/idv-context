@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.policy.load;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.policy.MockPolicyMother;
 import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.entities.policy.Policy;
 import uk.co.idv.context.entities.policy.PolicyKey;
@@ -28,7 +29,7 @@ class LoadPolicyTest {
     @Test
     void shouldLoadPolicyById() {
         UUID id = UUID.randomUUID();
-        Policy expectedPolicy = mock(Policy.class);
+        Policy expectedPolicy = MockPolicyMother.policy();
         given(repository.load(id)).willReturn(Optional.of(expectedPolicy));
 
         Policy policy = loadPolicy.load(id);
@@ -45,7 +46,7 @@ class LoadPolicyTest {
         Policies<Policy> applicablePolicies = mock(Policies.class);
         given(allPolicies.getApplicable(request)).willReturn(applicablePolicies);
 
-        Policy expected = mock(Policy.class);
+        Policy expected = MockPolicyMother.policy();
         given(applicablePolicies.getHighestPriority()).willReturn(expected);
 
         Policy policy = loadPolicy.load(request);
@@ -54,14 +55,16 @@ class LoadPolicyTest {
     }
 
     @Test
-    void shouldLoadPoliciesApplicablePolicyKey() {
-        Policy policy = mock(Policy.class);
+    void shouldLoadPoliciesApplicablePolicyKeyInPriorityOrder() {
+        Policy mediumPriority = MockPolicyMother.withPriority(50);
+        Policy lowPriority = MockPolicyMother.withPriority(1);
+        Policy highPriority = MockPolicyMother.withPriority(99);
 
         Policies<Policy> allPolicies = mock(Policies.class);
         given(repository.loadAll()).willReturn(allPolicies);
 
         PolicyRequest request = mock(PolicyRequest.class);
-        Policies<Policy> applicablePolicies = new Policies<>(policy);
+        Policies<Policy> applicablePolicies = new Policies<>(mediumPriority, lowPriority, highPriority);
         given(allPolicies.getApplicable(request)).willReturn(applicablePolicies);
 
         PolicyKey key = mock(PolicyKey.class);
@@ -69,7 +72,7 @@ class LoadPolicyTest {
 
         Policies<Policy> policies = loadPolicy.load(key);
 
-        assertThat(policies).containsExactly(policy);
+        assertThat(policies).containsExactly(highPriority, mediumPriority, lowPriority);
     }
 
 }

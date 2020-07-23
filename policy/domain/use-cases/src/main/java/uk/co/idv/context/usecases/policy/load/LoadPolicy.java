@@ -9,6 +9,7 @@ import uk.co.idv.context.entities.policy.PolicyRequest;
 import uk.co.idv.context.usecases.policy.PolicyRepository;
 
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -35,6 +36,7 @@ public class LoadPolicy<T extends Policy> {
         return new Policies<>(requests.stream()
                 .map(allPolicies::getApplicable)
                 .flatMap(Policies::stream)
+                .sorted(Comparator.comparing(Policy::getPriority).reversed())
                 .collect(Collectors.toList()));
     }
 

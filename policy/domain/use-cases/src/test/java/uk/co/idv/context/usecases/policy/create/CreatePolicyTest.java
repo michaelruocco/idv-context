@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.policy.create;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.policy.MockPolicyMother;
 import uk.co.idv.context.entities.policy.Policy;
 import uk.co.idv.context.usecases.policy.PolicyRepository;
 
@@ -15,7 +16,7 @@ class CreatePolicyTest {
 
     @Test
     void shouldSavePolicy() {
-        Policy policy = mock(Policy.class);
+        Policy policy = MockPolicyMother.policy();
 
         createPolicy.create(policy);
 

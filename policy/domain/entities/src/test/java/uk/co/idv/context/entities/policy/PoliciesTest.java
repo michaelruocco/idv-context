@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class PoliciesTest {
@@ -12,8 +11,8 @@ class PoliciesTest {
     @Test
     void shouldReturnApplicablePolicies() {
         PolicyRequest request = mock(PolicyRequest.class);
-        Policy applicable = givenPolicyApplicableTo(request);
-        Policy notApplicable = mock(Policy.class);
+        Policy applicable = MockPolicyMother.applicableTo(request);
+        Policy notApplicable = MockPolicyMother.notApplicableTo(request);
         Policies<Policy> allPolicies = new Policies<>(applicable, notApplicable);
 
         Policies<Policy> policies = allPolicies.getApplicable(request);
@@ -32,8 +31,8 @@ class PoliciesTest {
 
     @Test
     void shouldReturnPolicyWithHighestPriorityValue() {
-        Policy lowPriority = givenPolicyWithPriority(1);
-        Policy highPriority = givenPolicyWithPriority(99);
+        Policy lowPriority = MockPolicyMother.withPriority(1);
+        Policy highPriority = MockPolicyMother.withPriority(99);
         Policies<Policy> policies = new Policies<>(lowPriority, highPriority);
 
         Policy policy = policies.getHighestPriority();
@@ -43,9 +42,9 @@ class PoliciesTest {
 
     @Test
     void shouldReturnPolicyWithHighestPriorityValueAddedFirstIfTwoPoliciesHaveSamePriority() {
-        Policy lowPriority = givenPolicyWithPriority(1);
-        Policy highPriority = givenPolicyWithPriority(99);
-        Policy otherHighPriority = givenPolicyWithPriority(99);
+        Policy lowPriority = MockPolicyMother.withPriority(1);
+        Policy highPriority = MockPolicyMother.withPriority(99);
+        Policy otherHighPriority = MockPolicyMother.withPriority(99);
         Policies<Policy> policies = new Policies<>(lowPriority, highPriority, otherHighPriority);
 
         Policy policy = policies.getHighestPriority();
@@ -55,8 +54,8 @@ class PoliciesTest {
 
     @Test
     void shouldReturnStreamOfPolicies() {
-        Policy policy1 = mock(Policy.class);
-        Policy policy2 = mock(Policy.class);
+        Policy policy1 = MockPolicyMother.policy();
+        Policy policy2 = MockPolicyMother.policy();
 
         Policies<Policy> policies = new Policies<>(policy1, policy2);
 
@@ -72,23 +71,11 @@ class PoliciesTest {
 
     @Test
     void shouldReturnIsEmptyFalseIfNotEmpty() {
-        Policy policy = mock(Policy.class);
+        Policy policy = MockPolicyMother.policy();
 
         Policies<Policy> policies = new Policies<>(policy);
 
         assertThat(policies.isEmpty()).isFalse();
-    }
-
-    private Policy givenPolicyApplicableTo(PolicyRequest request) {
-        Policy policy = mock(Policy.class);
-        given(policy.appliesTo(request)).willReturn(true);
-        return policy;
-    }
-
-    private Policy givenPolicyWithPriority(int priority) {
-        Policy policy = mock(Policy.class);
-        given(policy.getPriority()).willReturn(priority);
-        return policy;
     }
 
 }

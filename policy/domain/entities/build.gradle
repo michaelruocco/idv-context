@@ -4,4 +4,5 @@ plugins {
 
 dependencies {
     testFixturesImplementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
+    testFixturesImplementation "org.mockito:mockito-core:${mockitoVersion}"
 }

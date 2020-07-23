@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.policy.update;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.policy.MockPolicyMother;
 import uk.co.idv.context.entities.policy.Policy;
 import uk.co.idv.context.usecases.policy.PolicyRepository;
 import uk.co.idv.context.usecases.policy.load.PolicyNotFoundException;
@@ -23,7 +24,7 @@ class UpdatePolicyTest {
     @Test
     void shouldThrowExceptionIfPolicyDoesNotExists() {
         UUID id = UUID.randomUUID();
-        Policy policy = givenPolicyWithId(id);
+        Policy policy = MockPolicyMother.withId(id);
         givenPolicyDoesNotExist(id);
 
         Throwable error = catchThrowable(() -> updatePolicy.update(policy));
@@ -36,18 +37,12 @@ class UpdatePolicyTest {
     @Test
     void shouldSavePolicyIfPolicyAlreadyExists() {
         UUID id = UUID.randomUUID();
-        Policy policy = givenPolicyWithId(id);
+        Policy policy = MockPolicyMother.withId(id);
         givenPolicyAlreadyExists(policy);
 
         updatePolicy.update(policy);
 
         verify(repository).save(policy);
-    }
-
-    private Policy givenPolicyWithId(UUID id) {
-        Policy policy = mock(Policy.class);
-        given(policy.getId()).willReturn(id);
-        return policy;
     }
 
     private void givenPolicyAlreadyExists(Policy policy) {
