@@ -59,19 +59,29 @@ class LoadPolicyTest {
         Policies<Policy> allPolicies = mock(Policies.class);
         given(repository.loadAll()).willReturn(allPolicies);
 
-        Policy lowPriority = MockPolicyMother.withPriority(1);
-        Policy highPriority = MockPolicyMother.withPriority(99);
+        Policy lowPriority = MockPolicyMother.withPriority(25);
+        Policy highPriority = MockPolicyMother.withPriority(100);
         PolicyRequest request1 = givenPoliciesApplicableToRequest(allPolicies, lowPriority, highPriority);
 
         Policy mediumPriority = MockPolicyMother.withPriority(50);
         PolicyRequest request2 = givenPoliciesApplicableToRequest(allPolicies, mediumPriority);
 
+        Policy lowestPriority = MockPolicyMother.withPriority(1);
+        Policy highestPriority = MockPolicyMother.withPriority(150);
+        PolicyRequest request3 = givenPoliciesApplicableToRequest(allPolicies, lowestPriority, highestPriority);
+
         PolicyKey key = mock(PolicyKey.class);
-        given(keyConverter.toPolicyRequests(key)).willReturn(Arrays.asList(request1, request2));
+        given(keyConverter.toPolicyRequests(key)).willReturn(Arrays.asList(request1, request2, request3));
 
         Policies<Policy> policies = loadPolicy.load(key);
 
-        assertThat(policies).containsExactly(highPriority, mediumPriority, lowPriority);
+        assertThat(policies).containsExactly(
+                highestPriority,
+                highPriority,
+                mediumPriority,
+                lowPriority,
+                lowestPriority
+        );
     }
 
     private PolicyRequest givenPoliciesApplicableToRequest(Policies<Policy> allPolicies,
