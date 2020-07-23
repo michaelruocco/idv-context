@@ -82,7 +82,6 @@ class PolicyFacadeTest {
 
     @Test
     void shouldLoadAllPolicies() {
-        PolicyKey key = mock(PolicyKey.class);
         Policies<Policy> expectedPolicies = mock(Policies.class);
         given(load.loadAll()).willReturn(expectedPolicies);
 
