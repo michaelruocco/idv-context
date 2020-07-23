@@ -27,6 +27,10 @@ public class Policies<T extends Policy> implements Iterable<T> {
         return values.stream();
     }
 
+    public boolean isEmpty() {
+        return values.isEmpty();
+    }
+
     public Policies<T> getApplicable(PolicyRequest request) {
         return new Policies<>(values.stream()
                 .filter(policy -> policy.appliesTo(request))

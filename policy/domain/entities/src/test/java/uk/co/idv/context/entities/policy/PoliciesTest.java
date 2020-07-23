@@ -63,6 +63,22 @@ class PoliciesTest {
         assertThat(policies.stream()).containsExactly(policy1, policy2);
     }
 
+    @Test
+    void shouldReturnIsEmptyTrueIfEmpty() {
+        Policies<Policy> emptyPolicies = new Policies<>();
+
+        assertThat(emptyPolicies.isEmpty()).isTrue();
+    }
+
+    @Test
+    void shouldReturnIsEmptyFalseIfNotEmpty() {
+        Policy policy = mock(Policy.class);
+
+        Policies<Policy> policies = new Policies<>(policy);
+
+        assertThat(policies.isEmpty()).isFalse();
+    }
+
     private Policy givenPolicyApplicableTo(PolicyRequest request) {
         Policy policy = mock(Policy.class);
         given(policy.appliesTo(request)).willReturn(true);
