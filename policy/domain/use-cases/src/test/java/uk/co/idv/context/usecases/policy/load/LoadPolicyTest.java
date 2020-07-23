@@ -8,7 +8,7 @@ import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 import uk.co.idv.context.usecases.policy.PolicyRepository;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -56,23 +56,30 @@ class LoadPolicyTest {
 
     @Test
     void shouldLoadPoliciesApplicablePolicyKeyInPriorityOrder() {
-        Policy mediumPriority = MockPolicyMother.withPriority(50);
-        Policy lowPriority = MockPolicyMother.withPriority(1);
-        Policy highPriority = MockPolicyMother.withPriority(99);
-
         Policies<Policy> allPolicies = mock(Policies.class);
         given(repository.loadAll()).willReturn(allPolicies);
 
-        PolicyRequest request = mock(PolicyRequest.class);
-        Policies<Policy> applicablePolicies = new Policies<>(mediumPriority, lowPriority, highPriority);
-        given(allPolicies.getApplicable(request)).willReturn(applicablePolicies);
+        Policy lowPriority = MockPolicyMother.withPriority(1);
+        Policy highPriority = MockPolicyMother.withPriority(99);
+        PolicyRequest request1 = givenPoliciesApplicableToRequest(allPolicies, lowPriority, highPriority);
+
+        Policy mediumPriority = MockPolicyMother.withPriority(50);
+        PolicyRequest request2 = givenPoliciesApplicableToRequest(allPolicies, mediumPriority);
 
         PolicyKey key = mock(PolicyKey.class);
-        given(keyConverter.toPolicyRequests(key)).willReturn(Collections.singleton(request));
+        given(keyConverter.toPolicyRequests(key)).willReturn(Arrays.asList(request1, request2));
 
         Policies<Policy> policies = loadPolicy.load(key);
 
         assertThat(policies).containsExactly(highPriority, mediumPriority, lowPriority);
+    }
+
+    private PolicyRequest givenPoliciesApplicableToRequest(Policies<Policy> allPolicies,
+                                                           Policy... policies) {
+        PolicyRequest request = mock(PolicyRequest.class);
+        Policies<Policy> applicablePolicies = new Policies<>(policies);
+        given(allPolicies.getApplicable(request)).willReturn(applicablePolicies);
+        return request;
     }
 
 }
