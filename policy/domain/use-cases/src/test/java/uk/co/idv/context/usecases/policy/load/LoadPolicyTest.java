@@ -14,6 +14,7 @@ import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -36,6 +37,18 @@ class LoadPolicyTest {
         Policy policy = loadPolicy.load(id);
 
         assertThat(policy).isEqualTo(expectedPolicy);
+    }
+
+    @Test
+    void shouldThrowExceptionIfPolicyNotFound() {
+        UUID id = UUID.randomUUID();
+        given(repository.load(id)).willReturn(Optional.empty());
+
+        Throwable error = catchThrowable(() -> loadPolicy.load(id));
+
+        assertThat(error)
+                .isInstanceOf(PolicyNotFoundException.class)
+                .hasMessage(id.toString());
     }
 
     @Test
@@ -67,21 +80,15 @@ class LoadPolicyTest {
         Policy mediumPriority = MockPolicyMother.withPriority(50);
         PolicyRequest request2 = givenPoliciesApplicableToRequest(allPolicies, mediumPriority);
 
-        Policy lowestPriority = MockPolicyMother.withPriority(1);
-        Policy highestPriority = MockPolicyMother.withPriority(150);
-        PolicyRequest request3 = givenPoliciesApplicableToRequest(allPolicies, lowestPriority, highestPriority);
-
         PolicyKey key = mock(PolicyKey.class);
-        given(keyConverter.toPolicyRequests(key)).willReturn(Arrays.asList(request1, request2, request3));
+        given(keyConverter.toPolicyRequests(key)).willReturn(Arrays.asList(request1, request2));
 
         Policies<Policy> policies = loadPolicy.load(key);
 
         assertThat(policies).containsExactly(
-                highestPriority,
                 highPriority,
                 mediumPriority,
-                lowPriority,
-                lowestPriority
+                lowPriority
         );
     }
 
