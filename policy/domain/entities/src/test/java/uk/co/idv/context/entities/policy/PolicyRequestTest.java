@@ -1,13 +1,13 @@
 package uk.co.idv.context.entities.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.PolicyRequest.PolicyRequestBuilder;
+import uk.co.idv.context.entities.policy.DefaultPolicyRequest.DefaultPolicyRequestBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PolicyRequestTest {
 
-    private final PolicyRequestBuilder builder = PolicyRequest.builder();
+    private final DefaultPolicyRequestBuilder builder = DefaultPolicyRequest.builder();
 
     @Test
     void shouldReturnChannelId() {

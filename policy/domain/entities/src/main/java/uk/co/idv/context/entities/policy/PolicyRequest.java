@@ -1,15 +1,11 @@
 package uk.co.idv.context.entities.policy;
 
-import lombok.Builder;
-import lombok.Data;
+public interface PolicyRequest {
 
+    String getChannelId();
 
-@Builder
-@Data
-public class PolicyRequest {
+    String getActivityName();
 
-    private final String channelId;
-    private final String activityName;
-    private final String aliasType;
+    String getAliasType();
 
 }

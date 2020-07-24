@@ -6,6 +6,7 @@ import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 
 import java.util.Collection;
+import java.util.UUID;
 
 import static java.util.Collections.singleton;
 import static uk.co.idv.context.entities.policy.key.PolicyKeyConstants.ALL;
@@ -14,6 +15,7 @@ import static uk.co.idv.context.entities.policy.key.PolicyKeyConstants.ALL;
 @Data
 public class ChannelPolicyKey implements PolicyKey {
 
+    private final UUID id;
     private final int priority;
     private final String channelId;
 
@@ -35,6 +37,11 @@ public class ChannelPolicyKey implements PolicyKey {
     @Override
     public Collection<String> getAliasTypes() {
         return singleton(ALL);
+    }
+
+    @Override
+    public boolean hasAliasType() {
+        return false;
     }
 
 }

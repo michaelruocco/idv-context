@@ -6,8 +6,8 @@ public interface PolicyRequestMother {
         return builder().build();
     }
 
-    static PolicyRequest.PolicyRequestBuilder builder() {
-        return PolicyRequest.builder()
+    static DefaultPolicyRequest.DefaultPolicyRequestBuilder builder() {
+        return DefaultPolicyRequest.builder()
                 .channelId("default-channel")
                 .activityName("default-activity")
                 .aliasType("default-alias");

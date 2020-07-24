@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.policy;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.context.entities.policy.MockPolicyMother;
 import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.entities.policy.Policy;
@@ -60,7 +61,7 @@ class PolicyFacadeTest {
 
     @Test
     void shouldLoadPolicyByRequest() {
-        PolicyRequest request = mock(PolicyRequest.class);
+        PolicyRequest request = mock(DefaultPolicyRequest.class);
         Policy expectedPolicy = MockPolicyMother.policy();
         given(load.load(request)).willReturn(expectedPolicy);
 

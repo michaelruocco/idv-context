@@ -6,11 +6,13 @@ import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 
 import java.util.Collection;
+import java.util.UUID;
 
 @Builder
 @Data
 public class ChannelActivityAliasPolicyKey implements PolicyKey {
 
+    private final UUID id;
     private final int priority;
     private final String channelId;
     private final Collection<String> activityNames;
@@ -36,6 +38,11 @@ public class ChannelActivityAliasPolicyKey implements PolicyKey {
     @Override
     public Collection<String> getAliasTypes() {
         return aliasTypes;
+    }
+
+    @Override
+    public boolean hasAliasType() {
+        return true;
     }
 
 }

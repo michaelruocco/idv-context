@@ -6,10 +6,10 @@ public interface Policy {
 
     UUID getId();
 
-    PolicyKey getKey();
-
     boolean appliesTo(PolicyRequest request);
 
     int getPriority();
+
+    PolicyKey getKey();
 
 }

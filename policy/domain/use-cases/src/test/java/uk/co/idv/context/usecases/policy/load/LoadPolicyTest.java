@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.policy.load;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.context.entities.policy.MockPolicyMother;
 import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.entities.policy.Policy;
@@ -42,7 +43,7 @@ class LoadPolicyTest {
         Policies<Policy> allPolicies = mock(Policies.class);
         given(repository.loadAll()).willReturn(allPolicies);
 
-        PolicyRequest request = mock(PolicyRequest.class);
+        PolicyRequest request = mock(DefaultPolicyRequest.class);
         Policies<Policy> applicablePolicies = mock(Policies.class);
         given(allPolicies.getApplicable(request)).willReturn(applicablePolicies);
 
@@ -86,7 +87,7 @@ class LoadPolicyTest {
 
     private PolicyRequest givenPoliciesApplicableToRequest(Policies<Policy> allPolicies,
                                                            Policy... policies) {
-        PolicyRequest request = mock(PolicyRequest.class);
+        PolicyRequest request = mock(DefaultPolicyRequest.class);
         Policies<Policy> applicablePolicies = new Policies<>(policies);
         given(allPolicies.getApplicable(request)).willReturn(applicablePolicies);
         return request;

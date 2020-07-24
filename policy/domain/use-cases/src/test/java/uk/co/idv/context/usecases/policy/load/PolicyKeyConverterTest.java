@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.policy.load;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 import uk.co.idv.context.entities.policy.key.ChannelActivityAliasPolicyKeyMother;
@@ -48,7 +49,7 @@ class PolicyKeyConverterTest {
     }
 
     private static PolicyRequest toExpectedChannelRequest(PolicyKey key) {
-        return PolicyRequest.builder()
+        return DefaultPolicyRequest.builder()
                 .channelId(key.getChannelId())
                 .activityName(ALL)
                 .aliasType(ALL)
@@ -56,7 +57,7 @@ class PolicyKeyConverterTest {
     }
 
     private static PolicyRequest toExpectedChannelActivityRequest(PolicyKey key) {
-        return PolicyRequest.builder()
+        return DefaultPolicyRequest.builder()
                 .channelId(key.getChannelId())
                 .activityName(CollectionUtils.getFirst(key.getActivityNames()))
                 .aliasType(ALL)
@@ -64,7 +65,7 @@ class PolicyKeyConverterTest {
     }
 
     private static PolicyRequest toExpectedChannelActivityAliasRequest(PolicyKey key) {
-        return PolicyRequest.builder()
+        return DefaultPolicyRequest.builder()
                 .channelId(key.getChannelId())
                 .activityName(CollectionUtils.getFirst(key.getActivityNames()))
                 .aliasType(CollectionUtils.getFirst(key.getAliasTypes()))

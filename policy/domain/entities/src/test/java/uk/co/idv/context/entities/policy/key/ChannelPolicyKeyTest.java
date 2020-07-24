@@ -4,10 +4,12 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static uk.co.idv.context.entities.policy.key.ChannelPolicyKeyMother.defaultChannelKey;
-import static uk.co.idv.context.entities.policy.key.MockPolicyRequestFactory.givenPolicyRequestApplyingTo;
+import static uk.co.idv.context.entities.policy.key.MockPolicyRequestMother.applyingTo;
 
 class ChannelPolicyKeyTest {
 
@@ -16,6 +18,24 @@ class ChannelPolicyKeyTest {
         PolicyKey key = ChannelPolicyKey.builder().build();
 
         assertThat(key.getType()).isEqualTo("channel");
+    }
+
+    @Test
+    void shouldNotHaveAliasType() {
+        PolicyKey key = ChannelPolicyKey.builder().build();
+
+        assertThat(key.hasAliasType()).isFalse();
+    }
+
+    @Test
+    void shouldReturnId() {
+        UUID id = UUID.randomUUID();
+
+        PolicyKey key = ChannelPolicyKey.builder()
+                .id(id)
+                .build();
+
+        assertThat(key.getId()).isEqualTo(id);
     }
 
     @Test
@@ -57,7 +77,7 @@ class ChannelPolicyKeyTest {
     @Test
     void shouldNotApplyToPolicyRequestsWithOtherChannelId() {
         PolicyKey key = defaultChannelKey();
-        PolicyRequest request = givenPolicyRequestApplyingTo(key);
+        PolicyRequest request = applyingTo(key);
         given(request.getChannelId()).willReturn("other-channel");
 
         boolean applies = key.appliesTo(request);
@@ -68,7 +88,7 @@ class ChannelPolicyKeyTest {
     @Test
     void shouldApplyToPolicyRequestsWithMatchingChannelId() {
         PolicyKey key = defaultChannelKey();
-        PolicyRequest request = givenPolicyRequestApplyingTo(key);
+        PolicyRequest request = applyingTo(key);
 
         boolean applies = key.appliesTo(request);
 

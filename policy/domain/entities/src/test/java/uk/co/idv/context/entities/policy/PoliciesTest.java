@@ -10,7 +10,7 @@ class PoliciesTest {
 
     @Test
     void shouldReturnApplicablePolicies() {
-        PolicyRequest request = mock(PolicyRequest.class);
+        PolicyRequest request = mock(DefaultPolicyRequest.class);
         Policy applicable = MockPolicyMother.applicableTo(request);
         Policy notApplicable = MockPolicyMother.notApplicableTo(request);
         Policies<Policy> allPolicies = new Policies<>(applicable, notApplicable);
