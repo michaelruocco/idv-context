@@ -4,6 +4,9 @@ package uk.co.idv.context.entities.policy;
 import java.util.Collection;
 import java.util.UUID;
 
+import static java.util.Collections.singleton;
+import static uk.co.idv.context.entities.policy.key.PolicyKeyConstants.ALL;
+
 public interface PolicyKey {
 
     UUID getId();
@@ -18,8 +21,12 @@ public interface PolicyKey {
 
     Collection<String> getActivityNames();
 
-    Collection<String> getAliasTypes();
+    default Collection<String> getAliasTypes() {
+        return singleton(ALL);
+    }
 
-    boolean hasAliasType();
+    default boolean hasAliasType() {
+        return false;
+    }
 
 }

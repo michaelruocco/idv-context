@@ -8,9 +8,6 @@ import uk.co.idv.context.entities.policy.PolicyRequest;
 import java.util.Collection;
 import java.util.UUID;
 
-import static java.util.Collections.singleton;
-import static uk.co.idv.context.entities.policy.key.PolicyKeyConstants.ALL;
-
 @Builder
 @Data
 public class ChannelActivityPolicyKey implements PolicyKey {
@@ -34,16 +31,6 @@ public class ChannelActivityPolicyKey implements PolicyKey {
     @Override
     public Collection<String> getActivityNames() {
         return activityNames;
-    }
-
-    @Override
-    public Collection<String> getAliasTypes() {
-        return singleton(ALL);
-    }
-
-    @Override
-    public boolean hasAliasType() {
-        return false;
     }
 
 }

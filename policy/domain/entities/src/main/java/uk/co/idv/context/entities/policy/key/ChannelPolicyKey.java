@@ -34,14 +34,4 @@ public class ChannelPolicyKey implements PolicyKey {
         return singleton(ALL);
     }
 
-    @Override
-    public Collection<String> getAliasTypes() {
-        return singleton(ALL);
-    }
-
-    @Override
-    public boolean hasAliasType() {
-        return false;
-    }
-
 }
