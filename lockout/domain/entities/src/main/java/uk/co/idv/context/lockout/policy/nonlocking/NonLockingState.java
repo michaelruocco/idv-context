@@ -6,7 +6,7 @@ import uk.co.idv.context.lockout.policy.unlocked.UnlockedState;
 public class NonLockingState extends UnlockedState {
 
     public NonLockingState(VerificationAttempts attempts) {
-        super("non locking policy", attempts);
+        super(attempts, "non locking policy");
     }
 
 }

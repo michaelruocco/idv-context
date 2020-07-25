@@ -1,0 +1,36 @@
+package uk.co.idv.context.lockout.policy.hard;
+
+import uk.co.idv.context.lockout.attempt.VerificationAttempts;
+import uk.co.idv.context.lockout.policy.LockoutState;
+
+public class HardLockoutState extends LockoutState {
+
+    private final int maxNumberOfAttempts;
+
+    public HardLockoutState(VerificationAttempts attempts, int maxNumberOfAttempts) {
+        super(attempts);
+        this.maxNumberOfAttempts = maxNumberOfAttempts;
+    }
+
+    @Override
+    public boolean isLocked() {
+        return getNumberOfAttemptsRemaining() <= 0;
+    }
+
+    @Override
+    public String getMessage() {
+        if (isLocked()) {
+            return String.format("maximum number of attempts [%d] reached", maxNumberOfAttempts);
+        }
+        return String.format("%d attempts remaining", getNumberOfAttemptsRemaining());
+    }
+
+    public int getNumberOfAttemptsRemaining() {
+        return maxNumberOfAttempts - getNumberOfAttempts();
+    }
+
+    public int getMaxNumberOfAttempts() {
+        return maxNumberOfAttempts;
+    }
+
+}

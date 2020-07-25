@@ -1,20 +1,34 @@
 package uk.co.idv.context.lockout.policy;
 
+import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.lockout.attempt.VerificationAttempts;
 
 import java.util.UUID;
 
-public interface LockoutState {
+@RequiredArgsConstructor
+public abstract class LockoutState {
 
-    UUID getId();
+    private final VerificationAttempts attempts;
 
-    IdvId getIdvId();
+    public UUID getId() {
+        return attempts.getId();
+    }
 
-    boolean isLocked();
+    public IdvId getIdvId() {
+        return attempts.getIdvId();
+    }
 
-    VerificationAttempts getAttempts();
+    public VerificationAttempts getAttempts() {
+        return attempts;
+    }
 
-    String getMessage();
+    public int getNumberOfAttempts() {
+        return attempts.size();
+    }
+
+    public abstract boolean isLocked();
+
+    public abstract String getMessage();
 
 }

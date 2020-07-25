@@ -37,6 +37,13 @@ class UnlockedStateTest {
     }
 
     @Test
+    void shouldReturnNumberOfAttempts() {
+        int numberOfAttempts = state.getNumberOfAttempts();
+
+        assertThat(numberOfAttempts).isEqualTo(attempts.size());
+    }
+
+    @Test
     void shouldNotBeLocked() {
         boolean locked = state.isLocked();
 
