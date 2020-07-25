@@ -13,6 +13,10 @@ public class VerificationAttemptsMother {
         // utility class
     }
 
+    public static VerificationAttempts build() {
+        return builder().build();
+    }
+
     public static VerificationAttempts withIdvId(IdvId idvId) {
         return builder().idvId(idvId).build();
     }
