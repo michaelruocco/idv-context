@@ -10,6 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class NonLockingStateTest {
 
     private final VerificationAttempts attempts = VerificationAttemptsMother.build();
+
     private final LockoutState state = new NonLockingState(attempts);
 
     @Test

@@ -12,6 +12,7 @@ class HardLockoutStateTest {
     private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
 
     private final VerificationAttempts attempts = mock(VerificationAttempts.class);
+
     private final HardLockoutState state = new HardLockoutState(attempts, MAX_NUMBER_OF_ATTEMPTS);
 
     @Test
