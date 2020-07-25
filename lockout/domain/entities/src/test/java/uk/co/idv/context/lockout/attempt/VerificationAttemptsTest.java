@@ -97,6 +97,22 @@ class VerificationAttemptsTest {
     }
 
     @Test
+    void shouldReturnSize() {
+        IdvId idvId = IdvIdMother.idvId();
+        Collection<VerificationAttempt> attemptCollection = Arrays.asList(
+                VerificationAttemptMother.withIdvId(idvId),
+                VerificationAttemptMother.withIdvId(idvId)
+        );
+
+        VerificationAttempts attempts = VerificationAttempts.builder()
+                .idvId(idvId)
+                .attempts(attemptCollection)
+                .build();
+
+        assertThat(attempts.size()).isEqualTo(2);
+    }
+
+    @Test
     void shouldThrowExceptionIfAttemptAddedWithDifferentIdvId() {
         IdvId idvId = IdvIdMother.idvId();
         VerificationAttempts attempts = VerificationAttemptsMother.withIdvId(idvId);

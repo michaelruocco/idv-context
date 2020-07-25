@@ -42,6 +42,10 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return idvId;
     }
 
+    public int size() {
+        return attempts.size();
+    }
+
     public VerificationAttempts add(VerificationAttempt attempt) {
         validate(attempt.getIdvId());
         return withAttempts(addToAttempts(attempt));
