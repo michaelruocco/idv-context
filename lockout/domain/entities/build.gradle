@@ -6,5 +6,8 @@ dependencies {
     api project(":identity-entities")
     api project(":policy-entities")
 
+    implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
+
     testFixturesApi testFixtures(project(":identity-entities"))
+    testFixturesApi testFixtures(project(":policy-entities"))
 }

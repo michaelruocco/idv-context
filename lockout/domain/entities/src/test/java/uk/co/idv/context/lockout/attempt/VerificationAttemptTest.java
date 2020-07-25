@@ -71,6 +71,26 @@ class VerificationAttemptTest {
     }
 
     @Test
+    void shouldReturnHasAliasTrueIfAliasMatches() {
+        Alias alias = DefaultAliasMother.build();
+        VerificationAttempt attempt = builder.alias(alias).build();
+
+        boolean hasAlias = attempt.hasAlias(alias);
+
+        assertThat(hasAlias).isTrue();
+    }
+
+    @Test
+    void shouldReturnHasAliasFalseIfAliasDoesNotMatch() {
+        Alias alias = DefaultAliasMother.build();
+        VerificationAttempt attempt = builder.alias(alias).build();
+
+        boolean hasAlias = attempt.hasAlias(IdvIdMother.idvId());
+
+        assertThat(hasAlias).isFalse();
+    }
+
+    @Test
     void shouldReturnIdvId() {
         IdvId idvId = IdvIdMother.idvId();
 

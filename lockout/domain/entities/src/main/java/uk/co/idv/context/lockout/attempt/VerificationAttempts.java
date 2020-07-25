@@ -4,11 +4,16 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.With;
+import org.apache.commons.collections4.CollectionUtils;
+import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.context.entities.policy.PolicyKey;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -42,16 +47,40 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return withAttempts(addToAttempts(attempt));
     }
 
+    public Instant getMostRecentTimestamp() {
+        return getMostRecent().getTimestamp();
+    }
+
+    public VerificationAttempts with(Alias alias) {
+        return withAttempts(attempts.stream()
+                .filter(attempt -> attempt.hasAlias(alias))
+                .collect(Collectors.toList()));
+    }
+
+    public VerificationAttempts applyingTo(PolicyKey key) {
+        return withAttempts(attempts.stream()
+                .filter(key::appliesTo)
+                .collect(Collectors.toList()));
+    }
+
     private void validate(IdvId attemptIdvId) {
         if (!idvId.equals(attemptIdvId)) {
             throw new IdvIdMismatchException(attemptIdvId, idvId);
         }
     }
 
+    public VerificationAttempts remove(VerificationAttempts attemptsToRemove) {
+        return withAttempts(CollectionUtils.removeAll(attempts, attemptsToRemove.attempts));
+    }
+
     private Collection<VerificationAttempt> addToAttempts(VerificationAttempt attempt) {
         Collection<VerificationAttempt> updated = new ArrayList<>(attempts);
         updated.add(attempt);
         return updated;
+    }
+
+    private VerificationAttempt getMostRecent() {
+        return Collections.max(attempts, Comparator.comparing(VerificationAttempt::getTimestamp));
     }
 
     public static class VerificationAttemptsBuilder {

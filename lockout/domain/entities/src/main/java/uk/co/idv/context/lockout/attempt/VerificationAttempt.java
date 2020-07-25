@@ -29,4 +29,8 @@ public class VerificationAttempt implements PolicyRequest {
         return alias.getType();
     }
 
+    public boolean hasAlias(Alias alias) {
+        return this.alias.equals(alias);
+    }
+
 }
