@@ -43,7 +43,7 @@ class HardLockoutStateTest {
         givenNumberOfAttempts(MAX_NUMBER_OF_ATTEMPTS);
 
         assertThat(state.isLocked()).isTrue();
-        assertThat(state.getNumberOfAttemptsRemaining()).isEqualTo(0);
+        assertThat(state.getNumberOfAttemptsRemaining()).isZero();
         assertThat(state.getMessage()).isEqualTo(toExpectedLockedMessage());
     }
 
