@@ -1,5 +1,6 @@
 package uk.co.idv.context.lockout.policy.hard;
 
+import lombok.Builder;
 import uk.co.idv.context.lockout.attempt.VerificationAttempts;
 import uk.co.idv.context.lockout.policy.LockoutState;
 
@@ -7,6 +8,7 @@ public class HardLockoutState extends LockoutState {
 
     private final int maxNumberOfAttempts;
 
+    @Builder
     public HardLockoutState(VerificationAttempts attempts, int maxNumberOfAttempts) {
         super(attempts);
         this.maxNumberOfAttempts = maxNumberOfAttempts;

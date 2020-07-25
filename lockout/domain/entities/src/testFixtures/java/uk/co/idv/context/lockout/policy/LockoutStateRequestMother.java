@@ -11,7 +11,7 @@ public interface LockoutStateRequestMother {
 
     static LockoutStateRequest.LockoutStateRequestBuilder builder() {
         return LockoutStateRequest.builder()
-                .attempt(VerificationAttemptMother.build())
+                .newAttempt(VerificationAttemptMother.build())
                 .attempts(VerificationAttemptsMother.build());
     }
 

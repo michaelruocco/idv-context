@@ -12,7 +12,10 @@ class SoftLockoutStateTest {
     private final SoftLock lock = SoftLockMother.build();
     private final VerificationAttempts attempts = mock(VerificationAttempts.class);
 
-    private final SoftLockoutState state = new SoftLockoutState(attempts, lock);
+    private final SoftLockoutState state = SoftLockoutState.builder()
+            .attempts(attempts)
+            .lock(lock)
+            .build();
 
     @Test
     void shouldReturnDurationFromLock() {

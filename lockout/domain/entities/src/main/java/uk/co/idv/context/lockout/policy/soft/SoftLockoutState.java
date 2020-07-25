@@ -1,5 +1,6 @@
 package uk.co.idv.context.lockout.policy.soft;
 
+import lombok.Builder;
 import uk.co.idv.context.lockout.attempt.VerificationAttempts;
 import uk.co.idv.context.lockout.policy.LockoutState;
 
@@ -10,6 +11,7 @@ public class SoftLockoutState extends LockoutState {
 
     private final SoftLock lock;
 
+    @Builder
     public SoftLockoutState(VerificationAttempts attempts, SoftLock lock) {
         super(attempts);
         this.lock = lock;
