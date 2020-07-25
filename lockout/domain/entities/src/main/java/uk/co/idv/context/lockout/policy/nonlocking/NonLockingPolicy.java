@@ -8,7 +8,11 @@ import uk.co.idv.context.lockout.policy.recordattempt.NeverRecordAttempts;
 public class NonLockingPolicy extends LockoutPolicy {
 
     public NonLockingPolicy(PolicyKey key) {
-        super(key, new AttemptsFilter(key), new NonLockingStateCalculator(), new NeverRecordAttempts());
+        super(key,
+                new AttemptsFilter(key),
+                new NonLockingStateCalculator(),
+                new NeverRecordAttempts()
+        );
     }
 
 }

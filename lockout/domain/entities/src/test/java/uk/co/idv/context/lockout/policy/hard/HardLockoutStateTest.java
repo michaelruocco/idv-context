@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class NonLockingStateTest {
+class HardLockoutStateTest {
 
     private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
 

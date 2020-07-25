@@ -20,12 +20,12 @@ class NonLockingPolicyTest {
     }
 
     @Test
-    void shouldReturnNonLockingStateCalculator() {
+    void shouldReturnStateCalculator() {
         assertThat(policy.getStateCalculator()).isInstanceOf(NonLockingStateCalculator.class);
     }
 
     @Test
-    void shouldReturnNeverRecordAttemptsPolicy() {
+    void shouldReturnRecordAttemptsPolicy() {
         assertThat(policy.getRecordAttemptPolicy()).isInstanceOf(NeverRecordAttempts.class);
     }
 
