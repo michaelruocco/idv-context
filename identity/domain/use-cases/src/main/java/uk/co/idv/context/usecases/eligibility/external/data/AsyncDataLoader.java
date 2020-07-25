@@ -58,7 +58,7 @@ public class AsyncDataLoader {
             Thread.currentThread().interrupt();
             log.debug(e.getMessage(), e);
         } catch (ExecutionException | TimeoutException e) {
-            log.debug(e.getMessage(), e);
+            log.error(e.getMessage(), e);
         } finally {
             log.info("futures took {}ms to complete", millisBetweenNowAnd(start));
         }
