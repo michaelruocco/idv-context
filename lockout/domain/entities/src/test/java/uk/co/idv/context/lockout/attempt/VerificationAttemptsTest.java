@@ -149,7 +149,7 @@ class VerificationAttemptsTest {
 
         VerificationAttempts updatedAttempts = attempts.remove(attemptsToRemove);
 
-        assertThat(updatedAttempts).doesNotContain(attemptToRemove);
+        assertThat(updatedAttempts).isEmpty();
     }
 
     @Test
