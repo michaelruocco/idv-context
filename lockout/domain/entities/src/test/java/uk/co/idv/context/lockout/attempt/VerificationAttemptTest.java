@@ -53,12 +53,21 @@ class VerificationAttemptTest {
     }
 
     @Test
-    void shouldReturnProvidedAlias() {
-        Alias providedAlias = DefaultAliasMother.build();
+    void shouldReturnAlias() {
+        Alias alias = DefaultAliasMother.build();
 
-        VerificationAttempt attempt = builder.alias(providedAlias).build();
+        VerificationAttempt attempt = builder.alias(alias).build();
 
-        assertThat(attempt.getAlias()).isEqualTo(providedAlias);
+        assertThat(attempt.getAlias()).isEqualTo(alias);
+    }
+
+    @Test
+    void shouldReturnAliasType() {
+        Alias alias = DefaultAliasMother.build();
+
+        VerificationAttempt attempt = builder.alias(alias).build();
+
+        assertThat(attempt.getAliasType()).isEqualTo(alias.getType());
     }
 
     @Test

@@ -1,6 +1,7 @@
 package uk.co.idv.context.lockout.attempt;
 
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
+import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.lockout.attempt.VerificationAttempt.VerificationAttemptBuilder;
 
@@ -11,6 +12,14 @@ public class VerificationAttemptMother {
 
     private VerificationAttemptMother() {
         // utility class
+    }
+
+    public static VerificationAttempt build() {
+        return builder().build();
+    }
+
+    public static VerificationAttempt withIdvId(IdvId idvId) {
+        return builder().idvId(idvId).build();
     }
 
     public static VerificationAttemptBuilder builder() {
