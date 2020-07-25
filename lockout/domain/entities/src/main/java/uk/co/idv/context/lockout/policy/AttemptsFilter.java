@@ -9,9 +9,6 @@ public class AttemptsFilter {
 
     private final PolicyKey key;
 
-    //TODO move this functionality into policy key class
-    //this will probably mean updating policy request class to add
-    //method to return an optional alias
     public VerificationAttempts filter(LockoutStateRequest request) {
         VerificationAttempts attempts = request.getAttempts();
         VerificationAttempts applicable = attempts.applyingTo(key);

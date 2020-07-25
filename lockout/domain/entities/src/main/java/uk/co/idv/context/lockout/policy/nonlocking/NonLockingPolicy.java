@@ -7,7 +7,6 @@ import uk.co.idv.context.lockout.policy.recordattempt.NeverRecordAttempts;
 
 public class NonLockingPolicy extends LockoutPolicy {
 
-    //TODO tests for this class
     public NonLockingPolicy(PolicyKey key) {
         super(key, new AttemptsFilter(key), new NonLockingStateCalculator(), new NeverRecordAttempts());
     }
