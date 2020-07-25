@@ -54,7 +54,7 @@ subprojects {
 
     ext {
         testSetsPluginVersion = "3.0.1"
-        awsSdkVersion = "1.11.822"
+        awsSdkVersion = "1.11.827"
         commonsCollectionsVersion = "4.4"
 
         junitVersion = "5.6.2"
@@ -62,7 +62,7 @@ subprojects {
         slf4jVersion = "1.7.30"
         assertjVersion = "3.16.1"
         junitPioneerVersion = "0.7.0"
-        mockitoVersion = "3.4.3"
+        mockitoVersion = "3.4.4"
     }
 
     dependencies {
