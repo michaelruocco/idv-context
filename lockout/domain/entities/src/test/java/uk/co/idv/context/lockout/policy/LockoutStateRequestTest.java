@@ -38,6 +38,17 @@ class LockoutStateRequestTest {
     }
 
     @Test
+    void shouldReturnNumberOfAttempts() {
+        VerificationAttempts attempts = VerificationAttemptsMother.build();
+
+        LockoutStateRequest request = LockoutStateRequest.builder()
+                .attempts(attempts)
+                .build();
+
+        assertThat(request.getNumberOfAttempts()).isEqualTo(attempts.size());
+    }
+
+    @Test
     void shouldReturnAliasFromNewAttempt() {
         VerificationAttempt attempt = VerificationAttemptMother.build();
 

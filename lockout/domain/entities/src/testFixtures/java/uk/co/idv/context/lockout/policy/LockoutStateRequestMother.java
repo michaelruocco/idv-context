@@ -9,6 +9,16 @@ public interface LockoutStateRequestMother {
         return builder().build();
     }
 
+    static LockoutStateRequest withOneAttempt() {
+        return withNumberOfAttempts(1);
+    }
+
+    static LockoutStateRequest withNumberOfAttempts(int numberOfAttempts) {
+        return builder()
+                .attempts(VerificationAttemptsMother.withNumberOfAttempts(numberOfAttempts))
+                .build();
+    }
+
     static LockoutStateRequest.LockoutStateRequestBuilder builder() {
         return LockoutStateRequest.builder()
                 .newAttempt(VerificationAttemptMother.build())

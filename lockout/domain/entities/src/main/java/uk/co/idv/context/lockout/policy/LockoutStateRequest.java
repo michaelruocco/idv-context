@@ -16,6 +16,10 @@ public class LockoutStateRequest {
     private final VerificationAttempt newAttempt;
     private final VerificationAttempts attempts;
 
+    public int getNumberOfAttempts() {
+        return attempts.size();
+    }
+
     public Alias getAlias() {
         return newAttempt.getAlias();
     }

@@ -24,8 +24,8 @@ public class HardLockoutStateCalculator implements LockoutStateCalculator {
     }
 
     private void logRequest(LockoutStateRequest request) {
-        log.info("calculating hard locking state from request {} with max number of attempts {}",
-                request,
+        log.debug("calculating hard lockout state from request with {} attempts and max number of attempts {}",
+                request.getNumberOfAttempts(),
                 maxNumberOfAttempts);
     }
 

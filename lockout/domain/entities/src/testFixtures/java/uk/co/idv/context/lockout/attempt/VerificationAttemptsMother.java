@@ -4,7 +4,9 @@ import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.lockout.attempt.VerificationAttempts.VerificationAttemptsBuilder;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.UUID;
 
 public class VerificationAttemptsMother {
@@ -19,6 +21,14 @@ public class VerificationAttemptsMother {
 
     public static VerificationAttempts withIdvId(IdvId idvId) {
         return builder().idvId(idvId).build();
+    }
+
+    public static VerificationAttempts withNumberOfAttempts(int numberOfAttempts) {
+        Collection<VerificationAttempt> attempts = new ArrayList<>();
+        for (int i = 0; i < numberOfAttempts; i++) {
+            attempts.add(VerificationAttemptMother.build());
+        }
+        return builder().attempts(attempts).build();
     }
 
     public static VerificationAttempts withAttempts(VerificationAttempt... attempts) {

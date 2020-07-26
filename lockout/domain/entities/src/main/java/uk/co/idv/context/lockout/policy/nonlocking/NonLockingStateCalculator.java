@@ -15,7 +15,7 @@ public class NonLockingStateCalculator implements LockoutStateCalculator {
 
     @Override
     public LockoutState calculate(LockoutStateRequest request) {
-        log.info("calculating non locking state from request {}", request);
+        log.debug("calculating non locking state with {} attempts", request.getNumberOfAttempts());
         return new NonLockingState(request.getAttempts());
     }
 
