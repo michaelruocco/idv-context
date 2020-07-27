@@ -30,6 +30,9 @@ project(':policy-use-cases').projectDir = file('policy/domain/use-cases')
 include ':lockout-entities'
 project(':lockout-entities').projectDir = file('lockout/domain/entities')
 
+include ':lockout-use-cases'
+project(':lockout-use-cases').projectDir = file('lockout/domain/use-cases')
+
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
 

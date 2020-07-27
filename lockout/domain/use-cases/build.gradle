@@ -1,0 +1,9 @@
+dependencies {
+    api project(":identity-entities")
+    api project(":lockout-entities")
+
+    implementation project(":policy-use-cases")
+
+    testImplementation testFixtures(project(":identity-entities"))
+    testImplementation testFixtures(project(":policy-entities"))
+}
