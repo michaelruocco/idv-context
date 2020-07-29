@@ -5,15 +5,14 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.neovisionaries.i18n.CountryCode;
-import uk.co.idv.context.adapter.json.JsonParserConverter;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
+import uk.co.mruoc.json.jackson.JsonNodeConverter;
+import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import java.util.Optional;
-
-import static uk.co.idv.context.adapter.json.JsonNodeConverter.toObject;
 
 public class IdentityDeserializer extends StdDeserializer<Identity> {
 
@@ -38,19 +37,19 @@ public class IdentityDeserializer extends StdDeserializer<Identity> {
                 .orElse(null);
     }
 
-    private static Aliases toAliases(final JsonNode node, final JsonParser parser) {
-        return toObject(node.get("aliases"), parser, Aliases.class);
+    private static Aliases toAliases(JsonNode node, JsonParser parser) {
+        return JsonNodeConverter.toObject(node.get("aliases"), parser, Aliases.class);
     }
 
-    private static PhoneNumbers toPhoneNumbers(final JsonNode node, final JsonParser parser) {
+    private static PhoneNumbers toPhoneNumbers(JsonNode node, JsonParser parser) {
         return Optional.ofNullable(node.get("phoneNumbers"))
-                .map(phoneNumbers -> toObject(phoneNumbers, parser, PhoneNumbers.class))
+                .map(phoneNumbers -> JsonNodeConverter.toObject(phoneNumbers, parser, PhoneNumbers.class))
                 .orElseGet(PhoneNumbers::new);
     }
 
-    private static EmailAddresses toEmailAddresses(final JsonNode node, final JsonParser parser) {
+    private static EmailAddresses toEmailAddresses(JsonNode node, JsonParser parser) {
         return Optional.ofNullable(node.get("emailAddresses"))
-                .map(emailAddresses -> toObject(emailAddresses, parser, EmailAddresses.class))
+                .map(emailAddresses -> JsonNodeConverter.toObject(emailAddresses, parser, EmailAddresses.class))
                 .orElseGet(EmailAddresses::new);
     }
 

@@ -17,14 +17,14 @@ class PhoneNumbersSerdeTest {
 
     @Test
     void shouldSerialize() throws JsonProcessingException {
-        final String json = MAPPER.writeValueAsString(PHONE_NUMBERS);
+        String json = MAPPER.writeValueAsString(PHONE_NUMBERS);
 
         assertThatJson(json).isEqualTo(JSON);
     }
 
     @Test
     void shouldDeserialize() throws JsonProcessingException {
-        final PhoneNumbers phoneNumbers = MAPPER.readValue(JSON, PhoneNumbers.class);
+        PhoneNumbers phoneNumbers = MAPPER.readValue(JSON, PhoneNumbers.class);
 
         assertThat(phoneNumbers).isEqualTo(PHONE_NUMBERS);
     }

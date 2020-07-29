@@ -13,7 +13,7 @@ public class AlwaysRecordAttempts implements RecordAttemptPolicy {
     }
 
     @Override
-    public boolean shouldRecordAttempt(final RecordAttemptRequest request) {
+    public boolean shouldRecordAttempt(RecordAttemptRequest request) {
         return true;
     }
 

@@ -17,11 +17,11 @@ public class ApplicationErrorHandler {
     private final ErrorHandler errorHandler;
 
     @ExceptionHandler(Throwable.class)
-    public ResponseEntity<ApiError> handleException(final Throwable throwable) {
+    public ResponseEntity<ApiError> handleException(Throwable throwable) {
         return toResponseEntity(errorHandler.apply(throwable));
     }
 
-    private static ResponseEntity<ApiError> toResponseEntity(final ApiError error) {
+    private static ResponseEntity<ApiError> toResponseEntity(ApiError error) {
         return new ResponseEntity<>(error, HttpStatus.valueOf(error.getStatus()));
     }
 

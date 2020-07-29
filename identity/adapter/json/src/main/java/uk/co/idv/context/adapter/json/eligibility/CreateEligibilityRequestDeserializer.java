@@ -5,8 +5,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.adapter.json.JsonParserConverter;
 import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
+import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import static uk.co.idv.context.adapter.json.eligibility.EligibilityFieldExtractor.toAliases;
 import static uk.co.idv.context.adapter.json.eligibility.EligibilityFieldExtractor.toChannel;

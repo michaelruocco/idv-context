@@ -13,9 +13,9 @@ public class UpdatePolicy<T extends Policy> {
 
     private final PolicyRepository<T> repository;
 
-    public void update(final T policy) {
-        final UUID id = policy.getId();
-        final Optional<T> loadedPolicy = repository.load(id);
+    public void update(T policy) {
+        UUID id = policy.getId();
+        Optional<T> loadedPolicy = repository.load(id);
         if (loadedPolicy.isEmpty()) {
             throw new PolicyNotFoundException(id);
         }

@@ -4,13 +4,13 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.adapter.json.JsonNodeConverter;
-import uk.co.idv.context.adapter.json.JsonParserConverter;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannel;
 import uk.co.idv.context.entities.channel.de.DeRsa;
 import uk.co.idv.context.entities.channel.gb.As3;
 import uk.co.idv.context.entities.channel.gb.GbRsa;
+import uk.co.mruoc.json.jackson.JsonNodeConverter;
+import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import java.util.Map;
 

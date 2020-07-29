@@ -2,10 +2,6 @@ plugins {
     id "java-test-fixtures"
 }
 
-ext {
-    jacksonVersion = "2.11.1"
-}
-
 dependencies {
     api project(":identity-use-cases")
     api "com.github.michaelruocco:json-adapter:0.1.5"
