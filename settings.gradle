@@ -33,6 +33,9 @@ project(':policy-in-memory-repository').projectDir = file('policy/adapter/reposi
 include ':lockout-entities'
 project(':lockout-entities').projectDir = file('lockout/domain/entities')
 
+include ':lockout-json'
+project(':lockout-json').projectDir = file('lockout/adapter/json')
+
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
 
