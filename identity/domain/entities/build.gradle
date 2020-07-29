@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api "org.javamoney:moneta:1.4.1"
+    api "org.javamoney:moneta:1.4.2"
     api "com.neovisionaries:nv-i18n:1.27"
 
     implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"

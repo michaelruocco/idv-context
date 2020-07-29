@@ -54,7 +54,7 @@ subprojects {
 
     ext {
         testSetsPluginVersion = "3.0.1"
-        awsSdkVersion = "1.11.827"
+        awsSdkVersion = "1.11.829"
         commonsCollectionsVersion = "4.4"
         jacksonVersion = "2.11.1"
 
