@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.policy.load;
 
 import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.entities.policy.Policy;
@@ -14,6 +15,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Builder
+@RequiredArgsConstructor
 @Slf4j
 public class LoadPolicy<T extends Policy> {
 
