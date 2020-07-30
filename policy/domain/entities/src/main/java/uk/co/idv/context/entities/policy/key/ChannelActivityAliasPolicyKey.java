@@ -12,6 +12,8 @@ import java.util.UUID;
 @Data
 public class ChannelActivityAliasPolicyKey implements PolicyKey {
 
+    public static final String TYPE = "channel-activity-alias";
+
     private final UUID id;
     private final int priority;
     private final String channelId;
@@ -27,7 +29,7 @@ public class ChannelActivityAliasPolicyKey implements PolicyKey {
 
     @Override
     public String getType() {
-        return "channel-activity-alias";
+        return TYPE;
     }
 
     @Override

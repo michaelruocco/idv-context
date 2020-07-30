@@ -30,6 +30,9 @@ project(':policy-use-cases').projectDir = file('policy/domain/use-cases')
 include ':policy-in-memory-repository'
 project(':policy-in-memory-repository').projectDir = file('policy/adapter/repository/in-memory')
 
+include ':policy-json'
+project(':policy-json').projectDir = file('policy/adapter/json')
+
 include ':lockout-entities'
 project(':lockout-entities').projectDir = file('lockout/domain/entities')
 

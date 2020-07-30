@@ -57,6 +57,7 @@ subprojects {
         awsSdkVersion = "1.11.829"
         commonsCollectionsVersion = "4.4"
         jacksonVersion = "2.11.1"
+        jsonAdapterVersion = "0.1.5"
 
         junitVersion = "5.6.2"
         lombokVersion = "1.18.12"
@@ -64,6 +65,8 @@ subprojects {
         assertjVersion = "3.16.1"
         junitPioneerVersion = "0.7.0"
         mockitoVersion = "3.4.4"
+        jsonUnitAssertjVersion = "2.18.1"
+        fileLoaderVersion = "5.0.1"
     }
 
     dependencies {

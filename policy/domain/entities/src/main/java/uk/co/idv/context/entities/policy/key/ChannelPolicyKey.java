@@ -15,6 +15,8 @@ import static uk.co.idv.context.entities.policy.key.PolicyKeyConstants.ALL;
 @Data
 public class ChannelPolicyKey implements PolicyKey {
 
+    public static final String TYPE = "channel";
+
     private final UUID id;
     private final int priority;
     private final String channelId;
@@ -26,7 +28,7 @@ public class ChannelPolicyKey implements PolicyKey {
 
     @Override
     public String getType() {
-        return "channel";
+        return TYPE;
     }
 
     @Override
