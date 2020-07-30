@@ -1,0 +1,9 @@
+{
+  "id": "83b6f4ef-f62a-41b3-803a-119622c99072",
+  "type": "channel-activity",
+  "channelId": "default-channel",
+  "activityNames": [
+    "default-activity"
+  ],
+  "priority": 3
+}

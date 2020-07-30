@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.json.policy.key;
+package uk.co.idv.context.adapter.json.policy.key.channel;
 
 import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 

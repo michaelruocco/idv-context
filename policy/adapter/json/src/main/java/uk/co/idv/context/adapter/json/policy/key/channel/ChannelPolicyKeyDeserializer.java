@@ -20,8 +20,8 @@ public class ChannelPolicyKeyDeserializer extends StdDeserializer<ChannelPolicyK
         JsonNode node = JsonParserConverter.toNode(parser);
         return ChannelPolicyKey.builder()
                 .id(UUID.fromString(node.get("id").asText()))
-                .channelId(node.get("channelId").asText())
                 .priority(node.get("priority").asInt())
+                .channelId(node.get("channelId").asText())
                 .build();
     }
 

@@ -1,0 +1,12 @@
+{
+  "id": "fb30f2bc-458f-4ced-bd72-526e9230ff20",
+  "type": "channel-activity-alias",
+  "channelId": "default-channel",
+  "activityNames": [
+    "default-activity"
+  ],
+  "aliasTypes": [
+    "default-alias"
+  ],
+  "priority": 2
+}

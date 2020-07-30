@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.policy.key;
 import uk.co.idv.context.entities.policy.key.ChannelActivityAliasPolicyKey.ChannelActivityAliasPolicyKeyBuilder;
 
 import java.util.Collections;
+import java.util.UUID;
 
 public interface ChannelActivityAliasPolicyKeyMother {
 
@@ -12,10 +13,11 @@ public interface ChannelActivityAliasPolicyKeyMother {
 
     static ChannelActivityAliasPolicyKeyBuilder builder() {
         return ChannelActivityAliasPolicyKey.builder()
+                .id(UUID.fromString("fb30f2bc-458f-4ced-bd72-526e9230ff20"))
+                .priority(2)
                 .channelId("default-channel")
-                .activityNames(Collections.singleton("default-activity"))
-                .aliasTypes(Collections.singleton("default-alias"))
-                .priority(2);
+                .activityNames(Collections.singletonList("default-activity"))
+                .aliasTypes(Collections.singletonList("default-alias"));
     }
 
 }
