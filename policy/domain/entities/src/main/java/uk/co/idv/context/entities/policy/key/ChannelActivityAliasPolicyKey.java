@@ -33,16 +33,6 @@ public class ChannelActivityAliasPolicyKey implements PolicyKey {
     }
 
     @Override
-    public Collection<String> getActivityNames() {
-        return activityNames;
-    }
-
-    @Override
-    public Collection<String> getAliasTypes() {
-        return aliasTypes;
-    }
-
-    @Override
     public boolean hasAliasType() {
         return true;
     }

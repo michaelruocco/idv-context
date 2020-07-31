@@ -30,9 +30,4 @@ public class ChannelActivityPolicyKey implements PolicyKey {
         return TYPE;
     }
 
-    @Override
-    public Collection<String> getActivityNames() {
-        return activityNames;
-    }
-
 }
