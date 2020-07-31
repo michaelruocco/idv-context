@@ -1,11 +1,11 @@
-package uk.co.idv.context.adapter.json.policy.key.channel;
+package uk.co.idv.context.adapter.json.policy.key.invalid;
 
 import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
-public interface ChannelPolicyKeyJsonMother {
+public interface InvalidPolicyKeyJsonMother {
 
-    static String defaultChannelKey() {
-        return loadContentFromClasspath("policy-key/channel-policy-key.json");
+    static String invalidKey() {
+        return loadContentFromClasspath("policy-key/invalid-policy-key.json");
     }
 
 }
