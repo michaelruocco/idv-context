@@ -1,16 +1,16 @@
-package uk.co.idv.config.repository.dynamo;
+package uk.co.idv.config.identity.repository.dynamo;
 
-import uk.co.idv.config.repository.RepositoryConfig;
+import uk.co.idv.config.identity.repository.IdentityRepositoryConfig;
 import uk.co.idv.context.adapter.repository.DynamoIdentityRepository;
 import uk.co.idv.context.adapter.repository.IdentityConverter;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 import uk.co.mruoc.json.JsonConverter;
 
-public class DynamoRepositoryConfig implements RepositoryConfig {
+public class DynamoIdentityRepositoryConfig implements IdentityRepositoryConfig {
 
     private final IdentityRepository repository;
 
-    public DynamoRepositoryConfig(JsonConverter jsonConverter, DynamoTables tables) {
+    public DynamoIdentityRepositoryConfig(JsonConverter jsonConverter, DynamoTables tables) {
         repository = buildIdentityRepository(jsonConverter, tables);
     }
 

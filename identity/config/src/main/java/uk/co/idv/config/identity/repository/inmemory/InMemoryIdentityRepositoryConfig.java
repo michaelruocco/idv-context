@@ -1,10 +1,10 @@
-package uk.co.idv.config.repository.inmemory;
+package uk.co.idv.config.identity.repository.inmemory;
 
-import uk.co.idv.config.repository.RepositoryConfig;
+import uk.co.idv.config.identity.repository.IdentityRepositoryConfig;
 import uk.co.idv.context.adapter.repository.InMemoryIdentityRepository;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 
-public class InMemoryRepositoryConfig implements RepositoryConfig {
+public class InMemoryIdentityRepositoryConfig implements IdentityRepositoryConfig {
 
     private final IdentityRepository repository = new InMemoryIdentityRepository();
 

@@ -3,7 +3,7 @@ package uk.co.idv.app.spring.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.co.idv.config.identity.IdentityConfig;
-import uk.co.idv.config.repository.RepositoryConfig;
+import uk.co.idv.config.identity.repository.IdentityRepositoryConfig;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.adapter.json.error.handler.IdentityErrorHandler;
@@ -17,7 +17,7 @@ import java.util.concurrent.Executors;
 public class SpringDomainConfig {
 
     @Bean
-    public IdentityConfig identityConfig(RepositoryConfig repositoryConfig) {
+    public IdentityConfig identityConfig(IdentityRepositoryConfig repositoryConfig) {
         return IdentityConfig.builder()
                 .repository(repositoryConfig.identityRepository())
                 .stubConfig(stubConfig())

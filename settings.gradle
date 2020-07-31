@@ -45,6 +45,9 @@ project(':lockout-in-memory-repository').projectDir = file('lockout/adapter/repo
 include ':lockout-json'
 project(':lockout-json').projectDir = file('lockout/adapter/json')
 
+include ':lockout-config'
+project(':lockout-config').projectDir = file('lockout/config')
+
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
 

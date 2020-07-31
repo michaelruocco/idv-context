@@ -1,0 +1,6 @@
+dependencies {
+    api project(":lockout-use-cases")
+    api project(":lockout-json")
+
+    implementation project(":lockout-in-memory-repository")
+}

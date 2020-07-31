@@ -1,4 +1,4 @@
-package uk.co.idv.config.repository.dynamo;
+package uk.co.idv.config.identity.repository.dynamo;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.auth.DefaultAWSCredentialsProviderChain;

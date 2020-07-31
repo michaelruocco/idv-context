@@ -1,8 +1,8 @@
-package uk.co.idv.config.repository;
+package uk.co.idv.config.identity.repository;
 
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 
-public interface RepositoryConfig {
+public interface IdentityRepositoryConfig {
 
     IdentityRepository identityRepository();
 

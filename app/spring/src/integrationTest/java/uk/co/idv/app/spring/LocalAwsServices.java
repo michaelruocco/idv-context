@@ -4,8 +4,8 @@ import com.amazonaws.regions.Regions;
 import lombok.extern.slf4j.Slf4j;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.OutputFrame;
-import uk.co.idv.config.repository.dynamo.DynamoTableFactory;
-import uk.co.idv.config.repository.dynamo.DynamoTables;
+import uk.co.idv.config.identity.repository.dynamo.DynamoTableFactory;
+import uk.co.idv.config.identity.repository.dynamo.DynamoTables;
 
 import java.time.Duration;
 import java.util.concurrent.Callable;
