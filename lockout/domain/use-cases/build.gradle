@@ -1,0 +1,5 @@
+dependencies {
+    api project(":lockout-entities")
+
+    implementation project(":policy-use-cases")
+}

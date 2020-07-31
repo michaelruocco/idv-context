@@ -11,9 +11,9 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InMemoryLockoutPolicyRepositoryTest {
+class InMemoryPolicyRepositoryTest {
 
-    private final PolicyRepository<Policy> repository = new InMemoryLockoutPolicyRepository<>();
+    private final PolicyRepository<Policy> repository = new InMemoryPolicyRepository<>();
 
     @Test
     void shouldReturnEmptyOptionalIfPolicyNotFoundById() {

@@ -22,6 +22,10 @@ public class LoadPolicy<T extends Policy> {
     private final PolicyRepository<T> repository;
     private final PolicyKeyConverter keyConverter;
 
+    public LoadPolicy(PolicyRepository<T> repository) {
+        this(repository, new PolicyKeyConverter());
+    }
+
     public T load(UUID id) {
         return repository.load(id).orElseThrow(() -> new PolicyNotFoundException(id));
     }

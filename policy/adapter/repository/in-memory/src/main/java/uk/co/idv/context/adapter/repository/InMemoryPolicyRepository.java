@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
-public class InMemoryLockoutPolicyRepository<T extends Policy> implements PolicyRepository<T> {
+public class InMemoryPolicyRepository<T extends Policy> implements PolicyRepository<T> {
 
     private final Map<UUID, T> policies = new HashMap<>();
 

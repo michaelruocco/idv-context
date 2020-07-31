@@ -14,7 +14,7 @@ import java.util.UUID;
 
 @Builder
 @RequiredArgsConstructor
-public class PolicyFacade<T extends Policy> {
+public class PolicyService<T extends Policy> {
 
     private final CreatePolicy<T> create;
     private final UpdatePolicy<T> update;

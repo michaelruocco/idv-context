@@ -18,13 +18,13 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class PolicyFacadeTest {
+class PolicyServiceTest {
 
     private final CreatePolicy<Policy> create = mock(CreatePolicy.class);
     private final UpdatePolicy<Policy> update = mock(UpdatePolicy.class);
     private final LoadPolicy<Policy> load = mock(LoadPolicy.class);
 
-    private final PolicyFacade<Policy> facade = PolicyFacade.builder()
+    private final PolicyService<Policy> facade = PolicyService.builder()
             .create(create)
             .update(update)
             .load(load)
