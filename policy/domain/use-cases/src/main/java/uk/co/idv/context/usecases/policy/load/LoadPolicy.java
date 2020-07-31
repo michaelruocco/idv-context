@@ -33,6 +33,9 @@ public class LoadPolicy<T extends Policy> {
     public T load(PolicyRequest request) {
         Policies<T> allPolicies = loadAll();
         Policies<T> applicablePolicies = allPolicies.getApplicable(request);
+        if (applicablePolicies.isEmpty()) {
+            throw new PolicyNotFoundException(request);
+        }
         return applicablePolicies.getHighestPriority();
     }
 

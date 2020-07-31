@@ -6,7 +6,6 @@ import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
 import uk.co.idv.context.config.lockout.repository.inmemory.InMemoryLockoutRepositoryConfig;
 import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutPolicyMother;
-import uk.co.idv.context.entities.policy.EmptyPoliciesException;
 import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
@@ -42,8 +41,9 @@ public class LockoutIntegrationTest {
 
         Throwable error = catchThrowable(() -> policyService.load(request));
 
-        //TODO change to throw exception not found for policy request
-        assertThat(error).isInstanceOf(EmptyPoliciesException.class);
+        assertThat(error)
+                .isInstanceOf(PolicyNotFoundException.class)
+                .hasMessage(request.toString());
     }
 
     @Test

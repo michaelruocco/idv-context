@@ -40,7 +40,7 @@ class LoadPolicyTest {
     }
 
     @Test
-    void shouldThrowExceptionIfPolicyNotFound() {
+    void shouldThrowExceptionIfPolicyNotFoundById() {
         UUID id = UUID.randomUUID();
         given(repository.load(id)).willReturn(Optional.empty());
 
@@ -49,6 +49,23 @@ class LoadPolicyTest {
         assertThat(error)
                 .isInstanceOf(PolicyNotFoundException.class)
                 .hasMessage(id.toString());
+    }
+
+    @Test
+    void shouldThrowExceptionIfPolicyNotFoundByRequest() {
+        Policies<Policy> allPolicies = mock(Policies.class);
+        given(repository.loadAll()).willReturn(allPolicies);
+
+        PolicyRequest request = mock(DefaultPolicyRequest.class);
+        Policies<Policy> applicablePolicies = mock(Policies.class);
+        given(allPolicies.getApplicable(request)).willReturn(applicablePolicies);
+        given(applicablePolicies.isEmpty()).willReturn(true);
+
+        Throwable error = catchThrowable(() -> loadPolicy.load(request));
+
+        assertThat(error)
+                .isInstanceOf(PolicyNotFoundException.class)
+                .hasMessage(request.toString());
     }
 
     @Test
