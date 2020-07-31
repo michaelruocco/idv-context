@@ -1,4 +1,4 @@
-package uk.co.idv.config.identity;
+package uk.co.idv.context.config.identity;
 
 import lombok.Builder;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStub;

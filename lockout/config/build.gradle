@@ -3,4 +3,5 @@ dependencies {
     api project(":lockout-json")
 
     implementation project(":lockout-in-memory-repository")
+    implementation project(":policy-in-memory-repository")
 }

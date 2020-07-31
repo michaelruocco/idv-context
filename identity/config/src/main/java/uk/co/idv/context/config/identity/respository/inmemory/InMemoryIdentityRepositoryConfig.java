@@ -1,6 +1,6 @@
-package uk.co.idv.config.identity.repository.inmemory;
+package uk.co.idv.context.config.identity.respository.inmemory;
 
-import uk.co.idv.config.identity.repository.IdentityRepositoryConfig;
+import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.adapter.repository.InMemoryIdentityRepository;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 

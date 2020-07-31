@@ -1,6 +1,6 @@
-package uk.co.idv.config.identity.repository.dynamo;
+package uk.co.idv.context.config.identity.respository.dynamo;
 
-import uk.co.idv.config.identity.repository.IdentityRepositoryConfig;
+import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.adapter.repository.DynamoIdentityRepository;
 import uk.co.idv.context.adapter.repository.IdentityConverter;
 import uk.co.idv.context.usecases.identity.IdentityRepository;

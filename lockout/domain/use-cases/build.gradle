@@ -1,5 +1,10 @@
+plugins {
+    id "java-test-fixtures"
+}
+
 dependencies {
     api project(":lockout-entities")
+    api project(":policy-use-cases")
 
-    implementation project(":policy-use-cases")
+    testFixturesApi testFixtures(project(":lockout-entities"))
 }

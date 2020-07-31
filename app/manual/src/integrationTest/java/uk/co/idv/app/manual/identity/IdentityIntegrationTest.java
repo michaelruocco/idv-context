@@ -1,10 +1,10 @@
-package uk.co.idv.app.manual;
+package uk.co.idv.app.manual.identity;
 
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.config.identity.IdentityConfig;
-import uk.co.idv.config.identity.repository.IdentityRepositoryConfig;
-import uk.co.idv.config.identity.repository.inmemory.InMemoryIdentityRepositoryConfig;
+import uk.co.idv.context.config.identity.IdentityConfig;
+import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
+import uk.co.idv.context.config.identity.respository.inmemory.InMemoryIdentityRepositoryConfig;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.UnsupportedAliasTypeExeception;
 import uk.co.idv.context.entities.alias.Aliases;

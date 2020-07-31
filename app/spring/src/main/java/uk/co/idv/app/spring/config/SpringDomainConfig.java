@@ -2,8 +2,8 @@ package uk.co.idv.app.spring.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.config.identity.IdentityConfig;
-import uk.co.idv.config.identity.repository.IdentityRepositoryConfig;
+import uk.co.idv.context.config.identity.IdentityConfig;
+import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.adapter.json.error.handler.IdentityErrorHandler;
