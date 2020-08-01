@@ -54,17 +54,17 @@ subprojects {
 
     ext {
         testSetsPluginVersion = "3.0.1"
-        awsSdkVersion = "1.11.829"
+        awsSdkVersion = "1.11.832"
         commonsCollectionsVersion = "4.4"
         jacksonVersion = "2.11.1"
-        jsonAdapterVersion = "0.1.5"
+        jsonAdapterVersion = "0.1.7"
 
         junitVersion = "5.6.2"
         lombokVersion = "1.18.12"
         slf4jVersion = "1.7.30"
         assertjVersion = "3.16.1"
-        junitPioneerVersion = "0.7.0"
-        mockitoVersion = "3.4.4"
+        junitPioneerVersion = "0.8.0"
+        mockitoVersion = "3.4.6"
         jsonUnitAssertjVersion = "2.18.1"
         fileLoaderVersion = "5.0.1"
     }
