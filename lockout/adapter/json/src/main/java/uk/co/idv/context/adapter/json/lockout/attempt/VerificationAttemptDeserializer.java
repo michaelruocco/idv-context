@@ -1,0 +1,38 @@
+package uk.co.idv.context.adapter.json.lockout.attempt;
+
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.context.entities.lockout.attempt.VerificationAttempt;
+import uk.co.mruoc.json.jackson.JsonNodeConverter;
+import uk.co.mruoc.json.jackson.JsonParserConverter;
+
+import java.time.Instant;
+import java.util.UUID;
+
+public class VerificationAttemptDeserializer extends StdDeserializer<VerificationAttempt> {
+
+    public VerificationAttemptDeserializer() {
+        super(VerificationAttempt.class);
+    }
+
+    @Override
+    public VerificationAttempt deserialize(JsonParser parser, DeserializationContext context) {
+        JsonNode node = JsonParserConverter.toNode(parser);
+        return VerificationAttempt.builder()
+                .channelId(node.get("channelId").asText())
+                .activityName(node.get("activityName").asText())
+                .alias(JsonNodeConverter.toObject(node.get("alias"), parser, Alias.class))
+                .idvId(JsonNodeConverter.toObject(node.get("idvId"), parser, IdvId.class))
+                .contextId(UUID.fromString(node.get("contextId").asText()))
+                .methodName(node.get("methodName").asText())
+                .verificationId(UUID.fromString(node.get("verificationId").asText()))
+                .timestamp(Instant.parse(node.get("timestamp").asText()))
+                .successful(node.get("successful").asBoolean())
+                .build();
+    }
+
+}

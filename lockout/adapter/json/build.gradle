@@ -1,3 +1,17 @@
 plugins {
     id "java-test-fixtures"
 }
+
+dependencies {
+    api project(":lockout-entities")
+    api "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
+
+    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
+
+    testImplementation project(":identity-json")
+    testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
+
+    testFixturesApi testFixtures(project(":lockout-entities"))
+    testFixturesApi "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
+}
