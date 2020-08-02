@@ -26,7 +26,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldThrowExceptionIfPolicyNotFoundById() {
-        LockoutPolicy policy = HardLockoutPolicyMother.hard();
+        LockoutPolicy policy = HardLockoutPolicyMother.build();
 
         Throwable error = catchThrowable(() -> policyService.load(policy.getId()));
 
@@ -64,7 +64,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldLoadCreatedLockoutPolicyById() {
-        LockoutPolicy expected = HardLockoutPolicyMother.hard();
+        LockoutPolicy expected = HardLockoutPolicyMother.build();
         policyService.create(expected);
 
         LockoutPolicy loaded = policyService.load(expected.getId());
@@ -74,7 +74,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldLoadCreatedLockoutPolicyByPolicyRequest() {
-        LockoutPolicy expected = HardLockoutPolicyMother.hard();
+        LockoutPolicy expected = HardLockoutPolicyMother.build();
         policyService.create(expected);
         PolicyRequest request = PolicyRequestMother.build();
 
@@ -85,7 +85,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldLoadCreatedLockoutPolicyByKey() {
-        LockoutPolicy expected = HardLockoutPolicyMother.hard();
+        LockoutPolicy expected = HardLockoutPolicyMother.build();
         policyService.create(expected);
 
         Policies<LockoutPolicy> loaded = policyService.load(expected.getKey());
@@ -95,7 +95,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldLoadCreatedLockoutPolicyWhenAllPoliciesLoaded() {
-        LockoutPolicy expected = HardLockoutPolicyMother.hard();
+        LockoutPolicy expected = HardLockoutPolicyMother.build();
         policyService.create(expected);
 
         Policies<LockoutPolicy> loaded = policyService.loadAll();
@@ -105,7 +105,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldThrowExceptionIfAttemptToUpdatePolicyThatDoesNotExist() {
-        LockoutPolicy policy = HardLockoutPolicyMother.hard();
+        LockoutPolicy policy = HardLockoutPolicyMother.build();
 
         Throwable error = catchThrowable(() -> policyService.update(policy));
 

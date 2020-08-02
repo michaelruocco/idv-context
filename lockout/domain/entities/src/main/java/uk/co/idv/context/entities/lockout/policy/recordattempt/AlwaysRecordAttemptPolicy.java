@@ -2,14 +2,18 @@
 
 package uk.co.idv.context.entities.lockout.policy.recordattempt;
 
+import lombok.Data;
 import uk.co.idv.context.entities.lockout.policy.RecordAttemptPolicy;
 import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 
-public class AlwaysRecordAttempts implements RecordAttemptPolicy {
+@Data
+public class AlwaysRecordAttemptPolicy implements RecordAttemptPolicy {
+
+    public static final String TYPE = "always-record";
 
     @Override
     public String getType() {
-        return "always-record";
+        return TYPE;
     }
 
     @Override

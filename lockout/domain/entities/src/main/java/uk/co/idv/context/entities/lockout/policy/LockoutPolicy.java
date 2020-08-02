@@ -1,7 +1,9 @@
 package uk.co.idv.context.entities.lockout.policy;
 
+import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.Getter;
 import uk.co.idv.context.entities.policy.Policy;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
@@ -9,14 +11,16 @@ import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
 
 import java.util.UUID;
 
-@RequiredArgsConstructor
+@Builder
 @Data
 public class LockoutPolicy implements Policy {
 
     private final PolicyKey key;
-    private final AttemptsFilter attemptsFilter;
     private final LockoutStateCalculator stateCalculator;
     private final RecordAttemptPolicy recordAttemptPolicy;
+
+    @Getter(AccessLevel.NONE)
+    private final AttemptsFilter attemptsFilter;
 
     public LockoutState calculateState(LockoutStateRequest attempts) {
         return stateCalculator.calculate(attempts);

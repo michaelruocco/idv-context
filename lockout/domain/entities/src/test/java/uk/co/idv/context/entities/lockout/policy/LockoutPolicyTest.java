@@ -18,16 +18,16 @@ class LockoutPolicyTest {
     private final LockoutStateCalculator stateCalculator = mock(LockoutStateCalculator.class);
     private final RecordAttemptPolicy recordAttemptPolicy = mock(RecordAttemptPolicy.class);
 
-    private final LockoutPolicy policy = new LockoutPolicy(key, attemptsFilter, stateCalculator, recordAttemptPolicy);
+    private final LockoutPolicy policy = LockoutPolicy.builder()
+            .key(key)
+            .stateCalculator(stateCalculator)
+            .recordAttemptPolicy(recordAttemptPolicy)
+            .attemptsFilter(attemptsFilter)
+            .build();
 
     @Test
     void shouldReturnKey() {
         assertThat(policy.getKey()).isEqualTo(key);
-    }
-
-    @Test
-    void shouldReturnAttemptFilter() {
-        assertThat(policy.getAttemptsFilter()).isEqualTo(attemptsFilter);
     }
 
     @Test

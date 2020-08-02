@@ -7,9 +7,9 @@ import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-class NeverRecordAttemptsTest {
+class NeverRecordAttemptPolicyTest {
 
-    private final RecordAttemptPolicy policy = new NeverRecordAttempts();
+    private final RecordAttemptPolicy policy = new NeverRecordAttemptPolicy();
 
     @Test
     void shouldReturnType() {
