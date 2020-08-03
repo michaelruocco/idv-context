@@ -1,0 +1,15 @@
+{
+  "key": {
+    "id": "805eef78-1933-4da9-ac66-8343b3a6f0d4",
+    "priority": 4,
+    "channelId": "default-channel",
+    "type": "channel"
+  },
+  "stateCalculator": {
+    "maxNumberOfAttempts": 3,
+    "type": "hard-lockout"
+  },
+  "recordAttemptPolicy": {
+    "type": "always-record"
+  }
+}
