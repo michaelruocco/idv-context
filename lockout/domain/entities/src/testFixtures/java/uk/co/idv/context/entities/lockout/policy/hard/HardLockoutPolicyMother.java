@@ -1,11 +1,9 @@
 package uk.co.idv.context.entities.lockout.policy.hard;
 
-import uk.co.idv.context.entities.lockout.policy.AttemptsFilter;
 import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.context.entities.lockout.policy.LockoutPolicy.LockoutPolicyBuilder;
+import uk.co.idv.context.entities.lockout.policy.LockoutPolicyMother;
 import uk.co.idv.context.entities.lockout.policy.recordattempt.AlwaysRecordAttemptPolicy;
-import uk.co.idv.context.entities.policy.PolicyKey;
-import uk.co.idv.context.entities.policy.key.ChannelPolicyKeyMother;
 
 public interface HardLockoutPolicyMother {
 
@@ -18,10 +16,7 @@ public interface HardLockoutPolicyMother {
     }
 
     static LockoutPolicyBuilder builder() {
-        PolicyKey key = ChannelPolicyKeyMother.defaultChannelKey();
-        return LockoutPolicy.builder()
-                .key(key)
-                .attemptsFilter(new AttemptsFilter(key))
+        return LockoutPolicyMother.builder()
                 .recordAttemptPolicy(new AlwaysRecordAttemptPolicy())
                 .stateCalculator(new HardLockoutStateCalculator(3));
     }

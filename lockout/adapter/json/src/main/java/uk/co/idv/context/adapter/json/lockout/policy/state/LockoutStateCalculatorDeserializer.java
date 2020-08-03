@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.lockout.policy.LockoutStateCalculator;
 import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutStateCalculator;
+import uk.co.idv.context.entities.lockout.policy.nonlocking.NonLockingStateCalculator;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
@@ -44,7 +45,8 @@ public class LockoutStateCalculatorDeserializer extends StdDeserializer<LockoutS
 
     private static Map<String, Class<? extends LockoutStateCalculator>> buildMappings() {
         return Map.of(
-                HardLockoutStateCalculator.TYPE, HardLockoutStateCalculator.class
+                HardLockoutStateCalculator.TYPE, HardLockoutStateCalculator.class,
+                NonLockingStateCalculator.TYPE, NonLockingStateCalculator.class
         );
     }
 
