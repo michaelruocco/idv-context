@@ -1,8 +1,9 @@
-package uk.co.idv.context.adapter.json.lockout.policy.state;
+package uk.co.idv.context.adapter.json.lockout.policy.state.hard;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.adapter.json.lockout.policy.state.LockoutStateCalculatorModule;
 import uk.co.idv.context.entities.lockout.policy.LockoutStateCalculator;
 import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutStateCalculator;
 
