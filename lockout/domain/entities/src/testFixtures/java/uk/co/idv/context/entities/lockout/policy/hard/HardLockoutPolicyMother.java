@@ -12,13 +12,15 @@ public interface HardLockoutPolicyMother {
     }
 
     static LockoutPolicy withMaxNumberOfAttempts(int maxNumberOfAttempts) {
-         return builder().stateCalculator(new HardLockoutStateCalculator(maxNumberOfAttempts)).build();
+        return builder()
+                .stateCalculator(HardLockoutStateCalculatorMother.withMaxNumberOfAttempts(maxNumberOfAttempts))
+                .build();
     }
 
     static LockoutPolicyBuilder builder() {
         return LockoutPolicyMother.builder()
                 .recordAttemptPolicy(new AlwaysRecordAttemptPolicy())
-                .stateCalculator(new HardLockoutStateCalculator(3));
+                .stateCalculator(HardLockoutStateCalculatorMother.build());
     }
 
 }

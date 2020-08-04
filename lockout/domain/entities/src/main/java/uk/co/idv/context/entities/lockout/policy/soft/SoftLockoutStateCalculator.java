@@ -1,5 +1,8 @@
 package uk.co.idv.context.entities.lockout.policy.soft;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
@@ -9,9 +12,14 @@ import uk.co.idv.context.entities.lockout.policy.unlocked.UnlockedState;
 
 @Slf4j
 @RequiredArgsConstructor
+@Data
 public class SoftLockoutStateCalculator implements LockoutStateCalculator {
 
+    public static final String TYPE = "soft-lockout";
+
     private final SoftLockIntervals intervals;
+
+    @Getter(AccessLevel.NONE)
     private final SoftLockoutStateFactory stateFactory;
 
     public SoftLockoutStateCalculator(SoftLockIntervals intervals) {
@@ -20,7 +28,7 @@ public class SoftLockoutStateCalculator implements LockoutStateCalculator {
 
     @Override
     public String getType() {
-        return "soft-lockout";
+        return TYPE;
     }
 
     @Override
@@ -35,10 +43,6 @@ public class SoftLockoutStateCalculator implements LockoutStateCalculator {
         log.debug("calculating soft lockout state from request with {} attempts and intervals {}",
                 request.getNumberOfAttempts(),
                 intervals);
-    }
-
-    public SoftLockIntervals getIntervals() {
-        return intervals;
     }
 
 }

@@ -14,7 +14,7 @@ public interface NonLockingPolicyMother {
     static LockoutPolicyBuilder builder() {
         return LockoutPolicyMother.builder()
                 .recordAttemptPolicy(new NeverRecordAttemptPolicy())
-                .stateCalculator(new NonLockingStateCalculator());
+                .stateCalculator(NonLockingStateCalculatorMother.build());
     }
 
 }

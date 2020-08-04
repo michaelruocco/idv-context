@@ -1,5 +1,6 @@
 package uk.co.idv.context.entities.lockout.policy.soft;
 
+import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 import uk.co.idv.context.entities.lockout.policy.LockoutStateRequest;
@@ -9,6 +10,7 @@ import java.time.Duration;
 import java.time.Instant;
 
 @Slf4j
+@Data
 public class SoftLockoutStateFactory {
 
     public LockoutState build(Duration duration, LockoutStateRequest request) {

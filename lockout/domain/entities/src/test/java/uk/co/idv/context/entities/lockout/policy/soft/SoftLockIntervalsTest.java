@@ -2,6 +2,7 @@ package uk.co.idv.context.entities.lockout.policy.soft;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -38,6 +39,13 @@ class SoftLockIntervalsTest {
         Optional<SoftLockInterval> interval = intervals.findInterval(numberOfAttempts);
 
         assertThat(interval).contains(twoAttempts);
+    }
+
+    @Test
+    void shouldReturnAllIntervalValues() {
+        Collection<SoftLockInterval> values = intervals.values();
+
+        assertThat(values).containsExactly(twoAttempts, fourAttempts);
     }
 
 }

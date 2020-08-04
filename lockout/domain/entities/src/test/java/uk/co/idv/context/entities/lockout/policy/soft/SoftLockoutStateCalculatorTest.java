@@ -10,7 +10,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SoftLockoutStateCalculatorTest {
 
-    private final SoftLockIntervals intervals = SoftLockIntervalsMother.onlyOneAttempt();
+    private final SoftLockIntervals intervals = SoftLockIntervalsMother.oneAttempt();
 
     private final SoftLockoutStateCalculator calculator = new SoftLockoutStateCalculator(intervals);
 
