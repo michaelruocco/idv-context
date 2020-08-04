@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.lockout.policy.state.hard.HardLockoutStateCalculatorDeserializer;
 import uk.co.idv.context.adapter.json.lockout.policy.state.nonlocking.NonLockingStateCalculatorDeserializer;
 import uk.co.idv.context.adapter.json.lockout.policy.state.soft.DurationSerializer;
+import uk.co.idv.context.adapter.json.lockout.policy.state.soft.RecurringSoftLockoutStateCalculatorDeserializer;
 import uk.co.idv.context.adapter.json.lockout.policy.state.soft.SoftLockIntervalDeserializer;
 import uk.co.idv.context.adapter.json.lockout.policy.state.soft.SoftLockIntervalsDeserializer;
 import uk.co.idv.context.adapter.json.lockout.policy.state.soft.SoftLockIntervalsSerializer;
@@ -12,6 +13,7 @@ import uk.co.idv.context.adapter.json.lockout.policy.state.soft.SoftLockoutState
 import uk.co.idv.context.entities.lockout.policy.LockoutStateCalculator;
 import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutStateCalculator;
 import uk.co.idv.context.entities.lockout.policy.nonlocking.NonLockingStateCalculator;
+import uk.co.idv.context.entities.lockout.policy.soft.RecurringSoftLockoutStateCalculator;
 import uk.co.idv.context.entities.lockout.policy.soft.SoftLockInterval;
 import uk.co.idv.context.entities.lockout.policy.soft.SoftLockIntervals;
 import uk.co.idv.context.entities.lockout.policy.soft.SoftLockoutStateCalculator;
@@ -27,6 +29,8 @@ public class LockoutStateCalculatorModule extends SimpleModule {
         setUpHardLockoutStateCalculator();
         setUpNonLockingStateCalculator();
         setUpSoftLockoutStateCalculator();
+        setUpRecurringSoftLockoutStateCalculator();
+        setUpSoftLockIntervals();
     }
 
     private void setUpDefaults() {
@@ -43,7 +47,10 @@ public class LockoutStateCalculatorModule extends SimpleModule {
 
     private void setUpSoftLockoutStateCalculator() {
         addDeserializer(SoftLockoutStateCalculator.class, new SoftLockoutStateCalculatorDeserializer());
-        setUpSoftLockIntervals();
+    }
+
+    private void setUpRecurringSoftLockoutStateCalculator() {
+        addDeserializer(RecurringSoftLockoutStateCalculator.class, new RecurringSoftLockoutStateCalculatorDeserializer());
     }
 
     private void setUpSoftLockIntervals() {

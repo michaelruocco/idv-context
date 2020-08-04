@@ -5,9 +5,11 @@ import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import uk.co.idv.context.adapter.json.lockout.policy.state.hard.HardLockoutStateCalculatorJsonMother;
 import uk.co.idv.context.adapter.json.lockout.policy.state.nonlocking.NonLockingStateCalculatorJsonMother;
+import uk.co.idv.context.adapter.json.lockout.policy.state.soft.RecurringSoftLockoutStateCalculatorJsonMother;
 import uk.co.idv.context.adapter.json.lockout.policy.state.soft.SoftLockoutStateCalculatorJsonMother;
 import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutStateCalculatorMother;
 import uk.co.idv.context.entities.lockout.policy.nonlocking.NonLockingStateCalculatorMother;
+import uk.co.idv.context.entities.lockout.policy.soft.RecurringSoftLockoutStateCalculatorMother;
 import uk.co.idv.context.entities.lockout.policy.soft.SoftLockoutStateCalculatorMother;
 
 import java.util.stream.Stream;
@@ -19,7 +21,8 @@ public class LockoutStateCalculatorArgumentsProvider implements ArgumentsProvide
         return Stream.of(
                 Arguments.of(HardLockoutStateCalculatorJsonMother.build(), HardLockoutStateCalculatorMother.build()),
                 Arguments.of(NonLockingStateCalculatorJsonMother.build(), NonLockingStateCalculatorMother.build()),
-                Arguments.of(SoftLockoutStateCalculatorJsonMother.build(), SoftLockoutStateCalculatorMother.build())
+                Arguments.of(SoftLockoutStateCalculatorJsonMother.build(), SoftLockoutStateCalculatorMother.build()),
+                Arguments.of(RecurringSoftLockoutStateCalculatorJsonMother.build(), RecurringSoftLockoutStateCalculatorMother.build())
         );
     }
 

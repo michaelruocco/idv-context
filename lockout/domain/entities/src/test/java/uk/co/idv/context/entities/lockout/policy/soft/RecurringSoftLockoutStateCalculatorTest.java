@@ -11,6 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class RecurringSoftLockoutStateCalculatorTest {
 
     private static final int INTERVAL_NUMBER_OF_ATTEMPTS = 2;
+
     private final SoftLockInterval interval = SoftLockIntervalMother.build(INTERVAL_NUMBER_OF_ATTEMPTS);
 
     private final RecurringSoftLockoutStateCalculator calculator = new RecurringSoftLockoutStateCalculator(interval);
