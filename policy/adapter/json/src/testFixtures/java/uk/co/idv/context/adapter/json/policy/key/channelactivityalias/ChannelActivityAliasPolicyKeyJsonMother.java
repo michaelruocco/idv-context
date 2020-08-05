@@ -4,7 +4,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
 public interface ChannelActivityAliasPolicyKeyJsonMother {
 
-    static String defaultChannelActivityAliasKey() {
+    static String build() {
         return loadContentFromClasspath("policy-key/channel-activity-alias-policy-key.json");
     }
 

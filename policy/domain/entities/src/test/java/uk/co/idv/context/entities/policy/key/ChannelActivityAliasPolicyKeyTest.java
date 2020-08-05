@@ -10,7 +10,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static uk.co.idv.context.entities.policy.key.ChannelActivityAliasPolicyKeyMother.defaultChannelActivityAliasKey;
+import static uk.co.idv.context.entities.policy.key.ChannelActivityAliasPolicyKeyMother.build;
 import static uk.co.idv.context.entities.policy.key.MockPolicyRequestMother.applyingTo;
 
 class ChannelActivityAliasPolicyKeyTest {
@@ -86,7 +86,7 @@ class ChannelActivityAliasPolicyKeyTest {
 
     @Test
     void shouldNotApplyToPolicyRequestsWithOtherChannelId() {
-        PolicyKey key = defaultChannelActivityAliasKey();
+        PolicyKey key = build();
         PolicyRequest request = applyingTo(key);
         given(request.getChannelId()).willReturn("other-channel");
 
@@ -97,7 +97,7 @@ class ChannelActivityAliasPolicyKeyTest {
 
     @Test
     void shouldNotApplyToPolicyRequestsWithOtherActivityName() {
-        PolicyKey key = defaultChannelActivityAliasKey();
+        PolicyKey key = build();
         PolicyRequest request = applyingTo(key);
         given(request.getActivityName()).willReturn("other-activity");
 
@@ -108,7 +108,7 @@ class ChannelActivityAliasPolicyKeyTest {
 
     @Test
     void shouldNotApplyToPolicyRequestsWithOtherAliasType() {
-        PolicyKey key = defaultChannelActivityAliasKey();
+        PolicyKey key = build();
         PolicyRequest request = applyingTo(key);
         given(request.getAliasType()).willReturn("other-alias");
 
@@ -119,7 +119,7 @@ class ChannelActivityAliasPolicyKeyTest {
 
     @Test
     void shouldApplyToPolicyRequestsWithMatchingChannelIdAndActivityNameAndAliasType() {
-        PolicyKey key = defaultChannelActivityAliasKey();
+        PolicyKey key = build();
         PolicyRequest request = applyingTo(key);
 
         boolean applies = key.appliesTo(request);

@@ -7,8 +7,10 @@ import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.adapter.json.error.handler.IdentityErrorHandler;
+import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
 import uk.co.idv.context.usecases.identity.IdentityFacade;
+import uk.co.idv.context.usecases.lockout.LockoutPolicyService;
 
 import java.time.Duration;
 import java.util.concurrent.Executors;
@@ -32,6 +34,11 @@ public class SpringDomainConfig {
     @Bean
     public CreateEligibility createEligibility(IdentityConfig identityConfig) {
         return identityConfig.createEligibility();
+    }
+
+    @Bean
+    public LockoutPolicyService lockoutPolicyService(LockoutRepositoryConfig repositoryConfig) {
+        return new LockoutPolicyService(repositoryConfig.policyRepository());
     }
 
     @Bean

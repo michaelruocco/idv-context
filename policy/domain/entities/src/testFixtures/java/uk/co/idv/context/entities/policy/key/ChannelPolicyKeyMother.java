@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface ChannelPolicyKeyMother {
 
-    static ChannelPolicyKey defaultChannelKey() {
+    static ChannelPolicyKey build() {
         return builder().build();
     }
 

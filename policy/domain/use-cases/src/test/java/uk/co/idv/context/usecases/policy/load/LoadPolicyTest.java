@@ -52,37 +52,16 @@ class LoadPolicyTest {
     }
 
     @Test
-    void shouldThrowExceptionIfPolicyNotFoundByRequest() {
+    void shouldLoadPoliciesApplicableToRequest() {
         Policies<Policy> allPolicies = mock(Policies.class);
         given(repository.loadAll()).willReturn(allPolicies);
 
-        PolicyRequest request = mock(DefaultPolicyRequest.class);
-        Policies<Policy> applicablePolicies = mock(Policies.class);
-        given(allPolicies.getApplicable(request)).willReturn(applicablePolicies);
-        given(applicablePolicies.isEmpty()).willReturn(true);
+        Policy policy = MockPolicyMother.policy();
+        PolicyRequest request = givenPoliciesApplicableToRequest(allPolicies, policy);
 
-        Throwable error = catchThrowable(() -> loadPolicy.load(request));
+        Policies<Policy> policies = loadPolicy.load(request);
 
-        assertThat(error)
-                .isInstanceOf(PolicyNotFoundException.class)
-                .hasMessage(request.toString());
-    }
-
-    @Test
-    void shouldLoadHighestPriorityPolicyApplicableToRequest() {
-        Policies<Policy> allPolicies = mock(Policies.class);
-        given(repository.loadAll()).willReturn(allPolicies);
-
-        PolicyRequest request = mock(DefaultPolicyRequest.class);
-        Policies<Policy> applicablePolicies = mock(Policies.class);
-        given(allPolicies.getApplicable(request)).willReturn(applicablePolicies);
-
-        Policy expected = MockPolicyMother.policy();
-        given(applicablePolicies.getHighestPriority()).willReturn(expected);
-
-        Policy policy = loadPolicy.load(request);
-
-        assertThat(policy).isEqualTo(expected);
+        assertThat(policies).containsExactly(policy);
     }
 
     @Test

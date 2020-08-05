@@ -36,19 +36,8 @@ public class LockoutIntegrationTest {
     }
 
     @Test
-    void shouldThrowExceptionIfPolicyNotFoundByPolicyRequest() {
-        PolicyRequest request = PolicyRequestMother.build();
-
-        Throwable error = catchThrowable(() -> policyService.load(request));
-
-        assertThat(error)
-                .isInstanceOf(PolicyNotFoundException.class)
-                .hasMessage(request.toString());
-    }
-
-    @Test
     void shouldReturnEmptyPoliciesByKeyIfNoPoliciesFound() {
-        PolicyKey key = ChannelPolicyKeyMother.defaultChannelKey();
+        PolicyKey key = ChannelPolicyKeyMother.build();
 
         Policies<LockoutPolicy> policies = policyService.load(key);
 
@@ -78,9 +67,9 @@ public class LockoutIntegrationTest {
         policyService.create(expected);
         PolicyRequest request = PolicyRequestMother.build();
 
-        LockoutPolicy loaded = policyService.load(request);
+        Policies<LockoutPolicy> loaded = policyService.load(request);
 
-        assertThat(loaded).isEqualTo(expected);
+        assertThat(loaded).containsExactly(expected);
     }
 
     @Test

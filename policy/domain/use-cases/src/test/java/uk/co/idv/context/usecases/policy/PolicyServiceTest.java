@@ -60,14 +60,14 @@ class PolicyServiceTest {
     }
 
     @Test
-    void shouldLoadPolicyByRequest() {
+    void shouldLoadPoliciesByRequest() {
         PolicyRequest request = mock(DefaultPolicyRequest.class);
-        Policy expectedPolicy = MockPolicyMother.policy();
-        given(load.load(request)).willReturn(expectedPolicy);
+        Policies<Policy> expectedPolicies = mock(Policies.class);
+        given(load.load(request)).willReturn(expectedPolicies);
 
-        Policy policy = facade.load(request);
+        Policies<Policy> policies = facade.load(request);
 
-        assertThat(policy).isEqualTo(expectedPolicy);
+        assertThat(policies).isEqualTo(expectedPolicies);
     }
 
     @Test

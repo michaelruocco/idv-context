@@ -11,7 +11,7 @@ public interface LockoutPolicyMother {
     }
 
     static LockoutPolicyBuilder builder() {
-        PolicyKey key = ChannelPolicyKeyMother.defaultChannelKey();
+        PolicyKey key = ChannelPolicyKeyMother.build();
         return LockoutPolicy.builder()
                 .key(key)
                 .attemptsFilter(new AttemptsFilter(key));

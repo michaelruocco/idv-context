@@ -20,7 +20,7 @@ class PolicyKeyConverterTest {
 
     @Test
     void shouldConvertChannelPolicyKeyToPolicyRequests() {
-        PolicyKey key = ChannelPolicyKeyMother.defaultChannelKey();
+        PolicyKey key = ChannelPolicyKeyMother.build();
 
         Collection<PolicyRequest> requests = converter.toPolicyRequests(key);
 
@@ -30,7 +30,7 @@ class PolicyKeyConverterTest {
 
     @Test
     void shouldConvertChannelActivityPolicyKeyToPolicyRequests() {
-        PolicyKey key = ChannelActivityPolicyKeyMother.defaultChannelActivityKey();
+        PolicyKey key = ChannelActivityPolicyKeyMother.build();
 
         Collection<PolicyRequest> requests = converter.toPolicyRequests(key);
 
@@ -40,7 +40,7 @@ class PolicyKeyConverterTest {
 
     @Test
     void shouldConvertChannelActivityAliasPolicyKeyToPolicyRequests() {
-        PolicyKey key = ChannelActivityAliasPolicyKeyMother.defaultChannelActivityAliasKey();
+        PolicyKey key = ChannelActivityAliasPolicyKeyMother.build();
 
         Collection<PolicyRequest> requests = converter.toPolicyRequests(key);
 

@@ -32,7 +32,7 @@ public class PolicyService<T extends Policy> {
         return load.load(id);
     }
 
-    public T load(PolicyRequest request) {
+    public Policies<T> load(PolicyRequest request) {
         return load.load(request);
     }
 

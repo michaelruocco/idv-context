@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.lockout.policy.recordattempt.RecordAttemptPolicyModule;
 import uk.co.idv.context.adapter.json.lockout.policy.state.LockoutStateCalculatorModule;
-import uk.co.idv.context.adapter.json.policy.key.PolicyKeyModule;
+import uk.co.idv.context.adapter.json.policy.PolicyModule;
 import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
 
 import java.util.Arrays;
@@ -20,7 +20,7 @@ public class LockoutPolicyModule extends SimpleModule {
     @Override
     public Iterable<? extends Module> getDependencies() {
         return Arrays.asList(
-                new PolicyKeyModule(),
+                new PolicyModule(),
                 new RecordAttemptPolicyModule(),
                 new LockoutStateCalculatorModule()
         );

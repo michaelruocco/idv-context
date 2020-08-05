@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface ChannelActivityPolicyKeyMother {
 
-    static ChannelActivityPolicyKey defaultChannelActivityKey() {
+    static ChannelActivityPolicyKey build() {
         return builder().build();
     }
 

@@ -189,7 +189,7 @@ class VerificationAttemptsTest {
 
     @Test
     void shouldReturnAttemptsApplyingToPolicyKey() {
-        PolicyKey key = ChannelPolicyKeyMother.defaultChannelKey();
+        PolicyKey key = ChannelPolicyKeyMother.build();
         VerificationAttempt applicableAttempt = VerificationAttemptMother.withChannelId(key.getChannelId());
         Collection<VerificationAttempt> attemptCollection = Arrays.asList(
                 VerificationAttemptMother.withChannelId("other-channel"),

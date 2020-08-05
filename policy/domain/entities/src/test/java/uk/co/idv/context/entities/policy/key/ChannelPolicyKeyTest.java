@@ -8,7 +8,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static uk.co.idv.context.entities.policy.key.ChannelPolicyKeyMother.defaultChannelKey;
+import static uk.co.idv.context.entities.policy.key.ChannelPolicyKeyMother.build;
 import static uk.co.idv.context.entities.policy.key.MockPolicyRequestMother.applyingTo;
 
 class ChannelPolicyKeyTest {
@@ -76,7 +76,7 @@ class ChannelPolicyKeyTest {
 
     @Test
     void shouldNotApplyToPolicyRequestsWithOtherChannelId() {
-        PolicyKey key = defaultChannelKey();
+        PolicyKey key = build();
         PolicyRequest request = applyingTo(key);
         given(request.getChannelId()).willReturn("other-channel");
 
@@ -87,7 +87,7 @@ class ChannelPolicyKeyTest {
 
     @Test
     void shouldApplyToPolicyRequestsWithMatchingChannelId() {
-        PolicyKey key = defaultChannelKey();
+        PolicyKey key = build();
         PolicyRequest request = applyingTo(key);
 
         boolean applies = key.appliesTo(request);

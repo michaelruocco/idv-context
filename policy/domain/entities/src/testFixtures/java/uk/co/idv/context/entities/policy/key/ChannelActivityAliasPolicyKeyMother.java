@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public interface ChannelActivityAliasPolicyKeyMother {
 
-    static ChannelActivityAliasPolicyKey defaultChannelActivityAliasKey() {
+    static ChannelActivityAliasPolicyKey build() {
         return builder().build();
     }
 

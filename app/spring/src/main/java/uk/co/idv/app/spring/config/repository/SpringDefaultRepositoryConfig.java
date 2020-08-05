@@ -1,4 +1,4 @@
-package uk.co.idv.app.spring.config;
+package uk.co.idv.app.spring.config.repository;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -7,15 +7,16 @@ import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.config.identity.respository.dynamo.DynamoIdentityRepositoryConfig;
 import uk.co.idv.context.config.identity.respository.dynamo.DynamoTableFactory;
 import uk.co.idv.context.config.identity.respository.dynamo.DynamoTables;
-import uk.co.idv.context.config.identity.respository.inmemory.InMemoryIdentityRepositoryConfig;
+import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
+import uk.co.idv.context.config.lockout.repository.inmemory.InMemoryLockoutRepositoryConfig;
 import uk.co.mruoc.json.JsonConverter;
 
 @Configuration
-public class SpringRepositoryConfig {
+@Profile("!stubbed")
+public class SpringDefaultRepositoryConfig {
 
     @Bean
-    @Profile("!stubbed")
-    public IdentityRepositoryConfig dynamoRepositoryConfig(JsonConverter jsonConverter) {
+    public IdentityRepositoryConfig identityRepositoryConfig(JsonConverter jsonConverter) {
         DynamoTableFactory tableFactory = DynamoTableFactory.builder()
                 .environment(System.getProperty("environment", "idv-local"))
                 .region(System.getProperty("aws.region", "eu-west-1"))
@@ -27,9 +28,9 @@ public class SpringRepositoryConfig {
     }
 
     @Bean
-    @Profile("stubbed")
-    public IdentityRepositoryConfig inMemoryRepositoryConfig() {
-        return new InMemoryIdentityRepositoryConfig();
+    public LockoutRepositoryConfig lockoutRepositoryConfig() {
+        //TODO replace with redis lockout repository config
+        return new InMemoryLockoutRepositoryConfig();
     }
 
 }

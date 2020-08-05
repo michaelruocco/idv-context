@@ -17,6 +17,10 @@ configurations {
     compile.exclude module: "slf4j-simple"
 }
 
+ext {
+    karateVersion = "0.9.5"
+}
+
 dependencies {
     implementation 'org.springframework.boot:spring-boot-dependencies:2.3.2.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-web'
@@ -27,10 +31,13 @@ dependencies {
     implementation project(":identity-config")
     implementation project(":identity-external-find-stub")
 
+    implementation project(":lockout-json")
+    implementation project(":lockout-config")
+
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
 
-    integrationTestImplementation "com.intuit.karate:karate-apache:0.9.5"
-    integrationTestImplementation "com.intuit.karate:karate-junit5:0.9.5"
+    integrationTestImplementation "com.intuit.karate:karate-apache:${karateVersion}"
+    integrationTestImplementation "com.intuit.karate:karate-junit5:${karateVersion}"
     integrationTestImplementation "org.awaitility:awaitility:4.0.3"
     integrationTestImplementation "org.testcontainers:junit-jupiter:1.14.3"
     integrationTestImplementation "com.amazonaws:aws-java-sdk-dynamodb:${awsSdkVersion}"

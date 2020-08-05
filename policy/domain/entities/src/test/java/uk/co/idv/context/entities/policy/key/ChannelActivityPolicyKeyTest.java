@@ -10,7 +10,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static uk.co.idv.context.entities.policy.key.ChannelActivityPolicyKeyMother.defaultChannelActivityKey;
+import static uk.co.idv.context.entities.policy.key.ChannelActivityPolicyKeyMother.build;
 import static uk.co.idv.context.entities.policy.key.MockPolicyRequestMother.applyingTo;
 
 class ChannelActivityPolicyKeyTest {
@@ -82,7 +82,7 @@ class ChannelActivityPolicyKeyTest {
 
     @Test
     void shouldNotApplyToPolicyRequestsWithOtherChannelId() {
-        PolicyKey key = defaultChannelActivityKey();
+        PolicyKey key = build();
         PolicyRequest request = applyingTo(key);
         given(request.getChannelId()).willReturn("other-channel");
 
@@ -93,7 +93,7 @@ class ChannelActivityPolicyKeyTest {
 
     @Test
     void shouldNotApplyToPolicyRequestsWithOtherActivityName() {
-        PolicyKey key = defaultChannelActivityKey();
+        PolicyKey key = build();
         PolicyRequest request = applyingTo(key);
         given(request.getActivityName()).willReturn("other-activity");
 
@@ -104,7 +104,7 @@ class ChannelActivityPolicyKeyTest {
 
     @Test
     void shouldApplyToPolicyRequestsWithMatchingChannelIdAndActivityName() {
-        PolicyKey key = defaultChannelActivityKey();
+        PolicyKey key = build();
         PolicyRequest request = applyingTo(key);
 
         boolean applies = key.appliesTo(request);

@@ -10,6 +10,7 @@ import uk.co.idv.context.entities.policy.PolicyRequest;
 import uk.co.idv.context.usecases.policy.PolicyRepository;
 
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -30,18 +31,17 @@ public class LoadPolicy<T extends Policy> {
         return repository.load(id).orElseThrow(() -> new PolicyNotFoundException(id));
     }
 
-    public T load(PolicyRequest request) {
-        Policies<T> allPolicies = loadAll();
-        Policies<T> applicablePolicies = allPolicies.getApplicable(request);
-        if (applicablePolicies.isEmpty()) {
-            throw new PolicyNotFoundException(request);
-        }
-        return applicablePolicies.getHighestPriority();
+    public Policies<T> load(PolicyKey key) {
+        Collection<PolicyRequest> requests = keyConverter.toPolicyRequests(key);
+        return load(requests);
     }
 
-    public Policies<T> load(PolicyKey key) {
+    public Policies<T> load(PolicyRequest request) {
+        return load(Collections.singleton(request));
+    }
+
+    public Policies<T> load(Collection<PolicyRequest> requests) {
         Policies<T> allPolicies = loadAll();
-        Collection<PolicyRequest> requests = keyConverter.toPolicyRequests(key);
         return new Policies<>(requests.stream()
                 .map(allPolicies::getApplicable)
                 .flatMap(Policies::stream)
