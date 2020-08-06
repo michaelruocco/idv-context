@@ -3,7 +3,7 @@ Feature: Identity Maintenance
   Background:
     * url baseUrl + "/identities"
 
-  Scenario: Get identity - Error - unsupported alias type
+  Scenario: Get identity - Error - Unsupported alias type
     Given param aliasType = "ABC"
     And param aliasValue = "123"
     When method GET
@@ -17,7 +17,7 @@ Feature: Identity Maintenance
       }
       """
 
-  Scenario: Get identity - Error - identity not found
+  Scenario: Get identity - Error - Identity not found
     Given param aliasType = "credit-card-number"
     And param aliasValue = "4929111111111199"
     When method GET
@@ -75,7 +75,7 @@ Feature: Identity Maintenance
       """
     And match responseHeaders.Location contains baseUrl + "/identities/" + response.idvId
 
-  Scenario: Create + Get identity - Success - Create with one alias, Get by alias
+  Scenario: Create + Get identity - Success - Create with one alias, get by alias
     Given request
       """
       {
@@ -103,7 +103,7 @@ Feature: Identity Maintenance
       }
       """
 
-  Scenario: Create + Get identity - Success - Create with one alias, Get by idv id
+  Scenario: Create + Get identity - Success - Create with one alias, get by idv id
     Given request
       """
       {
@@ -131,7 +131,7 @@ Feature: Identity Maintenance
       }
       """
 
-  Scenario: Create + Update identity - Error - idv id cannot be updated
+  Scenario: Create + Update identity - Error - Idv id cannot be updated
     Given request
       """
       {

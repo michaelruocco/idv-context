@@ -47,7 +47,8 @@ public class ParallelKarateIntegrationTest {
     private static String[] getFeaturePaths() {
         return new String[]{
                 "classpath:identity",
-                "classpath:eligibility"
+                "classpath:eligibility",
+                "classpath:lockout"
         };
     }
 

@@ -2,6 +2,7 @@ package uk.co.idv.app.spring.lockout;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +16,11 @@ import uk.co.idv.context.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.usecases.lockout.LockoutPolicyService;
 
+import java.net.URI;
 import java.util.UUID;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
@@ -46,15 +51,22 @@ public class LockoutPolicyController {
     }
 
     @PostMapping
-    public LockoutPolicy create(@RequestBody LockoutPolicy policy) {
+    public ResponseEntity<LockoutPolicy> create(@RequestBody LockoutPolicy policy) {
         service.create(policy);
-        return getPolicy(policy.getId());
+        LockoutPolicy created = getPolicy(policy.getId());
+        return ResponseEntity
+                .created(buildGetUri(policy.getId()))
+                .body(created);
     }
 
     @PutMapping
     public LockoutPolicy update(@RequestBody LockoutPolicy policy) {
         service.update(policy);
         return getPolicy(policy.getId());
+    }
+
+    private static URI buildGetUri(final UUID id) {
+        return linkTo(methodOn(LockoutPolicyController.class).getPolicy(id)).toUri();
     }
 
 }

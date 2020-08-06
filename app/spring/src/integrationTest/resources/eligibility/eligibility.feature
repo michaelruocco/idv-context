@@ -1,9 +1,9 @@
-Feature: Identity Maintenance
+Feature: Eligibility Requests
 
   Background:
     * url baseUrl + "/eligibility"
 
-  Scenario: Create eligibility - Error - create eligibility not configured
+  Scenario: Create eligibility - Error - Create eligibility not configured
     Given request
       """
       {
@@ -37,7 +37,7 @@ Feature: Identity Maintenance
       }
       """
 
-  Scenario: Create eligibility - Error - identity not found for internal data lookup
+  Scenario: Create eligibility - Error - Identity not found for internal data lookup
     Given request
       """
       {
@@ -68,7 +68,7 @@ Feature: Identity Maintenance
       }
       """
 
-  Scenario: Create eligibility - Success - identity created for internal data lookup
+  Scenario: Create eligibility - Success - Identity created for internal data lookup
     Given url baseUrl + "/identities"
     And request
       """
