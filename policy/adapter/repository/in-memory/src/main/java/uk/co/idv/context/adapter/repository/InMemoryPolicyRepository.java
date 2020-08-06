@@ -28,4 +28,9 @@ public class InMemoryPolicyRepository<T extends Policy> implements PolicyReposit
         return new Policies<>(policies.values());
     }
 
+    @Override
+    public void deleteAll() {
+        policies.clear();
+    }
+
 }

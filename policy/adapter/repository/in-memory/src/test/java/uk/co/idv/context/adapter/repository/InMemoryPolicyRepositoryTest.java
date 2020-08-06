@@ -45,4 +45,17 @@ class InMemoryPolicyRepositoryTest {
         assertThat(policies).containsExactlyInAnyOrder(policy1, policy2);
     }
 
+    @Test
+    void shouldDeleteAllSavedPolicies() {
+        Policy policy1 = MockPolicyMother.withId(UUID.randomUUID());
+        Policy policy2 = MockPolicyMother.withId(UUID.randomUUID());
+        repository.save(policy1);
+        repository.save(policy2);
+        repository.deleteAll();
+
+        Policies<Policy> policies = repository.loadAll();
+
+        assertThat(policies).isEmpty();
+    }
+
 }

@@ -14,4 +14,6 @@ public interface PolicyRepository<T extends Policy> {
 
     Policies<T> loadAll();
 
+    void deleteAll();
+
 }

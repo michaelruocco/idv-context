@@ -8,6 +8,7 @@ import uk.co.idv.context.entities.policy.Policy;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 import uk.co.idv.context.usecases.policy.create.CreatePolicy;
+import uk.co.idv.context.usecases.policy.delete.DeletePolicy;
 import uk.co.idv.context.usecases.policy.load.LoadPolicy;
 import uk.co.idv.context.usecases.policy.update.UpdatePolicy;
 
@@ -23,18 +24,20 @@ class PolicyServiceTest {
     private final CreatePolicy<Policy> create = mock(CreatePolicy.class);
     private final UpdatePolicy<Policy> update = mock(UpdatePolicy.class);
     private final LoadPolicy<Policy> load = mock(LoadPolicy.class);
+    private final DeletePolicy<Policy> delete = mock(DeletePolicy.class);
 
-    private final PolicyService<Policy> facade = PolicyService.builder()
+    private final PolicyService<Policy> service = PolicyService.builder()
             .create(create)
             .update(update)
             .load(load)
+            .delete(delete)
             .build();
 
     @Test
     void shouldCreatePolicy() {
         Policy policy = MockPolicyMother.policy();
 
-        facade.create(policy);
+        service.create(policy);
 
         verify(create).create(policy);
     }
@@ -43,9 +46,16 @@ class PolicyServiceTest {
     void shouldUpdatePolicy() {
         Policy policy = MockPolicyMother.policy();
 
-        facade.update(policy);
+        service.update(policy);
 
         verify(update).update(policy);
+    }
+
+    @Test
+    void shouldDeleteAllPolicies() {
+        service.deleteAll();
+
+        verify(delete).deleteAll();
     }
 
     @Test
@@ -54,7 +64,7 @@ class PolicyServiceTest {
         Policy expectedPolicy = MockPolicyMother.withId(id);
         given(load.load(id)).willReturn(expectedPolicy);
 
-        Policy policy = facade.load(id);
+        Policy policy = service.load(id);
 
         assertThat(policy).isEqualTo(expectedPolicy);
     }
@@ -65,7 +75,7 @@ class PolicyServiceTest {
         Policies<Policy> expectedPolicies = mock(Policies.class);
         given(load.load(request)).willReturn(expectedPolicies);
 
-        Policies<Policy> policies = facade.load(request);
+        Policies<Policy> policies = service.load(request);
 
         assertThat(policies).isEqualTo(expectedPolicies);
     }
@@ -76,7 +86,7 @@ class PolicyServiceTest {
         Policies<Policy> expectedPolicies = mock(Policies.class);
         given(load.load(key)).willReturn(expectedPolicies);
 
-        Policies<Policy> policies = facade.load(key);
+        Policies<Policy> policies = service.load(key);
 
         assertThat(policies).isEqualTo(expectedPolicies);
     }
@@ -86,7 +96,7 @@ class PolicyServiceTest {
         Policies<Policy> expectedPolicies = mock(Policies.class);
         given(load.loadAll()).willReturn(expectedPolicies);
 
-        Policies<Policy> policies = facade.loadAll();
+        Policies<Policy> policies = service.loadAll();
 
         assertThat(policies).isEqualTo(expectedPolicies);
     }

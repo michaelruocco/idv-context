@@ -115,4 +115,17 @@ public class LockoutIntegrationTest {
         assertThat(loaded).isEqualTo(update);
     }
 
+    @Test
+    void shouldDeleteAllPolicies() {
+        LockoutPolicy policy1 = HardLockoutPolicyMother.withMaxNumberOfAttempts(2);
+        LockoutPolicy policy2 = HardLockoutPolicyMother.withMaxNumberOfAttempts(4);
+        policyService.create(policy1);
+        policyService.create(policy2);
+
+        policyService.deleteAll();
+
+        Policies<LockoutPolicy> policies = policyService.loadAll();
+        assertThat(policies).isEmpty();
+    }
+
 }

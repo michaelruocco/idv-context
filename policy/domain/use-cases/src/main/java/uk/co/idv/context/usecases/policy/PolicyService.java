@@ -7,6 +7,7 @@ import uk.co.idv.context.entities.policy.Policy;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 import uk.co.idv.context.usecases.policy.create.CreatePolicy;
+import uk.co.idv.context.usecases.policy.delete.DeletePolicy;
 import uk.co.idv.context.usecases.policy.load.LoadPolicy;
 import uk.co.idv.context.usecases.policy.update.UpdatePolicy;
 
@@ -19,6 +20,7 @@ public class PolicyService<T extends Policy> {
     private final CreatePolicy<T> create;
     private final UpdatePolicy<T> update;
     private final LoadPolicy<T> load;
+    private final DeletePolicy<T> delete;
 
     public void create(T policy) {
         create.create(policy);
@@ -26,6 +28,10 @@ public class PolicyService<T extends Policy> {
 
     public void update(T policy) {
         update.update(policy);
+    }
+
+    public void deleteAll() {
+        delete.deleteAll();
     }
 
     public T load(UUID id) {
