@@ -108,3 +108,96 @@ Feature: Lockout Policy Maintenance
         }
       }
       """
+
+  Scenario: Create + Get multiple policies - Success - Create and get multiple policies
+    * def policyId1 = "b7504d4e-c0b7-4785-8d05-cd852ff5329b"
+    Given request
+      """
+      {
+        "key": {
+          "id": "#(policyId1)",
+          "priority": 99,
+          "channelId": "my-channel",
+          "activityNames": [
+            "my-activity"
+          ],
+          "type": "channel-activity"
+        },
+        "stateCalculator": {
+          "type": "non-locking"
+        },
+        "recordAttemptPolicy": {
+          "type": "never-record"
+        }
+      }
+      """
+    And method POST
+    And status 201
+    * def policyId2 = "4382f604-bdc7-48b9-b229-44350c5fa27c"
+    And request
+      """
+      {
+        "key": {
+          "id": "#(policyId2)",
+          "priority": 1,
+          "channelId": "my-channel",
+          "type": "channel"
+        },
+        "stateCalculator": {
+          "type": "recurring-soft-lockout",
+          "interval": {
+            "numberOfAttempts": 1,
+            "duration": 60000
+          }
+        },
+        "recordAttemptPolicy": {
+          "type": "always-record"
+        }
+      }
+      """
+    And method POST
+    And status 201
+    And param channelId = "my-channel"
+    And param activityName = "my-activity"
+    When method GET
+    Then status 200
+    And match response ==
+      """
+      [
+        {
+          "key": {
+            "id": "#(policyId1)",
+            "priority": 99,
+            "channelId": "my-channel",
+            "activityNames": [
+              "my-activity"
+            ],
+            "type": "channel-activity"
+          },
+          "stateCalculator": {
+            "type": "non-locking"
+          },
+          "recordAttemptPolicy": {
+            "type": "never-record"
+          }
+        },
+        {
+          "key": {
+            "id": "#(policyId2)",
+            "priority": 1,
+            "channelId": "my-channel",
+            "type": "channel"
+          },
+          "stateCalculator": {
+            "type": "recurring-soft-lockout",
+            "interval": {
+              "numberOfAttempts": 1,
+              "duration": 60000
+            }
+          },
+          "recordAttemptPolicy": {
+            "type": "always-record"
+          }
+        }
+      ]
+      """
