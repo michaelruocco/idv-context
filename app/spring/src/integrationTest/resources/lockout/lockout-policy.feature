@@ -201,3 +201,86 @@ Feature: Lockout Policy Maintenance
         }
       ]
       """
+
+  Scenario: Update policy - Success - Create policy then update
+    * def policyId = "be9f971a-92ff-4730-8cda-b298609af0d0"
+    Given request
+      """
+      {
+        "key": {
+          "id": "#(policyId)",
+          "priority": 1,
+          "channelId": "default-channel",
+          "type": "channel"
+        },
+        "stateCalculator": {
+          "maxNumberOfAttempts": 5,
+          "type": "hard-lockout"
+        },
+        "recordAttemptPolicy": {
+          "type": "always-record"
+        }
+      }
+      """
+    And method POST
+    And status 201
+    And request
+      """
+      {
+        "key": {
+          "id": "#(policyId)",
+          "priority": 20,
+          "channelId": "default-channel",
+          "activityNames": [ "default-activity" ],
+          "aliasTypes": [ "default-alias" ],
+          "type": "channel-activity-alias"
+        },
+        "stateCalculator": {
+          "type": "soft-lockout",
+          "intervals": [
+            {
+              "numberOfAttempts": 1,
+              "duration": 60000
+            },
+            {
+              "numberOfAttempts": 2,
+              "duration": 120000
+            }
+          ]
+        },
+        "recordAttemptPolicy": {
+          "type": "always-record"
+        }
+      }
+      """
+    When method PUT
+    And status 200
+    And match response ==
+      """
+      {
+        "key": {
+          "id": "#(policyId)",
+          "priority": 20,
+          "channelId": "default-channel",
+          "activityNames": [ "default-activity" ],
+          "aliasTypes": [ "default-alias" ],
+          "type": "channel-activity-alias"
+        },
+        "stateCalculator": {
+          "type": "soft-lockout",
+          "intervals": [
+            {
+              "numberOfAttempts": 1,
+              "duration": 60000
+            },
+            {
+              "numberOfAttempts": 2,
+              "duration": 120000
+            }
+          ]
+        },
+        "recordAttemptPolicy": {
+          "type": "always-record"
+        }
+      }
+      """
