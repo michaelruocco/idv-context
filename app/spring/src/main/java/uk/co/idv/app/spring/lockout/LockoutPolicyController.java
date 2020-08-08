@@ -66,9 +66,9 @@ public class LockoutPolicyController {
         return getPolicy(policy.getId());
     }
 
-    @DeleteMapping
-    public ResponseEntity<?> deleteAll() {
-        service.deleteAll();
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Object> delete(@PathVariable("id") UUID id) {
+        service.delete(id);
         return ResponseEntity.noContent()
                 .build();
     }

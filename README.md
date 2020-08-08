@@ -12,7 +12,8 @@
 ## Todo
 
 *   Handle invalid payloads / Jackson failures
-*   Add lockout module/functionality
+*   Handle lockout policy not found error correctly
+*   Add redis repository for persisting policies
 
 ## Useful commands
 

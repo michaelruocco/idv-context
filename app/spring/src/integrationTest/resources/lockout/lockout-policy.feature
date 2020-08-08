@@ -284,3 +284,32 @@ Feature: Lockout Policy Maintenance
         }
       }
       """
+
+  Scenario: Delete policy - Success - Create policy then delete
+    * def policyId = "e0ec06c9-dd62-43bd-991f-663b562404e1"
+    Given request
+      """
+      {
+        "key": {
+          "id": "#(policyId)",
+          "priority": 1,
+          "channelId": "default-channel",
+          "type": "channel"
+        },
+        "stateCalculator": {
+          "maxNumberOfAttempts": 5,
+          "type": "hard-lockout"
+        },
+        "recordAttemptPolicy": {
+          "type": "always-record"
+        }
+      }
+      """
+    And method POST
+    And status 201
+    And path "/" + policyId
+    When method DELETE
+    Then status 204
+    And path "/" + policyId
+    And method GET
+    And status 500

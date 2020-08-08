@@ -8,12 +8,12 @@ import java.util.UUID;
 
 public interface PolicyRepository<T extends Policy> {
 
-    void save(final T policy);
+    void save(T policy);
 
-    Optional<T> load(final UUID id);
+    Optional<T> load(UUID id);
 
     Policies<T> loadAll();
 
-    void deleteAll();
+    void delete(UUID id);
 
 }

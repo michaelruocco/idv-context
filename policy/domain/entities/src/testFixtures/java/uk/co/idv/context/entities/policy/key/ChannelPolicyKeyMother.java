@@ -10,6 +10,10 @@ public interface ChannelPolicyKeyMother {
         return builder().build();
     }
 
+    static ChannelPolicyKey withId(UUID id) {
+        return builder().id(id).build();
+    }
+
     static ChannelPolicyKeyBuilder builder() {
         return ChannelPolicyKey.builder()
                 .id(UUID.fromString("805eef78-1933-4da9-ac66-8343b3a6f0d4"))

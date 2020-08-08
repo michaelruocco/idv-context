@@ -113,10 +113,12 @@ class LockoutPolicyControllerTest {
     }
 
     @Test
-    void shouldDeleteAllPolicies() {
-        ResponseEntity<?> response = controller.deleteAll();
+    void shouldDeletePolicyById() {
+        UUID id = UUID.randomUUID();
 
-        verify(service).deleteAll();
+        ResponseEntity<Object> response = controller.delete(id);
+
+        verify(service).delete(id);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         assertThat(response.getBody()).isNull();
     }

@@ -29,8 +29,8 @@ public class InMemoryPolicyRepository<T extends Policy> implements PolicyReposit
     }
 
     @Override
-    public void deleteAll() {
-        policies.clear();
+    public void delete(UUID id) {
+        policies.remove(id);
     }
 
 }

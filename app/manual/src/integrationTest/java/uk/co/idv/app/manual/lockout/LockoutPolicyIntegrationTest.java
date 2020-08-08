@@ -14,10 +14,12 @@ import uk.co.idv.context.entities.policy.key.ChannelPolicyKeyMother;
 import uk.co.idv.context.usecases.lockout.LockoutPolicyService;
 import uk.co.idv.context.usecases.policy.load.PolicyNotFoundException;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class LockoutIntegrationTest {
+public class LockoutPolicyIntegrationTest {
 
     private final LockoutRepositoryConfig repositoryConfig = new InMemoryLockoutRepositoryConfig();
     private final LockoutConfig lockoutConfig = new LockoutConfig(repositoryConfig.policyRepository());
@@ -116,16 +118,16 @@ public class LockoutIntegrationTest {
     }
 
     @Test
-    void shouldDeleteAllPolicies() {
-        LockoutPolicy policy1 = HardLockoutPolicyMother.withMaxNumberOfAttempts(2);
-        LockoutPolicy policy2 = HardLockoutPolicyMother.withMaxNumberOfAttempts(4);
+    void shouldDeletePolicy() {
+        LockoutPolicy policy1 = HardLockoutPolicyMother.withId(UUID.randomUUID());
+        LockoutPolicy policy2 = HardLockoutPolicyMother.withId(UUID.randomUUID());
         policyService.create(policy1);
         policyService.create(policy2);
 
-        policyService.deleteAll();
+        policyService.delete(policy1.getId());
 
         Policies<LockoutPolicy> policies = policyService.loadAll();
-        assertThat(policies).isEmpty();
+        assertThat(policies).containsExactly(policy2);
     }
 
 }

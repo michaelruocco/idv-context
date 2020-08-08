@@ -52,10 +52,12 @@ class PolicyServiceTest {
     }
 
     @Test
-    void shouldDeleteAllPolicies() {
-        service.deleteAll();
+    void shouldDeletePolicy() {
+        UUID id = UUID.randomUUID();
 
-        verify(delete).deleteAll();
+        service.delete(id);
+
+        verify(delete).delete(id);
     }
 
     @Test

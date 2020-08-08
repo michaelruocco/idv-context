@@ -30,8 +30,8 @@ public class PolicyService<T extends Policy> {
         update.update(policy);
     }
 
-    public void deleteAll() {
-        delete.deleteAll();
+    public void delete(UUID id) {
+        delete.delete(id);
     }
 
     public T load(UUID id) {
