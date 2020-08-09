@@ -33,10 +33,6 @@ public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
         this.environment = environment;
     }
 
-    private void logInfo(OutputFrame frame) {
-        log.info(frame.getUtf8String());
-    }
-
     public void waitForStartupToComplete() {
         await().pollDelay(Duration.ofSeconds(5))
                 .pollInterval(Duration.ofMillis(500))
@@ -52,6 +48,10 @@ public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
         String ip = getContainerIpAddress();
         int port = getMappedPort(4569);
         return String.format("http://%s:%s", ip, port);
+    }
+
+    private void logInfo(OutputFrame frame) {
+        log.info(frame.getUtf8String());
     }
 
     private Callable<Boolean> containerIsRunning() {

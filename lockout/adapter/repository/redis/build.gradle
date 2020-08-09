@@ -1,0 +1,4 @@
+dependencies {
+    implementation project(":policy-redis-repository")
+    implementation project(":lockout-use-cases")
+}

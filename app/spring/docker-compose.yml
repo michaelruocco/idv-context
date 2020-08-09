@@ -13,6 +13,10 @@ services:
       - DEFAULT_REGION=eu-west-1
       - SERVICES=dynamodb
 
+  redis:
+    image: redis
+    container_name: redis
+
   verification-context-app:
     image: michaelruocco/verification-context-spring-app
     container_name: verification-context-app
@@ -23,5 +27,7 @@ services:
       - AWS_ACCESS_KEY=abc
       - AWS_SECRET_KEY=123
       - AWS_DYNAMO_DB_ENDPOINT_URI=http://aws-services:4569
+      - REDIS_ENDPOINT_URI=redis://redis:6379
     depends_on:
       - aws-services
+      - redis

@@ -26,9 +26,13 @@ public class ParallelKarateIntegrationTest {
     @Container
     public static final LocalAwsServices AWS_SERVICES = new LocalAwsServices(REGION, ENVIRONMENT);
 
+    @Container
+    public static final LocalRedis REDIS = new LocalRedis();
+
     @BeforeAll
     static void setUp() {
         setUpAws();
+        setUpRedis();
         setUpApp();
     }
 
@@ -57,6 +61,10 @@ public class ParallelKarateIntegrationTest {
         AWS_SERVICES.waitForDynamoTablesToActive();
     }
 
+    private static void setUpRedis() {
+        REDIS.waitForStartupToComplete();
+    }
+
     private static void setUpApp() {
         int port = findAvailableTcpPort();
         setApplicationProperties(port);
@@ -68,6 +76,7 @@ public class ParallelKarateIntegrationTest {
         System.setProperty("environment", ENVIRONMENT);
         System.setProperty("server.port", Integer.toString(serverPort));
         System.setProperty("aws.dynamo.db.endpoint.uri", AWS_SERVICES.getDynamoEndpointUri());
+        System.setProperty("redis.endpoint.uri", REDIS.getEndpointUri());
     }
 
 }

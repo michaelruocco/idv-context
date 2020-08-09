@@ -30,6 +30,9 @@ project(':policy-use-cases').projectDir = file('policy/domain/use-cases')
 include ':policy-in-memory-repository'
 project(':policy-in-memory-repository').projectDir = file('policy/adapter/repository/in-memory')
 
+include ':policy-redis-repository'
+project(':policy-redis-repository').projectDir = file('policy/adapter/repository/redis')
+
 include ':policy-json'
 project(':policy-json').projectDir = file('policy/adapter/json')
 
@@ -41,6 +44,9 @@ project(':lockout-use-cases').projectDir = file('lockout/domain/use-cases')
 
 include ':lockout-in-memory-repository'
 project(':lockout-in-memory-repository').projectDir = file('lockout/adapter/repository/in-memory')
+
+include ':lockout-redis-repository'
+project(':lockout-redis-repository').projectDir = file('lockout/adapter/repository/redis')
 
 include ':lockout-json'
 project(':lockout-json').projectDir = file('lockout/adapter/json')

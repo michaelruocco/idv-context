@@ -12,4 +12,5 @@ CMD java \
   -Daws.region=${AWS_REGION} \
   -Denvironment=${ENVIRONMENT} \
   -Daws.dynamo.db.endpoint.uri=${AWS_DYNAMO_DB_ENDPOINT_URI} \
+  -Dredis.endpoint.uri=${REDIS_ENDPOINT_URI} \
   -jar /opt/app.jar
