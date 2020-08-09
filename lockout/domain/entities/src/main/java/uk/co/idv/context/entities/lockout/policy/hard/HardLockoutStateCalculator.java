@@ -23,14 +23,10 @@ public class HardLockoutStateCalculator implements LockoutStateCalculator {
 
     @Override
     public LockoutState calculate(LockoutStateRequest request) {
-        logRequest(request);
-        return new HardLockoutState(request.getAttempts(), maxNumberOfAttempts);
-    }
-
-    private void logRequest(LockoutStateRequest request) {
-        log.debug("calculating hard lockout state from request with {} attempts and max number of attempts {}",
+        log.debug("calculating hard lockout state from request with {} attempts against max number of attempts {}",
                 request.getNumberOfAttempts(),
                 maxNumberOfAttempts);
+        return new HardLockoutState(request.getAttempts(), maxNumberOfAttempts);
     }
 
     public int getMaxNumberOfAttempts() {

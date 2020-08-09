@@ -33,17 +33,13 @@ public class RecurringSoftLockoutStateCalculator implements LockoutStateCalculat
 
     @Override
     public LockoutState calculate(LockoutStateRequest request) {
-        logRequest(request);
+        log.debug("calculating recurring soft lockout state with {} attempts against interval {}",
+                request.getNumberOfAttempts(),
+                interval);
         if (isLocked(request.getNumberOfAttempts())) {
             return stateFactory.build(interval.getDuration(), request);
         }
         return new UnlockedState(request.getAttempts());
-    }
-
-    private void logRequest(LockoutStateRequest request) {
-        log.debug("calculating recurring soft lockout state with {} attempts and interval {}",
-                request.getNumberOfAttempts(),
-                interval);
     }
 
     private boolean isLocked(int numberOfAttempts) {

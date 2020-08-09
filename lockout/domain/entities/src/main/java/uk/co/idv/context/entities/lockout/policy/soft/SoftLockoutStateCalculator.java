@@ -33,16 +33,12 @@ public class SoftLockoutStateCalculator implements LockoutStateCalculator {
 
     @Override
     public LockoutState calculate(LockoutStateRequest request) {
-        logRequest(request);
+        log.debug("calculating soft lockout state from request with {} attempts against intervals {}",
+                request.getNumberOfAttempts(),
+                intervals);
         return intervals.findInterval(request.getNumberOfAttempts())
                 .map(interval -> stateFactory.build(interval.getDuration(), request))
                 .orElseGet(() -> new UnlockedState(request.getAttempts()));
-    }
-
-    private void logRequest(LockoutStateRequest request) {
-        log.debug("calculating soft lockout state from request with {} attempts and intervals {}",
-                request.getNumberOfAttempts(),
-                intervals);
     }
 
 }
