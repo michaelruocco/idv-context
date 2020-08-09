@@ -60,7 +60,7 @@ Feature: Lockout Policy Maintenance
     And match responseHeaders.Location contains baseUrl + "/lockout-policies/" + policyId
 
   Scenario: Create + Get policy - Success - Create channel/activity policy, get by id
-    * def policyId = "89c2c644-23b2-48d7-85e1-7d78d98492d3"
+    * def policyId = "796910ee-692d-4610-91b8-7bcdd34f9e22"
     Given request
       """
       {
