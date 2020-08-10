@@ -11,7 +11,7 @@ buildscript {
 plugins {
     id "idea"
     id "java-library"
-    id "com.diffplug.spotless" version "5.1.0"
+    id "com.diffplug.spotless" version "5.1.1"
     id "com.github.ben-manes.versions" version "0.29.0"
     id "com.vanniktech.dependency.graph.generator" version "0.5.0"
     id "pl.allegro.tech.build.axion-release" version "1.12.0"
@@ -54,16 +54,16 @@ subprojects {
 
     ext {
         testSetsPluginVersion = "3.0.1"
-        awsSdkVersion = "1.11.832"
+        awsSdkVersion = "1.11.837"
         commonsCollectionsVersion = "4.4"
-        jacksonVersion = "2.11.1"
+        jacksonVersion = "2.11.2"
         jsonAdapterVersion = "0.1.7"
 
         junitVersion = "5.6.2"
         lombokVersion = "1.18.12"
         slf4jVersion = "1.7.30"
         assertjVersion = "3.16.1"
-        junitPioneerVersion = "0.8.0"
+        junitPioneerVersion = "0.9.0"
         mockitoVersion = "3.4.6"
         jsonUnitAssertjVersion = "2.18.1"
         fileLoaderVersion = "5.0.1"

@@ -13,7 +13,6 @@
 
 *   Handle invalid payloads / Jackson failures
 *   Handle lockout policy not found error correctly
-*   Add redis repository for persisting policies
 
 ## Useful commands
 
