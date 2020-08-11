@@ -44,9 +44,14 @@ dependencies {
     integrationTestImplementation "com.amazonaws:aws-java-sdk-dynamodb:${awsSdkVersion}"
 }
 
+springBoot {
+    buildInfo()
+}
+
 bootRun {
     systemProperties = System.properties
-    args = ["--server.port=8081", "--spring.profiles.active=stubbed"]
+    systemProperty "spring.profiles.active", System.properties.getOrDefault("spring.profiles.active", "stubbed")
+    systemProperty "server.port", System.properties.getOrDefault("server.port", "8081")
 }
 
 integrationTest {

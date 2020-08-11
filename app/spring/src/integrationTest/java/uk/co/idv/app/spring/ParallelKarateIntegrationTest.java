@@ -52,7 +52,8 @@ public class ParallelKarateIntegrationTest {
         return new String[]{
                 "classpath:identity",
                 "classpath:eligibility",
-                "classpath:lockout"
+                "classpath:lockout",
+                "classpath:actuator"
         };
     }
 
