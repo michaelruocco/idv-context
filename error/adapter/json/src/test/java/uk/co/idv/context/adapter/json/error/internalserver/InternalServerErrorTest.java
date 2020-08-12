@@ -7,7 +7,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class InternalServerErrorTest {
 
-    private static final String MESSAGE = "error message";
+    private static final String MESSAGE = "my-message";
 
     private final ApiError error = new InternalServerError(MESSAGE);
 

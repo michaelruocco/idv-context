@@ -7,12 +7,12 @@ import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class ApiErrorSerializationTest {
+class IdentityApiErrorSerializationTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new ApiErrorModule());
+    private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new IdentityErrorModule());
 
     @ParameterizedTest(name = "should serialize error {1}")
-    @ArgumentsSource(ErrorArgumentsProvider.class)
+    @ArgumentsSource(IdentityApiErrorArgumentsProvider.class)
     void shouldSerialize(String expectedJson, ApiError error) throws JsonProcessingException {
         String json = MAPPER.writeValueAsString(error);
 

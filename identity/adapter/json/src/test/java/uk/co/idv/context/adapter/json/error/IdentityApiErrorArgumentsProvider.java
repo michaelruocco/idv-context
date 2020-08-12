@@ -16,30 +16,20 @@ import static uk.co.idv.context.adapter.json.error.eligibilitynotconfigured.Elig
 import static uk.co.idv.context.adapter.json.error.eligibilitynotconfigured.EligibilityNotConfiguredErrorMother.eligibilityNotConfiguredError;
 import static uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundErrorJsonMother.identityNotFoundErrorJson;
 import static uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundErrorMother.identityNotFoundError;
-import static uk.co.idv.context.adapter.json.error.internalserver.InternalServerErrorJsonMother.internalServerErrorJson;
-import static uk.co.idv.context.adapter.json.error.internalserver.InternalServerErrorMother.internalServerError;
 import static uk.co.idv.context.adapter.json.error.updateidvid.CannotUpdateIdvIdErrorJsonMother.cannotUpdateIdvIdErrorJson;
 import static uk.co.idv.context.adapter.json.error.updateidvid.CannotUpdateIdvIdErrorMother.cannotUpdateIdvIdError;
 
-public class ErrorArgumentsProvider implements ArgumentsProvider {
+public class IdentityApiErrorArgumentsProvider implements ArgumentsProvider {
 
     @Override
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
-                internalServerErrorArguments(),
                 cannotUpdateIdvIdErrorArguments(),
                 unsupportedAliasTypeErrorArguments(),
                 identityNotFoundErrorArguments(),
                 countryMismatchErrorArguments(),
                 countryNotProvidedErrorArguments(),
                 eligibilityNotConfiguredErrorArguments()
-        );
-    }
-
-    private static Arguments internalServerErrorArguments() {
-        return Arguments.of(
-                internalServerErrorJson(),
-                internalServerError()
         );
     }
 
