@@ -23,7 +23,7 @@ public class CountryMismatchHandler implements ErrorHandler {
     }
 
     private static ApiError toError(Throwable cause) {
-        log.error(cause.getMessage(), cause);
+        log.error("country mismatch occurred", cause);
         CountryMismatchException error = (CountryMismatchException) cause;
         return CountryMismatchError.builder()
                 .updated(error.getUpdated())

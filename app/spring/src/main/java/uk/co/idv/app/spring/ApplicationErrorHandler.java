@@ -26,6 +26,7 @@ public class ApplicationErrorHandler {
     }
 
     private static ApiError toInternalServerError(Throwable throwable) {
+        log.error("unexpected error occurred", throwable);
         return new InternalServerError(throwable.getMessage());
     }
 

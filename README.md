@@ -11,7 +11,7 @@
 
 ## Todo
 
-*   Handle invalid payloads / Jackson failures
+*   Add initial functionality for loading identity and checking lockout state when creating verification context
 
 ## Useful commands
 

@@ -42,7 +42,7 @@ public class DynamoTables {
             log.info("table {} took {}ms to become active", tableName, millisBetweenNowAnd(start));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            log.error(e.getMessage(), e);
+            log.error("thread interrupted waiting for table to become active", e);
             throw new DynamoException(e);
         }
     }

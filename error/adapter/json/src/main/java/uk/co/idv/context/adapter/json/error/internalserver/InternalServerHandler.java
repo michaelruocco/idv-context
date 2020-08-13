@@ -15,7 +15,7 @@ public class InternalServerHandler implements ErrorHandler {
     }
 
     private static ApiError toError(Throwable cause) {
-        log.error(cause.getMessage(), cause);
+        log.error("unexpected error occurred", cause);
         return new InternalServerError(cause.getMessage());
     }
 

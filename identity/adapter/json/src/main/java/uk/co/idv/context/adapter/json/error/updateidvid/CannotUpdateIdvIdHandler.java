@@ -23,7 +23,7 @@ public class CannotUpdateIdvIdHandler implements ErrorHandler {
     }
 
     private static ApiError toError(Throwable cause) {
-        log.error(cause.getMessage(), cause);
+        log.error("cannot update idv id", cause);
         CannotUpdateIdvIdException error = (CannotUpdateIdvIdException) cause;
         return CannotUpdateIdvIdError.builder()
                 .updated(error.getUpdated())

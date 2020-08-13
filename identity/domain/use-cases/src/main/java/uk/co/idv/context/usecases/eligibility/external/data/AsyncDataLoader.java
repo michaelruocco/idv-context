@@ -56,9 +56,9 @@ public class AsyncDataLoader {
             future.get(timeout.toMillis(), TimeUnit.MILLISECONDS);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            log.debug(e.getMessage(), e);
+            log.debug("thread interrupted waiting for futures to complete", e);
         } catch (ExecutionException | TimeoutException e) {
-            log.error(e.getMessage(), e);
+            log.error("an error occurred executing futures", e);
         } finally {
             log.info("futures took {}ms to complete", millisBetweenNowAnd(start));
         }
