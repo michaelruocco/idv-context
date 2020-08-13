@@ -19,7 +19,6 @@ import java.util.Collections;
 public class IdentityConfig {
 
     private final IdentityRepository repository;
-
     private final ExternalFindIdentityStubConfig stubConfig;
 
     public CreateEligibility createEligibility() {
@@ -33,7 +32,7 @@ public class IdentityConfig {
         return IdentityFacade.build(repository);
     }
 
-    public IdentityErrorHandler identityErrorHandler() {
+    public IdentityErrorHandler errorHandler() {
         return new IdentityErrorHandler();
     }
 

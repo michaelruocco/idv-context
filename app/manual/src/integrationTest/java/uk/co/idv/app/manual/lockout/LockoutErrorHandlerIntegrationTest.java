@@ -1,30 +1,30 @@
-package uk.co.idv.app.manual.identity;
+package uk.co.idv.app.manual.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.adapter.json.error.internalserver.InternalServerError;
-import uk.co.idv.context.adapter.json.error.updateidvid.CannotUpdateIdvIdError;
-import uk.co.idv.context.usecases.identity.save.CannotUpdateIdvIdException;
-import uk.co.idv.context.usecases.identity.save.CannotUpdateIdvIdExceptionMother;
+import uk.co.idv.context.adapter.json.error.policynotfound.PolicyNotFoundError;
+import uk.co.idv.context.config.lockout.LockoutConfig;
+import uk.co.idv.context.usecases.policy.load.PolicyNotFoundException;
+import uk.co.idv.context.usecases.policy.load.PolicyNotFoundExceptionMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class IdentityErrorHandlerIntegrationTest {
+public class LockoutErrorHandlerIntegrationTest {
 
-    private final IdentityConfig config = IdentityConfig.builder()
+    private final LockoutConfig config = LockoutConfig.builder()
             .build();
 
     private final ErrorHandler handler = config.errorHandler();
 
     @Test
-    void shouldHandleCannotUpdateIdvIdException() {
-        CannotUpdateIdvIdException exception = CannotUpdateIdvIdExceptionMother.build();
+    void shouldHandlePolicyNotFoundException() {
+        PolicyNotFoundException exception = PolicyNotFoundExceptionMother.build();
 
         ApiError error = handler.apply(exception);
 
-        assertThat(error).isInstanceOf(CannotUpdateIdvIdError.class);
+        assertThat(error).isInstanceOf(PolicyNotFoundError.class);
     }
 
     @Test

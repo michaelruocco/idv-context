@@ -27,11 +27,10 @@ class ApplicationErrorHandlerTest {
         assertThat(response.getStatusCode()).isEqualTo(status);
     }
 
-    private ApiError givenConvertedToErrorWithStatus(Throwable cause, HttpStatus status) {
+    private void givenConvertedToErrorWithStatus(Throwable cause, HttpStatus status) {
         ApiError error = mock(ApiError.class);
         given(error.getStatus()).willReturn(status.value());
         given(errorHandler.apply(cause)).willReturn(error);
-        return error;
     }
 
 }

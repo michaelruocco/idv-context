@@ -2,57 +2,23 @@ package uk.co.idv.app.spring.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.context.config.identity.IdentityConfig;
-import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
-import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
+import org.springframework.context.annotation.Primary;
+import uk.co.idv.context.adapter.json.error.handler.CompositeErrorHandler;
+import uk.co.idv.context.adapter.json.error.internalserver.InternalServerHandler;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.context.adapter.json.error.handler.IdentityErrorHandler;
-import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
-import uk.co.idv.context.usecases.eligibility.CreateEligibility;
-import uk.co.idv.context.usecases.identity.IdentityFacade;
-import uk.co.idv.context.usecases.lockout.LockoutPolicyService;
 
-import java.time.Duration;
-import java.util.concurrent.Executors;
+import java.util.Collection;
 
 @Configuration
 public class SpringDomainConfig {
 
     @Bean
-    public IdentityConfig identityConfig(IdentityRepositoryConfig repositoryConfig) {
-        return IdentityConfig.builder()
-                .repository(repositoryConfig.identityRepository())
-                .stubConfig(stubConfig())
-                .build();
-    }
-
-    @Bean
-    public IdentityFacade identityFacade(IdentityConfig identityConfig) {
-        return identityConfig.identityFacade();
-    }
-
-    @Bean
-    public CreateEligibility createEligibility(IdentityConfig identityConfig) {
-        return identityConfig.createEligibility();
-    }
-
-    @Bean
-    public LockoutPolicyService lockoutPolicyService(LockoutRepositoryConfig repositoryConfig) {
-        return new LockoutPolicyService(repositoryConfig.policyRepository());
-    }
-
-    @Bean
-    public ErrorHandler errorHandler() {
-        return new IdentityErrorHandler();
-    }
-
-    private static ExternalFindIdentityStubConfig stubConfig() {
-        return ExternalFindIdentityStubConfig.builder()
-                .executor(Executors.newFixedThreadPool(2))
-                .timeout(Duration.ofMillis(250))
-                .phoneNumberDelay(Duration.ofMillis(400))
-                .emailAddressDelay(Duration.ofMillis(100))
-                .build();
+    @Primary
+    public ErrorHandler errorHandler(Collection<ErrorHandler> errorHandlers) {
+        return new CompositeErrorHandler(
+                new InternalServerHandler(),
+                errorHandlers
+        );
     }
 
 }

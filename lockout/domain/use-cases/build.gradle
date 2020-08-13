@@ -7,4 +7,5 @@ dependencies {
     api project(":policy-use-cases")
 
     testFixturesApi testFixtures(project(":lockout-entities"))
+    testFixturesApi testFixtures(project(":policy-use-cases"))
 }

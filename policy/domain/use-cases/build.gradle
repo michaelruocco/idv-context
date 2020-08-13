@@ -5,5 +5,5 @@ plugins {
 dependencies {
     api project(":policy-entities")
 
-    testImplementation testFixtures(project(":policy-entities"))
+    testFixturesApi testFixtures(project(":policy-entities"))
 }

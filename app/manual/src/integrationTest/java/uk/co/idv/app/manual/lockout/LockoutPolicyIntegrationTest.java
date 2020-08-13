@@ -22,7 +22,9 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 public class LockoutPolicyIntegrationTest {
 
     private final LockoutRepositoryConfig repositoryConfig = new InMemoryLockoutRepositoryConfig();
-    private final LockoutConfig lockoutConfig = new LockoutConfig(repositoryConfig.policyRepository());
+    private final LockoutConfig lockoutConfig = LockoutConfig.builder()
+            .repository(repositoryConfig.policyRepository())
+            .build();
 
     private final LockoutPolicyService policyService = lockoutConfig.policyService();
 

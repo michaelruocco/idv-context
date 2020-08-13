@@ -37,7 +37,7 @@ public class ParallelKarateIntegrationTest {
     }
 
     @Test
-    void identityMaintenanceTest() {
+    void runFeatureTests() {
         String reportDir = "build/reports/karate";
         Results results = Runner.path(getFeaturePaths())
                 .reportDir(reportDir)
