@@ -12,7 +12,6 @@
 ## Todo
 
 *   Handle invalid payloads / Jackson failures
-*   Handle lockout policy not found error correctly
 
 ## Useful commands
 

@@ -13,7 +13,7 @@ public class CountryNotProvidedHandler implements ErrorHandler {
     @Override
     public Optional<ApiError> apply(Throwable cause) {
         if (supports(cause)) {
-            return Optional.of(toError(cause));
+            return Optional.of(toError());
         }
         return Optional.empty();
     }
@@ -22,7 +22,7 @@ public class CountryNotProvidedHandler implements ErrorHandler {
         return CountryNotProvidedException.class.isAssignableFrom(cause.getClass());
     }
 
-    private static ApiError toError(Throwable cause) {
+    private static ApiError toError() {
         return new CountryNotProvidedError();
     }
 
