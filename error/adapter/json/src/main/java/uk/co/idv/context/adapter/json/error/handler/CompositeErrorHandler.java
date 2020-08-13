@@ -5,33 +5,27 @@ import uk.co.idv.context.adapter.json.error.ApiError;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class CompositeErrorHandler implements ErrorHandler {
 
-    private final ErrorHandler defaultHandler;
     private final Collection<ErrorHandler> handlers;
 
-    public CompositeErrorHandler(ErrorHandler defaultHandler, ErrorHandler... handlers) {
-        this(defaultHandler, Arrays.asList(handlers));
+    public CompositeErrorHandler(ErrorHandler... handlers) {
+        this(Arrays.asList(handlers));
     }
 
     @Override
-    public boolean supports(Throwable cause) {
-        return true;
+    public Optional<ApiError> apply(Throwable cause) {
+        return toError(cause);
     }
 
-    @Override
-    public ApiError apply(Throwable cause) {
-        ErrorHandler handler = findHandler(cause);
-        return handler.apply(cause);
-    }
-
-    private ErrorHandler findHandler(Throwable cause) {
+    private Optional<ApiError> toError(Throwable cause) {
         return handlers.stream()
-                .filter(handler -> handler.supports(cause))
-                .findFirst()
-                .orElse(defaultHandler);
+                .map(handler -> handler.apply(cause))
+                .flatMap(Optional::stream)
+                .findFirst();
     }
 
 }

@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.context.adapter.json.error.internalserver.InternalServerError;
+
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @ControllerAdvice
@@ -18,7 +21,12 @@ public class ApplicationErrorHandler {
 
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<ApiError> handleException(Throwable throwable) {
-        return toResponseEntity(errorHandler.apply(throwable));
+        Optional<ApiError> error = errorHandler.apply(throwable);
+        return toResponseEntity(error.orElse(toInternalServerError(throwable)));
+    }
+
+    private static ApiError toInternalServerError(Throwable throwable) {
+        return new InternalServerError(throwable.getMessage());
     }
 
     private static ResponseEntity<ApiError> toResponseEntity(ApiError error) {

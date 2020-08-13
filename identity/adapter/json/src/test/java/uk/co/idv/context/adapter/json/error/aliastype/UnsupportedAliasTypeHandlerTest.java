@@ -5,6 +5,8 @@ import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.entities.alias.UnsupportedAliasTypeExeception;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -16,23 +18,23 @@ class UnsupportedAliasTypeHandlerTest {
     void shouldSupportCannotUpdateIdvIdException() {
         UnsupportedAliasTypeExeception exception = mock(UnsupportedAliasTypeExeception.class);
 
-        assertThat(handler.supports(exception)).isTrue();
+        assertThat(handler.apply(exception)).isPresent();
     }
 
     @Test
     void shouldNotSupportAnyOtherException() {
         Throwable other = new Throwable();
 
-        assertThat(handler.supports(other)).isFalse();
+        assertThat(handler.apply(other)).isEmpty();
     }
 
     @Test
     void shouldReturnUnsupportedAliasTypeError() {
         UnsupportedAliasTypeExeception cause = mock(UnsupportedAliasTypeExeception.class);
 
-        ApiError error = handler.apply(cause);
+        Optional<ApiError> error = handler.apply(cause);
 
-        assertThat(error).isInstanceOf(UnsupportedAliasTypeError.class);
+        assertThat(error).containsInstanceOf(UnsupportedAliasTypeError.class);
     }
 
     @Test
@@ -40,9 +42,11 @@ class UnsupportedAliasTypeHandlerTest {
         String type = "my-type";
         UnsupportedAliasTypeExeception cause = new UnsupportedAliasTypeExeception(type);
 
-        UnsupportedAliasTypeError error = (UnsupportedAliasTypeError) handler.apply(cause);
+        Optional<ApiError> error = handler.apply(cause);
 
-        assertThat(error.getMessage()).isEqualTo(type);
+        assertThat(error).isPresent();
+        UnsupportedAliasTypeError specificError = (UnsupportedAliasTypeError) error.get();
+        assertThat(specificError.getMessage()).isEqualTo(type);
     }
 
 }

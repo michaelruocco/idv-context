@@ -6,8 +6,9 @@ import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.entities.identity.CountryMismatchException;
 import uk.co.idv.context.entities.identity.CountryMismatchExceptionMother;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 class CountryMismatchHandlerTest {
 
@@ -15,35 +16,37 @@ class CountryMismatchHandlerTest {
 
     @Test
     void shouldSupportCountryMismatchException() {
-        CountryMismatchException exception = mock(CountryMismatchException.class);
+        CountryMismatchException exception = CountryMismatchExceptionMother.build();
 
-        assertThat(handler.supports(exception)).isTrue();
+        assertThat(handler.apply(exception)).isPresent();
     }
 
     @Test
     void shouldNotSupportAnyOtherException() {
         Throwable other = new Throwable();
 
-        assertThat(handler.supports(other)).isFalse();
+        assertThat(handler.apply(other)).isEmpty();
     }
 
     @Test
     void shouldReturnCountryMismatchError() {
         CountryMismatchException cause = CountryMismatchExceptionMother.build();
 
-        ApiError error = handler.apply(cause);
+        Optional<ApiError> error = handler.apply(cause);
 
-        assertThat(error).isInstanceOf(CountryMismatchError.class);
+        assertThat(error).containsInstanceOf(CountryMismatchError.class);
     }
 
     @Test
     void shouldPopulateUpdatedAndExistingIdvIds() {
         CountryMismatchException cause = CountryMismatchExceptionMother.build();
 
-        CountryMismatchError error = (CountryMismatchError) handler.apply(cause);
+        Optional<ApiError> error = handler.apply(cause);
 
-        assertThat(error.getUpdated()).isEqualTo(cause.getUpdated());
-        assertThat(error.getExisting()).isEqualTo(cause.getExisting());
+        assertThat(error).isPresent();
+        CountryMismatchError specificError = (CountryMismatchError) error.get();
+        assertThat(specificError.getUpdated()).isEqualTo(cause.getUpdated());
+        assertThat(specificError.getExisting()).isEqualTo(cause.getExisting());
     }
 
 }

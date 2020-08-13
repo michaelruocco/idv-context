@@ -5,14 +5,12 @@ import uk.co.idv.context.adapter.json.error.country.mismatch.CountryMismatchHand
 import uk.co.idv.context.adapter.json.error.country.notprovided.CountryNotProvidedHandler;
 import uk.co.idv.context.adapter.json.error.eligibilitynotconfigured.EligibilityNotConfiguredHandler;
 import uk.co.idv.context.adapter.json.error.identitynotfound.IdentityNotFoundHandler;
-import uk.co.idv.context.adapter.json.error.internalserver.InternalServerHandler;
 import uk.co.idv.context.adapter.json.error.updateidvid.CannotUpdateIdvIdHandler;
 
 public class IdentityErrorHandler extends CompositeErrorHandler {
 
     public IdentityErrorHandler() {
         super(
-                new InternalServerHandler(),
                 new CannotUpdateIdvIdHandler(),
                 new UnsupportedAliasTypeHandler(),
                 new IdentityNotFoundHandler(),

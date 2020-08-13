@@ -4,15 +4,23 @@ import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.entities.alias.UnsupportedAliasTypeExeception;
 
+import java.util.Optional;
+
 public class UnsupportedAliasTypeHandler implements ErrorHandler {
 
     @Override
-    public boolean supports(Throwable cause) {
+    public Optional<ApiError> apply(Throwable cause) {
+        if (supports(cause)) {
+            return Optional.of(toError(cause));
+        }
+        return Optional.empty();
+    }
+
+    private static boolean supports(Throwable cause) {
         return UnsupportedAliasTypeExeception.class.isAssignableFrom(cause.getClass());
     }
 
-    @Override
-    public ApiError apply(Throwable cause) {
+    private static ApiError toError(Throwable cause) {
         return new UnsupportedAliasTypeError(cause.getMessage());
     }
 

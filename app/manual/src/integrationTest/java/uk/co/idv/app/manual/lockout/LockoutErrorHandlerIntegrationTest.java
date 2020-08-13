@@ -3,11 +3,12 @@ package uk.co.idv.app.manual.lockout;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.context.adapter.json.error.internalserver.InternalServerError;
 import uk.co.idv.context.adapter.json.error.policynotfound.PolicyNotFoundError;
 import uk.co.idv.context.config.lockout.LockoutConfig;
 import uk.co.idv.context.usecases.policy.load.PolicyNotFoundException;
 import uk.co.idv.context.usecases.policy.load.PolicyNotFoundExceptionMother;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,19 +23,18 @@ public class LockoutErrorHandlerIntegrationTest {
     void shouldHandlePolicyNotFoundException() {
         PolicyNotFoundException exception = PolicyNotFoundExceptionMother.build();
 
-        ApiError error = handler.apply(exception);
+        Optional<ApiError> error = handler.apply(exception);
 
-        assertThat(error).isInstanceOf(PolicyNotFoundError.class);
+        assertThat(error).containsInstanceOf(PolicyNotFoundError.class);
     }
 
     @Test
-    void shouldReturnInternalServerErrorForAnyOtherException() {
+    void shouldReturnEmptyIfExceptionNotSupported() {
         Throwable throwable = new Throwable("error message");
 
-        ApiError error = handler.apply(throwable);
+        Optional<ApiError> error = handler.apply(throwable);
 
-        assertThat(error).isInstanceOf(InternalServerError.class);
-        assertThat(error.getMessage()).isEqualTo(throwable.getMessage());
+        assertThat(error).isEmpty();
     }
 
 }

@@ -4,10 +4,11 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.context.adapter.json.error.internalserver.InternalServerError;
 import uk.co.idv.context.adapter.json.error.updateidvid.CannotUpdateIdvIdError;
 import uk.co.idv.context.usecases.identity.save.CannotUpdateIdvIdException;
 import uk.co.idv.context.usecases.identity.save.CannotUpdateIdvIdExceptionMother;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -22,19 +23,18 @@ public class IdentityErrorHandlerIntegrationTest {
     void shouldHandleCannotUpdateIdvIdException() {
         CannotUpdateIdvIdException exception = CannotUpdateIdvIdExceptionMother.build();
 
-        ApiError error = handler.apply(exception);
+        Optional<ApiError> error = handler.apply(exception);
 
-        assertThat(error).isInstanceOf(CannotUpdateIdvIdError.class);
+        assertThat(error).containsInstanceOf(CannotUpdateIdvIdError.class);
     }
 
     @Test
-    void shouldReturnInternalServerErrorForAnyOtherException() {
+    void shouldReturnEmptyIfErrorNotSupported() {
         Throwable throwable = new Throwable("error message");
 
-        ApiError error = handler.apply(throwable);
+        Optional<ApiError> error = handler.apply(throwable);
 
-        assertThat(error).isInstanceOf(InternalServerError.class);
-        assertThat(error.getMessage()).isEqualTo(throwable.getMessage());
+        assertThat(error).isEmpty();
     }
 
 }

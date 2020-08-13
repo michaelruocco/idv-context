@@ -6,6 +6,8 @@ import org.springframework.http.ResponseEntity;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -30,7 +32,7 @@ class ApplicationErrorHandlerTest {
     private void givenConvertedToErrorWithStatus(Throwable cause, HttpStatus status) {
         ApiError error = mock(ApiError.class);
         given(error.getStatus()).willReturn(status.value());
-        given(errorHandler.apply(cause)).willReturn(error);
+        given(errorHandler.apply(cause)).willReturn(Optional.of(error));
     }
 
 }

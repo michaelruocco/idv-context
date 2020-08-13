@@ -8,8 +8,9 @@ import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 
 class IdentityNotFoundHandlerTest {
 
@@ -17,25 +18,25 @@ class IdentityNotFoundHandlerTest {
 
     @Test
     void shouldSupportIdentityNotFoundException() {
-        IdentityNotFoundException exception = mock(IdentityNotFoundException.class);
+        IdentityNotFoundException exception = new IdentityNotFoundException(AliasesMother.idvIdOnly());
 
-        assertThat(handler.supports(exception)).isTrue();
+        assertThat(handler.apply(exception)).isPresent();
     }
 
     @Test
     void shouldNotSupportAnyOtherException() {
         Throwable other = new Throwable();
 
-        assertThat(handler.supports(other)).isFalse();
+        assertThat(handler.apply(other)).isEmpty();
     }
 
     @Test
     void shouldReturnIdentityNotFoundError() {
         IdentityNotFoundException exception = new IdentityNotFoundException(AliasesMother.idvIdOnly());
 
-        ApiError error = handler.apply(exception);
+        Optional<ApiError> error = handler.apply(exception);
 
-        assertThat(error).isInstanceOf(IdentityNotFoundError.class);
+        assertThat(error).containsInstanceOf(IdentityNotFoundError.class);
     }
 
     @Test
@@ -43,9 +44,10 @@ class IdentityNotFoundHandlerTest {
         Alias alias = IdvIdMother.idvId();
         IdentityNotFoundException exception = new IdentityNotFoundException(AliasesMother.with(alias));
 
-        ApiError error = handler.apply(exception);
+        Optional<ApiError> error = handler.apply(exception);
 
-        assertThat(error.getMessage()).isEqualTo(alias.format());
+        assertThat(error).isPresent();
+        assertThat(error.get().getMessage()).isEqualTo(alias.format());
     }
 
 }

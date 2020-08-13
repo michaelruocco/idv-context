@@ -3,46 +3,40 @@ package uk.co.idv.context.adapter.json.error.handler;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.json.error.ApiError;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class CompositeErrorHandlerTest {
 
-    private final ErrorHandler defaultHandler = mock(ErrorHandler.class);
-    private final ErrorHandler specificHandler = mock(ErrorHandler.class);
+    private final ErrorHandler specificHandler1 = mock(ErrorHandler.class);
+    private final ErrorHandler specificHandler2 = mock(ErrorHandler.class);
 
-    private final ErrorHandler compositeHandler = new CompositeErrorHandler(defaultHandler, specificHandler);
+    private final ErrorHandler compositeHandler = new CompositeErrorHandler(specificHandler1, specificHandler2);
 
     @Test
-    void shouldSupportAnyThrowable() {
-        Throwable any = new Throwable();
+    void shouldReturnErrorFromSpecificHandlerIfReturned() {
+        Throwable exception = new Exception();
+        given(specificHandler1.apply(exception)).willReturn(Optional.empty());
+        ApiError expectedError = mock(ApiError.class);
+        given(specificHandler2.apply(exception)).willReturn(Optional.of(expectedError));
 
-        assertThat(compositeHandler.supports(any)).isTrue();
+        Optional<ApiError> error = compositeHandler.apply(exception);
+
+        assertThat(error).contains(expectedError);
     }
 
     @Test
-    void shouldReturnErrorFromSpecificHandlerIfExceptionIsSupported() {
+    void shouldReturnEmptyOptionalIfNoSpecificHandlersReturnError() {
         Throwable exception = new Exception();
-        given(specificHandler.supports(exception)).willReturn(true);
-        ApiError expectedError = mock(ApiError.class);
-        given(specificHandler.apply(exception)).willReturn(expectedError);
+        given(specificHandler1.apply(exception)).willReturn(Optional.empty());
+        given(specificHandler2.apply(exception)).willReturn(Optional.empty());
 
-        ApiError error = compositeHandler.apply(exception);
+        Optional<ApiError> error = compositeHandler.apply(exception);
 
-        assertThat(error).isEqualTo(expectedError);
-    }
-
-    @Test
-    void shouldReturnErrorFromDefaultHandlerIfNoSpecificHandlersSupportException() {
-        Throwable exception = new Exception();
-        given(specificHandler.supports(exception)).willReturn(false);
-        ApiError expectedError = mock(ApiError.class);
-        given(defaultHandler.apply(exception)).willReturn(expectedError);
-
-        ApiError error = compositeHandler.apply(exception);
-
-        assertThat(error).isEqualTo(expectedError);
+        assertThat(error).isEmpty();
     }
 
 }

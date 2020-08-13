@@ -5,6 +5,7 @@ import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.usecases.policy.load.PolicyNotFoundException;
 
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,23 +19,23 @@ class PolicyNotFoundHandlerTest {
     void shouldSupportPolicyNotFoundException() {
         PolicyNotFoundException exception = mock(PolicyNotFoundException.class);
 
-        assertThat(handler.supports(exception)).isTrue();
+        assertThat(handler.apply(exception)).isPresent();
     }
 
     @Test
     void shouldNotSupportAnyOtherException() {
         Throwable other = new Throwable();
 
-        assertThat(handler.supports(other)).isFalse();
+        assertThat(handler.apply(other)).isEmpty();
     }
 
     @Test
     void shouldReturnPolicyNotFoundError() {
         PolicyNotFoundException exception = new PolicyNotFoundException(UUID.randomUUID());
 
-        ApiError error = handler.apply(exception);
+        Optional<ApiError> error = handler.apply(exception);
 
-        assertThat(error).isInstanceOf(PolicyNotFoundError.class);
+        assertThat(error).containsInstanceOf(PolicyNotFoundError.class);
     }
 
     @Test
@@ -42,9 +43,10 @@ class PolicyNotFoundHandlerTest {
         UUID id = UUID.randomUUID();
         PolicyNotFoundException exception = new PolicyNotFoundException(id);
 
-        ApiError error = handler.apply(exception);
+        Optional<ApiError> error = handler.apply(exception);
 
-        assertThat(error.getMessage()).isEqualTo(id.toString());
+        assertThat(error).isPresent();
+        assertThat(error.get().getMessage()).isEqualTo(id.toString());
     }
 
 }

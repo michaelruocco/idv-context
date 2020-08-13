@@ -7,12 +7,12 @@ Feature: Lockout Policy Maintenance
     * def policyId = "fcdb814c-dba4-4b2f-a84e-a97d3593b97b"
     Given path "/" + policyId
     When method GET
-    Then status 500
+    Then status 404
     And match response ==
       """
       {
-        "status": 500,
-        "title": "Internal server error",
+        "status": 404,
+        "title": "Policy not found",
         "message": "#(policyId)"
       }
       """
@@ -312,4 +312,4 @@ Feature: Lockout Policy Maintenance
     Then status 204
     And path "/" + policyId
     And method GET
-    And status 500
+    And status 404

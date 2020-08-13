@@ -4,16 +4,17 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 
+import java.util.Optional;
+
 @Slf4j
 public class InternalServerHandler implements ErrorHandler {
 
     @Override
-    public boolean supports(Throwable cause) {
-        return true;
+    public Optional<ApiError> apply(Throwable cause) {
+        return Optional.of(toError(cause));
     }
 
-    @Override
-    public ApiError apply(Throwable cause) {
+    private static ApiError toError(Throwable cause) {
         log.error(cause.getMessage(), cause);
         return new InternalServerError(cause.getMessage());
     }

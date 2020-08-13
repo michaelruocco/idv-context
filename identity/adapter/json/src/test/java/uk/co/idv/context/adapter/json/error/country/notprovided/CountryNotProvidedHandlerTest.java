@@ -5,6 +5,8 @@ import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.usecases.identity.create.CountryNotProvidedException;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
@@ -16,23 +18,23 @@ class CountryNotProvidedHandlerTest {
     void shouldSupportCountryNotProvidedException() {
         CountryNotProvidedException exception = mock(CountryNotProvidedException.class);
 
-        assertThat(handler.supports(exception)).isTrue();
+        assertThat(handler.apply(exception)).isPresent();
     }
 
     @Test
     void shouldNotSupportAnyOtherException() {
         Throwable other = new Throwable();
 
-        assertThat(handler.supports(other)).isFalse();
+        assertThat(handler.apply(other)).isEmpty();
     }
 
     @Test
     void shouldReturnCountryMismatchError() {
         CountryNotProvidedException cause = mock(CountryNotProvidedException.class);
 
-        ApiError error = handler.apply(cause);
+        Optional<ApiError> error = handler.apply(cause);
 
-        assertThat(error).isInstanceOf(CountryNotProvidedError.class);
+        assertThat(error).containsInstanceOf(CountryNotProvidedError.class);
     }
 
 }
