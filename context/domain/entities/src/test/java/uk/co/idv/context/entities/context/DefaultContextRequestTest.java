@@ -10,13 +10,13 @@ import uk.co.idv.context.entities.channel.DefaultChannelMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class CreateContextRequestTest {
+class DefaultContextRequestTest {
 
     @Test
     void shouldSetChannel() {
         Channel channel = DefaultChannelMother.build();
 
-        CreateContextRequest request = CreateContextRequest.builder()
+        CreateContextRequest request = DefaultCreateContextRequest.builder()
                 .channel(channel)
                 .build();
 
@@ -27,7 +27,7 @@ class CreateContextRequestTest {
     void shouldSetActivity() {
         Activity activity = DefaultActivityMother.build();
 
-        CreateContextRequest request = CreateContextRequest.builder()
+        CreateContextRequest request = DefaultCreateContextRequest.builder()
                 .activity(activity)
                 .build();
 
@@ -38,7 +38,7 @@ class CreateContextRequestTest {
     void shouldSetAlias() {
         Alias alias = DefaultAliasMother.build();
 
-        CreateContextRequest request = CreateContextRequest.builder()
+        CreateContextRequest request = DefaultCreateContextRequest.builder()
                 .alias(alias)
                 .build();
 

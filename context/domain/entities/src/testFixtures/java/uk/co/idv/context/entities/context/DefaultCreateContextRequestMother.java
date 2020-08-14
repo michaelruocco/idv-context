@@ -7,7 +7,7 @@ import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
 
-public interface CreateContextRequestMother {
+public interface DefaultCreateContextRequestMother {
 
     static CreateContextRequest withChannel(Channel channel) {
         return builder().channel(channel).build();
@@ -25,8 +25,8 @@ public interface CreateContextRequestMother {
         return builder().build();
     }
 
-    static CreateContextRequest.CreateContextRequestBuilder builder() {
-        return CreateContextRequest.builder()
+    static DefaultCreateContextRequest.DefaultCreateContextRequestBuilder builder() {
+        return DefaultCreateContextRequest.builder()
                 .channel(DefaultChannelMother.build())
                 .activity(DefaultActivityMother.build())
                 .alias(DefaultAliasMother.build());
