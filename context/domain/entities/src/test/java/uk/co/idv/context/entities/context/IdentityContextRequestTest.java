@@ -1,10 +1,6 @@
 package uk.co.idv.context.entities.context;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.activity.Activity;
-import uk.co.idv.context.entities.activity.DefaultActivityMother;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 
