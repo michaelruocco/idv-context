@@ -57,6 +57,9 @@ project(':lockout-config').projectDir = file('lockout/config')
 include ':error-json'
 project(':error-json').projectDir = file('error/adapter/json')
 
+include ':context-entities'
+project(':context-entities').projectDir = file('context/domain/entities')
+
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
 

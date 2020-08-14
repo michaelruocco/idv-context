@@ -49,7 +49,7 @@ springBoot {
 }
 
 bootRun {
-    systemProperties = System.properties
+    systemProperties = System.getProperties()
     systemProperty "spring.profiles.active", System.properties.getOrDefault("spring.profiles.active", "stubbed")
     systemProperty "server.port", System.properties.getOrDefault("server.port", "8081")
 }
@@ -61,8 +61,8 @@ integrationTest {
 
 docker {
     registryCredentials {
-        username = System.getenv("DOCKER_USERNAME")
-        password = System.getenv("DOCKER_PASSWORD")
+        username.set(System.getenv("DOCKER_USERNAME"))
+        password.set(System.getenv("DOCKER_PASSWORD"))
     }
 }
 
