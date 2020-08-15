@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.usecases.eligibility.EligibilityNotConfiguredException;
+import uk.co.idv.context.usecases.eligibility.EligibilityNotConfiguredExceptionMother;
 
 import java.util.Optional;
 
@@ -14,22 +15,8 @@ class EligibilityNotConfiguredHandlerTest {
     private final ErrorHandler handler = new EligibilityNotConfiguredHandler();
 
     @Test
-    void shouldSupportEligibilityNotConfiguredException() {
-        EligibilityNotConfiguredException exception = new EligibilityNotConfiguredException("my-channel");
-
-        assertThat(handler.apply(exception)).isPresent();
-    }
-
-    @Test
-    void shouldNotSupportAnyOtherException() {
-        Throwable other = new Throwable();
-
-        assertThat(handler.apply(other)).isEmpty();
-    }
-
-    @Test
-    void shouldReturnEligibilityNotConfiguredError() {
-        EligibilityNotConfiguredException exception = new EligibilityNotConfiguredException("my-channel");
+    void shouldConvertEligibilityNotConfiguredExceptionToError() {
+        EligibilityNotConfiguredException exception = EligibilityNotConfiguredExceptionMother.build();
 
         Optional<ApiError> error = handler.apply(exception);
 
@@ -37,14 +24,22 @@ class EligibilityNotConfiguredHandlerTest {
     }
 
     @Test
-    void shouldPopulateMessageWithAliases() {
-        String channelId = "my-channel";
-        Throwable exception = new EligibilityNotConfiguredException(channelId);
+    void shouldPopulateErrorMessageWithExceptionMessage() {
+        EligibilityNotConfiguredException exception = EligibilityNotConfiguredExceptionMother.build();
 
         Optional<ApiError> error = handler.apply(exception);
 
-        assertThat(error).isPresent();
-        assertThat(error.get().getMessage()).contains(channelId);
+        String expectedMessage = String.format("eligibility not configured for channel %s", exception.getMessage());
+        assertThat(error).get().hasFieldOrPropertyWithValue("message", expectedMessage);
+    }
+
+    @Test
+    void shouldNotSupportAnyOtherException() {
+        Throwable other = new Throwable();
+
+        Optional<ApiError> error = handler.apply(other);
+
+        assertThat(error).isEmpty();
     }
 
 }

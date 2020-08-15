@@ -15,38 +15,43 @@ class CountryMismatchHandlerTest {
     private final ErrorHandler handler = new CountryMismatchHandler();
 
     @Test
-    void shouldSupportCountryMismatchException() {
+    void shouldConvertSupportCountryMismatchExceptionToError() {
         CountryMismatchException exception = CountryMismatchExceptionMother.build();
 
-        assertThat(handler.apply(exception)).isPresent();
+        Optional<ApiError> error = handler.apply(exception);
+
+        assertThat(error).containsInstanceOf(CountryMismatchError.class);
+    }
+
+    @Test
+    void shouldPopulateUpdatedIdvId() {
+        CountryMismatchException exception = CountryMismatchExceptionMother.build();
+
+        Optional<ApiError> error = handler.apply(exception);
+
+        assertThat(error).map(e -> (CountryMismatchError) e)
+                .map(CountryMismatchError::getUpdated)
+                .contains(exception.getUpdated());
+    }
+
+    @Test
+    void shouldPopulateExistingIdvId() {
+        CountryMismatchException exception = CountryMismatchExceptionMother.build();
+
+        Optional<ApiError> error = handler.apply(exception);
+
+        assertThat(error).map(e -> (CountryMismatchError) e)
+                .map(CountryMismatchError::getExisting)
+                .contains(exception.getExisting());
     }
 
     @Test
     void shouldNotSupportAnyOtherException() {
         Throwable other = new Throwable();
 
-        assertThat(handler.apply(other)).isEmpty();
-    }
+        Optional<ApiError> error = handler.apply(other);
 
-    @Test
-    void shouldReturnCountryMismatchError() {
-        CountryMismatchException cause = CountryMismatchExceptionMother.build();
-
-        Optional<ApiError> error = handler.apply(cause);
-
-        assertThat(error).containsInstanceOf(CountryMismatchError.class);
-    }
-
-    @Test
-    void shouldPopulateUpdatedAndExistingIdvIds() {
-        CountryMismatchException cause = CountryMismatchExceptionMother.build();
-
-        Optional<ApiError> error = handler.apply(cause);
-
-        assertThat(error).isPresent();
-        CountryMismatchError specificError = (CountryMismatchError) error.get();
-        assertThat(specificError.getUpdated()).isEqualTo(cause.getUpdated());
-        assertThat(specificError.getExisting()).isEqualTo(cause.getExisting());
+        assertThat(error).isEmpty();
     }
 
 }

@@ -8,7 +8,7 @@ public class DefaultAliasFactory implements AliasFactory {
             case IdvId.TYPE: return new IdvId(value);
             case CreditCardNumber.TYPE: return new CreditCardNumber(value);
             case DebitCardNumber.TYPE: return new DebitCardNumber(value);
-            default: throw new UnsupportedAliasTypeExeception(type);
+            default: throw new UnsupportedAliasTypeException(type);
         }
     }
 

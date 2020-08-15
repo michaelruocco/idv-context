@@ -15,21 +15,7 @@ class CannotUpdateIdvIdHandlerTest {
     private final ErrorHandler handler = new CannotUpdateIdvIdHandler();
 
     @Test
-    void shouldSupportCannotUpdateIdvIdException() {
-        CannotUpdateIdvIdException exception =  CannotUpdateIdvIdExceptionMother.build();
-
-        assertThat(handler.apply(exception)).isPresent();
-    }
-
-    @Test
-    void shouldNotSupportAnyOtherException() {
-        Throwable other = new Throwable();
-
-        assertThat(handler.apply(other)).isEmpty();
-    }
-
-    @Test
-    void shouldReturnCannotUpdateIdvIdError() {
+    void shouldConvertCannotUpdateIdvIdExceptionToError() {
         CannotUpdateIdvIdException cause = CannotUpdateIdvIdExceptionMother.build();
 
         Optional<ApiError> error = handler.apply(cause);
@@ -38,15 +24,34 @@ class CannotUpdateIdvIdHandlerTest {
     }
 
     @Test
-    void shouldPopulateUpdatedAndExistingIdvIds() {
-        CannotUpdateIdvIdException cause = CannotUpdateIdvIdExceptionMother.build();
+    void shouldPopulateUpdatedIdvId() {
+        CannotUpdateIdvIdException exception = CannotUpdateIdvIdExceptionMother.build();
 
-        Optional<ApiError> error = handler.apply(cause);
+        Optional<ApiError> error = handler.apply(exception);
 
-        assertThat(error).isPresent();
-        CannotUpdateIdvIdError specificError = (CannotUpdateIdvIdError) error.get();
-        assertThat(specificError.getUpdated()).isEqualTo(cause.getUpdated());
-        assertThat(specificError.getExisting()).isEqualTo(cause.getExisting());
+        assertThat(error).map(e -> (CannotUpdateIdvIdError) e)
+                .map(CannotUpdateIdvIdError::getUpdated)
+                .contains(exception.getUpdated());
+    }
+
+    @Test
+    void shouldPopulateExistingIdvId() {
+        CannotUpdateIdvIdException exception = CannotUpdateIdvIdExceptionMother.build();
+
+        Optional<ApiError> error = handler.apply(exception);
+
+        assertThat(error).map(e -> (CannotUpdateIdvIdError) e)
+                .map(CannotUpdateIdvIdError::getExisting)
+                .contains(exception.getExisting());
+    }
+
+    @Test
+    void shouldNotSupportAnyOtherException() {
+        Throwable other = new Throwable();
+
+        Optional<ApiError> error = handler.apply(other);
+
+        assertThat(error).isEmpty();
     }
 
 }

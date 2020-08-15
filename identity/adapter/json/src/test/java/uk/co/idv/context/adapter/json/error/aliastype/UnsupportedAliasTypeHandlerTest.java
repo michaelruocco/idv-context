@@ -3,7 +3,8 @@ package uk.co.idv.context.adapter.json.error.aliastype;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.context.entities.alias.UnsupportedAliasTypeExeception;
+import uk.co.idv.context.entities.alias.UnsupportedAliasTypeExceptionMother;
+import uk.co.idv.context.entities.alias.UnsupportedAliasTypeException;
 
 import java.util.Optional;
 
@@ -15,38 +16,30 @@ class UnsupportedAliasTypeHandlerTest {
     private final ErrorHandler handler = new UnsupportedAliasTypeHandler();
 
     @Test
-    void shouldSupportCannotUpdateIdvIdException() {
-        UnsupportedAliasTypeExeception exception = mock(UnsupportedAliasTypeExeception.class);
+    void shouldConvertCannotUpdateIdvIdExceptionToError() {
+        UnsupportedAliasTypeException exception = mock(UnsupportedAliasTypeException.class);
 
-        assertThat(handler.apply(exception)).isPresent();
+        Optional<ApiError> error = handler.apply(exception);
+
+        assertThat(error).containsInstanceOf(UnsupportedAliasTypeError.class);
+    }
+
+    @Test
+    void shouldPopulateErrorMessageWithExceptionMessage() {
+        UnsupportedAliasTypeException exception = UnsupportedAliasTypeExceptionMother.build();
+
+        Optional<ApiError> error = handler.apply(exception);
+
+        assertThat(error).get().hasFieldOrPropertyWithValue("message", exception.getMessage());
     }
 
     @Test
     void shouldNotSupportAnyOtherException() {
         Throwable other = new Throwable();
 
-        assertThat(handler.apply(other)).isEmpty();
-    }
+        Optional<ApiError> error = handler.apply(other);
 
-    @Test
-    void shouldReturnUnsupportedAliasTypeError() {
-        UnsupportedAliasTypeExeception cause = mock(UnsupportedAliasTypeExeception.class);
-
-        Optional<ApiError> error = handler.apply(cause);
-
-        assertThat(error).containsInstanceOf(UnsupportedAliasTypeError.class);
-    }
-
-    @Test
-    void shouldPopulateMessageWithAliasType() {
-        String type = "my-type";
-        UnsupportedAliasTypeExeception cause = new UnsupportedAliasTypeExeception(type);
-
-        Optional<ApiError> error = handler.apply(cause);
-
-        assertThat(error).isPresent();
-        UnsupportedAliasTypeError specificError = (UnsupportedAliasTypeError) error.get();
-        assertThat(specificError.getMessage()).isEqualTo(type);
+        assertThat(error).isEmpty();
     }
 
 }

@@ -15,26 +15,21 @@ class CountryNotProvidedHandlerTest {
     private final ErrorHandler handler = new CountryNotProvidedHandler();
 
     @Test
-    void shouldSupportCountryNotProvidedException() {
+    void shouldConvertCountryNotProvidedExceptionToError() {
         CountryNotProvidedException exception = mock(CountryNotProvidedException.class);
 
-        assertThat(handler.apply(exception)).isPresent();
+        Optional<ApiError> error = handler.apply(exception);
+
+        assertThat(error).containsInstanceOf(CountryNotProvidedError.class);
     }
 
     @Test
     void shouldNotSupportAnyOtherException() {
         Throwable other = new Throwable();
 
-        assertThat(handler.apply(other)).isEmpty();
-    }
+        Optional<ApiError> error = handler.apply(other);
 
-    @Test
-    void shouldReturnCountryMismatchError() {
-        CountryNotProvidedException cause = mock(CountryNotProvidedException.class);
-
-        Optional<ApiError> error = handler.apply(cause);
-
-        assertThat(error).containsInstanceOf(CountryNotProvidedError.class);
+        assertThat(error).isEmpty();
     }
 
 }

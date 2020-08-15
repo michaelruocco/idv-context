@@ -6,7 +6,7 @@ import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.config.identity.respository.inmemory.InMemoryIdentityRepositoryConfig;
 import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.UnsupportedAliasTypeExeception;
+import uk.co.idv.context.entities.alias.UnsupportedAliasTypeException;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumber;
@@ -47,7 +47,7 @@ public class IdentityIntegrationTest {
         Throwable error = catchThrowable(() -> facade.find(type, "123"));
 
         assertThat(error)
-                .isInstanceOf(UnsupportedAliasTypeExeception.class)
+                .isInstanceOf(UnsupportedAliasTypeException.class)
                 .hasMessage(type);
     }
 

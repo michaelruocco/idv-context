@@ -48,7 +48,7 @@ class DefaultAliasFactoryTest {
         Throwable error = catchThrowable(() -> factory.build(type, "ABC123"));
 
         assertThat(error)
-                .isInstanceOf(UnsupportedAliasTypeExeception.class)
+                .isInstanceOf(UnsupportedAliasTypeException.class)
                 .hasMessage(type);
     }
 
