@@ -34,14 +34,17 @@ public class LockoutPolicy implements Policy {
         return recordAttemptPolicy.shouldRecordAttempt(request);
     }
 
+    @Override
     public UUID getId() {
         return key.getId();
     }
 
+    @Override
     public boolean appliesTo(PolicyRequest request) {
         return key.appliesTo(request);
     }
 
+    @Override
     public int getPriority() {
         return key.getPriority();
     }
