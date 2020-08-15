@@ -83,6 +83,19 @@ class PolicyServiceTest {
     }
 
     @Test
+    void shouldLoadHighestPriorityPolicyByRequest() {
+        PolicyRequest request = mock(DefaultPolicyRequest.class);
+        Policies<Policy> policies = mock(Policies.class);
+        given(load.load(request)).willReturn(policies);
+        Policy expectedPolicy = mock(Policy.class);
+        given(policies.getHighestPriority()).willReturn(expectedPolicy);
+
+        Policy policy = service.loadHighestPriority(request);
+
+        assertThat(policy).isEqualTo(expectedPolicy);
+    }
+
+    @Test
     void shouldLoadPoliciesByKey() {
         PolicyKey key = mock(PolicyKey.class);
         Policies<Policy> expectedPolicies = mock(Policies.class);

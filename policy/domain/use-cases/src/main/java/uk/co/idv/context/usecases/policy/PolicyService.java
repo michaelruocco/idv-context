@@ -38,6 +38,10 @@ public class PolicyService<T extends Policy> {
         return load.load(id);
     }
 
+    public T loadHighestPriority(PolicyRequest request) {
+        return load(request).getHighestPriority();
+    }
+
     public Policies<T> load(PolicyRequest request) {
         return load.load(request);
     }
