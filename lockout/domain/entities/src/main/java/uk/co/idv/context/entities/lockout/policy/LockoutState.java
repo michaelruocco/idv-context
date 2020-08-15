@@ -2,14 +2,14 @@ package uk.co.idv.context.entities.lockout.policy;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.alias.IdvId;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import java.util.UUID;
 
 @RequiredArgsConstructor
 public abstract class LockoutState {
 
-    private final VerificationAttempts attempts;
+    private final Attempts attempts;
 
     public UUID getId() {
         return attempts.getId();
@@ -19,7 +19,7 @@ public abstract class LockoutState {
         return attempts.getIdvId();
     }
 
-    public VerificationAttempts getAttempts() {
+    public Attempts getAttempts() {
         return attempts;
     }
 

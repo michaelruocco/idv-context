@@ -3,7 +3,7 @@ package uk.co.idv.context.entities.lockout.policy;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import java.util.UUID;
 
@@ -94,10 +94,10 @@ class LockoutPolicyTest {
     @Test
     void shouldReturnAttemptsFromResetFilter() {
         LockoutStateRequest request = mock(LockoutStateRequest.class);
-        VerificationAttempts expectedAttempts = mock(VerificationAttempts.class);
+        Attempts expectedAttempts = mock(Attempts.class);
         given(attemptsFilter.filter(request)).willReturn(expectedAttempts);
 
-        VerificationAttempts attempts = policy.reset(request);
+        Attempts attempts = policy.reset(request);
 
         assertThat(attempts).isEqualTo(expectedAttempts);
     }

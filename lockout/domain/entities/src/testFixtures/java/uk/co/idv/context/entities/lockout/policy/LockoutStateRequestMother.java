@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.lockout.policy;
 
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttemptMother;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttemptsMother;
+import uk.co.idv.context.entities.lockout.attempt.AttemptMother;
+import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
 
 public interface LockoutStateRequestMother {
 
@@ -15,14 +15,14 @@ public interface LockoutStateRequestMother {
 
     static LockoutStateRequest withNumberOfAttempts(int numberOfAttempts) {
         return builder()
-                .attempts(VerificationAttemptsMother.withNumberOfAttempts(numberOfAttempts))
+                .attempts(AttemptsMother.withNumberOfAttempts(numberOfAttempts))
                 .build();
     }
 
     static LockoutStateRequest.LockoutStateRequestBuilder builder() {
         return LockoutStateRequest.builder()
-                .newAttempt(VerificationAttemptMother.build())
-                .attempts(VerificationAttemptsMother.build());
+                .newAttempt(AttemptMother.build())
+                .attempts(AttemptsMother.build());
     }
 
 }

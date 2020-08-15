@@ -11,7 +11,7 @@ import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 import uk.co.idv.context.entities.policy.PolicyRequestMother;
 import uk.co.idv.context.entities.policy.key.ChannelPolicyKeyMother;
-import uk.co.idv.context.usecases.lockout.LockoutPolicyService;
+import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 import uk.co.idv.context.usecases.policy.load.PolicyNotFoundException;
 
 import java.util.UUID;

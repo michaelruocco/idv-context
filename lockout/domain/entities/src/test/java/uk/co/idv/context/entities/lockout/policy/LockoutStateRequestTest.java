@@ -1,10 +1,10 @@
 package uk.co.idv.context.entities.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempt;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttemptMother;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttemptsMother;
+import uk.co.idv.context.entities.lockout.attempt.Attempt;
+import uk.co.idv.context.entities.lockout.attempt.AttemptMother;
+import uk.co.idv.context.entities.lockout.attempt.Attempts;
+import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -17,7 +17,7 @@ class LockoutStateRequestTest {
 
     @Test
     void shouldReturnNewAttempt() {
-        VerificationAttempt attempt = VerificationAttemptMother.build();
+        Attempt attempt = AttemptMother.build();
 
         LockoutStateRequest request = LockoutStateRequest.builder()
                 .newAttempt(attempt)
@@ -28,7 +28,7 @@ class LockoutStateRequestTest {
 
     @Test
     void shouldReturnAttempts() {
-        VerificationAttempts attempts = VerificationAttemptsMother.build();
+        Attempts attempts = AttemptsMother.build();
 
         LockoutStateRequest request = LockoutStateRequest.builder()
                 .attempts(attempts)
@@ -39,7 +39,7 @@ class LockoutStateRequestTest {
 
     @Test
     void shouldReturnNumberOfAttempts() {
-        VerificationAttempts attempts = VerificationAttemptsMother.build();
+        Attempts attempts = AttemptsMother.build();
 
         LockoutStateRequest request = LockoutStateRequest.builder()
                 .attempts(attempts)
@@ -50,7 +50,7 @@ class LockoutStateRequestTest {
 
     @Test
     void shouldReturnAliasFromNewAttempt() {
-        VerificationAttempt attempt = VerificationAttemptMother.build();
+        Attempt attempt = AttemptMother.build();
 
         LockoutStateRequest request = LockoutStateRequest.builder()
                 .newAttempt(attempt)
@@ -61,7 +61,7 @@ class LockoutStateRequestTest {
 
     @Test
     void shouldReturnTrueIfNewAttemptIsBeforeNow() {
-        VerificationAttempt attempt = VerificationAttemptMother.build();
+        Attempt attempt = AttemptMother.build();
         LockoutStateRequest request = LockoutStateRequest.builder()
                 .newAttempt(attempt)
                 .build();
@@ -74,7 +74,7 @@ class LockoutStateRequestTest {
 
     @Test
     void shouldReturnFalseIfNewAttemptIsAfterNow() {
-        VerificationAttempt attempt = VerificationAttemptMother.build();
+        Attempt attempt = AttemptMother.build();
         LockoutStateRequest request = LockoutStateRequest.builder()
                 .newAttempt(attempt)
                 .build();
@@ -98,8 +98,8 @@ class LockoutStateRequestTest {
         assertThat(result).isEqualTo(mostRecentTimestamp.plus(duration));
     }
 
-    private VerificationAttempts verificationAttemptsWithMostRecentTimestamp(Instant timestamp) {
-        VerificationAttempts attempts = mock(VerificationAttempts.class);
+    private Attempts verificationAttemptsWithMostRecentTimestamp(Instant timestamp) {
+        Attempts attempts = mock(Attempts.class);
         given(attempts.getMostRecentTimestamp()).willReturn(timestamp);
         return attempts;
     }

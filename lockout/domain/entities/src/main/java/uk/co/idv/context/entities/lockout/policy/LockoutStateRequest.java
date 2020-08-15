@@ -3,8 +3,8 @@ package uk.co.idv.context.entities.lockout.policy;
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempt;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.context.entities.lockout.attempt.Attempt;
+import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -13,8 +13,8 @@ import java.time.Instant;
 @Data
 public class LockoutStateRequest {
 
-    private final VerificationAttempt newAttempt;
-    private final VerificationAttempts attempts;
+    private final Attempt newAttempt;
+    private final Attempts attempts;
 
     public int getNumberOfAttempts() {
         return attempts.size();

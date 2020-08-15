@@ -2,8 +2,8 @@ package uk.co.idv.context.config.lockout;
 
 import lombok.Builder;
 import uk.co.idv.context.adapter.json.lockout.error.handler.LockoutErrorHandler;
-import uk.co.idv.context.usecases.lockout.LockoutPolicyRepository;
-import uk.co.idv.context.usecases.lockout.LockoutPolicyService;
+import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyRepository;
+import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 
 @Builder
 public class LockoutConfig {

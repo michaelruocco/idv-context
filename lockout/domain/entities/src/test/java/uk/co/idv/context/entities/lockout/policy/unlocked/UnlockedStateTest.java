@@ -2,8 +2,8 @@ package uk.co.idv.context.entities.lockout.policy.unlocked;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.IdvId;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttemptsMother;
+import uk.co.idv.context.entities.lockout.attempt.Attempts;
+import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 
 import java.util.UUID;
@@ -12,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class UnlockedStateTest {
 
-    private final VerificationAttempts attempts = VerificationAttemptsMother.build();
+    private final Attempts attempts = AttemptsMother.build();
     private final LockoutState state = new UnlockedState(attempts);
 
     @Test
@@ -31,7 +31,7 @@ class UnlockedStateTest {
 
     @Test
     void shouldReturnAttempts() {
-        VerificationAttempts stateAttempts = state.getAttempts();
+        Attempts stateAttempts = state.getAttempts();
 
         assertThat(stateAttempts).isEqualTo(attempts);
     }

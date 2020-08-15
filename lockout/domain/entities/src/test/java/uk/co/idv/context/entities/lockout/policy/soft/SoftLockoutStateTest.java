@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.lockout.policy.soft;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -10,7 +10,7 @@ import static org.mockito.Mockito.mock;
 class SoftLockoutStateTest {
 
     private final SoftLock lock = SoftLockMother.build();
-    private final VerificationAttempts attempts = mock(VerificationAttempts.class);
+    private final Attempts attempts = mock(Attempts.class);
 
     private final SoftLockoutState state = SoftLockoutState.builder()
             .attempts(attempts)

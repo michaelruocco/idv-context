@@ -5,22 +5,22 @@ import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempt.VerificationAttemptBuilder;
+import uk.co.idv.context.entities.lockout.attempt.Attempt.AttemptBuilder;
 
 import java.time.Instant;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class VerificationAttemptTest {
+class AttemptTest {
 
-    private final VerificationAttemptBuilder builder = VerificationAttempt.builder();
+    private final AttemptBuilder builder = Attempt.builder();
 
     @Test
     void shouldReturnSuccessful() {
         boolean successful = true;
 
-        VerificationAttempt attempt = builder.successful(successful).build();
+        Attempt attempt = builder.successful(successful).build();
 
         assertThat(attempt.isSuccessful()).isTrue();
     }
@@ -29,7 +29,7 @@ class VerificationAttemptTest {
     void shouldReturnContextId() {
         UUID contextId = UUID.randomUUID();
 
-        VerificationAttempt attempt = builder.contextId(contextId).build();
+        Attempt attempt = builder.contextId(contextId).build();
 
         assertThat(attempt.getContextId()).isEqualTo(contextId);
     }
@@ -38,7 +38,7 @@ class VerificationAttemptTest {
     void shouldReturnChannelId() {
         String channelId = "channel-id";
 
-        VerificationAttempt attempt = builder.channelId(channelId).build();
+        Attempt attempt = builder.channelId(channelId).build();
 
         assertThat(attempt.getChannelId()).isEqualTo(channelId);
     }
@@ -47,7 +47,7 @@ class VerificationAttemptTest {
     void shouldReturnActivityName() {
         String activityName = "activity-name";
 
-        VerificationAttempt attempt = builder.activityName(activityName).build();
+        Attempt attempt = builder.activityName(activityName).build();
 
         assertThat(attempt.getActivityName()).isEqualTo(activityName);
     }
@@ -56,7 +56,7 @@ class VerificationAttemptTest {
     void shouldReturnAlias() {
         Alias alias = DefaultAliasMother.build();
 
-        VerificationAttempt attempt = builder.alias(alias).build();
+        Attempt attempt = builder.alias(alias).build();
 
         assertThat(attempt.getAlias()).isEqualTo(alias);
     }
@@ -65,7 +65,7 @@ class VerificationAttemptTest {
     void shouldReturnAliasType() {
         Alias alias = DefaultAliasMother.build();
 
-        VerificationAttempt attempt = builder.alias(alias).build();
+        Attempt attempt = builder.alias(alias).build();
 
         assertThat(attempt.getAliasType()).isEqualTo(alias.getType());
     }
@@ -73,7 +73,7 @@ class VerificationAttemptTest {
     @Test
     void shouldReturnHasAliasTrueIfAliasMatches() {
         Alias alias = DefaultAliasMother.build();
-        VerificationAttempt attempt = builder.alias(alias).build();
+        Attempt attempt = builder.alias(alias).build();
 
         boolean hasAlias = attempt.hasAlias(alias);
 
@@ -83,7 +83,7 @@ class VerificationAttemptTest {
     @Test
     void shouldReturnHasAliasFalseIfAliasDoesNotMatch() {
         Alias alias = DefaultAliasMother.build();
-        VerificationAttempt attempt = builder.alias(alias).build();
+        Attempt attempt = builder.alias(alias).build();
 
         boolean hasAlias = attempt.hasAlias(IdvIdMother.idvId());
 
@@ -94,7 +94,7 @@ class VerificationAttemptTest {
     void shouldReturnIdvId() {
         IdvId idvId = IdvIdMother.idvId();
 
-        VerificationAttempt attempt = builder.idvId(idvId).build();
+        Attempt attempt = builder.idvId(idvId).build();
 
         assertThat(attempt.getIdvId()).isEqualTo(idvId);
     }
@@ -103,7 +103,7 @@ class VerificationAttemptTest {
     void shouldReturnMethodName() {
         String methodName = "method-name";
 
-        VerificationAttempt attempt = builder.methodName(methodName).build();
+        Attempt attempt = builder.methodName(methodName).build();
 
         assertThat(attempt.getMethodName()).isEqualTo(methodName);
     }
@@ -112,7 +112,7 @@ class VerificationAttemptTest {
     void shouldReturnVerificationId() {
         UUID verificationId = UUID.randomUUID();
 
-        VerificationAttempt attempt = builder.verificationId(verificationId).build();
+        Attempt attempt = builder.verificationId(verificationId).build();
 
         assertThat(attempt.getVerificationId()).isEqualTo(verificationId);
     }
@@ -121,7 +121,7 @@ class VerificationAttemptTest {
     void shouldReturnTimestamp() {
         Instant timestamp = Instant.now();
 
-        VerificationAttempt attempt = builder.timestamp(timestamp).build();
+        Attempt attempt = builder.timestamp(timestamp).build();
 
         assertThat(attempt.getTimestamp()).isEqualTo(timestamp);
     }

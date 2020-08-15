@@ -4,39 +4,35 @@ import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempt.VerificationAttemptBuilder;
+import uk.co.idv.context.entities.lockout.attempt.Attempt.AttemptBuilder;
 
 import java.time.Instant;
 import java.util.UUID;
 
-public class VerificationAttemptMother {
+public interface AttemptMother {
 
-    private VerificationAttemptMother() {
-        // utility class
-    }
-
-    public static VerificationAttempt withIdvId(IdvId idvId) {
+    static Attempt withIdvId(IdvId idvId) {
         return builder().idvId(idvId).build();
     }
 
-    public static VerificationAttempt withTimestamp(Instant timestamp) {
+    static Attempt withTimestamp(Instant timestamp) {
         return builder().timestamp(timestamp).build();
     }
 
-    public static VerificationAttempt withAlias(Alias alias) {
+    static Attempt withAlias(Alias alias) {
         return builder().alias(alias).build();
     }
 
-    public static VerificationAttempt withChannelId(String channelId) {
+    static Attempt withChannelId(String channelId) {
         return builder().channelId(channelId).build();
     }
 
-    public static VerificationAttempt build() {
+    static Attempt build() {
         return builder().build();
     }
 
-    public static VerificationAttemptBuilder builder() {
-        return VerificationAttempt.builder()
+    static AttemptBuilder builder() {
+        return Attempt.builder()
                 .contextId(UUID.fromString("fb059cfd-5613-49fe-8f34-2264b5da8343"))
                 .channelId("fake-channel")
                 .activityName("fake-activity")

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempt;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.context.entities.lockout.attempt.Attempt;
+import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import java.util.Collections;
 
@@ -23,13 +23,13 @@ public class VerificationAttemptModule extends SimpleModule {
     }
 
     private void setUpVerificationAttempt() {
-        setMixInAnnotation(VerificationAttempt.class, VerificationAttemptMixin.class);
-        addDeserializer(VerificationAttempt.class, new VerificationAttemptDeserializer());
+        setMixInAnnotation(Attempt.class, VerificationAttemptMixin.class);
+        addDeserializer(Attempt.class, new VerificationAttemptDeserializer());
     }
 
     private void setUpVerificationAttempts() {
-        addSerializer(VerificationAttempts.class, new VerificationAttemptsSerializer());
-        addDeserializer(VerificationAttempts.class, new VerificationAttemptsDeserializer());
+        addSerializer(Attempts.class, new VerificationAttemptsSerializer());
+        addDeserializer(Attempts.class, new VerificationAttemptsDeserializer());
     }
 
 }

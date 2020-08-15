@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.lockout.policy.hard;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -11,7 +11,7 @@ class HardLockoutStateTest {
 
     private static final int MAX_NUMBER_OF_ATTEMPTS = 3;
 
-    private final VerificationAttempts attempts = mock(VerificationAttempts.class);
+    private final Attempts attempts = mock(Attempts.class);
 
     private final HardLockoutState state = HardLockoutState.builder()
             .attempts(attempts)

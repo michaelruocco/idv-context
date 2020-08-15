@@ -2,7 +2,7 @@ package uk.co.idv.context.adapter.repository;
 
 import lombok.Builder;
 import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.context.usecases.lockout.LockoutPolicyRepository;
+import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyRepository;
 import uk.co.mruoc.json.JsonConverter;
 
 import java.util.Map;

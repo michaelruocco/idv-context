@@ -7,7 +7,7 @@ import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.key.ChannelPolicyKeyMother;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts.VerificationAttemptsBuilder;
+import uk.co.idv.context.entities.lockout.attempt.Attempts.AttemptsBuilder;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -18,17 +18,17 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
-class VerificationAttemptsTest {
+class AttemptsTest {
 
     @Test
     void shouldThrowExceptionIfConstructedWithAttemptsWithDifferentIdvIds() {
         IdvId idvId = IdvIdMother.idvId();
         IdvId differentIdvId = IdvIdMother.idvId1();
-        Collection<VerificationAttempt> attempts = Arrays.asList(
-                VerificationAttemptMother.withIdvId(idvId),
-                VerificationAttemptMother.withIdvId(differentIdvId)
+        Collection<Attempt> attempts = Arrays.asList(
+                AttemptMother.withIdvId(idvId),
+                AttemptMother.withIdvId(differentIdvId)
         );
-        VerificationAttemptsBuilder builder = VerificationAttempts.builder()
+        AttemptsBuilder builder = Attempts.builder()
                 .attempts(attempts);
 
         IdvIdMismatchException error = catchThrowableOfType(
@@ -43,10 +43,10 @@ class VerificationAttemptsTest {
     void shouldThrowExceptionIfConstructedWithAttemptWithDifferentIdvId() {
         IdvId idvId = IdvIdMother.idvId();
         IdvId differentIdvId = IdvIdMother.idvId1();
-        Collection<VerificationAttempt> attempts = Collections.singleton(
-                VerificationAttemptMother.withIdvId(differentIdvId)
+        Collection<Attempt> attempts = Collections.singleton(
+                AttemptMother.withIdvId(differentIdvId)
         );
-        VerificationAttemptsBuilder builder = VerificationAttempts.builder()
+        AttemptsBuilder builder = Attempts.builder()
                 .idvId(idvId)
                 .attempts(attempts);
 
@@ -62,7 +62,7 @@ class VerificationAttemptsTest {
     void shouldReturnId() {
         UUID id = UUID.randomUUID();
 
-        VerificationAttempts attempts = VerificationAttempts.builder()
+        Attempts attempts = Attempts.builder()
                 .id(id)
                 .build();
 
@@ -73,7 +73,7 @@ class VerificationAttemptsTest {
     void shouldReturnIdvId() {
         IdvId idvId = IdvIdMother.idvId();
 
-        VerificationAttempts attempts = VerificationAttempts.builder()
+        Attempts attempts = Attempts.builder()
                 .idvId(idvId)
                 .build();
 
@@ -83,12 +83,12 @@ class VerificationAttemptsTest {
     @Test
     void shouldContainAttempts() {
         IdvId idvId = IdvIdMother.idvId();
-        Collection<VerificationAttempt> attemptCollection = Arrays.asList(
-                VerificationAttemptMother.withIdvId(idvId),
-                VerificationAttemptMother.withIdvId(idvId)
+        Collection<Attempt> attemptCollection = Arrays.asList(
+                AttemptMother.withIdvId(idvId),
+                AttemptMother.withIdvId(idvId)
         );
 
-        VerificationAttempts attempts = VerificationAttempts.builder()
+        Attempts attempts = Attempts.builder()
                 .idvId(idvId)
                 .attempts(attemptCollection)
                 .build();
@@ -99,12 +99,12 @@ class VerificationAttemptsTest {
     @Test
     void shouldReturnSize() {
         IdvId idvId = IdvIdMother.idvId();
-        Collection<VerificationAttempt> attemptCollection = Arrays.asList(
-                VerificationAttemptMother.withIdvId(idvId),
-                VerificationAttemptMother.withIdvId(idvId)
+        Collection<Attempt> attemptCollection = Arrays.asList(
+                AttemptMother.withIdvId(idvId),
+                AttemptMother.withIdvId(idvId)
         );
 
-        VerificationAttempts attempts = VerificationAttempts.builder()
+        Attempts attempts = Attempts.builder()
                 .idvId(idvId)
                 .attempts(attemptCollection)
                 .build();
@@ -115,9 +115,9 @@ class VerificationAttemptsTest {
     @Test
     void shouldThrowExceptionIfAttemptAddedWithDifferentIdvId() {
         IdvId idvId = IdvIdMother.idvId();
-        VerificationAttempts attempts = VerificationAttemptsMother.withIdvId(idvId);
+        Attempts attempts = AttemptsMother.withIdvId(idvId);
         IdvId otherIdvId = IdvIdMother.idvId1();
-        VerificationAttempt attempt = VerificationAttemptMother.withIdvId(otherIdvId);
+        Attempt attempt = AttemptMother.withIdvId(otherIdvId);
 
         IdvIdMismatchException error = catchThrowableOfType(
                 () -> attempts.add(attempt),
@@ -130,24 +130,24 @@ class VerificationAttemptsTest {
     @Test
     void shouldAddAttemptWithSameIdvId() {
         IdvId idvId = IdvIdMother.idvId();
-        VerificationAttempts attempts = VerificationAttemptsMother.withIdvId(idvId);
-        VerificationAttempt attempt = VerificationAttemptMother.withIdvId(idvId);
+        Attempts attempts = AttemptsMother.withIdvId(idvId);
+        Attempt attempt = AttemptMother.withIdvId(idvId);
 
-        VerificationAttempts updatedAttempts = attempts.add(attempt);
+        Attempts updatedAttempts = attempts.add(attempt);
 
         assertThat(updatedAttempts).containsExactly(attempt);
     }
 
     @Test
     void shouldRemoveAttempt() {
-        VerificationAttempt attemptToRemove = VerificationAttemptMother.build();
-        VerificationAttempts attempts = VerificationAttemptsMother.builder()
+        Attempt attemptToRemove = AttemptMother.build();
+        Attempts attempts = AttemptsMother.builder()
                 .idvId(attemptToRemove.getIdvId())
                 .attempts(Collections.singleton(attemptToRemove))
                 .build();
-        VerificationAttempts attemptsToRemove = VerificationAttemptsMother.withAttempts(attemptToRemove);
+        Attempts attemptsToRemove = AttemptsMother.withAttempts(attemptToRemove);
 
-        VerificationAttempts updatedAttempts = attempts.remove(attemptsToRemove);
+        Attempts updatedAttempts = attempts.remove(attemptsToRemove);
 
         assertThat(updatedAttempts).isEmpty();
     }
@@ -155,11 +155,11 @@ class VerificationAttemptsTest {
     @Test
     void shouldReturnMostRecentTimestamp() {
         Instant expectedMostRecent = Instant.parse("2020-07-25T09:15:00.000Z");
-        Collection<VerificationAttempt> attemptCollection = Arrays.asList(
-                VerificationAttemptMother.withTimestamp(Instant.parse("2020-07-25T09:05:00.000Z")),
-                VerificationAttemptMother.withTimestamp(expectedMostRecent)
+        Collection<Attempt> attemptCollection = Arrays.asList(
+                AttemptMother.withTimestamp(Instant.parse("2020-07-25T09:05:00.000Z")),
+                AttemptMother.withTimestamp(expectedMostRecent)
         );
-        VerificationAttempts attempts = VerificationAttempts.builder()
+        Attempts attempts = Attempts.builder()
                 .idvId(IdvIdMother.idvId())
                 .attempts(attemptCollection)
                 .build();
@@ -172,17 +172,17 @@ class VerificationAttemptsTest {
     @Test
     void shouldReturnAttemptsWithAlias() {
         Alias alias = DefaultAliasMother.build();
-        VerificationAttempt attemptWithAlias = VerificationAttemptMother.withAlias(alias);
-        Collection<VerificationAttempt> attemptCollection = Arrays.asList(
-                VerificationAttemptMother.withAlias(IdvIdMother.idvId()),
+        Attempt attemptWithAlias = AttemptMother.withAlias(alias);
+        Collection<Attempt> attemptCollection = Arrays.asList(
+                AttemptMother.withAlias(IdvIdMother.idvId()),
                 attemptWithAlias
         );
-        VerificationAttempts attempts = VerificationAttempts.builder()
+        Attempts attempts = Attempts.builder()
                 .idvId(IdvIdMother.idvId())
                 .attempts(attemptCollection)
                 .build();
 
-        VerificationAttempts attemptsWithAlias = attempts.with(alias);
+        Attempts attemptsWithAlias = attempts.with(alias);
 
         assertThat(attemptsWithAlias).containsExactly(attemptWithAlias);
     }
@@ -190,17 +190,17 @@ class VerificationAttemptsTest {
     @Test
     void shouldReturnAttemptsApplyingToPolicyKey() {
         PolicyKey key = ChannelPolicyKeyMother.build();
-        VerificationAttempt applicableAttempt = VerificationAttemptMother.withChannelId(key.getChannelId());
-        Collection<VerificationAttempt> attemptCollection = Arrays.asList(
-                VerificationAttemptMother.withChannelId("other-channel"),
+        Attempt applicableAttempt = AttemptMother.withChannelId(key.getChannelId());
+        Collection<Attempt> attemptCollection = Arrays.asList(
+                AttemptMother.withChannelId("other-channel"),
                 applicableAttempt
         );
-        VerificationAttempts attempts = VerificationAttempts.builder()
+        Attempts attempts = Attempts.builder()
                 .idvId(IdvIdMother.idvId())
                 .attempts(attemptCollection)
                 .build();
 
-        VerificationAttempts applicableAttempts = attempts.applyingTo(key);
+        Attempts applicableAttempts = attempts.applyingTo(key);
 
         assertThat(applicableAttempts).containsExactly(applicableAttempt);
     }

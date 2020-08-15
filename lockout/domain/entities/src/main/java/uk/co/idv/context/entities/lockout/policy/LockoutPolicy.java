@@ -7,7 +7,7 @@ import lombok.Getter;
 import uk.co.idv.context.entities.policy.Policy;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import java.util.UUID;
 
@@ -26,7 +26,7 @@ public class LockoutPolicy implements Policy {
         return stateCalculator.calculate(attempts);
     }
 
-    public VerificationAttempts reset(LockoutStateRequest request) {
+    public Attempts reset(LockoutStateRequest request) {
         return attemptsFilter.filter(request);
     }
 

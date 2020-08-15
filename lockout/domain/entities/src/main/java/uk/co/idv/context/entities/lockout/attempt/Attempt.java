@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Builder
 @Data
-public class VerificationAttempt implements PolicyRequest {
+public class Attempt implements PolicyRequest {
 
     private final String channelId;
     private final String activityName;

@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.lockout;
+package uk.co.idv.context.usecases.lockout.policy;
 
 import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.context.usecases.policy.PolicyService;

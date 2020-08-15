@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.lockout.policy.soft;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttemptsMother;
+import uk.co.idv.context.entities.lockout.attempt.Attempts;
+import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 import uk.co.idv.context.entities.lockout.policy.LockoutStateRequest;
 import uk.co.idv.context.entities.lockout.policy.unlocked.UnlockedState;
@@ -18,7 +18,7 @@ class SoftLockoutStateFactoryTest {
 
     private final LockoutStateRequest request = mock(LockoutStateRequest.class);
     private final Duration duration = Duration.ofMinutes(5);
-    private final VerificationAttempts attempts = VerificationAttemptsMother.build();
+    private final Attempts attempts = AttemptsMother.build();
 
     private final SoftLockoutStateFactory factory = new SoftLockoutStateFactory();
 

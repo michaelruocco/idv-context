@@ -6,23 +6,23 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.IdvId;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempt;
+import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import java.time.Instant;
 import java.util.UUID;
 
-public class VerificationAttemptDeserializer extends StdDeserializer<VerificationAttempt> {
+public class VerificationAttemptDeserializer extends StdDeserializer<Attempt> {
 
     public VerificationAttemptDeserializer() {
-        super(VerificationAttempt.class);
+        super(Attempt.class);
     }
 
     @Override
-    public VerificationAttempt deserialize(JsonParser parser, DeserializationContext context) {
+    public Attempt deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
-        return VerificationAttempt.builder()
+        return Attempt.builder()
                 .channelId(node.get("channelId").asText())
                 .activityName(node.get("activityName").asText())
                 .alias(JsonNodeConverter.toObject(node.get("alias"), parser, Alias.class))

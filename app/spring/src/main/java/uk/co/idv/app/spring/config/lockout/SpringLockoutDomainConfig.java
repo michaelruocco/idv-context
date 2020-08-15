@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.config.lockout.LockoutConfig;
 import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
-import uk.co.idv.context.usecases.lockout.LockoutPolicyService;
+import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 
 @Configuration
 public class SpringLockoutDomainConfig {

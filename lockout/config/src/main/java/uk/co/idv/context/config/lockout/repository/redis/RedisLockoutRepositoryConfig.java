@@ -3,7 +3,7 @@ package uk.co.idv.context.config.lockout.repository.redis;
 import lombok.Builder;
 import uk.co.idv.context.adapter.repository.RedisLockoutPolicyRepository;
 import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
-import uk.co.idv.context.usecases.lockout.LockoutPolicyRepository;
+import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyRepository;
 import uk.co.mruoc.json.JsonConverter;
 
 import java.util.Map;

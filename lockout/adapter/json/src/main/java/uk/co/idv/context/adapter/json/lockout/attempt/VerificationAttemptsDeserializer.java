@@ -6,28 +6,28 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.entities.alias.IdvId;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempt;
-import uk.co.idv.context.entities.lockout.attempt.VerificationAttempts;
+import uk.co.idv.context.entities.lockout.attempt.Attempt;
+import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import java.util.Collection;
 import java.util.UUID;
 
-public class VerificationAttemptsDeserializer extends StdDeserializer<VerificationAttempts> {
+public class VerificationAttemptsDeserializer extends StdDeserializer<Attempts> {
 
-    private static final TypeReference<Collection<VerificationAttempt>> ATTEMPT_COLLECTION = new TypeReference<>() {
+    private static final TypeReference<Collection<Attempt>> ATTEMPT_COLLECTION = new TypeReference<>() {
         // intentionally blank
     };
 
     public VerificationAttemptsDeserializer() {
-        super(VerificationAttempts.class);
+        super(Attempts.class);
     }
 
     @Override
-    public VerificationAttempts deserialize(JsonParser parser, DeserializationContext context) {
+    public Attempts deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
-        return VerificationAttempts.builder()
+        return Attempts.builder()
                 .id(UUID.fromString(node.get("id").asText()))
                 .idvId(new IdvId(node.get("idvId").asText()))
                 .attempts(JsonNodeConverter.toCollection(node.get("attempts"), parser, ATTEMPT_COLLECTION))

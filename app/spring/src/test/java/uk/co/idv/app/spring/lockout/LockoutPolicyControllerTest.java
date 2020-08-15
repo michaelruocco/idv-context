@@ -9,7 +9,7 @@ import uk.co.idv.context.entities.lockout.policy.soft.SoftLockoutPolicyMother;
 import uk.co.idv.context.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.entities.policy.PolicyRequest;
-import uk.co.idv.context.usecases.lockout.LockoutPolicyService;
+import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 
 import java.util.UUID;
 

@@ -20,21 +20,21 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Data
-public class VerificationAttempts implements Iterable<VerificationAttempt> {
+public class Attempts implements Iterable<Attempt> {
 
     private final UUID id;
     private final IdvId idvId;
 
     @With
     @Getter(AccessLevel.NONE)
-    private final Collection<VerificationAttempt> attempts;
+    private final Collection<Attempt> attempts;
 
-    public static VerificationAttemptsBuilder builder() {
-        return new VerificationAttemptsBuilder();
+    public static AttemptsBuilder builder() {
+        return new AttemptsBuilder();
     }
 
     @Override
-    public Iterator<VerificationAttempt> iterator() {
+    public Iterator<Attempt> iterator() {
         return attempts.iterator();
     }
 
@@ -46,7 +46,7 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return attempts.size();
     }
 
-    public VerificationAttempts add(VerificationAttempt attempt) {
+    public Attempts add(Attempt attempt) {
         validate(attempt.getIdvId());
         return withAttempts(addToAttempts(attempt));
     }
@@ -55,13 +55,13 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         return getMostRecent().getTimestamp();
     }
 
-    public VerificationAttempts with(Alias alias) {
+    public Attempts with(Alias alias) {
         return withAttempts(attempts.stream()
                 .filter(attempt -> attempt.hasAlias(alias))
                 .collect(Collectors.toList()));
     }
 
-    public VerificationAttempts applyingTo(PolicyKey key) {
+    public Attempts applyingTo(PolicyKey key) {
         return withAttempts(attempts.stream()
                 .filter(key::appliesTo)
                 .collect(Collectors.toList()));
@@ -73,47 +73,47 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
         }
     }
 
-    public VerificationAttempts remove(VerificationAttempts attemptsToRemove) {
+    public Attempts remove(Attempts attemptsToRemove) {
         return withAttempts(CollectionUtils.removeAll(attempts, attemptsToRemove.attempts));
     }
 
-    private Collection<VerificationAttempt> addToAttempts(VerificationAttempt attempt) {
-        Collection<VerificationAttempt> updated = new ArrayList<>(attempts);
+    private Collection<Attempt> addToAttempts(Attempt attempt) {
+        Collection<Attempt> updated = new ArrayList<>(attempts);
         updated.add(attempt);
         return updated;
     }
 
-    private VerificationAttempt getMostRecent() {
-        return Collections.max(attempts, Comparator.comparing(VerificationAttempt::getTimestamp));
+    private Attempt getMostRecent() {
+        return Collections.max(attempts, Comparator.comparing(Attempt::getTimestamp));
     }
 
-    public static class VerificationAttemptsBuilder {
+    public static class AttemptsBuilder {
 
         private UUID id;
         private IdvId idvId;
-        private Collection<VerificationAttempt> attempts = Collections.emptyList();
+        private Collection<Attempt> attempts = Collections.emptyList();
 
-        public VerificationAttemptsBuilder id(UUID id) {
+        public AttemptsBuilder id(UUID id) {
             this.id = id;
             return this;
         }
 
-        public VerificationAttemptsBuilder idvId(IdvId idvId) {
+        public AttemptsBuilder idvId(IdvId idvId) {
             this.idvId = idvId;
             return this;
         }
 
-        public VerificationAttemptsBuilder attempts(Collection<VerificationAttempt> attempts) {
+        public AttemptsBuilder attempts(Collection<Attempt> attempts) {
             this.attempts = attempts;
             return this;
         }
 
-        public VerificationAttempts build() {
+        public Attempts build() {
             validate(attempts);
-            return new VerificationAttempts(id, idvId, attempts);
+            return new Attempts(id, idvId, attempts);
         }
 
-        private void validate(Collection<VerificationAttempt> attempts) {
+        private void validate(Collection<Attempt> attempts) {
             List<IdvId> idvIds = toDistinctIdvIds(attempts);
             if (idvIds.size() > 1) {
                 throw new IdvIdMismatchException(idvIds);
@@ -123,9 +123,9 @@ public class VerificationAttempts implements Iterable<VerificationAttempt> {
             }
         }
 
-        private static List<IdvId> toDistinctIdvIds(Collection<VerificationAttempt> attempts) {
+        private static List<IdvId> toDistinctIdvIds(Collection<Attempt> attempts) {
             return attempts.stream()
-                    .map(VerificationAttempt::getIdvId)
+                    .map(Attempt::getIdvId)
                     .distinct()
                     .collect(Collectors.toList());
         }

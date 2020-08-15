@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.context.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.context.entities.policy.Policies;
-import uk.co.idv.context.usecases.lockout.LockoutPolicyService;
+import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 
 import java.net.URI;
 import java.util.UUID;
