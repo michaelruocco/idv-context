@@ -12,7 +12,7 @@ import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 class PoliciesSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new PolicyModule());
-    private static final Policies<Policy> POLICIES = PoliciesMother.fake();
+    private static final Policies<Policy> POLICIES = PoliciesMother.singleFakePolicy();
     private static final String JSON = PoliciesJsonMother.build();
 
     @Test
