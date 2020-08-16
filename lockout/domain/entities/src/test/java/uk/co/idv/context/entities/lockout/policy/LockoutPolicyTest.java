@@ -92,14 +92,23 @@ class LockoutPolicyTest {
     }
 
     @Test
-    void shouldReturnAttemptsFromResetFilter() {
-        LockoutStateRequest request = mock(LockoutStateRequest.class);
-        Attempts expectedAttempts = mock(Attempts.class);
-        given(attemptsFilter.filter(request)).willReturn(expectedAttempts);
+    void shouldReturnAttemptsWithApplicableAttemptsRemoved() {
+        Attempts all = mock(Attempts.class);
+        LockoutStateRequest request = givenRequestWithAttempts(all);
+        Attempts applicable = mock(Attempts.class);
+        given(attemptsFilter.filter(request)).willReturn(applicable);
+        Attempts expected = mock(Attempts.class);
+        given(all.remove(applicable)).willReturn(expected);
 
         Attempts attempts = policy.reset(request);
 
-        assertThat(attempts).isEqualTo(expectedAttempts);
+        assertThat(attempts).isEqualTo(expected);
+    }
+
+    private LockoutStateRequest givenRequestWithAttempts(Attempts attempts) {
+        LockoutStateRequest request = mock(LockoutStateRequest.class);
+        given(request.getAttempts()).willReturn(attempts);
+        return request;
     }
 
 }
