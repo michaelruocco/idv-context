@@ -8,6 +8,8 @@ import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.lockout.policy.RecordAttemptPolicy;
 import uk.co.idv.context.entities.lockout.policy.recordattempt.AlwaysRecordAttemptPolicy;
 import uk.co.idv.context.entities.lockout.policy.recordattempt.NeverRecordAttemptPolicy;
+import uk.co.idv.context.entities.lockout.policy.recordattempt.RecordAttemptWhenMethodCompletePolicy;
+import uk.co.idv.context.entities.lockout.policy.recordattempt.RecordAttemptWhenSequenceCompletePolicy;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
@@ -46,7 +48,9 @@ public class RecordAttemptPolicyDeserializer extends StdDeserializer<RecordAttem
     private static Map<String, Class<? extends RecordAttemptPolicy>> buildMappings() {
         return Map.of(
                 AlwaysRecordAttemptPolicy.TYPE, AlwaysRecordAttemptPolicy.class,
-                NeverRecordAttemptPolicy.TYPE, NeverRecordAttemptPolicy.class
+                NeverRecordAttemptPolicy.TYPE, NeverRecordAttemptPolicy.class,
+                RecordAttemptWhenMethodCompletePolicy.TYPE, RecordAttemptWhenMethodCompletePolicy.class,
+                RecordAttemptWhenSequenceCompletePolicy.TYPE, RecordAttemptWhenSequenceCompletePolicy.class
         );
     }
 
