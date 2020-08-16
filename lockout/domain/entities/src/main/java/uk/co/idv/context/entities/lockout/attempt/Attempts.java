@@ -27,7 +27,7 @@ public class Attempts implements Iterable<Attempt> {
 
     @With
     @Getter(AccessLevel.NONE)
-    private final Collection<Attempt> attempts;
+    private final Collection<Attempt> values;
 
     public static AttemptsBuilder builder() {
         return new AttemptsBuilder();
@@ -35,7 +35,7 @@ public class Attempts implements Iterable<Attempt> {
 
     @Override
     public Iterator<Attempt> iterator() {
-        return attempts.iterator();
+        return values.iterator();
     }
 
     public IdvId getIdvId() {
@@ -43,12 +43,12 @@ public class Attempts implements Iterable<Attempt> {
     }
 
     public int size() {
-        return attempts.size();
+        return values.size();
     }
 
     public Attempts add(Attempt attempt) {
         validate(attempt.getIdvId());
-        return withAttempts(addToAttempts(attempt));
+        return withValues(addToAttempts(attempt));
     }
 
     public Instant getMostRecentTimestamp() {
@@ -56,13 +56,13 @@ public class Attempts implements Iterable<Attempt> {
     }
 
     public Attempts with(Alias alias) {
-        return withAttempts(attempts.stream()
+        return withValues(values.stream()
                 .filter(attempt -> attempt.hasAlias(alias))
                 .collect(Collectors.toList()));
     }
 
     public Attempts applyingTo(PolicyKey key) {
-        return withAttempts(attempts.stream()
+        return withValues(values.stream()
                 .filter(key::appliesTo)
                 .collect(Collectors.toList()));
     }
@@ -74,17 +74,17 @@ public class Attempts implements Iterable<Attempt> {
     }
 
     public Attempts remove(Attempts attemptsToRemove) {
-        return withAttempts(CollectionUtils.removeAll(attempts, attemptsToRemove.attempts));
+        return withValues(CollectionUtils.removeAll(values, attemptsToRemove.values));
     }
 
     private Collection<Attempt> addToAttempts(Attempt attempt) {
-        Collection<Attempt> updated = new ArrayList<>(attempts);
+        Collection<Attempt> updated = new ArrayList<>(values);
         updated.add(attempt);
         return updated;
     }
 
     private Attempt getMostRecent() {
-        return Collections.max(attempts, Comparator.comparing(Attempt::getTimestamp));
+        return Collections.max(values, Comparator.comparing(Attempt::getTimestamp));
     }
 
     public static class AttemptsBuilder {
