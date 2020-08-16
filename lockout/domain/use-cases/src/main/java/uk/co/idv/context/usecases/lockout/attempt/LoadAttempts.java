@@ -6,10 +6,10 @@ import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.usecases.common.IdGenerator;
 
 @Builder
-public class AttemptLoader {
+public class LoadAttempts {
 
     private final IdGenerator idGenerator;
-    private final AttemptRepository repository;
+    private final AttemptsRepository repository;
 
     public Attempts load(IdvId idvId) {
         return repository.load(idvId).orElse(buildEmptyAttempts(idvId));

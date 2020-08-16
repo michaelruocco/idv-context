@@ -13,12 +13,12 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class AttemptLoaderTest {
+class LoadAttemptsTest {
 
     private final IdGenerator idGenerator = mock(IdGenerator.class);
-    private final AttemptRepository repository = mock(AttemptRepository.class);
+    private final AttemptsRepository repository = mock(AttemptsRepository.class);
 
-    private final AttemptLoader loader = AttemptLoader.builder()
+    private final LoadAttempts loader = LoadAttempts.builder()
             .idGenerator(idGenerator)
             .repository(repository)
             .build();
