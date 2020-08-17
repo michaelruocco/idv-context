@@ -13,7 +13,6 @@ public class AttemptFacade {
     private final LoadAttempts loadAttempts;
 
     public Attempts load(Alias alias) {
-        //TODO replace with idv id lookup
         Identity identity = findIdentity.find(alias);
         return loadAttempts.load(identity.getIdvId());
     }

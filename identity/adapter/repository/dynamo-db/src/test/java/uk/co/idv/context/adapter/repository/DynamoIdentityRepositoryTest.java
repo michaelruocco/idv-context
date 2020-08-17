@@ -3,18 +3,22 @@ package uk.co.idv.context.adapter.repository;
 import com.amazonaws.services.dynamodbv2.document.BatchGetItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.BatchWriteItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
 import com.amazonaws.services.dynamodbv2.model.KeysAndAttributes;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
@@ -123,6 +127,29 @@ class DynamoIdentityRepositoryTest {
         );
 
         assertThat(error.getOutcome()).isEqualTo(outcome);
+    }
+
+    @Test
+    void shouldLoadIdentityByAlias() {
+        Alias alias = DefaultAliasMother.build();
+        Item item = new Item();
+        given(converter.toItem(alias)).willReturn(Optional.of(item));
+        Identity expectedIdentity = IdentityMother.example();
+        given(converter.toIdentity(item)).willReturn(expectedIdentity);
+
+        Optional<Identity> identity = repository.load(alias);
+
+        assertThat(identity).contains(expectedIdentity);
+    }
+
+    @Test
+    void shouldReturnEmptyOptionalIfIdentityNotFoundForAlias() {
+        Alias alias = DefaultAliasMother.build();
+        given(converter.toItem(alias)).willReturn(Optional.empty());
+
+        Optional<Identity> identity = repository.load(alias);
+
+        assertThat(identity).isEmpty();
     }
 
     private void givenAliasesSuccessfullyDeleted(Aliases aliases) {

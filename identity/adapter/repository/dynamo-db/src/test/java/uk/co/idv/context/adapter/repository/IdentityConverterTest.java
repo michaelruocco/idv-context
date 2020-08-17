@@ -11,12 +11,14 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
+import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 
 import java.util.Map;
+import java.util.Optional;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -90,6 +92,40 @@ class IdentityConverterTest {
         assertThat(identities).containsExactly(expectedIdentity);
     }
 
+    @Test
+    void shouldConvertAliasToIdentity() {
+        BatchGetItemOutcome outcome = mock(BatchGetItemOutcome.class);
+        Item item = new Item();
+        given(outcome.getTableItems()).willReturn(Map.of(TABLE_NAME, singletonList(item)));
+        Identity expectedIdentity = IdentityMother.example();
+        given(itemConverter.toIdentity(item)).willReturn(expectedIdentity);
+
+        Identities identities = converter.toIdentities(outcome);
+
+        assertThat(identities).containsExactly(expectedIdentity);
+    }
+
+    @Test
+    void shouldConvertAliasToItem() {
+        Alias alias = DefaultAliasMother.build();
+        PrimaryKey key = givenAliasConvertedToPrimaryKey(alias);
+        Item expectedItem = givenItemReturnedForPrimaryKey(key);
+
+        Optional<Item> item = converter.toItem(alias);
+
+        assertThat(item).contains(expectedItem);
+    }
+
+    @Test
+    void shouldConvertItemToIdentity() {
+        Item item = new Item();
+        Identity expectedIdentity = givenItemConvertedToIdentity(item);
+
+        Identity identity = converter.toIdentity(item);
+
+        assertThat(identity).isEqualTo(expectedIdentity);
+    }
+
     private Item givenAliasConvertedToItem(Identity identity, Alias alias) {
         Item item = new Item();
         given(itemConverter.toItem(identity, alias)).willReturn(item);
@@ -100,6 +136,18 @@ class IdentityConverterTest {
         PrimaryKey key = new PrimaryKey();
         given(itemConverter.toPrimaryKey(alias)).willReturn(key);
         return key;
+    }
+
+    private Item givenItemReturnedForPrimaryKey(PrimaryKey key) {
+        Item item = new Item();
+        given(table.getItem(key)).willReturn(item);
+        return item;
+    }
+
+    private Identity givenItemConvertedToIdentity(Item item) {
+        Identity identity = IdentityMother.example();
+        given(itemConverter.toIdentity(item)).willReturn(identity);
+        return identity;
     }
 
 }

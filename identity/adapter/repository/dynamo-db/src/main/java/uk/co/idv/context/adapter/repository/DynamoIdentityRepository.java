@@ -9,6 +9,7 @@ import com.amazonaws.services.dynamodbv2.model.KeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.model.WriteRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.Identity;
@@ -17,6 +18,7 @@ import uk.co.idv.context.usecases.identity.IdentityRepository;
 import java.time.Instant;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static uk.co.idv.context.usecases.util.DurationCalculator.millisBetweenNowAnd;
 
@@ -36,6 +38,11 @@ public class DynamoIdentityRepository implements IdentityRepository {
     public void update(Identity updated, Identity existing) {
         deleteEntriesForRemovedAliases(updated, existing);
         batchUpdateItems(updated);
+    }
+
+    @Override
+    public Optional<Identity> load(Alias alias) {
+        return converter.toItem(alias).map(converter::toIdentity);
     }
 
     @Override

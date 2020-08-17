@@ -41,7 +41,8 @@ public class InMemoryIdentityRepository implements IdentityRepository {
         aliases.forEach(this::delete);
     }
 
-    private Optional<Identity> load(Alias alias) {
+    @Override
+    public Optional<Identity> load(Alias alias) {
         String key = alias.format();
         return Optional.ofNullable(identities.get(key));
     }

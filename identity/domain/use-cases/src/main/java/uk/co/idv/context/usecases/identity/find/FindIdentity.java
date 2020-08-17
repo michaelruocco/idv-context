@@ -13,8 +13,8 @@ public class FindIdentity {
 
     private final IdentityRepository repository;
 
-    public Identity find(Alias... aliases) {
-        return find(new Aliases(aliases));
+    public Identity find(Alias alias) {
+        return repository.load(alias).orElseThrow(() -> new IdentityNotFoundException(alias));
     }
 
     public Identity find(Aliases aliases) {

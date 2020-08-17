@@ -6,11 +6,14 @@ import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
 import uk.co.idv.context.entities.alias.DebitCardNumberMother;
+import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -26,7 +29,7 @@ class InMemoryIdentityRepositoryTest {
     }
 
     @Test
-    void shouldLoadSavedIdentityByAlias() {
+    void shouldLoadSavedIdentityByAliases() {
         Alias idvId = IdvIdMother.idvId();
         Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
         Identity identity = IdentityMother.withAliases(toAliases(idvId, creditCardNumber));
@@ -88,6 +91,26 @@ class InMemoryIdentityRepositoryTest {
         repository.delete(aliases);
 
         assertThat(repository.load(aliases)).isEmpty();
+    }
+
+    @Test
+    void shouldLoadSavedIdentityByAlias() {
+        Alias alias = DefaultAliasMother.build();
+        Identity expectedIdentity = IdentityMother.withAliases(IdvIdMother.idvId(), alias);
+        repository.create(expectedIdentity);
+
+        Optional<Identity> identity = repository.load(alias);
+
+        assertThat(identity).contains(expectedIdentity);
+    }
+
+    @Test
+    void shouldReturnEmptyOptionalIfIdentityFound() {
+        Alias alias = DefaultAliasMother.build();
+
+        Optional<Identity> identity = repository.load(alias);
+
+        assertThat(identity).isEmpty();
     }
 
     private static Aliases toAliases(Alias... alias) {

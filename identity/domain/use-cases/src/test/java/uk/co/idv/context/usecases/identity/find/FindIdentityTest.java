@@ -11,6 +11,8 @@ import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.mockito.BDDMockito.given;
@@ -47,6 +49,19 @@ class FindIdentityTest {
     }
 
     @Test
+    void shouldReturnIdentityIfNoIdentitiesByAlias() {
+        Alias alias = DefaultAliasMother.build();
+        given(repository.load(alias)).willReturn(Optional.empty());
+
+        IdentityNotFoundException error = catchThrowableOfType(
+                () -> loader.find(alias),
+                IdentityNotFoundException.class
+        );
+
+        assertThat(error.getAliases()).containsExactly(alias);
+    }
+
+    @Test
     void shouldReturnIdentityIfOneExistingIdentityByAliases() {
         Aliases aliases = AliasesMother.idvIdAndDebitCardNumber();
         Identity expected = IdentityMother.withAliases(aliases);
@@ -76,7 +91,7 @@ class FindIdentityTest {
     }
 
     private void givenOneExistingIdentity(Alias alias, Identity identity) {
-        givenOneExistingIdentity(AliasesMother.with(alias), identity);
+        given(repository.load(alias)).willReturn(Optional.of(identity));
     }
 
     private void givenOneExistingIdentity(Aliases aliases, Identity identity) {
