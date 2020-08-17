@@ -11,7 +11,6 @@
 
 ## Todo
 
-*   Tidy up unit tests for lockout policy
 *   Add initial functionality for loading identity and checking lockout state when creating verification context
 
 ## Useful commands

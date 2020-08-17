@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.lockout.policy;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
+import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.attempt.AttemptMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
@@ -112,6 +113,20 @@ class LockoutStateRequestTest {
         Instant result = request.addToMostRecentAttemptTimestamp(duration);
 
         assertThat(result).isEqualTo(mostRecentTimestamp.plus(duration));
+    }
+
+    @Test
+    void shouldRemoveAttempts() {
+        Attempt attempt1 = AttemptMother.withChannelId("channel-1");
+        Attempt attempt2 = AttemptMother.withChannelId("channel-2");
+        LockoutStateRequest request = LockoutStateRequest.builder()
+                .attempts(AttemptsMother.withAttempts(attempt1, attempt2))
+                .build();
+
+        LockoutStateRequest updated = request.removeAttempts(AttemptsMother.withAttempts(attempt1));
+
+        assertThat(updated).isEqualToIgnoringGivenFields(request,"attempts");
+        assertThat(updated.getAttempts()).containsExactly(attempt2);
     }
 
     private Attempts verificationAttemptsWithMostRecentTimestamp(Instant timestamp) {

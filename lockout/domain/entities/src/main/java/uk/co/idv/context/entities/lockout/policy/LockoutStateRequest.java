@@ -31,6 +31,10 @@ public class LockoutStateRequest {
         return attempts.getMostRecentTimestamp().plus(duration);
     }
 
+    public LockoutStateRequest removeAttempts(Attempts attemptsToRemove) {
+        return withAttempts(attempts.remove(attemptsToRemove));
+    }
+
     public boolean isBefore(Instant instant) {
         return timestamp.isBefore(instant);
     }

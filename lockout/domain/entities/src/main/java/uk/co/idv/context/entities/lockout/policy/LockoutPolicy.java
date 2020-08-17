@@ -42,8 +42,8 @@ public class LockoutPolicy implements Policy {
 
     public LockoutState resetState(LockoutStateRequest request) {
         Attempts applicable = attemptsFilter.filter(request);
-        Attempts reset = request.getAttempts().remove(applicable);
-        return calculateState(request.withAttempts(reset));
+        LockoutStateRequest resetRequest = request.removeAttempts(applicable);
+        return calculateState(resetRequest);
     }
 
     public boolean shouldRecordAttempt(RecordAttemptRequest request) {
