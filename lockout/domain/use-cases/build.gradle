@@ -6,6 +6,8 @@ dependencies {
     api project(":lockout-entities")
     api project(":policy-use-cases")
 
+    implementation project(":identity-use-cases")
+
     testFixturesApi testFixtures(project(":lockout-entities"))
     testFixturesApi testFixtures(project(":policy-use-cases"))
 }

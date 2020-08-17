@@ -15,7 +15,7 @@ public class SoftLockoutStateFactory {
 
     public LockoutState build(Duration duration, LockoutStateRequest request) {
         final Instant expiry = request.addToMostRecentAttemptTimestamp(duration);
-        final boolean isLocked = request.isNewAttemptBefore(expiry);
+        final boolean isLocked = request.isBefore(expiry);
 
         if (!isLocked) {
             return new UnlockedState(request.getAttempts());

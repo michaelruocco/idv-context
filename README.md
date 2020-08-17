@@ -11,6 +11,9 @@
 
 ## Todo
 
+*   Add functionality to perform idv id lookup from one alias
+*   Add unit test coverage to attempt and lockout facades after adding idv id lookup by alias
+*   Tidy up unit tests for lockout policy
 *   Add initial functionality for loading identity and checking lockout state when creating verification context
 
 ## Useful commands

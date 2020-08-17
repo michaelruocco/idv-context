@@ -27,6 +27,10 @@ public interface AttemptsMother {
         return builder().attempts(attempts).build();
     }
 
+    static Attempts empty() {
+        return withNumberOfAttempts(0);
+    }
+
     static Attempts withAttempts(Attempt... attempts) {
         return builder().attempts(Arrays.asList(attempts)).build();
     }

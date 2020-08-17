@@ -54,11 +54,11 @@ class SoftLockoutStateFactoryTest {
     }
 
     private void givenNewAttemptAfter(Instant expiry) {
-        given(request.isNewAttemptBefore(expiry)).willReturn(false);
+        given(request.isBefore(expiry)).willReturn(false);
     }
 
     private void givenNewAttemptBefore(Instant expiry) {
-        given(request.isNewAttemptBefore(expiry)).willReturn(true);
+        given(request.isBefore(expiry)).willReturn(true);
     }
 
 }

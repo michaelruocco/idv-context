@@ -10,4 +10,5 @@ dependencies {
 
     testFixturesApi testFixtures(project(":identity-entities"))
     testFixturesApi testFixtures(project(":policy-entities"))
+    testFixturesImplementation "org.mockito:mockito-core:${mockitoVersion}"
 }

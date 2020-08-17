@@ -2,8 +2,8 @@ package uk.co.idv.context.entities.lockout.policy.soft;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
-import uk.co.idv.context.entities.lockout.policy.LockoutStateRequest;
 import uk.co.idv.context.entities.lockout.policy.LockoutStateRequestMother;
+import uk.co.idv.context.entities.lockout.policy.LockoutStateRequest;
 import uk.co.idv.context.entities.lockout.policy.unlocked.UnlockedState;
 
 import static org.assertj.core.api.Assertions.assertThat;

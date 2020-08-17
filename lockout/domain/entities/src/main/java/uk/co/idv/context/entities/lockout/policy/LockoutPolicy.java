@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import uk.co.idv.context.entities.lockout.LockoutRequest;
 import uk.co.idv.context.entities.policy.Policy;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
@@ -20,15 +21,27 @@ public class LockoutPolicy implements Policy {
     private final RecordAttemptPolicy recordAttemptPolicy;
 
     @Getter(AccessLevel.NONE)
+    private final LockoutRequestConverter converter;
+
+    @Getter(AccessLevel.NONE)
     private final AttemptsFilter attemptsFilter;
 
-    public LockoutState calculateState(LockoutStateRequest attempts) {
-        return stateCalculator.calculate(attempts);
+    public LockoutState calculateState(LockoutRequest request, Attempts attempts) {
+        return calculateState(converter.toLockoutStateRequest(request, attempts));
     }
 
-    public Attempts reset(LockoutStateRequest request) {
+    public LockoutState calculateState(LockoutStateRequest request) {
+        return stateCalculator.calculate(request);
+    }
+
+    public LockoutState resetState(LockoutRequest request, Attempts attempts) {
+        return resetState(converter.toLockoutStateRequest(request, attempts));
+    }
+
+    public LockoutState resetState(LockoutStateRequest request) {
         Attempts applicable = attemptsFilter.filter(request);
-        return request.getAttempts().remove(applicable);
+        Attempts reset = request.getAttempts().remove(applicable);
+        return calculateState(request.withAttempts(reset));
     }
 
     public boolean shouldRecordAttempt(RecordAttemptRequest request) {

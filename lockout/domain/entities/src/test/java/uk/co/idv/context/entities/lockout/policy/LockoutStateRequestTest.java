@@ -1,7 +1,8 @@
 package uk.co.idv.context.entities.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.lockout.attempt.Attempt;
+import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.lockout.attempt.AttemptMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
@@ -16,14 +17,25 @@ import static org.mockito.Mockito.mock;
 class LockoutStateRequestTest {
 
     @Test
-    void shouldReturnNewAttempt() {
-        Attempt attempt = AttemptMother.build();
+    void shouldReturnAlias() {
+        Alias alias = DefaultAliasMother.build();
 
         LockoutStateRequest request = LockoutStateRequest.builder()
-                .newAttempt(attempt)
+                .alias(alias)
                 .build();
 
-        assertThat(request.getNewAttempt()).isEqualTo(attempt);
+        assertThat(request.getAlias()).isEqualTo(alias);
+    }
+
+    @Test
+    void shouldReturnTimestamp() {
+        Instant timestamp = Instant.now();
+
+        LockoutStateRequest request = LockoutStateRequest.builder()
+                .timestamp(timestamp)
+                .build();
+
+        assertThat(request.getTimestamp()).isEqualTo(timestamp);
     }
 
     @Test
@@ -49,38 +61,42 @@ class LockoutStateRequestTest {
     }
 
     @Test
-    void shouldReturnAliasFromNewAttempt() {
-        Attempt attempt = AttemptMother.build();
-
+    void shouldReturnRequestWithUpdatedAttemptsAndAllOtherValuesUnchanged() {
+        Attempts attempts = AttemptsMother.withAttempts(AttemptMother.build());
         LockoutStateRequest request = LockoutStateRequest.builder()
-                .newAttempt(attempt)
+                .attempts(attempts)
                 .build();
+        Attempts empty = AttemptsMother.empty();
 
-        assertThat(request.getAlias()).isEqualTo(attempt.getAlias());
+        LockoutStateRequest updated = request.withAttempts(empty);
+
+        assertThat(updated)
+                .isEqualToIgnoringGivenFields(request, "attempts")
+                .hasFieldOrPropertyWithValue("attempts", empty);
     }
 
     @Test
-    void shouldReturnTrueIfNewAttemptIsBeforeNow() {
-        Attempt attempt = AttemptMother.build();
+    void shouldReturnTrueIfTimestampIsBeforeNow() {
+        Instant timestamp = Instant.now();
         LockoutStateRequest request = LockoutStateRequest.builder()
-                .newAttempt(attempt)
+                .timestamp(timestamp)
                 .build();
-        Instant now = attempt.getTimestamp().plusMillis(1);
+        Instant now = timestamp.plusMillis(1);
 
-        boolean isBefore = request.isNewAttemptBefore(now);
+        boolean isBefore = request.isBefore(now);
 
         assertThat(isBefore).isTrue();
     }
 
     @Test
-    void shouldReturnFalseIfNewAttemptIsAfterNow() {
-        Attempt attempt = AttemptMother.build();
+    void shouldReturnFalseIfTimestampIsAfterNow() {
+        Instant timestamp = Instant.now();
         LockoutStateRequest request = LockoutStateRequest.builder()
-                .newAttempt(attempt)
+                .timestamp(timestamp)
                 .build();
-        Instant now = attempt.getTimestamp().minusMillis(1);
+        Instant now = timestamp.minusMillis(1);
 
-        boolean isBefore = request.isNewAttemptBefore(now);
+        boolean isBefore = request.isBefore(now);
 
         assertThat(isBefore).isFalse();
     }

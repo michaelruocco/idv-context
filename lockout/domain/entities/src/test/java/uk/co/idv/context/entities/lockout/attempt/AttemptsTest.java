@@ -205,4 +205,15 @@ class AttemptsTest {
         assertThat(applicableAttempts).containsExactly(applicableAttempt);
     }
 
+    @Test
+    void shouldReturnAttemptsWithUpdatedValuesAndAllOtherValuesUnchanged() {
+        Attempts attempts = AttemptsMother.withAttempts(AttemptMother.build());
+
+        Attempts updatedAttempts = attempts.withValues(Collections.emptyList());
+
+        assertThat(updatedAttempts).isEmpty();
+        assertThat(updatedAttempts.getId()).isEqualTo(attempts.getId());
+        assertThat(updatedAttempts.getIdvId()).isEqualTo(attempts.getIdvId());
+    }
+
 }

@@ -9,7 +9,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class ResetAttemptsFilterTest {
+class AttemptsFilterTest {
 
     private final PolicyKey key = mock(PolicyKey.class);
 

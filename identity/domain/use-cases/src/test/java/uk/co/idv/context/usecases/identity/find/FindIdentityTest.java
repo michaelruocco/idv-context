@@ -1,8 +1,10 @@
 package uk.co.idv.context.usecases.identity.find;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.IdentitiesMother;
 import uk.co.idv.context.entities.identity.Identity;
@@ -34,7 +36,18 @@ class FindIdentityTest {
     }
 
     @Test
-    void shouldReturnIdentityIfOneExistingIdentity() {
+    void shouldReturnIdentityIfOneExistingIdentityByAlias() {
+        Alias alias = DefaultAliasMother.build();
+        Identity expected = IdentityMother.withAliases(alias);
+        givenOneExistingIdentity(alias, expected);
+
+        Identity identity = loader.find(alias);
+
+        assertThat(identity).isEqualTo(expected);
+    }
+
+    @Test
+    void shouldReturnIdentityIfOneExistingIdentityByAliases() {
         Aliases aliases = AliasesMother.idvIdAndDebitCardNumber();
         Identity expected = IdentityMother.withAliases(aliases);
         givenOneExistingIdentity(aliases, expected);
@@ -60,6 +73,10 @@ class FindIdentityTest {
 
     private void givenNoExistingIdentities(Aliases aliases) {
         given(repository.load(aliases)).willReturn(IdentitiesMother.empty());
+    }
+
+    private void givenOneExistingIdentity(Alias alias, Identity identity) {
+        givenOneExistingIdentity(AliasesMother.with(alias), identity);
     }
 
     private void givenOneExistingIdentity(Aliases aliases, Identity identity) {
