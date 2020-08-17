@@ -18,13 +18,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class IdentityFacadeTest {
+class IdentityServiceTest {
 
     private final UpdateIdentity update = mock(UpdateIdentity.class);
     private final FindIdentity find = mock(FindIdentity.class);
     private final AliasFactory aliasFactory = mock(AliasFactory.class);
 
-    private final IdentityFacade facade = IdentityFacade.builder()
+    private final IdentityService facade = IdentityService.builder()
             .update(update)
             .find(find)
             .aliasFactory(aliasFactory)

@@ -15,6 +15,7 @@ import uk.co.idv.context.usecases.policy.update.UpdatePolicy;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -93,6 +94,20 @@ class PolicyServiceTest {
         Policy policy = service.loadHighestPriority(request);
 
         assertThat(policy).isEqualTo(expectedPolicy);
+    }
+
+    @Test
+    void shouldThrowExceptionOnNoPoliciesFoundLoadHighestPriorityPolicyByRequest() {
+        PolicyRequest request = mock(DefaultPolicyRequest.class);
+        Policies<Policy> policies = mock(Policies.class);
+        given(load.load(request)).willReturn(policies);
+        given(policies.isEmpty()).willReturn(true);
+        Policy expectedPolicy = mock(Policy.class);
+        given(policies.getHighestPriority()).willReturn(expectedPolicy);
+
+        Throwable error = catchThrowable(() -> service.loadHighestPriority(request));
+
+        assertThat(error).isInstanceOf(NoPoliciesConfiguredForRequestException.class);
     }
 
     @Test

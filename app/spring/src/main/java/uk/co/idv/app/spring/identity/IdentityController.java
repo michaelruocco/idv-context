@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.context.entities.identity.Identity;
-import uk.co.idv.context.usecases.identity.IdentityFacade;
+import uk.co.idv.context.usecases.identity.IdentityService;
 
 import java.net.URI;
 import java.util.UUID;
@@ -23,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/identities")
 public class IdentityController {
 
-    private final IdentityFacade facade;
+    private final IdentityService facade;
 
     @GetMapping
     public Identity getIdentity(@RequestParam String aliasType,

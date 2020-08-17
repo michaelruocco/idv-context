@@ -34,7 +34,7 @@ class DefaultLockoutRequestTest {
 
     @Test
     void shouldReturnChannelIdFromExternalRequest() {
-        ExternalLockoutRequest externalRequest = ExternalLockoutRequestMother.build();
+        ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.build();
 
         LockoutRequest request = DefaultLockoutRequest.builder()
                 .externalRequest(externalRequest)
@@ -45,7 +45,7 @@ class DefaultLockoutRequestTest {
 
     @Test
     void shouldReturnActivityNameFromExternalRequest() {
-        ExternalLockoutRequest externalRequest = ExternalLockoutRequestMother.build();
+        ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.build();
 
         LockoutRequest request = DefaultLockoutRequest.builder()
                 .externalRequest(externalRequest)
@@ -56,7 +56,7 @@ class DefaultLockoutRequestTest {
 
     @Test
     void shouldReturnAliasFromExternalRequest() {
-        ExternalLockoutRequest externalRequest = ExternalLockoutRequestMother.build();
+        ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.build();
 
         LockoutRequest request = DefaultLockoutRequest.builder()
                 .externalRequest(externalRequest)
@@ -67,7 +67,7 @@ class DefaultLockoutRequestTest {
 
     @Test
     void shouldReturnAliasTypeFromExternalRequest() {
-        ExternalLockoutRequest externalRequest = ExternalLockoutRequestMother.build();
+        ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.build();
 
         LockoutRequest request = DefaultLockoutRequest.builder()
                 .externalRequest(externalRequest)

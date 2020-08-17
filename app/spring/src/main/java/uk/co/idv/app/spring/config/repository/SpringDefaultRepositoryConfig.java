@@ -10,8 +10,8 @@ import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.config.identity.respository.dynamo.DynamoIdentityRepositoryConfig;
 import uk.co.idv.context.config.identity.respository.dynamo.DynamoTableFactory;
 import uk.co.idv.context.config.identity.respository.dynamo.DynamoTables;
-import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
-import uk.co.idv.context.config.lockout.repository.redis.RedisLockoutRepositoryConfig;
+import uk.co.idv.context.config.lockout.repository.LockoutPolicyRepositoryConfig;
+import uk.co.idv.context.config.lockout.repository.redis.RedisLockoutPolicyRepositoryConfig;
 import uk.co.idv.context.config.lockout.repository.redis.RedissonMapFactory;
 import uk.co.mruoc.json.JsonConverter;
 
@@ -32,12 +32,12 @@ public class SpringDefaultRepositoryConfig {
     }
 
     @Bean
-    public LockoutRepositoryConfig lockoutRepositoryConfig(JsonConverter jsonConverter) {
+    public LockoutPolicyRepositoryConfig lockoutRepositoryConfig(JsonConverter jsonConverter) {
         RedissonMapFactory factory = RedissonMapFactory.builder()
                 .client(redissionClient())
                 .environment(loadEnvironment())
                 .build();
-        return RedisLockoutRepositoryConfig.builder()
+        return RedisLockoutPolicyRepositoryConfig.builder()
                 .policies(factory.buildLockoutPolicyMap())
                 .jsonConverter(jsonConverter)
                 .build();

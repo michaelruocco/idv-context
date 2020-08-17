@@ -7,7 +7,7 @@ import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
-import uk.co.idv.context.usecases.identity.IdentityFacade;
+import uk.co.idv.context.usecases.identity.IdentityService;
 
 import java.time.Duration;
 import java.util.concurrent.Executors;
@@ -24,8 +24,8 @@ public class SpringIdentityDomainConfig {
     }
 
     @Bean
-    public IdentityFacade identityFacade(IdentityConfig identityConfig) {
-        return identityConfig.identityFacade();
+    public IdentityService identityFacade(IdentityConfig identityConfig) {
+        return identityConfig.identityService();
     }
 
     @Bean

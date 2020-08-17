@@ -23,10 +23,11 @@ public class LockoutPolicy implements Policy {
     private final RecordAttemptPolicy recordAttemptPolicy;
 
     @Getter(AccessLevel.NONE)
-    private final LockoutRequestConverter converter;
-
-    @Getter(AccessLevel.NONE)
     private final AttemptsFilter attemptsFilter;
+
+    @Builder.Default
+    @Getter(AccessLevel.NONE)
+    private final LockoutRequestConverter converter = new LockoutRequestConverter();
 
     public LockoutState calculateState(LockoutRequest request, Attempts attempts) {
         return calculateState(converter.toLockoutStateRequest(request, attempts));

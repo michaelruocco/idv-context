@@ -1,11 +1,16 @@
 package uk.co.idv.context.entities.lockout;
 
+import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.lockout.DefaultExternalLockoutRequest.DefaultExternalLockoutRequestBuilder;
 
-public interface ExternalLockoutRequestMother {
+public interface DefaultExternalLockoutRequestMother {
 
-    static ExternalLockoutRequest build() {
+    static DefaultExternalLockoutRequest withAlias(Alias alias) {
+        return builder().alias(alias).build();
+    }
+
+    static DefaultExternalLockoutRequest build() {
         return builder().build();
     }
 

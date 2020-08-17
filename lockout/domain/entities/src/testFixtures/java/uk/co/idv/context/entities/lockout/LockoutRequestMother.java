@@ -15,7 +15,7 @@ public interface LockoutRequestMother {
         return DefaultLockoutRequest.builder()
                 .timestamp(Instant.parse("2020-08-14T05:18:44.700Z"))
                 .idvId(IdvIdMother.idvId())
-                .externalRequest(ExternalLockoutRequestMother.build());
+                .externalRequest(DefaultExternalLockoutRequestMother.build());
     }
 
 }

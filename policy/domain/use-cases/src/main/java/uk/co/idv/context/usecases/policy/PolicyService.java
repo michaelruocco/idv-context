@@ -39,7 +39,11 @@ public class PolicyService<T extends Policy> {
     }
 
     public T loadHighestPriority(PolicyRequest request) {
-        return load(request).getHighestPriority();
+        Policies<T> policies = load(request);
+        if (policies.isEmpty()) {
+            throw new NoPoliciesConfiguredForRequestException(request);
+        }
+        return policies.getHighestPriority();
     }
 
     public Policies<T> load(PolicyRequest request) {

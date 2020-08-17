@@ -2,6 +2,7 @@ dependencies {
     api project(":lockout-use-cases")
     api project(":lockout-json")
     api project(":policy-redis-repository")
+    api project(":identity-config")
 
     implementation project(":lockout-in-memory-repository")
     implementation project(":policy-in-memory-repository")

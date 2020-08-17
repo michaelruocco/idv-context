@@ -18,7 +18,7 @@ import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
 import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequestMother;
-import uk.co.idv.context.usecases.identity.IdentityFacade;
+import uk.co.idv.context.usecases.identity.IdentityService;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
 
 import java.time.Duration;
@@ -43,7 +43,7 @@ public class CreateEligibilityIntegrationTest {
             .build();
 
     private final CreateEligibility createEligibility = identityConfig.createEligibility();
-    private final IdentityFacade facade = identityConfig.identityFacade();
+    private final IdentityService facade = identityConfig.identityService();
 
     @Test
     void shouldThrowExceptionIfIdentityNotFoundForRsa() {

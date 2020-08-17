@@ -12,14 +12,14 @@ import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 import java.util.UUID;
 
 @Builder
-public class IdentityFacade {
+public class IdentityService {
 
     private final UpdateIdentity update;
     private final FindIdentity find;
     private final AliasFactory aliasFactory;
 
-    public static IdentityFacade build(IdentityRepository repository) {
-        return IdentityFacade.builder()
+    public static IdentityService build(IdentityRepository repository) {
+        return IdentityService.builder()
                 .update(UpdateIdentity.buildInternal(repository))
                 .find(new FindIdentity(repository))
                 .aliasFactory(new DefaultAliasFactory())

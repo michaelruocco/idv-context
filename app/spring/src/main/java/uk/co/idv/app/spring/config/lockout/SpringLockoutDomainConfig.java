@@ -4,16 +4,16 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.config.lockout.LockoutConfig;
-import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
+import uk.co.idv.context.config.lockout.repository.LockoutPolicyRepositoryConfig;
 import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 
 @Configuration
 public class SpringLockoutDomainConfig {
 
     @Bean
-    public LockoutConfig lockoutConfig(LockoutRepositoryConfig repositoryConfig) {
+    public LockoutConfig lockoutConfig(LockoutPolicyRepositoryConfig repositoryConfig) {
         return LockoutConfig.builder()
-                .repository(repositoryConfig.policyRepository())
+                .policyRepository(repositoryConfig.policyRepository())
                 .build();
     }
 

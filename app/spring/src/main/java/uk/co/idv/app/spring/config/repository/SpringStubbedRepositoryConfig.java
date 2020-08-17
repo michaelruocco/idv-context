@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.config.identity.respository.inmemory.InMemoryIdentityRepositoryConfig;
-import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
+import uk.co.idv.context.config.lockout.repository.LockoutPolicyRepositoryConfig;
 import uk.co.idv.context.config.lockout.repository.inmemory.InMemoryLockoutRepositoryConfig;
 
 @Configuration
@@ -20,7 +20,7 @@ public class SpringStubbedRepositoryConfig {
 
     @Bean
     @Profile("stubbed")
-    public LockoutRepositoryConfig lockoutRepositoryConfig() {
+    public LockoutPolicyRepositoryConfig lockoutRepositoryConfig() {
         return new InMemoryLockoutRepositoryConfig();
     }
 

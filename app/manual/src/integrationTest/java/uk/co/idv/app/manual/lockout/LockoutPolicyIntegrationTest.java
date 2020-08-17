@@ -2,8 +2,6 @@ package uk.co.idv.app.manual.lockout;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.config.lockout.LockoutConfig;
-import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
-import uk.co.idv.context.config.lockout.repository.inmemory.InMemoryLockoutRepositoryConfig;
 import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutPolicyMother;
 import uk.co.idv.context.entities.policy.Policies;
@@ -21,11 +19,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class LockoutPolicyIntegrationTest {
 
-    private final LockoutRepositoryConfig repositoryConfig = new InMemoryLockoutRepositoryConfig();
-    private final LockoutConfig lockoutConfig = LockoutConfig.builder()
-            .repository(repositoryConfig.policyRepository())
-            .build();
-
+    private final LockoutConfig lockoutConfig = new LockoutConfigBuilder().build();
     private final LockoutPolicyService policyService = lockoutConfig.policyService();
 
     @Test

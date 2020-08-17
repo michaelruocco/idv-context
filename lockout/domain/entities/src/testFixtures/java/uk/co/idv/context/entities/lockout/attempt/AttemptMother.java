@@ -42,11 +42,11 @@ public interface AttemptMother {
     static AttemptBuilder builder() {
         return Attempt.builder()
                 .contextId(UUID.fromString("fb059cfd-5613-49fe-8f34-2264b5da8343"))
-                .channelId("fake-channel")
-                .activityName("fake-activity")
+                .channelId("default-channel")
+                .activityName("default-activity")
                 .alias(CreditCardNumberMother.creditCardNumber())
                 .idvId(IdvIdMother.idvId())
-                .methodName("fake-method")
+                .methodName("default-method")
                 .verificationId(UUID.fromString("1fb7cd98-694d-4ba4-968a-9b86bbf52c01"))
                 .timestamp(Instant.parse("2019-09-27T09:35:15.612Z"))
                 .successful(true);

@@ -9,17 +9,23 @@ import uk.co.idv.context.usecases.eligibility.CompositeCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
 import uk.co.idv.context.usecases.eligibility.external.ExternalCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.internal.InternalCreateEligibility;
-import uk.co.idv.context.usecases.identity.IdentityFacade;
+import uk.co.idv.context.usecases.identity.IdentityService;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
+import uk.co.idv.context.usecases.identity.find.FindIdentity;
 import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 
 import java.util.Collections;
 
 @Builder
-public class IdentityConfig {
+public class IdentityConfig implements FindIdentityProvider {
 
     private final IdentityRepository repository;
     private final ExternalFindIdentityStubConfig stubConfig;
+
+    @Override
+    public FindIdentity provideFindIdentity() {
+        return new FindIdentity(repository);
+    }
 
     public CreateEligibility createEligibility() {
         return new CompositeCreateEligibility(
@@ -28,8 +34,8 @@ public class IdentityConfig {
         );
     }
 
-    public IdentityFacade identityFacade() {
-        return IdentityFacade.build(repository);
+    public IdentityService identityService() {
+        return IdentityService.build(repository);
     }
 
     public IdentityErrorHandler errorHandler() {

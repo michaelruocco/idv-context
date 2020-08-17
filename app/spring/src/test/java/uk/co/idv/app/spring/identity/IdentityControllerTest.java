@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
-import uk.co.idv.context.usecases.identity.IdentityFacade;
+import uk.co.idv.context.usecases.identity.IdentityService;
 
 import java.util.UUID;
 
@@ -17,7 +17,7 @@ import static org.mockito.Mockito.mock;
 
 class IdentityControllerTest {
 
-    private final IdentityFacade facade = mock(IdentityFacade.class);
+    private final IdentityService facade = mock(IdentityService.class);
 
     private final IdentityController controller = new IdentityController(facade);
 

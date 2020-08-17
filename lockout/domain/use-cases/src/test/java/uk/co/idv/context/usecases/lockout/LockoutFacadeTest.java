@@ -5,7 +5,7 @@ import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
-import uk.co.idv.context.entities.lockout.ExternalLockoutRequestMother;
+import uk.co.idv.context.entities.lockout.DefaultExternalLockoutRequestMother;
 import uk.co.idv.context.entities.lockout.LockoutRequest;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 import uk.co.idv.context.usecases.identity.find.FindIdentity;
@@ -28,7 +28,7 @@ class LockoutFacadeTest {
 
     @Test
     void shouldLoadLockoutState() {
-        ExternalLockoutRequest externalRequest = ExternalLockoutRequestMother.build();
+        ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.build();
         Identity identity = givenIdentityFoundForAlias(externalRequest.getAlias());
         LockoutRequest lockoutRequest = mock(LockoutRequest.class);
         given(converter.toLockoutRequest(externalRequest, identity.getIdvId())).willReturn(lockoutRequest);
@@ -41,7 +41,7 @@ class LockoutFacadeTest {
 
     @Test
     void shouldResetLockoutState() {
-        ExternalLockoutRequest externalRequest = ExternalLockoutRequestMother.build();
+        ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.build();
         Identity identity = givenIdentityFoundForAlias(externalRequest.getAlias());
         LockoutRequest lockoutRequest = mock(LockoutRequest.class);
         given(converter.toLockoutRequest(externalRequest, identity.getIdvId())).willReturn(lockoutRequest);
