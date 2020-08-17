@@ -17,23 +17,23 @@ public class RecordAttempt {
     private final SaveAttempt save;
     private final LoadLockoutState load;
 
-    public LockoutState record(RecordAttemptRequest request) {
+    public LockoutState recordIfRequired(RecordAttemptRequest request) {
         LockoutPolicy policy = policyService.loadHighestPriority(request);
         if (policy.shouldRecordAttempt(request)) {
-            return record(request, policy);
+            return recordIfRequired(request, policy);
         }
         return load.load(request, policy);
     }
 
-    private LockoutState record(RecordAttemptRequest request, LockoutPolicy policy) {
+    private LockoutState recordIfRequired(RecordAttemptRequest request, LockoutPolicy policy) {
         Attempt attempt = request.getAttempt();
         if (attempt.isSuccessful()) {
             return reset.reset(request, policy);
         }
-        return recordFailed(request, policy);
+        return recordFailedAttempt(request, policy);
     }
 
-    private LockoutState recordFailed(RecordAttemptRequest request, LockoutPolicy policy) {
+    private LockoutState recordFailedAttempt(RecordAttemptRequest request, LockoutPolicy policy) {
         Attempts attempts = save.save(request.getAttempt());
         return policy.calculateState(request, attempts);
     }

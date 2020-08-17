@@ -27,6 +27,14 @@ public interface AttemptMother {
         return builder().channelId(channelId).build();
     }
 
+    static Attempt successful() {
+        return builder().successful(true).build();
+    }
+
+    static Attempt unsuccessful() {
+        return builder().successful(false).build();
+    }
+
     static Attempt build() {
         return builder().build();
     }

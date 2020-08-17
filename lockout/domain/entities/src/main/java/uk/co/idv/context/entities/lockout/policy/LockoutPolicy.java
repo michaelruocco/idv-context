@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.lockout.LockoutRequest;
 import uk.co.idv.context.entities.policy.Policy;
 import uk.co.idv.context.entities.policy.PolicyKey;
@@ -14,6 +15,7 @@ import java.util.UUID;
 
 @Builder
 @Data
+@Slf4j
 public class LockoutPolicy implements Policy {
 
     private final PolicyKey key;

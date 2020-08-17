@@ -25,8 +25,8 @@ public class LockoutService {
         return reset.reset(request);
     }
 
-    public LockoutState recordAttempt(RecordAttemptRequest request) {
-        return recordAttempt.record(request);
+    public LockoutState recordAttemptIfRequired(RecordAttemptRequest request) {
+        return recordAttempt.recordIfRequired(request);
     }
 
     public LockoutState loadAndValidateState(LockoutRequest request) {
