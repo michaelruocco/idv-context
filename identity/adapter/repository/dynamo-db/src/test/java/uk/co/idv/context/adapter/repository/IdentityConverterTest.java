@@ -30,7 +30,7 @@ class IdentityConverterTest {
     private static final String TABLE_NAME = "table-name";
 
     private final Table table = mock(Table.class);
-    private final ItemConverter itemConverter = mock(ItemConverter.class);
+    private final IdentityItemConverter itemConverter = mock(IdentityItemConverter.class);
 
     private final IdentityConverter converter = new IdentityConverter(table, itemConverter);
 

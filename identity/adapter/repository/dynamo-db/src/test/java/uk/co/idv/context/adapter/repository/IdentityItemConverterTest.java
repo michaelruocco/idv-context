@@ -13,11 +13,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class ItemConverterTest {
+class IdentityItemConverterTest {
 
     private final JsonConverter jsonConverter = mock(JsonConverter.class);
 
-    private final ItemConverter itemConverter = new ItemConverter(jsonConverter);
+    private final IdentityItemConverter itemConverter = new IdentityItemConverter(jsonConverter);
 
     @Test
     void shouldConvertAliasToPrimaryKey() {
@@ -56,6 +56,5 @@ class ItemConverterTest {
                 .withJSON("body", json);
         assertThat(item).isEqualTo(expectedItem);
     }
-
 
 }

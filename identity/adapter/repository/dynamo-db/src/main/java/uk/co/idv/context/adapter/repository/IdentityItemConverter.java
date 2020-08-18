@@ -8,7 +8,7 @@ import uk.co.idv.context.entities.identity.Identity;
 import uk.co.mruoc.json.JsonConverter;
 
 @RequiredArgsConstructor
-public class ItemConverter {
+public class IdentityItemConverter {
 
     private final JsonConverter jsonConverter;
 

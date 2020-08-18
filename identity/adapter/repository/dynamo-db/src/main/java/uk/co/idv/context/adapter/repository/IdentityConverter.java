@@ -22,10 +22,10 @@ import java.util.stream.Collectors;
 public class IdentityConverter {
 
     private final Table table;
-    private final ItemConverter itemConverter;
+    private final IdentityItemConverter itemConverter;
 
     public IdentityConverter(Table table, JsonConverter jsonConverter) {
-        this(table, new ItemConverter(jsonConverter));
+        this(table, new IdentityItemConverter(jsonConverter));
     }
 
     public TableWriteItems toBatchUpdateItems(Identity identity) {
