@@ -8,14 +8,13 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import java.time.Instant;
+import java.util.stream.Stream;
 
 import static uk.co.idv.context.usecases.util.DurationCalculator.millisBetweenNowAnd;
 
 @Slf4j
 @RequiredArgsConstructor
 public class DynamoTables {
-
-    private static final String IDENTITY_TABLE_NAME = "identity";
 
     private final String environment;
     private final AmazonDynamoDB client;
@@ -24,14 +23,16 @@ public class DynamoTables {
         return new DynamoDB(client);
     }
 
-    public Table getIdentityTable() {
-        String tableName = buildIdentityTableName();
-        waitForTableToBeActive(tableName);
-        return getTable(tableName);
+    public Table getEnvironmentTable(String tableName) {
+        String environmentTableName = prefixEnvironment(tableName);
+        waitForTableToBeActive(environmentTableName);
+        return getTable(environmentTableName);
     }
 
-    public void waitForTablesToBeActive() {
-        waitForTableToBeActive(buildIdentityTableName());
+    public void waitForEnvironmentTablesToBeActive(String... tableNames) {
+        Stream.of(tableNames)
+                .map(this::prefixEnvironment)
+                .forEach(this::waitForTableToBeActive);
     }
 
     private void waitForTableToBeActive(String tableName) {
@@ -42,13 +43,9 @@ public class DynamoTables {
             log.info("table {} took {}ms to become active", tableName, millisBetweenNowAnd(start));
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
-            log.error("thread interrupted waiting for table to become active", e);
+            log.error("thread interrupted waiting for table {} to become active", tableName, e);
             throw new DynamoException(e);
         }
-    }
-
-    private String buildIdentityTableName() {
-        return prefixEnvironment(IDENTITY_TABLE_NAME);
     }
 
     private Table getTable(String tableName) {
