@@ -16,7 +16,7 @@ import static org.mockito.Mockito.mock;
 class LoadAttemptsTest {
 
     private final IdGenerator idGenerator = mock(IdGenerator.class);
-    private final AttemptsRepository repository = mock(AttemptsRepository.class);
+    private final AttemptRepository repository = mock(AttemptRepository.class);
 
     private final LoadAttempts loader = LoadAttempts.builder()
             .idGenerator(idGenerator)

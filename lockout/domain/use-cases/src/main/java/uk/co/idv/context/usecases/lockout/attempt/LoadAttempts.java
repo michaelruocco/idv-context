@@ -9,7 +9,7 @@ import uk.co.idv.context.usecases.common.IdGenerator;
 public class LoadAttempts {
 
     private final IdGenerator idGenerator;
-    private final AttemptsRepository repository;
+    private final AttemptRepository repository;
 
     public Attempts load(IdvId idvId) {
         return repository.load(idvId).orElse(buildEmptyAttempts(idvId));

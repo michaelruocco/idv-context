@@ -20,7 +20,7 @@ public class LockoutConfigBuilder {
 
     public LockoutConfig build() {
         return LockoutConfig.builder()
-                .attemptsRepository(repositoryConfig.attemptsRepository())
+                .attemptRepository(repositoryConfig.attemptRepository())
                 .policyRepository(repositoryConfig.policyRepository())
                 .findIdentityProvider(identityConfig)
                 .build();

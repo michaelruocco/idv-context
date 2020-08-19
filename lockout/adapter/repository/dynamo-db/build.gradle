@@ -1,5 +1,5 @@
 dependencies {
-    api "com.amazonaws:aws-java-sdk-dynamodb:${awsSdkVersion}"
+    api project(":common-dynamo-db")
     implementation project(":lockout-use-cases")
     implementation project(":lockout-json")
 

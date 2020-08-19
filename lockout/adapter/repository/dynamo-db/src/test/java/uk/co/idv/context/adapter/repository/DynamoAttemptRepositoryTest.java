@@ -8,7 +8,7 @@ import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
-import uk.co.idv.context.usecases.lockout.attempt.AttemptsRepository;
+import uk.co.idv.context.usecases.lockout.attempt.AttemptRepository;
 
 import java.util.Optional;
 
@@ -17,12 +17,12 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class DynamoAttemptsRepositoryTest {
+class DynamoAttemptRepositoryTest {
 
     private final AttemptItemConverter converter = mock(AttemptItemConverter.class);
     private final Table table = mock(Table.class);
 
-    private final AttemptsRepository repository = DynamoAttemptsRepository.builder()
+    private final AttemptRepository repository = DynamoAttemptRepository.builder()
             .converter(converter)
             .table(table)
             .build();

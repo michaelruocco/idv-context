@@ -5,7 +5,7 @@ import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import java.util.Optional;
 
-public interface AttemptsRepository {
+public interface AttemptRepository {
 
     void save(Attempts attempts);
 

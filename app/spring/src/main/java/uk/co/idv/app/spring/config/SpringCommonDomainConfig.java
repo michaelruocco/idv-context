@@ -10,7 +10,7 @@ import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import java.util.Collection;
 
 @Configuration
-public class SpringDomainConfig {
+public class SpringCommonDomainConfig {
 
     @Bean
     public ErrorHandler commonErrorHandler() {

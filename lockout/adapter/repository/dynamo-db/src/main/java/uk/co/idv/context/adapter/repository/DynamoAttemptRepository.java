@@ -6,12 +6,12 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import lombok.Builder;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
-import uk.co.idv.context.usecases.lockout.attempt.AttemptsRepository;
+import uk.co.idv.context.usecases.lockout.attempt.AttemptRepository;
 
 import java.util.Optional;
 
 @Builder
-public class DynamoAttemptsRepository implements AttemptsRepository {
+public class DynamoAttemptRepository implements AttemptRepository {
 
     private final AttemptItemConverter converter;
     private final Table table;

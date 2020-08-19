@@ -5,16 +5,16 @@ import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
-import uk.co.idv.context.usecases.lockout.attempt.AttemptsRepository;
+import uk.co.idv.context.usecases.lockout.attempt.AttemptRepository;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class InMemoryAttemptsRepositoryTest {
+class InMemoryAttemptRepositoryTest {
 
-    private final AttemptsRepository repository = new InMemoryAttemptsRepository();
+    private final AttemptRepository repository = new InMemoryAttemptRepository();
 
     @Test
     void shouldEmptyOptionalIfNoAttemptsFoundByIdvId() {

@@ -7,7 +7,7 @@ import uk.co.idv.context.usecases.common.RandomIdGenerator;
 import uk.co.idv.context.usecases.lockout.ExternalLockoutRequestConverter;
 import uk.co.idv.context.usecases.lockout.LockoutFacade;
 import uk.co.idv.context.usecases.lockout.LockoutService;
-import uk.co.idv.context.usecases.lockout.attempt.AttemptsRepository;
+import uk.co.idv.context.usecases.lockout.attempt.AttemptRepository;
 import uk.co.idv.context.usecases.lockout.attempt.LoadAttempts;
 import uk.co.idv.context.usecases.lockout.attempt.SaveAttempt;
 import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyRepository;
@@ -23,7 +23,7 @@ import java.time.Clock;
 public class LockoutConfig {
 
     private final LockoutPolicyRepository policyRepository;
-    private final AttemptsRepository attemptsRepository;
+    private final AttemptRepository attemptRepository;
     private final FindIdentityProvider findIdentityProvider;
 
     public LockoutFacade lockoutFacade() {
@@ -68,14 +68,14 @@ public class LockoutConfig {
         return ResetLockoutState.builder()
                 .loadAttempts(loadAttempts())
                 .policyService(policyService())
-                .repository(attemptsRepository)
+                .repository(attemptRepository)
                 .build();
     }
 
     private SaveAttempt saveAttempt() {
         return SaveAttempt.builder()
                 .loadAttempts(loadAttempts())
-                .repository(attemptsRepository)
+                .repository(attemptRepository)
                 .build();
     }
 
@@ -89,7 +89,7 @@ public class LockoutConfig {
     private LoadAttempts loadAttempts() {
         return LoadAttempts.builder()
                 .idGenerator(new RandomIdGenerator())
-                .repository(attemptsRepository)
+                .repository(attemptRepository)
                 .build();
     }
 

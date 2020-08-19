@@ -7,7 +7,7 @@ import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
 import com.amazonaws.services.dynamodbv2.model.KeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.model.WriteRequest;
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
@@ -23,7 +23,7 @@ import java.util.Optional;
 import static uk.co.idv.common.usecases.util.DurationCalculator.millisBetweenNowAnd;
 
 @Slf4j
-@RequiredArgsConstructor
+@Builder
 public class DynamoIdentityRepository implements IdentityRepository {
 
     private final IdentityConverter converter;

@@ -10,7 +10,7 @@ import uk.co.idv.context.entities.lockout.attempt.Attempts;
 public class SaveAttempt {
 
     private final LoadAttempts loadAttempts;
-    private final AttemptsRepository repository;
+    private final AttemptRepository repository;
 
     public Attempts save(Attempt attempt) {
         Attempts existing = loadAttempts.load(attempt.getIdvId());

@@ -2,13 +2,13 @@ package uk.co.idv.context.adapter.repository;
 
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
-import uk.co.idv.context.usecases.lockout.attempt.AttemptsRepository;
+import uk.co.idv.context.usecases.lockout.attempt.AttemptRepository;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-public class InMemoryAttemptsRepository implements AttemptsRepository {
+public class InMemoryAttemptRepository implements AttemptRepository {
 
     private final Map<IdvId, Attempts> store = new HashMap<>();
 

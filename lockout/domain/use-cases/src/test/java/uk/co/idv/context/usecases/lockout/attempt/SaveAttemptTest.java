@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verify;
 class SaveAttemptTest {
 
     private final LoadAttempts loadAttempts = mock(LoadAttempts.class);
-    private final AttemptsRepository repository = mock(AttemptsRepository.class);
+    private final AttemptRepository repository = mock(AttemptRepository.class);
 
     private final SaveAttempt saveAttempt = SaveAttempt.builder()
             .loadAttempts(loadAttempts)
