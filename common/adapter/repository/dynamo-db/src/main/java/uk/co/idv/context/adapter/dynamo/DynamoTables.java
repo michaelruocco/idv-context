@@ -1,4 +1,4 @@
-package uk.co.idv.context.config.identity.respository.dynamo;
+package uk.co.idv.context.adapter.dynamo;
 
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import java.time.Instant;
 import java.util.stream.Stream;
 
-import static uk.co.idv.context.usecases.util.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.idv.common.usecases.util.DurationCalculator.millisBetweenNowAnd;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -44,7 +44,7 @@ public class DynamoTables {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
             log.error("thread interrupted waiting for table {} to become active", tableName, e);
-            throw new DynamoException(e);
+            throw new WaitForTableToBeActiveException(e);
         }
     }
 

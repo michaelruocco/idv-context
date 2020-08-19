@@ -1,6 +1,7 @@
 package uk.co.idv.context.config.identity.respository.dynamo;
 
 import com.amazonaws.services.dynamodbv2.document.Table;
+import uk.co.idv.context.adapter.dynamo.DynamoTables;
 import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.adapter.repository.DynamoIdentityRepository;
 import uk.co.idv.context.adapter.repository.IdentityConverter;

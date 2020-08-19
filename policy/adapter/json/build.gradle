@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     api project(":policy-use-cases")
-    api project(":error-json")
+    api project(":common-json")
     api "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
 
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"

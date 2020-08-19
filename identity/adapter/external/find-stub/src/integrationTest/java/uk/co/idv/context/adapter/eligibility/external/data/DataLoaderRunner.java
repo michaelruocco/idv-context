@@ -11,7 +11,7 @@ import java.time.Duration;
 import java.time.Instant;
 import java.util.function.Supplier;
 
-import static uk.co.idv.context.usecases.util.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.idv.common.usecases.util.DurationCalculator.millisBetweenNowAnd;
 
 @Slf4j
 @RequiredArgsConstructor

@@ -27,10 +27,10 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    implementation project(":common-dynamo-db")
     implementation project(":identity-json")
     implementation project(":identity-config")
     implementation project(":identity-external-find-stub")
-
     implementation project(":lockout-json")
     implementation project(":lockout-config")
 

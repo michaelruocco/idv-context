@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 
-import static uk.co.idv.context.usecases.util.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.idv.common.usecases.util.DurationCalculator.millisBetweenNowAnd;
 
 @RequiredArgsConstructor
 @Slf4j

@@ -57,11 +57,17 @@ project(':lockout-json').projectDir = file('lockout/adapter/json')
 include ':lockout-config'
 project(':lockout-config').projectDir = file('lockout/config')
 
-include ':error-json'
-project(':error-json').projectDir = file('error/adapter/json')
-
 include ':context-entities'
 project(':context-entities').projectDir = file('context/domain/entities')
+
+include ':common-use-cases'
+project(':common-use-cases').projectDir = file('common/domain/use-cases')
+
+include ':common-json'
+project(':common-json').projectDir = file('common/adapter/json')
+
+include ':common-dynamo-db'
+project(':common-dynamo-db').projectDir = file('common/adapter/repository/dynamo-db')
 
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')

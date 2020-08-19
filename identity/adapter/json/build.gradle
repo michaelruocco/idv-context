@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     api project(":identity-use-cases")
-    api project(":error-json")
+    api project(":common-json")
 
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
 
@@ -12,5 +12,5 @@ dependencies {
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
 
     testFixturesApi testFixtures(project(":identity-use-cases"))
-    testFixturesApi testFixtures(project(":error-json"))
+    testFixturesApi testFixtures(project(":common-json"))
 }
