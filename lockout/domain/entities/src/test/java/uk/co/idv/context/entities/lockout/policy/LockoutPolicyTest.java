@@ -106,15 +106,16 @@ class LockoutPolicyTest {
     }
 
     @Test
-    void shouldReturnAttemptsWithApplicableAttemptsRemoved() {
+    void shouldReturnStateAttemptsWithApplicableAttemptsRemoved() {
         LockoutStateRequest request = mock(LockoutStateRequest.class);
         Attempts applicable = givenAttemptsApplicableTo(request);
         LockoutStateRequest resetRequest = givenRequestAfterAttemptsRemoved(request, applicable);
         LockoutState expected = givenStateCalculatedFromRequest(resetRequest);
 
-        LockoutState state = policy.resetState(request);
+        ResetResult result = policy.resetState(request);
 
-        assertThat(state).isEqualTo(expected);
+        assertThat(result.getState()).isEqualTo(expected);
+        assertThat(result.getAttemptsToRemove()).isEqualTo(applicable);
     }
 
     @Test
@@ -127,9 +128,10 @@ class LockoutPolicyTest {
         LockoutStateRequest resetRequest = givenRequestAfterAttemptsRemoved(stateRequest, applicable);
         LockoutState expected = givenStateCalculatedFromRequest(resetRequest);
 
-        LockoutState state = policy.resetState(lockoutRequest, attempts);
+        ResetResult result = policy.resetState(lockoutRequest, attempts);
 
-        assertThat(state).isEqualTo(expected);
+        assertThat(result.getState()).isEqualTo(expected);
+        assertThat(result.getAttemptsToRemove()).isEqualTo(applicable);
     }
 
     private LockoutStateRequest givenRequestWithAttempts() {

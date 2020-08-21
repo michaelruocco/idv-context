@@ -10,7 +10,7 @@ import uk.co.idv.context.usecases.lockout.LockoutFacade;
 import uk.co.idv.context.usecases.lockout.LockoutService;
 import uk.co.idv.context.usecases.lockout.attempt.AttemptRepository;
 import uk.co.idv.context.usecases.lockout.attempt.LoadAttempts;
-import uk.co.idv.context.usecases.lockout.attempt.SaveAttempt;
+import uk.co.idv.context.usecases.lockout.attempt.SaveAttempts;
 import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyRepository;
 import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 import uk.co.idv.context.usecases.lockout.state.LoadLockoutState;
@@ -62,7 +62,7 @@ public class LockoutConfig {
         return RecordAttempt.builder()
                 .policyService(policyService())
                 .reset(resetState())
-                .save(saveAttempt())
+                .save(saveAttempts())
                 .load(loadState())
                 .build();
     }
@@ -71,12 +71,12 @@ public class LockoutConfig {
         return ResetLockoutState.builder()
                 .loadAttempts(loadAttempts())
                 .policyService(policyService())
-                .repository(attemptRepository)
+                .saveAttempts(saveAttempts())
                 .build();
     }
 
-    private SaveAttempt saveAttempt() {
-        return SaveAttempt.builder()
+    private SaveAttempts saveAttempts() {
+        return SaveAttempts.builder()
                 .loadAttempts(loadAttempts())
                 .repository(attemptRepository)
                 .build();

@@ -7,7 +7,7 @@ import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
-import uk.co.idv.context.usecases.lockout.attempt.SaveAttempt;
+import uk.co.idv.context.usecases.lockout.attempt.SaveAttempts;
 import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -19,7 +19,7 @@ class RecordAttemptTest {
 
     private final LockoutPolicyService policyService = mock(LockoutPolicyService.class);
     private final ResetLockoutState reset = mock(ResetLockoutState.class);
-    private final SaveAttempt save = mock(SaveAttempt.class);
+    private final SaveAttempts save = mock(SaveAttempts.class);
     private final LoadLockoutState load = mock(LoadLockoutState.class);
 
     private final RecordAttempt recordAttempt = RecordAttempt.builder()

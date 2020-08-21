@@ -6,7 +6,7 @@ import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
-import uk.co.idv.context.usecases.lockout.attempt.SaveAttempt;
+import uk.co.idv.context.usecases.lockout.attempt.SaveAttempts;
 import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 
 @Builder
@@ -14,7 +14,7 @@ public class RecordAttempt {
 
     private final LockoutPolicyService policyService;
     private final ResetLockoutState reset;
-    private final SaveAttempt save;
+    private final SaveAttempts save;
     private final LoadLockoutState load;
 
     public LockoutState recordIfRequired(RecordAttemptRequest request) {

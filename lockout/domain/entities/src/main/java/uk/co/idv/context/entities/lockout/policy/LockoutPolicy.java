@@ -37,14 +37,17 @@ public class LockoutPolicy implements Policy {
         return stateCalculator.calculate(request);
     }
 
-    public LockoutState resetState(LockoutRequest request, Attempts attempts) {
+    public ResetResult resetState(LockoutRequest request, Attempts attempts) {
         return resetState(converter.toLockoutStateRequest(request, attempts));
     }
 
-    public LockoutState resetState(LockoutStateRequest request) {
+    public ResetResult resetState(LockoutStateRequest request) {
         Attempts applicable = attemptsFilter.filter(request);
         LockoutStateRequest resetRequest = request.removeAttempts(applicable);
-        return calculateState(resetRequest);
+        return ResetResult.builder()
+                .state(calculateState(resetRequest))
+                .attemptsToRemove(applicable)
+                .build();
     }
 
     public boolean shouldRecordAttempt(RecordAttemptRequest request) {

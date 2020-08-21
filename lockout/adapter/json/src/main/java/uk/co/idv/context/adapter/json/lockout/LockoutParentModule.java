@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.lockout.policy.LockoutPolicyModule;
 import uk.co.idv.context.adapter.json.lockout.policy.state.LockoutStateModule;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
+import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 
 import java.util.Arrays;
 
@@ -15,6 +16,7 @@ public class LockoutParentModule extends SimpleModule {
         super("lockout-parent-module", Version.unknownVersion());
 
         addDeserializer(ExternalLockoutRequest.class, new ExternalLockoutRequestDeserializer());
+        addDeserializer(RecordAttemptRequest.class, new RecordAttemptRequestDeserializer());
     }
 
     @Override

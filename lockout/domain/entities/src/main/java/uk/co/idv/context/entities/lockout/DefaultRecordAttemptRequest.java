@@ -1,6 +1,7 @@
 package uk.co.idv.context.entities.lockout;
 
 import lombok.Builder;
+import lombok.Data;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.attempt.Attempt;
@@ -9,6 +10,7 @@ import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 import java.time.Instant;
 
 @Builder
+@Data
 public class DefaultRecordAttemptRequest implements RecordAttemptRequest {
 
     private final boolean sequenceComplete;

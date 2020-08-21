@@ -14,12 +14,12 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class SaveAttemptTest {
+class SaveAttemptsTest {
 
     private final LoadAttempts loadAttempts = mock(LoadAttempts.class);
     private final AttemptRepository repository = mock(AttemptRepository.class);
 
-    private final SaveAttempt saveAttempt = SaveAttempt.builder()
+    private final SaveAttempts saveAttempts = SaveAttempts.builder()
             .loadAttempts(loadAttempts)
             .repository(repository)
             .build();
@@ -31,7 +31,7 @@ class SaveAttemptTest {
         given(loadAttempts.load(idvId)).willReturn(loadedAttempts);
         Attempt attempt = AttemptMother.withIdvId(idvId);
 
-        saveAttempt.save(attempt);
+        saveAttempts.save(attempt);
 
         ArgumentCaptor<Attempts> captor = ArgumentCaptor.forClass(Attempts.class);
         verify(repository).save(captor.capture());
@@ -41,4 +41,15 @@ class SaveAttemptTest {
                 .containsAll(loadedAttempts)
                 .contains(attempt);
     }
+
+    @Test
+    void shouldSaveAttempts() {
+        Attempts attempts = AttemptsMother.build();
+
+        Attempts savedAttempts = saveAttempts.save(attempts);
+
+        assertThat(savedAttempts).isEqualTo(attempts);
+        verify(repository).save(attempts);
+    }
+
 }

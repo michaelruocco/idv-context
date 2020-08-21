@@ -7,7 +7,7 @@ import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 @Builder
 @Slf4j
-public class SaveAttempt {
+public class SaveAttempts {
 
     private final LoadAttempts loadAttempts;
     private final AttemptRepository repository;
@@ -21,6 +21,11 @@ public class SaveAttempt {
         Attempts updated = existing.add(attempt);
         repository.save(updated);
         return updated;
+    }
+
+    public Attempts save(Attempts attempts) {
+        repository.save(attempts);
+        return attempts;
     }
 
 }

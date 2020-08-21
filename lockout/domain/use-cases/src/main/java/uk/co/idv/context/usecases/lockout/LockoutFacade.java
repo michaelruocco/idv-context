@@ -23,6 +23,7 @@ public class LockoutFacade {
     }
 
     public LockoutState recordAttempt(RecordAttemptRequest request) {
+        findIdentity.find(request.getIdvId());
         return lockoutService.recordAttemptIfRequired(request);
     }
 

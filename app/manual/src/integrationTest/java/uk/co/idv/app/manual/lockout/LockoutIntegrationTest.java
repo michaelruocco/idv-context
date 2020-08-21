@@ -37,7 +37,35 @@ public class LockoutIntegrationTest {
     private final LockoutFacade lockoutFacade = lockoutConfig.lockoutFacade();
 
     @Test
+    void shouldThrowExceptionIfIdentityDoesNotExistOnRecordAttempt() {
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.build();
+
+        Throwable error = catchThrowable(() -> lockoutFacade.recordAttempt(request));
+
+        assertThat(error).isInstanceOf(IdentityNotFoundException.class);
+    }
+
+    @Test
+    void shouldThrowExceptionIfIdentityDoesNotExistOnLoadState() {
+        ExternalLockoutRequest request = DefaultExternalLockoutRequestMother.build();
+
+        Throwable error = catchThrowable(() -> lockoutFacade.loadState(request));
+
+        assertThat(error).isInstanceOf(IdentityNotFoundException.class);
+    }
+
+    @Test
+    void shouldThrowExceptionIfIdentityDoesNotExistOnResetState() {
+        ExternalLockoutRequest request = DefaultExternalLockoutRequestMother.build();
+
+        Throwable error = catchThrowable(() -> lockoutFacade.resetState(request));
+
+        assertThat(error).isInstanceOf(IdentityNotFoundException.class);
+    }
+
+    @Test
     void shouldThrowExceptionNoPoliciesConfiguredForAttempt() {
+        identityService.update(IdentityMother.example());
         RecordAttemptRequest request = DefaultRecordAttemptRequestMother.build();
 
         Throwable error = catchThrowable(() -> lockoutFacade.recordAttempt(request));
@@ -47,6 +75,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldRecordUnsuccessfulAttempt() {
+        identityService.update(IdentityMother.example());
         policyService.create(HardLockoutPolicyMother.build());
         Attempt attempt = unsuccessful();
         RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
@@ -58,6 +87,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldBeLockedAfterMaxNumberOfAttemptsForHardLockoutPolicy() {
+        identityService.update(IdentityMother.example());
         policyService.create(HardLockoutPolicyMother.build());
         Attempt attempt = unsuccessful();
         RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
@@ -73,6 +103,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldThrowExceptionIfRecordAttemptAfterMaxNumberOfAttemptsForHardLockoutPolicy() {
+        identityService.update(IdentityMother.example());
         policyService.create(HardLockoutPolicyMother.build());
         Attempt attempt = unsuccessful();
         RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
@@ -93,6 +124,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldBeLockedAfterNumberOfAttemptsForRecurringSoftLockoutPolicy() {
+        identityService.update(IdentityMother.example());
         policyService.create(RecurringSoftLockoutPolicyMother.build());
         Attempt attempt = unsuccessful();
         RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
@@ -106,6 +138,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldThrowExceptionIfRecordAttemptAfterNumberOfAttemptsForRecurringSoftLockoutPolicy() {
+        identityService.update(IdentityMother.example());
         policyService.create(RecurringSoftLockoutPolicyMother.build());
         Attempt attempt = unsuccessful();
         RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
@@ -178,6 +211,7 @@ public class LockoutIntegrationTest {
 
     @Test
     void shouldResetFailedAttemptsOnSuccessfulAttempt() {
+        identityService.update(IdentityMother.example());
         policyService.create(HardLockoutPolicyMother.build());
         RecordAttemptRequest unsuccessfulRequest = DefaultRecordAttemptRequestMother.withAttempt(unsuccessful());
         lockoutFacade.recordAttempt(unsuccessfulRequest);
