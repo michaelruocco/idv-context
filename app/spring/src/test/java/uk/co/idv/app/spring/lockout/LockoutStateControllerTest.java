@@ -5,8 +5,10 @@ import org.mockito.ArgumentCaptor;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.lockout.DefaultExternalLockoutRequestMother;
+import uk.co.idv.context.entities.lockout.DefaultRecordAttemptRequestMother;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
+import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutStateMother;
 import uk.co.idv.context.usecases.lockout.LockoutFacade;
 
@@ -59,6 +61,17 @@ class LockoutStateControllerTest {
         given(facade.resetState(request)).willReturn(expectedState);
 
         LockoutState state = controller.resetState(request);
+
+        assertThat(state).isEqualTo(expectedState);
+    }
+
+    @Test
+    void shouldRecordAttempt() {
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.build();
+        LockoutState expectedState = HardLockoutStateMother.build();
+        given(facade.recordAttempt(request)).willReturn(expectedState);
+
+        LockoutState state = controller.recordAttempt(request);
 
         assertThat(state).isEqualTo(expectedState);
     }
