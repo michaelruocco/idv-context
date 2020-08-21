@@ -2,6 +2,8 @@ package uk.co.idv.context.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.AliasFactory;
+import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
@@ -18,13 +20,27 @@ class LockoutFacadeTest {
 
     private final FindIdentity findIdentity = mock(FindIdentity.class);
     private final LockoutService lockoutService = mock(LockoutService.class);
+    private final AliasFactory aliasFactory = mock(AliasFactory.class);
     private final ExternalLockoutRequestConverter converter = mock(ExternalLockoutRequestConverter.class);
 
     private final LockoutFacade facade = LockoutFacade.builder()
             .findIdentity(findIdentity)
             .lockoutService(lockoutService)
+            .aliasFactory(aliasFactory)
             .converter(converter)
             .build();
+
+    @Test
+    void shouldBuildAlias() {
+        String aliasType = "default-alias";
+        String aliasValue = "my-alias-value";
+        Alias expectedAlias = DefaultAliasMother.build();
+        given(aliasFactory.build(aliasType, aliasValue)).willReturn(expectedAlias);
+
+        Alias alias = facade.toAlias(aliasType, aliasValue);
+
+        assertThat(alias).isEqualTo(expectedAlias);
+    }
 
     @Test
     void shouldLoadLockoutState() {

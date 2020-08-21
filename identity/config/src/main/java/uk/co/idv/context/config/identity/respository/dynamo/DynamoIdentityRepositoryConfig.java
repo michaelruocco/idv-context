@@ -8,9 +8,9 @@ import uk.co.idv.context.adapter.repository.IdentityConverter;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 import uk.co.mruoc.json.JsonConverter;
 
-import static uk.co.idv.context.config.identity.respository.dynamo.IdentityTableNames.IDENTITY_TABLE_NAME;
-
 public class DynamoIdentityRepositoryConfig implements IdentityRepositoryConfig {
+
+    public static final String IDENTITY_TABLE_NAME = "identity";
 
     private final IdentityRepository repository;
 

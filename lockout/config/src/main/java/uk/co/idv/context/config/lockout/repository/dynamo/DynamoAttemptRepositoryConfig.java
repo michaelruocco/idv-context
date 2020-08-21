@@ -8,10 +8,10 @@ import uk.co.idv.context.config.lockout.repository.AttemptRepositoryConfig;
 import uk.co.idv.context.usecases.lockout.attempt.AttemptRepository;
 import uk.co.mruoc.json.JsonConverter;
 
-import static uk.co.idv.context.config.lockout.repository.dynamo.LockoutTableNames.ATTEMPT_TABLE_NAME;
-
 @Builder
 public class DynamoAttemptRepositoryConfig implements AttemptRepositoryConfig {
+
+    public static final String ATTEMPT_TABLE_NAME = "attempt";
 
     private final JsonConverter jsonConverter;
     private final DynamoTables tables;

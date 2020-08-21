@@ -12,7 +12,8 @@ import java.util.concurrent.Callable;
 
 import static org.awaitility.Awaitility.await;
 import static org.testcontainers.utility.MountableFile.forHostPath;
-import static uk.co.idv.context.config.identity.respository.dynamo.IdentityTableNames.IDENTITY_TABLE_NAME;
+import static uk.co.idv.context.config.identity.respository.dynamo.DynamoIdentityRepositoryConfig.IDENTITY_TABLE_NAME;
+import static uk.co.idv.context.config.lockout.repository.dynamo.DynamoAttemptRepositoryConfig.ATTEMPT_TABLE_NAME;
 
 @Slf4j
 public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
@@ -43,7 +44,10 @@ public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
 
     public void waitForDynamoTablesToActive() {
         DynamoTables tables = getOrBuildDynamoTables();
-        tables.waitForEnvironmentTablesToBeActive(IDENTITY_TABLE_NAME);
+        tables.waitForEnvironmentTablesToBeActive(
+                IDENTITY_TABLE_NAME,
+                ATTEMPT_TABLE_NAME
+        );
     }
 
     public String getDynamoEndpointUri() {

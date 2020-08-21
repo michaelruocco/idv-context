@@ -14,8 +14,8 @@ public class LockoutFacade {
 
     private final FindIdentity findIdentity;
     private final LockoutService lockoutService;
-    private final ExternalLockoutRequestConverter converter;
     private final AliasFactory aliasFactory;
+    private final ExternalLockoutRequestConverter converter;
 
     public Alias toAlias(String type, String value) {
         return aliasFactory.build(type, value);
