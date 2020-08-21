@@ -7,6 +7,7 @@ import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
 import uk.co.idv.context.entities.lockout.LockoutRequest;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
+import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 import uk.co.idv.context.usecases.identity.find.FindIdentity;
 
 @Builder
@@ -21,9 +22,13 @@ public class LockoutFacade {
         return aliasFactory.build(type, value);
     }
 
+    public LockoutState recordAttempt(RecordAttemptRequest request) {
+        return lockoutService.recordAttemptIfRequired(request);
+    }
+
     public LockoutState loadState(ExternalLockoutRequest externalRequest) {
         LockoutRequest lockoutRequest = toLockoutRequest(externalRequest);
-        return lockoutService.loadState(lockoutRequest);
+        return lockoutService.loadAndValidateState(lockoutRequest);
     }
 
     public LockoutState resetState(ExternalLockoutRequest externalRequest) {

@@ -6,10 +6,12 @@ import uk.co.idv.context.entities.alias.AliasFactory;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
+import uk.co.idv.context.entities.lockout.DefaultRecordAttemptRequestMother;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
 import uk.co.idv.context.entities.lockout.DefaultExternalLockoutRequestMother;
 import uk.co.idv.context.entities.lockout.LockoutRequest;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
+import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 import uk.co.idv.context.usecases.identity.find.FindIdentity;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -68,6 +70,16 @@ class LockoutFacadeTest {
         assertThat(state).isEqualTo(expectedState);
     }
 
+    @Test
+    void shouldRecordAttempt() {
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.build();
+        LockoutState expectedState = givenLockoutStateUpdated(request);
+
+        LockoutState state = facade.recordAttempt(request);
+
+        assertThat(state).isEqualTo(expectedState);
+    }
+
     private Identity givenIdentityFoundForAlias(Alias alias) {
         Identity identity = IdentityMother.example();
         given(findIdentity.find(alias)).willReturn(identity);
@@ -76,13 +88,19 @@ class LockoutFacadeTest {
 
     private LockoutState givenLockoutStateLoaded(LockoutRequest request) {
         LockoutState state = mock(LockoutState.class);
-        given(lockoutService.loadState(request)).willReturn(state);
+        given(lockoutService.loadAndValidateState(request)).willReturn(state);
         return state;
     }
 
     private LockoutState givenLockoutStateReset(LockoutRequest request) {
         LockoutState state = mock(LockoutState.class);
         given(lockoutService.resetState(request)).willReturn(state);
+        return state;
+    }
+
+    private LockoutState givenLockoutStateUpdated(RecordAttemptRequest request) {
+        LockoutState state = mock(LockoutState.class);
+        given(lockoutService.recordAttemptIfRequired(request)).willReturn(state);
         return state;
     }
 

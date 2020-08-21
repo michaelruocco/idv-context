@@ -11,7 +11,7 @@
 
 ## Todo
 
-*   Add endpoint for recording attempts
+*   Add json deserialization for record attempt request
 *   Add karate tests for lockout and attempt endpoints
 *   Add initial functionality for loading identity and checking lockout state when creating verification context
 

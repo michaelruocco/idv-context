@@ -1,7 +1,6 @@
 package uk.co.idv.app.spring.lockout;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,7 +15,6 @@ import uk.co.idv.context.usecases.lockout.LockoutFacade;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/lockout-states")
-@Slf4j
 public class LockoutStateController {
 
     private final LockoutFacade facade;
