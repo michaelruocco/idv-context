@@ -13,7 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-public class AttemptItemConverterTest {
+class AttemptItemConverterTest {
 
     private final JsonConverter jsonConverter = mock(JsonConverter.class);
 
