@@ -16,7 +16,7 @@ class LockoutStateCalculatorSerdeTest {
             .registerModule(new LockoutStateCalculatorModule())
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
-    @ParameterizedTest(name = "should serialize state calculator {1}")
+    @ParameterizedTest(name = "should serialize lockout state calculator {1}")
     @ArgumentsSource(LockoutStateCalculatorArgumentsProvider.class)
     void shouldSerialize(String expectedJson, LockoutStateCalculator stateCalculator) throws JsonProcessingException {
         String json = MAPPER.writeValueAsString(stateCalculator);
@@ -24,7 +24,7 @@ class LockoutStateCalculatorSerdeTest {
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
-    @ParameterizedTest(name = "should deserialize state calculator {1}")
+    @ParameterizedTest(name = "should deserialize lockout state calculator {1}")
     @ArgumentsSource(LockoutStateCalculatorArgumentsProvider.class)
     void shouldDeserialize(String json, LockoutStateCalculator expectedStateCalculator) throws JsonProcessingException {
         LockoutStateCalculator calculator = MAPPER.readValue(json, LockoutStateCalculator.class);

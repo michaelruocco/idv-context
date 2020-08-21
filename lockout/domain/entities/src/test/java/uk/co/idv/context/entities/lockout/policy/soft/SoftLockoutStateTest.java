@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class SoftLockoutStateTest {
@@ -24,15 +23,7 @@ class SoftLockoutStateTest {
 
     @Test
     void shouldReturnExpiryFromLock() {
-        assertThat(state.getExpiry()).isEqualTo(lock.getExpiry());
-    }
-
-    @Test
-    void shouldReturnNumberOfAttempts() {
-        int numberOfAttempts = 2;
-        givenNumberOfAttempts(numberOfAttempts);
-
-        assertThat(state.getNumberOfAttempts()).isEqualTo(numberOfAttempts);
+        assertThat(state.getExpiry()).isEqualTo(lock.calculateExpiry());
     }
 
     @Test
@@ -45,12 +36,8 @@ class SoftLockoutStateTest {
         assertThat(state.getMessage()).isEqualTo(toExpectedLockedMessage());
     }
 
-    private void givenNumberOfAttempts(int numberOfAttempts) {
-        given(attempts.size()).willReturn(numberOfAttempts);
-    }
-
     private String toExpectedLockedMessage() {
-        return String.format("soft lock expiring at %s", lock.getExpiry());
+        return String.format("soft lock began at %s and expiring at %s", lock.getStart(), lock.calculateExpiry());
     }
 
 }

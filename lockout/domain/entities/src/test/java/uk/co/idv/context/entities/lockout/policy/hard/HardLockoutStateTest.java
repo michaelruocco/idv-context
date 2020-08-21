@@ -24,14 +24,6 @@ class HardLockoutStateTest {
     }
 
     @Test
-    void shouldReturnNumberOfAttempts() {
-        int numberOfAttempts = 2;
-        givenNumberOfAttempts(numberOfAttempts);
-
-        assertThat(state.getNumberOfAttempts()).isEqualTo(numberOfAttempts);
-    }
-
-    @Test
     void shouldBeUnlockedIfAttemptsRemaining() {
         int numberOfAttempts = 0;
         givenNumberOfAttempts(numberOfAttempts);

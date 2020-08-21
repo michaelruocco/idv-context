@@ -21,14 +21,26 @@ class SoftLockTest {
     }
 
     @Test
-    void shouldReturnExpiry() {
-        Instant expiry = Instant.now();
+    void shouldReturnStart() {
+        Instant start = Instant.parse("2020-08-19T23:15:23.060Z");
 
         SoftLock softLock = SoftLock.builder()
-                .expiry(expiry)
+                .start(start)
                 .build();
 
-        assertThat(softLock.getExpiry()).isEqualTo(expiry);
+        assertThat(softLock.getStart()).isEqualTo(start);
+    }
+
+    @Test
+    void shouldCalculateExpiry() {
+        SoftLock softLock = SoftLock.builder()
+                .start(Instant.parse("2020-08-19T23:15:23.060Z"))
+                .duration(Duration.ofMinutes(1))
+                .build();
+
+        Instant expiry = softLock.calculateExpiry();
+
+        assertThat(expiry).isEqualTo(Instant.parse("2020-08-19T23:16:23.060Z"));
     }
 
 }

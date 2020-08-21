@@ -24,7 +24,7 @@ public class SoftLockoutState extends LockoutState {
 
     @Override
     public String getMessage() {
-        return String.format("soft lock expiring at %s", lock.getExpiry());
+        return String.format("soft lock began at %s and expiring at %s", lock.getStart(), lock.calculateExpiry());
     }
 
     public Duration getDuration() {
@@ -32,7 +32,7 @@ public class SoftLockoutState extends LockoutState {
     }
 
     public Instant getExpiry() {
-        return lock.getExpiry();
+        return lock.calculateExpiry();
     }
 
 }

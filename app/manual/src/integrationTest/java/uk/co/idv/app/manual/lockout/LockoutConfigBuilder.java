@@ -23,6 +23,7 @@ public class LockoutConfigBuilder {
                 .attemptRepository(repositoryConfig.attemptRepository())
                 .policyRepository(repositoryConfig.policyRepository())
                 .findIdentityProvider(identityConfig)
+                .aliasFactory(identityConfig.aliasFactory())
                 .build();
     }
 

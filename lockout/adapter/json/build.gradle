@@ -7,6 +7,7 @@ dependencies {
     api project(":policy-json")
     api "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
 
+    implementation project(":identity-json")
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
     testImplementation project(":identity-json")

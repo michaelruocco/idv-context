@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.With;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.policy.PolicyKey;
@@ -65,6 +66,10 @@ public class Attempts implements Iterable<Attempt> {
         return withValues(values.stream()
                 .filter(key::appliesTo)
                 .collect(Collectors.toList()));
+    }
+
+    public Collection<Attempt> toCollection() {
+        return UnmodifiableCollection.unmodifiableCollection(values);
     }
 
     private void validate(IdvId attemptIdvId) {

@@ -8,7 +8,6 @@ import uk.co.idv.context.entities.lockout.attempt.AttemptMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
 
-import java.time.Duration;
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -100,19 +99,6 @@ class LockoutStateRequestTest {
         boolean isBefore = request.isBefore(now);
 
         assertThat(isBefore).isFalse();
-    }
-
-    @Test
-    void shouldAddDurationToMostRecentTimestampFromAttempts() {
-        Instant mostRecentTimestamp = Instant.now();
-        LockoutStateRequest request = LockoutStateRequest.builder()
-                .attempts(verificationAttemptsWithMostRecentTimestamp(mostRecentTimestamp))
-                .build();
-        Duration duration = Duration.ofMinutes(5);
-
-        Instant result = request.addToMostRecentAttemptTimestamp(duration);
-
-        assertThat(result).isEqualTo(mostRecentTimestamp.plus(duration));
     }
 
     @Test

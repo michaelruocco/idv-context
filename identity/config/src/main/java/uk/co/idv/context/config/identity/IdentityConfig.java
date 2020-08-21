@@ -4,6 +4,8 @@ import lombok.Builder;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStub;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.context.adapter.json.error.handler.IdentityErrorHandler;
+import uk.co.idv.context.entities.alias.AliasFactory;
+import uk.co.idv.context.entities.alias.DefaultAliasFactory;
 import uk.co.idv.context.usecases.eligibility.ChannelCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CompositeCreateEligibility;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
@@ -36,6 +38,10 @@ public class IdentityConfig implements FindIdentityProvider {
 
     public IdentityService identityService() {
         return IdentityService.build(repository);
+    }
+
+    public AliasFactory aliasFactory() {
+        return new DefaultAliasFactory();
     }
 
     public IdentityErrorHandler errorHandler() {

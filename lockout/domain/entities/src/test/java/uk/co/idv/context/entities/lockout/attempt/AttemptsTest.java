@@ -1,5 +1,6 @@
 package uk.co.idv.context.entities.lockout.attempt;
 
+import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
@@ -214,6 +215,17 @@ class AttemptsTest {
         assertThat(updatedAttempts).isEmpty();
         assertThat(updatedAttempts.getId()).isEqualTo(attempts.getId());
         assertThat(updatedAttempts.getIdvId()).isEqualTo(attempts.getIdvId());
+    }
+
+    @Test
+    void shouldReturnAttemptsAsUnmodifiableCollection() {
+        Attempts attempts = AttemptsMother.withAttempts(AttemptMother.build());
+
+        Collection<Attempt> collection = attempts.toCollection();
+
+        assertThat(collection)
+                .isInstanceOf(UnmodifiableCollection.class)
+                .containsExactlyElementsOf(attempts);
     }
 
 }

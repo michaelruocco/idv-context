@@ -28,6 +28,7 @@ public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
         withEnv("DEFAULT_REGION", region.getName());
         withCopyFileToContainer(forHostPath("localstack/scripts/create-tables.sh"), "/docker-entrypoint-initaws.d/create-tables.sh");
         withCopyFileToContainer(forHostPath("localstack/tables/identity.json"), "/opt/tables/identity.json");
+        withCopyFileToContainer(forHostPath("localstack/tables/attempt.json"), "/opt/tables/attempt.json");
         withExposedPorts(4569);
         withLogConsumer(this::logInfo);
         this.region = region;

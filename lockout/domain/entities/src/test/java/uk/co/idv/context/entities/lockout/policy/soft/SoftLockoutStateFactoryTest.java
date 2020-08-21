@@ -50,7 +50,7 @@ class SoftLockoutStateFactoryTest {
     }
 
     private void givenExpiry(Instant expiry) {
-        given(request.addToMostRecentAttemptTimestamp(duration)).willReturn(expiry);
+        given(request.getMostRecentAttemptTimestamp()).willReturn(expiry.minus(duration));
     }
 
     private void givenNewAttemptAfter(Instant expiry) {

@@ -1,0 +1,19 @@
+{
+  "AttributeDefinitions": [
+    {
+      "AttributeName": "idvId",
+      "AttributeType": "S"
+    }
+  ],
+  "TableName": "idv-local-attempt",
+  "KeySchema": [
+    {
+      "AttributeName": "idvId",
+      "KeyType": "HASH"
+    }
+  ],
+  "ProvisionedThroughput": {
+    "ReadCapacityUnits": 1,
+    "WriteCapacityUnits": 1
+  }
+}

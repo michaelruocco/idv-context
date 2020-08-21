@@ -14,13 +14,13 @@ import uk.co.mruoc.json.jackson.JsonParserConverter;
 import java.util.Collection;
 import java.util.UUID;
 
-public class VerificationAttemptsDeserializer extends StdDeserializer<Attempts> {
+public class AttemptsDeserializer extends StdDeserializer<Attempts> {
 
     private static final TypeReference<Collection<Attempt>> ATTEMPT_COLLECTION = new TypeReference<>() {
         // intentionally blank
     };
 
-    public VerificationAttemptsDeserializer() {
+    public AttemptsDeserializer() {
         super(Attempts.class);
     }
 

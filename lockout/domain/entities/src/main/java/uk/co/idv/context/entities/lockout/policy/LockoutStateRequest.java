@@ -6,7 +6,6 @@ import lombok.With;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
-import java.time.Duration;
 import java.time.Instant;
 
 @Builder
@@ -27,8 +26,8 @@ public class LockoutStateRequest {
         return alias;
     }
 
-    public Instant addToMostRecentAttemptTimestamp(Duration duration) {
-        return attempts.getMostRecentTimestamp().plus(duration);
+    public Instant getMostRecentAttemptTimestamp() {
+        return attempts.getMostRecentTimestamp();
     }
 
     public LockoutStateRequest removeAttempts(Attempts attemptsToRemove) {

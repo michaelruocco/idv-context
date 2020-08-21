@@ -7,15 +7,14 @@ import uk.co.idv.context.entities.lockout.policy.LockoutStateRequest;
 import uk.co.idv.context.entities.lockout.policy.unlocked.UnlockedState;
 
 import java.time.Duration;
-import java.time.Instant;
 
 @Slf4j
 @Data
 public class SoftLockoutStateFactory {
 
     public LockoutState build(Duration duration, LockoutStateRequest request) {
-        final Instant expiry = request.addToMostRecentAttemptTimestamp(duration);
-        final boolean isLocked = request.isBefore(expiry);
+        SoftLock softLock = calculateSoftLock(duration, request);
+        boolean isLocked = request.isBefore(softLock.calculateExpiry());
 
         if (!isLocked) {
             return new UnlockedState(request.getAttempts());
@@ -23,7 +22,14 @@ public class SoftLockoutStateFactory {
 
         return SoftLockoutState.builder()
                 .attempts(request.getAttempts())
-                .lock(new SoftLock(duration, expiry))
+                .lock(softLock)
+                .build();
+    }
+
+    private static SoftLock calculateSoftLock(Duration duration, LockoutStateRequest request) {
+        return SoftLock.builder()
+                .start(request.getMostRecentAttemptTimestamp())
+                .duration(duration)
                 .build();
     }
 

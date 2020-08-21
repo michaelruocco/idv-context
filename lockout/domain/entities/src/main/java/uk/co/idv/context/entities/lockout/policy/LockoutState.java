@@ -2,8 +2,10 @@ package uk.co.idv.context.entities.lockout.policy;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
+import java.util.Collection;
 import java.util.UUID;
 
 @RequiredArgsConstructor
@@ -21,6 +23,10 @@ public abstract class LockoutState {
 
     public Attempts getAttempts() {
         return attempts;
+    }
+
+    public Collection<Attempt> attemptsCollection() {
+        return attempts.toCollection();
     }
 
     public int getNumberOfAttempts() {

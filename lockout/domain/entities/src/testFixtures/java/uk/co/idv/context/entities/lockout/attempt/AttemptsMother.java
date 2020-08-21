@@ -22,7 +22,7 @@ public interface AttemptsMother {
     static Attempts withNumberOfAttempts(int numberOfAttempts) {
         Collection<Attempt> attempts = new ArrayList<>();
         for (int i = 0; i < numberOfAttempts; i++) {
-            attempts.add(AttemptMother.build());
+            attempts.add(AttemptMother.unsuccessful());
         }
         return builder().attempts(attempts).build();
     }

@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class AttemptSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper()
-            .registerModules(new VerificationAttemptModule(), new AliasModule())
+            .registerModules(new AttemptModule(), new AliasModule())
             .disable(WRITE_DATES_AS_TIMESTAMPS);
 
     private static final String JSON = VerificationAttemptJsonMother.build();

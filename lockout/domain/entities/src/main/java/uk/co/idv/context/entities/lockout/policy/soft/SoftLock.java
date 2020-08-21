@@ -11,6 +11,10 @@ import java.time.Instant;
 public class SoftLock {
 
     private final Duration duration;
-    private final Instant expiry;
+    private final Instant start;
+
+    public Instant calculateExpiry() {
+        return start.plus(duration);
+    }
 
 }

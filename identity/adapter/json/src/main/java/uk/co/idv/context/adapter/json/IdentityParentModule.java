@@ -9,10 +9,10 @@ import uk.co.idv.context.adapter.json.identity.IdentityModule;
 
 import java.util.Arrays;
 
-public class VerificationContextParentModule extends SimpleModule {
+public class IdentityParentModule extends SimpleModule {
 
-    public VerificationContextParentModule() {
-        super("verification-context-json-module", Version.unknownVersion());
+    public IdentityParentModule() {
+        super("identity-parent-module", Version.unknownVersion());
     }
 
     @Override

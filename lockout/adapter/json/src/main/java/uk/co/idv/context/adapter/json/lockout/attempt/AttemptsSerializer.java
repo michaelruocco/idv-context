@@ -8,9 +8,9 @@ import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import java.io.IOException;
 
-public class VerificationAttemptsSerializer extends StdSerializer<Attempts> {
+public class AttemptsSerializer extends StdSerializer<Attempts> {
 
-    public VerificationAttemptsSerializer() {
+    public AttemptsSerializer() {
         super(Attempts.class);
     }
 

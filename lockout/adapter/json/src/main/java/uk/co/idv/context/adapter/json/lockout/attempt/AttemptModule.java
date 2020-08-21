@@ -9,12 +9,12 @@ import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import java.util.Collections;
 
-public class VerificationAttemptModule extends SimpleModule {
+public class AttemptModule extends SimpleModule {
 
-    public VerificationAttemptModule() {
+    public AttemptModule() {
         super("verification-attempt-module", Version.unknownVersion());
-        setUpVerificationAttempt();
-        setUpVerificationAttempts();
+        setUpAttempt();
+        setUpAttempts();
     }
 
     @Override
@@ -22,14 +22,14 @@ public class VerificationAttemptModule extends SimpleModule {
         return Collections.singleton(new JavaTimeModule());
     }
 
-    private void setUpVerificationAttempt() {
-        setMixInAnnotation(Attempt.class, VerificationAttemptMixin.class);
-        addDeserializer(Attempt.class, new VerificationAttemptDeserializer());
+    private void setUpAttempt() {
+        setMixInAnnotation(Attempt.class, AttemptMixin.class);
+        addDeserializer(Attempt.class, new AttemptDeserializer());
     }
 
-    private void setUpVerificationAttempts() {
-        addSerializer(Attempts.class, new VerificationAttemptsSerializer());
-        addDeserializer(Attempts.class, new VerificationAttemptsDeserializer());
+    private void setUpAttempts() {
+        addSerializer(Attempts.class, new AttemptsSerializer());
+        addDeserializer(Attempts.class, new AttemptsDeserializer());
     }
 
 }

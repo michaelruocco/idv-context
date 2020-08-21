@@ -13,9 +13,9 @@ import uk.co.mruoc.json.jackson.JsonParserConverter;
 import java.time.Instant;
 import java.util.UUID;
 
-public class VerificationAttemptDeserializer extends StdDeserializer<Attempt> {
+public class AttemptDeserializer extends StdDeserializer<Attempt> {
 
-    public VerificationAttemptDeserializer() {
+    public AttemptDeserializer() {
         super(Attempt.class);
     }
 
