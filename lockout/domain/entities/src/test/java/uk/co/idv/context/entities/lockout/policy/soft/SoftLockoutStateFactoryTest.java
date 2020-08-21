@@ -9,6 +9,7 @@ import uk.co.idv.context.entities.lockout.policy.unlocked.UnlockedState;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -50,7 +51,7 @@ class SoftLockoutStateFactoryTest {
     }
 
     private void givenExpiry(Instant expiry) {
-        given(request.getMostRecentAttemptTimestamp()).willReturn(expiry.minus(duration));
+        given(request.getMostRecentAttemptTimestamp()).willReturn(Optional.of(expiry.minus(duration)));
     }
 
     private void givenNewAttemptAfter(Instant expiry) {

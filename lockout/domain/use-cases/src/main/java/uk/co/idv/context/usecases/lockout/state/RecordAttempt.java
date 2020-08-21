@@ -34,7 +34,11 @@ public class RecordAttempt {
     }
 
     private LockoutState recordFailedAttempt(RecordAttemptRequest request, LockoutPolicy policy) {
-        Attempts attempts = save.save(request.getAttempt());
+        LockoutState state = load.load(request, policy);
+        if (state.isLocked()) {
+            throw new LockedOutException(state);
+        }
+        Attempts attempts = save.save(request.getAttempt(), state.getAttempts());
         return policy.calculateState(request, attempts);
     }
 

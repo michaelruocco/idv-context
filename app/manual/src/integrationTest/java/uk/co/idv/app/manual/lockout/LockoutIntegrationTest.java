@@ -13,6 +13,7 @@ import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutPolicyMother;
+import uk.co.idv.context.entities.lockout.policy.soft.RecurringSoftLockoutPolicyMother;
 import uk.co.idv.context.usecases.identity.IdentityService;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
 import uk.co.idv.context.usecases.lockout.LockoutFacade;
@@ -38,7 +39,7 @@ public class LockoutIntegrationTest {
     private final LockoutFacade lockoutFacade = lockoutConfig.lockoutFacade();
 
     @Test
-    void shouldThrowExceptionPolicyConfiguredForAttempt() {
+    void shouldThrowExceptionNoPoliciesConfiguredForAttempt() {
         RecordAttemptRequest request = DefaultRecordAttemptRequestMother.build();
 
         Throwable error = catchThrowable(() -> lockoutService.recordAttemptIfRequired(request));
@@ -60,14 +61,67 @@ public class LockoutIntegrationTest {
     @Test
     void shouldBeLockedAfterMaxNumberOfAttemptsForHardLockoutPolicy() {
         policyService.create(HardLockoutPolicyMother.build());
-        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(unsuccessful());
+        Attempt attempt = unsuccessful();
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
         lockoutService.recordAttemptIfRequired(request);
         lockoutService.recordAttemptIfRequired(request);
 
         LockoutState state = lockoutService.recordAttemptIfRequired(request);
 
-        assertThat(state.getAttempts()).hasSize(3);
+        assertThat(state.getAttempts()).containsExactly(attempt, attempt, attempt);
         assertThat(state.isLocked()).isTrue();
+        assertThat(state.getMessage()).isEqualTo("maximum number of attempts [3] reached");
+    }
+
+    @Test
+    void shouldThrowExceptionIfRecordAttemptAfterMaxNumberOfAttemptsForHardLockoutPolicy() {
+        policyService.create(HardLockoutPolicyMother.build());
+        Attempt attempt = unsuccessful();
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
+        lockoutService.recordAttemptIfRequired(request);
+        lockoutService.recordAttemptIfRequired(request);
+        lockoutService.recordAttemptIfRequired(request);
+
+        LockedOutException error = catchThrowableOfType(
+                () -> lockoutService.recordAttemptIfRequired(request),
+                LockedOutException.class
+        );
+
+        LockoutState state = error.getState();
+        assertThat(state.getAttempts()).containsExactly(attempt, attempt, attempt);
+        assertThat(state.isLocked()).isTrue();
+        assertThat(state.getMessage()).isEqualTo("maximum number of attempts [3] reached");
+    }
+
+    @Test
+    void shouldBeLockedAfterNumberOfAttemptsForRecurringSoftLockoutPolicy() {
+        policyService.create(RecurringSoftLockoutPolicyMother.build());
+        Attempt attempt = unsuccessful();
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
+
+        LockoutState state = lockoutService.recordAttemptIfRequired(request);
+
+        assertThat(state.getAttempts()).containsExactly(attempt);
+        assertThat(state.isLocked()).isTrue();
+        assertThat(state.getMessage()).isEqualTo("soft lock began at 2019-09-27T09:35:15.612Z and expiring at 2019-09-27T09:36:15.612Z");
+    }
+
+    @Test
+    void shouldThrowExceptionIfRecordAttemptAfterNumberOfAttemptsForRecurringSoftLockoutPolicy() {
+        policyService.create(RecurringSoftLockoutPolicyMother.build());
+        Attempt attempt = unsuccessful();
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
+        lockoutService.recordAttemptIfRequired(request);
+
+        LockedOutException error = catchThrowableOfType(
+                () -> lockoutService.recordAttemptIfRequired(request),
+                LockedOutException.class
+        );
+
+        LockoutState state = error.getState();
+        assertThat(state.getAttempts()).containsExactly(attempt);
+        assertThat(state.isLocked()).isTrue();
+        assertThat(state.getMessage()).isEqualTo("soft lock began at 2019-09-27T09:35:15.612Z and expiring at 2019-09-27T09:36:15.612Z");
     }
 
     @Test
@@ -94,6 +148,7 @@ public class LockoutIntegrationTest {
 
         assertThat(state.isLocked()).isFalse();
         assertThat(state.getAttempts()).isEmpty();
+        assertThat(state.getMessage()).isEqualTo("3 attempts remaining");
     }
 
     @Test

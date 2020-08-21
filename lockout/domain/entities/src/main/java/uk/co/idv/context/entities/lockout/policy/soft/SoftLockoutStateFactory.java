@@ -7,30 +7,32 @@ import uk.co.idv.context.entities.lockout.policy.LockoutStateRequest;
 import uk.co.idv.context.entities.lockout.policy.unlocked.UnlockedState;
 
 import java.time.Duration;
+import java.util.Optional;
 
 @Slf4j
 @Data
 public class SoftLockoutStateFactory {
 
     public LockoutState build(Duration duration, LockoutStateRequest request) {
-        SoftLock softLock = calculateSoftLock(duration, request);
-        boolean isLocked = request.isBefore(softLock.calculateExpiry());
+        Optional<SoftLock> softLock = calculateSoftLock(duration, request);
+        if (softLock.isEmpty()) {
+            return new UnlockedState(request.getAttempts());
+        }
 
+        boolean isLocked = request.isBefore(softLock.get().calculateExpiry());
         if (!isLocked) {
             return new UnlockedState(request.getAttempts());
         }
 
         return SoftLockoutState.builder()
                 .attempts(request.getAttempts())
-                .lock(softLock)
+                .lock(softLock.get())
                 .build();
     }
 
-    private static SoftLock calculateSoftLock(Duration duration, LockoutStateRequest request) {
-        return SoftLock.builder()
-                .start(request.getMostRecentAttemptTimestamp())
-                .duration(duration)
-                .build();
+    private static Optional<SoftLock> calculateSoftLock(Duration duration, LockoutStateRequest request) {
+        return request.getMostRecentAttemptTimestamp()
+                .map(timestamp -> new SoftLock(duration, timestamp));
     }
 
 }

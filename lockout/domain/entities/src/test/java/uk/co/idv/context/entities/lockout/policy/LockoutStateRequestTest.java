@@ -9,6 +9,7 @@ import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
 
 import java.time.Instant;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -115,9 +116,21 @@ class LockoutStateRequestTest {
         assertThat(updated.getAttempts()).containsExactly(attempt2);
     }
 
-    private Attempts verificationAttemptsWithMostRecentTimestamp(Instant timestamp) {
+    @Test
+    void shouldReturnMostRecentAttemptTimestamp() {
+        Instant expectedTimestamp = Instant.now();
+        LockoutStateRequest request = LockoutStateRequest.builder()
+                .attempts(givenAttemptsWithMostRecentTimestamp(expectedTimestamp))
+                .build();
+
+        Optional<Instant> timestamp = request.getMostRecentAttemptTimestamp();
+
+        assertThat(timestamp).contains(expectedTimestamp);
+    }
+
+    private Attempts givenAttemptsWithMostRecentTimestamp(Instant timestamp) {
         Attempts attempts = mock(Attempts.class);
-        given(attempts.getMostRecentTimestamp()).willReturn(timestamp);
+        given(attempts.getMostRecentTimestamp()).willReturn(Optional.of(timestamp));
         return attempts;
     }
 

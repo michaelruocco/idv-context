@@ -23,6 +23,10 @@ public class ResetLockoutState {
 
     public LockoutState reset(LockoutRequest request, LockoutPolicy policy) {
         Attempts attempts = loadAttempts.load(request.getIdvId());
+        LockoutState state = policy.calculateState(request, attempts);
+        if (state.isLocked()) {
+            throw new LockedOutException(state);
+        }
         return policy.resetState(request, attempts);
     }
 

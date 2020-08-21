@@ -7,6 +7,7 @@ import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 import java.time.Instant;
+import java.util.Optional;
 
 @Builder
 @Data
@@ -26,7 +27,7 @@ public class LockoutStateRequest {
         return alias;
     }
 
-    public Instant getMostRecentAttemptTimestamp() {
+    public Optional<Instant> getMostRecentAttemptTimestamp() {
         return attempts.getMostRecentTimestamp();
     }
 

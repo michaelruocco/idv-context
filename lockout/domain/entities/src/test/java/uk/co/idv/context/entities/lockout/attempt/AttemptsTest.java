@@ -14,6 +14,7 @@ import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -165,9 +166,21 @@ class AttemptsTest {
                 .attempts(attemptCollection)
                 .build();
 
-        Instant mostRecent = attempts.getMostRecentTimestamp();
+        Optional<Instant> mostRecent = attempts.getMostRecentTimestamp();
 
-        assertThat(mostRecent).isEqualTo(expectedMostRecent);
+        assertThat(mostRecent).contains(expectedMostRecent);
+    }
+
+    @Test
+    void shouldReturnEmptyMostRecentTimestampIfEmpty() {
+        Attempts attempts = Attempts.builder()
+                .idvId(IdvIdMother.idvId())
+                .attempts(Collections.emptyList())
+                .build();
+
+        Optional<Instant> mostRecent = attempts.getMostRecentTimestamp();
+
+        assertThat(mostRecent).isEmpty();
     }
 
     @Test

@@ -17,6 +17,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -52,8 +53,8 @@ public class Attempts implements Iterable<Attempt> {
         return withValues(addToAttempts(attempt));
     }
 
-    public Instant getMostRecentTimestamp() {
-        return getMostRecent().getTimestamp();
+    public Optional<Instant> getMostRecentTimestamp() {
+        return getMostRecent().map(Attempt::getTimestamp);
     }
 
     public Attempts with(Alias alias) {
@@ -88,8 +89,11 @@ public class Attempts implements Iterable<Attempt> {
         return updated;
     }
 
-    private Attempt getMostRecent() {
-        return Collections.max(values, Comparator.comparing(Attempt::getTimestamp));
+    private Optional<Attempt> getMostRecent() {
+        if (values.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(Collections.max(values, Comparator.comparing(Attempt::getTimestamp)));
     }
 
     public static class AttemptsBuilder {

@@ -11,6 +11,7 @@ import uk.co.idv.context.usecases.lockout.attempt.LoadAttempts;
 import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -25,11 +26,29 @@ class ResetLockoutStateTest {
             .build();
 
     @Test
+    void shouldThrowExceptionIfLockoutStateIsLocked() {
+        LockoutRequest request = LockoutRequestMother.build();
+        LockoutPolicy policy = givenPolicyLoadedForRequest(request);
+        Attempts attempts = givenAttemptsLoadedForIdvId(request.getIdvId());
+        LockoutState state = mock(LockoutState.class);
+        given(policy.calculateState(request, attempts)).willReturn(state);
+        given(state.isLocked()).willReturn(true);
+
+        LockedOutException error = catchThrowableOfType(
+                () -> resetState.reset(request),
+                LockedOutException.class
+        );
+
+        assertThat(error.getState()).isEqualTo(state);
+    }
+
+    @Test
     void shouldLoadLockoutPolicyAndAttemptsToResetLockoutState() {
         LockoutRequest request = LockoutRequestMother.build();
         LockoutPolicy policy = givenPolicyLoadedForRequest(request);
         Attempts attempts = givenAttemptsLoadedForIdvId(request.getIdvId());
         LockoutState expectedState = mock(LockoutState.class);
+        given(policy.calculateState(request, attempts)).willReturn(expectedState);
         given(policy.resetState(request, attempts)).willReturn(expectedState);
 
         LockoutState state = resetState.reset(request);
