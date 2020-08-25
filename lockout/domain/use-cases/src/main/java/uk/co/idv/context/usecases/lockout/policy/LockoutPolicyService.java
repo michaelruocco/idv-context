@@ -19,6 +19,7 @@ public class LockoutPolicyService extends PolicyService<LockoutPolicy> {
         );
     }
 
+    @Override
     public LockoutPolicy loadHighestPriority(PolicyRequest request) {
         try {
             return super.loadHighestPriority(request);
