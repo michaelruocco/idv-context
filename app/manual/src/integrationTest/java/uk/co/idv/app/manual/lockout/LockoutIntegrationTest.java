@@ -13,6 +13,8 @@ import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutPolicyMother;
+import uk.co.idv.context.entities.lockout.policy.recordattempt.RecordAttemptWhenMethodCompletePolicy;
+import uk.co.idv.context.entities.lockout.policy.recordattempt.RecordAttemptWhenSequenceCompletePolicy;
 import uk.co.idv.context.entities.lockout.policy.soft.RecurringSoftLockoutPolicyMother;
 import uk.co.idv.context.usecases.identity.IdentityService;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
@@ -77,12 +79,75 @@ public class LockoutIntegrationTest {
     void shouldRecordUnsuccessfulAttempt() {
         identityService.update(IdentityMother.example());
         policyService.create(HardLockoutPolicyMother.build());
-        Attempt attempt = unsuccessful();
-        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(unsuccessful());
 
         LockoutState state = lockoutFacade.recordAttempt(request);
 
         assertThat(state.getAttempts()).contains(request.getAttempt());
+    }
+
+    @Test
+    void shouldRecordUnsuccessfulAttemptIfPolicyRecordWhenMethodCompleteAndMethodComplete() {
+        identityService.update(IdentityMother.example());
+        policyService.create(HardLockoutPolicyMother.builder()
+                .recordAttemptPolicy(new RecordAttemptWhenMethodCompletePolicy())
+                .build());
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.builder()
+                .attempt(unsuccessful())
+                .methodComplete(true)
+                .build();
+
+        LockoutState state = lockoutFacade.recordAttempt(request);
+
+        assertThat(state.getAttempts()).containsExactly(request.getAttempt());
+    }
+
+    @Test
+    void shouldNotRecordUnsuccessfulAttemptIfPolicyRecordWhenMethodCompleteAndMethodNotComplete() {
+        identityService.update(IdentityMother.example());
+        policyService.create(HardLockoutPolicyMother.builder()
+                .recordAttemptPolicy(new RecordAttemptWhenMethodCompletePolicy())
+                .build());
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.builder()
+                .attempt(unsuccessful())
+                .methodComplete(false)
+                .build();
+
+        LockoutState state = lockoutFacade.recordAttempt(request);
+
+        assertThat(state.getAttempts()).isEmpty();
+    }
+
+    @Test
+    void shouldRecordUnsuccessfulAttemptIfPolicyRecordWhenSequenceCompleteAndSequenceComplete() {
+        identityService.update(IdentityMother.example());
+        policyService.create(HardLockoutPolicyMother.builder()
+                .recordAttemptPolicy(new RecordAttemptWhenSequenceCompletePolicy())
+                .build());
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.builder()
+                .attempt(unsuccessful())
+                .sequenceComplete(true)
+                .build();
+
+        LockoutState state = lockoutFacade.recordAttempt(request);
+
+        assertThat(state.getAttempts()).containsExactly(request.getAttempt());
+    }
+
+    @Test
+    void shouldNotRecordUnsuccessfulAttemptIfPolicyRecordWhenSequenceCompleteAndSequenceNotComplete() {
+        identityService.update(IdentityMother.example());
+        policyService.create(HardLockoutPolicyMother.builder()
+                .recordAttemptPolicy(new RecordAttemptWhenSequenceCompletePolicy())
+                .build());
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.builder()
+                .attempt(unsuccessful())
+                .sequenceComplete(false)
+                .build();
+
+        LockoutState state = lockoutFacade.recordAttempt(request);
+
+        assertThat(state.getAttempts()).isEmpty();
     }
 
     @Test
