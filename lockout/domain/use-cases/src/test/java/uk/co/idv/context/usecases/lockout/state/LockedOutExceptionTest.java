@@ -14,8 +14,7 @@ class LockedOutExceptionTest {
 
         Throwable error = new LockedOutException(state);
 
-        String expected = String.format("identity with idvId %s is locked", state.getIdvId());
-        assertThat(error.getMessage()).isEqualTo(expected);
+        assertThat(error.getMessage()).isEqualTo(state.getIdvId().format());
     }
 
     @Test

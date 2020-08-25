@@ -11,8 +11,8 @@
 
 ## Todo
 
-*   Add json deserialization for record attempt request
 *   Add karate tests for lockout and attempt endpoints
+*   Add json handling for lockout attempt and policy errors
 *   Add initial functionality for loading identity and checking lockout state when creating verification context
 
 ## Useful commands

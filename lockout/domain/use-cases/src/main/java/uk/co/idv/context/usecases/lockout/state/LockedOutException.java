@@ -9,7 +9,7 @@ public class LockedOutException extends RuntimeException {
     private final transient LockoutState state;
 
     public LockedOutException(LockoutState state) {
-        super(String.format("identity with idvId %s is locked", state.getIdvId()));
+        super(state.getIdvId().format());
         this.state = state;
     }
 

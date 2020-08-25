@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.lockout.state;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.attempt.AttemptMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
@@ -63,6 +64,7 @@ class RecordAttemptTest {
         given(policy.shouldRecordAttempt(request)).willReturn(true);
         LockoutState state = mock(LockoutState.class);
         given(load.load(request, policy)).willReturn(state);
+        given(state.getIdvId()).willReturn(IdvIdMother.idvId());
         given(state.isLocked()).willReturn(true);
 
         LockedOutException error = catchThrowableOfType(
