@@ -1,7 +1,9 @@
 package uk.co.idv.context.usecases.lockout.policy;
 
 import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
+import uk.co.idv.context.entities.policy.PolicyRequest;
 import uk.co.idv.context.usecases.policy.PolicyService;
+import uk.co.idv.context.usecases.policy.NoPoliciesConfiguredException;
 import uk.co.idv.context.usecases.policy.create.CreatePolicy;
 import uk.co.idv.context.usecases.policy.delete.DeletePolicy;
 import uk.co.idv.context.usecases.policy.load.LoadPolicy;
@@ -15,6 +17,14 @@ public class LockoutPolicyService extends PolicyService<LockoutPolicy> {
                 new LoadPolicy<>(repository),
                 new DeletePolicy<>(repository)
         );
+    }
+
+    public LockoutPolicy loadHighestPriority(PolicyRequest request) {
+        try {
+            return super.loadHighestPriority(request);
+        } catch (NoPoliciesConfiguredException e) {
+            throw new NoLockoutPoliciesConfiguredException(e.getRequest());
+        }
     }
 
 }

@@ -40,13 +40,18 @@ Feature: Lockout Policy Maintenance
     And param aliasValue = aliasValue
     And url baseUrl + "/lockout-states"
     When method GET
-    Then status 500
+    Then status 422
     And match response ==
       """
       {
-        "status": 500,
-        "title": "Internal server error",
-        "message": "channel: state-channel, activity: state-activity, alias type: idv-id"
+        "status": 422,
+        "title": "Lockout policy not configured",
+        "message": "Lockout policy not configured for channel, activity and alias combination",
+        "meta": {
+          "aliasType": "idv-id",
+          "activityName": "state-activity",
+          "channelId": "state-channel"
+        }
       }
       """
 

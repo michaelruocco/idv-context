@@ -107,7 +107,7 @@ class PolicyServiceTest {
 
         Throwable error = catchThrowable(() -> service.loadHighestPriority(request));
 
-        assertThat(error).isInstanceOf(NoPoliciesConfiguredForRequestException.class);
+        assertThat(error).isInstanceOf(NoPoliciesConfiguredException.class);
     }
 
     @Test

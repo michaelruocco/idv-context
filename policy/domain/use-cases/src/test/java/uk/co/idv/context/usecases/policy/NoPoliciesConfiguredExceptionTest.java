@@ -6,13 +6,13 @@ import uk.co.idv.context.entities.policy.PolicyRequestMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NoPoliciesConfiguredForRequestExceptionTest {
+class NoPoliciesConfiguredExceptionTest {
 
     @Test
     void shouldReturnMessage() {
         PolicyRequest request = PolicyRequestMother.build();
 
-        Throwable error = new NoPoliciesConfiguredForRequestException(request);
+        Throwable error = new NoPoliciesConfiguredException(request);
 
         assertThat(error.getMessage()).isEqualTo(
                 "channel: default-channel, " +
@@ -25,7 +25,7 @@ class NoPoliciesConfiguredForRequestExceptionTest {
     void shouldReturnRequest() {
         PolicyRequest request = PolicyRequestMother.build();
 
-        NoPoliciesConfiguredForRequestException error = new NoPoliciesConfiguredForRequestException(request);
+        NoPoliciesConfiguredException error = new NoPoliciesConfiguredException(request);
 
         assertThat(error.getRequest()).isEqualTo(request);
     }

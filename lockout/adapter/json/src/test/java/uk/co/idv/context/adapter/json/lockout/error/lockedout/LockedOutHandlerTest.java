@@ -39,8 +39,7 @@ class LockedOutHandlerTest {
 
         Optional<ApiError> error = handler.apply(exception);
 
-        assertThat(error).map(e -> (LockedOutError) e)
-                .map(LockedOutError::getMeta)
+        assertThat(error).map(ApiError::getMeta)
                 .map(meta -> meta.get("state"))
                 .contains(exception.getState());
     }

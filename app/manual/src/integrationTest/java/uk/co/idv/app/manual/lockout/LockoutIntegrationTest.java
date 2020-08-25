@@ -21,7 +21,7 @@ import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
 import uk.co.idv.context.usecases.lockout.LockoutFacade;
 import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 import uk.co.idv.context.usecases.lockout.state.LockedOutException;
-import uk.co.idv.context.usecases.policy.NoPoliciesConfiguredForRequestException;
+import uk.co.idv.context.usecases.policy.NoPoliciesConfiguredException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -72,7 +72,7 @@ public class LockoutIntegrationTest {
 
         Throwable error = catchThrowable(() -> lockoutFacade.recordAttempt(request));
 
-        assertThat(error).isInstanceOf(NoPoliciesConfiguredForRequestException.class);
+        assertThat(error).isInstanceOf(NoPoliciesConfiguredException.class);
     }
 
     @Test
@@ -324,7 +324,7 @@ public class LockoutIntegrationTest {
 
         Throwable error = catchThrowable(() -> lockoutFacade.loadState(externalRequest));
 
-        assertThat(error).isInstanceOf(NoPoliciesConfiguredForRequestException.class);
+        assertThat(error).isInstanceOf(NoPoliciesConfiguredException.class);
     }
 
     @Test
@@ -361,7 +361,7 @@ public class LockoutIntegrationTest {
 
         Throwable error = catchThrowable(() -> lockoutFacade.resetState(externalRequest));
 
-        assertThat(error).isInstanceOf(NoPoliciesConfiguredForRequestException.class);
+        assertThat(error).isInstanceOf(NoPoliciesConfiguredException.class);
     }
 
 }

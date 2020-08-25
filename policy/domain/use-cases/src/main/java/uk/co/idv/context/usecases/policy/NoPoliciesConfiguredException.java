@@ -4,11 +4,11 @@ import lombok.Getter;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 
 @Getter
-public class NoPoliciesConfiguredForRequestException extends RuntimeException {
+public class NoPoliciesConfiguredException extends RuntimeException {
 
     private final transient PolicyRequest request;
 
-    public NoPoliciesConfiguredForRequestException(PolicyRequest request) {
+    public NoPoliciesConfiguredException(PolicyRequest request) {
         super(toMessage(request));
         this.request = request;
     }
