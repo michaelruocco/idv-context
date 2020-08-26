@@ -21,6 +21,7 @@ public class PolicyService<T extends Policy> {
     private final UpdatePolicy<T> update;
     private final LoadPolicy<T> load;
     private final DeletePolicy<T> delete;
+    private final NoPoliciesConfiguredHandler noPoliciesConfiguredHandler;
 
     public void create(T policy) {
         create.create(policy);
@@ -41,7 +42,7 @@ public class PolicyService<T extends Policy> {
     public T loadHighestPriority(PolicyRequest request) {
         Policies<T> policies = load(request);
         if (policies.isEmpty()) {
-            throw new NoPoliciesConfiguredException(request);
+            throw noPoliciesConfiguredHandler.toException(request);
         }
         return policies.getHighestPriority();
     }

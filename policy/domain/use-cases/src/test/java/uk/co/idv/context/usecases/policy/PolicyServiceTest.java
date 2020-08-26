@@ -26,12 +26,14 @@ class PolicyServiceTest {
     private final UpdatePolicy<Policy> update = mock(UpdatePolicy.class);
     private final LoadPolicy<Policy> load = mock(LoadPolicy.class);
     private final DeletePolicy<Policy> delete = mock(DeletePolicy.class);
+    private final NoPoliciesConfiguredHandler handler = mock(NoPoliciesConfiguredHandler.class);
 
     private final PolicyService<Policy> service = PolicyService.builder()
             .create(create)
             .update(update)
             .load(load)
             .delete(delete)
+            .noPoliciesConfiguredHandler(handler)
             .build();
 
     @Test
@@ -97,17 +99,17 @@ class PolicyServiceTest {
     }
 
     @Test
-    void shouldThrowExceptionOnNoPoliciesFoundLoadHighestPriorityPolicyByRequest() {
+    void shouldThrowExceptionFromHandlerOnNoPoliciesFoundLoadHighestPriorityPolicyByRequest() {
         PolicyRequest request = mock(DefaultPolicyRequest.class);
         Policies<Policy> policies = mock(Policies.class);
         given(load.load(request)).willReturn(policies);
         given(policies.isEmpty()).willReturn(true);
-        Policy expectedPolicy = mock(Policy.class);
-        given(policies.getHighestPriority()).willReturn(expectedPolicy);
+        NoPoliciesConfiguredException expectedError = mock(NoPoliciesConfiguredException.class);
+        given(handler.toException(request)).willReturn(expectedError);
 
         Throwable error = catchThrowable(() -> service.loadHighestPriority(request));
 
-        assertThat(error).isInstanceOf(NoPoliciesConfiguredException.class);
+        assertThat(error).isEqualTo(expectedError);
     }
 
     @Test
