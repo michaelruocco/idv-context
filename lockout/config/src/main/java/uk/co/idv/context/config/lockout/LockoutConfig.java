@@ -1,10 +1,10 @@
 package uk.co.idv.context.config.lockout;
 
 import lombok.Builder;
+import uk.co.idv.common.usecases.id.RandomIdGenerator;
 import uk.co.idv.context.adapter.json.lockout.error.handler.LockoutErrorHandler;
 import uk.co.idv.context.config.identity.FindIdentityProvider;
 import uk.co.idv.context.entities.alias.AliasFactory;
-import uk.co.idv.context.usecases.common.RandomIdGenerator;
 import uk.co.idv.context.usecases.lockout.ExternalLockoutRequestConverter;
 import uk.co.idv.context.usecases.lockout.LockoutFacade;
 import uk.co.idv.context.usecases.lockout.LockoutService;

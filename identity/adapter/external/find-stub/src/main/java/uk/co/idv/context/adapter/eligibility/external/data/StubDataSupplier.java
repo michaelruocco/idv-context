@@ -8,7 +8,7 @@ import uk.co.idv.context.usecases.eligibility.external.data.Delay;
 import java.time.Instant;
 import java.util.function.Supplier;
 
-import static uk.co.idv.common.usecases.util.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
 
 @RequiredArgsConstructor
 @Slf4j

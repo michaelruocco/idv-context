@@ -5,6 +5,7 @@ plugins {
 dependencies {
     api project(":lockout-entities")
     api project(":policy-use-cases")
+    api project(":common-use-cases")
 
     implementation project(":identity-use-cases")
 

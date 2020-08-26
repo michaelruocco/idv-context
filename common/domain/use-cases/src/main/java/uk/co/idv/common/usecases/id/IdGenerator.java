@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.common;
+package uk.co.idv.common.usecases.id;
 
 import java.util.UUID;
 

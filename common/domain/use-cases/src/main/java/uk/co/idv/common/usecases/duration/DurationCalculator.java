@@ -1,4 +1,4 @@
-package uk.co.idv.common.usecases.util;
+package uk.co.idv.common.usecases.duration;
 
 import java.time.Duration;
 import java.time.Instant;

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-import static uk.co.idv.common.usecases.util.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
 
 @Slf4j
 @Builder

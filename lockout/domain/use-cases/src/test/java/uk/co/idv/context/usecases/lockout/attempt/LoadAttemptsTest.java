@@ -1,10 +1,10 @@
 package uk.co.idv.context.usecases.lockout.attempt;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
-import uk.co.idv.context.usecases.common.IdGenerator;
 
 import java.util.Optional;
 import java.util.UUID;
