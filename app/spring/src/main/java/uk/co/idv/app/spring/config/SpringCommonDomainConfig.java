@@ -3,6 +3,7 @@ package uk.co.idv.app.spring.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import uk.co.idv.common.config.time.TimeConfig;
 import uk.co.idv.context.adapter.json.error.handler.CommonApiErrorHandler;
 import uk.co.idv.context.adapter.json.error.handler.CompositeErrorHandler;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
@@ -11,6 +12,11 @@ import java.util.Collection;
 
 @Configuration
 public class SpringCommonDomainConfig {
+
+    @Bean
+    public TimeConfig timeConfig() {
+        return new TimeConfig();
+    }
 
     @Bean
     public ErrorHandler commonErrorHandler() {

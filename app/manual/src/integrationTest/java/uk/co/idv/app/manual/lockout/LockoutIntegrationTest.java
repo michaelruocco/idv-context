@@ -2,6 +2,8 @@ package uk.co.idv.app.manual.lockout;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.identity.IdentityConfigBuilder;
+import uk.co.idv.common.config.time.TimeConfig;
+import uk.co.idv.common.use.cases.time.ConfigurableOffsetClock;
 import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.config.lockout.LockoutConfig;
 import uk.co.idv.context.entities.identity.Identity;
@@ -31,10 +33,18 @@ import static uk.co.idv.context.entities.lockout.attempt.AttemptMother.unsuccess
 
 public class LockoutIntegrationTest {
 
+    private final ConfigurableOffsetClock clock = new ConfigurableOffsetClock();
+    private final TimeConfig timeConfig = new TimeConfig(clock);
+
     private final IdentityConfig identityConfig = new IdentityConfigBuilder().build();
     private final IdentityService identityService = identityConfig.identityService();
 
-    private final LockoutConfig lockoutConfig = new LockoutConfigBuilder(identityConfig).build();
+    private final LockoutConfigBuilder lockoutConfigBuilder = LockoutConfigBuilder.builder()
+            .timeConfig(timeConfig)
+            .identityConfig(identityConfig)
+            .build();
+
+    private final LockoutConfig lockoutConfig = lockoutConfigBuilder.build();
     private final LockoutPolicyService policyService = lockoutConfig.policyService();
     private final LockoutFacade lockoutFacade = lockoutConfig.lockoutFacade();
 

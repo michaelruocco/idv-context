@@ -1,0 +1,8 @@
+plugins {
+    id "java-test-fixtures"
+}
+
+dependencies {
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}

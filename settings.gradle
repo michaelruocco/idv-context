@@ -69,6 +69,9 @@ project(':common-json').projectDir = file('common/adapter/json')
 include ':common-dynamo-db'
 project(':common-dynamo-db').projectDir = file('common/adapter/repository/dynamo-db')
 
+include ':common-config'
+project(':common-config').projectDir = file('common/config')
+
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
 

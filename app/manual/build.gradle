@@ -9,6 +9,7 @@ testSets {
 dependencies {
     implementation project(":identity-config")
     implementation project(":lockout-config")
+    implementation project(":common-config")
 
     integrationTestImplementation project(":identity-in-memory-repository")
     integrationTestImplementation project(":identity-external-find-stub")
@@ -17,4 +18,5 @@ dependencies {
 
     integrationTestImplementation project(":lockout-in-memory-repository")
     integrationTestImplementation testFixtures(project(":lockout-use-cases"))
+    integrationTestImplementation testFixtures(project(":common-use-cases"))
 }

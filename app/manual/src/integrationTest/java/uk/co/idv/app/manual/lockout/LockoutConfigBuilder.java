@@ -1,29 +1,32 @@
 package uk.co.idv.app.manual.lockout;
 
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 import uk.co.idv.app.manual.identity.IdentityConfigBuilder;
+import uk.co.idv.common.config.time.TimeConfig;
 import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.config.lockout.LockoutConfig;
 import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
 import uk.co.idv.context.config.lockout.repository.inmemory.InMemoryLockoutRepositoryConfig;
 
-@RequiredArgsConstructor
+@Builder
 public class LockoutConfigBuilder {
 
+    @Builder.Default
+    private final TimeConfig timeConfig = new TimeConfig();
+
+    @Builder.Default
+    private final IdentityConfig identityConfig = new IdentityConfigBuilder().build();
+
+    @Builder.Default
     private final LockoutRepositoryConfig repositoryConfig = new InMemoryLockoutRepositoryConfig();
-
-    private final IdentityConfig identityConfig;
-
-    public LockoutConfigBuilder() {
-        this(new IdentityConfigBuilder().build());
-    }
 
     public LockoutConfig build() {
         return LockoutConfig.builder()
-                .attemptRepository(repositoryConfig.attemptRepository())
-                .policyRepository(repositoryConfig.policyRepository())
+                .clock(timeConfig.getClock())
                 .findIdentityProvider(identityConfig)
                 .aliasFactory(identityConfig.aliasFactory())
+                .attemptRepository(repositoryConfig.attemptRepository())
+                .policyRepository(repositoryConfig.policyRepository())
                 .build();
     }
 

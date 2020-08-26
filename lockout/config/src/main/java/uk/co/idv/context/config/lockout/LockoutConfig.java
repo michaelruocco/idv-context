@@ -27,6 +27,7 @@ public class LockoutConfig {
     private final AttemptRepository attemptRepository;
     private final FindIdentityProvider findIdentityProvider;
     private final AliasFactory aliasFactory;
+    private final Clock clock;
 
     public LockoutFacade lockoutFacade() {
         return LockoutFacade.builder()
@@ -55,7 +56,7 @@ public class LockoutConfig {
     }
 
     private ExternalLockoutRequestConverter lockoutRequestConverter() {
-        return new ExternalLockoutRequestConverter(Clock.systemUTC());
+        return new ExternalLockoutRequestConverter(clock);
     }
 
     private RecordAttempt recordAttempt() {

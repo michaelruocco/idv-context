@@ -19,7 +19,9 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 public class LockoutPolicyIntegrationTest {
 
-    private final LockoutConfig lockoutConfig = new LockoutConfigBuilder().build();
+    private final LockoutConfigBuilder lockoutConfigBuilder = LockoutConfigBuilder.builder().build();
+    private final LockoutConfig lockoutConfig = lockoutConfigBuilder.build();
+
     private final LockoutPolicyService policyService = lockoutConfig.policyService();
 
     @Test
