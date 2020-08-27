@@ -1,6 +1,5 @@
 package uk.co.idv.context.usecases.policy;
 
-import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.entities.policy.Policy;
@@ -13,21 +12,20 @@ import uk.co.idv.context.usecases.policy.update.UpdatePolicy;
 
 import java.util.UUID;
 
-@Builder
 @RequiredArgsConstructor
-public class PolicyService<T extends Policy> {
+public class PolicyService<P extends Policy, E extends NoPoliciesConfiguredException> {
 
-    private final CreatePolicy<T> create;
-    private final UpdatePolicy<T> update;
-    private final LoadPolicy<T> load;
-    private final DeletePolicy<T> delete;
-    private final NoPoliciesConfiguredHandler noPoliciesConfiguredHandler;
+    private final CreatePolicy<P> create;
+    private final UpdatePolicy<P> update;
+    private final LoadPolicy<P> load;
+    private final DeletePolicy<P> delete;
+    private final NoPoliciesConfiguredHandler<E> noPoliciesConfiguredHandler;
 
-    public void create(T policy) {
+    public void create(P policy) {
         create.create(policy);
     }
 
-    public void update(T policy) {
+    public void update(P policy) {
         update.update(policy);
     }
 
@@ -35,27 +33,27 @@ public class PolicyService<T extends Policy> {
         delete.delete(id);
     }
 
-    public T load(UUID id) {
+    public P load(UUID id) {
         return load.load(id);
     }
 
-    public T loadHighestPriority(PolicyRequest request) {
-        Policies<T> policies = load(request);
+    public P loadHighestPriority(PolicyRequest request) {
+        Policies<P> policies = load(request);
         if (policies.isEmpty()) {
             throw noPoliciesConfiguredHandler.toException(request);
         }
         return policies.getHighestPriority();
     }
 
-    public Policies<T> load(PolicyRequest request) {
+    public Policies<P> load(PolicyRequest request) {
         return load.load(request);
     }
 
-    public Policies<T> load(PolicyKey key) {
+    public Policies<P> load(PolicyKey key) {
         return load.load(key);
     }
 
-    public Policies<T> loadAll() {
+    public Policies<P> loadAll() {
         return load.loadAll();
     }
 

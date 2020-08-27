@@ -7,7 +7,7 @@ import uk.co.idv.context.usecases.policy.delete.DeletePolicy;
 import uk.co.idv.context.usecases.policy.load.LoadPolicy;
 import uk.co.idv.context.usecases.policy.update.UpdatePolicy;
 
-public class LockoutPolicyService extends PolicyService<LockoutPolicy> {
+public class LockoutPolicyService extends PolicyService<LockoutPolicy, NoLockoutPoliciesConfiguredException> {
 
     public LockoutPolicyService(LockoutPolicyRepository repository) {
         super(new CreatePolicy<>(repository),

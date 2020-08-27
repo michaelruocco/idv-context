@@ -26,15 +26,15 @@ class PolicyServiceTest {
     private final UpdatePolicy<Policy> update = mock(UpdatePolicy.class);
     private final LoadPolicy<Policy> load = mock(LoadPolicy.class);
     private final DeletePolicy<Policy> delete = mock(DeletePolicy.class);
-    private final NoPoliciesConfiguredHandler handler = mock(NoPoliciesConfiguredHandler.class);
+    private final NoPoliciesConfiguredHandler<NoPoliciesConfiguredException> handler = mock(NoPoliciesConfiguredHandler.class);
 
-    private final PolicyService<Policy> service = PolicyService.builder()
-            .create(create)
-            .update(update)
-            .load(load)
-            .delete(delete)
-            .noPoliciesConfiguredHandler(handler)
-            .build();
+    private final PolicyService<Policy, NoPoliciesConfiguredException> service = new PolicyService<>(
+            create,
+            update,
+            load,
+            delete,
+            handler
+    );
 
     @Test
     void shouldCreatePolicy() {
