@@ -2,8 +2,6 @@ package uk.co.idv.app.manual.lockout;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.identity.IdentityConfigBuilder;
-import uk.co.idv.common.config.time.TimeConfig;
-import uk.co.idv.common.use.cases.time.ConfigurableOffsetClock;
 import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.config.lockout.LockoutConfig;
 import uk.co.idv.context.entities.identity.Identity;
@@ -15,6 +13,7 @@ import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutPolicyMother;
+import uk.co.idv.context.entities.lockout.policy.recordattempt.NeverRecordAttemptPolicy;
 import uk.co.idv.context.entities.lockout.policy.recordattempt.RecordAttemptWhenMethodCompletePolicy;
 import uk.co.idv.context.entities.lockout.policy.recordattempt.RecordAttemptWhenSequenceCompletePolicy;
 import uk.co.idv.context.entities.lockout.policy.soft.RecurringSoftLockoutPolicyMother;
@@ -22,8 +21,10 @@ import uk.co.idv.context.usecases.identity.IdentityService;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
 import uk.co.idv.context.usecases.lockout.LockoutFacade;
 import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
+import uk.co.idv.context.usecases.lockout.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.context.usecases.lockout.state.LockedOutException;
-import uk.co.idv.context.usecases.policy.NoPoliciesConfiguredException;
+
+import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -33,14 +34,10 @@ import static uk.co.idv.context.entities.lockout.attempt.AttemptMother.unsuccess
 
 public class LockoutIntegrationTest {
 
-    private final ConfigurableOffsetClock clock = new ConfigurableOffsetClock();
-    private final TimeConfig timeConfig = new TimeConfig(clock);
-
     private final IdentityConfig identityConfig = new IdentityConfigBuilder().build();
     private final IdentityService identityService = identityConfig.identityService();
 
     private final LockoutConfigBuilder lockoutConfigBuilder = LockoutConfigBuilder.builder()
-            .timeConfig(timeConfig)
             .identityConfig(identityConfig)
             .build();
 
@@ -82,7 +79,7 @@ public class LockoutIntegrationTest {
 
         Throwable error = catchThrowable(() -> lockoutFacade.recordAttempt(request));
 
-        assertThat(error).isInstanceOf(NoPoliciesConfiguredException.class);
+        assertThat(error).isInstanceOf(NoLockoutPoliciesConfiguredException.class);
     }
 
     @Test
@@ -161,6 +158,19 @@ public class LockoutIntegrationTest {
     }
 
     @Test
+    void shouldNotRecordUnsuccessfulAttemptIfPolicyNeverRecordAttempt() {
+        identityService.update(IdentityMother.example());
+        policyService.create(HardLockoutPolicyMother.builder()
+                .recordAttemptPolicy(new NeverRecordAttemptPolicy())
+                .build());
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(unsuccessful());
+
+        LockoutState state = lockoutFacade.recordAttempt(request);
+
+        assertThat(state.getAttempts()).isEmpty();
+    }
+
+    @Test
     void shouldBeLockedAfterMaxNumberOfAttemptsForHardLockoutPolicy() {
         identityService.update(IdentityMother.example());
         policyService.create(HardLockoutPolicyMother.build());
@@ -228,6 +238,22 @@ public class LockoutIntegrationTest {
         assertThat(state.getAttempts()).containsExactly(attempt);
         assertThat(state.isLocked()).isTrue();
         assertThat(state.getMessage()).isEqualTo("soft lock began at 2019-09-27T09:35:15.612Z and expiring at 2019-09-27T09:36:15.612Z");
+    }
+
+    @Test
+    void shouldBeAbleToRegisterAttemptsAgainAfterRecurringSoftLockHasExpired() {
+        identityService.update(IdentityMother.example());
+        policyService.create(RecurringSoftLockoutPolicyMother.build());
+        Attempt unsuccessful = unsuccessful();
+        lockoutFacade.recordAttempt(DefaultRecordAttemptRequestMother.withAttempt(unsuccessful));
+        Attempt unsuccessfulAfterLockExpired = unsuccessful(Instant.parse("2019-09-27T09:37:15.612Z"));
+        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(unsuccessfulAfterLockExpired);
+
+        LockoutState state = lockoutFacade.recordAttempt(request);
+
+        assertThat(state.getAttempts()).containsExactly(unsuccessful, unsuccessfulAfterLockExpired);
+        assertThat(state.isLocked()).isTrue();
+        assertThat(state.getMessage()).isEqualTo("soft lock began at 2019-09-27T09:37:15.612Z and expiring at 2019-09-27T09:38:15.612Z");
     }
 
     @Test
@@ -334,7 +360,7 @@ public class LockoutIntegrationTest {
 
         Throwable error = catchThrowable(() -> lockoutFacade.loadState(externalRequest));
 
-        assertThat(error).isInstanceOf(NoPoliciesConfiguredException.class);
+        assertThat(error).isInstanceOf(NoLockoutPoliciesConfiguredException.class);
     }
 
     @Test
@@ -371,7 +397,7 @@ public class LockoutIntegrationTest {
 
         Throwable error = catchThrowable(() -> lockoutFacade.resetState(externalRequest));
 
-        assertThat(error).isInstanceOf(NoPoliciesConfiguredException.class);
+        assertThat(error).isInstanceOf(NoLockoutPoliciesConfiguredException.class);
     }
 
 }

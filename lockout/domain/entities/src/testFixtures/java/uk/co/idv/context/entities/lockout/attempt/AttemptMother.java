@@ -31,6 +31,13 @@ public interface AttemptMother {
         return builder().successful(true).build();
     }
 
+    static Attempt unsuccessful(Instant timestamp) {
+        return builder()
+                .timestamp(timestamp)
+                .successful(false)
+                .build();
+    }
+
     static Attempt unsuccessful() {
         return builder().successful(false).build();
     }

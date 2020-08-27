@@ -28,7 +28,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     implementation project(":common-dynamo-db")
-    implementation project(":common-config")
     implementation project(":identity-json")
     implementation project(":identity-config")
     implementation project(":identity-external-find-stub")

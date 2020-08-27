@@ -2,7 +2,6 @@ package uk.co.idv.app.manual.lockout;
 
 import lombok.Builder;
 import uk.co.idv.app.manual.identity.IdentityConfigBuilder;
-import uk.co.idv.common.config.time.TimeConfig;
 import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.config.lockout.LockoutConfig;
 import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
@@ -12,9 +11,6 @@ import uk.co.idv.context.config.lockout.repository.inmemory.InMemoryLockoutRepos
 public class LockoutConfigBuilder {
 
     @Builder.Default
-    private final TimeConfig timeConfig = new TimeConfig();
-
-    @Builder.Default
     private final IdentityConfig identityConfig = new IdentityConfigBuilder().build();
 
     @Builder.Default
@@ -22,7 +18,6 @@ public class LockoutConfigBuilder {
 
     public LockoutConfig build() {
         return LockoutConfig.builder()
-                .clock(timeConfig.getClock())
                 .findIdentityProvider(identityConfig)
                 .aliasFactory(identityConfig.aliasFactory())
                 .attemptRepository(repositoryConfig.attemptRepository())
