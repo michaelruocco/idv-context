@@ -64,16 +64,16 @@ public interface IdentityMother {
                 .build();
     }
 
-    static Identity.IdentityBuilder exampleBuilder() {
-        return Identity.builder()
+    static DefaultIdentity.DefaultIdentityBuilder exampleBuilder() {
+        return DefaultIdentity.builder()
                 .country(CountryCode.GB)
                 .aliases(AliasesMother.idvIdAndCreditCardNumber())
                 .phoneNumbers(PhoneNumbersMother.mobileAndOther())
                 .emailAddresses(EmailAddressesMother.two());
     }
 
-    static Identity.IdentityBuilder emptyBuilder() {
-        return Identity.builder()
+    static DefaultIdentity.DefaultIdentityBuilder emptyBuilder() {
+        return DefaultIdentity.builder()
                 .country(CountryCode.GB)
                 .aliases(AliasesMother.empty())
                 .phoneNumbers(PhoneNumbersMother.empty())

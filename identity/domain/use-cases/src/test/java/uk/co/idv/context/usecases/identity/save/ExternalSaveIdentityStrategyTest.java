@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.identity.save;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.identity.DefaultIdentity;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.identity.save.external.ExternalSaveIdentityStrategy;
 
@@ -14,9 +15,9 @@ class ExternalSaveIdentityStrategyTest {
 
     @Test
     void shouldAddDataFromExistingIdentity() {
-        Identity updated = mock(Identity.class);
-        Identity existing = mock(Identity.class);
-        Identity added = mock(Identity.class);
+        DefaultIdentity updated = mock(DefaultIdentity.class);
+        DefaultIdentity existing = mock(DefaultIdentity.class);
+        Identity added = mock(DefaultIdentity.class);
         given(updated.addData(existing)).willReturn(added);
 
         Identity saved = strategy.prepare(updated, existing);

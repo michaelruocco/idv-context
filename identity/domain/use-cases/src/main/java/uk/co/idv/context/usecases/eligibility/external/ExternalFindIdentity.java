@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.identity.Identity;
+import uk.co.idv.context.entities.identity.DefaultIdentity;
 import uk.co.idv.context.usecases.eligibility.external.data.AliasLoader;
 import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoadRequest;
 import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoader;
@@ -24,7 +25,7 @@ public class ExternalFindIdentity {
         Aliases aliases = loadAliases(request);
         AsyncDataLoadRequest loadRequest = converter.toAsyncDataLoadRequest(aliases, request);
         DataFutures futures = dataLoader.loadData(loadRequest);
-        return Identity.builder()
+        return DefaultIdentity.builder()
                 .aliases(aliases)
                 .country(request.getCountry())
                 .phoneNumbers(futures.getPhoneNumbersNow())

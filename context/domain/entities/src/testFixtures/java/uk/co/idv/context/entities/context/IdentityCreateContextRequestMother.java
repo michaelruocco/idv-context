@@ -1,6 +1,6 @@
 package uk.co.idv.context.entities.context;
 
-import uk.co.idv.context.entities.identity.Identity;
+import uk.co.idv.context.entities.identity.DefaultIdentity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 
 public interface IdentityCreateContextRequestMother {
@@ -9,7 +9,7 @@ public interface IdentityCreateContextRequestMother {
         return builder().initial(initial).build();
     }
 
-    static IdentityCreateContextRequest withIdentity(Identity identity) {
+    static IdentityCreateContextRequest withIdentity(DefaultIdentity identity) {
         return builder().identity(identity).build();
     }
 
