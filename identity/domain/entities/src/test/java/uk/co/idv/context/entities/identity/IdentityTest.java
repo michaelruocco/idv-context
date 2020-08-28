@@ -7,6 +7,7 @@ import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
 import uk.co.idv.context.entities.alias.DebitCardNumberMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdAlreadyPresentException;
 import uk.co.idv.context.entities.alias.IdvIdMother;
@@ -36,7 +37,7 @@ class IdentityTest {
 
     @Test
     void shouldReturnAliases() {
-        Aliases aliases = AliasesMother.idvIdAndCreditCardNumber();
+        DefaultAliases aliases = AliasesMother.idvIdAndCreditCardNumber();
 
         Identity identity = IdentityMother.withAliases(aliases);
 
@@ -124,9 +125,9 @@ class IdentityTest {
 
     @Test
     void shouldReturnAliasesNotPresentInOtherIdentity() {
-        Aliases aliases = mock(Aliases.class);
-        Aliases otherAliases = mock(Aliases.class);
-        Aliases expectedAliases = mock(Aliases.class);
+        DefaultAliases aliases = mock(DefaultAliases.class);
+        DefaultAliases otherAliases = mock(DefaultAliases.class);
+        Aliases expectedAliases = mock(DefaultAliases.class);
         given(aliases.notPresent(otherAliases)).willReturn(expectedAliases);
         Identity identity = IdentityMother.withAliases(aliases);
         Identity other = IdentityMother.withAliases(otherAliases);
@@ -138,7 +139,7 @@ class IdentityTest {
 
     @Test
     void shouldReturnHasIdvAliasFromAliases() {
-        Aliases aliases = mock(Aliases.class);
+        Aliases aliases = mock(DefaultAliases.class);
         given(aliases.hasIdvId()).willReturn(true);
 
         boolean hasIdvId = aliases.hasIdvId();
@@ -148,10 +149,10 @@ class IdentityTest {
 
     @Test
     void shouldCopyAllOtherAttributesWhenSettingIdvIdAlias() {
-        Aliases aliases = mock(Aliases.class);
+        DefaultAliases aliases = mock(DefaultAliases.class);
         Identity identity = IdentityMother.withAliases(aliases);
         IdvId idvId = IdvIdMother.idvId();
-        Aliases updatedAliases = mock(Aliases.class);
+        Aliases updatedAliases = mock(DefaultAliases.class);
         given(aliases.add(idvId)).willReturn(updatedAliases);
 
         Identity updatedIdentity = identity.setIdvId(idvId);

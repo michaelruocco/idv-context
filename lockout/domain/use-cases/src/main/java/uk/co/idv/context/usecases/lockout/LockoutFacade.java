@@ -4,6 +4,7 @@ import lombok.Builder;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.AliasFactory;
 import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
 import uk.co.idv.context.entities.lockout.LockoutRequest;
@@ -20,7 +21,7 @@ public class LockoutFacade {
     private final ExternalLockoutRequestConverter converter;
 
     public Aliases toAliases(String type, String value) {
-        return new Aliases(toAlias(type, value));
+        return new DefaultAliases(toAlias(type, value));
     }
 
     public Alias toAlias(String type, String value) {

@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.lockout.attempt;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempt.AttemptBuilder;
@@ -54,7 +54,7 @@ class AttemptTest {
 
     @Test
     void shouldReturnAliases() {
-        Aliases aliases = AliasesMother.defaultAliasOnly();
+        DefaultAliases aliases = AliasesMother.defaultAliasOnly();
 
         Attempt attempt = builder.aliases(aliases).build();
 
@@ -63,7 +63,7 @@ class AttemptTest {
 
     @Test
     void shouldReturnAliasTypes() {
-        Aliases aliases = AliasesMother.defaultAliasOnly();
+        DefaultAliases aliases = AliasesMother.defaultAliasOnly();
 
         Attempt attempt = builder.aliases(aliases).build();
 
@@ -72,7 +72,7 @@ class AttemptTest {
 
     @Test
     void shouldReturnHasAliasTrueIfHasAtLeastOneAlias() {
-        Aliases aliases = AliasesMother.defaultAliasOnly();
+        DefaultAliases aliases = AliasesMother.defaultAliasOnly();
         Attempt attempt = builder.aliases(aliases).build();
 
         boolean hasAlias = attempt.hasAtLeastOneAlias(aliases);
@@ -82,7 +82,7 @@ class AttemptTest {
 
     @Test
     void shouldReturnHasAliasFalseIfAliasDoesNotMatch() {
-        Aliases aliases = AliasesMother.defaultAliasOnly();
+        DefaultAliases aliases = AliasesMother.defaultAliasOnly();
         Attempt attempt = builder.aliases(aliases).build();
 
         boolean hasAlias = attempt.hasAtLeastOneAlias(AliasesMother.idvIdOnly());

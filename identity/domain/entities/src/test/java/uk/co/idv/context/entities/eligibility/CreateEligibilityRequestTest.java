@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.eligibility;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
 import uk.co.idv.context.entities.identity.RequestedData;
@@ -14,7 +14,7 @@ class CreateEligibilityRequestTest {
 
     @Test
     void shouldReturnAliases() {
-        Aliases aliases = AliasesMother.idvIdAndDebitCardNumber();
+        DefaultAliases aliases = AliasesMother.idvIdAndDebitCardNumber();
 
         CreateEligibilityRequest request = CreateEligibilityRequestMother.withAliases(aliases);
 

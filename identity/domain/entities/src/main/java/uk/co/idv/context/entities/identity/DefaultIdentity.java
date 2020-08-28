@@ -73,7 +73,6 @@ public class DefaultIdentity implements Identity {
         return merged;
     }
 
-
     @Override
     public Identity addData(Identity other) {
         validateHasSameCountry(other);

@@ -163,7 +163,7 @@ class AliasesTest {
         Alias idvId = IdvIdMother.idvId();
         Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
         Aliases aliases = AliasesMother.with(idvId, creditCardNumber);
-        Aliases comparison = AliasesMother.with(idvId);
+        DefaultAliases comparison = AliasesMother.with(idvId);
 
         Aliases notPresent = aliases.notPresent(comparison);
 

@@ -2,6 +2,7 @@ package uk.co.idv.context.usecases.identity.find;
 
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 
 import java.util.stream.Collectors;
 
@@ -10,7 +11,7 @@ public class IdentityNotFoundException extends RuntimeException {
     private final transient Aliases aliases;
 
     public IdentityNotFoundException(Alias alias) {
-        this(new Aliases(alias));
+        this(new DefaultAliases(alias));
     }
 
     public IdentityNotFoundException(Aliases aliases) {

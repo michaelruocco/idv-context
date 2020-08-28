@@ -1,137 +1,49 @@
 package uk.co.idv.context.entities.alias;
 
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
-import org.apache.commons.collections4.CollectionUtils;
-
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@EqualsAndHashCode
-@ToString
-public class Aliases implements Iterable<Alias> {
-
-    private final Collection<Alias> values;
-
-    public Aliases(Alias... values) {
-        this(Arrays.asList(values));
-    }
-
-    public Aliases(Collection<Alias> values) {
-        this.values = new LinkedHashSet<>(values);
-    }
+public interface Aliases extends Iterable<Alias> {
 
     @Override
-    public Iterator<Alias> iterator() {
-        return values.iterator();
-    }
+    Iterator<Alias> iterator();
 
-    public boolean containsOneOf(Aliases aliasesToCheck) {
-        return aliasesToCheck.stream().anyMatch(this::contains);
-    }
+    boolean containsOneOf(Aliases aliasesToCheck);
 
-    public boolean contains(Alias aliasToCheck) {
-        return values.contains(aliasToCheck);
-    }
+    boolean contains(Alias aliasToCheck);
 
-    public Stream<Alias> stream() {
-        return values.stream();
-    }
+    Stream<Alias> stream();
 
-    public Aliases add(Aliases aliasesToAdd) {
-        Collection<Alias> updated = new LinkedHashSet<>(values);
-        aliasesToAdd.forEach(this::validate);
-        aliasesToAdd.forEach(updated::add);
-        return new Aliases(updated);
-    }
+    Collection<Alias> asCollection();
 
-    public Aliases add(Alias alias) {
-        validate(alias);
-        return add(new Aliases(alias));
-    }
+    Aliases add(Aliases aliasesToAdd);
 
-    public Aliases remove(Alias alias) {
-        Collection<Alias> updated = new LinkedHashSet<>(values);
-        updated.remove(alias);
-        return new Aliases(updated);
-    }
+    Aliases add(Alias alias);
 
-    private void validate(Alias alias) {
-        if (!isValid(alias)) {
-            throw new IdvIdAlreadyPresentException(getIdvId(), alias);
-        }
-    }
+    Aliases remove(Alias alias);
 
-    private boolean isValid(Alias alias) {
-        if (alias.isIdvId() && hasIdvId()) {
-            return getIdvId().equals(alias);
-        }
-        return true;
-    }
+    Aliases notPresent(Aliases comparison);
 
-    public Aliases notPresent(Aliases comparison) {
-        return new Aliases(CollectionUtils.subtract(this.values, comparison.values));
-    }
+    int size();
 
-    public int size() {
-        return values.size();
-    }
+    boolean isEmpty();
 
-    public boolean isEmpty() {
-        return values.isEmpty();
-    }
+    UUID getIdvIdValue();
 
-    public UUID getIdvIdValue() {
-        return getIdvId().getValueAsUuid();
-    }
+    IdvId getIdvId();
 
-    public IdvId getIdvId() {
-        return getAliasByType(IdvId.TYPE)
-                .map(alias -> (IdvId) alias)
-                .orElseThrow(IdvIdNotFoundException::new);
-    }
+    boolean hasIdvId();
 
-    public boolean hasIdvId() {
-        return getAliasByType(IdvId.TYPE).isPresent();
-    }
+    Aliases getCreditCardNumbers();
 
-    public Aliases getCreditCardNumbers() {
-        Collection<Alias> creditCardNumbers = getAliasesByType(CreditCardNumber.TYPE).collect(Collectors.toList());
-        return new Aliases(creditCardNumbers);
-    }
+    String getFirstValue();
 
-    public String getFirstValue() {
-        return values.stream().findFirst()
-                .map(Alias::getValue)
-                .orElseThrow(EmptyAliasesException::new);
-    }
+    boolean hasAnyValuesEndingWith(String suffix);
 
-    public boolean hasAnyValuesEndingWith(String suffix) {
-        return values.stream().anyMatch(alias -> alias.valueEndsWith(suffix));
-    }
+    Collection<String> getTypes();
 
-    public Collection<String> getTypes() {
-        return values.stream()
-                .map(Alias::getType)
-                .collect(Collectors.toSet());
-    }
-
-    public String format() {
-        return values.stream().map(Alias::format).collect(Collectors.joining(","));
-    }
-
-    private Optional<Alias> getAliasByType(String type) {
-        return getAliasesByType(type).findFirst();
-    }
-
-    private Stream<Alias> getAliasesByType(String type) {
-        return values.stream().filter(alias -> alias.isType(type));
-    }
+    String format();
 
 }

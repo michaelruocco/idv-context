@@ -1,8 +1,8 @@
 package uk.co.idv.context.usecases.eligibility.external.data;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.eligibility.CreateEligibilityRequestMother;
 import uk.co.idv.context.entities.identity.FindIdentityRequest;
 
@@ -23,7 +23,7 @@ class FindIdentityRequestConverterTest {
         FindIdentityRequest findRequest = CreateEligibilityRequestMother.build();
         Duration timeout = Duration.ofSeconds(1);
         given(timeoutProvider.getTimeout(findRequest.getChannelId())).willReturn(timeout);
-        Aliases aliases = AliasesMother.idvIdAndDebitCardNumber();
+        DefaultAliases aliases = AliasesMother.idvIdAndDebitCardNumber();
 
         AsyncDataLoadRequest loadRequest = converter.toAsyncDataLoadRequest(aliases, findRequest);
 
@@ -33,7 +33,7 @@ class FindIdentityRequestConverterTest {
     @Test
     void shouldPopulateAliasesOnAsyncDataLoadRequest() {
         FindIdentityRequest findRequest = CreateEligibilityRequestMother.build();
-        Aliases aliases = AliasesMother.idvIdAndDebitCardNumber();
+        DefaultAliases aliases = AliasesMother.idvIdAndDebitCardNumber();
 
         AsyncDataLoadRequest loadRequest = converter.toAsyncDataLoadRequest(aliases, findRequest);
 

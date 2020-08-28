@@ -12,6 +12,7 @@ import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.CreditCardNumber;
 import uk.co.idv.context.entities.alias.DebitCardNumber;
 import uk.co.idv.context.entities.alias.DefaultAlias;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.alias.IdvId;
 
 public class AliasModule extends SimpleModule {
@@ -25,7 +26,7 @@ public class AliasModule extends SimpleModule {
 
     private void setUpDefaults() {
         setMixInAnnotation(Alias.class, AliasMixin.class);
-        setMixInAnnotation(Aliases.class, AliasesMixin.class);
+        setMixInAnnotation(DefaultAliases.class, AliasesMixin.class);
         addDeserializer(Alias.class, new AliasDeserializer());
         addDeserializer(Aliases.class, new AliasesDeserializer());
         addDeserializer(DefaultAlias.class, new DefaultAliasDeserializer());

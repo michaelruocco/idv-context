@@ -1,9 +1,9 @@
 package uk.co.idv.context.adapter.eligibility.external.data;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.adapter.eligibility.external.data.phonenumber.StubPhoneNumberFactory;
 import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoadRequest;
@@ -38,7 +38,7 @@ class StubDataSupplierTest {
         assertThat(phoneNumbers).isEqualTo(factory.getPopulatedData());
     }
 
-    private AsyncDataLoadRequest toRequest(Aliases aliases) {
+    private AsyncDataLoadRequest toRequest(DefaultAliases aliases) {
         return AsyncDataLoadRequestMother.withAliases(aliases);
     }
 

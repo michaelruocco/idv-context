@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.attempt.AttemptMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
@@ -19,7 +19,7 @@ class LockoutStateRequestTest {
 
     @Test
     void shouldReturnAliases() {
-        Aliases aliases = AliasesMother.defaultAliasOnly();
+        DefaultAliases aliases = AliasesMother.defaultAliasOnly();
 
         LockoutStateRequest request = LockoutStateRequest.builder()
                 .aliases(aliases)

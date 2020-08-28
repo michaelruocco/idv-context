@@ -4,8 +4,9 @@ import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.UnsupportedAliasTypeException;
 import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.DefaultAliases;
+import uk.co.idv.context.entities.alias.UnsupportedAliasTypeException;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumber;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
@@ -16,6 +17,7 @@ import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.identity.CountryMismatchException;
+import uk.co.idv.context.entities.identity.EmptyIdentityMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
@@ -81,7 +83,7 @@ public class IdentityIntegrationTest {
 
     @Test
     void shouldFindCreatedIdentity() {
-        Aliases aliases = AliasesMother.creditCardNumberOnly();
+        DefaultAliases aliases = AliasesMother.creditCardNumberOnly();
         Identity identity = IdentityMother.exampleBuilder()
                 .aliases(aliases)
                 .emailAddresses(EmailAddressesMother.empty())
@@ -145,12 +147,12 @@ public class IdentityIntegrationTest {
     @Test
     void shouldThrowExceptionIfAttemptToMergeTwoIdentitiesWithDifferentCountries() {
         CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Identity gbIdentity = service.update(IdentityMother.emptyBuilder()
+        Identity gbIdentity = service.update(EmptyIdentityMother.builder()
                 .aliases(AliasesMother.with(creditCardNumber))
                 .country(CountryCode.GB)
                 .build());
         DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
-        Identity deIdentity = service.update(IdentityMother.emptyBuilder()
+        Identity deIdentity = service.update(EmptyIdentityMother.builder()
                 .aliases(AliasesMother.with(debitCardNumber))
                 .country(CountryCode.DE)
                 .build());
@@ -231,7 +233,7 @@ public class IdentityIntegrationTest {
     }
 
     private static Identity buildMergeInput(Alias... aliases) {
-        return IdentityMother.emptyBuilder()
+        return EmptyIdentityMother.builder()
                 .aliases(AliasesMother.with(aliases))
                 .build();
     }

@@ -5,8 +5,8 @@ import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.config.identity.respository.inmemory.InMemoryIdentityRepositoryConfig;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
-import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.channel.gb.As3Mother;
 import uk.co.idv.context.entities.channel.gb.GbRsaMother;
 import uk.co.idv.context.entities.eligibility.Eligibility;
@@ -62,7 +62,7 @@ public class CreateEligibilityIntegrationTest {
 
     @Test
     void shouldReturnIdentityWithInternalDataIfIdentityExistsForRsa() {
-        Aliases aliases = AliasesMother.creditCardNumberOnly();
+        DefaultAliases aliases = AliasesMother.creditCardNumberOnly();
         Identity identity = IdentityMother.withAliases(aliases);
         Identity created = facade.update(identity);
         CreateEligibilityRequest request = CreateEligibilityRequestMother.builder()
@@ -93,7 +93,7 @@ public class CreateEligibilityIntegrationTest {
 
     @Test
     void shouldAddExternalDataToIdentityIfIdentityExistsForAs3() {
-        Aliases aliases = AliasesMother.creditCardNumberOnly();
+        DefaultAliases aliases = AliasesMother.creditCardNumberOnly();
         Identity identity = IdentityMother.exampleBuilder()
                 .aliases(aliases)
                 .phoneNumbers(PhoneNumbersMother.with(MobilePhoneNumberMother.withNumber("+447890123456")))

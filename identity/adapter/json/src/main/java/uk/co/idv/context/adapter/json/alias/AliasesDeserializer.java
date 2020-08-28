@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
@@ -19,13 +20,13 @@ public class AliasesDeserializer extends StdDeserializer<Aliases> {
     };
 
     public AliasesDeserializer() {
-        super(Aliases.class);
+        super(DefaultAliases.class);
     }
 
     @Override
     public Aliases deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
-        return new Aliases(JsonNodeConverter.toCollection(node, parser, ALIAS_COLLECTION));
+        return new DefaultAliases(JsonNodeConverter.toCollection(node, parser, ALIAS_COLLECTION));
     }
 
 }

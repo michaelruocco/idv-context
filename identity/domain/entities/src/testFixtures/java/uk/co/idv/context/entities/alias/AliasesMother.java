@@ -4,36 +4,36 @@ import java.util.Arrays;
 
 public interface AliasesMother {
 
-    static Aliases empty() {
+    static DefaultAliases empty() {
         return with();
     }
 
-    static Aliases idvIdAndCreditCardNumber() {
+    static DefaultAliases idvIdAndCreditCardNumber() {
         return with(IdvIdMother.idvId(), CreditCardNumberMother.creditCardNumber());
     }
 
-    static Aliases idvIdAndDebitCardNumber() {
+    static DefaultAliases idvIdAndDebitCardNumber() {
         return with(IdvIdMother.idvId(), DebitCardNumberMother.debitCardNumber());
     }
 
-    static Aliases idvIdAndDebitCardNumber1() {
+    static DefaultAliases idvIdAndDebitCardNumber1() {
         return with(IdvIdMother.idvId1(), DebitCardNumberMother.debitCardNumber1());
     }
 
-    static Aliases creditCardNumberOnly() {
+    static DefaultAliases creditCardNumberOnly() {
         return with(CreditCardNumberMother.creditCardNumber());
     }
 
-    static Aliases idvIdOnly() {
+    static DefaultAliases idvIdOnly() {
         return with(IdvIdMother.idvId());
     }
 
-    static Aliases defaultAliasOnly() {
+    static DefaultAliases defaultAliasOnly() {
         return with(DefaultAliasMother.build());
     }
 
-    static Aliases with(Alias... aliases) {
-        return new Aliases(Arrays.asList(aliases));
+    static DefaultAliases with(Alias... aliases) {
+        return new DefaultAliases(Arrays.asList(aliases));
     }
 
 }

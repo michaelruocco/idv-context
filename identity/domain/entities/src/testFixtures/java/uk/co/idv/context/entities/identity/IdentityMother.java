@@ -44,12 +44,6 @@ public interface IdentityMother {
         return exampleBuilder().build();
     }
 
-    static Identity minimal() {
-        return emptyBuilder()
-                .aliases(AliasesMother.idvIdOnly())
-                .build();
-    }
-
     static Identity withoutIdvId() {
         return exampleBuilder()
                 .aliases(AliasesMother.creditCardNumberOnly())
@@ -70,14 +64,6 @@ public interface IdentityMother {
                 .aliases(AliasesMother.idvIdAndCreditCardNumber())
                 .phoneNumbers(PhoneNumbersMother.mobileAndOther())
                 .emailAddresses(EmailAddressesMother.two());
-    }
-
-    static DefaultIdentity.DefaultIdentityBuilder emptyBuilder() {
-        return DefaultIdentity.builder()
-                .country(CountryCode.GB)
-                .aliases(AliasesMother.empty())
-                .phoneNumbers(PhoneNumbersMother.empty())
-                .emailAddresses(EmailAddressesMother.empty());
     }
 
 }

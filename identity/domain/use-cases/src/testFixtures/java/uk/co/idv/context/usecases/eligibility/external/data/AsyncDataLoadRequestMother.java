@@ -1,7 +1,7 @@
 package uk.co.idv.context.usecases.eligibility.external.data;
 
-import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoadRequest.AsyncDataLoadRequestBuilder;
 
 import java.time.Duration;
@@ -12,7 +12,7 @@ public interface AsyncDataLoadRequestMother {
         return builder().timeout(timeout).build();
     }
 
-    static AsyncDataLoadRequest withAliases(Aliases aliases) {
+    static AsyncDataLoadRequest withAliases(DefaultAliases aliases) {
         return builder().aliases(aliases).build();
     }
 

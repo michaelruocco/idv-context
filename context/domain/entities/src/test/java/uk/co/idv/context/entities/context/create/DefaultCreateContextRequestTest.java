@@ -3,8 +3,8 @@ package uk.co.idv.context.entities.context.create;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.context.entities.activity.DefaultActivityMother;
-import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
 
@@ -58,7 +58,7 @@ class DefaultCreateContextRequestTest {
 
     @Test
     void shouldReturnAliases() {
-        Aliases aliases = AliasesMother.creditCardNumberOnly();
+        DefaultAliases aliases = AliasesMother.creditCardNumberOnly();
 
         CreateContextRequest request = DefaultCreateContextRequest.builder()
                 .aliases(aliases)
@@ -69,7 +69,7 @@ class DefaultCreateContextRequestTest {
 
     @Test
     void shouldReturnAliasTypesFromAliases() {
-        Aliases aliases = AliasesMother.creditCardNumberOnly();
+        DefaultAliases aliases = AliasesMother.creditCardNumberOnly();
 
         CreateContextRequest request = DefaultCreateContextRequest.builder()
                 .aliases(aliases)

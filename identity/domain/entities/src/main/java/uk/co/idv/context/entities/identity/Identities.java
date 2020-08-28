@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.identity;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.collections4.IterableUtils;
 import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,7 +33,7 @@ public class Identities implements Iterable<Identity> {
     }
 
     public Aliases getIdvIds() {
-        return new Aliases(values.stream()
+        return new DefaultAliases(values.stream()
                 .map(Identity::getIdvId)
                 .collect(Collectors.toList()));
     }

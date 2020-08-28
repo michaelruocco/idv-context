@@ -5,6 +5,7 @@ import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.IdentitiesMother;
 import uk.co.idv.context.entities.identity.Identity;
@@ -63,7 +64,7 @@ class FindIdentityTest {
 
     @Test
     void shouldReturnIdentityIfOneExistingIdentityByAliases() {
-        Aliases aliases = AliasesMother.idvIdAndDebitCardNumber();
+        DefaultAliases aliases = AliasesMother.idvIdAndDebitCardNumber();
         Identity expected = IdentityMother.withAliases(aliases);
         givenOneExistingIdentity(aliases, expected);
 

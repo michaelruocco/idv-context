@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.eligibility;
 
-import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
 import uk.co.idv.context.entities.eligibility.CreateEligibilityRequest.CreateEligibilityRequestBuilder;
@@ -14,7 +14,7 @@ public interface CreateEligibilityRequestMother {
         return builder().channel(channel).build();
     }
 
-    static CreateEligibilityRequest withAliases(Aliases aliases) {
+    static CreateEligibilityRequest withAliases(DefaultAliases aliases) {
         return builder().aliases(aliases).build();
     }
 

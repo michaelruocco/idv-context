@@ -2,7 +2,7 @@ package uk.co.idv.context.entities.identity;
 
 import lombok.Builder;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
 
@@ -61,12 +61,12 @@ class FindIdentityRequestTest {
     @Builder
     private static class FakeFindIdentityRequest implements FindIdentityRequest {
 
-        private final Aliases aliases;
+        private final DefaultAliases aliases;
         private final RequestedData requestedData;
         private final Channel channel;
 
         @Override
-        public Aliases getAliases() {
+        public DefaultAliases getAliases() {
             return aliases;
         }
 

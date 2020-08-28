@@ -2,11 +2,11 @@ package uk.co.idv.context.adapter.repository;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
 import uk.co.idv.context.entities.alias.DebitCardNumberMother;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
+import uk.co.idv.context.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.identity.Identities;
 import uk.co.idv.context.entities.identity.Identity;
@@ -73,7 +73,7 @@ class InMemoryIdentityRepositoryTest {
 
     @Test
     void shouldOnlyReturnUniqueIdentitiesWhenLoadSavedIdentitiesByAliases() {
-        Aliases aliases = AliasesMother.idvIdAndCreditCardNumber();
+        DefaultAliases aliases = AliasesMother.idvIdAndCreditCardNumber();
         Identity identity = IdentityMother.withAliases(aliases);
         repository.create(identity);
 
@@ -84,7 +84,7 @@ class InMemoryIdentityRepositoryTest {
 
     @Test
     void shouldDeleteSavedIdentitiesByAliases() {
-        Aliases aliases = AliasesMother.idvIdOnly();
+        DefaultAliases aliases = AliasesMother.idvIdOnly();
         Identity identity = IdentityMother.withAliases(aliases);
         repository.create(identity);
 
@@ -113,7 +113,7 @@ class InMemoryIdentityRepositoryTest {
         assertThat(identity).isEmpty();
     }
 
-    private static Aliases toAliases(Alias... alias) {
+    private static DefaultAliases toAliases(Alias... alias) {
         return AliasesMother.with(alias);
     }
 
