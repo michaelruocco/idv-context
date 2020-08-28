@@ -7,6 +7,7 @@ import uk.co.idv.context.adapter.json.alias.AliasModule;
 import uk.co.idv.context.adapter.json.emailaddress.EmailAddressModule;
 import uk.co.idv.context.adapter.json.phonenumber.PhoneNumberModule;
 import uk.co.idv.context.entities.identity.Identity;
+import uk.co.idv.context.entities.identity.RequestedData;
 
 import java.util.Arrays;
 
@@ -15,6 +16,7 @@ public class IdentityModule extends SimpleModule {
     public IdentityModule() {
         super("identity-module", Version.unknownVersion());
         setUpIdentity();
+        setUpRequestedData();
     }
 
     @Override
@@ -29,6 +31,10 @@ public class IdentityModule extends SimpleModule {
     private void setUpIdentity() {
         setMixInAnnotation(Identity.class, IdentityMixin.class);
         addDeserializer(Identity.class, new IdentityDeserializer());
+    }
+
+    private void setUpRequestedData() {
+        addDeserializer(RequestedData.class, new RequestedDataDeserializer());
     }
 
 }

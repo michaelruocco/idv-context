@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     api project(":identity-entities")
+    api project(":lockout-entities")
 
     testFixturesApi testFixtures(project(":identity-entities"))
 }

@@ -7,9 +7,9 @@ import uk.co.idv.context.entities.alias.DebitCardNumberMother;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequestMother;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequestMother;
 import uk.co.idv.context.usecases.eligibility.external.ExternalFindIdentity;
-import uk.co.idv.context.usecases.eligibility.external.ExternalFindIdentityRequest;
+import uk.co.idv.context.entities.identity.FindIdentityRequest;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -24,7 +24,7 @@ public class ExternalFindIdentityStubIntegrationTest {
 
     @Test
     void shouldFindStubbedIdentityWithCountryCode() {
-        ExternalFindIdentityRequest request = CreateEligibilityRequestMother.build();
+        FindIdentityRequest request = CreateEligibilityRequestMother.build();
 
         Identity identity = find.find(request);
 
@@ -33,7 +33,7 @@ public class ExternalFindIdentityStubIntegrationTest {
 
     @Test
     void shouldFindStubbedIdentityWithAliases() {
-        ExternalFindIdentityRequest request = CreateEligibilityRequestMother.build();
+        FindIdentityRequest request = CreateEligibilityRequestMother.build();
 
         Identity identity = find.find(request);
 
@@ -43,7 +43,7 @@ public class ExternalFindIdentityStubIntegrationTest {
 
     @Test
     void shouldFindStubbedIdentityWithPhoneNumbers() {
-        ExternalFindIdentityRequest request = CreateEligibilityRequestMother.build();
+        FindIdentityRequest request = CreateEligibilityRequestMother.build();
 
         Identity identity = find.find(request);
 
@@ -52,7 +52,7 @@ public class ExternalFindIdentityStubIntegrationTest {
 
     @Test
     void shouldFindStubbedIdentityWithEmailAddresses() {
-        ExternalFindIdentityRequest request = CreateEligibilityRequestMother.build();
+        FindIdentityRequest request = CreateEligibilityRequestMother.build();
 
         Identity identity = find.find(request);
 

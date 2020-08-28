@@ -1,13 +1,12 @@
-package uk.co.idv.context.usecases.eligibility;
+package uk.co.idv.context.entities.eligibility;
 
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
-import uk.co.idv.context.entities.eligibility.EligibilityMother;
-import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest.CreateEligibilityRequestBuilder;
-
-import java.util.Collection;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequest.CreateEligibilityRequestBuilder;
+import uk.co.idv.context.entities.identity.RequestedData;
+import uk.co.idv.context.entities.identity.RequestedDataMother;
 
 public interface CreateEligibilityRequestMother {
 
@@ -19,8 +18,8 @@ public interface CreateEligibilityRequestMother {
         return builder().aliases(aliases).build();
     }
 
-    static CreateEligibilityRequest withRequested(Collection<String> requested) {
-        return builder().requested(requested).build();
+    static CreateEligibilityRequest withRequestedData(RequestedData requestedData) {
+        return builder().requestedData(requestedData).build();
     }
 
     static CreateEligibilityRequest build() {
@@ -31,11 +30,7 @@ public interface CreateEligibilityRequestMother {
         return CreateEligibilityRequest.builder()
                 .aliases(AliasesMother.creditCardNumberOnly())
                 .channel(DefaultChannelMother.build())
-                .requested(allRequested());
-    }
-
-    static Collection<String> allRequested() {
-        return EligibilityMother.allRequested();
+                .requestedData(RequestedDataMother.allRequested());
     }
 
 }

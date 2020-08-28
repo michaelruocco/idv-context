@@ -5,8 +5,8 @@ import lombok.Data;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.identity.Identity;
+import uk.co.idv.context.entities.identity.RequestedData;
 
-import java.util.Collection;
 
 @Builder
 @Data
@@ -14,7 +14,7 @@ public class Eligibility {
 
     private final Channel channel;
     private final Aliases aliases;
-    private final Collection<String> requested;
+    private final RequestedData requestedData;
     private final Identity identity;
 
 }

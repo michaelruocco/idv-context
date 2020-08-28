@@ -12,7 +12,7 @@ import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import static uk.co.idv.context.adapter.json.eligibility.EligibilityFieldExtractor.toAliases;
 import static uk.co.idv.context.adapter.json.eligibility.EligibilityFieldExtractor.toChannel;
-import static uk.co.idv.context.adapter.json.eligibility.EligibilityFieldExtractor.toRequested;
+import static uk.co.idv.context.adapter.json.eligibility.EligibilityFieldExtractor.toRequestedData;
 
 public class EligibilityDeserializer extends StdDeserializer<Eligibility> {
 
@@ -26,7 +26,7 @@ public class EligibilityDeserializer extends StdDeserializer<Eligibility> {
         return Eligibility.builder()
                 .channel(toChannel(node, parser))
                 .aliases(toAliases(node, parser))
-                .requested(toRequested(node, parser))
+                .requestedData(toRequestedData(node, parser))
                 .identity(toIdentity(node, parser))
                 .build();
     }

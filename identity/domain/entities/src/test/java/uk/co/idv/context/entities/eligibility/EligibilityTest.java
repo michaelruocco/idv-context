@@ -7,8 +7,8 @@ import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
-
-import java.util.Collection;
+import uk.co.idv.context.entities.identity.RequestedData;
+import uk.co.idv.context.entities.identity.RequestedDataMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -33,12 +33,12 @@ class EligibilityTest {
     }
 
     @Test
-    void shouldReturnRequested() {
-        Collection<String> requested = EligibilityMother.allRequested();
+    void shouldReturnRequestedData() {
+        RequestedData requestedData = RequestedDataMother.allRequested();
 
-        Eligibility eligibility = EligibilityMother.withRequested(requested);
+        Eligibility eligibility = EligibilityMother.withRequestedData(requestedData);
 
-        assertThat(eligibility.getRequested()).isEqualTo(requested);
+        assertThat(eligibility.getRequestedData()).isEqualTo(requestedData);
     }
 
     @Test

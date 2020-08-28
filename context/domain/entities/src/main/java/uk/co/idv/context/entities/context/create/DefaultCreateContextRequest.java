@@ -1,4 +1,4 @@
-package uk.co.idv.context.entities.context;
+package uk.co.idv.context.entities.context.create;
 
 import lombok.Builder;
 import lombok.Data;

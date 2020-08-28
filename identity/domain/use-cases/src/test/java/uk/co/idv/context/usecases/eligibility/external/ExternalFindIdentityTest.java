@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.context.entities.identity.FindIdentityRequest;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
@@ -23,7 +24,7 @@ class ExternalFindIdentityTest {
 
     private final Aliases loadedAliases = mock(Aliases.class);
     private final Aliases updatedAliases = mock(Aliases.class);
-    private final ExternalFindIdentityRequest findRequest = mock(ExternalFindIdentityRequest.class);
+    private final FindIdentityRequest findRequest = mock(FindIdentityRequest.class);
     private final AsyncDataLoadRequest loadRequest = mock(AsyncDataLoadRequest.class);
     private final DataFutures dataFutures = mock(DataFutures.class);
 

@@ -5,12 +5,12 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequest;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import static uk.co.idv.context.adapter.json.eligibility.EligibilityFieldExtractor.toAliases;
 import static uk.co.idv.context.adapter.json.eligibility.EligibilityFieldExtractor.toChannel;
-import static uk.co.idv.context.adapter.json.eligibility.EligibilityFieldExtractor.toRequested;
+import static uk.co.idv.context.adapter.json.eligibility.EligibilityFieldExtractor.toRequestedData;
 
 public class CreateEligibilityRequestDeserializer extends StdDeserializer<CreateEligibilityRequest> {
 
@@ -24,7 +24,7 @@ public class CreateEligibilityRequestDeserializer extends StdDeserializer<Create
         return CreateEligibilityRequest.builder()
                 .channel(toChannel(node, parser))
                 .aliases(toAliases(node, parser))
-                .requested(toRequested(node, parser))
+                .requestedData(toRequestedData(node, parser))
                 .build();
     }
 

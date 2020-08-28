@@ -2,6 +2,7 @@ package uk.co.idv.context.usecases.eligibility;
 
 import lombok.Builder;
 import uk.co.idv.context.entities.eligibility.Eligibility;
+import uk.co.idv.context.entities.identity.FindIdentityRequest;
 
 import java.util.Collection;
 
@@ -12,7 +13,7 @@ public class ChannelCreateEligibility implements CreateEligibility {
     private final Collection<String> supportedChannelIds;
 
     @Override
-    public Eligibility create(CreateEligibilityRequest request) {
+    public Eligibility create(FindIdentityRequest request) {
         return create.create(request);
     }
 

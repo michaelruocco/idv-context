@@ -1,6 +1,8 @@
 package uk.co.idv.context.usecases.eligibility;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequest;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequestMother;
 import uk.co.idv.context.entities.eligibility.Eligibility;
 import uk.co.idv.context.entities.eligibility.EligibilityMother;
 

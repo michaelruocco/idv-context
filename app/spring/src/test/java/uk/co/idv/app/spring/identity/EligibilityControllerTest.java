@@ -5,7 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.co.idv.context.entities.eligibility.Eligibility;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
-import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

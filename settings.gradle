@@ -1,5 +1,14 @@
 rootProject.name = 'verification-context'
 
+include ':common-use-cases'
+project(':common-use-cases').projectDir = file('common/domain/use-cases')
+
+include ':common-json'
+project(':common-json').projectDir = file('common/adapter/json')
+
+include ':common-dynamo-db'
+project(':common-dynamo-db').projectDir = file('common/adapter/repository/dynamo-db')
+
 include ':identity-entities'
 project(':identity-entities').projectDir = file('identity/domain/entities')
 
@@ -60,14 +69,8 @@ project(':lockout-config').projectDir = file('lockout/config')
 include ':context-entities'
 project(':context-entities').projectDir = file('context/domain/entities')
 
-include ':common-use-cases'
-project(':common-use-cases').projectDir = file('common/domain/use-cases')
-
-include ':common-json'
-project(':common-json').projectDir = file('common/adapter/json')
-
-include ':common-dynamo-db'
-project(':common-dynamo-db').projectDir = file('common/adapter/repository/dynamo-db')
+include ':context-use-cases'
+project(':context-use-cases').projectDir = file('context/domain/use-cases')
 
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')

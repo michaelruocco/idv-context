@@ -6,8 +6,8 @@ import uk.co.idv.context.entities.eligibility.EligibilityMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
-import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
-import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequestMother;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequest;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequestMother;
 import uk.co.idv.context.usecases.eligibility.EligibilityFactory;
 import uk.co.idv.context.usecases.identity.update.UpdateIdentity;
 

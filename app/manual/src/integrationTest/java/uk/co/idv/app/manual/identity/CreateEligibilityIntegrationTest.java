@@ -16,8 +16,8 @@ import uk.co.idv.context.entities.identity.IdentityMother;
 import uk.co.idv.context.entities.phonenumber.MobilePhoneNumberMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
-import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
-import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequestMother;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequest;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequestMother;
 import uk.co.idv.context.usecases.identity.IdentityService;
 import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
 

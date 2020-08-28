@@ -4,9 +4,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.channel.Channel;
+import uk.co.idv.context.entities.identity.RequestedData;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
-
-import java.util.Collection;
 
 public interface EligibilityFieldExtractor {
 
@@ -18,8 +17,8 @@ public interface EligibilityFieldExtractor {
         return JsonNodeConverter.toObject(node.get("aliases"), parser, Aliases.class);
     }
 
-    static Collection<String> toRequested(JsonNode node, JsonParser parser) {
-        return JsonNodeConverter.toStringCollection(node.get("requested"), parser);
+    static RequestedData toRequestedData(JsonNode node, JsonParser parser) {
+        return JsonNodeConverter.toObject(node.get("requestedData"), parser, RequestedData.class);
     }
 
 }

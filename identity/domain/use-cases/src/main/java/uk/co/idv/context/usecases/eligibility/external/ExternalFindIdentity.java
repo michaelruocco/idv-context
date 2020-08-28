@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.identity.FindIdentityRequest;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.DefaultIdentity;
 import uk.co.idv.context.usecases.eligibility.external.data.AliasLoader;
@@ -21,7 +22,7 @@ public class ExternalFindIdentity {
     private final AliasLoader aliasLoader;
     private final AsyncDataLoader dataLoader;
 
-    public Identity find(ExternalFindIdentityRequest request) {
+    public Identity find(FindIdentityRequest request) {
         Aliases aliases = loadAliases(request);
         AsyncDataLoadRequest loadRequest = converter.toAsyncDataLoadRequest(aliases, request);
         DataFutures futures = dataLoader.loadData(loadRequest);
@@ -33,7 +34,7 @@ public class ExternalFindIdentity {
                 .build();
     }
 
-    private Aliases loadAliases(ExternalFindIdentityRequest request) {
+    private Aliases loadAliases(FindIdentityRequest request) {
         Aliases loadedAliases = aliasLoader.load(request);
         log.debug("loaded aliases {}", loadedAliases);
         return loadedAliases.add(request.getAliases());

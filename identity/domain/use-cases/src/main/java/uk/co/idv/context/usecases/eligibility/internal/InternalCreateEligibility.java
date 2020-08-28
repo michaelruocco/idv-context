@@ -2,9 +2,9 @@ package uk.co.idv.context.usecases.eligibility.internal;
 
 import lombok.Builder;
 import uk.co.idv.context.entities.eligibility.Eligibility;
+import uk.co.idv.context.entities.identity.FindIdentityRequest;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
-import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
 import uk.co.idv.context.usecases.eligibility.EligibilityFactory;
 import uk.co.idv.context.usecases.identity.IdentityRepository;
 import uk.co.idv.context.usecases.identity.find.FindIdentity;
@@ -23,7 +23,7 @@ public class InternalCreateEligibility implements CreateEligibility {
     }
 
     @Override
-    public Eligibility create(CreateEligibilityRequest request) {
+    public Eligibility create(FindIdentityRequest request) {
         Identity identity = find.find(request.getAliases());
         return factory.build(request, identity);
     }

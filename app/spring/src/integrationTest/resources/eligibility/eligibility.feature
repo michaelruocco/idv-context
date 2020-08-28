@@ -17,7 +17,7 @@ Feature: Eligibility Requests
             "value": "4928111111111111"
           }
         ],
-        "requested": [
+        "requestedData": [
           "phone-numbers",
           "email-addresses"
         ]
@@ -51,7 +51,7 @@ Feature: Eligibility Requests
             "value": "4928111111111111"
           }
         ],
-        "requested": [
+        "requestedData": [
           "phone-numbers",
           "email-addresses"
         ]
@@ -95,7 +95,7 @@ Feature: Eligibility Requests
             "value": "4928111111111112"
           }
         ],
-        "requested": [
+        "requestedData": [
           "phone-numbers",
           "email-addresses"
         ]
@@ -116,7 +116,7 @@ Feature: Eligibility Requests
             "value": "4928111111111112"
           }
         ],
-        "requested": [
+        "requestedData": [
           "phone-numbers",
           "email-addresses"
         ],
@@ -151,7 +151,7 @@ Feature: Eligibility Requests
             "value": "4928111111111113"
           }
         ],
-        "requested": [
+        "requestedData": [
           "phone-numbers",
           "email-addresses"
         ]
@@ -172,7 +172,7 @@ Feature: Eligibility Requests
             "value": "4928111111111113"
           }
         ],
-        "requested": [
+        "requestedData": [
           "phone-numbers",
           "email-addresses"
         ],

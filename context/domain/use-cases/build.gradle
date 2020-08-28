@@ -1,0 +1,9 @@
+dependencies {
+    api project(":context-entities")
+
+    implementation project(":common-use-cases")
+    implementation project(":identity-use-cases")
+    implementation project(":lockout-use-cases")
+
+    testImplementation testFixtures(project(":context-entities"))
+}

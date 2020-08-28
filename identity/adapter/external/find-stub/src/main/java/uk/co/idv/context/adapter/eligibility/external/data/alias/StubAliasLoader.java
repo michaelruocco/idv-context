@@ -4,14 +4,14 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.DebitCardNumberMother;
-import uk.co.idv.context.usecases.eligibility.external.ExternalFindIdentityRequest;
+import uk.co.idv.context.entities.identity.FindIdentityRequest;
 import uk.co.idv.context.usecases.eligibility.external.data.AliasLoader;
 
 @Slf4j
 public class StubAliasLoader implements AliasLoader {
 
     @Override
-    public Aliases load(ExternalFindIdentityRequest request) {
+    public Aliases load(FindIdentityRequest request) {
         Aliases aliases = request.getAliases();
         if (!aliases.hasAnyValuesEndingWith("9")) {
             return loadStubbedData(aliases);

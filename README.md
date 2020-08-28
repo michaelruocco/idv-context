@@ -11,7 +11,9 @@
 
 ## Todo
 
+*   Try out accepting multiple aliases on context request, need to assess impact on lockout state / request
 *   Add initial functionality for loading identity and checking lockout state when creating verification context
+*   Ensure attempts merged when identities merged
 
 ## Useful commands
 

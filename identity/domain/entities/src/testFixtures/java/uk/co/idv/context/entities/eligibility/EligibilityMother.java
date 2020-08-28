@@ -7,9 +7,9 @@ import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
+import uk.co.idv.context.entities.identity.RequestedData;
+import uk.co.idv.context.entities.identity.RequestedDataMother;
 
-import java.util.Arrays;
-import java.util.Collection;
 
 public interface EligibilityMother {
 
@@ -25,8 +25,8 @@ public interface EligibilityMother {
         return builder().channel(channel).build();
     }
 
-    static Eligibility withRequested(Collection<String> requested) {
-        return builder().requested(requested).build();
+    static Eligibility withRequestedData(RequestedData requestedData) {
+        return builder().requestedData(requestedData).build();
     }
 
     static Eligibility withIdentity(Identity identity) {
@@ -41,12 +41,8 @@ public interface EligibilityMother {
         return Eligibility.builder()
                 .aliases(AliasesMother.creditCardNumberOnly())
                 .channel(DefaultChannelMother.build())
-                .requested(allRequested())
+                .requestedData(RequestedDataMother.allRequested())
                 .identity(IdentityMother.example());
-    }
-
-    static Collection<String> allRequested() {
-        return Arrays.asList("phone-numbers", "email-addresses");
     }
 
 }

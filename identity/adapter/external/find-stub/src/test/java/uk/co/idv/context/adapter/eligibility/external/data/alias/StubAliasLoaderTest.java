@@ -5,8 +5,8 @@ import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.CreditCardNumberMother;
 import uk.co.idv.context.entities.alias.DebitCardNumberMother;
-import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequestMother;
-import uk.co.idv.context.usecases.eligibility.external.ExternalFindIdentityRequest;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequestMother;
+import uk.co.idv.context.entities.identity.FindIdentityRequest;
 import uk.co.idv.context.usecases.eligibility.external.data.AliasLoader;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +18,7 @@ class StubAliasLoaderTest {
     @Test
     void shouldReturnInputAliasesIfAllAliasValuesDoNotEndIn9AndDoesNotContainCreditCardNumber() {
         Aliases inputAliases = AliasesMother.with(DebitCardNumberMother.debitCardNumber());
-        ExternalFindIdentityRequest request = CreateEligibilityRequestMother.withAliases(inputAliases);
+        FindIdentityRequest request = CreateEligibilityRequestMother.withAliases(inputAliases);
 
         Aliases loadedAliases = loader.load(request);
 
@@ -28,7 +28,7 @@ class StubAliasLoaderTest {
     @Test
     void shouldReturnAdditionalDebitCardAliasIfAllAliasValuesDoNotEndIn9AndContainsCreditCardNumber() {
         Aliases inputAliases = AliasesMother.with(CreditCardNumberMother.withValue("4929111111111111"));
-        ExternalFindIdentityRequest request = CreateEligibilityRequestMother.withAliases(inputAliases);
+        FindIdentityRequest request = CreateEligibilityRequestMother.withAliases(inputAliases);
 
         Aliases loadedAliases = loader.load(request);
 
@@ -40,7 +40,7 @@ class StubAliasLoaderTest {
 
     @Test
     void shouldReturnEmptyAliasesIfAnyAliasValuesEndIn9() {
-        ExternalFindIdentityRequest request = CreateEligibilityRequestMother.withAliases(
+        FindIdentityRequest request = CreateEligibilityRequestMother.withAliases(
                 AliasesMother.with(CreditCardNumberMother.withValueEndingIn9())
         );
 

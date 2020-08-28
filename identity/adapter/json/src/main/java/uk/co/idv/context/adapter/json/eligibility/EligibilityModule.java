@@ -6,7 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.channel.ChannelModule;
 import uk.co.idv.context.adapter.json.identity.IdentityModule;
 import uk.co.idv.context.entities.eligibility.Eligibility;
-import uk.co.idv.context.usecases.eligibility.CreateEligibilityRequest;
+import uk.co.idv.context.entities.eligibility.CreateEligibilityRequest;
 
 import java.util.Arrays;
 
