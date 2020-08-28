@@ -3,7 +3,7 @@ package uk.co.idv.context.entities.context.create;
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.activity.Activity;
-import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.channel.Channel;
 
 @Builder
@@ -11,7 +11,7 @@ import uk.co.idv.context.entities.channel.Channel;
 public class DefaultCreateContextRequest implements CreateContextRequest {
 
     private final Channel channel;
-    private final Alias alias;
+    private final Aliases aliases;
     private final Activity activity;
 
 }

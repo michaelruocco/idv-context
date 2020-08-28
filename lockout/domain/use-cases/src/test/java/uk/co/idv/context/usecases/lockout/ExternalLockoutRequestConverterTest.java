@@ -35,7 +35,7 @@ class ExternalLockoutRequestConverterTest {
 
         assertThat(request.getChannelId()).isEqualTo(externalRequest.getChannelId());
         assertThat(request.getActivityName()).isEqualTo(externalRequest.getActivityName());
-        assertThat(request.getAlias()).isEqualTo(externalRequest.getAlias());
+        assertThat(request.getAliases()).isEqualTo(externalRequest.getAliases());
     }
 
     @Test

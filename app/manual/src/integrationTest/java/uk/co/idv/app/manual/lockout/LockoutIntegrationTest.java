@@ -260,7 +260,7 @@ public class LockoutIntegrationTest {
     void shouldLoadState() {
         policyService.create(HardLockoutPolicyMother.build());
         Attempt attempt = unsuccessful();
-        Identity identity = IdentityMother.withAliases(attempt.getIdvId(), attempt.getAlias());
+        Identity identity = IdentityMother.withAliases(attempt.getAliases().add(attempt.getIdvId()));
         identityService.update(identity);
         RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
         lockoutFacade.recordAttempt(request);
@@ -277,7 +277,7 @@ public class LockoutIntegrationTest {
     void shouldResetState() {
         policyService.create(HardLockoutPolicyMother.build());
         Attempt attempt = unsuccessful();
-        Identity identity = IdentityMother.withAliases(attempt.getIdvId(), attempt.getAlias());
+        Identity identity = IdentityMother.withAliases(attempt.getAliases().add(attempt.getIdvId()));
         identityService.update(identity);
         RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(attempt);
         lockoutFacade.recordAttempt(request);
@@ -294,7 +294,7 @@ public class LockoutIntegrationTest {
     void shouldThrowExceptionOnLoadStateWhenLocked() {
         policyService.create(HardLockoutPolicyMother.build());
         Attempt attempt = unsuccessful();
-        Identity identity = IdentityMother.withAliases(attempt.getIdvId(), attempt.getAlias());
+        Identity identity = IdentityMother.withAliases(attempt.getAliases().add(attempt.getIdvId()));
         identityService.update(identity);
         RecordAttemptRequest request = DefaultRecordAttemptRequestMother.withAttempt(unsuccessful());
         lockoutFacade.recordAttempt(request);
@@ -329,11 +329,11 @@ public class LockoutIntegrationTest {
     void shouldLoadLockoutStateFromExternalRequestIfIdentityExists() {
         policyService.create(HardLockoutPolicyMother.build());
         Attempt attempt = unsuccessful();
-        Identity identity = IdentityMother.withAliases(attempt.getIdvId(), attempt.getAlias());
+        Identity identity = IdentityMother.withAliases(attempt.getAliases().add(attempt.getIdvId()));
         identityService.update(identity);
         RecordAttemptRequest unsuccessfulRequest = DefaultRecordAttemptRequestMother.withAttempt(attempt);
         lockoutFacade.recordAttempt(unsuccessfulRequest);
-        ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.withAlias(attempt.getAlias());
+        ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.withAliases(attempt.getAliases());
 
         LockoutState state = lockoutFacade.loadState(externalRequest);
 
@@ -349,7 +349,7 @@ public class LockoutIntegrationTest {
 
         assertThat(error)
                 .isInstanceOf(IdentityNotFoundException.class)
-                .hasMessage(externalRequest.getAlias().format());
+                .hasMessage(externalRequest.getAliases().format());
     }
 
     @Test
@@ -367,10 +367,10 @@ public class LockoutIntegrationTest {
     void shouldResetLockoutStateStateFromExternalRequestIfIdentityExists() {
         policyService.create(HardLockoutPolicyMother.build());
         Attempt attempt = unsuccessful();
-        Identity identity = IdentityMother.withAliases(attempt.getIdvId(), attempt.getAlias());
+        Identity identity = IdentityMother.withAliases(attempt.getAliases().add(attempt.getIdvId()));
         identityService.update(identity);
         lockoutFacade.recordAttempt(DefaultRecordAttemptRequestMother.withAttempt(attempt));
-        ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.withAlias(attempt.getAlias());
+        ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.withAliases(attempt.getAliases());
 
         LockoutState state = lockoutFacade.resetState(externalRequest);
 
@@ -386,7 +386,7 @@ public class LockoutIntegrationTest {
 
         assertThat(error)
                 .isInstanceOf(IdentityNotFoundException.class)
-                .hasMessage(externalRequest.getAlias().format());
+                .hasMessage(externalRequest.getAliases().format());
     }
 
     @Test

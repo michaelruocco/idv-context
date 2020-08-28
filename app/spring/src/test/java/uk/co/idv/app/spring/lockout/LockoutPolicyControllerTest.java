@@ -11,6 +11,7 @@ import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 
+import java.util.Collections;
 import java.util.UUID;
 
 import static java.util.Collections.singletonList;
@@ -61,7 +62,7 @@ class LockoutPolicyControllerTest {
         assertThat(request.getValue())
                 .hasFieldOrPropertyWithValue("channelId", channelId)
                 .hasFieldOrPropertyWithValue("activityName", activityName)
-                .hasFieldOrPropertyWithValue("aliasType", aliasType);
+                .hasFieldOrPropertyWithValue("aliasTypes", Collections.singleton(aliasType));
     }
 
     @Test

@@ -10,6 +10,7 @@ import uk.co.idv.context.entities.policy.key.ChannelPolicyKeyMother;
 import uk.co.idv.context.entities.policy.key.CollectionUtils;
 
 import java.util.Collection;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.co.idv.context.entities.policy.key.PolicyKeyConstants.ALL;
@@ -52,7 +53,7 @@ class PolicyKeyConverterTest {
         return DefaultPolicyRequest.builder()
                 .channelId(key.getChannelId())
                 .activityName(ALL)
-                .aliasType(ALL)
+                .aliasTypes(Collections.singleton(ALL))
                 .build();
     }
 
@@ -60,7 +61,7 @@ class PolicyKeyConverterTest {
         return DefaultPolicyRequest.builder()
                 .channelId(key.getChannelId())
                 .activityName(CollectionUtils.getFirst(key.getActivityNames()))
-                .aliasType(ALL)
+                .aliasTypes(Collections.singleton(ALL))
                 .build();
     }
 
@@ -68,7 +69,7 @@ class PolicyKeyConverterTest {
         return DefaultPolicyRequest.builder()
                 .channelId(key.getChannelId())
                 .activityName(CollectionUtils.getFirst(key.getActivityNames()))
-                .aliasType(CollectionUtils.getFirst(key.getAliasTypes()))
+                .aliasTypes(key.getAliasTypes())
                 .build();
     }
 

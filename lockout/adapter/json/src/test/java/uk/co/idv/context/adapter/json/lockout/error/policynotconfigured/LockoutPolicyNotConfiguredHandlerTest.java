@@ -56,8 +56,8 @@ class LockoutPolicyNotConfiguredHandlerTest {
 
         PolicyRequest request = exception.getRequest();
         assertThat(error).map(ApiError::getMeta)
-                .map(meta -> meta.get("aliasType"))
-                .contains(request.getAliasType());
+                .map(meta -> meta.get("aliasTypes"))
+                .contains(request.getAliasTypes());
     }
 
     @Test

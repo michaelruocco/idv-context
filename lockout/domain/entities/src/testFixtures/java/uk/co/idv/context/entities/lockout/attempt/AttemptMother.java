@@ -1,7 +1,8 @@
 package uk.co.idv.context.entities.lockout.attempt;
 
 import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.CreditCardNumberMother;
+import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempt.AttemptBuilder;
@@ -20,7 +21,11 @@ public interface AttemptMother {
     }
 
     static Attempt withAlias(Alias alias) {
-        return builder().alias(alias).build();
+        return withAliases(AliasesMother.with(alias));
+    }
+
+    static Attempt withAliases(Aliases aliases) {
+        return builder().aliases(aliases).build();
     }
 
     static Attempt withChannelId(String channelId) {
@@ -51,7 +56,7 @@ public interface AttemptMother {
                 .contextId(UUID.fromString("fb059cfd-5613-49fe-8f34-2264b5da8343"))
                 .channelId("default-channel")
                 .activityName("default-activity")
-                .alias(CreditCardNumberMother.creditCardNumber())
+                .aliases(AliasesMother.creditCardNumberOnly())
                 .idvId(IdvIdMother.idvId())
                 .methodName("default-method")
                 .verificationId(UUID.fromString("1fb7cd98-694d-4ba4-968a-9b86bbf52c01"))

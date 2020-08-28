@@ -3,6 +3,9 @@ package uk.co.idv.context.entities.policy;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.policy.DefaultPolicyRequest.DefaultPolicyRequestBuilder;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class PolicyRequestTest {
@@ -28,12 +31,12 @@ class PolicyRequestTest {
     }
 
     @Test
-    void shouldReturnAliasType() {
-        String aliasType = "alias-type";
+    void shouldReturnAliasTypes() {
+        Collection<String> aliasTypes = Collections.singleton("alias-type");
 
-        PolicyRequest request = builder.aliasType(aliasType).build();
+        PolicyRequest request = builder.aliasTypes(aliasTypes).build();
 
-        assertThat(request.getAliasType()).isEqualTo(aliasType);
+        assertThat(request.getAliasTypes()).isEqualTo(aliasTypes);
     }
 
 }

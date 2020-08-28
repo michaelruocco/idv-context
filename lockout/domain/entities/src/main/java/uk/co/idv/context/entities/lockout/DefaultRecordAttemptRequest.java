@@ -2,12 +2,13 @@ package uk.co.idv.context.entities.lockout;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 
 import java.time.Instant;
+import java.util.Collection;
 
 @Builder
 @Data
@@ -43,8 +44,8 @@ public class DefaultRecordAttemptRequest implements RecordAttemptRequest {
     }
 
     @Override
-    public Alias getAlias() {
-        return attempt.getAlias();
+    public Aliases getAliases() {
+        return attempt.getAliases();
     }
 
     @Override
@@ -58,8 +59,8 @@ public class DefaultRecordAttemptRequest implements RecordAttemptRequest {
     }
 
     @Override
-    public String getAliasType() {
-        return attempt.getAliasType();
+    public Collection<String> getAliasTypes() {
+        return attempt.getAliasTypes();
     }
 
 }

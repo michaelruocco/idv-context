@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.DefaultAliasMother;
+import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.AliasesMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -31,25 +31,25 @@ class DefaultExternalLockoutRequestTest {
     }
 
     @Test
-    void shouldReturnAlias() {
-        Alias alias = DefaultAliasMother.build();
+    void shouldReturnAliases() {
+        Aliases aliases = AliasesMother.defaultAliasOnly();
 
         ExternalLockoutRequest request = DefaultExternalLockoutRequest.builder()
-                .alias(alias)
+                .aliases(aliases)
                 .build();
 
-        assertThat(request.getAlias()).isEqualTo(alias);
+        assertThat(request.getAliases()).isEqualTo(aliases);
     }
 
     @Test
-    void shouldReturnAliasType() {
-        Alias alias = DefaultAliasMother.build();
+    void shouldReturnAliasTypes() {
+        Aliases aliases = AliasesMother.defaultAliasOnly();
 
         ExternalLockoutRequest request = DefaultExternalLockoutRequest.builder()
-                .alias(alias)
+                .aliases(aliases)
                 .build();
 
-        assertThat(request.getAliasType()).isEqualTo(alias.getType());
+        assertThat(request.getAliasTypes()).isEqualTo(aliases.getTypes());
     }
 
 }

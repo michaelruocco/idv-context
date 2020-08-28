@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.lockout.attempt;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.DefaultAliasMother;
+import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempt.AttemptBuilder;
@@ -53,39 +53,39 @@ class AttemptTest {
     }
 
     @Test
-    void shouldReturnAlias() {
-        Alias alias = DefaultAliasMother.build();
+    void shouldReturnAliases() {
+        Aliases aliases = AliasesMother.defaultAliasOnly();
 
-        Attempt attempt = builder.alias(alias).build();
+        Attempt attempt = builder.aliases(aliases).build();
 
-        assertThat(attempt.getAlias()).isEqualTo(alias);
+        assertThat(attempt.getAliases()).isEqualTo(aliases);
     }
 
     @Test
-    void shouldReturnAliasType() {
-        Alias alias = DefaultAliasMother.build();
+    void shouldReturnAliasTypes() {
+        Aliases aliases = AliasesMother.defaultAliasOnly();
 
-        Attempt attempt = builder.alias(alias).build();
+        Attempt attempt = builder.aliases(aliases).build();
 
-        assertThat(attempt.getAliasType()).isEqualTo(alias.getType());
+        assertThat(attempt.getAliasTypes()).isEqualTo(aliases.getTypes());
     }
 
     @Test
-    void shouldReturnHasAliasTrueIfAliasMatches() {
-        Alias alias = DefaultAliasMother.build();
-        Attempt attempt = builder.alias(alias).build();
+    void shouldReturnHasAliasTrueIfHasAtLeastOneAlias() {
+        Aliases aliases = AliasesMother.defaultAliasOnly();
+        Attempt attempt = builder.aliases(aliases).build();
 
-        boolean hasAlias = attempt.hasAlias(alias);
+        boolean hasAlias = attempt.hasAtLeastOneAlias(aliases);
 
         assertThat(hasAlias).isTrue();
     }
 
     @Test
     void shouldReturnHasAliasFalseIfAliasDoesNotMatch() {
-        Alias alias = DefaultAliasMother.build();
-        Attempt attempt = builder.alias(alias).build();
+        Aliases aliases = AliasesMother.defaultAliasOnly();
+        Attempt attempt = builder.aliases(aliases).build();
 
-        boolean hasAlias = attempt.hasAlias(IdvIdMother.idvId());
+        boolean hasAlias = attempt.hasAtLeastOneAlias(AliasesMother.idvIdOnly());
 
         assertThat(hasAlias).isFalse();
     }

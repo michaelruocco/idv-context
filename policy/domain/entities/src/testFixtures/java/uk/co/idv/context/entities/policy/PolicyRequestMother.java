@@ -1,5 +1,7 @@
 package uk.co.idv.context.entities.policy;
 
+import java.util.Collections;
+
 public interface PolicyRequestMother {
 
     static PolicyRequest build() {
@@ -10,7 +12,7 @@ public interface PolicyRequestMother {
         return DefaultPolicyRequest.builder()
                 .channelId("default-channel")
                 .activityName("default-activity")
-                .aliasType("default-alias");
+                .aliasTypes(Collections.singleton("default-alias"));
     }
 
 }

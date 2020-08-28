@@ -3,6 +3,7 @@ package uk.co.idv.context.usecases.lockout;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.alias.Alias;
 import uk.co.idv.context.entities.alias.AliasFactory;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.DefaultAliasMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
@@ -47,7 +48,7 @@ class LockoutFacadeTest {
     @Test
     void shouldLoadLockoutState() {
         ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.build();
-        Identity identity = givenIdentityFoundForAlias(externalRequest.getAlias());
+        Identity identity = givenIdentityFoundForAliases(externalRequest.getAliases());
         LockoutRequest lockoutRequest = mock(LockoutRequest.class);
         given(converter.toLockoutRequest(externalRequest, identity.getIdvId())).willReturn(lockoutRequest);
         LockoutState expectedState = givenLockoutStateLoaded(lockoutRequest);
@@ -60,7 +61,7 @@ class LockoutFacadeTest {
     @Test
     void shouldResetLockoutState() {
         ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.build();
-        Identity identity = givenIdentityFoundForAlias(externalRequest.getAlias());
+        Identity identity = givenIdentityFoundForAliases(externalRequest.getAliases());
         LockoutRequest lockoutRequest = mock(LockoutRequest.class);
         given(converter.toLockoutRequest(externalRequest, identity.getIdvId())).willReturn(lockoutRequest);
         LockoutState expectedState = givenLockoutStateReset(lockoutRequest);
@@ -80,9 +81,9 @@ class LockoutFacadeTest {
         assertThat(state).isEqualTo(expectedState);
     }
 
-    private Identity givenIdentityFoundForAlias(Alias alias) {
+    private Identity givenIdentityFoundForAliases(Aliases aliases) {
         Identity identity = IdentityMother.example();
-        given(findIdentity.find(alias)).willReturn(identity);
+        given(findIdentity.find(aliases)).willReturn(identity);
         return identity;
     }
 

@@ -9,14 +9,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ContextCreateEligibilityRequestTest {
 
     @Test
-    void shouldReturnAliasFromInitialRequestAsAliases() {
+    void shouldReturnAliasesFromInitialRequest() {
         CreateContextRequest initialRequest = DefaultCreateContextRequestMother.build();
 
         ContextCreateEligibilityRequest request = ContextCreateEligibilityRequest.builder()
                 .request(initialRequest)
                 .build();
 
-        assertThat(request.getAliases()).containsExactly(initialRequest.getAlias());
+        assertThat(request.getAliases()).isEqualTo(initialRequest.getAliases());
     }
 
     @Test

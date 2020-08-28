@@ -107,10 +107,10 @@ class ChannelActivityAliasPolicyKeyTest {
     }
 
     @Test
-    void shouldNotApplyToPolicyRequestsWithOtherAliasType() {
+    void shouldNotApplyToPolicyRequestsWithOtherAliasTypes() {
         PolicyKey key = build();
         PolicyRequest request = applyingTo(key);
-        given(request.getAliasType()).willReturn("other-alias");
+        given(request.getAliasTypes()).willReturn(Collections.singleton("other-alias"));
 
         boolean applies = key.appliesTo(request);
 

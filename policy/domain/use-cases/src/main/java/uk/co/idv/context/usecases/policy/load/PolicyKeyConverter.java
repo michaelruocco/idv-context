@@ -17,10 +17,8 @@ public class PolicyKeyConverter {
         DefaultPolicyRequestBuilder builder = DefaultPolicyRequest.builder().channelId(key.getChannelId());
         for (String activityName : key.getActivityNames()) {
             builder.activityName(activityName);
-            for (String aliasType : key.getAliasTypes()) {
-                builder.aliasType(aliasType);
-                requests.add(builder.build());
-            }
+            builder.aliasTypes(key.getAliasTypes());
+            requests.add(builder.build());
         }
         log.info("converted key {} into policy requests {}", key, requests);
         return requests;

@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.DefaultAliasMother;
+import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.attempt.AttemptMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
@@ -18,14 +18,14 @@ import static org.mockito.Mockito.mock;
 class LockoutStateRequestTest {
 
     @Test
-    void shouldReturnAlias() {
-        Alias alias = DefaultAliasMother.build();
+    void shouldReturnAliases() {
+        Aliases aliases = AliasesMother.defaultAliasOnly();
 
         LockoutStateRequest request = LockoutStateRequest.builder()
-                .alias(alias)
+                .aliases(aliases)
                 .build();
 
-        assertThat(request.getAlias()).isEqualTo(alias);
+        assertThat(request.getAliases()).isEqualTo(aliases);
     }
 
     @Test

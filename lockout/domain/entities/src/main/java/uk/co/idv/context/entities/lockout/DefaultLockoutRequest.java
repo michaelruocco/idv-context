@@ -1,10 +1,11 @@
 package uk.co.idv.context.entities.lockout;
 
 import lombok.Builder;
-import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.IdvId;
 
 import java.time.Instant;
+import java.util.Collection;
 
 @Builder
 public class DefaultLockoutRequest implements LockoutRequest {
@@ -34,13 +35,13 @@ public class DefaultLockoutRequest implements LockoutRequest {
     }
 
     @Override
-    public String getAliasType() {
-        return externalRequest.getAliasType();
+    public Collection<String> getAliasTypes() {
+        return externalRequest.getAliasTypes();
     }
 
     @Override
-    public Alias getAlias() {
-        return externalRequest.getAlias();
+    public Aliases getAliases() {
+        return externalRequest.getAliases();
     }
 
 }

@@ -9,7 +9,7 @@ public class LockoutRequestConverter {
 
     public LockoutStateRequest toLockoutStateRequest(LockoutRequest request, Attempts attempts) {
         return LockoutStateRequest.builder()
-                .alias(request.getAlias())
+                .aliases(request.getAliases())
                 .timestamp(request.getTimestamp())
                 .attempts(attempts)
                 .build();

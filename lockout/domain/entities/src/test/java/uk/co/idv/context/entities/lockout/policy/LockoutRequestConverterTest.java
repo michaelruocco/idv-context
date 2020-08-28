@@ -13,12 +13,12 @@ class LockoutRequestConverterTest {
     private final LockoutRequestConverter converter = new LockoutRequestConverter();
 
     @Test
-    void shouldPopulateAlias() {
+    void shouldPopulateAliases() {
         LockoutRequest lockoutRequest = LockoutRequestMother.build();
 
         LockoutStateRequest stateRequest = converter.toLockoutStateRequest(lockoutRequest, mock(Attempts.class));
 
-        assertThat(stateRequest.getAlias()).isEqualTo(lockoutRequest.getAlias());
+        assertThat(stateRequest.getAliases()).isEqualTo(lockoutRequest.getAliases());
     }
 
     @Test

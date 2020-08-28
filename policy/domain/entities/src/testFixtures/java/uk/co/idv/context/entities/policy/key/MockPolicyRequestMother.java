@@ -14,7 +14,7 @@ public interface MockPolicyRequestMother {
         PolicyRequest request = mock(DefaultPolicyRequest.class);
         given(request.getChannelId()).willReturn(key.getChannelId());
         given(request.getActivityName()).willReturn(getFirst(key.getActivityNames()));
-        given(request.getAliasType()).willReturn(getFirst(key.getAliasTypes()));
+        given(request.getAliasTypes()).willReturn(key.getAliasTypes());
         return request;
     }
 

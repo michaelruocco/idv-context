@@ -2,8 +2,8 @@ package uk.co.idv.context.entities.lockout.attempt;
 
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.DefaultAliasMother;
+import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.policy.PolicyKey;
@@ -185,20 +185,20 @@ class AttemptsTest {
 
     @Test
     void shouldReturnAttemptsWithAlias() {
-        Alias alias = DefaultAliasMother.build();
-        Attempt attemptWithAlias = AttemptMother.withAlias(alias);
+        Aliases aliases = AliasesMother.defaultAliasOnly();
+        Attempt attemptWithAliases = AttemptMother.withAliases(aliases);
         Collection<Attempt> attemptCollection = Arrays.asList(
                 AttemptMother.withAlias(IdvIdMother.idvId()),
-                attemptWithAlias
+                attemptWithAliases
         );
         Attempts attempts = Attempts.builder()
                 .idvId(IdvIdMother.idvId())
                 .attempts(attemptCollection)
                 .build();
 
-        Attempts attemptsWithAlias = attempts.with(alias);
+        Attempts attemptsWithAlias = attempts.with(aliases);
 
-        assertThat(attemptsWithAlias).containsExactly(attemptWithAlias);
+        assertThat(attemptsWithAlias).containsExactly(attemptWithAliases);
     }
 
     @Test

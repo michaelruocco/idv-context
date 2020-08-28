@@ -14,10 +14,10 @@ public class NoPoliciesConfiguredException extends RuntimeException {
     }
 
     private static String toMessage(PolicyRequest request) {
-        return String.format("channel: %s, activity: %s, alias type: %s",
+        return String.format("channel: %s, activity: %s, alias types: %s",
                 request.getChannelId(),
                 request.getActivityName(),
-                request.getAliasType());
+                request.getAliasTypes());
     }
 
 }

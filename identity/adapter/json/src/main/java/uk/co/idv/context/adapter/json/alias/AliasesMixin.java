@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.IdvId;
 
+import java.util.Collection;
 import java.util.UUID;
 
 public interface AliasesMixin {
@@ -22,5 +23,8 @@ public interface AliasesMixin {
 
     @JsonIgnore
     boolean isEmpty();
+
+    @JsonIgnore
+    Collection<String> getTypes();
 
 }

@@ -17,6 +17,7 @@ import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.UUID;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -41,7 +42,7 @@ public class LockoutPolicyController {
         DefaultPolicyRequest request = DefaultPolicyRequest.builder()
                 .channelId(channelId)
                 .activityName(activityName)
-                .aliasType(aliasType)
+                .aliasTypes(Collections.singleton(aliasType))
                 .build();
         if (request.isEmpty()) {
             return service.loadAll();

@@ -2,11 +2,12 @@ package uk.co.idv.context.entities.context.create;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.LockoutRequest;
 
 import java.time.Instant;
+import java.util.Collection;
 
 @Builder
 @Data
@@ -21,8 +22,8 @@ public class ContextLockoutRequest implements LockoutRequest {
     }
 
     @Override
-    public Alias getAlias() {
-        return identityRequest.getAlias();
+    public Aliases getAliases() {
+        return identityRequest.getAliases();
     }
 
     @Override
@@ -36,8 +37,8 @@ public class ContextLockoutRequest implements LockoutRequest {
     }
 
     @Override
-    public String getAliasType() {
-        return identityRequest.getAliasType();
+    public Collection<String> getAliasTypes() {
+        return identityRequest.getAliasTypes();
     }
 
 }

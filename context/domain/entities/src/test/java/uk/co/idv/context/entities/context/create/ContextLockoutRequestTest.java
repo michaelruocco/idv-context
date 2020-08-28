@@ -31,14 +31,14 @@ class ContextLockoutRequestTest {
     }
 
     @Test
-    void shouldReturnAliasFromIdentityRequest() {
+    void shouldReturnAliasesFromIdentityRequest() {
         IdentityCreateContextRequest identityRequest = IdentityCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .identityRequest(identityRequest)
                 .build();
 
-        assertThat(request.getAlias()).isEqualTo(identityRequest.getAlias());
+        assertThat(request.getAliases()).isEqualTo(identityRequest.getAliases());
     }
 
     @Test
@@ -64,14 +64,14 @@ class ContextLockoutRequestTest {
     }
 
     @Test
-    void shouldReturnAliasTypeFromIdentityRequest() {
+    void shouldReturnAliasTypesFromIdentityRequest() {
         IdentityCreateContextRequest identityRequest = IdentityCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .identityRequest(identityRequest)
                 .build();
 
-        assertThat(request.getAliasType()).isEqualTo(identityRequest.getAliasType());
+        assertThat(request.getAliasTypes()).isEqualTo(identityRequest.getAliasTypes());
     }
 
     @Test

@@ -1,12 +1,14 @@
 package uk.co.idv.context.entities.policy;
 
 
+import java.util.Collection;
+
 public interface PolicyRequest {
 
     String getChannelId();
 
     String getActivityName();
 
-    String getAliasType();
+    Collection<String> getAliasTypes();
 
 }

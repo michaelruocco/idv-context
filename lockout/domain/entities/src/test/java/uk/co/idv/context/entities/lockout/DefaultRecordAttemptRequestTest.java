@@ -61,14 +61,14 @@ class DefaultRecordAttemptRequestTest {
     }
 
     @Test
-    void shouldReturnAliasFromAttempt() {
+    void shouldReturnAliasesFromAttempt() {
         Attempt attempt = AttemptMother.build();
 
         RecordAttemptRequest request = DefaultRecordAttemptRequest.builder()
                 .attempt(attempt)
                 .build();
 
-        assertThat(request.getAlias()).isEqualTo(attempt.getAlias());
+        assertThat(request.getAliases()).isEqualTo(attempt.getAliases());
     }
 
     @Test
@@ -94,14 +94,14 @@ class DefaultRecordAttemptRequestTest {
     }
 
     @Test
-    void shouldReturnAliasTypeFromAttempt() {
+    void shouldReturnAliasTypesFromAttempt() {
         Attempt attempt = AttemptMother.build();
 
         RecordAttemptRequest request = DefaultRecordAttemptRequest.builder()
                 .attempt(attempt)
                 .build();
 
-        assertThat(request.getAliasType()).isEqualTo(attempt.getAliasType());
+        assertThat(request.getAliasTypes()).isEqualTo(attempt.getAliasTypes());
     }
 
 }

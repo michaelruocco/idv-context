@@ -3,11 +3,13 @@ package uk.co.idv.context.entities.context.create;
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.activity.Activity;
-import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.policy.ContextPolicy;
+
+import java.util.Collection;
 
 @Builder
 @Data
@@ -23,13 +25,18 @@ public class IdentityCreateContextRequest implements CreateContextRequest {
     }
 
     @Override
+    public Aliases getAliases() {
+        return initial.getAliases();
+    }
+
+    @Override
     public String getChannelId() {
         return initial.getChannelId();
     }
 
     @Override
-    public Alias getAlias() {
-        return initial.getAlias();
+    public Collection<String> getAliasTypes() {
+        return initial.getAliasTypes();
     }
 
     @Override

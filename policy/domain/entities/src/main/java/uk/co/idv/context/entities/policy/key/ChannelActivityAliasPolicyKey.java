@@ -24,7 +24,7 @@ public class ChannelActivityAliasPolicyKey implements PolicyKey {
     public boolean appliesTo(PolicyRequest request) {
         return channelId.equals(request.getChannelId()) &&
                 activityNames.contains(request.getActivityName()) &&
-                aliasTypes.contains(request.getAliasType());
+                appliesToAliasTypes(request.getAliasTypes());
     }
 
     @Override
@@ -35,6 +35,14 @@ public class ChannelActivityAliasPolicyKey implements PolicyKey {
     @Override
     public boolean hasAliasType() {
         return true;
+    }
+
+    private boolean appliesToAliasTypes(Collection<String> typesToCheck) {
+        return typesToCheck.stream().anyMatch(this::appliesToAliasType);
+    }
+
+    private boolean appliesToAliasType(String typeToCheck) {
+        return aliasTypes.stream().anyMatch(type -> type.equals(typeToCheck));
     }
 
 }

@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation "org.apache.commons:commons-lang3:3.11"
+    implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
 
     testFixturesImplementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
     testFixturesImplementation "org.mockito:mockito-core:${mockitoVersion}"

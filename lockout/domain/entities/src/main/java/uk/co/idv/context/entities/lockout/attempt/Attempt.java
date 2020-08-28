@@ -2,11 +2,12 @@ package uk.co.idv.context.entities.lockout.attempt;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.alias.IdvId;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 
 import java.time.Instant;
+import java.util.Collection;
 import java.util.UUID;
 
 @Builder
@@ -15,7 +16,7 @@ public class Attempt implements PolicyRequest {
 
     private final String channelId;
     private final String activityName;
-    private final Alias alias;
+    private final Aliases aliases;
     private final IdvId idvId;
 
     private final UUID contextId;
@@ -25,12 +26,12 @@ public class Attempt implements PolicyRequest {
     private final boolean successful;
 
     @Override
-    public String getAliasType() {
-        return alias.getType();
+    public Collection<String> getAliasTypes() {
+        return aliases.getTypes();
     }
 
-    public boolean hasAlias(Alias alias) {
-        return this.alias.equals(alias);
+    public boolean hasAtLeastOneAlias(Aliases aliasesToCheck) {
+        return this.aliases.containsOneOf(aliasesToCheck);
     }
 
 }

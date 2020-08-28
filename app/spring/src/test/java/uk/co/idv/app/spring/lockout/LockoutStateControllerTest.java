@@ -2,8 +2,8 @@ package uk.co.idv.app.spring.lockout;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.DefaultAliasMother;
+import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.lockout.DefaultExternalLockoutRequestMother;
 import uk.co.idv.context.entities.lockout.DefaultRecordAttemptRequestMother;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
@@ -31,8 +31,8 @@ class LockoutStateControllerTest {
 
     @Test
     void shouldPassExternalLockoutRequestWhenGettingLockoutState() {
-        Alias alias = DefaultAliasMother.build();
-        given(facade.toAlias(ALIAS_TYPE, ALIAS_VALUE)).willReturn(alias);
+        Aliases aliases = AliasesMother.defaultAliasOnly();
+        given(facade.toAliases(ALIAS_TYPE, ALIAS_VALUE)).willReturn(aliases);
         ArgumentCaptor<ExternalLockoutRequest> captor = ArgumentCaptor.forClass(ExternalLockoutRequest.class);
 
         controller.getState(CHANNEL_ID, ACTIVITY_NAME, ALIAS_TYPE, ALIAS_VALUE);
@@ -41,7 +41,7 @@ class LockoutStateControllerTest {
         assertThat(captor.getValue())
                 .hasFieldOrPropertyWithValue("channelId", CHANNEL_ID)
                 .hasFieldOrPropertyWithValue("activityName", ACTIVITY_NAME)
-                .hasFieldOrPropertyWithValue("alias", alias);
+                .hasFieldOrPropertyWithValue("aliases", aliases);
     }
 
     @Test

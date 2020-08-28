@@ -2,6 +2,9 @@ package uk.co.idv.context.entities.policy;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.Collection;
+import java.util.Collections;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class DefaultPolicyRequestTest {
@@ -29,14 +32,14 @@ class DefaultPolicyRequestTest {
     }
 
     @Test
-    void shouldReturnAliasType() {
-        String aliasType = "my-alias";
+    void shouldReturnAliasTypes() {
+        Collection<String> aliasTypes = Collections.singleton("my-alias");
 
         PolicyRequest request = DefaultPolicyRequest.builder()
-                .aliasType(aliasType)
+                .aliasTypes(aliasTypes)
                 .build();
 
-        assertThat(request.getAliasType()).isEqualTo(aliasType);
+        assertThat(request.getAliasTypes()).isEqualTo(aliasTypes);
     }
 
     @Test
@@ -65,9 +68,36 @@ class DefaultPolicyRequestTest {
     }
 
     @Test
-    void shouldNotBeEmptyIfAliasTypeSet() {
+    void shouldBeEmptyIfAliasTypesEmpty() {
         DefaultPolicyRequest request = DefaultPolicyRequest.builder()
-                .aliasType("my-alias")
+                .aliasTypes(Collections.emptyList())
+                .build();
+
+        assertThat(request.isEmpty()).isTrue();
+    }
+
+    @Test
+    void shouldBeEmptyIfAliasTypesContainsOnlyNull() {
+        DefaultPolicyRequest request = DefaultPolicyRequest.builder()
+                .aliasTypes(Collections.singleton(null))
+                .build();
+
+        assertThat(request.isEmpty()).isTrue();
+    }
+
+    @Test
+    void shouldBeEmptyIfAliasTypesContainsEmptyString() {
+        DefaultPolicyRequest request = DefaultPolicyRequest.builder()
+                .aliasTypes(Collections.singleton(""))
+                .build();
+
+        assertThat(request.isEmpty()).isTrue();
+    }
+
+    @Test
+    void shouldNotBeEmptyIfAliasTypesSet() {
+        DefaultPolicyRequest request = DefaultPolicyRequest.builder()
+                .aliasTypes(Collections.singleton("my-alias"))
                 .build();
 
         assertThat(request.isEmpty()).isFalse();

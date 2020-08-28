@@ -1,14 +1,16 @@
 package uk.co.idv.context.entities.context.create;
 
 import uk.co.idv.context.entities.activity.Activity;
-import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.channel.Channel;
+
+import java.util.Collection;
 
 public interface CreateContextRequest {
 
     Channel getChannel();
 
-    Alias getAlias();
+    Aliases getAliases();
 
     Activity getActivity();
 
@@ -16,8 +18,8 @@ public interface CreateContextRequest {
         return getChannel().getId();
     }
 
-    default String getAliasType() {
-        return getAlias().getType();
+    default Collection<String> getAliasTypes() {
+        return getAliases().getTypes();
     }
 
     default String getActivityName() {

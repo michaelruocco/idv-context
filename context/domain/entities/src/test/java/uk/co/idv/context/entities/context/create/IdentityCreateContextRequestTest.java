@@ -55,14 +55,14 @@ class IdentityCreateContextRequestTest {
     }
 
     @Test
-    void shouldReturnAliasFromInitialRequest() {
+    void shouldReturnAliasesFromInitialRequest() {
         CreateContextRequest initial = DefaultCreateContextRequestMother.build();
 
         CreateContextRequest request = IdentityCreateContextRequest.builder()
                 .initial(initial)
                 .build();
 
-        assertThat(request.getAlias()).isEqualTo(initial.getAlias());
+        assertThat(request.getAliases()).isEqualTo(initial.getAliases());
     }
 
     @Test

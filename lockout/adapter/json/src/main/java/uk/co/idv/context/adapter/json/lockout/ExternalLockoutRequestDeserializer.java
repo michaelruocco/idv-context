@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.lockout.DefaultExternalLockoutRequest;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
@@ -22,7 +22,7 @@ public class ExternalLockoutRequestDeserializer extends StdDeserializer<External
         return DefaultExternalLockoutRequest.builder()
                 .channelId(node.get("channelId").asText())
                 .activityName(node.get("activityName").asText())
-                .alias(JsonNodeConverter.toObject(node.get("alias"), parser, Alias.class))
+                .aliases(JsonNodeConverter.toObject(node.get("aliases"), parser, Aliases.class))
                 .build();
     }
 

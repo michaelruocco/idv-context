@@ -21,7 +21,7 @@ public class LockoutPolicyNotConfiguredError extends DefaultApiError {
         return Map.of(
                 "channelId", request.getChannelId(),
                 "activityName", request.getActivityName(),
-                "aliasType", request.getAliasType()
+                "aliasTypes", request.getAliasTypes()
         );
     }
 

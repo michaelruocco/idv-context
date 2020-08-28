@@ -17,7 +17,7 @@ class NoPoliciesConfiguredExceptionTest {
         assertThat(error.getMessage()).isEqualTo(
                 "channel: default-channel, " +
                 "activity: default-activity, " +
-                "alias type: default-alias"
+                "alias types: [default-alias]"
         );
     }
 

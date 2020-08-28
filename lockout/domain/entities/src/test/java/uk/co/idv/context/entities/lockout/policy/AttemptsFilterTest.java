@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Alias;
+import uk.co.idv.context.entities.alias.Aliases;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
@@ -32,15 +32,15 @@ class AttemptsFilterTest {
     @Test
     void shouldReturnApplicableAttemptsWithAliasIfKeyHasAliasType() {
         given(key.hasAliasType()).willReturn(true);
-        Alias alias = mock(Alias.class);
+        Aliases aliases = mock(Aliases.class);
         LockoutStateRequest request = mock(LockoutStateRequest.class);
-        given(request.getAlias()).willReturn(alias);
+        given(request.getAliases()).willReturn(aliases);
         Attempts attempts = mock(Attempts.class);
         given(request.getAttempts()).willReturn(attempts);
         Attempts applicable = mock(Attempts.class);
         Attempts applicableWithAlias = mock(Attempts.class);
         given(attempts.applyingTo(key)).willReturn(applicable);
-        given(applicable.with(alias)).willReturn(applicableWithAlias);
+        given(applicable.with(aliases)).willReturn(applicableWithAlias);
 
         Attempts resetAttempts = filter.filter(request);
 

@@ -15,7 +15,7 @@ public class AttemptsFilter {
         Attempts attempts = request.getAttempts();
         Attempts applicable = attempts.applyingTo(key);
         if (key.hasAliasType()) {
-            return applicable.with(request.getAlias());
+            return applicable.with(request.getAliases());
         }
         return applicable;
     }

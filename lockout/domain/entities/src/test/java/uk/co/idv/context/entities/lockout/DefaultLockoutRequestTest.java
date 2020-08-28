@@ -55,25 +55,25 @@ class DefaultLockoutRequestTest {
     }
 
     @Test
-    void shouldReturnAliasFromExternalRequest() {
+    void shouldReturnAliasesFromExternalRequest() {
         ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.build();
 
         LockoutRequest request = DefaultLockoutRequest.builder()
                 .externalRequest(externalRequest)
                 .build();
 
-        assertThat(request.getAlias()).isEqualTo(externalRequest.getAlias());
+        assertThat(request.getAliases()).isEqualTo(externalRequest.getAliases());
     }
 
     @Test
-    void shouldReturnAliasTypeFromExternalRequest() {
+    void shouldReturnAliasTypesFromExternalRequest() {
         ExternalLockoutRequest externalRequest = DefaultExternalLockoutRequestMother.build();
 
         LockoutRequest request = DefaultLockoutRequest.builder()
                 .externalRequest(externalRequest)
                 .build();
 
-        assertThat(request.getAliasType()).isEqualTo(externalRequest.getAliasType());
+        assertThat(request.getAliasTypes()).isEqualTo(externalRequest.getAliasTypes());
     }
 
 }

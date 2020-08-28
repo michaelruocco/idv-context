@@ -48,7 +48,9 @@ Feature: Lockout Policy Maintenance
         "title": "Lockout policy not configured",
         "message": "Lockout policy not configured for channel, activity and alias combination",
         "meta": {
-          "aliasType": "#(aliasType)",
+          "aliasTypes": [
+            "#(aliasType)"
+          ],
           "activityName": "state-activity",
           "channelId": "state-channel"
         }
@@ -164,10 +166,12 @@ Feature: Lockout Policy Maintenance
         "attempt": {
           "channelId": "#(channelId)",
           "activityName": "default-activity",
-          "alias": {
-            "type": "#(aliasType)",
-            "value": "#(aliasValue)"
-          },
+          "aliases": [
+            {
+              "type": "#(aliasType)",
+              "value": "#(aliasValue)"
+            }
+          ],
           "idvId": {
             "type": "idv-id",
             "value": "#(aliasValue)"
@@ -202,10 +206,12 @@ Feature: Lockout Policy Maintenance
               "value": "#(aliasValue)"
             },
             "activityName":"default-activity",
-            "alias": {
-              "type":"idv-id",
-              "value":"#(aliasValue)"
-            },
+            "aliases": [
+              {
+                "type":"idv-id",
+                "value":"#(aliasValue)"
+              }
+            ],
             "methodName": "default-method",
             "contextId": "#(contextId)",
             "channelId": "#(channelId)",
@@ -265,10 +271,12 @@ Feature: Lockout Policy Maintenance
         "attempt": {
           "channelId": "#(channelId)",
           "activityName": "default-activity",
-          "alias": {
-            "type": "#(aliasType)",
-            "value": "#(aliasValue)"
-          },
+          "aliases": [
+            {
+              "type": "#(aliasType)",
+              "value": "#(aliasValue)"
+            }
+          ],
           "idvId": {
             "type": "idv-id",
             "value": "#(aliasValue)"
@@ -289,10 +297,12 @@ Feature: Lockout Policy Maintenance
       {
         "channelId": "#(channelId)",
         "activityName": "default-activity",
-        "alias": {
+        "aliases": [
+          {
             "type": "idv-id",
             "value": "#(aliasValue)"
-        }
+          }
+        ]
       }
       """
     When method PUT

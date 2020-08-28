@@ -18,7 +18,7 @@ public class ContextCreateEligibilityRequest implements FindIdentityRequest {
 
     @Override
     public Aliases getAliases() {
-        return new Aliases(request.getAlias());
+        return request.getAliases();
     }
 
     @Override

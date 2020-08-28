@@ -34,7 +34,7 @@ class LockoutPolicyNotConfiguredErrorTest {
         assertThat(error.getMeta()).contains(
                 entry("channelId", request.getChannelId()),
                 entry("activityName", request.getActivityName()),
-                entry("aliasType", request.getAliasType())
+                entry("aliasTypes", request.getAliasTypes())
         );
     }
 

@@ -32,8 +32,12 @@ public class Aliases implements Iterable<Alias> {
         return values.iterator();
     }
 
-    public boolean contains(Alias alias) {
-        return values.contains(alias);
+    public boolean containsOneOf(Aliases aliasesToCheck) {
+        return aliasesToCheck.stream().anyMatch(this::contains);
+    }
+
+    public boolean contains(Alias aliasToCheck) {
+        return values.contains(aliasToCheck);
     }
 
     public Stream<Alias> stream() {
@@ -110,6 +114,16 @@ public class Aliases implements Iterable<Alias> {
 
     public boolean hasAnyValuesEndingWith(String suffix) {
         return values.stream().anyMatch(alias -> alias.valueEndsWith(suffix));
+    }
+
+    public Collection<String> getTypes() {
+        return values.stream()
+                .map(Alias::getType)
+                .collect(Collectors.toSet());
+    }
+
+    public String format() {
+        return values.stream().map(Alias::format).collect(Collectors.joining(","));
     }
 
     private Optional<Alias> getAliasByType(String type) {

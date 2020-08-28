@@ -28,6 +28,10 @@ public interface AliasesMother {
         return with(IdvIdMother.idvId());
     }
 
+    static Aliases defaultAliasOnly() {
+        return with(DefaultAliasMother.build());
+    }
+
     static Aliases with(Alias... aliases) {
         return new Aliases(Arrays.asList(aliases));
     }

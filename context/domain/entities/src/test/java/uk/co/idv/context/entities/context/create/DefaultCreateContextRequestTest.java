@@ -3,8 +3,8 @@ package uk.co.idv.context.entities.context.create;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.context.entities.activity.DefaultActivityMother;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.DefaultAliasMother;
+import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.context.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.channel.Channel;
 import uk.co.idv.context.entities.channel.DefaultChannelMother;
 
@@ -57,25 +57,25 @@ class DefaultCreateContextRequestTest {
     }
 
     @Test
-    void shouldReturnAlias() {
-        Alias alias = DefaultAliasMother.build();
+    void shouldReturnAliases() {
+        Aliases aliases = AliasesMother.creditCardNumberOnly();
 
         CreateContextRequest request = DefaultCreateContextRequest.builder()
-                .alias(alias)
+                .aliases(aliases)
                 .build();
 
-        assertThat(request.getAlias()).isEqualTo(alias);
+        assertThat(request.getAliases()).isEqualTo(aliases);
     }
 
     @Test
-    void shouldReturnAliasTypeFromAlias() {
-        Alias alias = DefaultAliasMother.build();
+    void shouldReturnAliasTypesFromAliases() {
+        Aliases aliases = AliasesMother.creditCardNumberOnly();
 
         CreateContextRequest request = DefaultCreateContextRequest.builder()
-                .alias(alias)
+                .aliases(aliases)
                 .build();
 
-        assertThat(request.getAliasType()).isEqualTo(alias.getType());
+        assertThat(request.getAliasTypes()).isEqualTo(aliases.getTypes());
     }
 
 }

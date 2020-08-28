@@ -29,7 +29,7 @@ public class LockoutStateController {
         ExternalLockoutRequest request = DefaultExternalLockoutRequest.builder()
                 .channelId(channelId)
                 .activityName(activityName)
-                .alias(facade.toAlias(aliasType, aliasValue))
+                .aliases(facade.toAliases(aliasType, aliasValue))
                 .build();
         return facade.loadState(request);
     }
