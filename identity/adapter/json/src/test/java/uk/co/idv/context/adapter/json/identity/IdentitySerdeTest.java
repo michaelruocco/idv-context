@@ -29,14 +29,4 @@ class IdentitySerdeTest {
         assertThat(identity).isEqualTo(IDENTITY);
     }
 
-    @Test
-    void shouldDeserializeMinimal() throws JsonProcessingException {
-        Identity expectedIdentity = IdentityMother.minimal();
-        String json = IdentityJsonMother.minimal();
-
-        Identity identity = MAPPER.readValue(json, Identity.class);
-
-        assertThat(identity).isEqualTo(expectedIdentity);
-    }
-
 }

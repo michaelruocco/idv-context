@@ -8,8 +8,4 @@ public interface IdentityJsonMother {
         return loadContentFromClasspath("identity/identity.json");
     }
 
-    static String minimal() {
-        return loadContentFromClasspath("identity/minimal-identity.json");
-    }
-
 }

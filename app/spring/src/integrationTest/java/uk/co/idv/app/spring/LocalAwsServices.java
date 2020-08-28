@@ -4,7 +4,7 @@ import com.amazonaws.regions.Regions;
 import lombok.extern.slf4j.Slf4j;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.OutputFrame;
-import uk.co.idv.context.adapter.dynamo.DynamoTableFactory;
+import uk.co.idv.context.adapter.dynamo.EnvironmentDynamoTablesFactory;
 import uk.co.idv.context.adapter.dynamo.DynamoTables;
 
 import java.time.Duration;
@@ -44,7 +44,7 @@ public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
 
     public void waitForDynamoTablesToActive() {
         DynamoTables tables = getOrBuildDynamoTables();
-        tables.waitForEnvironmentTablesToBeActive(
+        tables.waitForTablesToBeActive(
                 IDENTITY_TABLE_NAME,
                 ATTEMPT_TABLE_NAME
         );
@@ -70,7 +70,7 @@ public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
 
     private DynamoTables getOrBuildDynamoTables() {
         if (dynamoTables == null) {
-            DynamoTableFactory factory = DynamoTableFactory.builder()
+            EnvironmentDynamoTablesFactory factory = EnvironmentDynamoTablesFactory.builder()
                     .endpointUrl(getDynamoEndpointUri())
                     .region(region.getName())
                     .environment(environment)

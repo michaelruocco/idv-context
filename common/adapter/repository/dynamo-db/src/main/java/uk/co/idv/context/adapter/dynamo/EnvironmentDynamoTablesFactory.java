@@ -10,7 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Builder
-public class DynamoTableFactory {
+public class EnvironmentDynamoTablesFactory {
 
     private final String endpointUrl;
     private final String environment;
@@ -20,7 +20,7 @@ public class DynamoTableFactory {
     private final AWSCredentialsProvider credentialsProvider = new DefaultAWSCredentialsProviderChain();
 
     public DynamoTables build() {
-        return new DynamoTables(environment, buildClient());
+        return new EnvironmentDynamoTables(environment, buildClient());
     }
 
     private AmazonDynamoDB buildClient() {

@@ -24,7 +24,7 @@ public class DynamoIdentityRepositoryConfig implements IdentityRepositoryConfig 
     }
 
     private static IdentityRepository buildIdentityRepository(JsonConverter jsonConverter, DynamoTables tables) {
-        Table table = tables.getEnvironmentTable(IDENTITY_TABLE_NAME);
+        Table table = tables.getTable(IDENTITY_TABLE_NAME);
         IdentityConverter identityConverter = new IdentityConverter(table, jsonConverter);
         return DynamoIdentityRepository.builder()
                 .converter(identityConverter)

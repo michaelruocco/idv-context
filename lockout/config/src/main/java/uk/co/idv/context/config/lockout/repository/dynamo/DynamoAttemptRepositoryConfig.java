@@ -20,7 +20,7 @@ public class DynamoAttemptRepositoryConfig implements AttemptRepositoryConfig {
     public AttemptRepository attemptRepository() {
         return DynamoAttemptRepository.builder()
                 .converter(new AttemptItemConverter(jsonConverter))
-                .table(tables.getEnvironmentTable(ATTEMPT_TABLE_NAME))
+                .table(tables.getTable(ATTEMPT_TABLE_NAME))
                 .build();
     }
 

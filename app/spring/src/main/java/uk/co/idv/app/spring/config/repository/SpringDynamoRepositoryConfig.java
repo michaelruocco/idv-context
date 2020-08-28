@@ -3,7 +3,7 @@ package uk.co.idv.app.spring.config.repository;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import uk.co.idv.context.adapter.dynamo.DynamoTableFactory;
+import uk.co.idv.context.adapter.dynamo.EnvironmentDynamoTablesFactory;
 import uk.co.idv.context.adapter.dynamo.DynamoTables;
 import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.config.identity.respository.dynamo.DynamoIdentityRepositoryConfig;
@@ -32,7 +32,7 @@ public class SpringDynamoRepositoryConfig {
 
     @Bean
     public DynamoTables dynamoTables() {
-        DynamoTableFactory tableFactory = DynamoTableFactory.builder()
+        EnvironmentDynamoTablesFactory tableFactory = EnvironmentDynamoTablesFactory.builder()
                 .environment(System.getProperty("environment", "idv-local"))
                 .region(System.getProperty("aws.region", "eu-west-1"))
                 .endpointUrl(System.getProperty("aws.dynamo.db.endpoint.uri", "http://localhost:4569"))
