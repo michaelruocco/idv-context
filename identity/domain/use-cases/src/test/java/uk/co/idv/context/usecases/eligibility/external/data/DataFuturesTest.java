@@ -15,7 +15,7 @@ class DataFuturesTest {
 
     @Test
     void shouldReturnCombinedCompletableFutures() {
-        CompletableFuture<PhoneNumbers> phoneNumbersFuture = completedFuture(PhoneNumbersMother.mobileAndOther());
+        CompletableFuture<PhoneNumbers> phoneNumbersFuture = completedFuture(PhoneNumbersMother.two());
         CompletableFuture<EmailAddresses> emailAddressesFuture = completedFuture(EmailAddressesMother.two());
 
         DataFutures futures = DataFutures.builder()

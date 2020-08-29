@@ -8,7 +8,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
@@ -35,12 +34,6 @@ public class PhoneNumbers implements Iterable<PhoneNumber> {
         mergedNumbers.addAll(this.numbers);
         mergedNumbers.addAll(others.numbers);
         return new PhoneNumbers(mergedNumbers);
-    }
-
-    public PhoneNumbers getMobileNumbers() {
-        return new PhoneNumbers(numbers.stream()
-                .filter(PhoneNumber::isMobile)
-                .collect(Collectors.toList()));
     }
 
     public boolean isEmpty() {

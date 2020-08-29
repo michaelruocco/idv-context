@@ -19,8 +19,6 @@ public interface Identity {
 
     PhoneNumbers getPhoneNumbers();
 
-    PhoneNumbers getMobilePhoneNumbers();
-
     Aliases getAliases();
 
     Aliases getAliasesNotPresent(Identity other);

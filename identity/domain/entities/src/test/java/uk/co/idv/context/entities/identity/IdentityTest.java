@@ -14,9 +14,6 @@ import uk.co.idv.context.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.emailaddress.EmailAddresses;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
-import uk.co.idv.context.entities.phonenumber.MobilePhoneNumberMother;
-import uk.co.idv.context.entities.phonenumber.OtherPhoneNumberMother;
-import uk.co.idv.context.entities.phonenumber.PhoneNumber;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -97,21 +94,11 @@ class IdentityTest {
 
     @Test
     void shouldReturnPhoneNumbers() {
-        PhoneNumbers numbers = PhoneNumbersMother.mobileAndOther();
+        PhoneNumbers numbers = PhoneNumbersMother.two();
 
         Identity identity = IdentityMother.withPhoneNumbers(numbers);
 
         assertThat(identity.getPhoneNumbers()).isEqualTo(numbers);
-    }
-
-    @Test
-    void shouldReturnMobilePhoneNumbers() {
-        PhoneNumber mobile = MobilePhoneNumberMother.mobile();
-        PhoneNumber other = OtherPhoneNumberMother.other();
-
-        Identity identity = IdentityMother.withPhoneNumbers(mobile, other);
-
-        assertThat(identity.getMobilePhoneNumbers()).containsExactly(mobile);
     }
 
     @Test

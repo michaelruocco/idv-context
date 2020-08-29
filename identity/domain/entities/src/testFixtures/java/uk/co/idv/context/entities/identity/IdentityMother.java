@@ -53,7 +53,7 @@ public interface IdentityMother {
     static Identity example1() {
         return exampleBuilder()
                 .aliases(AliasesMother.idvIdAndDebitCardNumber1())
-                .phoneNumbers(PhoneNumbersMother.mobile())
+                .phoneNumbers(PhoneNumbersMother.one())
                 .emailAddresses(EmailAddressesMother.one())
                 .build();
     }
@@ -62,7 +62,7 @@ public interface IdentityMother {
         return DefaultIdentity.builder()
                 .country(CountryCode.GB)
                 .aliases(AliasesMother.idvIdAndCreditCardNumber())
-                .phoneNumbers(PhoneNumbersMother.mobileAndOther())
+                .phoneNumbers(PhoneNumbersMother.two())
                 .emailAddresses(EmailAddressesMother.two());
     }
 

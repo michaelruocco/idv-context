@@ -220,7 +220,7 @@ public class IdentityIntegrationTest {
         return IdentityMother.exampleBuilder()
                 .aliases(AliasesMother.with(alias))
                 .emailAddresses(EmailAddressesMother.with("credit@email.com"))
-                .phoneNumbers(PhoneNumbersMother.mobile())
+                .phoneNumbers(PhoneNumbersMother.one())
                 .build();
     }
 
@@ -228,7 +228,7 @@ public class IdentityIntegrationTest {
         return IdentityMother.exampleBuilder()
                 .aliases(AliasesMother.with(alias))
                 .emailAddresses(EmailAddressesMother.with("debit@email.com"))
-                .phoneNumbers(PhoneNumbersMother.other())
+                .phoneNumbers(PhoneNumbersMother.two())
                 .build();
     }
 

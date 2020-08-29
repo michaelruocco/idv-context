@@ -65,7 +65,7 @@ class ExternalFindIdentityTest {
 
     @Test
     void shouldReturnPhoneNumbersFromDataFutures() {
-        PhoneNumbers phoneNumbers = PhoneNumbersMother.mobileAndOther();
+        PhoneNumbers phoneNumbers = PhoneNumbersMother.two();
         given(dataFutures.getPhoneNumbersNow()).willReturn(phoneNumbers);
 
         Identity identity = identityFinder.find(findRequest);

@@ -1,5 +1,6 @@
 package uk.co.idv.app.spring.config;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -15,11 +16,14 @@ public class SpringJacksonConfig {
 
     @Bean
     public ObjectMapper objectMapper() {
-        return new ObjectMapper().registerModules(
-                new JavaTimeModule(),
-                new IdentityParentModule(),
-                new LockoutParentModule()
-        ).disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        return new ObjectMapper()
+                .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
+                .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+                .registerModules(
+                        new JavaTimeModule(),
+                        new IdentityParentModule(),
+                        new LockoutParentModule()
+                );
     }
 
     @Bean

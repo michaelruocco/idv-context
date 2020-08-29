@@ -47,7 +47,7 @@ public class ExternalFindIdentityStubIntegrationTest {
 
         Identity identity = find.find(request);
 
-        assertThat(identity.getPhoneNumbers()).isEqualTo(PhoneNumbersMother.mobileAndOther());
+        assertThat(identity.getPhoneNumbers()).isEqualTo(PhoneNumbersMother.two());
     }
 
     @Test

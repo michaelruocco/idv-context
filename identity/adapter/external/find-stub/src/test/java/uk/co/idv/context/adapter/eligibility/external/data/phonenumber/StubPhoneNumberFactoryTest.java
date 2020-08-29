@@ -21,7 +21,7 @@ class StubPhoneNumberFactoryTest {
 
     @Test
     void shouldReturnPopulatedData() {
-        assertThat(factory.getPopulatedData()).isEqualTo(PhoneNumbersMother.mobileAndOther());
+        assertThat(factory.getPopulatedData()).isEqualTo(PhoneNumbersMother.two());
     }
 
 }

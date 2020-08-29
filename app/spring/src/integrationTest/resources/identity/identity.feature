@@ -197,7 +197,7 @@ Feature: Identity Maintenance
           "joe.bloggs@hotmail.com"
         ],
         "phoneNumbers": [
-          { "type": "mobile", "value": "+4407808247742" }
+          { "value": "+4407808247742", "lastUpdated": "2020-08-29T21:31:12.825Z" }
         ]
       }
       """
@@ -217,7 +217,7 @@ Feature: Identity Maintenance
           "joe.bloggs@hotmail.com"
         ],
         "phoneNumbers": [
-          { "type": "mobile", "value": "+4407808247742" }
+          { "value": "+4407808247742", "lastUpdated": "2020-08-29T21:31:12.825Z" }
         ]
       }
       """
@@ -320,7 +320,7 @@ Feature: Identity Maintenance
           "merge1@one.com"
         ],
         "phoneNumbers": [
-          { "type": "mobile", "value": "+4407808111111" }
+          { "value": "+4407808111111", "lastUpdated": "2020-08-29T21:31:11.111Z" }
         ]
       }
       """
@@ -337,7 +337,7 @@ Feature: Identity Maintenance
           "merge2@two.com"
         ],
         "phoneNumbers": [
-          { "type": "mobile", "value": "+4407808222222" }
+          { "value": "+4407808222222", "lastUpdated": "2020-08-29T21:31:22.222Z" }
         ]
       }
       """
@@ -355,7 +355,7 @@ Feature: Identity Maintenance
           "merge3@three.com"
         ],
         "phoneNumbers": [
-          { "type": "other", "value": "+441604333333" }
+          { "value": "+441604333333", "lastUpdated": "2020-08-29T21:31:33.333Z" }
         ]
       }
       """
@@ -377,9 +377,9 @@ Feature: Identity Maintenance
           "merge1@one.com"
         ],
         "phoneNumbers": [
-          { "type": "other", "value": "+441604333333" },
-          { "type": "mobile", "value": "+4407808222222" },
-          { "type": "mobile", "value": "+4407808111111" }
+          { "value": "+441604333333", "lastUpdated": "2020-08-29T21:31:33.333Z" },
+          { "value": "+4407808222222", "lastUpdated": "2020-08-29T21:31:22.222Z" },
+          { "value": "+4407808111111", "lastUpdated": "2020-08-29T21:31:11.111Z" }
         ]
       }
       """

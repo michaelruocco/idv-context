@@ -15,7 +15,7 @@ public class StubPhoneNumberFactory implements StubDataFactory<PhoneNumbers> {
 
     @Override
     public PhoneNumbers getPopulatedData() {
-        return PhoneNumbersMother.mobileAndOther();
+        return PhoneNumbersMother.two();
     }
 
     @Override

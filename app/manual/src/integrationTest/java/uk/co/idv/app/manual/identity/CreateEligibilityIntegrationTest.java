@@ -13,7 +13,7 @@ import uk.co.idv.context.entities.eligibility.Eligibility;
 import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.context.entities.identity.Identity;
 import uk.co.idv.context.entities.identity.IdentityMother;
-import uk.co.idv.context.entities.phonenumber.MobilePhoneNumberMother;
+import uk.co.idv.context.entities.phonenumber.PhoneNumberMother;
 import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
 import uk.co.idv.context.usecases.eligibility.CreateEligibility;
 import uk.co.idv.context.entities.eligibility.CreateEligibilityRequest;
@@ -96,7 +96,7 @@ public class CreateEligibilityIntegrationTest {
         DefaultAliases aliases = AliasesMother.creditCardNumberOnly();
         Identity identity = IdentityMother.exampleBuilder()
                 .aliases(aliases)
-                .phoneNumbers(PhoneNumbersMother.with(MobilePhoneNumberMother.withNumber("+447890123456")))
+                .phoneNumbers(PhoneNumbersMother.with(PhoneNumberMother.withNumber("+447890123456")))
                 .emailAddresses(EmailAddressesMother.with("test@email.com"))
                 .build();
         Identity existing = facade.update(identity);

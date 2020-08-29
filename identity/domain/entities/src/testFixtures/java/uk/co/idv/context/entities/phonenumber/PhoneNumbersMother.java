@@ -2,19 +2,15 @@ package uk.co.idv.context.entities.phonenumber;
 
 public interface PhoneNumbersMother {
 
-    static PhoneNumbers mobileAndOther() {
+    static PhoneNumbers two() {
         return with(
-                MobilePhoneNumberMother.mobile(),
-                OtherPhoneNumberMother.other()
+                PhoneNumberMother.example(),
+                PhoneNumberMother.example1()
         );
     }
 
-    static PhoneNumbers mobile() {
-        return with(MobilePhoneNumberMother.mobile1());
-    }
-
-    static PhoneNumbers other() {
-        return with(OtherPhoneNumberMother.other());
+    static PhoneNumbers one() {
+        return with(PhoneNumberMother.example());
     }
 
     static PhoneNumbers empty() {

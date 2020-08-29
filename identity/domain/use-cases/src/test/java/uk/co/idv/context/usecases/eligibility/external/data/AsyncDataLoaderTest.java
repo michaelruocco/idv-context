@@ -39,7 +39,7 @@ class AsyncDataLoaderTest {
     void shouldReturnEmptyDataIfSuppliersDoNotCompleteWithinTimeout() {
         AsyncDataLoadRequest request = AsyncDataLoadRequestMother.withTimeout(TIMEOUT);
         Duration delayDuration = TIMEOUT.plusMillis(150);
-        given(supplierFactory.phoneNumberSupplier(request)).willReturn(new DelayedSupplier<>(delayDuration, PhoneNumbersMother.mobileAndOther()));
+        given(supplierFactory.phoneNumberSupplier(request)).willReturn(new DelayedSupplier<>(delayDuration, PhoneNumbersMother.two()));
         given(supplierFactory.emailAddressSupplier(request)).willReturn(new DelayedSupplier<>(delayDuration, EmailAddressesMother.one()));
 
         DataFutures futures = loader.loadData(request);
@@ -51,7 +51,7 @@ class AsyncDataLoaderTest {
     @Test
     void shouldReturnDataIfSuppliersCompleteSuccessfully() {
         AsyncDataLoadRequest request = AsyncDataLoadRequestMother.withTimeout(TIMEOUT);
-        PhoneNumbers expectedPhoneNumbers = PhoneNumbersMother.mobileAndOther();
+        PhoneNumbers expectedPhoneNumbers = PhoneNumbersMother.two();
         EmailAddresses expectedEmailAddresses = EmailAddressesMother.two();
         given(supplierFactory.phoneNumberSupplier(request)).willReturn(new SuccessfulSupplier<>(expectedPhoneNumbers));
         given(supplierFactory.emailAddressSupplier(request)).willReturn(new SuccessfulSupplier<>(expectedEmailAddresses));

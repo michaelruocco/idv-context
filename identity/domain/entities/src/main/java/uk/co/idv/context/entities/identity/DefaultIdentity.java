@@ -36,11 +36,6 @@ public class DefaultIdentity implements Identity {
     }
 
     @Override
-    public PhoneNumbers getMobilePhoneNumbers() {
-        return phoneNumbers.getMobileNumbers();
-    }
-
-    @Override
     public Aliases getAliasesNotPresent(Identity other) {
         return aliases.notPresent(other.getAliases());
     }

@@ -1,11 +1,20 @@
 package uk.co.idv.context.entities.phonenumber;
 
-public interface PhoneNumber {
+import lombok.Builder;
+import lombok.Data;
 
-    String getType();
+import java.time.Instant;
+import java.util.Optional;
 
-    String getValue();
+@Builder
+@Data
+public class PhoneNumber {
 
-    boolean isMobile();
+    private final String value;
+    private final Instant lastUpdated;
+
+    public Optional<Instant> getLastUpdated() {
+        return Optional.ofNullable(lastUpdated);
+    }
 
 }

@@ -6,24 +6,19 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PhoneNumbersTest {
 
-    private final PhoneNumber mobileNumber = MobilePhoneNumberMother.mobile();
-    private final PhoneNumber otherNumber = OtherPhoneNumberMother.other();
+    private final PhoneNumber number1 = PhoneNumberMother.example();
+    private final PhoneNumber number2 = PhoneNumberMother.example1();
 
-    private final PhoneNumbers numbers = PhoneNumbersMother.with(mobileNumber, otherNumber);
+    private final PhoneNumbers numbers = PhoneNumbersMother.with(number1, number2);
 
     @Test
     void shouldBeIterable() {
-        assertThat(numbers).containsExactly(mobileNumber, otherNumber);
+        assertThat(numbers).containsExactly(number1, number2);
     }
 
     @Test
     void shouldReturnStream() {
-        assertThat(numbers.stream()).containsExactly(mobileNumber, otherNumber);
-    }
-
-    @Test
-    void shouldReturnMobileNumbers() {
-        assertThat(numbers.getMobileNumbers()).containsExactly(mobileNumber);
+        assertThat(numbers.stream()).containsExactly(number1, number2);
     }
 
     @Test
@@ -39,16 +34,16 @@ class PhoneNumbersTest {
     }
 
     @Test
-    void shouldAddEmailAddressesWithoutDuplicates() {
-        PhoneNumber mobileNumber1 = MobilePhoneNumberMother.withNumber("+447089131313");
-        PhoneNumbers otherNumbers = new PhoneNumbers(mobileNumber, mobileNumber1);
+    void shouldAddPhoneNumbersWithoutDuplicates() {
+        PhoneNumber otherNumber1 = PhoneNumberMother.withNumber("+447089131313");
+        PhoneNumbers otherNumbers = new PhoneNumbers(number1, otherNumber1);
 
         PhoneNumbers mergedNumbers = numbers.add(otherNumbers);
 
         assertThat(mergedNumbers.stream()).containsExactly(
-                mobileNumber,
-                otherNumber,
-                mobileNumber1
+                number1,
+                number2,
+                otherNumber1
         );
     }
 
