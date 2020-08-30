@@ -2,7 +2,6 @@ package uk.co.idv.context.entities.policy.method.otp.delivery;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.phonenumber.PhoneNumber;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -15,8 +14,8 @@ public class LastUpdatedConfig {
     private final boolean allowUnknown;
     private final Long cutoffDays;
 
-    public boolean isValid(PhoneNumber phoneNumber, Instant now) {
-        Optional<Instant> lastUpdated = phoneNumber.getLastUpdated();
+    public boolean isValid(Updatable updatable, Instant now) {
+        Optional<Instant> lastUpdated = updatable.getLastUpdated();
         if (lastUpdated.isEmpty()) {
             return allowUnknown;
         }

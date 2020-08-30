@@ -7,4 +7,5 @@ dependencies {
     api project(":lockout-entities")
 
     testFixturesApi testFixtures(project(":identity-entities"))
+    testFixturesImplementation "org.mockito:mockito-core:${mockitoVersion}"
 }

@@ -1,8 +1,6 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.phonenumber.PhoneNumber;
-import uk.co.idv.context.entities.phonenumber.PhoneNumberMother;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -12,9 +10,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 class LastUpdatedConfigTest {
 
     @Test
-    void shouldBeValidIfUnknownAllowedAndPhoneHasNoLastUpdatedDate() {
+    void shouldBeValidIfUnknownAllowedAndPhoneNumberHasNoLastUpdatedDate() {
         LastUpdatedConfig config = LastUpdatedConfigMother.unknownAllowed();
-        PhoneNumber number = PhoneNumberMother.withoutLastUpdated();
+        Updatable number = UpdatableMother.withoutLastUpdated();
 
         boolean valid = config.isValid(number, Instant.now());
 
@@ -24,7 +22,7 @@ class LastUpdatedConfigTest {
     @Test
     void shouldNotBeValidIfUnknownNotAllowedAndPhoneHasNoLastUpdatedDate() {
         LastUpdatedConfig config = LastUpdatedConfigMother.unknownNotAllowed();
-        PhoneNumber number = PhoneNumberMother.withoutLastUpdated();
+        Updatable number = UpdatableMother.withoutLastUpdated();
 
         boolean valid = config.isValid(number, Instant.now());
 
@@ -36,7 +34,7 @@ class LastUpdatedConfigTest {
         Instant now = Instant.now();
         Duration cutoff = Duration.ofDays(5);
         LastUpdatedConfig config = LastUpdatedConfigMother.withCutoffDays(cutoff.toDays());
-        PhoneNumber number = PhoneNumberMother.withLastUpdated(now.minus(cutoff).plusMillis(1));
+        Updatable number = UpdatableMother.withLastUpdated(now.minus(cutoff).plusMillis(1));
 
         boolean valid = config.isValid(number, now);
 
@@ -48,7 +46,7 @@ class LastUpdatedConfigTest {
         Instant now = Instant.now();
         Duration cutoff = Duration.ofDays(5);
         LastUpdatedConfig config = LastUpdatedConfigMother.withCutoffDays(cutoff.toDays());
-        PhoneNumber number = PhoneNumberMother.withLastUpdated(now.minus(cutoff));
+        Updatable number = UpdatableMother.withLastUpdated(now.minus(cutoff));
 
         boolean valid = config.isValid(number, now);
 
@@ -60,7 +58,7 @@ class LastUpdatedConfigTest {
         Instant now = Instant.now();
         Duration cutoff = Duration.ofDays(5);
         LastUpdatedConfig config = LastUpdatedConfigMother.withCutoffDays(cutoff.toDays());
-        PhoneNumber number = PhoneNumberMother.withLastUpdated(now.minus(cutoff).minusMillis(1));
+        Updatable number = UpdatableMother.withLastUpdated(now.minus(cutoff).minusMillis(1));
 
         boolean valid = config.isValid(number, now);
 
@@ -71,7 +69,7 @@ class LastUpdatedConfigTest {
     void shouldBeValidIfPhoneHasLastUpdatedDateAndCutoffDaysNoConfigured() {
         Instant now = Instant.now();
         LastUpdatedConfig config = LastUpdatedConfigMother.withoutCutoffDays();
-        PhoneNumber number = PhoneNumberMother.withLastUpdated(now);
+        Updatable number = UpdatableMother.withLastUpdated(now);
 
         boolean valid = config.isValid(number, now);
 
