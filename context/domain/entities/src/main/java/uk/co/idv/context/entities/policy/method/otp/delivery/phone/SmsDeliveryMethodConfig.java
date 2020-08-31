@@ -1,38 +1,23 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
-import lombok.Builder;
-import lombok.Data;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
-
 import java.time.Instant;
 import java.util.Collection;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Builder
-@Data
-public class SmsDeliveryMethodConfig implements PhoneDeliveryMethodConfig {
+public class SmsDeliveryMethodConfig extends PhoneDeliveryMethodConfig {
 
     public static final String TYPE = "sms";
 
-    private final OtpPhoneNumberConfig phoneNumberConfig;
-    private final SimSwapConfig simSwapConfig;
-
-    @Override
-    public String getType() {
-        return TYPE;
+    public SmsDeliveryMethodConfig(OtpPhoneNumberConfig phoneNumberConfig) {
+        super(TYPE, phoneNumberConfig);
     }
 
     @Override
     public Collection<OtpPhoneNumber> filter(Collection<OtpPhoneNumber> numbers, Instant now) {
-        return numbers.stream()
+        Collection<OtpPhoneNumber> mobileNumbers = numbers.stream()
                 .filter(OtpPhoneNumber::isMobile)
-                .filter(number -> phoneNumberConfig.isValid(number, now))
                 .collect(Collectors.toList());
-    }
-
-    public Optional<SimSwapConfig> getSimSwapConfig() {
-        return Optional.ofNullable(simSwapConfig);
+        return super.filter(mobileNumbers, now);
     }
 
 }

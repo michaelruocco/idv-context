@@ -1,7 +1,6 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 
 import java.time.Instant;
 import java.util.Arrays;
@@ -14,12 +13,8 @@ import static org.mockito.Mockito.mock;
 class SmsDeliveryMethodConfigTest {
 
     private final OtpPhoneNumberConfig phoneNumberConfig = mock(OtpPhoneNumberConfig.class);
-    private final SimSwapConfig simSwapConfig = mock(SimSwapConfig.class);
 
-    private final SmsDeliveryMethodConfig config = SmsDeliveryMethodConfig.builder()
-            .phoneNumberConfig(phoneNumberConfig)
-            .simSwapConfig(simSwapConfig)
-            .build();
+    private final SmsDeliveryMethodConfig config = new SmsDeliveryMethodConfig(phoneNumberConfig);
 
     @Test
     void shouldReturnType() {
@@ -29,11 +24,6 @@ class SmsDeliveryMethodConfigTest {
     @Test
     void shouldReturnPhoneNumberConfig() {
         assertThat(config.getPhoneNumberConfig()).isEqualTo(phoneNumberConfig);
-    }
-
-    @Test
-    void shouldReturnSimSwapConfig() {
-        assertThat(config.getSimSwapConfig()).contains(simSwapConfig);
     }
 
     @Test

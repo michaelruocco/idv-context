@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.policy.method.otp.delivery.LastUpdatedConfig;
+import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 
 import java.time.Instant;
 
@@ -41,6 +42,17 @@ class OtpPhoneNumberConfigTest {
                 .build();
 
         assertThat(config.getLastUpdatedConfig()).isEqualTo(lastUpdatedConfig);
+    }
+
+    @Test
+    void shouldReturnSimSwapConfig() {
+        SimSwapConfig simSwapConfig = mock(SimSwapConfig.class);
+
+        OtpPhoneNumberConfig config = OtpPhoneNumberConfig.builder()
+                .simSwapConfig(simSwapConfig)
+                .build();
+
+        assertThat(config.getSimSwapConfig()).contains(simSwapConfig);
     }
 
     @Test
