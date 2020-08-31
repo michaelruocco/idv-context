@@ -20,19 +20,19 @@ class LastUpdatedConfigTest {
     }
 
     @Test
-    void shouldReturnEmptyCutoffDaysIfNotConfigured() {
-        LastUpdatedConfig config = LastUpdatedConfigMother.withoutCutoffDays();
+    void shouldReturnEmptyMinDaysSinceUpdateIfNotConfigured() {
+        LastUpdatedConfig config = LastUpdatedConfigMother.withoutMinDaysSinceUpdate();
 
-        Optional<Long> cutoffDays = config.getCutoffDays();
+        Optional<Long> cutoffDays = config.getMinDaysSinceUpdate();
 
         assertThat(cutoffDays).isEmpty();
     }
 
     @Test
-    void shouldReturnCutoffDaysIfConfigured() {
-        LastUpdatedConfig config = LastUpdatedConfigMother.withCutoffDays(5);
+    void shouldReturnMinDaysSinceUpdateIfConfigured() {
+        LastUpdatedConfig config = LastUpdatedConfigMother.withMinDaysSinceUpdate(5);
 
-        Optional<Long> cutoffDays = config.getCutoffDays();
+        Optional<Long> cutoffDays = config.getMinDaysSinceUpdate();
 
         assertThat(cutoffDays).contains(5L);
     }
@@ -61,7 +61,7 @@ class LastUpdatedConfigTest {
     void shouldNotBeValidIfPhoneHasLastUpdatedDateAfterCutoff() {
         Instant now = Instant.now();
         Duration cutoff = Duration.ofDays(5);
-        LastUpdatedConfig config = LastUpdatedConfigMother.withCutoffDays(cutoff.toDays());
+        LastUpdatedConfig config = LastUpdatedConfigMother.withMinDaysSinceUpdate(cutoff.toDays());
         Updatable number = UpdatableMother.withLastUpdated(now.minus(cutoff).plusMillis(1));
 
         boolean valid = config.isValid(number, now);
@@ -73,7 +73,7 @@ class LastUpdatedConfigTest {
     void shouldNotBeValidIfPhoneHasLastUpdatedDateEqualToCutoff() {
         Instant now = Instant.now();
         Duration cutoff = Duration.ofDays(5);
-        LastUpdatedConfig config = LastUpdatedConfigMother.withCutoffDays(cutoff.toDays());
+        LastUpdatedConfig config = LastUpdatedConfigMother.withMinDaysSinceUpdate(cutoff.toDays());
         Updatable number = UpdatableMother.withLastUpdated(now.minus(cutoff));
 
         boolean valid = config.isValid(number, now);
@@ -85,7 +85,7 @@ class LastUpdatedConfigTest {
     void shouldBeValidIfPhoneHasLastUpdatedDateBeforeCutoff() {
         Instant now = Instant.now();
         Duration cutoff = Duration.ofDays(5);
-        LastUpdatedConfig config = LastUpdatedConfigMother.withCutoffDays(cutoff.toDays());
+        LastUpdatedConfig config = LastUpdatedConfigMother.withMinDaysSinceUpdate(cutoff.toDays());
         Updatable number = UpdatableMother.withLastUpdated(now.minus(cutoff).minusMillis(1));
 
         boolean valid = config.isValid(number, now);
@@ -94,9 +94,9 @@ class LastUpdatedConfigTest {
     }
 
     @Test
-    void shouldBeValidIfPhoneHasLastUpdatedDateAndCutoffDaysNoConfigured() {
+    void shouldBeValidIfPhoneHasLastUpdatedDateAndMinDaysSinceUpdateNotConfigured() {
         Instant now = Instant.now();
-        LastUpdatedConfig config = LastUpdatedConfigMother.withoutCutoffDays();
+        LastUpdatedConfig config = LastUpdatedConfigMother.withoutMinDaysSinceUpdate();
         Updatable number = UpdatableMother.withLastUpdated(now);
 
         boolean valid = config.isValid(number, now);

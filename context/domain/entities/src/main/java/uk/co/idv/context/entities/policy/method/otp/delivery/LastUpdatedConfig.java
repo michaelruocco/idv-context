@@ -12,7 +12,7 @@ import java.util.Optional;
 public class LastUpdatedConfig {
 
     private final boolean allowUnknown;
-    private final Long cutoffDays;
+    private final Long minDaysSinceUpdate;
 
     public boolean isValid(Updatable updatable, Instant now) {
         Optional<Instant> lastUpdated = updatable.getLastUpdated();
@@ -24,16 +24,16 @@ public class LastUpdatedConfig {
                 .orElse(true);
     }
 
-    public Optional<Long> getCutoffDays() {
-        return Optional.ofNullable(cutoffDays);
-    }
-
-    private Optional<Duration> getCutoffDuration() {
-        return getCutoffDays().map(Duration::ofDays);
+    public Optional<Long> getMinDaysSinceUpdate() {
+        return Optional.ofNullable(minDaysSinceUpdate);
     }
 
     private Optional<Instant> calculateCutoff(Instant now) {
-        return getCutoffDuration().map(now::minus);
+        return getMinDurationSinceUpdate().map(now::minus);
+    }
+
+    private Optional<Duration> getMinDurationSinceUpdate() {
+        return getMinDaysSinceUpdate().map(Duration::ofDays);
     }
 
 }

@@ -10,33 +10,31 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class SmsDeliveryConfigTest {
+class VoiceDeliveryMethodConfigTest {
 
     private final OtpPhoneNumberConfig phoneNumberConfig = mock(OtpPhoneNumberConfig.class);
 
-    private final PhoneDeliveryConfig config = new SmsDeliveryConfig(phoneNumberConfig);
+    private final VoiceDeliveryMethodConfig config = new VoiceDeliveryMethodConfig(phoneNumberConfig);
 
     @Test
-    void shouldReturnName() {
-        assertThat(config.getName()).isEqualTo("sms");
+    void shouldReturnType() {
+        assertThat(config.getType()).isEqualTo("voice");
     }
 
     @Test
-    void shouldFilterValidPhoneMobileNumbers() {
+    void shouldReturnPhoneNumberConfig() {
+        assertThat(config.getPhoneNumberConfig()).isEqualTo(phoneNumberConfig);
+    }
+
+    @Test
+    void shouldFilterValidPhoneNumbers() {
         Instant now = Instant.now();
         OtpPhoneNumber invalid = givenInvalidNumber(now);
         OtpPhoneNumber valid = givenValidNumber(now);
-        OtpPhoneNumber validMobile = givenValidMobileNumber(now);
 
-        Collection<OtpPhoneNumber> filtered = config.filter(Arrays.asList(invalid, valid, validMobile), now);
+        Collection<OtpPhoneNumber> filtered = config.filter(Arrays.asList(invalid, valid), now);
 
-        assertThat(filtered).containsExactly(validMobile);
-    }
-
-    private OtpPhoneNumber givenValidMobileNumber(Instant now) {
-        OtpPhoneNumber number = givenValidNumber(now);
-        given(number.isMobile()).willReturn(true);
-        return number;
+        assertThat(filtered).containsExactly(valid);
     }
 
     private OtpPhoneNumber givenValidNumber(Instant now) {
@@ -50,5 +48,6 @@ class SmsDeliveryConfigTest {
         given(phoneNumberConfig.isValid(number, now)).willReturn(false);
         return number;
     }
+
 
 }

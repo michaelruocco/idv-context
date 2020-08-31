@@ -11,18 +11,18 @@ public interface LastUpdatedConfigMother {
         return builder().allowUnknown(false).build();
     }
 
-    static LastUpdatedConfig withCutoffDays(long days) {
-        return builder().cutoffDays(days).build();
+    static LastUpdatedConfig withMinDaysSinceUpdate(long days) {
+        return builder().minDaysSinceUpdate(days).build();
     }
 
-    static LastUpdatedConfig withoutCutoffDays() {
-        return builder().cutoffDays(null).build();
+    static LastUpdatedConfig withoutMinDaysSinceUpdate() {
+        return builder().minDaysSinceUpdate(null).build();
     }
 
     static LastUpdatedConfig.LastUpdatedConfigBuilder builder() {
         return LastUpdatedConfig.builder()
                 .allowUnknown(true)
-                .cutoffDays(5L);
+                .minDaysSinceUpdate(5L);
     }
 
 }

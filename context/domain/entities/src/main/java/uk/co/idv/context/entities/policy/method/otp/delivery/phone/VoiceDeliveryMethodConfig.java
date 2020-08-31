@@ -1,5 +1,6 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
@@ -7,15 +8,16 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class VoiceDeliveryConfig implements PhoneDeliveryConfig {
+@Data
+public class VoiceDeliveryMethodConfig implements PhoneDeliveryMethodConfig {
 
-    public static final String VOICE = "voice";
+    public static final String TYPE = "voice";
 
     private final OtpPhoneNumberConfig phoneNumberConfig;
 
     @Override
-    public String getName() {
-        return VOICE;
+    public String getType() {
+        return TYPE;
     }
 
     @Override
