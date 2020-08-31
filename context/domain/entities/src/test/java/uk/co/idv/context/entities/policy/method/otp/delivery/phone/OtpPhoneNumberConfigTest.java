@@ -100,6 +100,22 @@ class OtpPhoneNumberConfigTest {
         assertThat(valid).isTrue();
     }
 
+    @Test
+    void shouldReturnNotValidIfInternationalNotAllowedAndNumberIsNotInternationalAndLastUpdateNotValid() {
+        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
+        Instant now = Instant.now();
+        LastUpdatedConfig lastUpdatedConfig = mock(LastUpdatedConfig.class);
+        given(lastUpdatedConfig.isValid(number, now)).willReturn(false);
+        OtpPhoneNumberConfig config = OtpPhoneNumberConfig.builder()
+                .allowInternational(false)
+                .lastUpdatedConfig(lastUpdatedConfig)
+                .build();
+
+        boolean valid = config.isValid(number, now);
+
+        assertThat(valid).isFalse();
+    }
+
     private OtpPhoneNumber givenInternationalPhoneNumber() {
         OtpPhoneNumber number = mock(OtpPhoneNumber.class);
         given(number.isInternational()).willReturn(true);
