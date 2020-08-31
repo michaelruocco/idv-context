@@ -4,10 +4,38 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 class LastUpdatedConfigTest {
+
+    @Test
+    void shouldReturnAllowUnknown() {
+        LastUpdatedConfig config = LastUpdatedConfigMother.unknownAllowed();
+
+        boolean allowUnknown = config.isAllowUnknown();
+
+        assertThat(allowUnknown).isTrue();
+    }
+
+    @Test
+    void shouldReturnEmptyCutoffDaysIfNotConfigured() {
+        LastUpdatedConfig config = LastUpdatedConfigMother.withoutCutoffDays();
+
+        Optional<Long> cutoffDays = config.getCutoffDays();
+
+        assertThat(cutoffDays).isEmpty();
+    }
+
+    @Test
+    void shouldReturnCutoffDaysIfConfigured() {
+        LastUpdatedConfig config = LastUpdatedConfigMother.withCutoffDays(5);
+
+        Optional<Long> cutoffDays = config.getCutoffDays();
+
+        assertThat(cutoffDays).contains(5L);
+    }
 
     @Test
     void shouldBeValidIfUnknownAllowedAndPhoneNumberHasNoLastUpdatedDate() {

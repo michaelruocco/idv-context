@@ -28,12 +28,12 @@ public class LastUpdatedConfig {
         return Optional.ofNullable(cutoffDays);
     }
 
-    private Optional<Instant> calculateCutoff(Instant now) {
-        return getCutoffDuration().map(now::minus);
+    private Optional<Duration> getCutoffDuration() {
+        return getCutoffDays().map(Duration::ofDays);
     }
 
-    public Optional<Duration> getCutoffDuration() {
-        return getCutoffDays().map(Duration::ofDays);
+    private Optional<Instant> calculateCutoff(Instant now) {
+        return getCutoffDuration().map(now::minus);
     }
 
 }
