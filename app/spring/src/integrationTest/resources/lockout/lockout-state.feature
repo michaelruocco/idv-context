@@ -1,4 +1,4 @@
-Feature: Lockout Policy Maintenance
+Feature: Lockout State Requests
 
   Background:
     * url baseUrl + "/lockout-states"
