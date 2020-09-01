@@ -1,9 +1,15 @@
+ext {
+    localPhoneNumberVersion = "0.1.1"
+}
+
 dependencies {
     api project(":context-entities")
 
     implementation project(":common-use-cases")
     implementation project(":identity-use-cases")
     implementation project(":lockout-use-cases")
+    implementation "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}"
 
     testImplementation testFixtures(project(":context-entities"))
+    testImplementation "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}:test-fixtures"
 }

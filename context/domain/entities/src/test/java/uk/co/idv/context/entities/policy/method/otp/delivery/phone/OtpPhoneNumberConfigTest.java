@@ -1,6 +1,5 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
-import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.policy.method.otp.delivery.LastUpdatedConfig;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
@@ -12,17 +11,6 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class OtpPhoneNumberConfigTest {
-
-    @Test
-    void shouldReturnRegion() {
-        CountryCode region = CountryCode.GB;
-
-        OtpPhoneNumberConfig config = OtpPhoneNumberConfig.builder()
-                .region(region)
-                .build();
-
-        assertThat(config.getRegion()).isEqualTo(region);
-    }
 
     @Test
     void shouldReturnAllowInternational() {
@@ -57,7 +45,7 @@ class OtpPhoneNumberConfigTest {
 
     @Test
     void shouldReturnLastUpdatedValidResultIfAllowInternationalIsTrue() {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
+        OtpPhoneNumber number = givenLocalPhoneNumber();
         Instant now = Instant.now();
         LastUpdatedConfig lastUpdatedConfig = mock(LastUpdatedConfig.class);
         given(lastUpdatedConfig.isValid(number, now)).willReturn(true);
@@ -85,8 +73,8 @@ class OtpPhoneNumberConfigTest {
     }
 
     @Test
-    void shouldReturnValidIfInternationalNotAllowedAndNumberIsNotInternationalAndLastUpdateValid() {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
+    void shouldReturnValidIfInternationalNotAllowedAndNumberIsLocalAndLastUpdateValid() {
+        OtpPhoneNumber number = givenLocalPhoneNumber();
         Instant now = Instant.now();
         LastUpdatedConfig lastUpdatedConfig = mock(LastUpdatedConfig.class);
         given(lastUpdatedConfig.isValid(number, now)).willReturn(true);
@@ -101,8 +89,8 @@ class OtpPhoneNumberConfigTest {
     }
 
     @Test
-    void shouldReturnNotValidIfInternationalNotAllowedAndNumberIsNotInternationalAndLastUpdateNotValid() {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
+    void shouldReturnNotValidIfInternationalNotAllowedAndNumberIsLocalAndLastUpdateNotValid() {
+        OtpPhoneNumber number = givenLocalPhoneNumber();
         Instant now = Instant.now();
         LastUpdatedConfig lastUpdatedConfig = mock(LastUpdatedConfig.class);
         given(lastUpdatedConfig.isValid(number, now)).willReturn(false);
@@ -116,9 +104,15 @@ class OtpPhoneNumberConfigTest {
         assertThat(valid).isFalse();
     }
 
+    private OtpPhoneNumber givenLocalPhoneNumber() {
+        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
+        given(number.isLocal()).willReturn(true);
+        return number;
+    }
+
     private OtpPhoneNumber givenInternationalPhoneNumber() {
         OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-        given(number.isInternational()).willReturn(true);
+        given(number.isLocal()).willReturn(false);
         return number;
     }
 

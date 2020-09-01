@@ -1,6 +1,5 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
-import com.neovisionaries.i18n.CountryCode;
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.policy.method.otp.delivery.LastUpdatedConfig;
@@ -13,7 +12,6 @@ import java.util.Optional;
 @Data
 public class OtpPhoneNumberConfig {
 
-    private final CountryCode region;
     private final boolean allowInternational;
     private final LastUpdatedConfig lastUpdatedConfig;
     private final SimSwapConfig simSwapConfig;
@@ -22,7 +20,7 @@ public class OtpPhoneNumberConfig {
         if (allowInternational) {
             return lastUpdatedAllowed(number, now);
         }
-        return !number.isInternational() && lastUpdatedAllowed(number, now);
+        return number.isLocal() && lastUpdatedAllowed(number, now);
     }
 
     public Optional<SimSwapConfig> getSimSwapConfig() {

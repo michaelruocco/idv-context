@@ -1,10 +1,9 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.policy.method.otp.delivery.OtpPhoneNumbersMother;
 
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -33,7 +32,7 @@ class SmsDeliveryMethodConfigTest {
         OtpPhoneNumber valid = givenValidNumber(now);
         OtpPhoneNumber validMobile = givenValidMobileNumber(now);
 
-        Collection<OtpPhoneNumber> filtered = config.filter(Arrays.asList(invalid, valid, validMobile), now);
+        OtpPhoneNumbers filtered = config.filter(OtpPhoneNumbersMother.with(invalid, valid, validMobile), now);
 
         assertThat(filtered).containsExactly(validMobile);
     }

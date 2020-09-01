@@ -1,11 +1,24 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
+import lombok.Builder;
+import lombok.Data;
 import uk.co.idv.context.entities.policy.method.otp.delivery.Updatable;
 
-public interface OtpPhoneNumber extends Updatable {
+import java.time.Instant;
+import java.util.Optional;
 
-    boolean isInternational();
+@Builder
+@Data
+public class OtpPhoneNumber implements Updatable {
 
-    boolean isMobile();
+    private final String value;
+    private final boolean mobile;
+    private final boolean local;
+    private final Instant lastUpdated;
+
+    @Override
+    public Optional<Instant> getLastUpdated() {
+        return Optional.ofNullable(lastUpdated);
+    }
 
 }

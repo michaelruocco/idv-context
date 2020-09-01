@@ -1,8 +1,7 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
 import java.time.Instant;
-import java.util.Collection;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class SmsDeliveryMethodConfig extends PhoneDeliveryMethodConfig {
 
@@ -13,11 +12,13 @@ public class SmsDeliveryMethodConfig extends PhoneDeliveryMethodConfig {
     }
 
     @Override
-    public Collection<OtpPhoneNumber> filter(Collection<OtpPhoneNumber> numbers, Instant now) {
-        Collection<OtpPhoneNumber> mobileNumbers = numbers.stream()
-                .filter(OtpPhoneNumber::isMobile)
-                .collect(Collectors.toList());
+    public Stream<OtpPhoneNumber> filter(Stream<OtpPhoneNumber> numbers, Instant now) {
+        Stream<OtpPhoneNumber> mobileNumbers = filterMobileNumber(numbers);
         return super.filter(mobileNumbers, now);
+    }
+
+    private Stream<OtpPhoneNumber> filterMobileNumber(Stream<OtpPhoneNumber> numbers) {
+        return numbers.filter(OtpPhoneNumber::isMobile);
     }
 
 }
