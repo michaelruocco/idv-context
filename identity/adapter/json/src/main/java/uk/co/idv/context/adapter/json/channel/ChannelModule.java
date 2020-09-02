@@ -8,11 +8,11 @@ import uk.co.idv.context.adapter.json.channel.de.DeRsaChannelDeserializer;
 import uk.co.idv.context.adapter.json.channel.defaultchannel.DefaultChannelDeserializer;
 import uk.co.idv.context.adapter.json.channel.gb.As3ChannelDeserializer;
 import uk.co.idv.context.adapter.json.channel.gb.GbRsaChannelDeserializer;
-import uk.co.idv.context.entities.channel.Channel;
-import uk.co.idv.context.entities.channel.DefaultChannel;
-import uk.co.idv.context.entities.channel.de.DeRsa;
-import uk.co.idv.context.entities.channel.gb.As3;
-import uk.co.idv.context.entities.channel.gb.GbRsa;
+import uk.co.idv.identity.entities.channel.Channel;
+import uk.co.idv.identity.entities.channel.DefaultChannel;
+import uk.co.idv.identity.entities.channel.de.DeRsa;
+import uk.co.idv.identity.entities.channel.gb.As3;
+import uk.co.idv.identity.entities.channel.gb.GbRsa;
 
 import java.util.Collections;
 

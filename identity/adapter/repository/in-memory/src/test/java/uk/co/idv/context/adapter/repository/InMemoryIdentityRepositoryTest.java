@@ -1,17 +1,17 @@
 package uk.co.idv.context.adapter.repository;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.AliasesMother;
-import uk.co.idv.context.entities.alias.CreditCardNumberMother;
-import uk.co.idv.context.entities.alias.DebitCardNumberMother;
-import uk.co.idv.context.entities.alias.DefaultAliasMother;
-import uk.co.idv.context.entities.alias.DefaultAliases;
-import uk.co.idv.context.entities.alias.IdvIdMother;
-import uk.co.idv.context.entities.identity.Identities;
-import uk.co.idv.context.entities.identity.Identity;
-import uk.co.idv.context.entities.identity.IdentityMother;
-import uk.co.idv.context.usecases.identity.IdentityRepository;
+import uk.co.idv.identity.entities.alias.Alias;
+import uk.co.idv.identity.entities.alias.AliasesMother;
+import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
+import uk.co.idv.identity.entities.alias.DebitCardNumberMother;
+import uk.co.idv.identity.entities.alias.DefaultAliasMother;
+import uk.co.idv.identity.entities.alias.DefaultAliases;
+import uk.co.idv.identity.entities.alias.IdvIdMother;
+import uk.co.idv.identity.entities.identity.Identities;
+import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.identity.entities.identity.IdentityMother;
+import uk.co.idv.identity.usecases.identity.IdentityRepository;
 
 import java.util.Optional;
 

@@ -1,7 +1,7 @@
 package uk.co.idv.context.adapter.eligibility.external.data.phonenumber;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -2,9 +2,9 @@ package uk.co.idv.context.adapter.eligibility.external.data.phonenumber;
 
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.adapter.eligibility.external.data.StubDataSupplier;
-import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
-import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoadRequest;
-import uk.co.idv.context.usecases.eligibility.external.data.Delay;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoadRequest;
+import uk.co.idv.identity.usecases.eligibility.external.data.Delay;
 
 @Slf4j
 public class StubPhoneNumberSupplier extends StubDataSupplier<PhoneNumbers> {

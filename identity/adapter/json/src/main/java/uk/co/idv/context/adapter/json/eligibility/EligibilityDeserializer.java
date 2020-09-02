@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.eligibility.Eligibility;
-import uk.co.idv.context.entities.identity.Identity;
+import uk.co.idv.identity.entities.eligibility.Eligibility;
+import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 

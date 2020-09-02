@@ -6,8 +6,8 @@ import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubCo
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
-import uk.co.idv.context.usecases.eligibility.CreateEligibility;
-import uk.co.idv.context.usecases.identity.IdentityService;
+import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
+import uk.co.idv.identity.usecases.identity.IdentityService;
 
 import java.time.Duration;
 import java.util.concurrent.Executors;

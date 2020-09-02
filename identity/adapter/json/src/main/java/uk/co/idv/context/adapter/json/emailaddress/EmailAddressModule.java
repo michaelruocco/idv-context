@@ -2,7 +2,7 @@ package uk.co.idv.context.adapter.json.emailaddress;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.context.entities.emailaddress.EmailAddresses;
+import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 
 public class EmailAddressModule extends SimpleModule {
 

@@ -5,7 +5,7 @@ import uk.co.idv.context.adapter.dynamo.DynamoTables;
 import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
 import uk.co.idv.context.adapter.repository.DynamoIdentityRepository;
 import uk.co.idv.context.adapter.repository.IdentityConverter;
-import uk.co.idv.context.usecases.identity.IdentityRepository;
+import uk.co.idv.identity.usecases.identity.IdentityRepository;
 import uk.co.mruoc.json.JsonConverter;
 
 public class DynamoIdentityRepositoryConfig implements IdentityRepositoryConfig {

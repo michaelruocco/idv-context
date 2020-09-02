@@ -4,9 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.emailaddress.EmailAddresses;
-import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
 import java.util.UUID;
 

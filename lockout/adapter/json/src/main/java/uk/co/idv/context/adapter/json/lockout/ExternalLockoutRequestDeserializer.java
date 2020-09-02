@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.context.entities.lockout.DefaultExternalLockoutRequest;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;

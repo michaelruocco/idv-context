@@ -2,8 +2,8 @@ package uk.co.idv.context.adapter.json.error.updateidvid;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.json.error.ApiError;
-import uk.co.idv.context.entities.alias.IdvId;
-import uk.co.idv.context.entities.alias.IdvIdMother;
+import uk.co.idv.identity.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.IdvIdMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;

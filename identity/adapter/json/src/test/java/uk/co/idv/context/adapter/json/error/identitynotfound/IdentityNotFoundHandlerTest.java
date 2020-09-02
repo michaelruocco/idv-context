@@ -3,8 +3,8 @@ package uk.co.idv.context.adapter.json.error.identitynotfound;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.context.usecases.identity.find.IdentityNotFoundException;
-import uk.co.idv.context.usecases.identity.find.IdentityNotFoundExceptionMother;
+import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
+import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundExceptionMother;
 
 import java.util.Optional;
 

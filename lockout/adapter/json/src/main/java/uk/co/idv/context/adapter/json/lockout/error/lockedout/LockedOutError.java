@@ -2,7 +2,7 @@ package uk.co.idv.context.adapter.json.lockout.error.lockedout;
 
 import lombok.Getter;
 import uk.co.idv.context.adapter.json.error.DefaultApiError;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 
 import java.util.Map;

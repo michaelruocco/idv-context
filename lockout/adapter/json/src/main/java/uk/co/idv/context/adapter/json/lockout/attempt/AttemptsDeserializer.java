@@ -5,7 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;

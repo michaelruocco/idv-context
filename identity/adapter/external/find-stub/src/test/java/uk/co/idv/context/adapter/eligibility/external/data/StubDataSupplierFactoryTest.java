@@ -3,10 +3,10 @@ package uk.co.idv.context.adapter.eligibility.external.data;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.eligibility.external.data.emailaddress.StubEmailAddressSupplier;
 import uk.co.idv.context.adapter.eligibility.external.data.phonenumber.StubPhoneNumberSupplier;
-import uk.co.idv.context.entities.emailaddress.EmailAddresses;
-import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
-import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoadRequest;
-import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoadRequestMother;
+import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoadRequest;
+import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoadRequestMother;
 
 import java.util.function.Supplier;
 

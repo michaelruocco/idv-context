@@ -2,7 +2,7 @@ package uk.co.idv.context.adapter.json.error.aliastype;
 
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.AbstractErrorHandler;
-import uk.co.idv.context.entities.alias.UnsupportedAliasTypeException;
+import uk.co.idv.identity.entities.alias.UnsupportedAliasTypeException;
 
 public class UnsupportedAliasTypeHandler extends AbstractErrorHandler {
 

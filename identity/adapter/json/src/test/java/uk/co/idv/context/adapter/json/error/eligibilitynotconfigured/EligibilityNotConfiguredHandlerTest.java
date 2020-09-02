@@ -3,8 +3,8 @@ package uk.co.idv.context.adapter.json.error.eligibilitynotconfigured;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.context.usecases.eligibility.EligibilityNotConfiguredException;
-import uk.co.idv.context.usecases.eligibility.EligibilityNotConfiguredExceptionMother;
+import uk.co.idv.identity.usecases.eligibility.EligibilityNotConfiguredException;
+import uk.co.idv.identity.usecases.eligibility.EligibilityNotConfiguredExceptionMother;
 
 import java.util.Optional;
 

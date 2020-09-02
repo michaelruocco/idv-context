@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.context.create;
 
-import uk.co.idv.context.entities.identity.DefaultIdentity;
-import uk.co.idv.context.entities.identity.IdentityMother;
+import uk.co.idv.identity.entities.identity.DefaultIdentity;
+import uk.co.idv.identity.entities.identity.IdentityMother;
 
 public interface IdentityCreateContextRequestMother {
 

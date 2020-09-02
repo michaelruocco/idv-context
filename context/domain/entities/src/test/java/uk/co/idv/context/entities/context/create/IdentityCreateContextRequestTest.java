@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.context.create;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.identity.Identity;
-import uk.co.idv.context.entities.identity.IdentityMother;
+import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.identity.entities.identity.IdentityMother;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 

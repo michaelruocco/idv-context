@@ -1,8 +1,8 @@
 package uk.co.idv.context.adapter.repository;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.IdvId;
-import uk.co.idv.context.entities.alias.IdvIdMother;
+import uk.co.idv.identity.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
 import uk.co.idv.context.usecases.lockout.attempt.AttemptRepository;

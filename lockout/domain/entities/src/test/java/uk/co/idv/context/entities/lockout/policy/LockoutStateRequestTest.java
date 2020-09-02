@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.lockout.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.AliasesMother;
-import uk.co.idv.context.entities.alias.DefaultAliases;
+import uk.co.idv.identity.entities.alias.AliasesMother;
+import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.attempt.AttemptMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;

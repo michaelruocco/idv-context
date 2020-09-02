@@ -7,10 +7,10 @@ import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.identity.Identities;
-import uk.co.idv.context.entities.identity.Identity;
+import uk.co.idv.identity.entities.alias.Alias;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.identity.Identities;
+import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.mruoc.json.JsonConverter;
 
 import java.util.Collection;

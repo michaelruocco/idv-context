@@ -1,6 +1,6 @@
 package uk.co.idv.context.entities.lockout.policy.state;
 
-import uk.co.idv.context.entities.alias.IdvIdMother;
+import uk.co.idv.identity.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 
 import static org.mockito.BDDMockito.given;

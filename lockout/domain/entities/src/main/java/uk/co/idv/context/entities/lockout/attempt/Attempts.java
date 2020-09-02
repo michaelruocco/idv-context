@@ -6,8 +6,8 @@ import lombok.Getter;
 import lombok.With;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.context.entities.policy.PolicyKey;
 
 import java.time.Instant;

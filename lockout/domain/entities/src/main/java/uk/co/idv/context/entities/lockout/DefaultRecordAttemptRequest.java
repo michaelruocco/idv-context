@@ -2,8 +2,8 @@ package uk.co.idv.context.entities.lockout;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
 

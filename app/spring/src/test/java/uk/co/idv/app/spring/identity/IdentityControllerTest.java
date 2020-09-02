@@ -3,9 +3,9 @@ package uk.co.idv.app.spring.identity;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import uk.co.idv.context.entities.identity.Identity;
-import uk.co.idv.context.entities.identity.IdentityMother;
-import uk.co.idv.context.usecases.identity.IdentityService;
+import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.identity.entities.identity.IdentityMother;
+import uk.co.idv.identity.usecases.identity.IdentityService;
 
 import java.util.UUID;
 

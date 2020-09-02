@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.AliasesMother;
-import uk.co.idv.context.entities.alias.DefaultAliases;
+import uk.co.idv.identity.entities.alias.AliasesMother;
+import uk.co.idv.identity.entities.alias.DefaultAliases;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

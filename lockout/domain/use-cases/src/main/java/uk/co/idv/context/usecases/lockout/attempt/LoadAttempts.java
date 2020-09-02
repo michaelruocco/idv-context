@@ -2,7 +2,7 @@ package uk.co.idv.context.usecases.lockout.attempt;
 
 import lombok.Builder;
 import uk.co.idv.common.usecases.id.IdGenerator;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 
 @Builder

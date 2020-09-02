@@ -1,15 +1,15 @@
 package uk.co.idv.context.adapter.eligibility.external;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.alias.AliasesMother;
-import uk.co.idv.context.entities.alias.DebitCardNumberMother;
-import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
-import uk.co.idv.context.entities.identity.Identity;
-import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.context.entities.eligibility.CreateEligibilityRequestMother;
-import uk.co.idv.context.usecases.eligibility.external.ExternalFindIdentity;
-import uk.co.idv.context.entities.identity.FindIdentityRequest;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.AliasesMother;
+import uk.co.idv.identity.entities.alias.DebitCardNumberMother;
+import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
+import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequestMother;
+import uk.co.idv.identity.usecases.eligibility.external.ExternalFindIdentity;
+import uk.co.idv.identity.entities.identity.FindIdentityRequest;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

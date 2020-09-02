@@ -3,7 +3,7 @@ package uk.co.idv.context.adapter.json.error.country.mismatch;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.AbstractErrorHandler;
-import uk.co.idv.context.entities.identity.CountryMismatchException;
+import uk.co.idv.identity.entities.identity.CountryMismatchException;
 
 @Slf4j
 public class CountryMismatchHandler extends AbstractErrorHandler {

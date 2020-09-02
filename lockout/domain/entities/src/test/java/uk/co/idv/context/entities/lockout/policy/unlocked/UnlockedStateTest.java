@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.lockout.policy.unlocked;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;

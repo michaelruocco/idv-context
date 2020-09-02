@@ -3,7 +3,7 @@ package uk.co.idv.context.adapter.json.channel.gb;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.channel.gb.As3;
+import uk.co.idv.identity.entities.channel.gb.As3;
 
 public class As3ChannelDeserializer extends StdDeserializer<As3> {
 

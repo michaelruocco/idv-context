@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.adapter.json.channel.RsaFieldExtractor;
-import uk.co.idv.context.entities.channel.gb.GbRsa;
+import uk.co.idv.identity.entities.channel.gb.GbRsa;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 public class GbRsaChannelDeserializer extends StdDeserializer<GbRsa> {

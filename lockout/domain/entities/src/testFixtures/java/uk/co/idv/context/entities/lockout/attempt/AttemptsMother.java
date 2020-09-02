@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.lockout.attempt;
 
-import uk.co.idv.context.entities.alias.IdvId;
-import uk.co.idv.context.entities.alias.IdvIdMother;
+import uk.co.idv.identity.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.IdvIdMother;
 import uk.co.idv.context.entities.lockout.attempt.Attempts.AttemptsBuilder;
 
 import java.util.ArrayList;

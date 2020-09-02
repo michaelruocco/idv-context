@@ -1,8 +1,8 @@
 package uk.co.idv.context.adapter.json.alias;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.IdvId;
 
 import java.util.Collection;
 import java.util.UUID;

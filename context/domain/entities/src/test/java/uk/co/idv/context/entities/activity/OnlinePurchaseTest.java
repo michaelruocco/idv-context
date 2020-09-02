@@ -2,8 +2,8 @@ package uk.co.idv.context.entities.activity;
 
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.CardNumber;
-import uk.co.idv.context.entities.alias.CreditCardNumberMother;
+import uk.co.idv.identity.entities.alias.CardNumber;
+import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
 
 import javax.money.MonetaryAmount;
 import java.time.Instant;

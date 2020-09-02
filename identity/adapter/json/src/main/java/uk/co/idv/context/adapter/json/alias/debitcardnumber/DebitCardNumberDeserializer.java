@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.alias.DebitCardNumber;
+import uk.co.idv.identity.entities.alias.DebitCardNumber;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 public class DebitCardNumberDeserializer extends StdDeserializer<DebitCardNumber> {

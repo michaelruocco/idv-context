@@ -2,8 +2,8 @@ package uk.co.idv.context.usecases.policy.method.otp.delivery.phone;
 
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.phonenumber.PhoneNumber;
-import uk.co.idv.context.entities.phonenumber.PhoneNumberMother;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumberMother;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.mruoc.localphone.LocalNumberCalculator;
 import uk.co.mruoc.localphone.LocalPhoneNumber;

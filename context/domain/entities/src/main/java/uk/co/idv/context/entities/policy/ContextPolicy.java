@@ -1,6 +1,6 @@
 package uk.co.idv.context.entities.policy;
 
-import uk.co.idv.context.entities.identity.RequestedData;
+import uk.co.idv.identity.entities.identity.RequestedData;
 
 import java.util.Collections;
 

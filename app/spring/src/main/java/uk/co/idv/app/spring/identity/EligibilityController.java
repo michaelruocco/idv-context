@@ -7,9 +7,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uk.co.idv.context.entities.eligibility.Eligibility;
-import uk.co.idv.context.usecases.eligibility.CreateEligibility;
-import uk.co.idv.context.entities.eligibility.CreateEligibilityRequest;
+import uk.co.idv.identity.entities.eligibility.Eligibility;
+import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
+import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
 
 @RestController
 @RequiredArgsConstructor

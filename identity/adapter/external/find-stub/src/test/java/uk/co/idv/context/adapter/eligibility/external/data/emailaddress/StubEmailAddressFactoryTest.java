@@ -1,7 +1,7 @@
 package uk.co.idv.context.adapter.eligibility.external.data.emailaddress;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

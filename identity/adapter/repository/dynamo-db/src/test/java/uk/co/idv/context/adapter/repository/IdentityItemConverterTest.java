@@ -3,10 +3,10 @@ package uk.co.idv.context.adapter.repository;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.IdvIdMother;
-import uk.co.idv.context.entities.identity.Identity;
-import uk.co.idv.context.entities.identity.IdentityMother;
+import uk.co.idv.identity.entities.alias.Alias;
+import uk.co.idv.identity.entities.alias.IdvIdMother;
+import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.identity.entities.identity.IdentityMother;
 import uk.co.mruoc.json.JsonConverter;
 
 import static org.assertj.core.api.Assertions.assertThat;

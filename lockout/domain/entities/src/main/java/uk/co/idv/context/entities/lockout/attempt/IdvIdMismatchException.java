@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.lockout.attempt;
 
 import lombok.Getter;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.IdvId;
 
 import java.util.Arrays;
 import java.util.Collection;

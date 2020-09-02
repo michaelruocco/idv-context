@@ -2,8 +2,8 @@ package uk.co.idv.context.adapter.eligibility.external.data.phonenumber;
 
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.adapter.eligibility.external.data.StubDataFactory;
-import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
-import uk.co.idv.context.entities.phonenumber.PhoneNumbersMother;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
 @Slf4j
 public class StubPhoneNumberFactory implements StubDataFactory<PhoneNumbers> {

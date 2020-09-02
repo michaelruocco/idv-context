@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.lockout;
 
 import lombok.Builder;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.IdvId;
 
 import java.time.Instant;
 import java.util.Collection;

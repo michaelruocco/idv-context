@@ -9,11 +9,11 @@ import com.amazonaws.services.dynamodbv2.model.KeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.model.WriteRequest;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.identity.Identities;
-import uk.co.idv.context.entities.identity.Identity;
-import uk.co.idv.context.usecases.identity.IdentityRepository;
+import uk.co.idv.identity.entities.alias.Alias;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.identity.Identities;
+import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.identity.usecases.identity.IdentityRepository;
 
 import java.time.Instant;
 import java.util.List;

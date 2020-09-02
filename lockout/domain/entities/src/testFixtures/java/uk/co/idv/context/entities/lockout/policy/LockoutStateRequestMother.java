@@ -1,6 +1,6 @@
 package uk.co.idv.context.entities.lockout.policy;
 
-import uk.co.idv.context.entities.alias.AliasesMother;
+import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
 
 import java.time.Instant;

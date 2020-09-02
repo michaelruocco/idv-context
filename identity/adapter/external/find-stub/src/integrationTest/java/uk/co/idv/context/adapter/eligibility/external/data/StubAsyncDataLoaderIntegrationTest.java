@@ -3,9 +3,9 @@ package uk.co.idv.context.adapter.eligibility.external.data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
-import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoader;
-import uk.co.idv.context.usecases.eligibility.external.data.DataFutures;
-import uk.co.idv.context.usecases.eligibility.external.data.DataSupplierFactory;
+import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoader;
+import uk.co.idv.identity.usecases.eligibility.external.data.DataFutures;
+import uk.co.idv.identity.usecases.eligibility.external.data.DataSupplierFactory;
 
 import java.time.Duration;
 import java.time.Instant;

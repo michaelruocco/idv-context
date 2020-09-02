@@ -4,8 +4,8 @@ import lombok.Builder;
 import uk.co.idv.context.entities.context.create.ContextCreateEligibilityRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.IdentityCreateContextRequest;
-import uk.co.idv.context.entities.eligibility.Eligibility;
-import uk.co.idv.context.usecases.eligibility.CreateEligibility;
+import uk.co.idv.identity.entities.eligibility.Eligibility;
+import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
 
 @Builder

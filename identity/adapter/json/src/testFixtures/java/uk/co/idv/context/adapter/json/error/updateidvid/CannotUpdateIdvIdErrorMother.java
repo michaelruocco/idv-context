@@ -1,6 +1,6 @@
 package uk.co.idv.context.adapter.json.error.updateidvid;
 
-import uk.co.idv.context.entities.alias.IdvIdMother;
+import uk.co.idv.identity.entities.alias.IdvIdMother;
 
 public interface CannotUpdateIdvIdErrorMother {
 

@@ -1,14 +1,14 @@
 package uk.co.idv.context.adapter.eligibility.external.data;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.AliasesMother;
-import uk.co.idv.context.entities.alias.CreditCardNumberMother;
-import uk.co.idv.context.entities.alias.DefaultAliases;
-import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.identity.entities.alias.AliasesMother;
+import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
+import uk.co.idv.identity.entities.alias.DefaultAliases;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.context.adapter.eligibility.external.data.phonenumber.StubPhoneNumberFactory;
-import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoadRequest;
-import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoadRequestMother;
-import uk.co.idv.context.usecases.eligibility.external.data.Delay;
+import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoadRequest;
+import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoadRequestMother;
+import uk.co.idv.identity.usecases.eligibility.external.data.Delay;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

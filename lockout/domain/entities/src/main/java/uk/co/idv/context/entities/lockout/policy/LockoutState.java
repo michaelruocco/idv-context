@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.lockout.policy;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.attempt.Attempt;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 

@@ -6,8 +6,8 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.alias.AliasModule;
 import uk.co.idv.context.adapter.json.emailaddress.EmailAddressModule;
 import uk.co.idv.context.adapter.json.phonenumber.PhoneNumberModule;
-import uk.co.idv.context.entities.identity.Identity;
-import uk.co.idv.context.entities.identity.RequestedData;
+import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.identity.entities.identity.RequestedData;
 
 import java.util.Arrays;
 

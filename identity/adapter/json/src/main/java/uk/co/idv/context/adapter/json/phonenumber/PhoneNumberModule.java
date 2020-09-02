@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import uk.co.idv.context.entities.phonenumber.PhoneNumber;
-import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
 import java.util.Arrays;
 

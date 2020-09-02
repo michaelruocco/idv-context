@@ -2,7 +2,7 @@ package uk.co.idv.context.entities.activity;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.alias.CardNumber;
+import uk.co.idv.identity.entities.alias.CardNumber;
 
 import javax.money.MonetaryAmount;
 import java.time.Instant;

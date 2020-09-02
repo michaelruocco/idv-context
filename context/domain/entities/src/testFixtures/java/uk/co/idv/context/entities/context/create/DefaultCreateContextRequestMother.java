@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.context.create;
 
 import uk.co.idv.context.entities.activity.DefaultActivityMother;
-import uk.co.idv.context.entities.alias.AliasesMother;
-import uk.co.idv.context.entities.channel.DefaultChannelMother;
+import uk.co.idv.identity.entities.alias.AliasesMother;
+import uk.co.idv.identity.entities.channel.DefaultChannelMother;
 
 public interface DefaultCreateContextRequestMother {
 

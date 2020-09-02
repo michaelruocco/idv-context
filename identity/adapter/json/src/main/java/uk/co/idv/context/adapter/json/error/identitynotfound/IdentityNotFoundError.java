@@ -2,8 +2,8 @@ package uk.co.idv.context.adapter.json.error.identitynotfound;
 
 import lombok.Getter;
 import uk.co.idv.context.adapter.json.error.DefaultApiError;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.Alias;
+import uk.co.idv.identity.entities.alias.Aliases;
 
 import java.util.stream.Collectors;
 

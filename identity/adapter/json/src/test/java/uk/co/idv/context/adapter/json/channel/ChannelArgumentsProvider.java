@@ -3,10 +3,10 @@ package uk.co.idv.context.adapter.json.channel;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
-import uk.co.idv.context.entities.channel.DefaultChannelMother;
-import uk.co.idv.context.entities.channel.de.DeRsaMother;
-import uk.co.idv.context.entities.channel.gb.As3Mother;
-import uk.co.idv.context.entities.channel.gb.GbRsaMother;
+import uk.co.idv.identity.entities.channel.DefaultChannelMother;
+import uk.co.idv.identity.entities.channel.de.DeRsaMother;
+import uk.co.idv.identity.entities.channel.gb.As3Mother;
+import uk.co.idv.identity.entities.channel.gb.GbRsaMother;
 
 import java.util.stream.Stream;
 

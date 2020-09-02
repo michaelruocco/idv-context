@@ -5,8 +5,8 @@ import uk.co.idv.context.config.identity.IdentityConfig;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.adapter.json.error.updateidvid.CannotUpdateIdvIdError;
-import uk.co.idv.context.usecases.identity.save.CannotUpdateIdvIdException;
-import uk.co.idv.context.usecases.identity.save.CannotUpdateIdvIdExceptionMother;
+import uk.co.idv.identity.usecases.identity.save.CannotUpdateIdvIdException;
+import uk.co.idv.identity.usecases.identity.save.CannotUpdateIdvIdExceptionMother;
 
 import java.util.Optional;
 

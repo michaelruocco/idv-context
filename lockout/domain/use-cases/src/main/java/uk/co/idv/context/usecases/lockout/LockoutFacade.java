@@ -1,16 +1,16 @@
 package uk.co.idv.context.usecases.lockout;
 
 import lombok.Builder;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.AliasFactory;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.alias.DefaultAliases;
-import uk.co.idv.context.entities.identity.Identity;
+import uk.co.idv.identity.entities.alias.Alias;
+import uk.co.idv.identity.entities.alias.AliasFactory;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.DefaultAliases;
+import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
 import uk.co.idv.context.entities.lockout.LockoutRequest;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;
 import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
-import uk.co.idv.context.usecases.identity.find.FindIdentity;
+import uk.co.idv.identity.usecases.identity.find.FindIdentity;
 
 @Builder
 public class LockoutFacade {

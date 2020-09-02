@@ -7,13 +7,13 @@ import uk.co.idv.context.adapter.json.alias.debitcardnumber.DebitCardNumberDeser
 import uk.co.idv.context.adapter.json.alias.defaultalias.DefaultAliasDeserializer;
 import uk.co.idv.context.adapter.json.alias.idvid.IdvIdDeserializer;
 import uk.co.idv.context.adapter.json.alias.idvid.IdvIdMixin;
-import uk.co.idv.context.entities.alias.Alias;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.alias.CreditCardNumber;
-import uk.co.idv.context.entities.alias.DebitCardNumber;
-import uk.co.idv.context.entities.alias.DefaultAlias;
-import uk.co.idv.context.entities.alias.DefaultAliases;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.Alias;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.CreditCardNumber;
+import uk.co.idv.identity.entities.alias.DebitCardNumber;
+import uk.co.idv.identity.entities.alias.DefaultAlias;
+import uk.co.idv.identity.entities.alias.DefaultAliases;
+import uk.co.idv.identity.entities.alias.IdvId;
 
 public class AliasModule extends SimpleModule {
 

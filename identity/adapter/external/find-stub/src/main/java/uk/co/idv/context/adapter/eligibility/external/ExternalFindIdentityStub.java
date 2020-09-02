@@ -2,10 +2,10 @@ package uk.co.idv.context.adapter.eligibility.external;
 
 import uk.co.idv.context.adapter.eligibility.external.data.StubDataSupplierFactory;
 import uk.co.idv.context.adapter.eligibility.external.data.alias.StubAliasLoader;
-import uk.co.idv.context.usecases.eligibility.external.ExternalFindIdentity;
-import uk.co.idv.context.usecases.eligibility.external.data.AsyncDataLoader;
-import uk.co.idv.context.usecases.eligibility.external.data.DataSupplierFactory;
-import uk.co.idv.context.usecases.eligibility.external.data.FindIdentityRequestConverter;
+import uk.co.idv.identity.usecases.eligibility.external.ExternalFindIdentity;
+import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoader;
+import uk.co.idv.identity.usecases.eligibility.external.data.DataSupplierFactory;
+import uk.co.idv.identity.usecases.eligibility.external.data.FindIdentityRequestConverter;
 
 public class ExternalFindIdentityStub {
 

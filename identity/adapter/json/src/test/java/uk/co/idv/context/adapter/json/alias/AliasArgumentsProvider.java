@@ -3,10 +3,10 @@ package uk.co.idv.context.adapter.json.alias;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
-import uk.co.idv.context.entities.alias.CreditCardNumberMother;
-import uk.co.idv.context.entities.alias.DebitCardNumberMother;
-import uk.co.idv.context.entities.alias.DefaultAliasMother;
-import uk.co.idv.context.entities.alias.IdvIdMother;
+import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
+import uk.co.idv.identity.entities.alias.DebitCardNumberMother;
+import uk.co.idv.identity.entities.alias.DefaultAliasMother;
+import uk.co.idv.identity.entities.alias.IdvIdMother;
 
 import java.util.stream.Stream;
 

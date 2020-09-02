@@ -5,11 +5,11 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.neovisionaries.i18n.CountryCode;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.emailaddress.EmailAddresses;
-import uk.co.idv.context.entities.identity.DefaultIdentity;
-import uk.co.idv.context.entities.identity.Identity;
-import uk.co.idv.context.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
+import uk.co.idv.identity.entities.identity.DefaultIdentity;
+import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 

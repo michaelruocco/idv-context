@@ -1,11 +1,11 @@
 package uk.co.idv.context.adapter.eligibility.external.data.alias;
 
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.alias.AliasesMother;
-import uk.co.idv.context.entities.alias.DebitCardNumberMother;
-import uk.co.idv.context.entities.identity.FindIdentityRequest;
-import uk.co.idv.context.usecases.eligibility.external.data.AliasLoader;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.AliasesMother;
+import uk.co.idv.identity.entities.alias.DebitCardNumberMother;
+import uk.co.idv.identity.entities.identity.FindIdentityRequest;
+import uk.co.idv.identity.usecases.eligibility.external.data.AliasLoader;
 
 @Slf4j
 public class StubAliasLoader implements AliasLoader {

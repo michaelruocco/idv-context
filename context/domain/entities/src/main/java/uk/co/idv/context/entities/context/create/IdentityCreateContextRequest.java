@@ -3,10 +3,10 @@ package uk.co.idv.context.entities.context.create;
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.activity.Activity;
-import uk.co.idv.context.entities.alias.Aliases;
-import uk.co.idv.context.entities.alias.IdvId;
-import uk.co.idv.context.entities.channel.Channel;
-import uk.co.idv.context.entities.identity.Identity;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.IdvId;
+import uk.co.idv.identity.entities.channel.Channel;
+import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 
 import java.util.Collection;

@@ -1,7 +1,7 @@
 package uk.co.idv.context.usecases.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.alias.IdvId;
+import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
 import uk.co.idv.context.entities.lockout.LockoutRequest;
 

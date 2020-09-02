@@ -3,8 +3,8 @@ package uk.co.idv.context.adapter.json.error.aliastype;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.context.entities.alias.UnsupportedAliasTypeExceptionMother;
-import uk.co.idv.context.entities.alias.UnsupportedAliasTypeException;
+import uk.co.idv.identity.entities.alias.UnsupportedAliasTypeExceptionMother;
+import uk.co.idv.identity.entities.alias.UnsupportedAliasTypeException;
 
 import java.util.Optional;
 
