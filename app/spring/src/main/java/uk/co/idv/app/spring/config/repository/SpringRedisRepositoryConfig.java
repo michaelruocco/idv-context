@@ -7,9 +7,9 @@ import org.redisson.config.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import uk.co.idv.context.config.lockout.repository.LockoutPolicyRepositoryConfig;
-import uk.co.idv.context.config.lockout.repository.redis.RedisLockoutPolicyRepositoryConfig;
-import uk.co.idv.context.config.lockout.repository.redis.RedissonMapFactory;
+import uk.co.idv.lockout.config.repository.LockoutPolicyRepositoryConfig;
+import uk.co.idv.lockout.config.repository.redis.RedisLockoutPolicyRepositoryConfig;
+import uk.co.idv.lockout.config.repository.redis.RedissonMapFactory;
 import uk.co.mruoc.json.JsonConverter;
 
 import static uk.co.idv.app.spring.config.repository.EnvironmentLoader.loadEnvironment;

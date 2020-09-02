@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
-import uk.co.idv.context.entities.lockout.LockoutRequest;
+import uk.co.idv.lockout.entities.LockoutRequest;
 
 import java.time.Instant;
 import java.util.Collection;

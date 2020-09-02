@@ -1,15 +1,15 @@
 package uk.co.idv.app.manual.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.config.lockout.LockoutConfig;
-import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutPolicyMother;
+import uk.co.idv.lockout.config.LockoutConfig;
+import uk.co.idv.lockout.entities.policy.LockoutPolicy;
+import uk.co.idv.lockout.entities.policy.hard.HardLockoutPolicyMother;
 import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.entities.policy.PolicyKey;
 import uk.co.idv.context.entities.policy.PolicyRequest;
 import uk.co.idv.context.entities.policy.PolicyRequestMother;
 import uk.co.idv.context.entities.policy.key.ChannelPolicyKeyMother;
-import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
+import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 import uk.co.idv.context.usecases.policy.load.PolicyNotFoundException;
 
 import java.util.UUID;

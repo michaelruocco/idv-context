@@ -7,8 +7,8 @@ import uk.co.idv.context.adapter.dynamo.EnvironmentDynamoTablesFactory;
 import uk.co.idv.context.adapter.dynamo.DynamoTables;
 import uk.co.idv.identity.config.repository.IdentityRepositoryConfig;
 import uk.co.idv.identity.config.repository.dynamo.DynamoIdentityRepositoryConfig;
-import uk.co.idv.context.config.lockout.repository.AttemptRepositoryConfig;
-import uk.co.idv.context.config.lockout.repository.dynamo.DynamoAttemptRepositoryConfig;
+import uk.co.idv.lockout.config.repository.AttemptRepositoryConfig;
+import uk.co.idv.lockout.config.repository.dynamo.DynamoAttemptRepositoryConfig;
 import uk.co.mruoc.json.JsonConverter;
 
 import static uk.co.idv.app.spring.config.repository.EnvironmentLoader.loadEnvironment;

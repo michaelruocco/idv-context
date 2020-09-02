@@ -4,12 +4,12 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import uk.co.idv.context.entities.lockout.policy.LockoutPolicy;
-import uk.co.idv.context.entities.lockout.policy.soft.SoftLockoutPolicyMother;
+import uk.co.idv.lockout.entities.policy.LockoutPolicy;
+import uk.co.idv.lockout.entities.policy.soft.SoftLockoutPolicyMother;
 import uk.co.idv.context.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.context.entities.policy.Policies;
 import uk.co.idv.context.entities.policy.PolicyRequest;
-import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
+import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 
 import java.util.Collections;
 import java.util.UUID;

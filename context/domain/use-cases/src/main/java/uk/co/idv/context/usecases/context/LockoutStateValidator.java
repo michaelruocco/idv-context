@@ -3,9 +3,9 @@ package uk.co.idv.context.usecases.context;
 import lombok.Builder;
 import uk.co.idv.context.entities.context.create.ContextLockoutRequest;
 import uk.co.idv.context.entities.context.create.IdentityCreateContextRequest;
-import uk.co.idv.context.entities.lockout.LockoutRequest;
-import uk.co.idv.context.entities.lockout.policy.LockoutState;
-import uk.co.idv.context.usecases.lockout.LockoutService;
+import uk.co.idv.lockout.entities.LockoutRequest;
+import uk.co.idv.lockout.entities.policy.LockoutState;
+import uk.co.idv.lockout.usecases.LockoutService;
 
 import java.time.Clock;
 

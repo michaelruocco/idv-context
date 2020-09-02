@@ -3,9 +3,9 @@ package uk.co.idv.app.manual.lockout;
 import lombok.Builder;
 import uk.co.idv.app.manual.identity.IdentityConfigBuilder;
 import uk.co.idv.identity.config.IdentityConfig;
-import uk.co.idv.context.config.lockout.LockoutConfig;
-import uk.co.idv.context.config.lockout.repository.LockoutRepositoryConfig;
-import uk.co.idv.context.config.lockout.repository.inmemory.InMemoryLockoutRepositoryConfig;
+import uk.co.idv.lockout.config.LockoutConfig;
+import uk.co.idv.lockout.config.repository.LockoutRepositoryConfig;
+import uk.co.idv.lockout.config.repository.inmemory.InMemoryLockoutRepositoryConfig;
 
 @Builder
 public class LockoutConfigBuilder {

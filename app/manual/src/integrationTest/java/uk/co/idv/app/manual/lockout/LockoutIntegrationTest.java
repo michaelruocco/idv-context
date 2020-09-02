@@ -3,34 +3,34 @@ package uk.co.idv.app.manual.lockout;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.identity.IdentityConfigBuilder;
 import uk.co.idv.identity.config.IdentityConfig;
-import uk.co.idv.context.config.lockout.LockoutConfig;
+import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
-import uk.co.idv.context.entities.lockout.DefaultExternalLockoutRequestMother;
-import uk.co.idv.context.entities.lockout.DefaultRecordAttemptRequestMother;
-import uk.co.idv.context.entities.lockout.ExternalLockoutRequest;
-import uk.co.idv.context.entities.lockout.attempt.Attempt;
-import uk.co.idv.context.entities.lockout.policy.LockoutState;
-import uk.co.idv.context.entities.lockout.policy.RecordAttemptRequest;
-import uk.co.idv.context.entities.lockout.policy.hard.HardLockoutPolicyMother;
-import uk.co.idv.context.entities.lockout.policy.recordattempt.NeverRecordAttemptPolicy;
-import uk.co.idv.context.entities.lockout.policy.recordattempt.RecordAttemptWhenMethodCompletePolicy;
-import uk.co.idv.context.entities.lockout.policy.recordattempt.RecordAttemptWhenSequenceCompletePolicy;
-import uk.co.idv.context.entities.lockout.policy.soft.RecurringSoftLockoutPolicyMother;
+import uk.co.idv.lockout.entities.DefaultExternalLockoutRequestMother;
+import uk.co.idv.lockout.entities.DefaultRecordAttemptRequestMother;
+import uk.co.idv.lockout.entities.ExternalLockoutRequest;
+import uk.co.idv.lockout.entities.attempt.Attempt;
+import uk.co.idv.lockout.entities.policy.LockoutState;
+import uk.co.idv.lockout.entities.policy.RecordAttemptRequest;
+import uk.co.idv.lockout.entities.policy.hard.HardLockoutPolicyMother;
+import uk.co.idv.lockout.entities.policy.recordattempt.NeverRecordAttemptPolicy;
+import uk.co.idv.lockout.entities.policy.recordattempt.RecordAttemptWhenMethodCompletePolicy;
+import uk.co.idv.lockout.entities.policy.recordattempt.RecordAttemptWhenSequenceCompletePolicy;
+import uk.co.idv.lockout.entities.policy.soft.RecurringSoftLockoutPolicyMother;
 import uk.co.idv.identity.usecases.identity.IdentityService;
 import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
-import uk.co.idv.context.usecases.lockout.LockoutFacade;
-import uk.co.idv.context.usecases.lockout.policy.LockoutPolicyService;
-import uk.co.idv.context.usecases.lockout.policy.NoLockoutPoliciesConfiguredException;
-import uk.co.idv.context.usecases.lockout.state.LockedOutException;
+import uk.co.idv.lockout.usecases.LockoutFacade;
+import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
+import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
+import uk.co.idv.lockout.usecases.state.LockedOutException;
 
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
-import static uk.co.idv.context.entities.lockout.attempt.AttemptMother.successful;
-import static uk.co.idv.context.entities.lockout.attempt.AttemptMother.unsuccessful;
+import static uk.co.idv.lockout.entities.attempt.AttemptMother.successful;
+import static uk.co.idv.lockout.entities.attempt.AttemptMother.unsuccessful;
 
 public class LockoutIntegrationTest {
 

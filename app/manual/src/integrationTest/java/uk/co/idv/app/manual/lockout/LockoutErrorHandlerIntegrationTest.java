@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.adapter.json.error.ApiError;
 import uk.co.idv.identity.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.identity.adapter.json.error.policynotfound.PolicyNotFoundError;
-import uk.co.idv.context.config.lockout.LockoutConfig;
+import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.context.usecases.policy.load.PolicyNotFoundException;
 import uk.co.idv.context.usecases.policy.load.PolicyNotFoundExceptionMother;
 
