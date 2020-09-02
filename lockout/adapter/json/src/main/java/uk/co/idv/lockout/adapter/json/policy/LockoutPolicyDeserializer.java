@@ -8,7 +8,7 @@ import uk.co.idv.lockout.entities.policy.AttemptsFilter;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutStateCalculator;
 import uk.co.idv.lockout.entities.policy.RecordAttemptPolicy;
-import uk.co.idv.context.entities.policy.PolicyKey;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 

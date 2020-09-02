@@ -1,8 +1,8 @@
 package uk.co.idv.identity.adapter.json.error.updateidvid;
 
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.identity.adapter.json.error.ApiError;
-import uk.co.idv.identity.adapter.json.error.handler.AbstractErrorHandler;
+import uk.co.idv.common.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.handler.AbstractErrorHandler;
 import uk.co.idv.identity.usecases.identity.save.CannotUpdateIdvIdException;
 
 @Slf4j

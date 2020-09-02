@@ -1,9 +1,9 @@
 package uk.co.idv.lockout.adapter.json.error.policynotconfigured;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.adapter.json.error.ApiError;
-import uk.co.idv.context.entities.policy.PolicyRequest;
-import uk.co.idv.context.entities.policy.PolicyRequestMother;
+import uk.co.idv.common.adapter.json.error.ApiError;
+import uk.co.idv.policy.entities.policy.PolicyRequest;
+import uk.co.idv.policy.entities.policy.PolicyRequestMother;
 
 import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;

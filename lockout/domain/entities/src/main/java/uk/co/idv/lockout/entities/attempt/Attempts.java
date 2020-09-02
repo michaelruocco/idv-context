@@ -8,7 +8,7 @@ import org.apache.commons.collections4.CollectionUtils;
 import org.apache.commons.collections4.collection.UnmodifiableCollection;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
-import uk.co.idv.context.entities.policy.PolicyKey;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
 import java.time.Instant;
 import java.util.ArrayList;

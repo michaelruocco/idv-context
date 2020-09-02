@@ -2,8 +2,8 @@ package uk.co.idv.lockout.entities.policy;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.lockout.entities.LockoutRequest;
-import uk.co.idv.context.entities.policy.PolicyKey;
-import uk.co.idv.context.entities.policy.PolicyRequest;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
+import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.lockout.entities.attempt.Attempts;
 
 import java.util.UUID;

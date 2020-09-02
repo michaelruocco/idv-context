@@ -1,11 +1,11 @@
 package uk.co.idv.lockout.usecases.policy;
 
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
-import uk.co.idv.context.usecases.policy.PolicyService;
-import uk.co.idv.context.usecases.policy.create.CreatePolicy;
-import uk.co.idv.context.usecases.policy.delete.DeletePolicy;
-import uk.co.idv.context.usecases.policy.load.LoadPolicy;
-import uk.co.idv.context.usecases.policy.update.UpdatePolicy;
+import uk.co.idv.policy.usecases.policy.PolicyService;
+import uk.co.idv.policy.usecases.policy.create.CreatePolicy;
+import uk.co.idv.policy.usecases.policy.delete.DeletePolicy;
+import uk.co.idv.policy.usecases.policy.load.LoadPolicy;
+import uk.co.idv.policy.usecases.policy.update.UpdatePolicy;
 
 public class LockoutPolicyService extends PolicyService<LockoutPolicy, NoLockoutPoliciesConfiguredException> {
 

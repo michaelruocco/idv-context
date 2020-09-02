@@ -1,7 +1,7 @@
 package uk.co.idv.identity.adapter.json.error.eligibilitynotconfigured;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.ApiError;
 
 import static java.util.Map.entry;
 import static org.assertj.core.api.Assertions.assertThat;

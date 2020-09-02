@@ -1,8 +1,8 @@
 package uk.co.idv.lockout.adapter.json.error.policynotconfigured;
 
 import lombok.Getter;
-import uk.co.idv.identity.adapter.json.error.DefaultApiError;
-import uk.co.idv.context.entities.policy.PolicyRequest;
+import uk.co.idv.common.adapter.json.error.DefaultApiError;
+import uk.co.idv.policy.entities.policy.PolicyRequest;
 
 import java.util.Map;
 

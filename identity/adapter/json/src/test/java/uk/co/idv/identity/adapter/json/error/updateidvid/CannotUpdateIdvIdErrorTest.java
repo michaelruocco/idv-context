@@ -1,7 +1,7 @@
 package uk.co.idv.identity.adapter.json.error.updateidvid;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.alias.IdvIdMother;
 

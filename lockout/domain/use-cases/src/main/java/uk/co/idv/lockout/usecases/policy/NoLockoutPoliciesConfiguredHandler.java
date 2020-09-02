@@ -1,7 +1,7 @@
 package uk.co.idv.lockout.usecases.policy;
 
-import uk.co.idv.context.entities.policy.PolicyRequest;
-import uk.co.idv.context.usecases.policy.NoPoliciesConfiguredHandler;
+import uk.co.idv.policy.entities.policy.PolicyRequest;
+import uk.co.idv.policy.usecases.policy.NoPoliciesConfiguredHandler;
 
 public class NoLockoutPoliciesConfiguredHandler
         implements NoPoliciesConfiguredHandler<NoLockoutPoliciesConfiguredException> {

@@ -1,9 +1,9 @@
 package uk.co.idv.context.adapter.repository;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.policy.Policies;
-import uk.co.idv.context.entities.policy.Policy;
-import uk.co.idv.context.usecases.policy.PolicyRepository;
+import uk.co.idv.policy.entities.policy.Policies;
+import uk.co.idv.policy.entities.policy.Policy;
+import uk.co.idv.policy.usecases.policy.PolicyRepository;
 import uk.co.mruoc.json.JsonConverter;
 
 import java.util.Map;

@@ -1,8 +1,8 @@
 package uk.co.idv.identity.adapter.json.error.country.mismatch;
 
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.identity.adapter.json.error.ApiError;
-import uk.co.idv.identity.adapter.json.error.handler.AbstractErrorHandler;
+import uk.co.idv.common.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.handler.AbstractErrorHandler;
 import uk.co.idv.identity.entities.identity.CountryMismatchException;
 
 @Slf4j

@@ -3,10 +3,10 @@ package uk.co.idv.lockout.adapter.json.policy;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.identity.adapter.json.error.PolicyErrorModule;
+import uk.co.idv.policy.adapter.json.error.PolicyErrorModule;
 import uk.co.idv.lockout.adapter.json.policy.recordattempt.RecordAttemptPolicyModule;
 import uk.co.idv.lockout.adapter.json.policy.state.LockoutStateCalculatorModule;
-import uk.co.idv.context.adapter.json.policy.PolicyModule;
+import uk.co.idv.policy.adapter.json.PolicyModule;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 
 import java.util.Arrays;

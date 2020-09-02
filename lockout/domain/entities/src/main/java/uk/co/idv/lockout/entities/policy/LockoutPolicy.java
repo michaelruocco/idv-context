@@ -6,9 +6,9 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.lockout.entities.LockoutRequest;
-import uk.co.idv.context.entities.policy.Policy;
-import uk.co.idv.context.entities.policy.PolicyKey;
-import uk.co.idv.context.entities.policy.PolicyRequest;
+import uk.co.idv.policy.entities.policy.Policy;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
+import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.lockout.entities.attempt.Attempts;
 
 import java.util.UUID;

@@ -1,7 +1,7 @@
 package uk.co.idv.identity.adapter.json.error.identitynotfound;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.IdvIdMother;

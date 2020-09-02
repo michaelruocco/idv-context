@@ -1,7 +1,7 @@
 package uk.co.idv.identity.adapter.json.error.aliastype;
 
 import lombok.Getter;
-import uk.co.idv.identity.adapter.json.error.DefaultApiError;
+import uk.co.idv.common.adapter.json.error.DefaultApiError;
 
 import static java.util.Collections.emptyMap;
 

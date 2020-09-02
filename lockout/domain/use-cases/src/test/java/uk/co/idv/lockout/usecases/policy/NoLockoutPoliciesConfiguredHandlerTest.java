@@ -1,8 +1,8 @@
 package uk.co.idv.lockout.usecases.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.PolicyRequest;
-import uk.co.idv.context.entities.policy.PolicyRequestMother;
+import uk.co.idv.policy.entities.policy.PolicyRequest;
+import uk.co.idv.policy.entities.policy.PolicyRequestMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

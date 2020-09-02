@@ -1,8 +1,8 @@
 package uk.co.idv.lockout.adapter.json.error.lockedout;
 
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.identity.adapter.json.error.ApiError;
-import uk.co.idv.identity.adapter.json.error.handler.AbstractErrorHandler;
+import uk.co.idv.common.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.handler.AbstractErrorHandler;
 import uk.co.idv.lockout.usecases.state.LockedOutException;
 
 @Slf4j

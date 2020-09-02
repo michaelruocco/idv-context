@@ -3,7 +3,7 @@ package uk.co.idv.identity.config;
 import lombok.Builder;
 import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStub;
 import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStubConfig;
-import uk.co.idv.identity.adapter.json.error.handler.IdentityErrorHandler;
+import uk.co.idv.common.adapter.json.error.handler.IdentityErrorHandler;
 import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.identity.entities.alias.DefaultAliasFactory;
 import uk.co.idv.identity.usecases.eligibility.ChannelCreateEligibility;

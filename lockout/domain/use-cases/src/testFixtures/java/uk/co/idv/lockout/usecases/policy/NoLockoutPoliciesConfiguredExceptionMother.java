@@ -1,6 +1,6 @@
 package uk.co.idv.lockout.usecases.policy;
 
-import uk.co.idv.context.entities.policy.PolicyRequestMother;
+import uk.co.idv.policy.entities.policy.PolicyRequestMother;
 
 public interface NoLockoutPoliciesConfiguredExceptionMother {
 

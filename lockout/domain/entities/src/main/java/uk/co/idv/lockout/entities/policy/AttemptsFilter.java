@@ -2,7 +2,7 @@ package uk.co.idv.lockout.entities.policy;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.policy.PolicyKey;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
 import uk.co.idv.lockout.entities.attempt.Attempts;
 
 @RequiredArgsConstructor

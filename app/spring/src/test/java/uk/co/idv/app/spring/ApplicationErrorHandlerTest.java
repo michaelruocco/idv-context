@@ -3,8 +3,8 @@ package uk.co.idv.app.spring;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import uk.co.idv.identity.adapter.json.error.ApiError;
-import uk.co.idv.identity.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.common.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 
 import java.util.Optional;
 

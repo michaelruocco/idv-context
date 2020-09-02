@@ -1,7 +1,7 @@
 package uk.co.idv.lockout.adapter.json.error.lockedout;
 
 import lombok.Getter;
-import uk.co.idv.identity.adapter.json.error.DefaultApiError;
+import uk.co.idv.common.adapter.json.error.DefaultApiError;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.lockout.entities.policy.LockoutState;
 

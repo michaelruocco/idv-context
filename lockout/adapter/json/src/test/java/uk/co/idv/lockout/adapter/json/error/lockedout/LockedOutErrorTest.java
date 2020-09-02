@@ -1,7 +1,7 @@
 package uk.co.idv.lockout.adapter.json.error.lockedout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.lockout.entities.policy.LockoutState;
 import uk.co.idv.lockout.entities.policy.hard.HardLockoutStateMother;
 

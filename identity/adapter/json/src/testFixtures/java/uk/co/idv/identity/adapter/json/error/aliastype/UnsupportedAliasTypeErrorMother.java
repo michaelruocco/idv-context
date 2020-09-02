@@ -1,6 +1,6 @@
 package uk.co.idv.identity.adapter.json.error.aliastype;
 
-import uk.co.idv.identity.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.ApiError;
 
 public interface UnsupportedAliasTypeErrorMother {
 

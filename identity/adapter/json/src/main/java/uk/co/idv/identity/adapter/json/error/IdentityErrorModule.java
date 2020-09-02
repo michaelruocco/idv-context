@@ -3,6 +3,7 @@ package uk.co.idv.identity.adapter.json.error;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import uk.co.idv.common.adapter.json.error.ErrorModule;
 import uk.co.idv.identity.adapter.json.error.aliastype.UnsupportedAliasTypeError;
 import uk.co.idv.identity.adapter.json.error.aliastype.UnsupportedAliasTypeErrorMixin;
 import uk.co.idv.identity.adapter.json.error.country.mismatch.CountryMismatchError;

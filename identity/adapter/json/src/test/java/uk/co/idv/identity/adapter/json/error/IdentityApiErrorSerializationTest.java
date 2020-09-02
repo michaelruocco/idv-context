@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import uk.co.idv.common.adapter.json.error.ApiError;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 

@@ -3,7 +3,7 @@ package uk.co.idv.identity.adapter.json.error.country.mismatch;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.Builder;
 import lombok.Getter;
-import uk.co.idv.identity.adapter.json.error.DefaultApiError;
+import uk.co.idv.common.adapter.json.error.DefaultApiError;
 
 import java.util.Map;
 

@@ -2,7 +2,7 @@ package uk.co.idv.lockout.entities.policy;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.alias.Aliases;
-import uk.co.idv.context.entities.policy.PolicyKey;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
 import uk.co.idv.lockout.entities.attempt.Attempts;
 
 import static org.assertj.core.api.Assertions.assertThat;

@@ -6,8 +6,8 @@ import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.alias.IdvIdMother;
-import uk.co.idv.context.entities.policy.PolicyKey;
-import uk.co.idv.context.entities.policy.key.ChannelPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
+import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 import uk.co.idv.lockout.entities.attempt.Attempts.AttemptsBuilder;
 
 import java.time.Instant;

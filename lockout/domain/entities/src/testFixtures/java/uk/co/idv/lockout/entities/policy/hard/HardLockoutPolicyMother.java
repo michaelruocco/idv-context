@@ -4,7 +4,7 @@ import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy.LockoutPolicyBuilder;
 import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.entities.policy.recordattempt.AlwaysRecordAttemptPolicy;
-import uk.co.idv.context.entities.policy.key.ChannelPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import java.util.UUID;
 

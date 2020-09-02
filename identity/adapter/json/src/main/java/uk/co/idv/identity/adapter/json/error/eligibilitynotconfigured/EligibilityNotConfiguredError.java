@@ -1,7 +1,7 @@
 package uk.co.idv.identity.adapter.json.error.eligibilitynotconfigured;
 
 import lombok.Getter;
-import uk.co.idv.identity.adapter.json.error.DefaultApiError;
+import uk.co.idv.common.adapter.json.error.DefaultApiError;
 
 import java.util.Map;
 

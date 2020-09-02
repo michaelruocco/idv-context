@@ -1,9 +1,9 @@
 package uk.co.idv.context.adapter.repository;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.MockPolicyMother;
-import uk.co.idv.context.entities.policy.Policies;
-import uk.co.idv.context.entities.policy.Policy;
+import uk.co.idv.policy.entities.policy.MockPolicyMother;
+import uk.co.idv.policy.entities.policy.Policies;
+import uk.co.idv.policy.entities.policy.Policy;
 import uk.co.mruoc.json.JsonConverter;
 
 import java.util.HashMap;

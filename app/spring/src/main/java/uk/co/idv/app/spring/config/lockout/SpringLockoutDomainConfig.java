@@ -2,7 +2,7 @@ package uk.co.idv.app.spring.config.lockout;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.identity.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.lockout.config.repository.AttemptRepositoryConfig;

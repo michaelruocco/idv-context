@@ -2,7 +2,7 @@ package uk.co.idv.identity.adapter.json.error.updateidvid;
 
 import lombok.Builder;
 import lombok.Getter;
-import uk.co.idv.identity.adapter.json.error.DefaultApiError;
+import uk.co.idv.common.adapter.json.error.DefaultApiError;
 import uk.co.idv.identity.entities.alias.IdvId;
 import java.util.Map;
 
