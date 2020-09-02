@@ -2,6 +2,7 @@ package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.policy.method.otp.delivery.OtpPhoneNumbersMother;
+import uk.co.idv.identity.entities.identity.RequestedData;
 
 import java.time.Instant;
 
@@ -34,6 +35,13 @@ class VoiceDeliveryMethodConfigTest {
         OtpPhoneNumbers filtered = config.filter(OtpPhoneNumbersMother.with(invalid, valid), now);
 
         assertThat(filtered).containsExactly(valid);
+    }
+
+    @Test
+    void shouldRequestPhoneNumbers() {
+        RequestedData requestedData = config.getRequestedData();
+
+        assertThat(requestedData).isEqualTo(RequestedData.phoneNumbersOnly());
     }
 
     private OtpPhoneNumber givenValidNumber(Instant now) {

@@ -9,6 +9,7 @@ import lombok.Setter;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.stream.Stream;
 
 @Data
 @RequiredArgsConstructor
@@ -20,6 +21,14 @@ public class RequestedData implements Iterable<String> {
     @Getter(value = AccessLevel.NONE)
     @Setter(value = AccessLevel.NONE)
     private final Collection<String> items;
+
+    public static RequestedData emailAddressesOnly() {
+        return new RequestedData(EMAIL_ADDRESSES);
+    }
+
+    public static RequestedData phoneNumbersOnly() {
+        return new RequestedData(PHONE_NUMBERS);
+    }
 
     public RequestedData(String... items) {
         this(Arrays.asList(items));
@@ -35,7 +44,11 @@ public class RequestedData implements Iterable<String> {
     }
 
     public boolean phoneNumbersRequested() {
-        return  items.contains(PHONE_NUMBERS);
+        return items.contains(PHONE_NUMBERS);
+    }
+
+    public Stream<String> stream() {
+        return items.stream();
     }
 
     public static Collection<String> allItems() {

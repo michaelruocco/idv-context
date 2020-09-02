@@ -1,13 +1,16 @@
 package uk.co.idv.context.entities.policy;
 
+import lombok.RequiredArgsConstructor;
+import uk.co.idv.context.entities.policy.method.MethodPolicies;
 import uk.co.idv.identity.entities.identity.RequestedData;
 
-import java.util.Collections;
-
+@RequiredArgsConstructor
 public class ContextPolicy {
 
+    private final MethodPolicies methodPolicies;
+
     public RequestedData getRequestedData() {
-        return new RequestedData(Collections.singleton("phone-numbers"));
+        return methodPolicies.getRequestedData();
     }
 
 }

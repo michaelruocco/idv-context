@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
+import uk.co.idv.identity.entities.identity.RequestedData;
 
 import java.time.Instant;
 import java.util.stream.Collectors;
@@ -24,4 +25,8 @@ public class PhoneDeliveryMethodConfig implements DeliveryMethodConfig {
         return numbers.filter(number -> phoneNumberConfig.isValid(number, now));
     }
 
+    @Override
+    public RequestedData getRequestedData() {
+        return RequestedData.phoneNumbersOnly();
+    }
 }
