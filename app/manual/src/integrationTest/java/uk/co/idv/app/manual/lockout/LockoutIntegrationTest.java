@@ -2,7 +2,7 @@ package uk.co.idv.app.manual.lockout;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.identity.IdentityConfigBuilder;
-import uk.co.idv.context.config.identity.IdentityConfig;
+import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.context.config.lockout.LockoutConfig;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;

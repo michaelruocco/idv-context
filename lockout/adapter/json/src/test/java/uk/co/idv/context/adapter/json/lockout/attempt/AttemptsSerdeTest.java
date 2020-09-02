@@ -3,7 +3,7 @@ package uk.co.idv.context.adapter.json.lockout.attempt;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.adapter.json.alias.AliasModule;
+import uk.co.idv.identity.adapter.json.alias.AliasModule;
 import uk.co.idv.context.entities.lockout.attempt.Attempts;
 import uk.co.idv.context.entities.lockout.attempt.AttemptsMother;
 

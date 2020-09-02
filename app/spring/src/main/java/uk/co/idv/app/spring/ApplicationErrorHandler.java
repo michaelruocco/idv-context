@@ -6,9 +6,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import uk.co.idv.context.adapter.json.error.ApiError;
-import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.context.adapter.json.error.internalserver.InternalServerError;
+import uk.co.idv.identity.adapter.json.error.ApiError;
+import uk.co.idv.identity.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.identity.adapter.json.error.internalserver.InternalServerError;
 
 import java.util.Optional;
 

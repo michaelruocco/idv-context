@@ -2,7 +2,7 @@ package uk.co.idv.app.manual.identity;
 
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.config.identity.IdentityConfig;
+import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.DefaultAliases;

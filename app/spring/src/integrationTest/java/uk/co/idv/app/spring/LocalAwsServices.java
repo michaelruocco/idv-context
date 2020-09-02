@@ -12,7 +12,7 @@ import java.util.concurrent.Callable;
 
 import static org.awaitility.Awaitility.await;
 import static org.testcontainers.utility.MountableFile.forHostPath;
-import static uk.co.idv.context.config.identity.respository.dynamo.DynamoIdentityRepositoryConfig.IDENTITY_TABLE_NAME;
+import static uk.co.idv.identity.config.repository.dynamo.DynamoIdentityRepositoryConfig.IDENTITY_TABLE_NAME;
 import static uk.co.idv.context.config.lockout.repository.dynamo.DynamoAttemptRepositoryConfig.ATTEMPT_TABLE_NAME;
 
 @Slf4j

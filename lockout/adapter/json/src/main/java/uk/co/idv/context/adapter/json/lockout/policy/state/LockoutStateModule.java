@@ -3,7 +3,7 @@ package uk.co.idv.context.adapter.json.lockout.policy.state;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.context.adapter.json.alias.AliasModule;
+import uk.co.idv.identity.adapter.json.alias.AliasModule;
 import uk.co.idv.context.adapter.json.lockout.attempt.AttemptModule;
 import uk.co.idv.context.adapter.json.lockout.policy.state.soft.DurationSerializer;
 import uk.co.idv.context.entities.lockout.policy.LockoutState;

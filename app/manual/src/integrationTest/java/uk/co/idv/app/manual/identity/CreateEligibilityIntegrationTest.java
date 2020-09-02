@@ -1,10 +1,10 @@
 package uk.co.idv.app.manual.identity;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.config.identity.IdentityConfig;
-import uk.co.idv.context.config.identity.respository.IdentityRepositoryConfig;
-import uk.co.idv.context.config.identity.respository.inmemory.InMemoryIdentityRepositoryConfig;
-import uk.co.idv.context.adapter.eligibility.external.ExternalFindIdentityStubConfig;
+import uk.co.idv.identity.config.IdentityConfig;
+import uk.co.idv.identity.config.repository.IdentityRepositoryConfig;
+import uk.co.idv.identity.config.repository.inmemory.InMemoryIdentityRepositoryConfig;
+import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.identity.entities.channel.gb.As3Mother;

@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
-import uk.co.idv.context.adapter.json.error.ApiError;
+import uk.co.idv.identity.adapter.json.error.ApiError;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 

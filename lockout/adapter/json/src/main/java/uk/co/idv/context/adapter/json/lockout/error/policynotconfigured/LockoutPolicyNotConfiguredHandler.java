@@ -1,8 +1,8 @@
 package uk.co.idv.context.adapter.json.lockout.error.policynotconfigured;
 
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.adapter.json.error.ApiError;
-import uk.co.idv.context.adapter.json.error.handler.AbstractErrorHandler;
+import uk.co.idv.identity.adapter.json.error.ApiError;
+import uk.co.idv.identity.adapter.json.error.handler.AbstractErrorHandler;
 import uk.co.idv.context.usecases.lockout.policy.NoLockoutPoliciesConfiguredException;
 
 @Slf4j

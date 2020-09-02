@@ -1,8 +1,8 @@
 package uk.co.idv.context.adapter.json.lockout.error.lockedout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.adapter.json.error.ApiError;
-import uk.co.idv.context.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.identity.adapter.json.error.ApiError;
+import uk.co.idv.identity.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.usecases.lockout.state.LockedOutException;
 import uk.co.idv.context.usecases.lockout.state.LockedOutExceptionMother;
 

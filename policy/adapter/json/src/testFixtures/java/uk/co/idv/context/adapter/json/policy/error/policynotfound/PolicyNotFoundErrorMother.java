@@ -1,6 +1,6 @@
 package uk.co.idv.context.adapter.json.policy.error.policynotfound;
 
-import uk.co.idv.context.adapter.json.error.policynotfound.PolicyNotFoundError;
+import uk.co.idv.identity.adapter.json.error.policynotfound.PolicyNotFoundError;
 
 import java.util.UUID;
 
