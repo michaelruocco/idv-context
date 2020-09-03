@@ -58,14 +58,14 @@ subprojects {
         lombokVersion = "1.18.12"
         slf4jVersion = "1.7.30"
         commonsCollectionsVersion = "4.4"
-        awsSdkVersion = "1.11.851"
+        awsSdkVersion = "1.11.853"
         jacksonVersion = "2.11.2"
         jsonAdapterVersion = "0.1.7"
 
         junitVersion = "5.6.2"
         assertjVersion = "3.17.1"
         junitPioneerVersion = "0.9.0"
-        mockitoVersion = "3.5.7"
+        mockitoVersion = "3.5.9"
         jsonUnitAssertjVersion = "2.18.1"
         fileLoaderVersion = "5.0.1"
     }
