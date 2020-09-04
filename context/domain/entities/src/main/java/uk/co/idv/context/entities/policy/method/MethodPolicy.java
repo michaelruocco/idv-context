@@ -1,9 +1,9 @@
 package uk.co.idv.context.entities.policy.method;
 
-import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.context.entities.policy.RequestedDataProvider;
 
-public interface MethodPolicy {
+public interface MethodPolicy extends RequestedDataProvider {
 
-    RequestedData getRequestedData();
+    // intentionally blank
 
 }

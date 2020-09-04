@@ -1,16 +1,17 @@
 package uk.co.idv.context.entities.policy;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.policy.method.MethodPolicies;
+import uk.co.idv.context.entities.policy.sequence.SequencePolicies;
 import uk.co.idv.identity.entities.identity.RequestedData;
 
 @RequiredArgsConstructor
-public class ContextPolicy {
+public class ContextPolicy implements RequestedDataProvider {
 
-    private final MethodPolicies methodPolicies;
+    private final SequencePolicies sequencePolicies;
 
+    @Override
     public RequestedData getRequestedData() {
-        return methodPolicies.getRequestedData();
+        return sequencePolicies.getRequestedData();
     }
 
 }

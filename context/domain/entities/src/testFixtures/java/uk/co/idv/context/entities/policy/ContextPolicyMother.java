@@ -1,11 +1,11 @@
 package uk.co.idv.context.entities.policy;
 
-import uk.co.idv.context.entities.policy.method.MethodPolicies;
+import uk.co.idv.context.entities.policy.sequence.SequencePolicies;
 
 public interface ContextPolicyMother {
 
     static ContextPolicy build() {
-        return new ContextPolicy(new MethodPolicies());
+        return new ContextPolicy(new SequencePolicies());
     }
 
 }

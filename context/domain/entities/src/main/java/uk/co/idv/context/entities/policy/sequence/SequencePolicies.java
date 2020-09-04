@@ -1,4 +1,4 @@
-package uk.co.idv.context.entities.policy.method;
+package uk.co.idv.context.entities.policy.sequence;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.policy.RequestedDataMerger;
@@ -9,11 +9,11 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @RequiredArgsConstructor
-public class MethodPolicies implements RequestedDataProvider {
+public class SequencePolicies implements RequestedDataProvider {
 
-    private final Collection<MethodPolicy> values;
+    private final Collection<SequencePolicy> values;
 
-    public MethodPolicies(MethodPolicy... values) {
+    public SequencePolicies(SequencePolicy... values) {
         this(Arrays.asList(values));
     }
 
