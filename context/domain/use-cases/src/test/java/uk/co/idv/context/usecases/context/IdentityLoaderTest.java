@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import uk.co.idv.context.entities.context.create.ContextCreateEligibilityRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
-import uk.co.idv.context.entities.context.create.IdentityCreateContextRequest;
+import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
+import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
 import uk.co.idv.identity.entities.eligibility.Eligibility;
 import uk.co.idv.identity.entities.eligibility.EligibilityMother;
 import uk.co.idv.identity.entities.identity.FindIdentityRequest;
@@ -31,7 +31,7 @@ class IdentityLoaderTest {
 
     @Test
     void shouldPassOriginalRequestWhenCreatingEligibility() {
-        CreateContextRequest initialRequest = DefaultCreateContextRequestMother.build();
+        CreateContextRequest initialRequest = FacadeCreateContextRequestMother.build();
         givenEligibilityReturned();
 
         loader.addIdentity(initialRequest);
@@ -44,7 +44,7 @@ class IdentityLoaderTest {
 
     @Test
     void shouldPassPolicyWhenCreatingEligibility() {
-        CreateContextRequest initialRequest = DefaultCreateContextRequestMother.build();
+        CreateContextRequest initialRequest = FacadeCreateContextRequestMother.build();
         ContextPolicy policy = givenPolicyLoadedForRequest(initialRequest);
         givenEligibilityReturned();
 
@@ -58,31 +58,31 @@ class IdentityLoaderTest {
 
     @Test
     void shouldReturnInitialRequest() {
-        CreateContextRequest initialRequest = DefaultCreateContextRequestMother.build();
+        CreateContextRequest initialRequest = FacadeCreateContextRequestMother.build();
         givenEligibilityReturned();
 
-        IdentityCreateContextRequest identityRequest = loader.addIdentity(initialRequest);
+        DefaultCreateContextRequest identityRequest = loader.addIdentity(initialRequest);
 
         assertThat(identityRequest.getInitial()).isEqualTo(initialRequest);
     }
 
     @Test
     void shouldReturnPolicy() {
-        CreateContextRequest request = DefaultCreateContextRequestMother.build();
+        CreateContextRequest request = FacadeCreateContextRequestMother.build();
         ContextPolicy policy = givenPolicyLoadedForRequest(request);
         givenEligibilityReturned();
 
-        IdentityCreateContextRequest identityRequest = loader.addIdentity(request);
+        DefaultCreateContextRequest identityRequest = loader.addIdentity(request);
 
         assertThat(identityRequest.getPolicy()).isEqualTo(policy);
     }
 
     @Test
     void shouldReturnIdentityFromEligibility() {
-        CreateContextRequest request = DefaultCreateContextRequestMother.build();
+        CreateContextRequest request = FacadeCreateContextRequestMother.build();
         Eligibility eligibility = givenEligibilityReturned();
 
-        IdentityCreateContextRequest identityRequest = loader.addIdentity(request);
+        DefaultCreateContextRequest identityRequest = loader.addIdentity(request);
 
         assertThat(identityRequest.getIdentity()).isEqualTo(eligibility.getIdentity());
     }

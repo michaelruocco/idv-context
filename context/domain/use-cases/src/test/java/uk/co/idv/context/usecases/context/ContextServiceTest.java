@@ -3,8 +3,8 @@ package uk.co.idv.context.usecases.context;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.create.IdentityCreateContextRequest;
-import uk.co.idv.context.entities.context.create.IdentityCreateContextRequestMother;
+import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -28,7 +28,7 @@ class ContextServiceTest {
     void shouldPopulateIdOnContext() {
         UUID expected = UUID.randomUUID();
         given(idGenerator.generate()).willReturn(expected);
-        IdentityCreateContextRequest request = IdentityCreateContextRequestMother.build();
+        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
 
         Context context = service.create(request);
 
@@ -39,7 +39,7 @@ class ContextServiceTest {
     void shouldPopulateCreatedOnContext() {
         Instant expected = Instant.now();
         given(clock.instant()).willReturn(expected);
-        IdentityCreateContextRequest request = IdentityCreateContextRequestMother.build();
+        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
 
         Context context = service.create(request);
 
@@ -48,7 +48,7 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateRequestOnContext() {
-        IdentityCreateContextRequest request = IdentityCreateContextRequestMother.build();
+        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
 
         Context context = service.create(request);
 

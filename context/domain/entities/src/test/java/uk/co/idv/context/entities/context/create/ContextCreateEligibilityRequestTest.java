@@ -10,7 +10,7 @@ class ContextCreateEligibilityRequestTest {
 
     @Test
     void shouldReturnAliasesFromInitialRequest() {
-        CreateContextRequest initialRequest = DefaultCreateContextRequestMother.build();
+        CreateContextRequest initialRequest = FacadeCreateContextRequestMother.build();
 
         ContextCreateEligibilityRequest request = ContextCreateEligibilityRequest.builder()
                 .request(initialRequest)
@@ -21,7 +21,7 @@ class ContextCreateEligibilityRequestTest {
 
     @Test
     void shouldReturnChannelFromIdentityRequest() {
-        CreateContextRequest initialRequest = DefaultCreateContextRequestMother.build();
+        CreateContextRequest initialRequest = FacadeCreateContextRequestMother.build();
 
         ContextCreateEligibilityRequest request = ContextCreateEligibilityRequest.builder()
                 .request(initialRequest)

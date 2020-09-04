@@ -10,7 +10,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnIdentityRequest() {
-        IdentityCreateContextRequest identityRequest = IdentityCreateContextRequestMother.build();
+        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .identityRequest(identityRequest)
@@ -21,7 +21,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnIdvIdFromIdentityRequest() {
-        IdentityCreateContextRequest identityRequest = IdentityCreateContextRequestMother.build();
+        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .identityRequest(identityRequest)
@@ -32,7 +32,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnAliasesFromIdentityRequest() {
-        IdentityCreateContextRequest identityRequest = IdentityCreateContextRequestMother.build();
+        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .identityRequest(identityRequest)
@@ -43,7 +43,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnChannelIdFromIdentityRequest() {
-        IdentityCreateContextRequest identityRequest = IdentityCreateContextRequestMother.build();
+        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .identityRequest(identityRequest)
@@ -54,7 +54,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnActivityNameFromIdentityRequest() {
-        IdentityCreateContextRequest identityRequest = IdentityCreateContextRequestMother.build();
+        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .identityRequest(identityRequest)
@@ -65,7 +65,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnAliasTypesFromIdentityRequest() {
-        IdentityCreateContextRequest identityRequest = IdentityCreateContextRequestMother.build();
+        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .identityRequest(identityRequest)

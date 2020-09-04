@@ -1,20 +1,26 @@
 package uk.co.idv.context.entities.context.create;
 
-import uk.co.idv.context.entities.activity.DefaultActivityMother;
-import uk.co.idv.identity.entities.alias.AliasesMother;
-import uk.co.idv.identity.entities.channel.DefaultChannelMother;
+import uk.co.idv.identity.entities.identity.DefaultIdentity;
+import uk.co.idv.identity.entities.identity.IdentityMother;
 
 public interface DefaultCreateContextRequestMother {
 
-    static CreateContextRequest build() {
+    static DefaultCreateContextRequest withInitial(CreateContextRequest initial) {
+        return builder().initial(initial).build();
+    }
+
+    static DefaultCreateContextRequest withIdentity(DefaultIdentity identity) {
+        return builder().identity(identity).build();
+    }
+
+    static DefaultCreateContextRequest build() {
         return builder().build();
     }
 
     static DefaultCreateContextRequest.DefaultCreateContextRequestBuilder builder() {
         return DefaultCreateContextRequest.builder()
-                .channel(DefaultChannelMother.build())
-                .activity(DefaultActivityMother.build())
-                .aliases(AliasesMother.creditCardNumberOnly());
+                .initial(FacadeCreateContextRequestMother.build())
+                .identity(IdentityMother.example());
     }
 
 }

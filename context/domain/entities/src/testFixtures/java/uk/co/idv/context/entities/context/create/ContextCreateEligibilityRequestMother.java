@@ -10,7 +10,7 @@ public interface ContextCreateEligibilityRequestMother {
 
     static ContextCreateEligibilityRequest.ContextCreateEligibilityRequestBuilder builder() {
         return ContextCreateEligibilityRequest.builder()
-                .request(DefaultCreateContextRequestMother.build())
+                .request(FacadeCreateContextRequestMother.build())
                 .policy(ContextPolicyMother.build());
     }
 

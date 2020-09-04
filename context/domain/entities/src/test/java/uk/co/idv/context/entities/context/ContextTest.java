@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.context;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.create.IdentityCreateContextRequest;
-import uk.co.idv.context.entities.context.create.IdentityCreateContextRequestMother;
+import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -35,7 +35,7 @@ class ContextTest {
 
     @Test
     void shouldReturnIdentityCreateContextRequest() {
-        IdentityCreateContextRequest request = IdentityCreateContextRequestMother.build();
+        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
 
         Context context = Context.builder()
                 .request(request)

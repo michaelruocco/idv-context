@@ -2,7 +2,7 @@ package uk.co.idv.context.entities.context;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.context.create.IdentityCreateContextRequest;
+import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
 
 import java.time.Instant;
 import java.util.UUID;
@@ -13,6 +13,6 @@ public class Context {
 
     private final UUID id;
     private final Instant created;
-    private final IdentityCreateContextRequest request;
+    private final DefaultCreateContextRequest request;
 
 }
