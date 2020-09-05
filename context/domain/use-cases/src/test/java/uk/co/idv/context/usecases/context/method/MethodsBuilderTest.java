@@ -13,7 +13,7 @@ import static org.mockito.Mockito.mock;
 
 class MethodsBuilderTest {
 
-    private final MethodBuilder<Method, MethodPolicy> methodBuilder = mock(MethodBuilder.class);
+    private final CompositeMethodBuilder methodBuilder = mock(CompositeMethodBuilder.class);
 
     private final MethodsBuilder methodsBuilder = new MethodsBuilder(methodBuilder);
 
