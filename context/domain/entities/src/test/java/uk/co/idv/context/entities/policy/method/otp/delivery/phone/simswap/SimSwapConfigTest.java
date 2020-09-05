@@ -4,22 +4,12 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class SimSwapConfigTest {
-
-    @Test
-    void shouldReturnAsync() {
-        SimSwapConfig config = SimSwapConfig.builder()
-                .async(true)
-                .build();
-
-        assertThat(config.isAsync()).isTrue();
-    }
 
     @Test
     void shouldReturnAcceptableResults() {
@@ -40,15 +30,7 @@ class SimSwapConfigTest {
                 .timeout(timeout)
                 .build();
 
-        assertThat(config.getTimeout()).contains(timeout);
-    }
-
-    @Test
-    void shouldReturnEmptyTimeoutIfNotConfigured() {
-        SimSwapConfig config = SimSwapConfig.builder()
-                .build();
-
-        assertThat(config.getTimeout()).isEmpty();
+        assertThat(config.getTimeout()).isEqualTo(timeout);
     }
 
     @Test
@@ -59,15 +41,7 @@ class SimSwapConfigTest {
                 .minDaysSinceSwap(days)
                 .build();
 
-        assertThat(config.getMinDaysSinceSwap()).contains(days);
-    }
-
-    @Test
-    void shouldReturnEmptyMinDaysSinceSwapIfNotConfigured() {
-        SimSwapConfig config = SimSwapConfig.builder()
-                .build();
-
-        assertThat(config.getMinDaysSinceSwap()).isEmpty();
+        assertThat(config.getMinDaysSinceSwap()).isEqualTo(days);
     }
 
     @Test
@@ -78,9 +52,9 @@ class SimSwapConfigTest {
                 .minDaysSinceSwap(days)
                 .build();
 
-        Optional<Instant> cutoff = config.calculateCutoff(now);
+        Instant cutoff = config.calculateCutoff(now);
 
-        assertThat(cutoff).contains(now.minus(Duration.ofDays(days)));
+        assertThat(cutoff).isEqualTo(now.minus(Duration.ofDays(days)));
     }
 
     @Test

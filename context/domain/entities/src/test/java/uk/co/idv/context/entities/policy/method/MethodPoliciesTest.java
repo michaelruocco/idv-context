@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.identity.RequestedData;
 import uk.co.idv.identity.entities.identity.RequestedDataMother;
 
+import java.util.stream.Stream;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -27,10 +29,25 @@ class MethodPoliciesTest {
         );
     }
 
+    @Test
+    void shouldReturnStreamOfSequencePolicies() {
+        MethodPolicy policy1 = givenMethodPolicy();
+        MethodPolicy policy2 = givenMethodPolicy();
+        MethodPolicies policies = new MethodPolicies(policy1, policy2);
+
+        Stream<MethodPolicy> stream = policies.stream();
+
+        assertThat(stream).containsExactly(policy1, policy2);
+    }
+
     private MethodPolicy givenMethodPolicyWithRequestedData(String... items) {
-        MethodPolicy policy = mock(MethodPolicy.class);
+        MethodPolicy policy = givenMethodPolicy();
         given(policy.getRequestedData()).willReturn(RequestedDataMother.with(items));
         return policy;
+    }
+
+    private MethodPolicy givenMethodPolicy() {
+        return mock(MethodPolicy.class);
     }
 
 }

@@ -5,13 +5,11 @@ import lombok.Data;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Optional;
 
 @Builder
 @Data
 public class SimSwapConfig {
 
-    private final boolean async;
     private final AcceptableSimSwapResults acceptableResults;
     private final Duration timeout;
     private final Long minDaysSinceSwap;
@@ -20,20 +18,20 @@ public class SimSwapConfig {
         return acceptableResults.isAcceptable(result);
     }
 
-    public Optional<Duration> getTimeout() {
-        return Optional.ofNullable(timeout);
+    public Duration getTimeout() {
+        return timeout;
     }
 
-    public Optional<Long> getMinDaysSinceSwap() {
-        return Optional.ofNullable(minDaysSinceSwap);
+    public Long getMinDaysSinceSwap() {
+        return minDaysSinceSwap;
     }
 
-    public Optional<Instant> calculateCutoff(Instant now) {
-        return getMinDurationSinceSwap().map(now::minus);
+    public Instant calculateCutoff(Instant now) {
+        return now.minus(getMinDurationSinceSwap());
     }
 
-    private Optional<Duration> getMinDurationSinceSwap() {
-        return getMinDaysSinceSwap().map(Duration::ofDays);
+    private Duration getMinDurationSinceSwap() {
+        return Duration.ofDays(minDaysSinceSwap);
     }
 
 }

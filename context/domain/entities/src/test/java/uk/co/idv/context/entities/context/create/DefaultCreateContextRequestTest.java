@@ -98,4 +98,15 @@ class DefaultCreateContextRequestTest {
         assertThat(request.getPolicy()).isEqualTo(policy);
     }
 
+    @Test
+    void shouldReturnPolicySequencePoliciesFromPolicy() {
+        ContextPolicy policy = ContextPolicyMother.build();
+
+        DefaultCreateContextRequest request = DefaultCreateContextRequest.builder()
+                .policy(policy)
+                .build();
+
+        assertThat(request.getSequencePolicies()).isEqualTo(policy.getSequencePolicies());
+    }
+
 }

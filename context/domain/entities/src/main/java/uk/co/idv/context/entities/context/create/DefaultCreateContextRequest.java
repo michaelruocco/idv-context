@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.context.create;
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.activity.Activity;
+import uk.co.idv.context.entities.policy.sequence.SequencePolicies;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.channel.Channel;
@@ -46,6 +47,10 @@ public class DefaultCreateContextRequest implements CreateContextRequest {
 
     public IdvId getIdvId() {
         return identity.getIdvId();
+    }
+
+    public SequencePolicies getSequencePolicies() {
+        return policy.getSequencePolicies();
     }
 
 }

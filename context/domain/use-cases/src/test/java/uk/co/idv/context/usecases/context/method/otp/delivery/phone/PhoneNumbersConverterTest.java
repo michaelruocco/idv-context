@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.policy.method.otp.delivery.phone;
+package uk.co.idv.context.usecases.context.method.otp.delivery.phone;
 
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;

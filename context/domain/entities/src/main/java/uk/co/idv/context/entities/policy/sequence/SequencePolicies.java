@@ -7,6 +7,7 @@ import uk.co.idv.identity.entities.identity.RequestedData;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class SequencePolicies implements RequestedDataProvider {
@@ -19,6 +20,10 @@ public class SequencePolicies implements RequestedDataProvider {
 
     public RequestedData getRequestedData() {
         return RequestedDataMerger.mergeRequestedData(values);
+    }
+
+    public Stream<SequencePolicy> stream() {
+        return values.stream();
     }
 
 }
