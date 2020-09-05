@@ -8,6 +8,10 @@ import java.util.stream.Collectors;
 
 public class RequestedDataMerger {
 
+    private RequestedDataMerger() {
+        // utility class
+    }
+
     public static RequestedData mergeRequestedData(RequestedDataProvider... providers) {
         return mergeRequestedData(Arrays.asList(providers));
     }
