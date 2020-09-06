@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.entities.context.eligibility.Eligible;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
-import uk.co.idv.context.entities.policy.method.otp.delivery.email.EmailDeliveryMethodConfig;
+import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
 
 
 @RequiredArgsConstructor
@@ -12,7 +12,7 @@ public class EmailAddressConverter {
 
     private final IdGenerator idGenerator;
 
-    public DeliveryMethod toDeliveryMethod(String emailAddress, EmailDeliveryMethodConfig config) {
+    public DeliveryMethod toDeliveryMethod(String emailAddress, DeliveryMethodConfig config) {
         return DeliveryMethod.builder()
                 .id(idGenerator.generate())
                 .type(config.getType())

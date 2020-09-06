@@ -2,43 +2,23 @@ package uk.co.idv.context.usecases.context.method.otp.delivery.phone;
 
 import lombok.Builder;
 import uk.co.idv.common.usecases.id.IdGenerator;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
-import uk.co.idv.context.usecases.context.method.otp.delivery.phone.simswap.SimSwapExecutor;
-
-import java.time.Clock;
 
 @Builder
 public class OtpPhoneNumberConverter {
 
     private final IdGenerator idGenerator;
-    private final Clock clock;
-    private final SimSwapExecutor simSwapExecutor;
+    private final OtpPhoneNumberEligibilityCalculator eligibilityCalculator;
 
     public DeliveryMethod toDeliveryMethod(OtpPhoneNumber number, PhoneDeliveryMethodConfig config) {
         return DeliveryMethod.builder()
                 .id(idGenerator.generate())
                 .type(config.getType())
                 .value(number.getValue())
-                .eligibility(toEligibility(number, config))
+                .eligibility(eligibilityCalculator.toEligibility(number, config))
                 .build();
-    }
-
-    public Eligibility toEligibility(OtpPhoneNumber number, PhoneDeliveryMethodConfig config) {
-        Eligibility eligibility = config.toEligibility(number, clock.instant());
-        if (!eligibility.isEligible()) {
-            return eligibility;
-        }
-        return config.getSimSwapConfig()
-                .map(simSwapConfig -> toEligibility(number, simSwapConfig))
-                .orElse(eligibility);
-    }
-
-    private Eligibility toEligibility(OtpPhoneNumber number, SimSwapConfig config) {
-        return simSwapExecutor.performSimSwap(number, config);
     }
 
 }
