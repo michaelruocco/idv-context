@@ -1,4 +1,4 @@
-package uk.co.idv.identity.usecases.eligibility.external.data;
+package uk.co.idv.common.usecases.async;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
@@ -13,16 +13,13 @@ public class Delay {
 
     private final Duration duration;
 
-    public Delay(long millis) {
-        this(Duration.ofMillis(millis));
-    }
-
     public void execute() {
         try {
             log.debug("sleeping for {}", duration);
             Thread.sleep(duration.toMillis());
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
+            log.error("delay interrupted", e);
         }
     }
 

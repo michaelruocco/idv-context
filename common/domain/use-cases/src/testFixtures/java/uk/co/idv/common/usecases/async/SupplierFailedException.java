@@ -1,4 +1,4 @@
-package uk.co.idv.identity.usecases.eligibility.external.data;
+package uk.co.idv.common.usecases.async;
 
 public class SupplierFailedException extends RuntimeException {
 

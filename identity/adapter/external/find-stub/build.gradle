@@ -10,6 +10,7 @@ dependencies {
     api project(":identity-use-cases")
 
     implementation project(":common-use-cases")
+    implementation testFixtures(project(":common-use-cases"))
     implementation testFixtures(project(":identity-use-cases"))
 
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"

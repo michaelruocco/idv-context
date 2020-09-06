@@ -8,6 +8,8 @@ dependencies {
     implementation project(":common-use-cases")
     implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
 
+    testImplementation testFixtures(project(":common-use-cases"))
+
     testFixturesApi testFixtures(project(":identity-entities"))
     testFixturesImplementation "org.slf4j:slf4j-simple:${slf4jVersion}"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
