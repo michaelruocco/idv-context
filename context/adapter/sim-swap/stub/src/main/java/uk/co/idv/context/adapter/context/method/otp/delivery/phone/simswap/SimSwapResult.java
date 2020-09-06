@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.eligibility.Eligible;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.AcceptableSimSwapStatuses;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.eligibility.SimSwapStatusNotAllowed;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.eligibility.SimSwappedAfterCutoff;
@@ -21,30 +20,24 @@ public class SimSwapResult {
     private final Instant lastSwapped;
 
     public static SimSwapResult timeout() {
-        return SimSwapResult.builder()
-                .status(AcceptableSimSwapStatuses.TIMEOUT)
-                .build();
+        return SimSwapResult.builder().status("timeout").build();
     }
 
     public static SimSwapResult unknown() {
-        return SimSwapResult.builder()
-                .status(AcceptableSimSwapStatuses.UNKNOWN)
-                .build();
+        return SimSwapResult.builder().status("unknown").build();
     }
 
     public static SimSwapResult failure() {
-        return SimSwapResult.builder()
-                .status(AcceptableSimSwapStatuses.FAILURE)
-                .build();
+        return SimSwapResult.builder().status("failure").build();
     }
 
-    public static SimSwapResult successful() {
-        return successful(null);
+    public static SimSwapResult success() {
+        return success(null);
     }
 
-    public static SimSwapResult successful(Instant lastSwapped) {
+    public static SimSwapResult success(Instant lastSwapped) {
         return SimSwapResult.builder()
-                .status(AcceptableSimSwapStatuses.SUCCESS)
+                .status("success")
                 .lastSwapped(lastSwapped)
                 .build();
     }

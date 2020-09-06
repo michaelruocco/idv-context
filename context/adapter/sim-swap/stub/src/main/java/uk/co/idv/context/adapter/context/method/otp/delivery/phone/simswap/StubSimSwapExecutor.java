@@ -44,9 +44,9 @@ public class StubSimSwapExecutor implements SimSwapExecutor {
             case '7':
                 return SimSwapResult.timeout();
             case '6':
-                return SimSwapResult.successful(clock.instant());
+                return SimSwapResult.success(clock.instant());
             default:
-                return SimSwapResult.successful();
+                return SimSwapResult.success();
         }
     }
 
