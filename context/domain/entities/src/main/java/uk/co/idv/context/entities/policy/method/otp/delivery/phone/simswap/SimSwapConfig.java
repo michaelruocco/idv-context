@@ -10,12 +10,12 @@ import java.time.Instant;
 @Data
 public class SimSwapConfig {
 
-    private final AcceptableSimSwapResults acceptableResults;
+    private final AcceptableSimSwapStatuses acceptableStatuses;
     private final Duration timeout;
     private final Long minDaysSinceSwap;
 
     public boolean isAcceptable(String result) {
-        return acceptableResults.isAcceptable(result);
+        return acceptableStatuses.isAcceptable(result);
     }
 
     public Duration getTimeout() {

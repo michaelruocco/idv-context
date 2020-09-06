@@ -2,6 +2,10 @@ package uk.co.idv.context.entities.policy.method.otp.delivery;
 
 import lombok.Builder;
 import lombok.Data;
+import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.context.entities.context.eligibility.Eligible;
+import uk.co.idv.context.entities.policy.method.otp.delivery.eligibility.UpdatedAfterCutoff;
+import uk.co.idv.context.entities.policy.method.otp.delivery.eligibility.UnknownLastUpdatedNotAllowed;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -14,14 +18,28 @@ public class LastUpdatedConfig {
     private final boolean allowUnknown;
     private final Long minDaysSinceUpdate;
 
-    public boolean isValid(Updatable updatable, Instant now) {
+    public Eligibility toEligibility(Updatable updatable, Instant now) {
         Optional<Instant> lastUpdated = updatable.getLastUpdated();
         if (lastUpdated.isEmpty()) {
-            return allowUnknown;
+            return toUnknownLastUpdatedEligibility();
         }
         return calculateCutoff(now)
-                .map(cutoff -> lastUpdated.get().isBefore(cutoff))
-                .orElse(true);
+                .map(cutoff -> toLastUpdatedEligibility(lastUpdated.get(), cutoff))
+                .orElseGet(Eligible::new);
+    }
+
+    private Eligibility toUnknownLastUpdatedEligibility() {
+        if (allowUnknown) {
+            return new Eligible();
+        }
+        return new UnknownLastUpdatedNotAllowed();
+    }
+
+    private Eligibility toLastUpdatedEligibility(Instant lastUpdated, Instant cutoff) {
+        if (lastUpdated.isAfter(cutoff)) {
+            return new UpdatedAfterCutoff(lastUpdated, cutoff);
+        }
+        return new Eligible();
     }
 
     public Optional<Long> getMinDaysSinceUpdate() {

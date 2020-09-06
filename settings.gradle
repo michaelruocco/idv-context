@@ -72,6 +72,9 @@ project(':context-entities').projectDir = file('context/domain/entities')
 include ':context-use-cases'
 project(':context-use-cases').projectDir = file('context/domain/use-cases')
 
+include ':context-sim-swap-stub'
+project(':context-sim-swap-stub').projectDir = file('context/adapter/sim-swap/stub')
+
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
 

@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.method.otp.delivery.OtpPhoneNumbersMother;
-import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.context.entities.policy.method.otp.delivery.phone.eligibility.NotAMobileNumber;
 
 import java.time.Instant;
 
@@ -27,39 +27,36 @@ class SmsDeliveryMethodConfigTest {
     }
 
     @Test
-    void shouldFilterValidPhoneMobileNumbers() {
+    void shouldReturnNotAMobileNumberEligibilityIfNumberIsNotAMobileNumber() {
+        OtpPhoneNumber number = givenNonMobileNumber();
         Instant now = Instant.now();
-        OtpPhoneNumber invalid = givenInvalidNumber(now);
-        OtpPhoneNumber valid = givenValidNumber(now);
-        OtpPhoneNumber validMobile = givenValidMobileNumber(now);
 
-        OtpPhoneNumbers filtered = config.filter(OtpPhoneNumbersMother.with(invalid, valid, validMobile), now);
+        Eligibility eligibility = config.toEligibility(number, now);
 
-        assertThat(filtered).containsExactly(validMobile);
+        assertThat(eligibility).isInstanceOf(NotAMobileNumber.class);
     }
 
     @Test
-    void shouldRequestPhoneNumbers() {
-        RequestedData requestedData = config.getRequestedData();
+    void shouldReturnEligibilityFromPhoneNumberConfigIfNumberIsAMobileNumber() {
+        OtpPhoneNumber number = givenMobileNumber();
+        Instant now = Instant.now();
+        Eligibility expectedEligibility = mock(Eligibility.class);
+        given(phoneNumberConfig.toEligibility(number, now)).willReturn(expectedEligibility);
 
-        assertThat(requestedData).isEqualTo(RequestedData.phoneNumbersOnly());
+        Eligibility eligibility = config.toEligibility(number, now);
+
+        assertThat(eligibility).isEqualTo(expectedEligibility);
     }
 
-    private OtpPhoneNumber givenValidMobileNumber(Instant now) {
-        OtpPhoneNumber number = givenValidNumber(now);
+    private OtpPhoneNumber givenNonMobileNumber() {
+        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
+        given(number.isMobile()).willReturn(false);
+        return number;
+    }
+
+    private OtpPhoneNumber givenMobileNumber() {
+        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
         given(number.isMobile()).willReturn(true);
-        return number;
-    }
-
-    private OtpPhoneNumber givenValidNumber(Instant now) {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-        given(phoneNumberConfig.isValid(number, now)).willReturn(true);
-        return number;
-    }
-
-    private OtpPhoneNumber givenInvalidNumber(Instant now) {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-        given(phoneNumberConfig.isValid(number, now)).willReturn(false);
         return number;
     }
 

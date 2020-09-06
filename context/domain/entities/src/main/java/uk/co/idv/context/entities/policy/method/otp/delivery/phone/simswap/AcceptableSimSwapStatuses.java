@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 @RequiredArgsConstructor
-public class AcceptableSimSwapResults implements Iterable<String> {
+public class AcceptableSimSwapStatuses implements Iterable<String> {
 
     public static final String SUCCESS = "success";
     public static final String FAILURE = "failure";
@@ -16,7 +16,7 @@ public class AcceptableSimSwapResults implements Iterable<String> {
 
     private final Collection<String> values;
 
-    public AcceptableSimSwapResults(String... values) {
+    public AcceptableSimSwapStatuses(String... values) {
         this(Arrays.asList(values));
     }
 

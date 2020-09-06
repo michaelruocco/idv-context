@@ -1,8 +1,7 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.method.otp.delivery.OtpPhoneNumbersMother;
-import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.context.entities.context.eligibility.Eligibility;
 
 import java.time.Instant;
 
@@ -27,34 +26,15 @@ class VoiceDeliveryMethodConfigTest {
     }
 
     @Test
-    void shouldFilterValidPhoneNumbers() {
+    void shouldReturnEligibilityFromPhoneNumberConfig() {
+        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
         Instant now = Instant.now();
-        OtpPhoneNumber invalid = givenInvalidNumber(now);
-        OtpPhoneNumber valid = givenValidNumber(now);
+        Eligibility expectedEligibility = mock(Eligibility.class);
+        given(phoneNumberConfig.toEligibility(number, now)).willReturn(expectedEligibility);
 
-        OtpPhoneNumbers filtered = config.filter(OtpPhoneNumbersMother.with(invalid, valid), now);
+        Eligibility eligibility = config.toEligibility(number, now);
 
-        assertThat(filtered).containsExactly(valid);
+        assertThat(eligibility).isEqualTo(expectedEligibility);
     }
-
-    @Test
-    void shouldRequestPhoneNumbers() {
-        RequestedData requestedData = config.getRequestedData();
-
-        assertThat(requestedData).isEqualTo(RequestedData.phoneNumbersOnly());
-    }
-
-    private OtpPhoneNumber givenValidNumber(Instant now) {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-        given(phoneNumberConfig.isValid(number, now)).willReturn(true);
-        return number;
-    }
-
-    private OtpPhoneNumber givenInvalidNumber(Instant now) {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-        given(phoneNumberConfig.isValid(number, now)).willReturn(false);
-        return number;
-    }
-
 
 }

@@ -13,13 +13,13 @@ class SimSwapConfigTest {
 
     @Test
     void shouldReturnAcceptableResults() {
-        AcceptableSimSwapResults acceptableResults = mock(AcceptableSimSwapResults.class);
+        AcceptableSimSwapStatuses acceptableResults = mock(AcceptableSimSwapStatuses.class);
 
         SimSwapConfig config = SimSwapConfig.builder()
-                .acceptableResults(acceptableResults)
+                .acceptableStatuses(acceptableResults)
                 .build();
 
-        assertThat(config.getAcceptableResults()).isEqualTo(acceptableResults);
+        assertThat(config.getAcceptableStatuses()).isEqualTo(acceptableResults);
     }
 
     @Test
@@ -60,10 +60,10 @@ class SimSwapConfigTest {
     @Test
     void shouldReturnResultAcceptable() {
         String result = "my-result";
-        AcceptableSimSwapResults acceptableResults = mock(AcceptableSimSwapResults.class);
+        AcceptableSimSwapStatuses acceptableResults = mock(AcceptableSimSwapStatuses.class);
         given(acceptableResults.isAcceptable(result)).willReturn(true);
         SimSwapConfig config = SimSwapConfig.builder()
-                .acceptableResults(acceptableResults)
+                .acceptableStatuses(acceptableResults)
                 .build();
 
         boolean acceptable = config.isAcceptable(result);

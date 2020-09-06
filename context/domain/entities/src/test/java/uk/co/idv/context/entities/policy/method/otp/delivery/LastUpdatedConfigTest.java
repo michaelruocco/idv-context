@@ -1,6 +1,10 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.context.entities.context.eligibility.Eligible;
+import uk.co.idv.context.entities.policy.method.otp.delivery.eligibility.UpdatedAfterCutoff;
+import uk.co.idv.context.entities.policy.method.otp.delivery.eligibility.UnknownLastUpdatedNotAllowed;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -38,70 +42,71 @@ class LastUpdatedConfigTest {
     }
 
     @Test
-    void shouldBeValidIfUnknownAllowedAndPhoneNumberHasNoLastUpdatedDate() {
+    void shouldReturnEligibleIfUnknownAllowedAndPhoneNumberHasNoLastUpdatedDate() {
         LastUpdatedConfig config = LastUpdatedConfigMother.unknownAllowed();
         Updatable number = UpdatableMother.withoutLastUpdated();
 
-        boolean valid = config.isValid(number, Instant.now());
+        Eligibility eligibility = config.toEligibility(number, Instant.now());
 
-        assertThat(valid).isTrue();
+        assertThat(eligibility).isInstanceOf(Eligible.class);
     }
 
     @Test
-    void shouldNotBeValidIfUnknownNotAllowedAndPhoneHasNoLastUpdatedDate() {
+    void shouldReturnUnknownLastUpdatedNotAllowedIfUnknownNotAllowedAndPhoneHasNoLastUpdatedDate() {
         LastUpdatedConfig config = LastUpdatedConfigMother.unknownNotAllowed();
         Updatable number = UpdatableMother.withoutLastUpdated();
 
-        boolean valid = config.isValid(number, Instant.now());
+        Eligibility eligibility = config.toEligibility(number, Instant.now());
 
-        assertThat(valid).isFalse();
+        assertThat(eligibility).isInstanceOf(UnknownLastUpdatedNotAllowed.class);
     }
 
     @Test
-    void shouldNotBeValidIfPhoneHasLastUpdatedDateAfterCutoff() {
-        Instant now = Instant.now();
+    void shouldReturnUpdatedAfterCutoffIfPhoneHasLastUpdatedDateAfterCutoff() {
+        Instant now = Instant.parse("2020-09-01T06:13:15.266Z");
         Duration cutoff = Duration.ofDays(5);
         LastUpdatedConfig config = LastUpdatedConfigMother.withMinDaysSinceUpdate(cutoff.toDays());
         Updatable number = UpdatableMother.withLastUpdated(now.minus(cutoff).plusMillis(1));
 
-        boolean valid = config.isValid(number, now);
+        Eligibility eligibility = config.toEligibility(number, now);
 
-        assertThat(valid).isFalse();
+        assertThat(eligibility).isInstanceOf(UpdatedAfterCutoff.class);
+        assertThat(eligibility.getReason()).contains("updated at 2020-08-27T06:13:15.267Z (cutoff 2020-08-27T06:13:15.266Z)");
     }
 
     @Test
-    void shouldNotBeValidIfPhoneHasLastUpdatedDateEqualToCutoff() {
-        Instant now = Instant.now();
+    void shouldReturnEligibleIfPhoneHasLastUpdatedDateEqualToCutoff() {
+        Instant now = Instant.parse("2020-09-01T06:13:15.266Z");
         Duration cutoff = Duration.ofDays(5);
         LastUpdatedConfig config = LastUpdatedConfigMother.withMinDaysSinceUpdate(cutoff.toDays());
         Updatable number = UpdatableMother.withLastUpdated(now.minus(cutoff));
 
-        boolean valid = config.isValid(number, now);
+        Eligibility eligibility = config.toEligibility(number, now);
 
-        assertThat(valid).isFalse();
+        assertThat(eligibility).isInstanceOf(Eligible.class);
     }
 
     @Test
-    void shouldBeValidIfPhoneHasLastUpdatedDateBeforeCutoff() {
-        Instant now = Instant.now();
+    void shouldReturnEligibleIfPhoneHasLastUpdatedDateBeforeCutoff() {
+        Instant now = Instant.parse("2020-09-01T06:13:15.266Z");
         Duration cutoff = Duration.ofDays(5);
         LastUpdatedConfig config = LastUpdatedConfigMother.withMinDaysSinceUpdate(cutoff.toDays());
         Updatable number = UpdatableMother.withLastUpdated(now.minus(cutoff).minusMillis(1));
 
-        boolean valid = config.isValid(number, now);
+        Eligibility eligibility = config.toEligibility(number, now);
 
-        assertThat(valid).isTrue();
+        assertThat(eligibility).isInstanceOf(Eligible.class);
     }
 
     @Test
-    void shouldBeValidIfPhoneHasLastUpdatedDateAndMinDaysSinceUpdateNotConfigured() {
+    void shouldReturnEligibleIfPhoneHasLastUpdatedDateAndMinDaysSinceUpdateNotConfigured() {
         Instant now = Instant.now();
         LastUpdatedConfig config = LastUpdatedConfigMother.withoutMinDaysSinceUpdate();
         Updatable number = UpdatableMother.withLastUpdated(now);
 
-        boolean valid = config.isValid(number, now);
+        Eligibility eligibility = config.toEligibility(number, now);
 
-        assertThat(valid).isTrue();
+        assertThat(eligibility).isInstanceOf(Eligible.class);
     }
 
 }
