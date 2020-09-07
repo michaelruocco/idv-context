@@ -16,8 +16,8 @@ class CompositeMethodBuilderTest {
     void shouldReturnMethodFromBuilderIfNameMatches() {
         Identity identity = mock(Identity.class);
         MethodPolicy policy = givenPolicyWithName("my-name");
-        MethodBuilder builder1 = givenBuilderWithName("other-name");
-        MethodBuilder builder2 = givenBuilderWithName("my-name");
+        MethodBuilder builder1 = givenBuilderNotSupporting(policy);
+        MethodBuilder builder2 = givenBuilderSupporting(policy);
         Method expectedMethod = mock(Method.class);
         given(builder2.build(identity, policy)).willReturn(expectedMethod);
         CompositeMethodBuilder compositeBuilder = new CompositeMethodBuilder(
@@ -43,16 +43,22 @@ class CompositeMethodBuilderTest {
                 .hasMessage("not-configured-name");
     }
 
-    private MethodBuilder givenBuilderWithName(String name) {
-        MethodBuilder builder = mock(MethodBuilder.class);
-        given(builder.getName()).willReturn(name);
-        return builder;
-    }
-
     private MethodPolicy givenPolicyWithName(String name) {
         MethodPolicy policy = mock(MethodPolicy.class);
         given(policy.getName()).willReturn(name);
         return policy;
+    }
+
+    private MethodBuilder givenBuilderNotSupporting(MethodPolicy policy) {
+        MethodBuilder builder = mock(MethodBuilder.class);
+        given(builder.supports(policy)).willReturn(false);
+        return builder;
+    }
+
+    private MethodBuilder givenBuilderSupporting(MethodPolicy policy) {
+        MethodBuilder builder = mock(MethodBuilder.class);
+        given(builder.supports(policy)).willReturn(true);
+        return builder;
     }
 
 }

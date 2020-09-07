@@ -6,7 +6,7 @@ import uk.co.idv.identity.entities.identity.Identity;
 
 public interface MethodBuilder {
 
-    String getName();
+    boolean supports(MethodPolicy policy);
 
     Method build(Identity identity, MethodPolicy policy);
 
