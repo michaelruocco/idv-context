@@ -60,13 +60,13 @@ class DeliveryMethodConfigsTest {
         EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.build();
         DeliveryMethodConfigs configs = new DeliveryMethodConfigs(emailConfig);
 
-        Optional<Duration> timeout = configs.getShortestSimSwapConfigTimeout();
+        Optional<Duration> timeout = configs.getLongestSimSwapConfigTimeout();
 
         assertThat(timeout).isEmpty();
     }
 
     @Test
-    void shouldReturnShortestSimSwapTimeoutIfMoreThanOneConfigured() {
+    void shouldReturnLongestSimSwapTimeoutIfMoreThanOneConfigured() {
         Duration longestTimeout = Duration.ofSeconds(5);
         Duration shortestTimeout = Duration.ofSeconds(2);
         SmsDeliveryMethodConfig smsConfig = SmsDeliveryMethodConfigMother.withSimSwapTimeout(longestTimeout);
@@ -74,9 +74,9 @@ class DeliveryMethodConfigsTest {
         EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.build();
         DeliveryMethodConfigs configs = new DeliveryMethodConfigs(smsConfig, voiceConfig, emailConfig);
 
-        Optional<Duration> timeout = configs.getShortestSimSwapConfigTimeout();
+        Optional<Duration> timeout = configs.getLongestSimSwapConfigTimeout();
 
-        assertThat(timeout).contains(shortestTimeout);
+        assertThat(timeout).contains(longestTimeout);
     }
 
     private DeliveryMethodConfig givenConfigWithRequestedData(String item) {

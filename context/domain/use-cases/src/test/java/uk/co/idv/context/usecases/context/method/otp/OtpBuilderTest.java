@@ -98,7 +98,7 @@ class OtpBuilderTest {
 
     @Test
     void shouldNotWaitForAsyncSimSwapsIfTimeoutPresentButEmptyFuturesReturnedFromDeliveryMethods() {
-        DeliveryMethodConfigs configs = givenDeliveryMethodConfigsWithShortestSimSwapTimeout(Duration.ofMillis(1));
+        DeliveryMethodConfigs configs = givenDeliveryMethodConfigsWithLongestSimSwapTimeout(Duration.ofMillis(1));
         OtpPolicy policy = givenPolicyWithDeliveryMethodConfigs(configs);
         Identity identity = mock(Identity.class);
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
@@ -114,7 +114,7 @@ class OtpBuilderTest {
     @Test
     void shouldWaitForAsyncSimSwapsIfTimeoutPresentAndFuturesReturnedFromDeliveryMethods() {
         Duration expectedTimeout = Duration.ofMillis(1);
-        DeliveryMethodConfigs configs = givenDeliveryMethodConfigsWithShortestSimSwapTimeout(expectedTimeout);
+        DeliveryMethodConfigs configs = givenDeliveryMethodConfigsWithLongestSimSwapTimeout(expectedTimeout);
         OtpPolicy policy = givenPolicyWithDeliveryMethodConfigs(configs);
         Identity identity = mock(Identity.class);
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
@@ -142,9 +142,9 @@ class OtpBuilderTest {
         return policy;
     }
 
-    private DeliveryMethodConfigs givenDeliveryMethodConfigsWithShortestSimSwapTimeout(Duration timeout) {
+    private DeliveryMethodConfigs givenDeliveryMethodConfigsWithLongestSimSwapTimeout(Duration timeout) {
         DeliveryMethodConfigs configs = mock(DeliveryMethodConfigs.class);
-        given(configs.getShortestSimSwapConfigTimeout()).willReturn(Optional.of(timeout));
+        given(configs.getLongestSimSwapConfigTimeout()).willReturn(Optional.of(timeout));
         return configs;
     }
 

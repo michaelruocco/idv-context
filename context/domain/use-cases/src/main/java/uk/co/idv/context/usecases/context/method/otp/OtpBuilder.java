@@ -41,7 +41,7 @@ public class OtpBuilder implements MethodBuilder {
     }
 
     private void waitForAnyAsyncSimSwaps(DeliveryMethodConfigs configs, DeliveryMethods methods) {
-        Optional<Duration> timeout = configs.getShortestSimSwapConfigTimeout();
+        Optional<Duration> timeout = configs.getLongestSimSwapConfigTimeout();
         EligibilityFutures futures = methods.toFutures();
         if (timeout.isPresent() && !futures.isEmpty()) {
             futureWaiter.waitFor(futures.all(), timeout.get());

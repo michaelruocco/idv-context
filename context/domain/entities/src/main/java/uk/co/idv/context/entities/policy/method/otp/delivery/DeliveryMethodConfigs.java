@@ -37,13 +37,13 @@ public class DeliveryMethodConfigs implements Iterable<DeliveryMethodConfig>, Re
         return values.stream();
     }
 
-    public Optional<Duration> getShortestSimSwapConfigTimeout() {
+    public Optional<Duration> getLongestSimSwapConfigTimeout() {
         return values.stream()
                 .filter(config -> config instanceof PhoneDeliveryMethodConfig)
                 .map(config -> (PhoneDeliveryMethodConfig) config)
                 .map(PhoneDeliveryMethodConfig::getSimSwapTimeout)
                 .flatMap(Optional::stream)
-                .min(Comparator.comparingLong(Duration::toMillis));
+                .max(Comparator.comparingLong(Duration::toMillis));
     }
 
 }

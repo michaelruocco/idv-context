@@ -11,6 +11,7 @@
 
 ## Todo
 
+*   Add common method config to otp method and policy for number of attempts and duration
 *   Add initial functionality for loading identity and checking lockout state when creating verification context
 *   Ensure attempts merged when identities merged
 *   Extract common dynamo adapter to its own separate library
