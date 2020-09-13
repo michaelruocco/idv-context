@@ -1,7 +1,4 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery;
-
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumbers;
+package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
 public interface OtpPhoneNumbersMother {
 

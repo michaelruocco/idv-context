@@ -1,7 +1,9 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
+package uk.co.idv.context.entities.policy.method.otp.delivery.phone.voice;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
+import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberConfig;
 
 import java.time.Instant;
 

@@ -3,7 +3,7 @@ package uk.co.idv.context.usecases.context.method.otp.delivery.phone;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.policy.method.otp.delivery.OtpPhoneNumbersMother;
+import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumbersMother;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumbers;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;

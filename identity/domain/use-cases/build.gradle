@@ -5,6 +5,7 @@ plugins {
 dependencies {
     api project(":identity-entities")
 
+    implementation project(":common-entities")
     implementation project(":common-use-cases")
     implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
 

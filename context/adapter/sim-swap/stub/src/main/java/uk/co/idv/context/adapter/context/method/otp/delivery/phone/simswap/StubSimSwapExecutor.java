@@ -1,53 +1,28 @@
 package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncSimSwapEligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 import uk.co.idv.context.usecases.context.method.otp.delivery.phone.simswap.SimSwapExecutor;
 
-import java.time.Clock;
-import java.util.concurrent.CompletableFuture;
+import java.util.function.Supplier;
 
-@Builder
+import static java.util.concurrent.CompletableFuture.completedFuture;
+
+@RequiredArgsConstructor
 public class StubSimSwapExecutor implements SimSwapExecutor {
 
-    private final Clock clock;
+    private final StubSimSwapEligibilitySupplierFactory supplierFactory;
 
     @Override
-    public Eligibility performSimSwap(OtpPhoneNumber number, SimSwapConfig config) {
-        return SimSwapEligibility.builder()
-                .now(clock.instant())
-                .result(toAsyncResult(number, config))
+    public AsyncSimSwapEligibility performSimSwap(OtpPhoneNumber number, SimSwapConfig config) {
+        Supplier<Eligibility> supplier = supplierFactory.toSupplier(number);
+        return AsyncSimSwapEligibility.builder()
+                .config(config)
+                .future(completedFuture(supplier.get()))
                 .build();
-    }
-
-    private AsyncSimSwapResult toAsyncResult(OtpPhoneNumber number, SimSwapConfig config) {
-        return AsyncSimSwapResult.builder()
-                .timeout(config.getTimeout())
-                .futureResult(toFutureResult(number))
-                .build();
-    }
-
-    private CompletableFuture<SimSwapResult> toFutureResult(OtpPhoneNumber number) {
-        return CompletableFuture.completedFuture(toResult(number));
-    }
-
-    private SimSwapResult toResult(OtpPhoneNumber number) {
-        String value = number.getValue();
-        char lastDigit = value.charAt(value.length() - 1);
-        switch (lastDigit) {
-            case '9':
-                return SimSwapResult.failure();
-            case '8':
-                return SimSwapResult.unknown();
-            case '7':
-                return SimSwapResult.timeout();
-            case '6':
-                return SimSwapResult.success(clock.instant());
-            default:
-                return SimSwapResult.success();
-        }
     }
 
 }

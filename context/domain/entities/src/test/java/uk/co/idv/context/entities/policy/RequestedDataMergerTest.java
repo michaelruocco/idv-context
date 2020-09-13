@@ -20,6 +20,17 @@ class RequestedDataMergerTest {
         assertThat(merged).containsExactly("data-1", "data-2");
     }
 
+    @Test
+    void shouldMergeRequestedDataFromAllProvidersUniquely() {
+        RequestedDataProvider provider1 = givenProviderWithData("data-1");
+        RequestedDataProvider provider2 = givenProviderWithData("data-2");
+        RequestedDataProvider provider3 = givenProviderWithData("data-2");
+
+        RequestedData merged = RequestedDataMerger.mergeRequestedData(provider1, provider2, provider3);
+
+        assertThat(merged).containsExactly("data-1", "data-2");
+    }
+
     private RequestedDataProvider givenProviderWithData(String... items) {
         RequestedDataProvider provider = mock(RequestedDataProvider.class);
         given(provider.getRequestedData()).willReturn(RequestedDataMother.with(items));

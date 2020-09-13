@@ -19,6 +19,7 @@ public class RequestedDataMerger {
     public static RequestedData mergeRequestedData(Collection<? extends RequestedDataProvider> providers) {
         return new RequestedData(providers.stream()
                 .flatMap(provider -> provider.getRequestedData().stream())
+                .distinct()
                 .collect(Collectors.toList()));
     }
 

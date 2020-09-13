@@ -13,32 +13,32 @@ import java.util.Collection;
 @Data
 public class ContextLockoutRequest implements LockoutRequest {
 
-    private final DefaultCreateContextRequest identityRequest;
+    private final DefaultCreateContextRequest contextRequest;
     private final Instant timestamp;
 
     @Override
     public IdvId getIdvId() {
-        return identityRequest.getIdvId();
+        return contextRequest.getIdvId();
     }
 
     @Override
     public Aliases getAliases() {
-        return identityRequest.getAliases();
+        return contextRequest.getAliases();
     }
 
     @Override
     public String getChannelId() {
-        return identityRequest.getChannelId();
+        return contextRequest.getChannelId();
     }
 
     @Override
     public String getActivityName() {
-        return identityRequest.getActivityName();
+        return contextRequest.getActivityName();
     }
 
     @Override
     public Collection<String> getAliasTypes() {
-        return identityRequest.getAliasTypes();
+        return contextRequest.getAliasTypes();
     }
 
 }

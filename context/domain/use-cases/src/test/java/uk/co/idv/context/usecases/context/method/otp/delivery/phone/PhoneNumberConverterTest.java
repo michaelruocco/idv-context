@@ -25,7 +25,7 @@ class PhoneNumberConverterTest {
         PhoneNumber number = PhoneNumberMother.example();
         given(calculator.toLocalPhoneNumber(number.getValue(), country)).willReturn(mock(LocalPhoneNumber.class));
 
-        OtpPhoneNumber otpNumber = converter.toOtpPhoneNumber(country, number);
+        OtpPhoneNumber otpNumber = converter.toOtpPhoneNumber(number, country);
 
         assertThat(otpNumber.getLastUpdated()).isEqualTo(number.getLastUpdated());
     }
@@ -36,7 +36,7 @@ class PhoneNumberConverterTest {
         PhoneNumber number = PhoneNumberMother.withoutLastUpdated();
         given(calculator.toLocalPhoneNumber(number.getValue(), country)).willReturn(mock(LocalPhoneNumber.class));
 
-        OtpPhoneNumber otpNumber = converter.toOtpPhoneNumber(country, number);
+        OtpPhoneNumber otpNumber = converter.toOtpPhoneNumber(number, country);
 
         assertThat(otpNumber.getLastUpdated()).isEmpty();
     }
@@ -48,7 +48,7 @@ class PhoneNumberConverterTest {
         LocalPhoneNumber localNumber = LocalPhoneNumberMother.localMobile();
         given(calculator.toLocalPhoneNumber(number.getValue(), country)).willReturn(localNumber);
 
-        OtpPhoneNumber otpNumber = converter.toOtpPhoneNumber(country, number);
+        OtpPhoneNumber otpNumber = converter.toOtpPhoneNumber(number, country);
 
         assertThat(otpNumber.isLocal()).isEqualTo(localNumber.isLocal());
     }
@@ -60,7 +60,7 @@ class PhoneNumberConverterTest {
         LocalPhoneNumber localNumber = LocalPhoneNumberMother.localMobile();
         given(calculator.toLocalPhoneNumber(number.getValue(), country)).willReturn(localNumber);
 
-        OtpPhoneNumber otpNumber = converter.toOtpPhoneNumber(country, number);
+        OtpPhoneNumber otpNumber = converter.toOtpPhoneNumber(number, country);
 
         assertThat(otpNumber.isMobile()).isEqualTo(localNumber.isMobile());
     }
@@ -72,7 +72,7 @@ class PhoneNumberConverterTest {
         LocalPhoneNumber localNumber = LocalPhoneNumberMother.localMobile();
         given(calculator.toLocalPhoneNumber(number.getValue(), country)).willReturn(localNumber);
 
-        OtpPhoneNumber otpNumber = converter.toOtpPhoneNumber(country, number);
+        OtpPhoneNumber otpNumber = converter.toOtpPhoneNumber(number, country);
 
         assertThat(otpNumber.getValue()).isEqualTo(localNumber.getFormattedValue());
     }

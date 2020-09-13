@@ -9,69 +9,69 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ContextLockoutRequestTest {
 
     @Test
-    void shouldReturnIdentityRequest() {
-        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
+    void shouldReturnContextRequest() {
+        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
-                .identityRequest(identityRequest)
+                .contextRequest(contextRequest)
                 .build();
 
-        assertThat(request.getIdvId()).isEqualTo(identityRequest.getIdvId());
+        assertThat(request.getContextRequest()).isEqualTo(contextRequest);
     }
 
     @Test
-    void shouldReturnIdvIdFromIdentityRequest() {
-        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
+    void shouldReturnIdvIdFromContextRequest() {
+        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
-                .identityRequest(identityRequest)
+                .contextRequest(contextRequest)
                 .build();
 
-        assertThat(request.getIdvId()).isEqualTo(identityRequest.getIdvId());
+        assertThat(request.getIdvId()).isEqualTo(contextRequest.getIdvId());
     }
 
     @Test
-    void shouldReturnAliasesFromIdentityRequest() {
-        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
+    void shouldReturnAliasesFromContextRequest() {
+        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
-                .identityRequest(identityRequest)
+                .contextRequest(contextRequest)
                 .build();
 
-        assertThat(request.getAliases()).isEqualTo(identityRequest.getAliases());
+        assertThat(request.getAliases()).isEqualTo(contextRequest.getAliases());
     }
 
     @Test
-    void shouldReturnChannelIdFromIdentityRequest() {
-        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
+    void shouldReturnChannelIdFromContextRequest() {
+        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
-                .identityRequest(identityRequest)
+                .contextRequest(contextRequest)
                 .build();
 
-        assertThat(request.getChannelId()).isEqualTo(identityRequest.getChannelId());
+        assertThat(request.getChannelId()).isEqualTo(contextRequest.getChannelId());
     }
 
     @Test
-    void shouldReturnActivityNameFromIdentityRequest() {
-        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
+    void shouldReturnActivityNameFromContextRequest() {
+        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
-                .identityRequest(identityRequest)
+                .contextRequest(contextRequest)
                 .build();
 
-        assertThat(request.getActivityName()).isEqualTo(identityRequest.getActivityName());
+        assertThat(request.getActivityName()).isEqualTo(contextRequest.getActivityName());
     }
 
     @Test
-    void shouldReturnAliasTypesFromIdentityRequest() {
-        DefaultCreateContextRequest identityRequest = DefaultCreateContextRequestMother.build();
+    void shouldReturnAliasTypesFromContextRequest() {
+        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
-                .identityRequest(identityRequest)
+                .contextRequest(contextRequest)
                 .build();
 
-        assertThat(request.getAliasTypes()).isEqualTo(identityRequest.getAliasTypes());
+        assertThat(request.getAliasTypes()).isEqualTo(contextRequest.getAliasTypes());
     }
 
     @Test
@@ -84,4 +84,5 @@ class ContextLockoutRequestTest {
 
         assertThat(request.getTimestamp()).isEqualTo(timestamp);
     }
+
 }

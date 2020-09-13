@@ -21,4 +21,12 @@ public class OtpPhoneNumber implements Updatable {
         return Optional.ofNullable(lastUpdated);
     }
 
+    public int getLastDigit() {
+        try {
+            return Integer.parseInt(value.substring(value.length() - 1));
+        } catch (StringIndexOutOfBoundsException | NumberFormatException e) {
+            throw new InvalidPhoneNumberValueException(value, e);
+        }
+    }
+
 }

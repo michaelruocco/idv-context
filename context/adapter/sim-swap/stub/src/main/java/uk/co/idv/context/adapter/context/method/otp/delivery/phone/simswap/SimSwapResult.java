@@ -19,29 +19,6 @@ public class SimSwapResult {
     private final String status;
     private final Instant lastSwapped;
 
-    public static SimSwapResult timeout() {
-        return SimSwapResult.builder().status("timeout").build();
-    }
-
-    public static SimSwapResult unknown() {
-        return SimSwapResult.builder().status("unknown").build();
-    }
-
-    public static SimSwapResult failure() {
-        return SimSwapResult.builder().status("failure").build();
-    }
-
-    public static SimSwapResult success() {
-        return success(null);
-    }
-
-    public static SimSwapResult success(Instant lastSwapped) {
-        return SimSwapResult.builder()
-                .status("success")
-                .lastSwapped(lastSwapped)
-                .build();
-    }
-
     public Eligibility toEligibility(Instant now) {
         return getLastSwapped()
                 .map(swappedAt -> toLastSwappedEligibility(swappedAt, now))
@@ -49,8 +26,9 @@ public class SimSwapResult {
     }
 
     private Eligibility toLastSwappedEligibility(Instant swappedAt, Instant now) {
-        if (swappedAt.isAfter(config.calculateCutoff(now))) {
-            return new SimSwappedAfterCutoff(swappedAt, now);
+        Optional<Instant> cutoff = config.calculateCutoff(now);
+        if (cutoff.map(swappedAt::isAfter).orElse(false)) {
+            return new SimSwappedAfterCutoff(swappedAt, cutoff.get());
         }
         return toStatusEligibility();
     }

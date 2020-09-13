@@ -9,6 +9,17 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ContextCreateEligibilityRequestTest {
 
     @Test
+    void shouldReturnInitialRequest() {
+        CreateContextRequest initialRequest = FacadeCreateContextRequestMother.build();
+
+        ContextCreateEligibilityRequest request = ContextCreateEligibilityRequest.builder()
+                .request(initialRequest)
+                .build();
+
+        assertThat(request.getRequest()).isEqualTo(initialRequest);
+    }
+
+    @Test
     void shouldReturnAliasesFromInitialRequest() {
         CreateContextRequest initialRequest = FacadeCreateContextRequestMother.build();
 

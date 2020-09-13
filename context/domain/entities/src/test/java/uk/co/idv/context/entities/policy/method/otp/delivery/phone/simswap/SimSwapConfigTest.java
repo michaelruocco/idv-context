@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -34,27 +35,46 @@ class SimSwapConfigTest {
     }
 
     @Test
-    void shouldReturnMinDaysSinceSwap() {
+    void shouldReturnMinDaysSinceSwapIfConfigured() {
         long days = 5;
 
         SimSwapConfig config = SimSwapConfig.builder()
                 .minDaysSinceSwap(days)
                 .build();
 
-        assertThat(config.getMinDaysSinceSwap()).isEqualTo(days);
+        assertThat(config.getMinDaysSinceSwap()).contains(days);
     }
 
     @Test
-    void shouldCalculateCutoff() {
+    void shouldReturnEmptyIfMinDaysSinceSwapNotConfigured() {
+        SimSwapConfig config = SimSwapConfig.builder()
+                .build();
+
+        assertThat(config.getMinDaysSinceSwap()).isEmpty();
+    }
+
+    @Test
+    void shouldCalculateCutoffIfMinDaysSinceSimSwapConfigured() {
         Instant now = Instant.parse("2020-08-31T12:00:00.000Z");
         long days = 5;
         SimSwapConfig config = SimSwapConfig.builder()
                 .minDaysSinceSwap(days)
                 .build();
 
-        Instant cutoff = config.calculateCutoff(now);
+        Optional<Instant> cutoff = config.calculateCutoff(now);
 
-        assertThat(cutoff).isEqualTo(now.minus(Duration.ofDays(days)));
+        assertThat(cutoff).contains(now.minus(Duration.ofDays(days)));
+    }
+
+    @Test
+    void shouldReturnEmptyCutoffIfMinDaysSinceSimSwapNotConfigured() {
+        Instant now = Instant.parse("2020-08-31T12:00:00.000Z");
+        SimSwapConfig config = SimSwapConfig.builder()
+                .build();
+
+        Optional<Instant> cutoff = config.calculateCutoff(now);
+
+        assertThat(cutoff).isEmpty();
     }
 
     @Test

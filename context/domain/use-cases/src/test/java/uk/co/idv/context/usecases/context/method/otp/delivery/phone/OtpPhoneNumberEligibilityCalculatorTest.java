@@ -2,7 +2,8 @@ package uk.co.idv.context.usecases.context.method.otp.delivery.phone;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.policy.method.otp.delivery.OtpPhoneNumberMother;
+import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncSimSwapEligibility;
+import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberMother;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
@@ -80,7 +81,7 @@ class OtpPhoneNumberEligibilityCalculatorTest {
     }
 
     private Eligibility givenEligibilityReturnedFromSimSwap(OtpPhoneNumber phoneNumber, SimSwapConfig config) {
-        Eligibility eligibility = mock(Eligibility.class);
+        AsyncSimSwapEligibility eligibility = mock(AsyncSimSwapEligibility.class);
         given(simSwapExecutor.performSimSwap(phoneNumber, config)).willReturn(eligibility);
         return eligibility;
     }

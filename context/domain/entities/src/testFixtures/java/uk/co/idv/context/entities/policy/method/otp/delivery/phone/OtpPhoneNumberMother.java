@@ -1,6 +1,5 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery;
+package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber.OtpPhoneNumberBuilder;
 
 import java.time.Instant;

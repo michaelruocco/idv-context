@@ -24,10 +24,10 @@ class PhoneNumbersConverterTest {
         PhoneNumber number1 = mock(PhoneNumber.class);
         PhoneNumber number2 = mock(PhoneNumber.class);
         PhoneNumbers numbers = PhoneNumbersMother.with(number1, number2);
-        OtpPhoneNumber expected1 = givenConvertedTo(country, number1);
-        OtpPhoneNumber expected2 = givenConvertedTo(country, number2);
+        OtpPhoneNumber expected1 = givenConvertedTo(number1, country);
+        OtpPhoneNumber expected2 = givenConvertedTo(number2, country);
 
-        OtpPhoneNumbers otpNumbers = numbersConverter.toOtpPhoneNumbers(country, numbers);
+        OtpPhoneNumbers otpNumbers = numbersConverter.toOtpPhoneNumbers(numbers, country);
 
         assertThat(otpNumbers).containsExactly(
                 expected1,
@@ -35,9 +35,9 @@ class PhoneNumbersConverterTest {
         );
     }
 
-    private OtpPhoneNumber givenConvertedTo(CountryCode country, PhoneNumber number) {
+    private OtpPhoneNumber givenConvertedTo(PhoneNumber number, CountryCode country) {
         OtpPhoneNumber otpNumber = mock(OtpPhoneNumber.class);
-        given(numberConverter.toOtpPhoneNumber(country, number)).willReturn(otpNumber);
+        given(numberConverter.toOtpPhoneNumber(number, country)).willReturn(otpNumber);
         return otpNumber;
     }
 

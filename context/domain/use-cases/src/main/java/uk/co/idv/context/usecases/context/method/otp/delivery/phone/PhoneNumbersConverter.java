@@ -12,9 +12,9 @@ public class PhoneNumbersConverter {
 
     private final PhoneNumberConverter converter;
 
-    public OtpPhoneNumbers toOtpPhoneNumbers(CountryCode country, PhoneNumbers numbers) {
+    public OtpPhoneNumbers toOtpPhoneNumbers(PhoneNumbers numbers, CountryCode country) {
         return new OtpPhoneNumbers(numbers.stream()
-                .map(number -> converter.toOtpPhoneNumber(country, number))
+                .map(number -> converter.toOtpPhoneNumber(number, country))
                 .collect(Collectors.toList()));
     }
 

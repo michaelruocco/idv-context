@@ -10,7 +10,7 @@ public interface ContextLockoutRequestMother {
 
     static ContextLockoutRequest.ContextLockoutRequestBuilder builder() {
         return ContextLockoutRequest.builder()
-                .identityRequest(DefaultCreateContextRequestMother.build())
+                .contextRequest(DefaultCreateContextRequestMother.build())
                 .timestamp(Instant.parse("2020-08-28T06:27:58.977Z"));
     }
 

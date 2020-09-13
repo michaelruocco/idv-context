@@ -1,5 +1,6 @@
 package uk.co.idv.identity.adapter.eligibility.external;
 
+import uk.co.idv.common.usecases.async.FutureWaiter;
 import uk.co.idv.identity.adapter.eligibility.external.data.StubDataSupplierFactory;
 import uk.co.idv.identity.adapter.eligibility.external.data.alias.StubAliasLoader;
 import uk.co.idv.identity.usecases.eligibility.external.ExternalFindIdentity;
@@ -17,7 +18,15 @@ public class ExternalFindIdentityStub {
         return ExternalFindIdentity.builder()
                 .converter(new FindIdentityRequestConverter(config))
                 .aliasLoader(new StubAliasLoader())
-                .dataLoader(new AsyncDataLoader(config.getExecutor(), toSupplierFactory(config)))
+                .dataLoader(toAsyncDataLoader(config))
+                .build();
+    }
+
+    private static AsyncDataLoader toAsyncDataLoader(ExternalFindIdentityStubConfig config) {
+        return AsyncDataLoader.builder()
+                .executor(config.getExecutor())
+                .supplierFactory(toSupplierFactory(config))
+                .futureWaiter(new FutureWaiter())
                 .build();
     }
 

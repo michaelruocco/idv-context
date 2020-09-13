@@ -3,6 +3,7 @@ package uk.co.idv.identity.usecases.eligibility.external.data;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.async.DelayedSupplier;
 import uk.co.idv.common.usecases.async.FailingSupplier;
+import uk.co.idv.common.usecases.async.FutureWaiter;
 import uk.co.idv.common.usecases.async.SuccessfulSupplier;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
@@ -23,8 +24,13 @@ class AsyncDataLoaderTest {
 
     private final Executor executor = Executors.newSingleThreadExecutor();
     private final DataSupplierFactory supplierFactory = mock(DataSupplierFactory.class);
+    private final FutureWaiter futureWaiter = new FutureWaiter();
 
-    private final AsyncDataLoader loader = new AsyncDataLoader(executor, supplierFactory);
+    private final AsyncDataLoader loader = AsyncDataLoader.builder()
+            .executor(executor)
+            .supplierFactory(supplierFactory)
+            .futureWaiter(futureWaiter)
+            .build();
 
     @Test
     void shouldReturnEmptyDataIfSuppliersDoNotCompleteSuccessfully() {

@@ -2,6 +2,7 @@ package uk.co.idv.identity.adapter.eligibility.external.data;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.common.usecases.async.FutureWaiter;
 import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoader;
 import uk.co.idv.identity.usecases.eligibility.external.data.DataFutures;
@@ -40,7 +41,11 @@ public class StubAsyncDataLoaderIntegrationTest {
                 .emailAddressDelay(EMAIL_ADDRESS_DELAY)
                 .build();
         DataSupplierFactory supplierFactory = toSupplierFactory(config);
-        AsyncDataLoader loader = new AsyncDataLoader(config.getExecutor(), supplierFactory);
+        AsyncDataLoader loader = AsyncDataLoader.builder()
+                .executor(config.getExecutor())
+                .supplierFactory(supplierFactory)
+                .futureWaiter(new FutureWaiter())
+                .build();
 
         Instant start = Instant.now();
         try {

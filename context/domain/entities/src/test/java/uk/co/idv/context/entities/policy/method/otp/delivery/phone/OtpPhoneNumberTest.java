@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import java.time.Instant;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 
 class OtpPhoneNumberTest {
 
@@ -54,6 +55,47 @@ class OtpPhoneNumberTest {
                 .build();
 
         assertThat(number.getLastUpdated()).isEmpty();
+    }
+
+    @Test
+    void shouldThrowExceptionOnGetLastDigitIfValueEmpty() {
+        String value = "";
+        OtpPhoneNumber number = OtpPhoneNumber.builder()
+                .value(value)
+                .build();
+
+        Throwable error = catchThrowable(number::getLastDigit);
+
+        assertThat(error)
+                .hasMessage(value)
+                .isInstanceOf(InvalidPhoneNumberValueException.class)
+                .hasCauseInstanceOf(StringIndexOutOfBoundsException.class);
+    }
+
+    @Test
+    void shouldThrowExceptionOnGetLastDigitIfLastCharIsNotADigit() {
+        String value = "value";
+        OtpPhoneNumber number = OtpPhoneNumber.builder()
+                .value(value)
+                .build();
+
+        Throwable error = catchThrowable(number::getLastDigit);
+
+        assertThat(error)
+                .hasMessage(value)
+                .isInstanceOf(InvalidPhoneNumberValueException.class)
+                .hasCauseInstanceOf(NumberFormatException.class);
+    }
+
+    @Test
+    void shouldReturnLastDigitFromValue() {
+        OtpPhoneNumber number = OtpPhoneNumber.builder()
+                .value("123")
+                .build();
+
+        int lastDigit = number.getLastDigit();
+
+        assertThat(lastDigit).isEqualTo(3);
     }
 
 }

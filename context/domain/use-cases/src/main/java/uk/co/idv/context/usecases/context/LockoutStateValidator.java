@@ -17,7 +17,7 @@ public class LockoutStateValidator {
 
     public LockoutState validateLockoutState(DefaultCreateContextRequest request) {
         LockoutRequest lockoutRequest = ContextLockoutRequest.builder()
-                .identityRequest(request)
+                .contextRequest(request)
                 .timestamp(clock.instant())
                 .build();
         return lockoutService.loadAndValidateState(lockoutRequest);

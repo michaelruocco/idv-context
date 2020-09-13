@@ -37,7 +37,7 @@ class LockoutStateValidatorTest {
         ArgumentCaptor<ContextLockoutRequest> captor = ArgumentCaptor.forClass(ContextLockoutRequest.class);
         verify(lockoutService).loadAndValidateState(captor.capture());
         ContextLockoutRequest lockoutRequest = captor.getValue();
-        assertThat(lockoutRequest.getIdentityRequest()).isEqualTo(initialRequest);
+        assertThat(lockoutRequest.getContextRequest()).isEqualTo(initialRequest);
     }
 
     @Test
