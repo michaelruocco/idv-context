@@ -27,6 +27,9 @@ public class SimSwapResult {
 
     private Eligibility toLastSwappedEligibility(Instant swappedAt, Instant now) {
         Optional<Instant> cutoff = config.calculateCutoff(now);
+        if (cutoff.isEmpty()) {
+            return toStatusEligibility();
+        }
         if (cutoff.map(swappedAt::isAfter).orElse(false)) {
             return new SimSwappedAfterCutoff(swappedAt, cutoff.get());
         }

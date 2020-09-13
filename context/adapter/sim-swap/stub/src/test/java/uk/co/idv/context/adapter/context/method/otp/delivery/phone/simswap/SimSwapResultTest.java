@@ -108,5 +108,24 @@ class SimSwapResultTest {
         assertThat(eligibility.getReason()).contains(expectedReason);
     }
 
+    @Test
+    void shouldReturnEligibleIfSimSwapCutoffAndLastSwappedBeforeCutoff() {
+        Instant now = Instant.parse("2020-09-13T20:37:53.240Z");
+        Instant cutoff = Instant.now().minus(Duration.ofDays(5));
+        Instant lastSwapped = cutoff.minusMillis(1);
+        String status = "my-status";
+        given(config.isAcceptable(status)).willReturn(true);
+        given(config.calculateCutoff(now)).willReturn(Optional.of(cutoff));
+        SimSwapResult result = SimSwapResult.builder()
+                .config(config)
+                .lastSwapped(lastSwapped)
+                .status(status)
+                .build();
+
+        Eligibility eligibility = result.toEligibility(now);
+
+        assertThat(eligibility).isInstanceOf(Eligible.class);
+    }
+
 
 }
