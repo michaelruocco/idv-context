@@ -43,7 +43,7 @@ class OtpPhoneNumberEligibilityCalculatorTest {
         Eligibility eligibility = calculator.toEligibility(phoneNumber, config);
 
         assertThat(eligibility).isEqualTo(expectedEligibility);
-        verify(simSwapExecutor, never()).performSimSwap(any(OtpPhoneNumber.class), any(SimSwapConfig.class));
+        verify(simSwapExecutor, never()).executeSimSwap(any(OtpPhoneNumber.class), any(SimSwapConfig.class));
     }
 
     @Test
@@ -56,7 +56,7 @@ class OtpPhoneNumberEligibilityCalculatorTest {
         Eligibility eligibility = calculator.toEligibility(phoneNumber, config);
 
         assertThat(eligibility).isEqualTo(expectedEligibility);
-        verify(simSwapExecutor, never()).performSimSwap(any(OtpPhoneNumber.class), any(SimSwapConfig.class));
+        verify(simSwapExecutor, never()).executeSimSwap(any(OtpPhoneNumber.class), any(SimSwapConfig.class));
     }
 
     @Test
@@ -82,7 +82,7 @@ class OtpPhoneNumberEligibilityCalculatorTest {
 
     private Eligibility givenEligibilityReturnedFromSimSwap(OtpPhoneNumber phoneNumber, SimSwapConfig config) {
         AsyncSimSwapEligibility eligibility = mock(AsyncSimSwapEligibility.class);
-        given(simSwapExecutor.performSimSwap(phoneNumber, config)).willReturn(eligibility);
+        given(simSwapExecutor.executeSimSwap(phoneNumber, config)).willReturn(eligibility);
         return eligibility;
     }
 }

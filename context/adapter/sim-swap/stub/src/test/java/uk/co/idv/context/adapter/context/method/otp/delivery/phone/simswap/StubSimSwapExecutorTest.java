@@ -30,7 +30,7 @@ class StubSimSwapExecutorTest {
         SimSwapConfig config = mock(SimSwapConfig.class);
         givenSupplierCreatedFor(number);
 
-        AsyncSimSwapEligibility eligibility = simSwapExecutor.performSimSwap(number, config);
+        AsyncSimSwapEligibility eligibility = simSwapExecutor.executeSimSwap(number, config);
 
         assertThat(eligibility.getConfig()).isEqualTo(config);
     }
@@ -41,7 +41,7 @@ class StubSimSwapExecutorTest {
         SimSwapConfig config = mock(SimSwapConfig.class);
         Eligibility expectedEligibility = givenEligibilityReturnedFor(number);
 
-        AsyncSimSwapEligibility eligibility = simSwapExecutor.performSimSwap(number, config);
+        AsyncSimSwapEligibility eligibility = simSwapExecutor.executeSimSwap(number, config);
 
         assertThat(eligibility.getFuture().get()).isEqualTo(expectedEligibility);
     }

@@ -35,8 +35,15 @@ public class AsyncSimSwapEligibility implements Eligibility {
     private Eligibility buildDefaultEligibility() {
         return SimSwapEligibility.builder()
                 .config(config)
-                .status("unknown")
+                .status(determineDefaultFallbackStatus())
                 .build();
+    }
+
+    private String determineDefaultFallbackStatus() {
+        if (future.isDone()) {
+            return "unknown";
+        }
+        return "timeout";
     }
 
 }

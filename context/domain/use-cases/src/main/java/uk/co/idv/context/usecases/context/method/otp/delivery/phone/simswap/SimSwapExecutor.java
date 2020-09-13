@@ -6,6 +6,6 @@ import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSw
 
 public interface SimSwapExecutor {
 
-    AsyncSimSwapEligibility performSimSwap(OtpPhoneNumber number, SimSwapConfig config);
+    AsyncSimSwapEligibility executeSimSwap(OtpPhoneNumber number, SimSwapConfig config);
 
 }

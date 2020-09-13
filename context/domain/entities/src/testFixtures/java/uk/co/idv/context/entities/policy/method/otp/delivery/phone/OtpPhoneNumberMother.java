@@ -36,6 +36,10 @@ public interface OtpPhoneNumberMother {
         return builder().lastUpdated(null).build();
     }
 
+    static OtpPhoneNumber withValue(String value) {
+        return builder().value(value).build();
+    }
+
     static OtpPhoneNumberBuilder builder() {
         return OtpPhoneNumber.builder()
                 .value("+447089111111")

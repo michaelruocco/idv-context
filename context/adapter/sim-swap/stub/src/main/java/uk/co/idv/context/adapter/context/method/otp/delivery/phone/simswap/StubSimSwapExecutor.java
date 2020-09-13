@@ -18,7 +18,7 @@ public class StubSimSwapExecutor implements SimSwapExecutor {
     private final Executor executor;
 
     @Override
-    public AsyncSimSwapEligibility performSimSwap(OtpPhoneNumber number, SimSwapConfig config) {
+    public AsyncSimSwapEligibility executeSimSwap(OtpPhoneNumber number, SimSwapConfig config) {
         Supplier<Eligibility> supplier = supplierFactory.toSupplier(number);
         return AsyncSimSwapEligibility.builder()
                 .config(config)

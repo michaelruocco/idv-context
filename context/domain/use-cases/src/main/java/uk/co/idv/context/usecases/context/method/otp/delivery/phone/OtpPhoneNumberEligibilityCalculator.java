@@ -26,7 +26,7 @@ public class OtpPhoneNumberEligibilityCalculator {
     }
 
     private Eligibility toEligibility(OtpPhoneNumber number, SimSwapConfig config) {
-        return simSwapExecutor.performSimSwap(number, config);
+        return simSwapExecutor.executeSimSwap(number, config);
     }
 
 }

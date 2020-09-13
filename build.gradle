@@ -68,6 +68,7 @@ subprojects {
         mockitoVersion = "3.5.10"
         jsonUnitAssertjVersion = "2.19.0"
         fileLoaderVersion = "5.0.1"
+        awaitilityVersion = "4.0.3"
     }
 
     dependencies {

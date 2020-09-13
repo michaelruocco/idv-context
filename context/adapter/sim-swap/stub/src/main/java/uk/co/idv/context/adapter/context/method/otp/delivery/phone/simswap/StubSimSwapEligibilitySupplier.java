@@ -2,15 +2,19 @@ package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.async.Delay;
+import uk.co.idv.common.usecases.duration.DurationCalculator;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 
 import java.time.Clock;
+import java.time.Instant;
 import java.util.function.Supplier;
 
 @Builder
 @Data
+@Slf4j
 public class StubSimSwapEligibilitySupplier implements Supplier<Eligibility> {
 
     private final StubSimSwapResultFactory resultFactory;
@@ -20,6 +24,16 @@ public class StubSimSwapEligibilitySupplier implements Supplier<Eligibility> {
 
     @Override
     public Eligibility get() {
+        Instant start = Instant.now();
+        try {
+            return perform();
+        } finally {
+            log.debug("sim swap eligibility supplier for {} took {}ms", number, DurationCalculator.millisBetweenNowAnd(start));
+        }
+    }
+
+    private Eligibility perform() {
+        log.debug("running stub sim swap eligibility supplier for {}", number);
         if (shouldError()) {
             throw new StubSimSwapExceptionErrorException(number.getValue());
         }
