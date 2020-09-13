@@ -99,7 +99,7 @@ class OtpPhoneNumberConfigTest {
         Eligibility expectedEligibility = mock(Eligibility.class);
         given(lastUpdatedConfig.toEligibility(number, now)).willReturn(expectedEligibility);
         OtpPhoneNumberConfig config = OtpPhoneNumberConfig.builder()
-                .allowInternational(true)
+                .allowInternational(false)
                 .lastUpdatedConfig(lastUpdatedConfig)
                 .build();
 
