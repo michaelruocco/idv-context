@@ -26,7 +26,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Slf4j
 public class StubAsyncDataLoaderIntegrationTest {
 
-    private static final Duration TIMEOUT = Duration.ofMillis(1750);
+    private static final Duration TIMEOUT = Duration.ofMillis(1500);
     private static final Duration PHONE_NUMBER_DELAY = Duration.ofMillis(500);
     private static final Duration EMAIL_ADDRESS_DELAY = Duration.ofMillis(1500);
     private static final int NUMBER_OF_RUNS = 100;
@@ -55,7 +55,7 @@ public class StubAsyncDataLoaderIntegrationTest {
             Instant end = Instant.now();
             Duration duration = Duration.between(start, end);
             log.info("took {}ms", duration.toMillis());
-            assertThat(duration).isLessThan(TIMEOUT.plusSeconds(2));
+            assertThat(duration).isLessThan(TIMEOUT.plusMillis(2500));
         }
     }
 
