@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -52,7 +53,22 @@ class StubSimSwapEligibilitySupplierTest {
     }
 
     @Test
-    void shouldBeDelayedIfNumberHasFiveAsLastDigit() {
+    void shouldThrowExceptionIfNumberEndsWith4() {
+        givenSimSwapResult();
+        String value = "+447809123124";
+        given(number.getLastDigit()).willReturn(4);
+        given(number.getValue()).willReturn(value);
+
+        Throwable error = catchThrowable(supplier::get);
+
+        verify(delay, never()).execute();
+        assertThat(error)
+                .isInstanceOf(StubSimSwapExceptionErrorException.class)
+                .hasMessage(value);
+    }
+
+    @Test
+    void shouldBeDelayedIfNumberEndsWith5() {
         givenSimSwapResult();
         given(number.getLastDigit()).willReturn(5);
 

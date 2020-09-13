@@ -20,15 +20,26 @@ public class StubSimSwapEligibilitySupplier implements Supplier<Eligibility> {
 
     @Override
     public Eligibility get() {
+        if (shouldError()) {
+            throw new StubSimSwapExceptionErrorException(number.getValue());
+        }
         if (shouldBeDelayed()) {
             delay.execute();
         }
-        SimSwapResult result = resultFactory.build(number);
-        return result.toEligibility(clock.instant());
+        return buildEligibility();
+    }
+
+    private boolean shouldError() {
+        return number.getLastDigit() == 4;
     }
 
     private boolean shouldBeDelayed() {
         return number.getLastDigit() == 5;
+    }
+
+    private Eligibility buildEligibility() {
+        SimSwapResult result = resultFactory.build(number);
+        return result.toEligibility(clock.instant());
     }
 
 }

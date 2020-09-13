@@ -7,6 +7,8 @@ import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumbe
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -15,8 +17,12 @@ import static org.mockito.Mockito.mock;
 class StubSimSwapExecutorTest {
 
     private final StubSimSwapEligibilitySupplierFactory supplierFactory = mock(StubSimSwapEligibilitySupplierFactory.class);
+    private final Executor executor = Executors.newSingleThreadExecutor();
 
-    private final StubSimSwapExecutor executor = new StubSimSwapExecutor(supplierFactory);
+    private final StubSimSwapExecutor simSwapExecutor = StubSimSwapExecutor.builder()
+            .supplierFactory(supplierFactory)
+            .executor(executor)
+            .build();
 
     @Test
     void shouldPopulateEligibilityWithConfig() {
@@ -24,7 +30,7 @@ class StubSimSwapExecutorTest {
         SimSwapConfig config = mock(SimSwapConfig.class);
         givenSupplierCreatedFor(number);
 
-        AsyncSimSwapEligibility eligibility = executor.performSimSwap(number, config);
+        AsyncSimSwapEligibility eligibility = simSwapExecutor.performSimSwap(number, config);
 
         assertThat(eligibility.getConfig()).isEqualTo(config);
     }
@@ -35,7 +41,7 @@ class StubSimSwapExecutorTest {
         SimSwapConfig config = mock(SimSwapConfig.class);
         Eligibility expectedEligibility = givenEligibilityReturnedFor(number);
 
-        AsyncSimSwapEligibility eligibility = executor.performSimSwap(number, config);
+        AsyncSimSwapEligibility eligibility = simSwapExecutor.performSimSwap(number, config);
 
         assertThat(eligibility.getFuture().get()).isEqualTo(expectedEligibility);
     }

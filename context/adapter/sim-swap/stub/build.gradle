@@ -1,3 +1,11 @@
+plugins {
+    id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+}
+
+testSets {
+    integrationTest
+}
+
 dependencies {
     implementation project(":context-use-cases")
     implementation testFixtures(project(":common-use-cases"))
