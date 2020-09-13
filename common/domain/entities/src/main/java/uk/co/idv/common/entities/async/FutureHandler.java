@@ -7,6 +7,10 @@ import java.util.concurrent.CompletableFuture;
 @Slf4j
 public class FutureHandler {
 
+    private FutureHandler() {
+        // utility class
+    }
+
     public static <T> T handle(CompletableFuture<T> future, T defaultValue) {
         return future
                 .exceptionally(error -> handle(error, defaultValue))
