@@ -4,9 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.async.Delay;
-import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapEligibilitySupplierFactory;
-import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutor;
-import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapResultFactory;
+import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncSimSwapEligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberMother;
@@ -27,29 +25,21 @@ public class SimSwapExecutorIntegrationTest {
 
     private static final long MIN_DAYS_SINCE_SIM_SWAP = 6;
     private static final Instant NOW = Instant.parse("2020-09-13T20:01:01.001Z");
-    private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
+    private final Delay delay = new Delay(Duration.ofMillis(250));
 
     private final SimSwapConfig simSwapConfig = SimSwapConfig.builder()
             .minDaysSinceSwap(MIN_DAYS_SINCE_SIM_SWAP)
             .acceptableStatuses(AcceptableSimSwapStatusesMother.onlySuccess())
             .build();
 
-    private final StubSimSwapResultFactory resultFactory = StubSimSwapResultFactory.builder()
-            .clock(clock)
-            .config(simSwapConfig)
-            .build();
-
-    private final Delay delay = new Delay(Duration.ofMillis(250));
-    private final StubSimSwapEligibilitySupplierFactory supplierFactory = StubSimSwapEligibilitySupplierFactory.builder()
-            .resultFactory(resultFactory)
+    private final StubSimSwapExecutorConfig config = StubSimSwapExecutorConfig.builder()
+            .simSwapConfig(simSwapConfig)
+            .clock(Clock.fixed(NOW, ZoneId.systemDefault()))
             .delay(delay)
-            .clock(clock)
+            .executorService(Executors.newCachedThreadPool())
             .build();
 
-    private final SimSwapExecutor executor = StubSimSwapExecutor.builder()
-            .executor(Executors.newCachedThreadPool())
-            .supplierFactory(supplierFactory)
-            .build();
+    private final SimSwapExecutor executor = config.buildSimSwapExecutor();
 
     @Test
     void shouldReturnIneligibleFailureResultForNumberEndingIn9() {
