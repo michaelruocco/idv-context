@@ -58,6 +58,18 @@ class DeliveryMethodTest {
     }
 
     @Test
+    void shouldReturnIsEligibleFromEligibility() {
+        Eligibility eligibility = mock(Eligibility.class);
+        given(eligibility.isEligible()).willReturn(true);
+
+        DeliveryMethod method = DeliveryMethod.builder()
+                .eligibility(eligibility)
+                .build();
+
+        assertThat(method.isEligible()).isTrue();
+    }
+
+    @Test
     void shouldReturnEmptyOptionalIfEligibilityIsNotAsyncSimSwapEligibility() {
         Eligibility eligibility = mock(Eligibility.class);
 

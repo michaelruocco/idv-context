@@ -24,7 +24,7 @@
 ```
 
 ```gradle
-// runs tests (including integration tests which in some cases can be slower) and builds code
+// runs tests (including integration tests which will be slower) and builds code
 ./gradlew clean build integrationTest
 ```
 

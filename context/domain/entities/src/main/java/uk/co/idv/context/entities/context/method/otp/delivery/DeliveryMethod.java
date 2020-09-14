@@ -22,6 +22,10 @@ public class DeliveryMethod {
         return getAsyncSimSwapEligibility().map(AsyncSimSwapEligibility::getFuture);
     }
 
+    public boolean isEligible() {
+        return eligibility.isEligible();
+    }
+
     private Optional<AsyncSimSwapEligibility> getAsyncSimSwapEligibility() {
         if (eligibility instanceof AsyncSimSwapEligibility) {
             return Optional.of((AsyncSimSwapEligibility) eligibility);

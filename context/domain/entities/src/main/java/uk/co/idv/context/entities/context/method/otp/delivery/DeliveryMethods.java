@@ -2,7 +2,10 @@ package uk.co.idv.context.entities.context.method.otp.delivery;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.context.entities.context.eligibility.Eligible;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.EligibilityFutures;
+import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.NoEligibleDeliveryMethodsAvailable;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -38,5 +41,15 @@ public class DeliveryMethods implements Iterable<DeliveryMethod> {
         );
     }
 
+    public Eligibility getEligibility() {
+        if (hasAtLeastOneEligible()) {
+            return new Eligible();
+        }
+        return new NoEligibleDeliveryMethodsAvailable();
+    }
+
+    private boolean hasAtLeastOneEligible() {
+        return values.stream().anyMatch(DeliveryMethod::isEligible);
+    }
 
 }
