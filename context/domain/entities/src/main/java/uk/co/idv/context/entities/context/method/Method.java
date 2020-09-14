@@ -1,6 +1,7 @@
 package uk.co.idv.context.entities.context.method;
 
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.context.entities.policy.method.MethodConfig;
 
 public interface Method {
 
@@ -11,5 +12,7 @@ public interface Method {
     boolean isComplete();
 
     boolean isSuccessful();
+
+    MethodConfig getConfig();
 
 }

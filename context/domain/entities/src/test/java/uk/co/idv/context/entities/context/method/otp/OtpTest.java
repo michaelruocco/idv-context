@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.context.method.otp;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
+import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -58,6 +59,17 @@ class OtpTest {
                 .build();
 
         assertThat(otp.isSuccessful()).isFalse();
+    }
+
+    @Test
+    void shouldReturnMethodConfig() {
+        OtpConfig otpConfig = mock(OtpConfig.class);
+
+        Otp otp = Otp.builder()
+                .otpConfig(otpConfig)
+                .build();
+
+        assertThat(otp.getConfig()).isEqualTo(otpConfig);
     }
 
     private DeliveryMethods givenDeliveryMethodsWithEligibility(Eligibility eligibility) {

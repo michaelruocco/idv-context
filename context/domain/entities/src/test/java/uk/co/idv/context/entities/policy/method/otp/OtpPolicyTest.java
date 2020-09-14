@@ -10,9 +10,13 @@ import static org.mockito.Mockito.mock;
 
 class OtpPolicyTest {
 
-    private final DeliveryMethodConfigs configs = mock(DeliveryMethodConfigs.class);
+    private final DeliveryMethodConfigs deliveryMethodConfigs = mock(DeliveryMethodConfigs.class);
+    private final OtpConfig otpConfig = mock(OtpConfig.class);
 
-    private final OtpPolicy policy = new OtpPolicy(configs);
+    private final OtpPolicy policy = OtpPolicy.builder()
+            .methodConfig(otpConfig)
+            .deliveryMethodConfigs(deliveryMethodConfigs)
+            .build();
 
     @Test
     void shouldReturnName() {
@@ -20,14 +24,19 @@ class OtpPolicyTest {
     }
 
     @Test
-    void shouldDeliveryMethodConfigs() {
-        assertThat(policy.getDeliveryMethodConfigs()).isEqualTo(configs);
+    void shouldReturnMethodConfig() {
+        assertThat(policy.getMethodConfig()).isEqualTo(otpConfig);
+    }
+
+    @Test
+    void shouldReturnDeliveryMethodConfigs() {
+        assertThat(policy.getDeliveryMethodConfigs()).isEqualTo(deliveryMethodConfigs);
     }
 
     @Test
     void shouldReturnRequestedDataFromConfigs() {
         RequestedData expectedRequestedData = mock(RequestedData.class);
-        given(configs.getRequestedData()).willReturn(expectedRequestedData);
+        given(deliveryMethodConfigs.getRequestedData()).willReturn(expectedRequestedData);
 
         RequestedData requestedData = policy.getRequestedData();
 

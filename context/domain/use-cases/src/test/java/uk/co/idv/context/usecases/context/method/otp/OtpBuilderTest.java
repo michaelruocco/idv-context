@@ -6,6 +6,7 @@ import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.EligibilityFutures;
 import uk.co.idv.context.entities.policy.method.MethodPolicy;
+import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
 import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.context.usecases.context.method.otp.delivery.DeliveryMethodConfigsConverter;
@@ -86,6 +87,19 @@ class OtpBuilderTest {
     }
 
     @Test
+    void shouldReturnOtpMethodWithMethodConfigPopulated() {
+        Identity identity = mock(Identity.class);
+        DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
+        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(identity, deliveryMethods);
+        OtpConfig expectedMethodConfig = mock(OtpConfig.class);
+        given(policy.getMethodConfig()).willReturn(expectedMethodConfig);
+
+        Otp otp = builder.build(identity, policy);
+
+        assertThat(otp.getConfig()).isEqualTo(expectedMethodConfig);
+    }
+
+    @Test
     void shouldNotWaitForAsyncSimSwapsIfTimeoutNotPresentAndEmptyFuturesReturnedFromDeliveryMethods() {
         Identity identity = mock(Identity.class);
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
@@ -153,6 +167,5 @@ class OtpBuilderTest {
         given(deliveryMethods.toFutures()).willReturn(futures);
         return futures;
     }
-
 
 }

@@ -37,6 +37,7 @@ public class OtpBuilder implements MethodBuilder {
         return Otp.builder()
                 .name(otpPolicy.getName())
                 .deliveryMethods(methods)
+                .otpConfig(otpPolicy.getMethodConfig())
                 .build();
     }
 
