@@ -10,7 +10,6 @@ dependencies {
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
-    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
 
     testFixturesApi testFixtures(project(":identity-use-cases"))
     testFixturesApi testFixtures(project(":common-json"))
