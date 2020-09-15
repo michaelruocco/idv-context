@@ -12,6 +12,10 @@ public class PhoneNumbersConverter {
 
     private final PhoneNumberConverter converter;
 
+    public PhoneNumbersConverter() {
+        this(new PhoneNumberConverter());
+    }
+
     public OtpPhoneNumbers toOtpPhoneNumbers(PhoneNumbers numbers, CountryCode country) {
         return new OtpPhoneNumbers(numbers.stream()
                 .map(number -> converter.toOtpPhoneNumber(number, country))

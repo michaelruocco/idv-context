@@ -21,11 +21,13 @@ class ContextServiceTest {
     private final IdGenerator idGenerator = mock(IdGenerator.class);
     private final Clock clock = mock(Clock.class);
     private final SequencesBuilder sequencesBuilder = mock(SequencesBuilder.class);
+    private final ContextRepository repository = mock(ContextRepository.class);
 
     private final ContextService service = ContextService.builder()
             .idGenerator(idGenerator)
             .clock(clock)
             .sequencesBuilder(sequencesBuilder)
+            .repository(repository)
             .build();
 
     @Test

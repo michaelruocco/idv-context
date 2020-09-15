@@ -2,8 +2,8 @@ package uk.co.idv.lockout.config;
 
 import lombok.Builder;
 import uk.co.idv.common.usecases.id.RandomIdGenerator;
+import uk.co.idv.identity.usecases.identity.find.FindIdentity;
 import uk.co.idv.lockout.adapter.json.error.handler.LockoutErrorHandler;
-import uk.co.idv.identity.config.FindIdentityProvider;
 import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.lockout.usecases.ExternalLockoutRequestConverter;
 import uk.co.idv.lockout.usecases.LockoutFacade;
@@ -25,14 +25,14 @@ public class LockoutConfig {
 
     private final LockoutPolicyRepository policyRepository;
     private final AttemptRepository attemptRepository;
-    private final FindIdentityProvider findIdentityProvider;
+    private final FindIdentity findIdentity;
     private final AliasFactory aliasFactory;
 
     public LockoutFacade lockoutFacade() {
         return LockoutFacade.builder()
                 .lockoutService(lockoutService())
                 .converter(lockoutRequestConverter())
-                .findIdentity(findIdentityProvider.provideFindIdentity())
+                .findIdentity(findIdentity)
                 .aliasFactory(aliasFactory)
                 .build();
     }

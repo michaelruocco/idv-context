@@ -12,10 +12,9 @@ import java.time.Instant;
 @Builder
 public class StubSimSwapResultFactory {
 
-    private final SimSwapConfig config;
     private final Clock clock;
 
-    public SimSwapResult build(OtpPhoneNumber number) {
+    public SimSwapResult build(OtpPhoneNumber number, SimSwapConfig config) {
         SimSwapResultBuilder builder = SimSwapResult.builder().config(config);
         switch (number.getLastDigit()) {
             case 9:

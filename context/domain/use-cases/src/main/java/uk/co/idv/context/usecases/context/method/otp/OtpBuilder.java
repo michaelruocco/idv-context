@@ -21,7 +21,9 @@ import java.util.Optional;
 public class OtpBuilder implements MethodBuilder {
 
     private final DeliveryMethodConfigsConverter configsConverter;
-    private final FutureWaiter futureWaiter;
+
+    @Builder.Default
+    private final FutureWaiter futureWaiter = new FutureWaiter();
 
     @Override
     public boolean supports(MethodPolicy policy) {

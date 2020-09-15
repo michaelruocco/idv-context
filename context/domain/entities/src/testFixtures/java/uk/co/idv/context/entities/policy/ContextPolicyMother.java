@@ -1,11 +1,33 @@
 package uk.co.idv.context.entities.policy;
 
 import uk.co.idv.context.entities.policy.sequence.SequencePolicies;
+import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
+import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
+import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
 public interface ContextPolicyMother {
 
     static ContextPolicy build() {
-        return new ContextPolicy(new SequencePolicies());
+        return builder().build();
+    }
+
+    static ContextPolicy withKey(PolicyKey key) {
+        return builder().key(key).build();
+    }
+
+    static ContextPolicy withPolicy(SequencePolicy policy) {
+        return withPolicies(SequencePoliciesMother.with(policy));
+    }
+
+    static ContextPolicy withPolicies(SequencePolicies policies) {
+        return builder().sequencePolicies(policies).build();
+    }
+
+    static ContextPolicy.ContextPolicyBuilder builder() {
+        return ContextPolicy.builder()
+                .key(ChannelPolicyKeyMother.build())
+                .sequencePolicies(SequencePoliciesMother.build());
     }
 
 }

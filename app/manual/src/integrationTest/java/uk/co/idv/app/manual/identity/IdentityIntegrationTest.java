@@ -33,7 +33,8 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 public class IdentityIntegrationTest {
 
-    private final IdentityConfig identityConfig = new IdentityConfigBuilder().build();
+    private final IdentityConfig identityConfig = IdentityConfig.builder()
+            .build();
     private final IdentityService service = identityConfig.identityService();
 
     @Test

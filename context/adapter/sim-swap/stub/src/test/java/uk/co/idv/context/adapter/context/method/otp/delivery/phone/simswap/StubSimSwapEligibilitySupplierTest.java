@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.async.Delay;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
+import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -21,12 +22,14 @@ class StubSimSwapEligibilitySupplierTest {
     private static final Instant NOW = Instant.now();
 
     private final StubSimSwapResultFactory resultFactory = mock(StubSimSwapResultFactory.class);
+    private final SimSwapConfig config = mock(SimSwapConfig.class);
     private final OtpPhoneNumber number = mock(OtpPhoneNumber.class);
     private final Delay delay = mock(Delay.class);
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
 
     private final StubSimSwapEligibilitySupplier supplier = StubSimSwapEligibilitySupplier.builder()
             .resultFactory(resultFactory)
+            .config(config)
             .number(number)
             .delay(delay)
             .clock(clock)
@@ -98,7 +101,7 @@ class StubSimSwapEligibilitySupplierTest {
 
     private SimSwapResult givenSimSwapResult() {
         SimSwapResult result = mock(SimSwapResult.class);
-        given(resultFactory.build(number)).willReturn(result);
+        given(resultFactory.build(number, config)).willReturn(result);
         return result;
     }
 

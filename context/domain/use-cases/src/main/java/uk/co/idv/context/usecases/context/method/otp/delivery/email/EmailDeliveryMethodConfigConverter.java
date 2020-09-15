@@ -12,6 +12,10 @@ public class EmailDeliveryMethodConfigConverter implements DeliveryMethodConfigC
 
     private final EmailAddressesConverter emailAddressesConverter;
 
+    public EmailDeliveryMethodConfigConverter() {
+        this(new EmailAddressesConverter());
+    }
+
     @Override
     public boolean supports(DeliveryMethodConfig config) {
         return config instanceof EmailDeliveryMethodConfig;

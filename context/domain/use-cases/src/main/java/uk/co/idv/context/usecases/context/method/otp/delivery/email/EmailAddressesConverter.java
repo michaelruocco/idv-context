@@ -12,6 +12,10 @@ public class EmailAddressesConverter {
 
     private final EmailAddressConverter addressConverter;
 
+    public EmailAddressesConverter() {
+        this(new EmailAddressConverter());
+    }
+
     public DeliveryMethods toDeliveryMethods(EmailAddresses emailAddresses, EmailDeliveryMethodConfig config) {
         return new DeliveryMethods(emailAddresses.stream()
                 .map(emailAddress -> addressConverter.toDeliveryMethod(emailAddress, config))

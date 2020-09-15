@@ -39,7 +39,7 @@ public class SimSwapExecutorIntegrationTest {
             .executorService(Executors.newCachedThreadPool())
             .build();
 
-    private final SimSwapExecutor executor = config.buildSimSwapExecutor();
+    private final SimSwapExecutor executor = config.simSwapExecutor();
 
     @Test
     void shouldReturnIneligibleFailureResultForNumberEndingIn9() {

@@ -4,6 +4,7 @@ import lombok.Builder;
 import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStub;
 import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.common.adapter.json.error.handler.IdentityErrorHandler;
+import uk.co.idv.identity.adapter.repository.InMemoryIdentityRepository;
 import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.identity.entities.alias.DefaultAliasFactory;
 import uk.co.idv.identity.usecases.eligibility.ChannelCreateEligibility;
@@ -16,22 +17,26 @@ import uk.co.idv.identity.usecases.identity.IdentityRepository;
 import uk.co.idv.identity.usecases.identity.find.FindIdentity;
 import uk.co.idv.identity.usecases.identity.update.UpdateIdentity;
 
+import java.time.Duration;
 import java.util.Collections;
+import java.util.concurrent.Executors;
 
 @Builder
-public class IdentityConfig implements FindIdentityProvider {
+public class IdentityConfig {
 
-    private final IdentityRepository repository;
-    private final ExternalFindIdentityStubConfig stubConfig;
+    @Builder.Default
+    private final IdentityRepository repository = new InMemoryIdentityRepository();
 
-    @Override
-    public FindIdentity provideFindIdentity() {
+    @Builder.Default
+    private final ExternalFindIdentityStubConfig stubConfig = buildDefaultStubConfig();
+
+    public FindIdentity findIdentity() {
         return new FindIdentity(repository);
     }
 
     public CreateEligibility createEligibility() {
         return new CompositeCreateEligibility(
-                rsaCreateEligibility(),
+                rsaGbCreateEligibility(),
                 as3CreateEligibility()
         );
     }
@@ -48,7 +53,7 @@ public class IdentityConfig implements FindIdentityProvider {
         return new IdentityErrorHandler();
     }
 
-    private ChannelCreateEligibility rsaCreateEligibility() {
+    private ChannelCreateEligibility rsaGbCreateEligibility() {
         return ChannelCreateEligibility.builder()
                 .supportedChannelIds(Collections.singleton("gb-rsa"))
                 .create(internalCreateEligibility())
@@ -71,6 +76,15 @@ public class IdentityConfig implements FindIdentityProvider {
 
     private CreateEligibility internalCreateEligibility() {
         return InternalCreateEligibility.build(repository);
+    }
+
+    private static ExternalFindIdentityStubConfig buildDefaultStubConfig() {
+        return ExternalFindIdentityStubConfig.builder()
+                .executor(Executors.newFixedThreadPool(2))
+                .timeout(Duration.ofMillis(250))
+                .phoneNumberDelay(Duration.ofMillis(400))
+                .emailAddressDelay(Duration.ofMillis(100))
+                .build();
     }
 
 }

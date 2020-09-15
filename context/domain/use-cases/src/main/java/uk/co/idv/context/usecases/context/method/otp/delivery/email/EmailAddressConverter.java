@@ -2,6 +2,7 @@ package uk.co.idv.context.usecases.context.method.otp.delivery.email;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.common.usecases.id.IdGenerator;
+import uk.co.idv.common.usecases.id.RandomIdGenerator;
 import uk.co.idv.context.entities.context.eligibility.Eligible;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
@@ -11,6 +12,10 @@ import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfi
 public class EmailAddressConverter {
 
     private final IdGenerator idGenerator;
+
+    public EmailAddressConverter() {
+        this(new RandomIdGenerator());
+    }
 
     public DeliveryMethod toDeliveryMethod(String emailAddress, DeliveryMethodConfig config) {
         return DeliveryMethod.builder()

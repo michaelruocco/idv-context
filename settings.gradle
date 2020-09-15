@@ -78,6 +78,12 @@ project(':context-use-cases').projectDir = file('context/domain/use-cases')
 include ':context-sim-swap-stub'
 project(':context-sim-swap-stub').projectDir = file('context/adapter/sim-swap/stub')
 
+include ':context-in-memory-repository'
+project(':context-in-memory-repository').projectDir = file('context/adapter/repository/in-memory')
+
+include ':context-config'
+project(':context-config').projectDir = file('context/config')
+
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
 

@@ -21,7 +21,7 @@ public class SpringLockoutDomainConfig {
                 .policyRepository(policyRepositoryConfig.policyRepository())
                 .attemptRepository(attemptRepositoryConfig.attemptRepository())
                 .aliasFactory(identityConfig.aliasFactory())
-                .findIdentityProvider(identityConfig)
+                .findIdentity(identityConfig.findIdentity())
                 .build();
     }
 

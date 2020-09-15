@@ -7,6 +7,7 @@ import uk.co.idv.common.usecases.async.Delay;
 import uk.co.idv.common.usecases.duration.DurationCalculator;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
+import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -18,6 +19,7 @@ import java.util.function.Supplier;
 public class StubSimSwapEligibilitySupplier implements Supplier<Eligibility> {
 
     private final StubSimSwapResultFactory resultFactory;
+    private final SimSwapConfig config;
     private final OtpPhoneNumber number;
     private final Clock clock;
     private final Delay delay;
@@ -52,7 +54,7 @@ public class StubSimSwapEligibilitySupplier implements Supplier<Eligibility> {
     }
 
     private Eligibility buildEligibility() {
-        SimSwapResult result = resultFactory.build(number);
+        SimSwapResult result = resultFactory.build(number, config);
         return result.toEligibility(clock.instant());
     }
 

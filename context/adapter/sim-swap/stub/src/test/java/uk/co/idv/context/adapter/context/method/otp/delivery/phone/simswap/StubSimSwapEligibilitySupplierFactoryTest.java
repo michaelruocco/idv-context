@@ -3,6 +3,7 @@ package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.async.Delay;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
+import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 
 import java.time.Clock;
 
@@ -13,11 +14,13 @@ class StubSimSwapEligibilitySupplierFactoryTest {
 
     private final Clock clock = mock(Clock.class);
     private final Delay delay = mock(Delay.class);
+    private final SimSwapConfig config = mock(SimSwapConfig.class);
     private final StubSimSwapResultFactory resultFactory = mock(StubSimSwapResultFactory.class);
 
     private final StubSimSwapEligibilitySupplierFactory supplierFactory = StubSimSwapEligibilitySupplierFactory.builder()
             .clock(clock)
             .delay(delay)
+            .config(config)
             .resultFactory(resultFactory)
             .build();
 
@@ -37,6 +40,15 @@ class StubSimSwapEligibilitySupplierFactoryTest {
         StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number);
 
         assertThat(supplier.getDelay()).isEqualTo(delay);
+    }
+
+    @Test
+    void shouldPopulateConfigOnSupplier() {
+        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
+
+        StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number);
+
+        assertThat(supplier.getConfig()).isEqualTo(config);
     }
 
     @Test

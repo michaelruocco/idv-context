@@ -12,7 +12,9 @@ import java.time.Clock;
 @Builder
 public class OtpPhoneNumberEligibilityCalculator {
 
-    private final Clock clock;
+    @Builder.Default
+    private final Clock clock = Clock.systemUTC();
+
     private final SimSwapExecutor simSwapExecutor;
 
     public Eligibility toEligibility(OtpPhoneNumber number, PhoneDeliveryMethodConfig config) {

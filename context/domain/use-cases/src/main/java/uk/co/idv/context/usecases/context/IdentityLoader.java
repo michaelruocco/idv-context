@@ -27,7 +27,7 @@ public class IdentityLoader {
     private ContextCreateEligibilityRequest loadAndAddPolicy(CreateContextRequest request) {
         return ContextCreateEligibilityRequest.builder()
                 .request(request)
-                .policy(policyService.load(request))
+                .policy(policyService.loadHighestPriority(request))
                 .build();
     }
 

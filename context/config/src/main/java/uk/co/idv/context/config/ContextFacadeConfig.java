@@ -1,0 +1,45 @@
+package uk.co.idv.context.config;
+
+import lombok.Builder;
+import uk.co.idv.context.config.repository.ContextRepositoryConfig;
+import uk.co.idv.context.usecases.context.ContextFacade;
+import uk.co.idv.context.usecases.context.IdentityLoader;
+import uk.co.idv.context.usecases.context.LockoutStateValidator;
+import uk.co.idv.context.usecases.policy.ContextPolicyService;
+import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
+import uk.co.idv.lockout.usecases.LockoutService;
+
+@Builder
+public class ContextFacadeConfig {
+
+    private final ContextRepositoryConfig repositoryConfig;
+    private final CreateEligibility createEligibility;
+    private final LockoutService lockoutService;
+    private final ContextServiceConfig serviceConfig;
+
+    public ContextFacade contextFacade() {
+        return ContextFacade.builder()
+                .identityLoader(identityLoader())
+                .stateValidator(stateValidator())
+                .contextService(serviceConfig.contextService())
+                .build();
+    }
+
+    public ContextPolicyService policyService() {
+        return new ContextPolicyService(repositoryConfig.policyRepository());
+    }
+
+    private IdentityLoader identityLoader() {
+        return IdentityLoader.builder()
+                .createEligibility(createEligibility)
+                .policyService(policyService())
+                .build();
+    }
+
+    private LockoutStateValidator stateValidator() {
+        return LockoutStateValidator.builder()
+                .lockoutService(lockoutService)
+                .build();
+    }
+
+}

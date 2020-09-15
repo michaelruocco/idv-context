@@ -6,17 +6,22 @@ import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSw
 import uk.co.idv.context.usecases.context.method.otp.delivery.phone.simswap.SimSwapExecutor;
 
 import java.time.Clock;
+import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 
 @Builder
 public class StubSimSwapExecutorConfig {
 
-    private final Clock clock;
+    @Builder.Default
+    private final Clock clock = Clock.systemUTC();
+
+    @Builder.Default
+    private final Delay delay = new Delay(Duration.ofSeconds(3));
+
     private final SimSwapConfig simSwapConfig;
-    private final Delay delay;
     private final ExecutorService executorService;
 
-    public SimSwapExecutor buildSimSwapExecutor() {
+    public SimSwapExecutor simSwapExecutor() {
         return StubSimSwapExecutor.builder()
                 .executor(executorService)
                 .supplierFactory(buildSupplierFactory())
@@ -28,13 +33,13 @@ public class StubSimSwapExecutorConfig {
                 .resultFactory(buildResultFactory())
                 .delay(delay)
                 .clock(clock)
+                .config(simSwapConfig)
                 .build();
     }
 
     private StubSimSwapResultFactory buildResultFactory() {
         return StubSimSwapResultFactory.builder()
                 .clock(clock)
-                .config(simSwapConfig)
                 .build();
     }
 

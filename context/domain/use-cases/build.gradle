@@ -4,12 +4,13 @@ ext {
 
 dependencies {
     api project(":context-entities")
+    api "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}"
 
     implementation project(":common-use-cases")
     implementation project(":identity-use-cases")
     implementation project(":lockout-use-cases")
-    implementation "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}"
 
     testImplementation testFixtures(project(":context-entities"))
+    testImplementation testFixtures(project(":policy-entities"))
     testImplementation "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}:test-fixtures"
 }

@@ -1,7 +1,6 @@
 package uk.co.idv.app.manual.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.app.manual.identity.IdentityConfigBuilder;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.identity.entities.identity.Identity;
@@ -34,7 +33,7 @@ import static uk.co.idv.lockout.entities.attempt.AttemptMother.unsuccessful;
 
 public class LockoutIntegrationTest {
 
-    private final IdentityConfig identityConfig = new IdentityConfigBuilder().build();
+    private final IdentityConfig identityConfig = IdentityConfig.builder().build();
     private final IdentityService identityService = identityConfig.identityService();
 
     private final LockoutConfigBuilder lockoutConfigBuilder = LockoutConfigBuilder.builder()

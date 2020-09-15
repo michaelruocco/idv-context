@@ -1,0 +1,9 @@
+dependencies {
+    api project(":context-use-cases")
+    api project(":context-sim-swap-stub")
+
+    implementation project(":identity-config")
+    implementation project(":lockout-config")
+    implementation project(":policy-in-memory-repository")
+    implementation project(":context-in-memory-repository")
+}

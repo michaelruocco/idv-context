@@ -11,7 +11,8 @@ import uk.co.idv.identity.entities.identity.Identity;
 @Builder
 public class PhoneDeliveryMethodConfigConverter implements DeliveryMethodConfigConverter {
 
-    private final PhoneNumbersConverter numbersConverter;
+    @Builder.Default
+    private final PhoneNumbersConverter numbersConverter = new PhoneNumbersConverter();
     private final OtpPhoneNumbersConverter otpNumbersConverter;
 
     @Override

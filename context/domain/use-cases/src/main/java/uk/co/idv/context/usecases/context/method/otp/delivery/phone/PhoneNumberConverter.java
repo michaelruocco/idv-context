@@ -12,6 +12,10 @@ public class PhoneNumberConverter {
 
     private final LocalNumberCalculator calculator;
 
+    public PhoneNumberConverter() {
+        this(new LocalNumberCalculator());
+    }
+
     public OtpPhoneNumber toOtpPhoneNumber(PhoneNumber number, CountryCode country) {
         LocalPhoneNumber localNumber = calculator.toLocalPhoneNumber(number.getValue(), country);
         return OtpPhoneNumber.builder()

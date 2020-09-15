@@ -21,7 +21,6 @@ class StubSimSwapResultFactoryTest {
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
 
     private final StubSimSwapResultFactory factory = StubSimSwapResultFactory.builder()
-            .config(config)
             .clock(clock)
             .build();
 
@@ -29,7 +28,7 @@ class StubSimSwapResultFactoryTest {
     void shouldReturnFailureResultIfNumberEndsWith9() {
         OtpPhoneNumber number = givenNumberWithLastDigit(9);
 
-        SimSwapResult result = factory.build(number);
+        SimSwapResult result = factory.build(number, config);
 
         assertThat(result)
                 .hasFieldOrPropertyWithValue("status", "failure")
@@ -41,7 +40,7 @@ class StubSimSwapResultFactoryTest {
     void shouldReturnUnknownResultIfNumberEndsWith8() {
         OtpPhoneNumber number = givenNumberWithLastDigit(8);
 
-        SimSwapResult result = factory.build(number);
+        SimSwapResult result = factory.build(number, config);
 
         assertThat(result)
                 .hasFieldOrPropertyWithValue("status", "unknown")
@@ -53,7 +52,7 @@ class StubSimSwapResultFactoryTest {
     void shouldReturnUnknownResultIfNumberEndsWith7() {
         OtpPhoneNumber number = givenNumberWithLastDigit(7);
 
-        SimSwapResult result = factory.build(number);
+        SimSwapResult result = factory.build(number, config);
 
         assertThat(result)
                 .hasFieldOrPropertyWithValue("status", "timeout")
@@ -65,7 +64,7 @@ class StubSimSwapResultFactoryTest {
     void shouldReturnSuccessResultWithLastSwapped5DaysAgoIfNumberEndsWith6() {
         OtpPhoneNumber number = givenNumberWithLastDigit(6);
 
-        SimSwapResult result = factory.build(number);
+        SimSwapResult result = factory.build(number, config);
 
         Instant expectedLastSwapped = NOW.minus(Duration.ofDays(5));
         assertThat(result)
@@ -78,7 +77,7 @@ class StubSimSwapResultFactoryTest {
     void shouldReturnSuccessResultIfNumberEndsWith5() {
         OtpPhoneNumber number = givenNumberWithLastDigit(5);
 
-        SimSwapResult result = factory.build(number);
+        SimSwapResult result = factory.build(number, config);
 
         assertThat(result)
                 .hasFieldOrPropertyWithValue("status", "success")

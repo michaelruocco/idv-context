@@ -2,9 +2,6 @@ package uk.co.idv.app.manual.identity;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.config.IdentityConfig;
-import uk.co.idv.identity.config.repository.IdentityRepositoryConfig;
-import uk.co.idv.identity.config.repository.inmemory.InMemoryIdentityRepositoryConfig;
-import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.identity.entities.channel.gb.As3Mother;
@@ -21,25 +18,12 @@ import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequestMother;
 import uk.co.idv.identity.usecases.identity.IdentityService;
 import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
 
-import java.time.Duration;
-import java.util.concurrent.Executors;
-
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 public class CreateEligibilityIntegrationTest {
 
-    private final IdentityRepositoryConfig repositoryConfig = new InMemoryIdentityRepositoryConfig();
-    private final ExternalFindIdentityStubConfig stubConfig = ExternalFindIdentityStubConfig.builder()
-            .executor(Executors.newFixedThreadPool(2))
-            .timeout(Duration.ofMillis(250))
-            .phoneNumberDelay(Duration.ofMillis(400))
-            .emailAddressDelay(Duration.ofMillis(100))
-            .build();
-
     private final IdentityConfig identityConfig = IdentityConfig.builder()
-            .repository(repositoryConfig.identityRepository())
-            .stubConfig(stubConfig)
             .build();
 
     private final CreateEligibility createEligibility = identityConfig.createEligibility();

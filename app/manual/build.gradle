@@ -9,12 +9,13 @@ testSets {
 dependencies {
     implementation project(":identity-config")
     implementation project(":lockout-config")
+    implementation project(":context-config")
 
     integrationTestImplementation project(":identity-in-memory-repository")
     integrationTestImplementation project(":identity-external-find-stub")
-    integrationTestImplementation testFixtures(project(":identity-use-cases"))
-    integrationTestImplementation testFixtures(project(":identity-json"))
-
     integrationTestImplementation project(":lockout-in-memory-repository")
+
+    integrationTestImplementation testFixtures(project(":identity-use-cases"))
     integrationTestImplementation testFixtures(project(":lockout-use-cases"))
+    integrationTestImplementation testFixtures(project(":context-entities"))
 }

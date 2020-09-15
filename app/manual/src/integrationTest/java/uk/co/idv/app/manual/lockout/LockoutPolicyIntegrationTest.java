@@ -26,13 +26,13 @@ public class LockoutPolicyIntegrationTest {
 
     @Test
     void shouldThrowExceptionIfPolicyNotFoundById() {
-        LockoutPolicy policy = HardLockoutPolicyMother.build();
+        UUID id = UUID.randomUUID();
 
-        Throwable error = catchThrowable(() -> policyService.load(policy.getId()));
+        Throwable error = catchThrowable(() -> policyService.load(id));
 
         assertThat(error)
                 .isInstanceOf(PolicyNotFoundException.class)
-                .hasMessage(policy.getId().toString());
+                .hasMessage(id.toString());
     }
 
     @Test

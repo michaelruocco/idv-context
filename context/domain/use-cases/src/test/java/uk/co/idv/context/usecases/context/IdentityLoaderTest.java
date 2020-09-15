@@ -89,7 +89,7 @@ class IdentityLoaderTest {
 
     private ContextPolicy givenPolicyLoadedForRequest(CreateContextRequest request) {
         ContextPolicy policy = mock(ContextPolicy.class);
-        given(policyService.load(request)).willReturn(policy);
+        given(policyService.loadHighestPriority(request)).willReturn(policy);
         return policy;
     }
 
