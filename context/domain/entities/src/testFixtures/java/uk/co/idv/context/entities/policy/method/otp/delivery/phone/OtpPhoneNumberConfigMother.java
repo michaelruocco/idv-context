@@ -21,6 +21,10 @@ public interface OtpPhoneNumberConfigMother {
         return builder().simSwapConfig(simSwapConfig).build();
     }
 
+    static OtpPhoneNumberConfig withoutSimSwapConfig() {
+        return builder().simSwapConfig(null).build();
+    }
+
     static OtpPhoneNumberConfig.OtpPhoneNumberConfigBuilder builder() {
         return OtpPhoneNumberConfig.builder()
                 .country(CountryCode.GB)

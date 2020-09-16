@@ -37,12 +37,14 @@ public class StubSimSwapEligibilitySupplier implements Supplier<Eligibility> {
     private Eligibility perform() {
         log.debug("running stub sim swap eligibility supplier for {}", number);
         if (shouldError()) {
-            throw new StubSimSwapExceptionErrorException(number.getValue());
+            throw new StubSimSwapErrorException(number.getValue());
         }
         if (shouldBeDelayed()) {
             delay.execute();
         }
-        return buildEligibility();
+        Eligibility eligibility = buildEligibility();
+        log.debug("sim swap eligibility supplier for {} returned eligibility {}", number, eligibility);
+        return eligibility;
     }
 
     private boolean shouldError() {

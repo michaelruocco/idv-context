@@ -14,57 +14,48 @@ class StubSimSwapEligibilitySupplierFactoryTest {
 
     private final Clock clock = mock(Clock.class);
     private final Delay delay = mock(Delay.class);
-    private final SimSwapConfig config = mock(SimSwapConfig.class);
     private final StubSimSwapResultFactory resultFactory = mock(StubSimSwapResultFactory.class);
+
+    private final OtpPhoneNumber number = mock(OtpPhoneNumber.class);
+    private final SimSwapConfig config = mock(SimSwapConfig.class);
 
     private final StubSimSwapEligibilitySupplierFactory supplierFactory = StubSimSwapEligibilitySupplierFactory.builder()
             .clock(clock)
             .delay(delay)
-            .config(config)
             .resultFactory(resultFactory)
             .build();
 
     @Test
     void shouldPopulateClockOnSupplier() {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-
-        StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number);
+        StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number, config);
 
         assertThat(supplier.getClock()).isEqualTo(clock);
     }
 
     @Test
     void shouldPopulateDelayOnSupplier() {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-
-        StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number);
+        StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number, config);
 
         assertThat(supplier.getDelay()).isEqualTo(delay);
     }
 
     @Test
     void shouldPopulateConfigOnSupplier() {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-
-        StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number);
+        StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number, config);
 
         assertThat(supplier.getConfig()).isEqualTo(config);
     }
 
     @Test
     void shouldPopulateResultFactoryOnSupplier() {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-
-        StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number);
+        StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number, config);
 
         assertThat(supplier.getResultFactory()).isEqualTo(resultFactory);
     }
 
     @Test
     void shouldPopulateOtpPhoneNumberOnSupplier() {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-
-        StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number);
+        StubSimSwapEligibilitySupplier supplier = supplierFactory.toSupplier(number, config);
 
         assertThat(supplier.getNumber()).isEqualTo(number);
     }

@@ -31,7 +31,7 @@ public class StubAsyncDataLoaderIntegrationTest {
     private static final Duration EMAIL_ADDRESS_DELAY = Duration.ofMillis(1500);
     private static final int NUMBER_OF_RUNS = 100;
 
-    private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool();
+    private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(NUMBER_OF_RUNS * 2);
 
     @Test
     void shouldLoadStubbedData() {

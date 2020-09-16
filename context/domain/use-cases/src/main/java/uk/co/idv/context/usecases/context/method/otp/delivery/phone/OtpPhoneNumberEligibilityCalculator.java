@@ -22,10 +22,14 @@ public class OtpPhoneNumberEligibilityCalculator {
         if (!eligibility.isEligible()) {
             return eligibility;
         }
+        if (!number.isMobile()) {
+            return eligibility;
+        }
         return config.getSimSwapConfig()
                 .map(simSwapConfig -> toEligibility(number, simSwapConfig))
                 .orElse(eligibility);
     }
+
 
     private Eligibility toEligibility(OtpPhoneNumber number, SimSwapConfig config) {
         return simSwapExecutor.executeSimSwap(number, config);

@@ -3,12 +3,15 @@ package uk.co.idv.context.entities.context;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
+import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class ContextTest {
@@ -47,6 +50,39 @@ class ContextTest {
     }
 
     @Test
+    void shouldReturnChannelFromCreateContextRequest() {
+        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+
+        Context context = Context.builder()
+                .request(request)
+                .build();
+
+        assertThat(context.getChannel()).isEqualTo(request.getChannel());
+    }
+
+    @Test
+    void shouldReturnActivityFromCreateContextRequest() {
+        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+
+        Context context = Context.builder()
+                .request(request)
+                .build();
+
+        assertThat(context.getActivity()).isEqualTo(request.getActivity());
+    }
+
+    @Test
+    void shouldReturnIdentityFromCreateContextRequest() {
+        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+
+        Context context = Context.builder()
+                .request(request)
+                .build();
+
+        assertThat(context.getIdentity()).isEqualTo(request.getIdentity());
+    }
+
+    @Test
     void shouldReturnSequences() {
         Sequences sequences = mock(Sequences.class);
 
@@ -55,6 +91,19 @@ class ContextTest {
                 .build();
 
         assertThat(context.getSequences()).isEqualTo(sequences);
+    }
+
+    @Test
+    void shouldReturnIncompleteEligibleOtpMethodFromSequencesIfOnePresent() {
+        Otp otp = mock(Otp.class);
+        Sequences sequences = mock(Sequences.class);
+        given(sequences.findNextIncompleteEligibleOtp()).willReturn(Optional.of(otp));
+
+        Context context = Context.builder()
+                .sequences(sequences)
+                .build();
+
+        assertThat(context.findNextIncompleteEligibleOtp()).contains(otp);
     }
 
 }

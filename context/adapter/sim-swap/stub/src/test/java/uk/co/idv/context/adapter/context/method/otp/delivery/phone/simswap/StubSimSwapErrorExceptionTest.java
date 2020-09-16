@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class StubSimSwapExceptionErrorExceptionTest {
+class StubSimSwapErrorExceptionTest {
 
     @Test
     void shouldReturnMessage() {
         String message = "my-number";
 
-        Throwable error = new StubSimSwapExceptionErrorException(message);
+        Throwable error = new StubSimSwapErrorException(message);
 
         assertThat(error.getMessage()).isEqualTo(message);
     }

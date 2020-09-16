@@ -12,15 +12,14 @@ public class StubSimSwapEligibilitySupplierFactory {
 
     private final Clock clock;
     private final Delay delay;
-    private final SimSwapConfig config;
     private final StubSimSwapResultFactory resultFactory;
 
-    public StubSimSwapEligibilitySupplier toSupplier(OtpPhoneNumber number) {
+    public StubSimSwapEligibilitySupplier toSupplier(OtpPhoneNumber number, SimSwapConfig config) {
         return StubSimSwapEligibilitySupplier.builder()
                 .clock(clock)
-                .config(config)
                 .resultFactory(resultFactory)
                 .delay(delay)
+                .config(config)
                 .number(number)
                 .build();
     }

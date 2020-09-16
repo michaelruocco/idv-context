@@ -1,5 +1,8 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
@@ -7,6 +10,7 @@ import java.util.Collection;
 import java.util.Iterator;
 
 @RequiredArgsConstructor
+@Data
 public class AcceptableSimSwapStatuses implements Iterable<String> {
 
     public static final String SUCCESS = "success";
@@ -14,6 +18,7 @@ public class AcceptableSimSwapStatuses implements Iterable<String> {
     public static final String TIMEOUT = "timeout";
     public static final String UNKNOWN = "unknown";
 
+    @Getter(AccessLevel.NONE)
     private final Collection<String> values;
 
     public AcceptableSimSwapStatuses(String... values) {

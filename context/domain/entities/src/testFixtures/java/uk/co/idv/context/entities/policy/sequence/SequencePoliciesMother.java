@@ -1,13 +1,19 @@
 package uk.co.idv.context.entities.policy.sequence;
 
+import uk.co.idv.context.entities.policy.method.MethodPolicy;
+
 public interface SequencePoliciesMother {
 
     static SequencePolicies build() {
-        return with(SequencePolicyMother.build());
+        return withSequencePolicy(SequencePolicyMother.build());
     }
 
-    static SequencePolicies with(SequencePolicy... policies) {
-        return new SequencePolicies(policies);
+    static SequencePolicies withSequencePolicy(SequencePolicy... sequencePolicies) {
+        return new SequencePolicies(sequencePolicies);
+    }
+
+    static SequencePolicies withMethodPolicy(MethodPolicy methodPolicy) {
+        return new SequencePolicies(SequencePolicyMother.with(methodPolicy));
     }
 
 }

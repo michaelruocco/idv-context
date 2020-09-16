@@ -2,8 +2,12 @@ package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.context.entities.context.method.otp.Otp;
+
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class SequenceTest {
@@ -28,6 +32,19 @@ class SequenceTest {
                 .build();
 
         assertThat(sequence.getMethods()).isEqualTo(methods);
+    }
+
+    @Test
+    void shouldReturnIncompleteEligibleOtpFromMethodsIfPresent() {
+        Otp otp = mock(Otp.class);
+        Methods methods = mock(Methods.class);
+        given(methods.findNextIncompleteEligibleOtp()).willReturn(Optional.of(otp));
+
+        Sequence sequence = Sequence.builder()
+                .methods(methods)
+                .build();
+
+        assertThat(sequence.findNextIncompleteEligibleOtp()).contains(otp);
     }
 
 }

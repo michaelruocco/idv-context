@@ -13,10 +13,6 @@ public interface SimSwapConfigMother {
         return builder().timeout(timeout).build();
     }
 
-    static SimSwapConfig withAcceptableStatuses(AcceptableSimSwapStatuses acceptableStatuses) {
-        return builder().acceptableStatuses(acceptableStatuses).build();
-    }
-
     static SimSwapConfig.SimSwapConfigBuilder builder() {
         return SimSwapConfig.builder()
                 .acceptableStatuses(AcceptableSimSwapStatusesMother.onlySuccess())

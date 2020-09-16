@@ -19,6 +19,9 @@ class StubSimSwapExecutorTest {
     private final StubSimSwapEligibilitySupplierFactory supplierFactory = mock(StubSimSwapEligibilitySupplierFactory.class);
     private final Executor executor = Executors.newSingleThreadExecutor();
 
+    private final OtpPhoneNumber number = mock(OtpPhoneNumber.class);
+    private final SimSwapConfig config = mock(SimSwapConfig.class);
+
     private final StubSimSwapExecutor simSwapExecutor = StubSimSwapExecutor.builder()
             .supplierFactory(supplierFactory)
             .executor(executor)
@@ -26,9 +29,7 @@ class StubSimSwapExecutorTest {
 
     @Test
     void shouldPopulateEligibilityWithConfig() {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-        SimSwapConfig config = mock(SimSwapConfig.class);
-        givenSupplierCreatedFor(number);
+        givenSupplierCreated();
 
         AsyncSimSwapEligibility eligibility = simSwapExecutor.executeSimSwap(number, config);
 
@@ -37,25 +38,24 @@ class StubSimSwapExecutorTest {
 
     @Test
     void shouldPopulateEligibilityFromSupplier() throws ExecutionException, InterruptedException {
-        OtpPhoneNumber number = mock(OtpPhoneNumber.class);
-        SimSwapConfig config = mock(SimSwapConfig.class);
-        Eligibility expectedEligibility = givenEligibilityReturnedFor(number);
+        Eligibility expectedEligibility = givenEligibilityReturned();
 
         AsyncSimSwapEligibility eligibility = simSwapExecutor.executeSimSwap(number, config);
 
         assertThat(eligibility.getFuture().get()).isEqualTo(expectedEligibility);
     }
 
-    private Eligibility givenEligibilityReturnedFor(OtpPhoneNumber number) {
-        StubSimSwapEligibilitySupplier supplier = givenSupplierCreatedFor(number);
+    private Eligibility givenEligibilityReturned() {
+        StubSimSwapEligibilitySupplier supplier = givenSupplierCreated();
         Eligibility eligibility = mock(Eligibility.class);
         given(supplier.get()).willReturn(eligibility);
         return eligibility;
     }
 
-    private StubSimSwapEligibilitySupplier givenSupplierCreatedFor(OtpPhoneNumber number) {
+    private StubSimSwapEligibilitySupplier givenSupplierCreated() {
         StubSimSwapEligibilitySupplier supplier = mock(StubSimSwapEligibilitySupplier.class);
-        given(supplierFactory.toSupplier(number)).willReturn(supplier);
+        given(supplierFactory.toSupplier(number, config)).willReturn(supplier);
         return supplier;
     }
+
 }

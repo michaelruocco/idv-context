@@ -15,4 +15,8 @@ public interface Method {
 
     MethodConfig getConfig();
 
+    default boolean isEligible() {
+        return getEligibility().isEligible();
+    }
+
 }

@@ -2,7 +2,6 @@ package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
 import lombok.Builder;
 import uk.co.idv.common.usecases.async.Delay;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 import uk.co.idv.context.usecases.context.method.otp.delivery.phone.simswap.SimSwapExecutor;
 
 import java.time.Clock;
@@ -18,7 +17,6 @@ public class StubSimSwapExecutorConfig {
     @Builder.Default
     private final Delay delay = new Delay(Duration.ofSeconds(3));
 
-    private final SimSwapConfig simSwapConfig;
     private final ExecutorService executorService;
 
     public SimSwapExecutor simSwapExecutor() {
@@ -33,7 +31,6 @@ public class StubSimSwapExecutorConfig {
                 .resultFactory(buildResultFactory())
                 .delay(delay)
                 .clock(clock)
-                .config(simSwapConfig)
                 .build();
     }
 

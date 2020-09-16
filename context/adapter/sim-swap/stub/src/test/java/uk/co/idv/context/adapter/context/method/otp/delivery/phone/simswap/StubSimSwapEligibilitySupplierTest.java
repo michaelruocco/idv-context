@@ -66,7 +66,7 @@ class StubSimSwapEligibilitySupplierTest {
 
         verify(delay, never()).execute();
         assertThat(error)
-                .isInstanceOf(StubSimSwapExceptionErrorException.class)
+                .isInstanceOf(StubSimSwapErrorException.class)
                 .hasMessage(value);
     }
 

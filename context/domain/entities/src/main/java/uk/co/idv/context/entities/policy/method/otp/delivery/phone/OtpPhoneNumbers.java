@@ -1,5 +1,8 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 import java.util.Arrays;
@@ -8,8 +11,10 @@ import java.util.Iterator;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
+@Data
 public class OtpPhoneNumbers implements Iterable<OtpPhoneNumber> {
 
+    @Getter(AccessLevel.NONE)
     private final Collection<OtpPhoneNumber> values;
 
     public OtpPhoneNumbers(OtpPhoneNumber... values) {
