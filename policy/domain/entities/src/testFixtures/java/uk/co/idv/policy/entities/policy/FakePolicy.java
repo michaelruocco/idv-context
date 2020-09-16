@@ -18,13 +18,13 @@ public class FakePolicy implements Policy {
     }
 
     @Override
-    public UUID getId() {
-        return key.getId();
-    }
-
-    @Override
     public boolean appliesTo(PolicyRequest request) {
         return key.appliesTo(request);
     }
 
+    @Override
+    public UUID getId() {
+        return key.getId();
+    }
+    
 }
