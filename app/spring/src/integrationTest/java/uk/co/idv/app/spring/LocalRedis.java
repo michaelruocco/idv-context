@@ -12,9 +12,11 @@ import static org.awaitility.Awaitility.await;
 @Slf4j
 public class LocalRedis extends GenericContainer<LocalRedis> {
 
+    private static final int PORT = 6379;
+
     public LocalRedis() {
         super("redis:latest");
-        withExposedPorts(6379);
+        withExposedPorts(PORT);
         withLogConsumer(this::logInfo);
     }
 
@@ -26,7 +28,7 @@ public class LocalRedis extends GenericContainer<LocalRedis> {
 
     public String getEndpointUri() {
         String ip = getContainerIpAddress();
-        int port = getMappedPort(6379);
+        int port = getMappedPort(PORT);
         return String.format("redis://%s:%s", ip, port);
     }
 

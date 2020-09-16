@@ -18,6 +18,8 @@ import static uk.co.idv.lockout.config.repository.dynamo.DynamoAttemptRepository
 @Slf4j
 public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
 
+    private static final int PORT = 4566;
+
     private static DynamoTables dynamoTables;
 
     private final String environment;
@@ -30,7 +32,7 @@ public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
         withCopyFileToContainer(forHostPath("localstack/scripts/create-tables.sh"), "/docker-entrypoint-initaws.d/create-tables.sh");
         withCopyFileToContainer(forHostPath("localstack/tables/identity.json"), "/opt/tables/identity.json");
         withCopyFileToContainer(forHostPath("localstack/tables/attempt.json"), "/opt/tables/attempt.json");
-        withExposedPorts(4569);
+        withExposedPorts(PORT);
         withLogConsumer(this::logInfo);
         this.region = region;
         this.environment = environment;
@@ -52,7 +54,7 @@ public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
 
     public String getDynamoEndpointUri() {
         String ip = getContainerIpAddress();
-        int port = getMappedPort(4569);
+        int port = getMappedPort(PORT);
         return String.format("http://%s:%s", ip, port);
     }
 
