@@ -13,13 +13,13 @@ public class FakePolicy implements Policy {
     private final PolicyKey key;
 
     @Override
-    public UUID getId() {
-        return key.getId();
+    public int getPriority() {
+        return key.getPriority();
     }
 
     @Override
-    public int getPriority() {
-        return key.getPriority();
+    public UUID getId() {
+        return key.getId();
     }
 
     @Override
