@@ -26,5 +26,5 @@ public class FakePolicy implements Policy {
     public UUID getId() {
         return key.getId();
     }
-    
+
 }
