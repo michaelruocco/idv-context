@@ -60,13 +60,13 @@ public class LockoutPolicy implements Policy {
     }
 
     @Override
-    public int getPriority() {
-        return key.getPriority();
+    public boolean appliesTo(PolicyRequest request) {
+        return key.appliesTo(request);
     }
 
     @Override
-    public boolean appliesTo(PolicyRequest request) {
-        return key.appliesTo(request);
+    public int getPriority() {
+        return key.getPriority();
     }
 
 }
