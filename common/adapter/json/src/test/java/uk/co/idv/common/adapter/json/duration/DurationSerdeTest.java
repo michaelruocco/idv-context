@@ -10,7 +10,7 @@ import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
-public class DurationSerdeTest {
+class DurationSerdeTest {
 
     private static final Duration DURATION = Duration.ofMinutes(5);
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new DurationModule());

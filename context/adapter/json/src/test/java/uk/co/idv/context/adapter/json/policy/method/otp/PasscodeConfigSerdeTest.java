@@ -9,7 +9,7 @@ import uk.co.idv.context.entities.policy.method.otp.PasscodeConfigMother;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PasscodeConfigSerdeTest {
+class PasscodeConfigSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new OtpPolicyModule());
     private static final PasscodeConfig CONFIG = PasscodeConfigMother.build();

@@ -9,7 +9,7 @@ import uk.co.idv.context.entities.policy.method.otp.OtpConfigMother;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class OtpConfigSerdeTest {
+class OtpConfigSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new OtpPolicyModule());
     private static final OtpConfig CONFIG = OtpConfigMother.build();
