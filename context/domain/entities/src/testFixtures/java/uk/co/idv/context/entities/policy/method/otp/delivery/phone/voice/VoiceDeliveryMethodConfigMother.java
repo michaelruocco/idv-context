@@ -7,7 +7,7 @@ import java.time.Duration;
 
 public interface VoiceDeliveryMethodConfigMother {
 
-    static VoiceDeliveryMethodConfig build() {
+    static VoiceDeliveryMethodConfig voice() {
         return withConfig(OtpPhoneNumberConfigMother.build());
     }
 

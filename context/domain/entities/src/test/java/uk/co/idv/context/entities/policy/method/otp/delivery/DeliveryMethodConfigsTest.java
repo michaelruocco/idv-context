@@ -22,8 +22,8 @@ class DeliveryMethodConfigsTest {
 
     @Test
     void shouldBeIterable() {
-        EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.build();
-        SmsDeliveryMethodConfig smsConfig = SmsDeliveryMethodConfigMother.build();
+        EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.email();
+        SmsDeliveryMethodConfig smsConfig = SmsDeliveryMethodConfigMother.sms();
 
         DeliveryMethodConfigs configs = new DeliveryMethodConfigs(emailConfig, smsConfig);
 
@@ -32,8 +32,8 @@ class DeliveryMethodConfigsTest {
 
     @Test
     void shouldReturnStream() {
-        EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.build();
-        SmsDeliveryMethodConfig smsConfig = SmsDeliveryMethodConfigMother.build();
+        EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.email();
+        SmsDeliveryMethodConfig smsConfig = SmsDeliveryMethodConfigMother.sms();
         DeliveryMethodConfigs configs = new DeliveryMethodConfigs(emailConfig, smsConfig);
 
         Stream<DeliveryMethodConfig> stream = configs.stream();
@@ -57,7 +57,7 @@ class DeliveryMethodConfigsTest {
 
     @Test
     void shouldReturnEmptySimSwapTimeoutIfNoneConfigured() {
-        EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.build();
+        EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.email();
         DeliveryMethodConfigs configs = new DeliveryMethodConfigs(emailConfig);
 
         Optional<Duration> timeout = configs.getLongestSimSwapConfigTimeout();
@@ -71,7 +71,7 @@ class DeliveryMethodConfigsTest {
         Duration shortestTimeout = Duration.ofSeconds(2);
         SmsDeliveryMethodConfig smsConfig = SmsDeliveryMethodConfigMother.withSimSwapTimeout(longestTimeout);
         VoiceDeliveryMethodConfig voiceConfig = VoiceDeliveryMethodConfigMother.withSimSwapTimeout(shortestTimeout);
-        EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.build();
+        EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.email();
         DeliveryMethodConfigs configs = new DeliveryMethodConfigs(smsConfig, voiceConfig, emailConfig);
 
         Optional<Duration> timeout = configs.getLongestSimSwapConfigTimeout();

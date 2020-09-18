@@ -23,7 +23,7 @@ class CompositeDeliveryMethodConfigConverterTest {
 
     @Test
     void shouldThrowExceptionIfConvertersSupportingConfig() {
-        DeliveryMethodConfig config = SmsDeliveryMethodConfigMother.build();
+        DeliveryMethodConfig config = SmsDeliveryMethodConfigMother.sms();
         Identity identity = mock(Identity.class);
 
         Throwable error = catchThrowable(() -> compositeConverter.toDeliveryMethods(identity, config));
@@ -35,7 +35,7 @@ class CompositeDeliveryMethodConfigConverterTest {
 
     @Test
     void shouldReturnDeliveryMethodsFromSupportedConverter() {
-        DeliveryMethodConfig config = SmsDeliveryMethodConfigMother.build();
+        DeliveryMethodConfig config = SmsDeliveryMethodConfigMother.sms();
         Identity identity = mock(Identity.class);
         given(converter2.supports(config)).willReturn(true);
         DeliveryMethods expectedMethods = mock(DeliveryMethods.class);

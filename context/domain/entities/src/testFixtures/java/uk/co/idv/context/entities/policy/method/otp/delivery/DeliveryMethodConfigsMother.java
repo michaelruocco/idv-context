@@ -8,9 +8,9 @@ public interface DeliveryMethodConfigsMother {
 
     static DeliveryMethodConfigs oneOfEach() {
         return with(
-                SmsDeliveryMethodConfigMother.build(),
-                VoiceDeliveryMethodConfigMother.build(),
-                EmailDeliveryMethodConfigMother.build()
+                SmsDeliveryMethodConfigMother.sms(),
+                VoiceDeliveryMethodConfigMother.voice(),
+                EmailDeliveryMethodConfigMother.email()
         );
     }
 

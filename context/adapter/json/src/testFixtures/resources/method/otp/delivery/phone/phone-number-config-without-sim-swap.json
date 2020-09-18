@@ -1,0 +1,8 @@
+{
+  "country": "GB",
+  "allowInternational": false,
+  "lastUpdatedConfig": {
+    "allowUnknown": true,
+    "minDaysSinceUpdate": 5
+  }
+}

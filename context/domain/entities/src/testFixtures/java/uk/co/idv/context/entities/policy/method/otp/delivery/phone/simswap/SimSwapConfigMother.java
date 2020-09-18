@@ -13,6 +13,10 @@ public interface SimSwapConfigMother {
         return builder().timeout(timeout).build();
     }
 
+    static SimSwapConfig withoutMinDays() {
+        return builder().minDaysSinceSwap(null).build();
+    }
+
     static SimSwapConfig.SimSwapConfigBuilder builder() {
         return SimSwapConfig.builder()
                 .acceptableStatuses(AcceptableSimSwapStatusesMother.onlySuccess())

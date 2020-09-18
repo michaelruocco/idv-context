@@ -1,0 +1,7 @@
+{
+  "acceptableStatuses": [
+    "success"
+  ],
+  "timeout": 2000,
+  "minDaysSinceSwap": 5
+}

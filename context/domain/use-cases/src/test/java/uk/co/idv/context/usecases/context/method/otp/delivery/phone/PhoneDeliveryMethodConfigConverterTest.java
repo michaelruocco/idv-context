@@ -45,7 +45,7 @@ class PhoneDeliveryMethodConfigConverterTest {
 
     @Test
     void shouldConvertConfigToDeliveryMethods() {
-        PhoneDeliveryMethodConfig config = SmsDeliveryMethodConfigMother.build();
+        PhoneDeliveryMethodConfig config = SmsDeliveryMethodConfigMother.sms();
         Identity identity = IdentityMother.example();
         OtpPhoneNumbers otpPhoneNumbers = givenConvertToOtpPhoneNumbers(identity.getPhoneNumbers(), config);
         DeliveryMethods expectedMethods = givenConvertToDeliveryMethods(otpPhoneNumbers, config);

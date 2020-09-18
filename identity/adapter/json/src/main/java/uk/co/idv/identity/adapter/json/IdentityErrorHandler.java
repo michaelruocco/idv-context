@@ -1,5 +1,6 @@
-package uk.co.idv.common.adapter.json.error.handler;
+package uk.co.idv.identity.adapter.json;
 
+import uk.co.idv.common.adapter.json.error.handler.CompositeErrorHandler;
 import uk.co.idv.identity.adapter.json.error.aliastype.UnsupportedAliasTypeHandler;
 import uk.co.idv.identity.adapter.json.error.country.mismatch.CountryMismatchHandler;
 import uk.co.idv.identity.adapter.json.error.country.notprovided.CountryNotProvidedHandler;

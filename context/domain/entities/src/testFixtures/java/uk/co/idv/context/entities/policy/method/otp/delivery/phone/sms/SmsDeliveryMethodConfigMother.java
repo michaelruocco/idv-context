@@ -7,7 +7,7 @@ import java.time.Duration;
 
 public interface SmsDeliveryMethodConfigMother {
 
-    static SmsDeliveryMethodConfig build() {
+    static SmsDeliveryMethodConfig sms() {
         return withConfig(OtpPhoneNumberConfigMother.build());
     }
 

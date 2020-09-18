@@ -1,0 +1,18 @@
+{
+  "type": "voice",
+  "phoneNumberConfig": {
+    "country": "GB",
+    "allowInternational": false,
+    "lastUpdatedConfig": {
+      "allowUnknown": true,
+      "minDaysSinceUpdate": 5
+    },
+    "simSwapConfig": {
+      "acceptableStatuses": [
+        "success"
+      ],
+      "timeout": 2000,
+      "minDaysSinceSwap": 5
+    }
+  }
+}

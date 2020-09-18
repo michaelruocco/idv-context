@@ -1,4 +1,4 @@
-package uk.co.idv.lockout.adapter.json.policy.state.soft;
+package uk.co.idv.common.adapter.json.duration;
 
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
