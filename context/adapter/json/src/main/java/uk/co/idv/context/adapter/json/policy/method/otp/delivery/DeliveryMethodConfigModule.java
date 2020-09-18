@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.policy.method.otp.delivery.email.EmailDeliveryMethodConfigModule;
 import uk.co.idv.context.adapter.json.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfigModule;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
+import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 
 import java.util.Arrays;
 
@@ -14,8 +15,11 @@ public class DeliveryMethodConfigModule extends SimpleModule {
     public DeliveryMethodConfigModule() {
         super("delivery-method-config-module", Version.unknownVersion());
 
-        addDeserializer(DeliveryMethodConfig.class, new DeliveryMethodConfigDeserializer());
         setMixInAnnotation(DeliveryMethodConfig.class, DeliveryMethodConfigMixin.class);
+        setMixInAnnotation(DeliveryMethodConfigs.class, DeliveryMethodConfigsMixin.class);
+
+        addDeserializer(DeliveryMethodConfig.class, new DeliveryMethodConfigDeserializer());
+        addDeserializer(DeliveryMethodConfigs.class, new DeliveryMethodConfigsDeserializer());
     }
 
     @Override

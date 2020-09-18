@@ -1,11 +1,13 @@
 package uk.co.idv.context.entities.policy.method.otp;
 
 import lombok.Builder;
+import lombok.Data;
 import uk.co.idv.context.entities.policy.method.MethodPolicy;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.identity.entities.identity.RequestedData;
 
 @Builder
+@Data
 public class OtpPolicy implements MethodPolicy {
 
     public static final String NAME = "one-time-passcode";
@@ -19,17 +21,8 @@ public class OtpPolicy implements MethodPolicy {
     }
 
     @Override
-    public OtpConfig getMethodConfig() {
-        return methodConfig;
-    }
-
-    @Override
     public RequestedData getRequestedData() {
         return deliveryMethodConfigs.getRequestedData();
-    }
-
-    public DeliveryMethodConfigs getDeliveryMethodConfigs() {
-        return deliveryMethodConfigs;
     }
 
 }

@@ -1,5 +1,8 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery;
 
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.policy.RequestedDataMerger;
 import uk.co.idv.context.entities.policy.RequestedDataProvider;
@@ -15,8 +18,10 @@ import java.util.Optional;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
+@Data
 public class DeliveryMethodConfigs implements Iterable<DeliveryMethodConfig>, RequestedDataProvider {
 
+    @Getter(AccessLevel.NONE)
     private final Collection<DeliveryMethodConfig> values;
 
     public DeliveryMethodConfigs(DeliveryMethodConfig... values) {

@@ -13,7 +13,7 @@ class InvalidDeliveryMethodConfigSerdeTest {
     private static final String JSON = InvalidDeliveryMethodConfigJsonMother.invalid();
 
     @Test
-    void shouldDeserialize() {
+    void shouldThrowErrorOnDeserialize() {
         Throwable error = catchThrowable(() -> MAPPER.readValue(JSON, DeliveryMethodConfig.class));
 
         assertThat(error)
