@@ -10,7 +10,7 @@ import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import java.time.Duration;
 
-public class PasscodeConfigDeserializer extends StdDeserializer<PasscodeConfig> {
+class PasscodeConfigDeserializer extends StdDeserializer<PasscodeConfig> {
 
     protected PasscodeConfigDeserializer() {
         super(PasscodeConfig.class);

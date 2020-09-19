@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class LockoutErrorHandlerIntegrationTest {
+class LockoutErrorHandlerIntegrationTest {
 
     private final LockoutConfig config = LockoutConfig.builder()
             .build();

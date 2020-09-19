@@ -12,7 +12,7 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class IdentityErrorHandlerIntegrationTest {
+class IdentityErrorHandlerIntegrationTest {
 
     private final IdentityConfig config = IdentityConfig.builder()
             .build();

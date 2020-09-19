@@ -9,7 +9,7 @@ import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ContextPolicySerdeTest {
+class ContextPolicySerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new ContextPolicyModule());
     private static final ContextPolicy POLICY = ContextPolicyMother.build();

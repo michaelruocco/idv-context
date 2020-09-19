@@ -18,7 +18,7 @@ import java.util.concurrent.Executors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class ExternalFindIdentityStubIntegrationTest {
+class ExternalFindIdentityStubIntegrationTest {
 
     private final ExecutorService executor = Executors.newFixedThreadPool(1);
     private final ExternalFindIdentityStubConfig config = ExternalFindIdentityStubConfig.build(executor);

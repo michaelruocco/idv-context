@@ -21,7 +21,7 @@ import java.util.concurrent.Executors;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-public class SimSwapExecutorIntegrationTest {
+class SimSwapExecutorIntegrationTest {
 
     private static final long MIN_DAYS_SINCE_SIM_SWAP = 6;
     private static final Instant NOW = Instant.parse("2020-09-13T20:01:01.001Z");

@@ -21,7 +21,7 @@ import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
-public class CreateEligibilityIntegrationTest {
+class CreateEligibilityIntegrationTest {
 
     private final IdentityConfig identityConfig = IdentityConfig.builder()
             .build();

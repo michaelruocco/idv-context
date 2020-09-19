@@ -9,7 +9,7 @@ import uk.co.idv.context.entities.policy.sequence.SequencePolicyMother;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SequencePolicySerdeTest {
+class SequencePolicySerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new SequencePolicyModule());
     private static final SequencePolicy POLICY = SequencePolicyMother.build();

@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
-public class IdentityIntegrationTest {
+class IdentityIntegrationTest {
 
     private final IdentityConfig identityConfig = IdentityConfig.builder()
             .build();

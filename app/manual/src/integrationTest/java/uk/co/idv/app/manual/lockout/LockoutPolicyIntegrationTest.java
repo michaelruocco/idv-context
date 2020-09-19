@@ -17,7 +17,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-public class LockoutPolicyIntegrationTest {
+class LockoutPolicyIntegrationTest {
 
     private final LockoutConfigBuilder lockoutConfigBuilder = LockoutConfigBuilder.builder().build();
     private final LockoutConfig lockoutConfig = lockoutConfigBuilder.build();

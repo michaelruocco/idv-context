@@ -24,7 +24,7 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
-public class StubAsyncDataLoaderIntegrationTest {
+class StubAsyncDataLoaderIntegrationTest {
 
     private static final Duration TIMEOUT = Duration.ofMillis(1750);
     private static final Duration PHONE_NUMBER_DELAY = Duration.ofMillis(500);

@@ -31,7 +31,7 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static uk.co.idv.lockout.entities.attempt.AttemptMother.successful;
 import static uk.co.idv.lockout.entities.attempt.AttemptMother.unsuccessful;
 
-public class LockoutIntegrationTest {
+class LockoutIntegrationTest {
 
     private final IdentityConfig identityConfig = IdentityConfig.builder().build();
     private final IdentityService identityService = identityConfig.identityService();
