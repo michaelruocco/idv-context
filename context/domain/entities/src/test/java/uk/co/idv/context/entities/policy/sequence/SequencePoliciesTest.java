@@ -40,6 +40,16 @@ class SequencePoliciesTest {
         assertThat(stream).containsExactly(policy1, policy2);
     }
 
+    @Test
+    void shouldBeIterable() {
+        SequencePolicy policy1 = givenSequencePolicy();
+        SequencePolicy policy2 = givenSequencePolicy();
+
+        SequencePolicies policies = new SequencePolicies(policy1, policy2);
+
+        assertThat(policies).containsExactly(policy1, policy2);
+    }
+
     private SequencePolicy givenSequencePolicyWithRequestedData(String... items) {
         SequencePolicy policy = givenSequencePolicy();
         given(policy.getRequestedData()).willReturn(RequestedDataMother.with(items));

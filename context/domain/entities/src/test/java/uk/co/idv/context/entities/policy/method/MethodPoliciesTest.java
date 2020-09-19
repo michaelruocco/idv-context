@@ -40,6 +40,16 @@ class MethodPoliciesTest {
         assertThat(stream).containsExactly(policy1, policy2);
     }
 
+    @Test
+    void shouldBeIterable() {
+        MethodPolicy policy1 = givenMethodPolicy();
+        MethodPolicy policy2 = givenMethodPolicy();
+
+        MethodPolicies policies = new MethodPolicies(policy1, policy2);
+
+        assertThat(policies).containsExactly(policy1, policy2);
+    }
+
     private MethodPolicy givenMethodPolicyWithRequestedData(String... items) {
         MethodPolicy policy = givenMethodPolicy();
         given(policy.getRequestedData()).willReturn(RequestedDataMother.with(items));

@@ -1,0 +1,68 @@
+{
+  "key": {
+    "id": "805eef78-1933-4da9-ac66-8343b3a6f0d4",
+    "type": "channel",
+    "channelId": "default-channel",
+    "priority": 4
+  },
+  "sequencePolicies": [
+    {
+      "name": "default-sequence",
+      "methodPolicies": [
+        {
+          "name": "one-time-passcode",
+          "methodConfig": {
+            "maxNumberOfAttempts": 3,
+            "duration": 300000,
+            "passcodeConfig": {
+              "length": 8,
+              "duration": 120000,
+              "maxNumberOfDeliveries": 2
+            }
+          },
+          "deliveryMethodConfigs": [
+            {
+              "type": "sms",
+              "phoneNumberConfig": {
+                "country": "GB",
+                "allowInternational": false,
+                "lastUpdatedConfig": {
+                  "allowUnknown": true,
+                  "minDaysSinceUpdate": 5
+                },
+                "simSwapConfig": {
+                  "acceptableStatuses": [
+                    "success"
+                  ],
+                  "timeout": 2000,
+                  "minDaysSinceSwap": 5
+                }
+              }
+            },
+            {
+              "type": "voice",
+              "phoneNumberConfig": {
+                "country": "GB",
+                "allowInternational": false,
+                "lastUpdatedConfig": {
+                  "allowUnknown": true,
+                  "minDaysSinceUpdate": 5
+                },
+                "simSwapConfig": {
+                  "acceptableStatuses": [
+                    "success"
+                  ],
+                  "timeout": 2000,
+                  "minDaysSinceSwap": 5
+                }
+              }
+            },
+            {
+              "type": "email"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

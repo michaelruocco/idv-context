@@ -7,7 +7,7 @@ import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfi
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-class InvalidDeliveryMethodConfigSerdeTest {
+class InvalidDeliveryMethodConfigDeserializationTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new DeliveryMethodConfigModule());
     private static final String JSON = InvalidDeliveryMethodConfigJsonMother.invalid();

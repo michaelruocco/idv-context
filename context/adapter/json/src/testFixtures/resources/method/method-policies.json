@@ -1,0 +1,55 @@
+[
+  {
+    "name": "one-time-passcode",
+    "methodConfig": {
+      "maxNumberOfAttempts": 3,
+      "duration": 300000,
+      "passcodeConfig": {
+        "length": 8,
+        "duration": 120000,
+        "maxNumberOfDeliveries": 2
+      }
+    },
+    "deliveryMethodConfigs": [
+      {
+        "type": "sms",
+        "phoneNumberConfig": {
+          "country": "GB",
+          "allowInternational": false,
+          "lastUpdatedConfig": {
+            "allowUnknown": true,
+            "minDaysSinceUpdate": 5
+          },
+          "simSwapConfig": {
+            "acceptableStatuses": [
+              "success"
+            ],
+            "timeout": 2000,
+            "minDaysSinceSwap": 5
+          }
+        }
+      },
+      {
+        "type": "voice",
+        "phoneNumberConfig": {
+          "country": "GB",
+          "allowInternational": false,
+          "lastUpdatedConfig": {
+            "allowUnknown": true,
+            "minDaysSinceUpdate": 5
+          },
+          "simSwapConfig": {
+            "acceptableStatuses": [
+              "success"
+            ],
+            "timeout": 2000,
+            "minDaysSinceSwap": 5
+          }
+        }
+      },
+      {
+        "type": "email"
+      }
+    ]
+  }
+]
