@@ -1,4 +1,4 @@
-package uk.co.idv.lockout.config.repository.redis;
+package uk.co.idv.context.adapter.repository;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
@@ -15,8 +15,8 @@ public class RedissonMapFactory {
     private final RedissonClient client;
     private final String environment;
 
-    public Map<UUID, String> buildLockoutPolicyMap() {
-        return client.getLocalCachedMap(prefixEnvironment("lockout-policy"), LocalCachedMapOptions.defaults());
+    public Map<UUID, String> buildPolicyMap(String name) {
+        return client.getLocalCachedMap(prefixEnvironment(name), LocalCachedMapOptions.defaults());
     }
 
     private String prefixEnvironment(String name) {

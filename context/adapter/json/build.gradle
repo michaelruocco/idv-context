@@ -3,7 +3,7 @@ plugins {
 }
 
 dependencies {
-    api project(":context-entities")
+    api project(":context-use-cases")
     api project(":common-json")
 
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"

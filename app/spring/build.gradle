@@ -33,9 +33,12 @@ dependencies {
     implementation project(":identity-external-find-stub")
     implementation project(":lockout-json")
     implementation project(":lockout-config")
+    implementation project(":context-json")
+    implementation project(":context-config")
 
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
     testImplementation testFixtures(project(":lockout-entities"))
+    testImplementation testFixtures(project(":context-entities"))
 
     integrationTestImplementation "com.intuit.karate:karate-apache:${karateVersion}"
     integrationTestImplementation "com.intuit.karate:karate-junit5:${karateVersion}"

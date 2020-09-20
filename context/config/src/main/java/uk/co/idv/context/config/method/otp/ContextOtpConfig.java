@@ -12,10 +12,13 @@ import uk.co.idv.context.usecases.context.method.otp.delivery.phone.OtpPhoneNumb
 import uk.co.idv.context.usecases.context.method.otp.delivery.phone.OtpPhoneNumbersConverter;
 import uk.co.idv.context.usecases.context.method.otp.delivery.phone.PhoneDeliveryMethodConfigConverter;
 
+import java.util.concurrent.Executors;
+
 @Builder
 public class ContextOtpConfig {
 
-    private final StubSimSwapExecutorConfig simSwapExecutorConfig;
+    @Builder.Default
+    private final StubSimSwapExecutorConfig simSwapExecutorConfig = buildDefaultStubConfig();
 
     public MethodBuilder otpBuilder() {
         return OtpBuilder.builder()
@@ -45,6 +48,12 @@ public class ContextOtpConfig {
     private OtpPhoneNumberEligibilityCalculator otpPhoneNumberEligibilityCalculator() {
         return OtpPhoneNumberEligibilityCalculator.builder()
                 .simSwapExecutor(simSwapExecutorConfig.simSwapExecutor())
+                .build();
+    }
+
+    private static StubSimSwapExecutorConfig buildDefaultStubConfig() {
+        return StubSimSwapExecutorConfig.builder()
+                .executor(Executors.newFixedThreadPool(2))
                 .build();
     }
 

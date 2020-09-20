@@ -8,18 +8,25 @@ import uk.co.idv.context.usecases.context.method.CompositeMethodBuilder;
 import uk.co.idv.context.usecases.context.method.MethodsBuilder;
 import uk.co.idv.context.usecases.context.sequence.SequenceBuilder;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
+import uk.co.idv.context.usecases.policy.ContextPolicyService;
 
 @Builder
 public class ContextServiceConfig {
 
     private final ContextRepositoryConfig repositoryConfig;
-    private final ContextOtpConfig otpConfig;
+
+    @Builder.Default
+    private final ContextOtpConfig otpConfig = ContextOtpConfig.builder().build();
 
     public ContextService contextService() {
         return ContextService.builder()
                 .repository(repositoryConfig.contextRepository())
                 .sequencesBuilder(sequencesBuilder())
                 .build();
+    }
+
+    public ContextPolicyService policyService() {
+        return new ContextPolicyService(repositoryConfig.policyRepository());
     }
 
     private SequencesBuilder sequencesBuilder() {

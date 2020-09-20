@@ -17,11 +17,11 @@ public class StubSimSwapExecutorConfig {
     @Builder.Default
     private final Delay delay = new Delay(Duration.ofSeconds(3));
 
-    private final ExecutorService executorService;
+    private final ExecutorService executor;
 
     public SimSwapExecutor simSwapExecutor() {
         return StubSimSwapExecutor.builder()
-                .executor(executorService)
+                .executor(executor)
                 .supplierFactory(buildSupplierFactory())
                 .build();
     }

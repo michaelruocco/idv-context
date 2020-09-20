@@ -35,7 +35,7 @@ class SimSwapExecutorIntegrationTest {
     private final StubSimSwapExecutorConfig config = StubSimSwapExecutorConfig.builder()
             .clock(Clock.fixed(NOW, ZoneId.systemDefault()))
             .delay(delay)
-            .executorService(Executors.newFixedThreadPool(1))
+            .executor(Executors.newFixedThreadPool(1))
             .build();
 
     private final SimSwapExecutor executor = config.simSwapExecutor();

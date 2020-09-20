@@ -2,10 +2,8 @@ package uk.co.idv.app.manual.context;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.lockout.LockoutConfigBuilder;
-import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.context.config.ContextFacadeConfig;
 import uk.co.idv.context.config.ContextServiceConfig;
-import uk.co.idv.context.config.method.otp.ContextOtpConfig;
 import uk.co.idv.context.config.repository.ContextRepositoryConfig;
 import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
 import uk.co.idv.context.entities.context.Context;
@@ -33,26 +31,16 @@ import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import java.util.Optional;
-import java.util.concurrent.Executors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-class ContextIntegrationTest {
+ class ContextIntegrationTest {
 
     private final ContextRepositoryConfig repositoryConfig = new InMemoryContextRepositoryConfig();
 
-    private final StubSimSwapExecutorConfig simSwapExecutorConfig = StubSimSwapExecutorConfig.builder()
-            .executorService(Executors.newFixedThreadPool(2))
-            .build();
-
-    private final ContextOtpConfig otpConfig = ContextOtpConfig.builder()
-            .simSwapExecutorConfig(simSwapExecutorConfig)
-            .build();
-
     private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
             .repositoryConfig(repositoryConfig)
-            .otpConfig(otpConfig)
             .build();
 
     private final IdentityConfig identityConfig = IdentityConfig.builder()
@@ -69,7 +57,7 @@ class ContextIntegrationTest {
             .createEligibility(identityConfig.createEligibility())
             .build();
 
-    private final ContextPolicyService contextPolicyService = contextConfig.policyService();
+    private final ContextPolicyService contextPolicyService = serviceConfig.policyService();
     private final IdentityService identityService = identityConfig.identityService();
     private final LockoutPolicyService lockoutPolicyService = lockoutConfig.policyService();
 

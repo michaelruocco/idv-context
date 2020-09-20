@@ -5,7 +5,6 @@ import uk.co.idv.context.config.repository.ContextRepositoryConfig;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.IdentityLoader;
 import uk.co.idv.context.usecases.context.LockoutStateValidator;
-import uk.co.idv.context.usecases.policy.ContextPolicyService;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.lockout.usecases.LockoutService;
 
@@ -25,14 +24,10 @@ public class ContextFacadeConfig {
                 .build();
     }
 
-    public ContextPolicyService policyService() {
-        return new ContextPolicyService(repositoryConfig.policyRepository());
-    }
-
     private IdentityLoader identityLoader() {
         return IdentityLoader.builder()
                 .createEligibility(createEligibility)
-                .policyService(policyService())
+                .policyService(serviceConfig.policyService())
                 .build();
     }
 

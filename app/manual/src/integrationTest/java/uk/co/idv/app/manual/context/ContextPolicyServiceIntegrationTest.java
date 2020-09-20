@@ -1,7 +1,7 @@
 package uk.co.idv.app.manual.context;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.config.ContextFacadeConfig;
+import uk.co.idv.context.config.ContextServiceConfig;
 import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
@@ -21,11 +21,11 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 class ContextPolicyServiceIntegrationTest {
 
-    private final ContextFacadeConfig contextConfig = ContextFacadeConfig.builder()
+    private final ContextServiceConfig config = ContextServiceConfig.builder()
             .repositoryConfig(new InMemoryContextRepositoryConfig())
             .build();
 
-    private final ContextPolicyService policyService = contextConfig.policyService();
+    private final ContextPolicyService policyService = config.policyService();
 
     @Test
     void shouldThrowExceptionIfPolicyNotFoundById() {
