@@ -18,7 +18,7 @@ public class OtpPhoneNumberConfigJsonMother {
     }
 
     private static String toPath(String filename) {
-        return String.format("method/otp/delivery/phone/%s", filename);
+        return String.format("policy/method/otp/delivery/phone/%s", filename);
     }
 
 }

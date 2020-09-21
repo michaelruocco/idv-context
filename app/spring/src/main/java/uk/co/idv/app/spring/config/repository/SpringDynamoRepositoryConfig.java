@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Profile;
 import uk.co.idv.context.adapter.dynamo.EnvironmentDynamoTablesFactory;
 import uk.co.idv.context.adapter.dynamo.DynamoTables;
 import uk.co.idv.context.config.repository.ContextRepositoryConfig;
-import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
+import uk.co.idv.context.config.repository.dynamo.DynamoContextRepositoryConfig;
 import uk.co.idv.identity.config.repository.IdentityRepositoryConfig;
 import uk.co.idv.identity.config.repository.dynamo.DynamoIdentityRepositoryConfig;
 import uk.co.idv.lockout.config.repository.AttemptRepositoryConfig;
@@ -32,10 +32,12 @@ public class SpringDynamoRepositoryConfig {
                 .build();
     }
 
-    //TODO replace with DynamoDB repository config
     @Bean
-    public ContextRepositoryConfig contextRepositoryConfig() {
-        return new InMemoryContextRepositoryConfig();
+    public ContextRepositoryConfig contextRepositoryConfig(JsonConverter jsonConverter, DynamoTables tables) {
+        return DynamoContextRepositoryConfig.builder()
+                .jsonConverter(jsonConverter)
+                .tables(tables)
+                .build();
     }
 
     @Bean

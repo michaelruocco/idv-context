@@ -6,7 +6,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface EmailDeliveryMethodConfigJsonMother {
 
     static String email() {
-        return loadContentFromClasspath("method/otp/delivery/email/email-delivery-method-config.json");
+        return loadContentFromClasspath("policy/method/otp/delivery/email/email-delivery-method-config.json");
     }
 
 }

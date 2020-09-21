@@ -5,7 +5,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface OtpPolicyJsonMother {
 
     static String build() {
-        return loadContentFromClasspath("method/otp/otp-policy.json");
+        return loadContentFromClasspath("policy/method/otp/otp-policy.json");
     }
 
 }

@@ -5,3 +5,6 @@ awslocal dynamodb create-table --cli-input-json "$identityJson"
 
 attemptJson=$(cat /opt/tables/attempt.json)
 awslocal dynamodb create-table --cli-input-json "$attemptJson"
+
+contextJson=$(cat /opt/tables/context.json)
+awslocal dynamodb create-table --cli-input-json "$contextJson"

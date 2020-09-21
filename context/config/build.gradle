@@ -7,4 +7,5 @@ dependencies {
     implementation project(":policy-in-memory-repository")
     implementation project(":context-in-memory-repository")
     implementation project(":context-redis-repository")
+    implementation project(":context-dynamo-db-repository")
 }

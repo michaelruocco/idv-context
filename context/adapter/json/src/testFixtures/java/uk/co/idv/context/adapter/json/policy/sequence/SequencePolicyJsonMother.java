@@ -5,7 +5,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface SequencePolicyJsonMother {
 
     static String build() {
-        return loadContentFromClasspath("sequence/sequence-policy.json");
+        return loadContentFromClasspath("policy/sequence/sequence-policy.json");
     }
 
 }

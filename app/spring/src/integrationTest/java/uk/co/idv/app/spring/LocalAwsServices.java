@@ -4,6 +4,7 @@ import com.amazonaws.regions.Regions;
 import lombok.extern.slf4j.Slf4j;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.OutputFrame;
+import org.testcontainers.utility.MountableFile;
 import uk.co.idv.context.adapter.dynamo.EnvironmentDynamoTablesFactory;
 import uk.co.idv.context.adapter.dynamo.DynamoTables;
 
@@ -12,6 +13,7 @@ import java.util.concurrent.Callable;
 
 import static org.awaitility.Awaitility.await;
 import static org.testcontainers.utility.MountableFile.forHostPath;
+import static uk.co.idv.context.config.repository.dynamo.DynamoContextRepositoryConfig.CONTEXT_TABLE_NAME;
 import static uk.co.idv.identity.config.repository.dynamo.DynamoIdentityRepositoryConfig.IDENTITY_TABLE_NAME;
 import static uk.co.idv.lockout.config.repository.dynamo.DynamoAttemptRepositoryConfig.ATTEMPT_TABLE_NAME;
 
@@ -30,12 +32,19 @@ public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
         withEnv("SERVICES", "dynamodb");
         withEnv("DEFAULT_REGION", region.getName());
         withCopyFileToContainer(forHostPath("localstack/scripts/create-tables.sh"), "/docker-entrypoint-initaws.d/create-tables.sh");
-        withCopyFileToContainer(forHostPath("localstack/tables/identity.json"), "/opt/tables/identity.json");
-        withCopyFileToContainer(forHostPath("localstack/tables/attempt.json"), "/opt/tables/attempt.json");
+        copyTableFile("identity.json");
+        copyTableFile("attempt.json");
+        copyTableFile("context.json");
         withExposedPorts(PORT);
         withLogConsumer(this::logInfo);
         this.region = region;
         this.environment = environment;
+    }
+
+    private void copyTableFile(String filename) {
+        MountableFile hostPath = forHostPath(String.format("localstack/tables/%s", filename));
+        String containerPath = String.format("opt/tables/%s", filename);
+        withCopyFileToContainer(hostPath, containerPath);
     }
 
     public void waitForStartupToComplete() {
@@ -48,7 +57,8 @@ public class LocalAwsServices extends GenericContainer<LocalAwsServices> {
         DynamoTables tables = getOrBuildDynamoTables();
         tables.waitForTablesToBeActive(
                 IDENTITY_TABLE_NAME,
-                ATTEMPT_TABLE_NAME
+                ATTEMPT_TABLE_NAME,
+                CONTEXT_TABLE_NAME
         );
     }
 

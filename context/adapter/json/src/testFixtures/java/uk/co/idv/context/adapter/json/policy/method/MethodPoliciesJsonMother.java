@@ -6,7 +6,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface MethodPoliciesJsonMother {
 
     static String build() {
-        return loadContentFromClasspath("method/method-policies.json");
+        return loadContentFromClasspath("policy/method/method-policies.json");
     }
 
 }

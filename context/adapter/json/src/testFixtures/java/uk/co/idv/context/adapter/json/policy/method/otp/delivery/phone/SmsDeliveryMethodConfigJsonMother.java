@@ -6,7 +6,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface SmsDeliveryMethodConfigJsonMother {
 
     static String sms() {
-        return loadContentFromClasspath("method/otp/delivery/phone/sms-delivery-method-config.json");
+        return loadContentFromClasspath("policy/method/otp/delivery/phone/sms-delivery-method-config.json");
     }
 
 }

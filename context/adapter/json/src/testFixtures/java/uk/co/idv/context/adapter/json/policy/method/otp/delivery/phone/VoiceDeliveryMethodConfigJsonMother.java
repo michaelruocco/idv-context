@@ -6,7 +6,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface VoiceDeliveryMethodConfigJsonMother {
 
     static String voice() {
-        return loadContentFromClasspath("method/otp/delivery/phone/voice-delivery-method-config.json");
+        return loadContentFromClasspath("policy/method/otp/delivery/phone/voice-delivery-method-config.json");
     }
 
 }

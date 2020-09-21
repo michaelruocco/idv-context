@@ -6,7 +6,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface InvalidDeliveryMethodConfigJsonMother {
 
     static String invalid() {
-        return loadContentFromClasspath("method/otp/delivery/invalid-delivery-method-config.json");
+        return loadContentFromClasspath("policy/method/otp/delivery/invalid-delivery-method-config.json");
     }
 
 }

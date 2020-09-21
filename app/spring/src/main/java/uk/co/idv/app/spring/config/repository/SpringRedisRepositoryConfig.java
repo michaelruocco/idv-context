@@ -6,7 +6,6 @@ import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import uk.co.idv.context.adapter.repository.RedissonMapFactory;
 import uk.co.idv.context.config.repository.ContextPolicyRepositoryConfig;
@@ -31,7 +30,6 @@ public class SpringRedisRepositoryConfig {
     }
 
     @Bean
-    @Primary //TODO remove once dynamo db config repository implemented
     public ContextPolicyRepositoryConfig contextPolicyRepositoryConfig(RedissonMapFactory mapFactory,
                                                                        JsonConverter jsonConverter) {
         return RedisContextPolicyRepositoryConfig.builder()

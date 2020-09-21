@@ -5,7 +5,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface PasscodeConfigJsonMother {
 
     static String build() {
-        return loadContentFromClasspath("method/otp/passcode-config.json");
+        return loadContentFromClasspath("policy/method/otp/passcode-config.json");
     }
 
 }

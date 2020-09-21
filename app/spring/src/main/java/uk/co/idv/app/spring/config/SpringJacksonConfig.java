@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import uk.co.idv.context.adapter.json.policy.ContextPolicyModule;
 import uk.co.idv.identity.adapter.json.IdentityParentModule;
 import uk.co.idv.lockout.adapter.json.LockoutParentModule;
 import uk.co.mruoc.json.JsonConverter;
@@ -22,7 +23,8 @@ public class SpringJacksonConfig {
                 .registerModules(
                         new JavaTimeModule(),
                         new IdentityParentModule(),
-                        new LockoutParentModule()
+                        new LockoutParentModule(),
+                        new ContextPolicyModule()
                 );
     }
 
