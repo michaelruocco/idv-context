@@ -45,7 +45,7 @@ class ParallelKarateIntegrationTest {
 
         assertThat(results.getFailCount())
                 .withFailMessage(results.getErrorMessages())
-                .isEqualTo(0);
+                .isZero();
     }
 
     private static String[] getFeaturePaths() {
@@ -53,6 +53,7 @@ class ParallelKarateIntegrationTest {
                 "classpath:identity",
                 "classpath:eligibility",
                 "classpath:lockout",
+                "classpath:context",
                 "classpath:actuator"
         };
     }
