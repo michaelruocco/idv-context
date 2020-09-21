@@ -6,4 +6,5 @@ dependencies {
     implementation project(":lockout-config")
     implementation project(":policy-in-memory-repository")
     implementation project(":context-in-memory-repository")
+    implementation project(":context-redis-repository")
 }

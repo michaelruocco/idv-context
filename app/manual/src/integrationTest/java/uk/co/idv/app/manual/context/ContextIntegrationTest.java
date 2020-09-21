@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.lockout.LockoutConfigBuilder;
 import uk.co.idv.context.config.ContextFacadeConfig;
 import uk.co.idv.context.config.ContextServiceConfig;
-import uk.co.idv.context.config.repository.ContextRepositoryConfig;
 import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
@@ -37,10 +36,8 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
  class ContextIntegrationTest {
 
-    private final ContextRepositoryConfig repositoryConfig = new InMemoryContextRepositoryConfig();
-
     private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
-            .repositoryConfig(repositoryConfig)
+            .repositoryConfig(new InMemoryContextRepositoryConfig())
             .build();
 
     private final IdentityConfig identityConfig = IdentityConfig.builder()
@@ -51,7 +48,6 @@ import static org.assertj.core.api.Assertions.catchThrowable;
             .build().build();
 
     private final ContextFacadeConfig contextConfig = ContextFacadeConfig.builder()
-            .repositoryConfig(repositoryConfig)
             .serviceConfig(serviceConfig)
             .lockoutService(lockoutConfig.lockoutService())
             .createEligibility(identityConfig.createEligibility())

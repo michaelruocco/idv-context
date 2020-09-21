@@ -2,7 +2,7 @@ package uk.co.idv.context.config;
 
 import lombok.Builder;
 import uk.co.idv.context.config.method.otp.ContextOtpConfig;
-import uk.co.idv.context.config.repository.ContextRepositoryConfig;
+import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
 import uk.co.idv.context.usecases.context.ContextService;
 import uk.co.idv.context.usecases.context.method.CompositeMethodBuilder;
 import uk.co.idv.context.usecases.context.method.MethodsBuilder;
@@ -13,7 +13,7 @@ import uk.co.idv.context.usecases.policy.ContextPolicyService;
 @Builder
 public class ContextServiceConfig {
 
-    private final ContextRepositoryConfig repositoryConfig;
+    private final ParentContextRepositoryConfig repositoryConfig;
 
     @Builder.Default
     private final ContextOtpConfig otpConfig = ContextOtpConfig.builder().build();

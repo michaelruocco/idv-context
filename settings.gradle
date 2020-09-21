@@ -84,6 +84,9 @@ project(':context-in-memory-repository').projectDir = file('context/adapter/repo
 include ':context-json'
 project(':context-json').projectDir = file('context/adapter/json')
 
+include ':context-redis-repository'
+project(':context-redis-repository').projectDir = file('context/adapter/repository/redis')
+
 include ':context-config'
 project(':context-config').projectDir = file('context/config')
 

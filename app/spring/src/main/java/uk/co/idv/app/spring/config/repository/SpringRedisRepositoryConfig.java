@@ -6,10 +6,11 @@ import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Profile;
 import uk.co.idv.context.adapter.repository.RedissonMapFactory;
-import uk.co.idv.context.config.repository.ContextRepositoryConfig;
-import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
+import uk.co.idv.context.config.repository.ContextPolicyRepositoryConfig;
+import uk.co.idv.context.config.repository.redis.RedisContextPolicyRepositoryConfig;
 import uk.co.idv.lockout.config.repository.LockoutPolicyRepositoryConfig;
 import uk.co.idv.lockout.config.repository.redis.RedisLockoutPolicyRepositoryConfig;
 import uk.co.mruoc.json.JsonConverter;
@@ -29,12 +30,14 @@ public class SpringRedisRepositoryConfig {
                 .build();
     }
 
-    //TODO replace with context policy repository config using redis and then
-    //add DynamoDB repostiory config for created contexts
     @Bean
-    public ContextRepositoryConfig contextPolicyRepositoryConfig(RedissonMapFactory mapFactory,
-                                                                 JsonConverter jsonConverter) {
-        return new InMemoryContextRepositoryConfig();
+    @Primary //TODO remove once dynamo db config repository implemented
+    public ContextPolicyRepositoryConfig contextPolicyRepositoryConfig(RedissonMapFactory mapFactory,
+                                                                       JsonConverter jsonConverter) {
+        return RedisContextPolicyRepositoryConfig.builder()
+                .policies(mapFactory.buildPolicyMap("context-policy"))
+                .jsonConverter(jsonConverter)
+                .build();
     }
 
     @Bean
