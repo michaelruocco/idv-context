@@ -14,6 +14,7 @@ import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.method.otp.OtpPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
 import uk.co.idv.context.usecases.context.ContextFacade;
+import uk.co.idv.context.usecases.context.ContextNotFoundException;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
 import uk.co.idv.context.usecases.policy.NoContextPoliciesConfiguredException;
 import uk.co.idv.identity.config.IdentityConfig;
@@ -30,6 +31,7 @@ import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -166,6 +168,30 @@ import static org.assertj.core.api.Assertions.catchThrowable;
         Optional<Otp> otp = context.findNextIncompleteEligibleOtp();
         assertThat(otp).isPresent();
     }
+
+     @Test
+     void shouldThrowExceptionIfContextNotFound() {
+         UUID id = UUID.randomUUID();
+
+         Throwable error = catchThrowable(() -> contextFacade.find(id));
+
+         assertThat(error)
+                 .isInstanceOf(ContextNotFoundException.class)
+                 .hasMessage(id.toString());
+     }
+
+     @Test
+     void shouldReturnContextIfFound() {
+         CreateContextRequest request = FacadeCreateContextRequestMother.build();
+         givenContextPolicyExistsForChannel(request.getChannelId());
+         givenIdentityExistsForAliases(request.getAliases());
+         givenLockoutPolicyExistsForChannel(request.getChannelId());
+         Context created = contextFacade.create(request);
+
+         Context loaded = contextFacade.find(created.getId());
+
+         assertThat(loaded).isEqualTo(created);
+     }
 
     private void givenContextPolicyExistsForChannel(String channelId) {
         ContextPolicy policy = ContextPolicyMother.builder()

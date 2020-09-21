@@ -6,6 +6,8 @@ import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -44,6 +46,16 @@ class ContextFacadeTest {
         verify(stateValidator).validateLockoutState(identityRequest);
     }
 
+    @Test
+    void shouldFindContext() {
+        UUID id = UUID.randomUUID();
+        Context expectedContext = givenContextFound(id);
+
+        Context context = facade.find(id);
+
+        assertThat(context).isEqualTo(expectedContext);
+    }
+
     private DefaultCreateContextRequest givenIdentityRequestLoaded(CreateContextRequest initialRequest) {
         DefaultCreateContextRequest identityRequest = mock(DefaultCreateContextRequest.class);
         given(identityLoader.addIdentity(initialRequest)).willReturn(identityRequest);
@@ -53,6 +65,12 @@ class ContextFacadeTest {
     private Context givenContextCreated(DefaultCreateContextRequest request) {
         Context context = mock(Context.class);
         given(contextService.create(request)).willReturn(context);
+        return context;
+    }
+
+    private Context givenContextFound(UUID id) {
+        Context context = mock(Context.class);
+        given(contextService.find(id)).willReturn(context);
         return context;
     }
 

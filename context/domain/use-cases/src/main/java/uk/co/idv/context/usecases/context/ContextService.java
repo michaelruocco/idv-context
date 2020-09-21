@@ -8,6 +8,7 @@ import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 
 import java.time.Clock;
+import java.util.UUID;
 
 @Builder
 public class ContextService {
@@ -30,6 +31,10 @@ public class ContextService {
                 .build();
         repository.save(context);
         return context;
+    }
+
+    public Context find(UUID id) {
+        return repository.load(id).orElseThrow(() -> new ContextNotFoundException(id));
     }
 
 }

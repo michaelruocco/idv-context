@@ -7,6 +7,7 @@ import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
 
 import java.time.Instant;
+import java.util.UUID;
 
 import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
 
@@ -25,6 +26,10 @@ public class ContextFacade {
         Context context = contextService.create(identityRequest);
         log.info("create context took {}ms ", millisBetweenNowAnd(start));
         return context;
+    }
+
+    public Context find(UUID id) {
+        return contextService.find(id);
     }
 
 }

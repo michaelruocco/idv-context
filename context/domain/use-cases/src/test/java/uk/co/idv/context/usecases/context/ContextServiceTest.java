@@ -10,9 +10,11 @@ import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 
 import java.time.Clock;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -71,10 +73,42 @@ class ContextServiceTest {
         assertThat(context.getSequences()).isEqualTo(sequences);
     }
 
+    @Test
+    void shouldFindContextIfExists() {
+        UUID id = UUID.randomUUID();
+        Context expectedContext = givenContextFound(id);
+
+        Context context = service.find(id);
+
+        assertThat(context).isEqualTo(expectedContext);
+    }
+
+    @Test
+    void shouldThrowExceptionIfContextDoesNotExist() {
+        UUID id = UUID.randomUUID();
+        givenContextNotFound(id);
+
+        Throwable error = catchThrowable(() -> service.find(id));
+
+        assertThat(error)
+                .isInstanceOf(ContextNotFoundException.class)
+                .hasMessage(id.toString());
+    }
+
     private Sequences givenSequencesBuiltFromRequest(DefaultCreateContextRequest request) {
         Sequences sequences = mock(Sequences.class);
         given(sequencesBuilder.build(request.getIdentity(), request.getSequencePolicies())).willReturn(sequences);
         return sequences;
+    }
+
+    private Context givenContextFound(UUID id) {
+        Context context = mock(Context.class);
+        given(repository.load(id)).willReturn(Optional.of(context));
+        return context;
+    }
+
+    private void givenContextNotFound(UUID id) {
+        given(repository.load(id)).willReturn(Optional.empty());
     }
 
 }
