@@ -1,4 +1,4 @@
-package uk.co.idv.identity.adapter.json.alias.debitcardnumber;
+package uk.co.idv.identity.adapter.json.alias.cardnumber;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;

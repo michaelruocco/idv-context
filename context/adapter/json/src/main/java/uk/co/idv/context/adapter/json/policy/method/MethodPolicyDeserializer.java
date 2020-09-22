@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.entities.policy.method.MethodPolicy;
 import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
-import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
@@ -22,7 +21,7 @@ public class MethodPolicyDeserializer extends StdDeserializer<MethodPolicy> {
     }
 
     public MethodPolicyDeserializer(Map<String, Class<? extends MethodPolicy>> mappings) {
-        super(Alias.class);
+        super(MethodPolicy.class);
         this.mappings = mappings;
     }
 
