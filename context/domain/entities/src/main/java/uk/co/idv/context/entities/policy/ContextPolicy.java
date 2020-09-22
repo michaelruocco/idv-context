@@ -18,13 +18,13 @@ public class ContextPolicy implements Policy, RequestedDataProvider {
     private final SequencePolicies sequencePolicies;
 
     @Override
-    public RequestedData getRequestedData() {
-        return sequencePolicies.getRequestedData();
+    public UUID getId() {
+        return key.getId();
     }
 
     @Override
-    public UUID getId() {
-        return key.getId();
+    public RequestedData getRequestedData() {
+        return sequencePolicies.getRequestedData();
     }
 
     @Override
@@ -35,11 +35,6 @@ public class ContextPolicy implements Policy, RequestedDataProvider {
     @Override
     public int getPriority() {
         return key.getPriority();
-    }
-
-    @Override
-    public PolicyKey getKey() {
-        return key;
     }
 
 }

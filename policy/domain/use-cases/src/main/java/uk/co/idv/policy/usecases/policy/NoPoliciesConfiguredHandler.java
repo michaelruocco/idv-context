@@ -2,8 +2,8 @@ package uk.co.idv.policy.usecases.policy;
 
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 
-public interface NoPoliciesConfiguredHandler<T extends NoPoliciesConfiguredException> {
+public interface NoPoliciesConfiguredHandler {
 
-    T toException(PolicyRequest request);
+    NoPoliciesConfiguredException toException(PolicyRequest request);
 
 }

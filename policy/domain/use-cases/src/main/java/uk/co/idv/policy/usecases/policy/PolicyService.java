@@ -13,13 +13,13 @@ import uk.co.idv.policy.usecases.policy.update.UpdatePolicy;
 import java.util.UUID;
 
 @RequiredArgsConstructor
-public class PolicyService<P extends Policy, E extends NoPoliciesConfiguredException> {
+public class PolicyService<P extends Policy> {
 
     private final CreatePolicy<P> create;
     private final UpdatePolicy<P> update;
     private final LoadPolicy<P> load;
     private final DeletePolicy<P> delete;
-    private final NoPoliciesConfiguredHandler<E> noPoliciesConfiguredHandler;
+    private final NoPoliciesConfiguredHandler noPoliciesConfiguredHandler;
 
     public void create(P policy) {
         create.create(policy);

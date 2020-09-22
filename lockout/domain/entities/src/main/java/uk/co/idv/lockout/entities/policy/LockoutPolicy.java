@@ -29,6 +29,21 @@ public class LockoutPolicy implements Policy {
     @Getter(AccessLevel.NONE)
     private final LockoutRequestConverter converter = new LockoutRequestConverter();
 
+    @Override
+    public int getPriority() {
+        return key.getPriority();
+    }
+
+    @Override
+    public UUID getId() {
+        return key.getId();
+    }
+
+    @Override
+    public boolean appliesTo(PolicyRequest request) {
+        return key.appliesTo(request);
+    }
+
     public LockoutState calculateState(LockoutRequest request, Attempts attempts) {
         return calculateState(converter.toLockoutStateRequest(request, attempts));
     }
@@ -52,21 +67,6 @@ public class LockoutPolicy implements Policy {
 
     public boolean shouldRecordAttempt(RecordAttemptRequest request) {
         return recordAttemptPolicy.shouldRecordAttempt(request);
-    }
-
-    @Override
-    public UUID getId() {
-        return key.getId();
-    }
-
-    @Override
-    public boolean appliesTo(PolicyRequest request) {
-        return key.appliesTo(request);
-    }
-
-    @Override
-    public int getPriority() {
-        return key.getPriority();
     }
 
 }

@@ -9,7 +9,7 @@ import uk.co.idv.policy.usecases.policy.load.LoadPolicy;
 import uk.co.idv.policy.usecases.policy.update.UpdatePolicy;
 
 @Slf4j
-public class ContextPolicyService extends PolicyService<ContextPolicy, NoContextPoliciesConfiguredException> {
+public class ContextPolicyService extends PolicyService<ContextPolicy> {
 
     public ContextPolicyService(ContextPolicyRepository repository) {
         super(new CreatePolicy<>(repository),
