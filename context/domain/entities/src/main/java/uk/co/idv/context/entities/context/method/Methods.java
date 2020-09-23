@@ -1,5 +1,6 @@
 package uk.co.idv.context.entities.context.method;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 
@@ -9,6 +10,7 @@ import java.util.Iterator;
 import java.util.Optional;
 
 @RequiredArgsConstructor
+@Data
 public class Methods implements Iterable<Method> {
 
     private final Collection<Method> values;

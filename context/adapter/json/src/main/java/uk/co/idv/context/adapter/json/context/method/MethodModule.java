@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.common.adapter.json.duration.DurationModule;
 import uk.co.idv.context.adapter.json.context.method.otp.OtpModule;
 import uk.co.idv.context.entities.context.method.Method;
+import uk.co.idv.context.entities.context.method.Methods;
 
 import java.util.Arrays;
 
@@ -15,8 +16,10 @@ public class MethodModule extends SimpleModule {
         super("method-module", Version.unknownVersion());
 
         setMixInAnnotation(Method.class, MethodMixin.class);
+        setMixInAnnotation(Methods.class, MethodsMixin.class);
 
         addDeserializer(Method.class, new MethodDeserializer());
+        addDeserializer(Methods.class, new MethodsDeserializer());
     }
 
     @Override
