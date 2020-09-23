@@ -1,0 +1,17 @@
+{
+  "channel": {
+    "id": "gb-rsa",
+    "country": "GB",
+    "issuerSessionId": "053ed9b4-74a6-4d13-a7d5-3970e59a7aad"
+  },
+  "aliases": [
+    {
+      "type": "credit-card-number",
+      "value": "4929111111111111"
+    }
+  ],
+  "activity": {
+    "name": "simple-activity",
+    "timestamp": "2020-06-06T12:36:15.179Z"
+  }
+}
