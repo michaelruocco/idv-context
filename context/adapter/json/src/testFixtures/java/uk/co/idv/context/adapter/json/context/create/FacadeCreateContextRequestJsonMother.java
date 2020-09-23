@@ -5,7 +5,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface FacadeCreateContextRequestJsonMother {
 
     static String build() {
-        return loadContentFromClasspath("context/create-context-request.json");
+        return loadContentFromClasspath("context/create/create-context-request.json");
     }
 
 }

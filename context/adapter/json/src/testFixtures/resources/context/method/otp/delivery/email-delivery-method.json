@@ -1,0 +1,8 @@
+{
+  "id": "51c560bd-4b47-4209-b70f-74f82720d960",
+  "type": "email",
+  "value": "joe.bloggs@hotmail.com",
+  "eligibility": {
+    "eligible": true
+  }
+}
