@@ -3,18 +3,26 @@ package uk.co.idv.context.entities.context.method;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 
+import java.time.Duration;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
+import static uk.co.idv.context.entities.context.method.MockMethodMother.givenCompleteMethod;
+import static uk.co.idv.context.entities.context.method.MockMethodMother.givenEligibleAndIncompleteMethod;
+import static uk.co.idv.context.entities.context.method.MockMethodMother.givenEligibleMethod;
+import static uk.co.idv.context.entities.context.method.MockMethodMother.givenIncompleteMethod;
+import static uk.co.idv.context.entities.context.method.MockMethodMother.givenIneligibleMethod;
+import static uk.co.idv.context.entities.context.method.MockMethodMother.givenMethodWith;
+import static uk.co.idv.context.entities.context.method.MockMethodMother.givenSuccessfulMethod;
+import static uk.co.idv.context.entities.context.method.MockMethodMother.givenUnsuccessfulMethod;
+import static uk.co.idv.context.entities.context.method.MockMethodMother.mockMethod;
 
 class MethodsTest {
 
     @Test
     void shouldReturnMethods() {
-        Method method1 = mock(Method.class);
-        Method method2 = mock(Method.class);
+        Method method1 = mockMethod();
+        Method method2 = mockMethod();
 
         Methods methods = new Methods(method1, method2);
 
@@ -26,7 +34,7 @@ class MethodsTest {
 
     @Test
     void shouldReturnOtpIfIncompleteAndEligible() {
-        Method method1 = mock(Method.class);
+        Method method1 = mockMethod();
         Otp expectedOtp = givenEligibleAndIncompleteMethod(Otp.class);
         Methods methods = new Methods(method1, expectedOtp);
 
@@ -37,7 +45,7 @@ class MethodsTest {
 
     @Test
     void shouldNotReturnOtpIfComplete() {
-        Method method1 = mock(Method.class);
+        Method method1 = mockMethod();
         Method method2 = givenCompleteMethod(Otp.class);
         Methods methods = new Methods(method1, method2);
 
@@ -48,7 +56,7 @@ class MethodsTest {
 
     @Test
     void shouldNotReturnOtpIfEligible() {
-        Method method1 = mock(Method.class);
+        Method method1 = mockMethod();
         Method method2 = givenIneligibleMethod(Otp.class);
         Methods methods = new Methods(method1, method2);
 
@@ -60,7 +68,7 @@ class MethodsTest {
     @Test
     void shouldNotReturnOtpIfNotPresent() {
         Method method1 = givenEligibleAndIncompleteMethod(Method.class);
-        Method method2 = mock(Method.class);
+        Method method2 = mockMethod();
         Methods methods = new Methods(method1, method2);
 
         Optional<Otp> otp = methods.findNextIncompleteEligibleOtp();
@@ -128,46 +136,14 @@ class MethodsTest {
         assertThat(methods.isSuccessful()).isFalse();
     }
 
-    private <T extends Method> T givenEligibleAndIncompleteMethod(Class<T> type) {
-        T method = givenEligibleMethod(type);
-        given(method.isComplete()).willReturn(false);
-        return method;
-    }
+    @Test
+    void shouldReturnSumOfMethodDurations() {
+        Method method1 = givenMethodWith(Duration.ofMinutes(2));
+        Method method2 = givenMethodWith(Duration.ofMinutes(3));
 
-    private <T extends Method> T givenEligibleMethod(Class<T> type) {
-        T method = mock(type);
-        given(method.isEligible()).willReturn(true);
-        return method;
-    }
+        Methods methods = new Methods(method1, method2);
 
-    private <T extends Method> T givenIneligibleMethod(Class<T> type) {
-        T method = mock(type);
-        given(method.isEligible()).willReturn(false);
-        return method;
-    }
-
-    private <T extends Method> T givenCompleteMethod(Class<T> type) {
-        T method = mock(type);
-        given(method.isComplete()).willReturn(true);
-        return method;
-    }
-
-    private Method givenIncompleteMethod() {
-        Method method = mock(Method.class);
-        given(method.isComplete()).willReturn(false);
-        return method;
-    }
-
-    private Method givenSuccessfulMethod() {
-        Method method = mock(Method.class);
-        given(method.isSuccessful()).willReturn(true);
-        return method;
-    }
-
-    private Method givenUnsuccessfulMethod() {
-        Method method = mock(Method.class);
-        given(method.isSuccessful()).willReturn(false);
-        return method;
+        assertThat(methods.getDuration()).isEqualTo(Duration.ofMinutes(5));
     }
 
 }

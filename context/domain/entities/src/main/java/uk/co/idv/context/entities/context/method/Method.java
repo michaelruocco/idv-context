@@ -22,7 +22,10 @@ public interface Method {
     }
 
     default Duration getDuration() {
-        return getConfig().getDuration();
+        if (isEligible()) {
+            return getConfig().getDuration();
+        }
+        return Duration.ZERO;
     }
 
 }

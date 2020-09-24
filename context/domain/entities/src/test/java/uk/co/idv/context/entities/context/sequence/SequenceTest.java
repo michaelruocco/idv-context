@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 
+import java.time.Duration;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -81,6 +82,19 @@ class SequenceTest {
                 .build();
 
         assertThat(sequence.isSuccessful()).isTrue();
+    }
+
+    @Test
+    void shouldReturnDurationFromMethods() {
+        Methods methods = mock(Methods.class);
+        Duration duration = Duration.ofMinutes(5);
+        given(methods.getDuration()).willReturn(duration);
+
+        Sequence sequence = Sequence.builder()
+                .methods(methods)
+                .build();
+
+        assertThat(sequence.getDuration()).isEqualTo(duration);
     }
 
 }

@@ -4,8 +4,10 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Optional;
 
@@ -41,6 +43,13 @@ public class Sequences implements Iterable<Sequence> {
 
     public boolean isSuccessful() {
         return values.stream().anyMatch(Sequence::isSuccessful);
+    }
+
+    public Duration getDuration() {
+        return values.stream()
+                .map(Sequence::getDuration)
+                .max(Comparator.comparingLong(Duration::toMillis))
+                .orElse(Duration.ZERO);
     }
 
 }

@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
@@ -38,6 +39,12 @@ public class Methods implements Iterable<Method> {
 
     public boolean isSuccessful() {
         return values.stream().allMatch(Method::isSuccessful);
+    }
+
+    public Duration getDuration() {
+        return values.stream()
+                .map(Method::getDuration)
+                .reduce(Duration.ZERO, Duration::plus);
     }
 
     public <T> Optional<T> findNextIncompleteEligibleMethodOfType(Class<T> type) {

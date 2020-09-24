@@ -3,18 +3,27 @@ package uk.co.idv.context.entities.context.sequence;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 
+import java.time.Duration;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenCompleteSequence;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenEligibleSequence;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIncompleteSequence;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIneligibleSequence;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWith;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWithIncompleteEligibleOtp;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSuccessfulSequence;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenUnsuccessfulSequence;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.mockSequence;
 
 class SequencesTest {
 
     @Test
     void shouldReturnSequences() {
-        Sequence sequence1 = mock(Sequence.class);
-        Sequence sequence2 = mock(Sequence.class);
+        Sequence sequence1 = mockSequence();
+        Sequence sequence2 = mockSequence();
 
         Sequences sequences = new Sequences(sequence1, sequence2);
 
@@ -26,8 +35,8 @@ class SequencesTest {
 
     @Test
     void shouldReturnEmptyOptionalIfNoSequencesHaveIncompleteEligibleOtpMethod() {
-        Sequence sequence1 = mock(Sequence.class);
-        Sequence sequence2 = mock(Sequence.class);
+        Sequence sequence1 = mockSequence();
+        Sequence sequence2 = mockSequence();
         Sequences sequences = new Sequences(sequence1, sequence2);
 
         Optional<Otp> otp = sequences.findNextIncompleteEligibleOtp();
@@ -37,10 +46,9 @@ class SequencesTest {
 
     @Test
     void shouldReturnOtpIfNoSequenceHasIncompleteEligibleOtpMethod() {
-        Sequence sequence1 = mock(Sequence.class);
-        Sequence sequence2 = mock(Sequence.class);
+        Sequence sequence1 = mockSequence();
         Otp expectedOtp = mock(Otp.class);
-        given(sequence2.findNextIncompleteEligibleOtp()).willReturn(Optional.of(expectedOtp));
+        Sequence sequence2 = givenSequenceWithIncompleteEligibleOtp(expectedOtp);
         Sequences sequences = new Sequences(sequence1, sequence2);
 
         Optional<Otp> otp = sequences.findNextIncompleteEligibleOtp();
@@ -108,40 +116,22 @@ class SequencesTest {
         assertThat(sequences.isSuccessful()).isFalse();
     }
 
-    private Sequence givenEligibleSequence() {
-        Sequence sequence = mock(Sequence.class);
-        given(sequence.isEligible()).willReturn(true);
-        return sequence;
+    @Test
+    void shouldReturnZeroDurationIfEmpty() {
+        Sequences sequences = new Sequences();
+
+        assertThat(sequences.getDuration()).isEqualTo(Duration.ZERO);
     }
 
-    private Sequence givenIneligibleSequence() {
-        Sequence sequence = mock(Sequence.class);
-        given(sequence.isEligible()).willReturn(false);
-        return sequence;
-    }
+    @Test
+    void shouldReturnLongestDurationFromSequences() {
+        Duration longest = Duration.ofMinutes(5);
+        Sequence sequence1 = givenSequenceWith(Duration.ofMinutes(1));
+        Sequence sequence2 = givenSequenceWith(longest);
 
-    private Sequence givenCompleteSequence() {
-        Sequence sequence = mock(Sequence.class);
-        given(sequence.isComplete()).willReturn(true);
-        return sequence;
-    }
+        Sequences sequences = new Sequences(sequence1, sequence2);
 
-    private Sequence givenIncompleteSequence() {
-        Sequence sequence = mock(Sequence.class);
-        given(sequence.isComplete()).willReturn(false);
-        return sequence;
-    }
-
-    private Sequence givenSuccessfulSequence() {
-        Sequence sequence = mock(Sequence.class);
-        given(sequence.isSuccessful()).willReturn(true);
-        return sequence;
-    }
-
-    private Sequence givenUnsuccessfulSequence() {
-        Sequence sequence = mock(Sequence.class);
-        given(sequence.isSuccessful()).willReturn(false);
-        return sequence;
+        assertThat(sequences.getDuration()).isEqualTo(longest);
     }
 
 }

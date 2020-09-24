@@ -5,6 +5,7 @@ import lombok.Data;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 
+import java.time.Duration;
 import java.util.Optional;
 
 @Builder
@@ -22,8 +23,16 @@ public class Sequence {
         return methods.isEligible();
     }
 
-    public boolean isComplete() { return methods.isComplete(); }
+    public boolean isComplete() {
+        return methods.isComplete();
+    }
 
-    public boolean isSuccessful() { return methods.isSuccessful(); }
+    public boolean isSuccessful() {
+        return methods.isSuccessful();
+    }
+
+    public Duration getDuration() {
+        return methods.getDuration();
+    }
 
 }
