@@ -11,7 +11,10 @@
 
 ## Todo
 
-*   Add json module for context and context policies
+*   Implement deserialization of context
+*   Add complete, successful and eligible flags to sequences and context
+*   Add functionality for expiry to context
+*   Functionality to post results to verification context
 *   Ensure attempts merged when identities merged
 *   Extract common dynamo adapter to its own separate library
 

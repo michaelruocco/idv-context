@@ -5,21 +5,20 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.entities.activity.Activity;
-import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
-class FacadeCreateContextRequestDeserializer extends StdDeserializer<CreateContextRequest> {
+class FacadeCreateContextRequestDeserializer extends StdDeserializer<FacadeCreateContextRequest> {
 
     protected FacadeCreateContextRequestDeserializer() {
-        super(CreateContextRequest.class);
+        super(FacadeCreateContextRequest.class);
     }
 
     @Override
-    public CreateContextRequest deserialize(JsonParser parser, DeserializationContext context) {
+    public FacadeCreateContextRequest deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
         return FacadeCreateContextRequest.builder()
                 .channel(JsonNodeConverter.toObject(node.get("channel"), parser, Channel.class))
