@@ -1,6 +1,6 @@
 package uk.co.idv.identity.usecases.eligibility;
 
-import uk.co.idv.identity.entities.eligibility.Eligibility;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.entities.identity.FindIdentityRequest;
 
 import java.util.Arrays;
@@ -22,7 +22,7 @@ public class CompositeCreateEligibility implements CreateEligibility {
     }
 
     @Override
-    public Eligibility create(FindIdentityRequest request) {
+    public IdentityEligibility create(FindIdentityRequest request) {
         String channelId = request.getChannelId();
         return selectCreate(channelId)
                 .map(create -> create.create(request))

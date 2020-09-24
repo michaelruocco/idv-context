@@ -11,34 +11,34 @@ import uk.co.idv.identity.entities.identity.RequestedData;
 import uk.co.idv.identity.entities.identity.RequestedDataMother;
 
 
-public interface EligibilityMother {
+public interface IdentityEligibilityMother {
 
-    static Eligibility withAliases(Alias... aliases) {
+    static IdentityEligibility withAliases(Alias... aliases) {
         return builder().aliases(AliasesMother.with(aliases)).build();
     }
 
-    static Eligibility withAliases(DefaultAliases aliases) {
+    static IdentityEligibility withAliases(DefaultAliases aliases) {
         return builder().aliases(aliases).build();
     }
 
-    static Eligibility withChannel(Channel channel) {
+    static IdentityEligibility withChannel(Channel channel) {
         return builder().channel(channel).build();
     }
 
-    static Eligibility withRequestedData(RequestedData requestedData) {
+    static IdentityEligibility withRequestedData(RequestedData requestedData) {
         return builder().requestedData(requestedData).build();
     }
 
-    static Eligibility withIdentity(Identity identity) {
+    static IdentityEligibility withIdentity(Identity identity) {
         return builder().identity(identity).build();
     }
 
-    static Eligibility build() {
+    static IdentityEligibility build() {
         return builder().build();
     }
 
-    static Eligibility.EligibilityBuilder builder() {
-        return Eligibility.builder()
+    static IdentityEligibility.IdentityEligibilityBuilder builder() {
+        return IdentityEligibility.builder()
                 .aliases(AliasesMother.creditCardNumberOnly())
                 .channel(DefaultChannelMother.build())
                 .requestedData(RequestedDataMother.allRequested())

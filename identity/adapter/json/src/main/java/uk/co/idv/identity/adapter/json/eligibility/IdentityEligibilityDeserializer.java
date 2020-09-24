@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.identity.entities.eligibility.Eligibility;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
@@ -14,16 +14,16 @@ import static uk.co.idv.identity.adapter.json.eligibility.EligibilityFieldExtrac
 import static uk.co.idv.identity.adapter.json.eligibility.EligibilityFieldExtractor.toChannel;
 import static uk.co.idv.identity.adapter.json.eligibility.EligibilityFieldExtractor.toRequestedData;
 
-public class EligibilityDeserializer extends StdDeserializer<Eligibility> {
+public class IdentityEligibilityDeserializer extends StdDeserializer<IdentityEligibility> {
 
-    protected EligibilityDeserializer() {
-        super(Eligibility.class);
+    protected IdentityEligibilityDeserializer() {
+        super(IdentityEligibility.class);
     }
 
     @Override
-    public Eligibility deserialize(JsonParser parser, DeserializationContext context) {
+    public IdentityEligibility deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
-        return Eligibility.builder()
+        return IdentityEligibility.builder()
                 .channel(toChannel(node, parser))
                 .aliases(toAliases(node, parser))
                 .requestedData(toRequestedData(node, parser))

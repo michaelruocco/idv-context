@@ -46,4 +46,6 @@ public class Context {
         return sequences.isComplete();
     }
 
+    public boolean isSuccessful() { return sequences.isSuccessful(); }
+
 }

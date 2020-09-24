@@ -6,7 +6,7 @@ import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.identity.entities.channel.gb.As3Mother;
 import uk.co.idv.identity.entities.channel.gb.GbRsaMother;
-import uk.co.idv.identity.entities.eligibility.Eligibility;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
@@ -54,7 +54,7 @@ class CreateEligibilityIntegrationTest {
                 .channel(GbRsaMother.rsa())
                 .build();
 
-        Eligibility eligibility = createEligibility.create(request);
+        IdentityEligibility eligibility = createEligibility.create(request);
 
         assertThat(eligibility.getIdentity()).isEqualTo(created);
     }
@@ -66,7 +66,7 @@ class CreateEligibilityIntegrationTest {
                 .channel(As3Mother.as3())
                 .build();
 
-        Eligibility eligibility = createEligibility.create(request);
+        IdentityEligibility eligibility = createEligibility.create(request);
 
         Identity identity = eligibility.getIdentity();
         assertThat(identity.hasIdvId()).isTrue();

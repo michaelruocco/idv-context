@@ -10,7 +10,7 @@ import uk.co.idv.identity.entities.identity.RequestedData;
 
 @Builder
 @Data
-public class Eligibility {
+public class IdentityEligibility {
 
     private final Channel channel;
     private final Aliases aliases;

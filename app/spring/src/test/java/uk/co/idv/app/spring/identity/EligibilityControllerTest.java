@@ -3,7 +3,7 @@ package uk.co.idv.app.spring.identity;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import uk.co.idv.identity.entities.eligibility.Eligibility;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
 
@@ -20,10 +20,10 @@ class EligibilityControllerTest {
     @Test
     void shouldCreateEligibility() {
         CreateEligibilityRequest request = mock(CreateEligibilityRequest.class);
-        Eligibility expected = mock(Eligibility.class);
+        IdentityEligibility expected = mock(IdentityEligibility.class);
         given(createEligibility.create(request)).willReturn(expected);
 
-        ResponseEntity<Eligibility> response = controller.createEligibility(request);
+        ResponseEntity<IdentityEligibility> response = controller.createEligibility(request);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isEqualTo(expected);

@@ -88,6 +88,26 @@ class SequencesTest {
         assertThat(sequences.isComplete()).isFalse();
     }
 
+    @Test
+    void shouldBeSuccessfulIfAnySequencesSuccessful() {
+        Sequence sequence1 = givenUnsuccessfulSequence();
+        Sequence sequence2 = givenSuccessfulSequence();
+
+        Sequences sequences = new Sequences(sequence1, sequence2);
+
+        assertThat(sequences.isSuccessful()).isTrue();
+    }
+
+    @Test
+    void shouldBeUnsuccessfulIfAllSequencesUnsuccessful() {
+        Sequence sequence1 = givenUnsuccessfulSequence();
+        Sequence sequence2 = givenUnsuccessfulSequence();
+
+        Sequences sequences = new Sequences(sequence1, sequence2);
+
+        assertThat(sequences.isSuccessful()).isFalse();
+    }
+
     private Sequence givenEligibleSequence() {
         Sequence sequence = mock(Sequence.class);
         given(sequence.isEligible()).willReturn(true);
@@ -109,6 +129,18 @@ class SequencesTest {
     private Sequence givenIncompleteSequence() {
         Sequence sequence = mock(Sequence.class);
         given(sequence.isComplete()).willReturn(false);
+        return sequence;
+    }
+
+    private Sequence givenSuccessfulSequence() {
+        Sequence sequence = mock(Sequence.class);
+        given(sequence.isSuccessful()).willReturn(true);
+        return sequence;
+    }
+
+    private Sequence givenUnsuccessfulSequence() {
+        Sequence sequence = mock(Sequence.class);
+        given(sequence.isSuccessful()).willReturn(false);
         return sequence;
     }
 

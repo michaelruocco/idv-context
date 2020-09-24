@@ -6,8 +6,8 @@ import uk.co.idv.context.entities.context.create.ContextCreateEligibilityRequest
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
-import uk.co.idv.identity.entities.eligibility.Eligibility;
-import uk.co.idv.identity.entities.eligibility.EligibilityMother;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibilityMother;
 import uk.co.idv.identity.entities.identity.FindIdentityRequest;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
@@ -80,7 +80,7 @@ class IdentityLoaderTest {
     @Test
     void shouldReturnIdentityFromEligibility() {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
-        Eligibility eligibility = givenEligibilityReturned();
+        IdentityEligibility eligibility = givenEligibilityReturned();
 
         DefaultCreateContextRequest identityRequest = loader.addIdentity(request);
 
@@ -93,8 +93,8 @@ class IdentityLoaderTest {
         return policy;
     }
 
-    private Eligibility givenEligibilityReturned() {
-        Eligibility eligibility = EligibilityMother.build();
+    private IdentityEligibility givenEligibilityReturned() {
+        IdentityEligibility eligibility = IdentityEligibilityMother.build();
         given(createEligibility.create(any(FindIdentityRequest.class))).willReturn(eligibility);
         return eligibility;
     }

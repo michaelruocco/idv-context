@@ -16,4 +16,7 @@ public interface MethodsMixin {
     @JsonIgnore
     boolean isComplete();
 
+    @JsonIgnore
+    boolean isSuccessful();
+
 }

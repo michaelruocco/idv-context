@@ -101,11 +101,31 @@ class MethodsTest {
     @Test
     void shouldReturnIncompleteIfAtLeastOnMethodIsNotComplete() {
         Method method1 = givenCompleteMethod(Method.class);
-        Method method2 = givenIncompleteMethod(Method.class);
+        Method method2 = givenIncompleteMethod();
 
         Methods methods = new Methods(method1, method2);
 
         assertThat(methods.isComplete()).isFalse();
+    }
+
+    @Test
+    void shouldReturnSuccessfulIfAllMethodsSuccessful() {
+        Method method1 = givenSuccessfulMethod();
+        Method method2 = givenSuccessfulMethod();
+
+        Methods methods = new Methods(method1, method2);
+
+        assertThat(methods.isSuccessful()).isTrue();
+    }
+
+    @Test
+    void shouldReturnUnsuccessfulIfAtLeastOnMethodIsNotComplete() {
+        Method method1 = givenSuccessfulMethod();
+        Method method2 = givenUnsuccessfulMethod();
+
+        Methods methods = new Methods(method1, method2);
+
+        assertThat(methods.isSuccessful()).isFalse();
     }
 
     private <T extends Method> T givenEligibleAndIncompleteMethod(Class<T> type) {
@@ -132,9 +152,21 @@ class MethodsTest {
         return method;
     }
 
-    private <T extends Method> T givenIncompleteMethod(Class<T> type) {
-        T method = mock(type);
+    private Method givenIncompleteMethod() {
+        Method method = mock(Method.class);
         given(method.isComplete()).willReturn(false);
+        return method;
+    }
+
+    private Method givenSuccessfulMethod() {
+        Method method = mock(Method.class);
+        given(method.isSuccessful()).willReturn(true);
+        return method;
+    }
+
+    private Method givenUnsuccessfulMethod() {
+        Method method = mock(Method.class);
+        given(method.isSuccessful()).willReturn(false);
         return method;
     }
 

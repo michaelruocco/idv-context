@@ -5,8 +5,8 @@ import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.channel.DefaultChannelMother;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequestMother;
-import uk.co.idv.identity.entities.eligibility.Eligibility;
-import uk.co.idv.identity.entities.eligibility.EligibilityMother;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibilityMother;
 
 import java.util.Arrays;
 
@@ -29,10 +29,10 @@ class CompositeCreateEligibilityTest {
     void shouldPerformUpdateForGivenChannelId() {
         Channel channel = DefaultChannelMother.withId("my-channel-1");
         CreateEligibilityRequest request = CreateEligibilityRequestMother.withChannel(channel);
-        Eligibility expectedEligibility = EligibilityMother.build();
+        IdentityEligibility expectedEligibility = IdentityEligibilityMother.build();
         given(channelCreate1.create(request)).willReturn(expectedEligibility);
 
-        Eligibility eligibility = compositeCreate.create(request);
+        IdentityEligibility eligibility = compositeCreate.create(request);
 
         assertThat(eligibility).isEqualTo(expectedEligibility);
     }

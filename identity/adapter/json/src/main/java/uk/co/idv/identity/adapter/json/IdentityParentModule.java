@@ -3,7 +3,7 @@ package uk.co.idv.identity.adapter.json;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.identity.adapter.json.eligibility.EligibilityModule;
+import uk.co.idv.identity.adapter.json.eligibility.IdentityEligibilityModule;
 import uk.co.idv.identity.adapter.json.error.IdentityErrorModule;
 import uk.co.idv.identity.adapter.json.identity.IdentityModule;
 
@@ -20,7 +20,7 @@ public class IdentityParentModule extends SimpleModule {
         return Arrays.asList(
                 new IdentityModule(),
                 new IdentityErrorModule(),
-                new EligibilityModule()
+                new IdentityEligibilityModule()
         );
     }
 

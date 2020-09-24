@@ -16,4 +16,7 @@ public interface SequencesMixin {
     @JsonIgnore
     boolean isComplete();
 
+    @JsonIgnore
+    boolean isSuccessful();
+
 }

@@ -3,8 +3,8 @@ package uk.co.idv.identity.usecases.eligibility;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequestMother;
-import uk.co.idv.identity.entities.eligibility.Eligibility;
-import uk.co.idv.identity.entities.eligibility.EligibilityMother;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibilityMother;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -31,10 +31,10 @@ class ChannelCreateEligibilityTest {
     @Test
     void shouldPerformCreate() {
         CreateEligibilityRequest request = CreateEligibilityRequestMother.build();
-        Eligibility expectedEligibility = EligibilityMother.build();
+        IdentityEligibility expectedEligibility = IdentityEligibilityMother.build();
         given(create.create(request)).willReturn(expectedEligibility);
 
-        Eligibility eligibility = channelCreate.create(request);
+        IdentityEligibility eligibility = channelCreate.create(request);
 
         assertThat(eligibility).isEqualTo(expectedEligibility);
     }

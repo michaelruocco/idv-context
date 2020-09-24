@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class CreateEligibilityRequestSerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new EligibilityModule());
+    private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new IdentityEligibilityModule());
     private static final String JSON = CreateEligibilityRequestJsonMother.build();
     private static final CreateEligibilityRequest REQUEST = CreateEligibilityRequestMother.build();
 

@@ -39,4 +39,8 @@ public class Sequences implements Iterable<Sequence> {
         return values.stream().anyMatch(Sequence::isComplete);
     }
 
+    public boolean isSuccessful() {
+        return values.stream().anyMatch(Sequence::isSuccessful);
+    }
+
 }

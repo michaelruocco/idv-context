@@ -12,13 +12,13 @@ import uk.co.idv.identity.entities.identity.RequestedDataMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class EligibilityTest {
+class IdentityEligibilityTest {
 
     @Test
     void shouldReturnChannel() {
         Channel channel = DefaultChannelMother.build();
 
-        Eligibility eligibility = EligibilityMother.withChannel(channel);
+        IdentityEligibility eligibility = IdentityEligibilityMother.withChannel(channel);
 
         assertThat(eligibility.getChannel()).isEqualTo(channel);
     }
@@ -27,7 +27,7 @@ class EligibilityTest {
     void shouldReturnAliases() {
         DefaultAliases aliases = AliasesMother.idvIdAndDebitCardNumber();
 
-        Eligibility eligibility = EligibilityMother.withAliases(aliases);
+        IdentityEligibility eligibility = IdentityEligibilityMother.withAliases(aliases);
 
         assertThat(eligibility.getAliases()).isEqualTo(aliases);
     }
@@ -36,7 +36,7 @@ class EligibilityTest {
     void shouldReturnRequestedData() {
         RequestedData requestedData = RequestedDataMother.allRequested();
 
-        Eligibility eligibility = EligibilityMother.withRequestedData(requestedData);
+        IdentityEligibility eligibility = IdentityEligibilityMother.withRequestedData(requestedData);
 
         assertThat(eligibility.getRequestedData()).isEqualTo(requestedData);
     }
@@ -45,7 +45,7 @@ class EligibilityTest {
     void shouldReturnIdentity() {
         Identity identity = IdentityMother.example();
 
-        Eligibility eligibility = EligibilityMother.withIdentity(identity);
+        IdentityEligibility eligibility = IdentityEligibilityMother.withIdentity(identity);
 
         assertThat(eligibility.getIdentity()).isEqualTo(identity);
     }

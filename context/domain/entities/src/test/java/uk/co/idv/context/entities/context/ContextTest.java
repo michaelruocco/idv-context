@@ -130,4 +130,16 @@ class ContextTest {
         assertThat(context.isComplete()).isTrue();
     }
 
+    @Test
+    void shouldReturnSuccessfulFromSequences() {
+        Sequences sequences = mock(Sequences.class);
+        given(sequences.isSuccessful()).willReturn(true);
+
+        Context context = Context.builder()
+                .sequences(sequences)
+                .build();
+
+        assertThat(context.isSuccessful()).isTrue();
+    }
+
 }

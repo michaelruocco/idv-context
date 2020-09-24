@@ -5,20 +5,20 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.entities.eligibility.Eligibility;
-import uk.co.idv.identity.entities.eligibility.EligibilityMother;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
+import uk.co.idv.identity.entities.eligibility.IdentityEligibilityMother;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class EligibilitySerdeTest {
+class IdentityEligibilitySerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper()
-            .registerModule(new EligibilityModule())
+            .registerModule(new IdentityEligibilityModule())
             .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
     private static final String JSON = EligibilityJsonMother.build();
-    private static final Eligibility ELIGIBILITY = EligibilityMother.build();
+    private static final IdentityEligibility ELIGIBILITY = IdentityEligibilityMother.build();
 
     @Test
     void shouldSerialize() throws JsonProcessingException {
@@ -29,7 +29,7 @@ class EligibilitySerdeTest {
 
     @Test
     void shouldDeserialize() throws JsonProcessingException {
-        Eligibility eligibility = MAPPER.readValue(JSON, Eligibility.class);
+        IdentityEligibility eligibility = MAPPER.readValue(JSON, IdentityEligibility.class);
 
         assertThat(eligibility).isEqualTo(ELIGIBILITY);
     }

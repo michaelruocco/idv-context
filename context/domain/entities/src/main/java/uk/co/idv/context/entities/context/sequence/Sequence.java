@@ -24,4 +24,6 @@ public class Sequence {
 
     public boolean isComplete() { return methods.isComplete(); }
 
+    public boolean isSuccessful() { return methods.isSuccessful(); }
+
 }
