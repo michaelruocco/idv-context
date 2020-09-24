@@ -88,6 +88,26 @@ class MethodsTest {
         assertThat(methods.isEligible()).isFalse();
     }
 
+    @Test
+    void shouldReturnCompleteIfAllMethodsComplete() {
+        Method method1 = givenCompleteMethod(Method.class);
+        Method method2 = givenCompleteMethod(Method.class);
+
+        Methods methods = new Methods(method1, method2);
+
+        assertThat(methods.isComplete()).isTrue();
+    }
+
+    @Test
+    void shouldReturnIncompleteIfAtLeastOnMethodIsNotComplete() {
+        Method method1 = givenCompleteMethod(Method.class);
+        Method method2 = givenIncompleteMethod(Method.class);
+
+        Methods methods = new Methods(method1, method2);
+
+        assertThat(methods.isComplete()).isFalse();
+    }
+
     private <T extends Method> T givenEligibleAndIncompleteMethod(Class<T> type) {
         T method = givenEligibleMethod(type);
         given(method.isComplete()).willReturn(false);
@@ -109,6 +129,12 @@ class MethodsTest {
     private <T extends Method> T givenCompleteMethod(Class<T> type) {
         T method = mock(type);
         given(method.isComplete()).willReturn(true);
+        return method;
+    }
+
+    private <T extends Method> T givenIncompleteMethod(Class<T> type) {
+        T method = mock(type);
+        given(method.isComplete()).willReturn(false);
         return method;
     }
 

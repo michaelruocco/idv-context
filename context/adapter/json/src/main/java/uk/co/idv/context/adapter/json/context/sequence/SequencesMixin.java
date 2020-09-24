@@ -10,4 +10,10 @@ public interface SequencesMixin {
     @JsonIgnore
     Collection<DeliveryMethod> getValues();
 
+    @JsonIgnore
+    boolean isEligible();
+
+    @JsonIgnore
+    boolean isComplete();
+
 }

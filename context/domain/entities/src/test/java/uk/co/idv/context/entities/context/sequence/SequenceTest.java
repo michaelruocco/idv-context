@@ -59,4 +59,16 @@ class SequenceTest {
         assertThat(sequence.isEligible()).isTrue();
     }
 
+    @Test
+    void shouldReturnCompleteFromMethods() {
+        Methods methods = mock(Methods.class);
+        given(methods.isComplete()).willReturn(true);
+
+        Sequence sequence = Sequence.builder()
+                .methods(methods)
+                .build();
+
+        assertThat(sequence.isComplete()).isTrue();
+    }
+
 }

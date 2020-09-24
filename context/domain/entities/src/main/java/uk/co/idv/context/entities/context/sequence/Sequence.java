@@ -22,4 +22,6 @@ public class Sequence {
         return methods.isEligible();
     }
 
+    public boolean isComplete() { return methods.isComplete(); }
+
 }

@@ -1,6 +1,7 @@
 {
   "name": "default-sequence",
   "eligible": true,
+  "complete": false,
   "methods": [
     {
       "name": "one-time-passcode",

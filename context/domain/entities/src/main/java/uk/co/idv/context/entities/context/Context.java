@@ -38,4 +38,12 @@ public class Context {
         return sequences.findNextIncompleteEligibleOtp();
     }
 
+    public boolean isEligible() {
+        return sequences.isEligible();
+    }
+
+    public boolean isComplete() {
+        return sequences.isComplete();
+    }
+
 }

@@ -31,4 +31,12 @@ public class Sequences implements Iterable<Sequence> {
                 .findFirst();
     }
 
+    public boolean isEligible() {
+        return values.stream().anyMatch(Sequence::isEligible);
+    }
+
+    public boolean isComplete() {
+        return values.stream().anyMatch(Sequence::isComplete);
+    }
+
 }

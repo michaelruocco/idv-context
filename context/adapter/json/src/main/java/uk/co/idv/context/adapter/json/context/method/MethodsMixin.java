@@ -13,4 +13,7 @@ public interface MethodsMixin {
     @JsonIgnore
     boolean isEligible();
 
+    @JsonIgnore
+    boolean isComplete();
+
 }

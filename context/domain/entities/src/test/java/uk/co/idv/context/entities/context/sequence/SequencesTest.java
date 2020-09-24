@@ -48,4 +48,68 @@ class SequencesTest {
         assertThat(otp).contains(expectedOtp);
     }
 
+    @Test
+    void shouldBeEligibleIfAnySequencesEligible() {
+        Sequence sequence1 = givenIneligibleSequence();
+        Sequence sequence2 = givenEligibleSequence();
+
+        Sequences sequences = new Sequences(sequence1, sequence2);
+
+        assertThat(sequences.isEligible()).isTrue();
+    }
+
+    @Test
+    void shouldBeIneligibleIfAllSequencesIneligible() {
+        Sequence sequence1 = givenIneligibleSequence();
+        Sequence sequence2 = givenIneligibleSequence();
+
+        Sequences sequences = new Sequences(sequence1, sequence2);
+
+        assertThat(sequences.isEligible()).isFalse();
+    }
+
+    @Test
+    void shouldBeCompleteIfAnySequencesComplete() {
+        Sequence sequence1 = givenIncompleteSequence();
+        Sequence sequence2 = givenCompleteSequence();
+
+        Sequences sequences = new Sequences(sequence1, sequence2);
+
+        assertThat(sequences.isComplete()).isTrue();
+    }
+
+    @Test
+    void shouldBeIncompleteIfAllSequencesIncomplete() {
+        Sequence sequence1 = givenIncompleteSequence();
+        Sequence sequence2 = givenIncompleteSequence();
+
+        Sequences sequences = new Sequences(sequence1, sequence2);
+
+        assertThat(sequences.isComplete()).isFalse();
+    }
+
+    private Sequence givenEligibleSequence() {
+        Sequence sequence = mock(Sequence.class);
+        given(sequence.isEligible()).willReturn(true);
+        return sequence;
+    }
+
+    private Sequence givenIneligibleSequence() {
+        Sequence sequence = mock(Sequence.class);
+        given(sequence.isEligible()).willReturn(false);
+        return sequence;
+    }
+
+    private Sequence givenCompleteSequence() {
+        Sequence sequence = mock(Sequence.class);
+        given(sequence.isComplete()).willReturn(true);
+        return sequence;
+    }
+
+    private Sequence givenIncompleteSequence() {
+        Sequence sequence = mock(Sequence.class);
+        given(sequence.isComplete()).willReturn(false);
+        return sequence;
+    }
+
 }

@@ -32,6 +32,10 @@ public class Methods implements Iterable<Method> {
         return values.stream().allMatch(Method::isEligible);
     }
 
+    public boolean isComplete() {
+        return values.stream().allMatch(Method::isComplete);
+    }
+
     public <T> Optional<T> findNextIncompleteEligibleMethodOfType(Class<T> type) {
         return values.stream()
                 .filter(method -> !method.isComplete())

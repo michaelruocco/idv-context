@@ -106,4 +106,28 @@ class ContextTest {
         assertThat(context.findNextIncompleteEligibleOtp()).contains(otp);
     }
 
+    @Test
+    void shouldReturnEligibleFromSequences() {
+        Sequences sequences = mock(Sequences.class);
+        given(sequences.isEligible()).willReturn(true);
+
+        Context context = Context.builder()
+                .sequences(sequences)
+                .build();
+
+        assertThat(context.isEligible()).isTrue();
+    }
+
+    @Test
+    void shouldReturnCompleteFromSequences() {
+        Sequences sequences = mock(Sequences.class);
+        given(sequences.isComplete()).willReturn(true);
+
+        Context context = Context.builder()
+                .sequences(sequences)
+                .build();
+
+        assertThat(context.isComplete()).isTrue();
+    }
+
 }
