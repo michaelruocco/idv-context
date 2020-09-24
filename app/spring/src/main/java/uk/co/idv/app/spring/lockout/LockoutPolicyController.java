@@ -69,7 +69,7 @@ public class LockoutPolicyController {
         return delete.delete(id);
     }
 
-    private static URI buildGetUri(final UUID id) {
+    private static URI buildGetUri(UUID id) {
         return linkTo(methodOn(LockoutPolicyController.class).getPolicy(id)).toUri();
     }
 

@@ -6,7 +6,7 @@ import uk.co.idv.identity.entities.channel.gb.GbRsaMother;
 
 public interface FacadeCreateContextRequestMother {
 
-    static CreateContextRequest build() {
+    static FacadeCreateContextRequest build() {
         return builder().build();
     }
 

@@ -118,6 +118,7 @@
   "sequences": [
     {
       "name": "default-sequence",
+      "eligible": true,
       "methods": [
         {
           "name": "one-time-passcode",

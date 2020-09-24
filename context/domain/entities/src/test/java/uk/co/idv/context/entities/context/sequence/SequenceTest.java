@@ -47,4 +47,16 @@ class SequenceTest {
         assertThat(sequence.findNextIncompleteEligibleOtp()).contains(otp);
     }
 
+    @Test
+    void shouldReturnEligibleFromMethods() {
+        Methods methods = mock(Methods.class);
+        given(methods.isEligible()).willReturn(true);
+
+        Sequence sequence = Sequence.builder()
+                .methods(methods)
+                .build();
+
+        assertThat(sequence.isEligible()).isTrue();
+    }
+
 }

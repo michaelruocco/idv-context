@@ -27,7 +27,7 @@ class MethodsTest {
     @Test
     void shouldReturnOtpIfIncompleteAndEligible() {
         Method method1 = mock(Method.class);
-        Otp expectedOtp = givenEligibleAndCompleteMethod(Otp.class);
+        Otp expectedOtp = givenEligibleAndIncompleteMethod(Otp.class);
         Methods methods = new Methods(method1, expectedOtp);
 
         Optional<Otp> otp = methods.findNextIncompleteEligibleOtp();
@@ -59,7 +59,7 @@ class MethodsTest {
 
     @Test
     void shouldNotReturnOtpIfNotPresent() {
-        Method method1 = givenEligibleAndCompleteMethod(Method.class);
+        Method method1 = givenEligibleAndIncompleteMethod(Method.class);
         Method method2 = mock(Method.class);
         Methods methods = new Methods(method1, method2);
 
@@ -68,9 +68,34 @@ class MethodsTest {
         assertThat(otp).isEmpty();
     }
 
-    private <T extends Method> T givenEligibleAndCompleteMethod(Class<T> type) {
-        T method = mock(type);
+    @Test
+    void shouldReturnEligibleIfAllMethodsEligible() {
+        Method method1 = givenEligibleMethod(Method.class);
+        Method method2 = givenEligibleMethod(Method.class);
+
+        Methods methods = new Methods(method1, method2);
+
+        assertThat(methods.isEligible()).isTrue();
+    }
+
+    @Test
+    void shouldReturnIneligibleIfAtLeastOnMethodIsNotEligible() {
+        Method method1 = givenEligibleMethod(Method.class);
+        Method method2 = givenIneligibleMethod(Method.class);
+
+        Methods methods = new Methods(method1, method2);
+
+        assertThat(methods.isEligible()).isFalse();
+    }
+
+    private <T extends Method> T givenEligibleAndIncompleteMethod(Class<T> type) {
+        T method = givenEligibleMethod(type);
         given(method.isComplete()).willReturn(false);
+        return method;
+    }
+
+    private <T extends Method> T givenEligibleMethod(Class<T> type) {
+        T method = mock(type);
         given(method.isEligible()).willReturn(true);
         return method;
     }

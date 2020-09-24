@@ -18,4 +18,8 @@ public class Sequence {
         return methods.findNextIncompleteEligibleOtp();
     }
 
+    public boolean isEligible() {
+        return methods.isEligible();
+    }
+
 }

@@ -10,4 +10,7 @@ public interface MethodsMixin {
     @JsonIgnore
     Collection<DeliveryMethod> getValues();
 
+    @JsonIgnore
+    boolean isEligible();
+
 }

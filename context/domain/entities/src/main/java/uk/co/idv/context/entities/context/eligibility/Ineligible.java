@@ -9,7 +9,7 @@ public class Ineligible implements Eligibility {
 
     private final String reason;
 
-    public Ineligible(final String reason) {
+    public Ineligible(String reason) {
         this.reason = reason;
     }
 

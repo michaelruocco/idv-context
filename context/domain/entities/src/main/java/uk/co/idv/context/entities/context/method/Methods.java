@@ -28,6 +28,10 @@ public class Methods implements Iterable<Method> {
         return findNextIncompleteEligibleMethodOfType(Otp.class);
     }
 
+    public boolean isEligible() {
+        return values.stream().allMatch(Method::isEligible);
+    }
+
     public <T> Optional<T> findNextIncompleteEligibleMethodOfType(Class<T> type) {
         return values.stream()
                 .filter(method -> !method.isComplete())

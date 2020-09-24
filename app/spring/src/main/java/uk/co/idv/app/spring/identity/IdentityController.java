@@ -44,7 +44,7 @@ public class IdentityController {
                 .body(updated);
     }
 
-    private static URI buildGetUri(final UUID id) {
+    private static URI buildGetUri(UUID id) {
         return linkTo(methodOn(IdentityController.class).getIdentity(id)).toUri();
     }
 

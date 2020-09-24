@@ -69,7 +69,7 @@ public class ContextPolicyController {
         return delete.delete(id);
     }
 
-    private static URI buildGetUri(final UUID id) {
+    private static URI buildGetUri(UUID id) {
         return linkTo(methodOn(ContextPolicyController.class).getPolicy(id)).toUri();
     }
 

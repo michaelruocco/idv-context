@@ -90,7 +90,7 @@ class LockoutPolicyControllerTest {
     }
 
     @Test
-    void shouldReturnLocationForCreatePolicy() {
+    void shouldReturnLocationForCreatedPolicy() {
         LockoutPolicy policy = SoftLockoutPolicyMother.build();
 
         ResponseEntity<LockoutPolicy> response = controller.create(policy);

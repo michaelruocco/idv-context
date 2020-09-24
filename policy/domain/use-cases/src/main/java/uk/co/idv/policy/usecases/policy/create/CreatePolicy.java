@@ -9,7 +9,7 @@ public class CreatePolicy<T extends Policy> {
 
     private final PolicyRepository<T> repository;
 
-    public void create(final T policy) {
+    public void create(T policy) {
         repository.save(policy);
     }
 
