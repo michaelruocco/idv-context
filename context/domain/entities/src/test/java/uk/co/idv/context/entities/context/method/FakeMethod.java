@@ -11,6 +11,9 @@ public class FakeMethod implements Method {
 
     private final Eligibility eligibility;
 
+    @Builder.Default
+    private final MethodConfig config = mock(MethodConfig.class);
+
     @Override
     public String getName() {
         return "fake-method";
@@ -33,7 +36,7 @@ public class FakeMethod implements Method {
 
     @Override
     public MethodConfig getConfig() {
-        return mock(MethodConfig.class);
+        return config;
     }
 
 }

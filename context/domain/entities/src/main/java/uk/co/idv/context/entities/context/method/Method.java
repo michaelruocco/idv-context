@@ -3,6 +3,8 @@ package uk.co.idv.context.entities.context.method;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.policy.method.MethodConfig;
 
+import java.time.Duration;
+
 public interface Method {
 
     String getName();
@@ -17,6 +19,10 @@ public interface Method {
 
     default boolean isEligible() {
         return getEligibility().isEligible();
+    }
+
+    default Duration getDuration() {
+        return getConfig().getDuration();
     }
 
 }

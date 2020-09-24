@@ -11,11 +11,10 @@
 
 ## Todo
 
-*   Implement deserialization of context
-*   Add complete, successful and eligible flags to sequences and context
-*   Add functionality for expiry to context
+*   Add context karate test scenarios
+*   Add functionality for expiry to context -> via publishing context created event
 *   Functionality to post results to verification context
-*   Ensure attempts merged when identities merged
+*   Ensure attempts merged when identities merged -> via publishing identity merged event
 *   Extract common dynamo adapter to its own separate library
 
 ## Useful commands
