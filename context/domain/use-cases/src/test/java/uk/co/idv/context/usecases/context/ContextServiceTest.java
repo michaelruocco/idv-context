@@ -6,10 +6,12 @@ import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
+import uk.co.idv.context.usecases.context.expiry.ExpiryCalculator;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 
 import java.time.Clock;
 import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,15 +22,19 @@ import static org.mockito.Mockito.mock;
 
 class ContextServiceTest {
 
+    private static final Instant NOW = Instant.parse("2020-09-25T07:14:01.050Z");
+
     private final IdGenerator idGenerator = mock(IdGenerator.class);
-    private final Clock clock = mock(Clock.class);
+    private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
     private final SequencesBuilder sequencesBuilder = mock(SequencesBuilder.class);
+    private final ExpiryCalculator expiryCalculator = mock(ExpiryCalculator.class);
     private final ContextRepository repository = mock(ContextRepository.class);
 
     private final ContextService service = ContextService.builder()
             .idGenerator(idGenerator)
             .clock(clock)
             .sequencesBuilder(sequencesBuilder)
+            .expiryCalculator(expiryCalculator)
             .repository(repository)
             .build();
 
@@ -45,13 +51,11 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateCreatedOnContext() {
-        Instant expected = Instant.now();
-        given(clock.instant()).willReturn(expected);
         DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
 
         Context context = service.create(request);
 
-        assertThat(context.getCreated()).isEqualTo(expected);
+        assertThat(context.getCreated()).isEqualTo(NOW);
     }
 
     @Test
@@ -71,6 +75,17 @@ class ContextServiceTest {
         Context context = service.create(request);
 
         assertThat(context.getSequences()).isEqualTo(sequences);
+    }
+
+    @Test
+    void shouldPopulateExpiryOnContext() {
+        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        Sequences sequences = givenSequencesBuiltFromRequest(request);
+        Instant expectedExpiry = givenExpiryCalculatedFor(sequences);
+
+        Context context = service.create(request);
+
+        assertThat(context.getExpiry()).isEqualTo(expectedExpiry);
     }
 
     @Test
@@ -109,6 +124,12 @@ class ContextServiceTest {
 
     private void givenContextNotFound(UUID id) {
         given(repository.load(id)).willReturn(Optional.empty());
+    }
+
+    private Instant givenExpiryCalculatedFor(Sequences sequences) {
+        Instant expiry = Instant.parse("2020-09-25T07:20:01.050Z");
+        given(expiryCalculator.calculate(NOW, sequences)).willReturn(expiry);
+        return expiry;
     }
 
 }

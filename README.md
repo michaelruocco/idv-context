@@ -12,7 +12,8 @@
 ## Todo
 
 *   Add context karate test scenarios
-*   Add functionality for expiry to context -> via publishing context created event
+*   Add registering context expiry job -> via publishing context created event
+*   Add publishing context expired event
 *   Functionality to post results to verification context
 *   Ensure attempts merged when identities merged -> via publishing identity merged event
 *   Extract common dynamo adapter to its own separate library

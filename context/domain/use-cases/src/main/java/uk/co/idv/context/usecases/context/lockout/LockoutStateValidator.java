@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.context;
+package uk.co.idv.context.usecases.context.lockout;
 
 import lombok.Builder;
 import uk.co.idv.context.entities.context.create.ContextLockoutRequest;

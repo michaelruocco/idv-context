@@ -2,8 +2,8 @@ package uk.co.idv.context.config;
 
 import lombok.Builder;
 import uk.co.idv.context.usecases.context.ContextFacade;
-import uk.co.idv.context.usecases.context.IdentityLoader;
-import uk.co.idv.context.usecases.context.LockoutStateValidator;
+import uk.co.idv.context.usecases.context.lockout.LockoutStateValidator;
+import uk.co.idv.context.usecases.context.identity.IdentityLoader;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.lockout.usecases.LockoutService;
 

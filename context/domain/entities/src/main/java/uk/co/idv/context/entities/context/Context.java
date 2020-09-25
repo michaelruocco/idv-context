@@ -19,6 +19,7 @@ public class Context {
 
     private final UUID id;
     private final Instant created;
+    private final Instant expiry;
     private final DefaultCreateContextRequest request;
     private final Sequences sequences;
 

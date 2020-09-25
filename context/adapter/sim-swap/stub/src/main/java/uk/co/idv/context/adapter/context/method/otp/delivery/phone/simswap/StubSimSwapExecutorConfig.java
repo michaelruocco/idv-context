@@ -12,11 +12,9 @@ import java.util.concurrent.ExecutorService;
 public class StubSimSwapExecutorConfig {
 
     @Builder.Default
-    private final Clock clock = Clock.systemUTC();
-
-    @Builder.Default
     private final Delay delay = new Delay(Duration.ofSeconds(3));
 
+    private final Clock clock;
     private final ExecutorService executor;
 
     public SimSwapExecutor simSwapExecutor() {

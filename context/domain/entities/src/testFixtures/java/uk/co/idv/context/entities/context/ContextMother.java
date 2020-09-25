@@ -16,6 +16,7 @@ public interface ContextMother {
         return Context.builder()
                 .id(UUID.fromString("2948aadc-7f63-4b00-875b-77a4e6608e5c"))
                 .created(Instant.parse("2020-09-14T20:02:02.002Z"))
+                .expiry(Instant.parse("2020-09-14T20:08:02.002Z"))
                 .request(DefaultCreateContextRequestMother.build())
                 .sequences(SequencesMother.otpOnly());
     }

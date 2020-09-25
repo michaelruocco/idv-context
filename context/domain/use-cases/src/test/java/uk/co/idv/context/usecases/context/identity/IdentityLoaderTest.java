@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.context;
+package uk.co.idv.context.usecases.context.identity;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;

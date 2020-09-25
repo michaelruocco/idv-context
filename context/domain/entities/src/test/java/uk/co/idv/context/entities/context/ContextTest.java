@@ -39,6 +39,17 @@ class ContextTest {
     }
 
     @Test
+    void shouldReturnExpiry() {
+        Instant expiry = Instant.now();
+
+        Context context = Context.builder()
+                .expiry(expiry)
+                .build();
+
+        assertThat(context.getExpiry()).isEqualTo(expiry);
+    }
+
+    @Test
     void shouldReturnIdentityCreateContextRequest() {
         DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
 
