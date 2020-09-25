@@ -18,4 +18,5 @@ dependencies {
     integrationTestImplementation testFixtures(project(":identity-use-cases"))
     integrationTestImplementation testFixtures(project(":lockout-use-cases"))
     integrationTestImplementation testFixtures(project(":context-entities"))
+    integrationTestImplementation testFixtures(project(":common-use-cases"))
 }

@@ -2,6 +2,8 @@ package uk.co.idv.app.manual.context;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.lockout.LockoutConfigBuilder;
+import uk.co.idv.common.usecases.id.IdGenerator;
+import uk.co.idv.common.usecases.id.NonRandomIdGenerator;
 import uk.co.idv.context.config.ContextFacadeConfig;
 import uk.co.idv.context.config.ContextServiceConfig;
 import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
@@ -44,10 +46,12 @@ class ContextIntegrationTest {
     private static final Instant NOW = Instant.now();
 
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
+    private final IdGenerator idGenerator = new NonRandomIdGenerator();
 
     private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
             .repositoryConfig(new InMemoryContextRepositoryConfig())
             .clock(clock)
+            .idGenerator(idGenerator)
             .build();
 
     private final IdentityConfig identityConfig = IdentityConfig.builder()
@@ -109,7 +113,7 @@ class ContextIntegrationTest {
 
         Context context = contextFacade.create(request);
 
-        assertThat(context.getId()).isNotNull();
+        assertThat(context.getId()).isEqualTo(UUID.fromString("507cc493-6998-49a4-9614-38ba4296eab6"));
     }
 
     @Test
