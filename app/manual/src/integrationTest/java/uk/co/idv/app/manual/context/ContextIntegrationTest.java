@@ -30,16 +30,24 @@ import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
+import java.time.Clock;
+import java.time.Instant;
+import java.time.ZoneId;
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
- class ContextIntegrationTest {
+class ContextIntegrationTest {
+
+    private static final Instant NOW = Instant.now();
+
+    private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
 
     private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
             .repositoryConfig(new InMemoryContextRepositoryConfig())
+            .clock(clock)
             .build();
 
     private final IdentityConfig identityConfig = IdentityConfig.builder()
@@ -50,6 +58,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
             .build().build();
 
     private final ContextFacadeConfig contextConfig = ContextFacadeConfig.builder()
+            .clock(clock)
             .serviceConfig(serviceConfig)
             .lockoutService(lockoutConfig.lockoutService())
             .createEligibility(identityConfig.createEligibility())
@@ -112,7 +121,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
         Context context = contextFacade.create(request);
 
-        assertThat(context.getCreated()).isNotNull();
+        assertThat(context.getCreated()).isEqualTo(NOW);
     }
 
     @Test
@@ -169,29 +178,29 @@ import static org.assertj.core.api.Assertions.catchThrowable;
         assertThat(otp).isPresent();
     }
 
-     @Test
-     void shouldThrowExceptionIfContextNotFound() {
-         UUID id = UUID.randomUUID();
+    @Test
+    void shouldThrowExceptionIfContextNotFound() {
+        UUID id = UUID.randomUUID();
 
-         Throwable error = catchThrowable(() -> contextFacade.find(id));
+        Throwable error = catchThrowable(() -> contextFacade.find(id));
 
-         assertThat(error)
-                 .isInstanceOf(ContextNotFoundException.class)
-                 .hasMessage(id.toString());
-     }
+        assertThat(error)
+                .isInstanceOf(ContextNotFoundException.class)
+                .hasMessage(id.toString());
+    }
 
-     @Test
-     void shouldReturnContextIfFound() {
-         CreateContextRequest request = FacadeCreateContextRequestMother.build();
-         givenContextPolicyExistsForChannel(request.getChannelId());
-         givenIdentityExistsForAliases(request.getAliases());
-         givenLockoutPolicyExistsForChannel(request.getChannelId());
-         Context created = contextFacade.create(request);
+    @Test
+    void shouldReturnContextIfFound() {
+        CreateContextRequest request = FacadeCreateContextRequestMother.build();
+        givenContextPolicyExistsForChannel(request.getChannelId());
+        givenIdentityExistsForAliases(request.getAliases());
+        givenLockoutPolicyExistsForChannel(request.getChannelId());
+        Context created = contextFacade.create(request);
 
-         Context loaded = contextFacade.find(created.getId());
+        Context loaded = contextFacade.find(created.getId());
 
-         assertThat(loaded).isEqualTo(created);
-     }
+        assertThat(loaded).isEqualTo(created);
+    }
 
     private void givenContextPolicyExistsForChannel(String channelId) {
         ContextPolicy policy = ContextPolicyMother.builder()
