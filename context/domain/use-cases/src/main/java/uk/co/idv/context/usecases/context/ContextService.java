@@ -2,7 +2,6 @@ package uk.co.idv.context.usecases.context;
 
 import lombok.Builder;
 import uk.co.idv.common.usecases.id.IdGenerator;
-import uk.co.idv.common.usecases.id.RandomIdGenerator;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
 import uk.co.idv.context.entities.context.sequence.Sequences;
@@ -17,14 +16,10 @@ import java.util.UUID;
 public class ContextService {
 
     @Builder.Default
-    private final IdGenerator idGenerator = new RandomIdGenerator();
-
-    @Builder.Default
     private final ExpiryCalculator expiryCalculator = new ExpiryCalculator();
 
-    @Builder.Default
-    private final Clock clock = Clock.systemUTC();
-
+    private final IdGenerator idGenerator;
+    private final Clock clock;
     private final SequencesBuilder sequencesBuilder;
     private final ContextRepository repository;
 

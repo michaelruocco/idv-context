@@ -7,8 +7,13 @@ import uk.co.idv.context.usecases.context.identity.IdentityLoader;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.lockout.usecases.LockoutService;
 
+import java.time.Clock;
+
 @Builder
 public class ContextFacadeConfig {
+
+    @Builder.Default
+    private final Clock clock = Clock.systemUTC();
 
     private final CreateEligibility createEligibility;
     private final LockoutService lockoutService;
@@ -32,6 +37,7 @@ public class ContextFacadeConfig {
     private LockoutStateValidator stateValidator() {
         return LockoutStateValidator.builder()
                 .lockoutService(lockoutService)
+                .clock(clock)
                 .build();
     }
 

@@ -12,9 +12,7 @@ import java.time.Clock;
 @Builder
 public class LockoutStateValidator {
 
-    @Builder.Default
-    private final Clock clock = Clock.systemUTC();
-
+    private final Clock clock;
     private final LockoutService lockoutService;
 
     public LockoutState validateLockoutState(DefaultCreateContextRequest request) {
