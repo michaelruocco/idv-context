@@ -9,6 +9,7 @@ import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.identity.Identity;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -48,5 +49,7 @@ public class Context {
     }
 
     public boolean isSuccessful() { return sequences.isSuccessful(); }
+
+    public Duration getDuration() { return sequences.getDuration(); }
 
 }

@@ -6,6 +6,7 @@ import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMoth
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
@@ -151,6 +152,19 @@ class ContextTest {
                 .build();
 
         assertThat(context.isSuccessful()).isTrue();
+    }
+
+    @Test
+    void shouldReturnDurationFromSequences() {
+        Sequences sequences = mock(Sequences.class);
+        Duration duration = Duration.ofMinutes(5);
+        given(sequences.getDuration()).willReturn(duration);
+
+        Context context = Context.builder()
+                .sequences(sequences)
+                .build();
+
+        assertThat(context.getDuration()).isEqualTo(duration);
     }
 
 }

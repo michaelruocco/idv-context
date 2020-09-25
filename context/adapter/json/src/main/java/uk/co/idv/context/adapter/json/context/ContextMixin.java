@@ -5,6 +5,8 @@ import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.identity.Identity;
 
+import java.time.Duration;
+
 public interface ContextMixin {
 
     @JsonIgnore
@@ -15,5 +17,8 @@ public interface ContextMixin {
 
     @JsonIgnore
     Identity getIdentity();
+
+    @JsonIgnore
+    Duration getDuration();
 
 }

@@ -33,6 +33,7 @@ import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import java.time.Clock;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Optional;
@@ -126,6 +127,20 @@ class ContextIntegrationTest {
         Context context = contextFacade.create(request);
 
         assertThat(context.getCreated()).isEqualTo(NOW);
+    }
+
+    @Test
+    void shouldPopulateExpiryTimestampOnContext() {
+        CreateContextRequest request = FacadeCreateContextRequestMother.build();
+        givenContextPolicyExistsForChannel(request.getChannelId());
+        givenIdentityExistsForAliases(request.getAliases());
+        givenLockoutPolicyExistsForChannel(request.getChannelId());
+
+        Context context = contextFacade.create(request);
+
+        Duration buffer = Duration.ofMinutes(1);
+        Instant expectedExpiry = NOW.plus(context.getDuration()).plus(buffer);
+        assertThat(context.getExpiry()).isEqualTo(expectedExpiry);
     }
 
     @Test
