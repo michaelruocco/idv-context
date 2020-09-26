@@ -2,6 +2,7 @@ dependencies {
     api project(":common-dynamo-db")
     implementation project(":context-use-cases")
     implementation project(":context-json")
+    implementation project(":common-use-cases")
 
     testImplementation testFixtures(project(":context-entities"))
 }

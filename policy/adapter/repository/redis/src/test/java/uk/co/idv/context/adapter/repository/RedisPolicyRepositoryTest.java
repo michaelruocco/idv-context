@@ -16,13 +16,13 @@ import static org.assertj.core.api.Assertions.entry;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class RedisPolicyRespositoryTest {
+class RedisPolicyRepositoryTest {
 
     private final Class<Policy> type = Policy.class;
     private final JsonConverter converter = mock(JsonConverter.class);
     private final Map<UUID, String> policies = new HashMap<>();
 
-    private final RedisPolicyRespository<Policy> repository = new RedisPolicyRespository<>(type, converter, policies);
+    private final RedisPolicyRepository<Policy> repository = new RedisPolicyRepository<>(type, converter, policies);
 
     @Test
     void shouldSavePolicy() {

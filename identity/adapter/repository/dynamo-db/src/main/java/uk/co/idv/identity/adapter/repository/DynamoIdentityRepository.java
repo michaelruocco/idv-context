@@ -42,7 +42,14 @@ public class DynamoIdentityRepository implements IdentityRepository {
 
     @Override
     public Optional<Identity> load(Alias alias) {
-        return converter.toItem(alias).map(converter::toIdentity);
+        Instant start = Instant.now();
+        try {
+            return converter.toItem(alias).map(converter::toIdentity);
+        } finally {
+            log.info("took {}ms to load identities using alias {}",
+                    millisBetweenNowAnd(start),
+                    alias);
+        }
     }
 
     @Override

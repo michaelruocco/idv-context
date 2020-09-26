@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.UUID;
 
 public class RedisContextPolicyRepository
-        extends RedisPolicyRespository<ContextPolicy>
+        extends RedisPolicyRepository<ContextPolicy>
         implements ContextPolicyRepository {
 
     @Builder
