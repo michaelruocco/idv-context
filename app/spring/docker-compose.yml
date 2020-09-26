@@ -4,8 +4,6 @@ services:
   aws-services:
     image: localstack/localstack:latest
     container_name: aws-services
-    ports:
-      - 4566:4566
     volumes:
       - ./localstack/scripts:/docker-entrypoint-initaws.d
       - ./localstack/tables:/opt/tables

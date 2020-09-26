@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Deploy verification context dynamodb tables, and redis cluster.
+Parameters:
+  EnvironmentName:
+    Type: String
+    Default: idv-dev
+    Description: The name of the environment the respositories will be created for
+  StackName:
+    Type: String
+    Default: idv-dev-network
+    Description: The name of the networking stack that
+      these resources are put into.
+
+Resources:
+
+  IdentityTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName:  !Sub ${EnvironmentName}-identity
+      AttributeDefinitions:
+        -
+          AttributeName: "alias"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "alias"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "1"
+        WriteCapacityUnits: "1"
+
+  AttemptTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${EnvironmentName}-attempt
+      AttributeDefinitions:
+        - AttributeName: "idvId"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "idvId"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "1"
+        WriteCapacityUnits: "1"
+
+  ContextTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${EnvironmentName}-context
+      AttributeDefinitions:
+        - AttributeName: "id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "id"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "1"
+        WriteCapacityUnits: "1"
+
+  ElasticacheSecurityGroup:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      GroupDescription: Elasticache Security Group
+      VpcId:
+        Fn::ImportValue:
+          !Join [':', [!Ref 'StackName', 'VPCId']]
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '6379'
+        ToPort: '6379'
+        # need to get security group id from network stack
+        SourceSecurityGroupId: 'sg-012a100210eb88d7f'
+
+  ElasticacheCluster:
+    Type: 'AWS::ElastiCache::CacheCluster'
+    Properties:
+      # need to create group in this template and use it here
+      CacheSubnetGroupName: idv-dev-redis-subnet-group
+      AutoMinorVersionUpgrade: 'true'
+      Engine: redis
+      CacheNodeType: cache.t2.micro
+      NumCacheNodes: '1'
+      VpcSecurityGroupIds:
+        - !GetAtt
+          - ElasticacheSecurityGroup
+          - GroupId

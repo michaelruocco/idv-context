@@ -12,6 +12,7 @@
 ## Todo
 
 *   Add context karate test scenarios
+*   Tidy up cloud formation templates and try out creating API gateway
 *   Add registering context expiry job -> via publishing context created event
 *   Add publishing context expired event
 *   Functionality to post results to verification context
@@ -19,6 +20,8 @@
 *   Extract common dynamo adapter to its own separate library
 
 ## Useful commands
+
+### Gradle
 
 ```gradle
 // runs tests and builds code
@@ -58,4 +61,34 @@
 // generate dependency graph images at build/reports/dependency-graph
 ./gradlew generateDependencyGraph
 ./gradlew generateDependencyGraphVerificationContext
+```
+
+### AWS
+
+The below commands can be used to use cloudformation to deploy the service on AWS.
+A great description of how these templates work is [here](https://reflectoring.io/aws-cloudformation-deploy-docker-image/).
+
+#### Creating AWS resources
+
+```aws
+//generate network resources using cloud formation
+aws cloudformation create-stack --stack-name idv-dev-network --template-body file://cloud-formation/network.yml --capabilities CAPABILITY_IAM
+```
+
+```aws
+//generate repository resources using cloud formation (relies on network stack already being created)
+aws cloudformation create-stack --stack-name idv-dev-repositories --template-body file://cloud-formation/repositories.yml
+```
+
+```aws
+//generate service resources using cloud formation (relies on network stack already being created
+aws cloudformation create-stack --stack-name idv-dev-service --template-body file://cloud-formation/service.yml
+```
+
+#### Deleting AWS resources
+
+```aws
+aws cloudformation delete-stack --stack-name idv-dev-service;
+aws cloudformation delete-stack --stack-name idv-dev-respositories;
+aws cloudformation delete-stack --stack-name idv-dev-network;
 ```
