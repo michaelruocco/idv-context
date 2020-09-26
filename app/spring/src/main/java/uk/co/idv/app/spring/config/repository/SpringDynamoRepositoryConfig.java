@@ -43,7 +43,6 @@ public class SpringDynamoRepositoryConfig {
     @Bean
     public DynamoTables dynamoTables() {
         EnvironmentDynamoTablesFactory tableFactory = EnvironmentDynamoTablesFactory.builder()
-                .environment(System.getProperty("environment", "idv-local"))
                 .region(System.getProperty("aws.region", "eu-west-1"))
                 .endpointUrl(System.getProperty("aws.dynamo.db.endpoint.uri", "http://localhost:4569"))
                 .environment(loadEnvironment())
