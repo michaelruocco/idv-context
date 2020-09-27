@@ -28,7 +28,8 @@
                   "success"
                 ],
                 "timeout": 2000,
-                "minDaysSinceSwap": 5
+                "minDaysSinceSwap": 5,
+                "async": false
               }
             }
           },
@@ -46,7 +47,8 @@
                   "success"
                 ],
                 "timeout": 2000,
-                "minDaysSinceSwap": 5
+                "minDaysSinceSwap": 5,
+                "async": false
               }
             }
           },

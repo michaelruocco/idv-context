@@ -189,7 +189,8 @@ Feature: Lockout Policy Maintenance
                           "success"
                         ],
                         "timeout": 2000,
-                        "minDaysSinceSwap": 6
+                        "minDaysSinceSwap": 6,
+                        "async": false
                       }
                     }
                   }
@@ -326,7 +327,8 @@ Feature: Lockout Policy Maintenance
                               "success"
                             ],
                             "timeout": 2000,
-                            "minDaysSinceSwap": 6
+                            "minDaysSinceSwap": 6,
+                            "async": false
                           }
                         }
                       }

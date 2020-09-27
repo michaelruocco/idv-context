@@ -14,6 +14,7 @@ public class SimSwapConfig {
     private final AcceptableSimSwapStatuses acceptableStatuses;
     private final Duration timeout;
     private final Long minDaysSinceSwap;
+    private final boolean async;
 
     public boolean isAcceptable(String status) {
         return acceptableStatuses.isAcceptable(status);

@@ -58,7 +58,8 @@ Feature: Lockout Policy Maintenance
                           "success"
                         ],
                         "timeout": 2000,
-                        "minDaysSinceSwap": 5
+                        "minDaysSinceSwap": 5,
+                        "async": false
                       }
                     }
                   }
@@ -110,7 +111,8 @@ Feature: Lockout Policy Maintenance
                           "success"
                         ],
                         "timeout": 2000,
-                        "minDaysSinceSwap": 5
+                        "minDaysSinceSwap": 5,
+                        "async": false
                       }
                     }
                   }
@@ -168,7 +170,8 @@ Feature: Lockout Policy Maintenance
                           "timeout"
                         ],
                         "timeout": 1500,
-                        "minDaysSinceSwap": 4
+                        "minDaysSinceSwap": 4,
+                        "async": false
                       }
                     }
                   }
@@ -227,7 +230,8 @@ Feature: Lockout Policy Maintenance
                           "timeout"
                         ],
                         "timeout": 1500,
-                        "minDaysSinceSwap": 4
+                        "minDaysSinceSwap": 4,
+                        "async": false
                       }
                     }
                   }

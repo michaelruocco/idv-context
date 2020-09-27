@@ -2,5 +2,6 @@
   "acceptableStatuses": [
     "success"
   ],
-  "timeout": 2000
+  "timeout": 2000,
+  "async": false
 }

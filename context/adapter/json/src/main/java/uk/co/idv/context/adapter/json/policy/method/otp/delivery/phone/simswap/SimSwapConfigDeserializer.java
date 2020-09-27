@@ -25,6 +25,7 @@ public class SimSwapConfigDeserializer extends StdDeserializer<SimSwapConfig> {
                 .acceptableStatuses(JsonNodeConverter.toObject(node.get("acceptableStatuses"), parser, AcceptableSimSwapStatuses.class))
                 .timeout(JsonNodeConverter.toObject(node.get("timeout"), parser, Duration.class))
                 .minDaysSinceSwap(toMinDaysSinceSwapIfPresent(node))
+                .async(node.get("async").asBoolean())
                 .build();
     }
 
