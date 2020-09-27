@@ -1,8 +1,6 @@
 package uk.co.idv.identity.entities.identity;
 
-import lombok.Builder;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.channel.DefaultChannelMother;
 
@@ -56,30 +54,6 @@ class FindIdentityRequestTest {
                 .build();
 
         assertThat(request.phoneNumbersRequested()).isTrue();
-    }
-
-    @Builder
-    private static class FakeFindIdentityRequest implements FindIdentityRequest {
-
-        private final DefaultAliases aliases;
-        private final RequestedData requestedData;
-        private final Channel channel;
-
-        @Override
-        public DefaultAliases getAliases() {
-            return aliases;
-        }
-
-        @Override
-        public RequestedData getRequestedData() {
-            return requestedData;
-        }
-
-        @Override
-        public Channel getChannel() {
-            return channel;
-        }
-
     }
 
 }

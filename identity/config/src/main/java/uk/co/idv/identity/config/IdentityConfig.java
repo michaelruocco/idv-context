@@ -10,6 +10,8 @@ import uk.co.idv.identity.entities.alias.DefaultAliasFactory;
 import uk.co.idv.identity.usecases.eligibility.ChannelCreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.CompositeCreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
+import uk.co.idv.identity.usecases.eligibility.DefaultCreateEligibility;
+import uk.co.idv.identity.usecases.eligibility.SupportedCreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.external.ExternalCreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.internal.InternalCreateEligibility;
 import uk.co.idv.identity.usecases.identity.IdentityService;
@@ -36,8 +38,8 @@ public class IdentityConfig {
 
     public CreateEligibility createEligibility() {
         return new CompositeCreateEligibility(
-                rsaGbCreateEligibility(),
-                as3CreateEligibility()
+                as3CreateEligibility(),
+                defaultCreateEligibility()
         );
     }
 
@@ -53,14 +55,11 @@ public class IdentityConfig {
         return new IdentityErrorHandler();
     }
 
-    private ChannelCreateEligibility rsaGbCreateEligibility() {
-        return ChannelCreateEligibility.builder()
-                .supportedChannelIds(Collections.singleton("gb-rsa"))
-                .create(internalCreateEligibility())
-                .build();
+    private SupportedCreateEligibility defaultCreateEligibility() {
+        return new DefaultCreateEligibility(internalCreateEligibility());
     }
 
-    private ChannelCreateEligibility as3CreateEligibility() {
+    private SupportedCreateEligibility as3CreateEligibility() {
         return ChannelCreateEligibility.builder()
                 .supportedChannelIds(Collections.singleton("as3"))
                 .create(externalCreateEligibility())

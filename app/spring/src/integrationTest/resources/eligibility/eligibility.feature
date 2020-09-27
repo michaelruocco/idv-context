@@ -3,40 +3,6 @@ Feature: Eligibility Requests
   Background:
     * url baseUrl + "/eligibility"
 
-  Scenario: Create eligibility - Error - Create eligibility not configured
-    Given request
-      """
-      {
-        "channel": {
-          "id": "default-channel",
-          "country": "GB"
-        },
-        "aliases": [
-          {
-            "type": "credit-card-number",
-            "value": "4928111111111111"
-          }
-        ],
-        "requestedData": [
-          "phone-numbers",
-          "email-addresses"
-        ]
-      }
-      """
-    When method POST
-    Then status 422
-    And match response ==
-      """
-      {
-        "status": 422,
-        "title": "Eligibility not configured",
-        "message": "eligibility not configured for channel default-channel",
-        "meta": {
-          "channelId": "default-channel"
-        }
-      }
-      """
-
   Scenario: Create eligibility - Error - Identity not found for internal data lookup
     Given request
       """

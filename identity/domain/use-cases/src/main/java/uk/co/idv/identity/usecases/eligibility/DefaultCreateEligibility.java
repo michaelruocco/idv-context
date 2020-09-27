@@ -1,16 +1,13 @@
 package uk.co.idv.identity.usecases.eligibility;
 
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.entities.identity.FindIdentityRequest;
 
-import java.util.Collection;
-
-@Builder
-public class ChannelCreateEligibility implements SupportedCreateEligibility {
+@RequiredArgsConstructor
+public class DefaultCreateEligibility implements SupportedCreateEligibility {
 
     private final CreateEligibility create;
-    private final Collection<String> supportedChannelIds;
 
     @Override
     public IdentityEligibility create(FindIdentityRequest request) {
@@ -19,7 +16,7 @@ public class ChannelCreateEligibility implements SupportedCreateEligibility {
 
     @Override
     public boolean supports(FindIdentityRequest request) {
-        return supportedChannelIds.contains(request.getChannelId());
+        return true;
     }
 
 }
