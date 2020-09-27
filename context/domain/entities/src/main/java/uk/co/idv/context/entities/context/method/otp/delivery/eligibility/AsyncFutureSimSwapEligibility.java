@@ -28,6 +28,10 @@ public class AsyncSimSwapEligibility implements Eligibility {
         return getEligibilityFromFuture().getReason();
     }
 
+    public boolean isComplete() {
+        return future.isDone();
+    }
+    
     private Eligibility getEligibilityFromFuture() {
         return FutureHandler.handle(future, buildDefaultEligibility());
     }
