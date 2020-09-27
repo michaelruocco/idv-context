@@ -1,6 +1,7 @@
 package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.SimSwapResult.SimSwapResultBuilder;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
@@ -10,11 +11,13 @@ import java.time.Duration;
 import java.time.Instant;
 
 @Builder
+@Slf4j
 public class StubSimSwapResultFactory {
 
     private final Clock clock;
 
     public SimSwapResult build(OtpPhoneNumber number, SimSwapConfig config) {
+        log.debug("building sim swap result for {}", number);
         SimSwapResultBuilder builder = SimSwapResult.builder().config(config);
         switch (number.getLastDigit()) {
             case 9:

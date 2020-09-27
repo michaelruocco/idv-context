@@ -2,6 +2,7 @@ package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.eligibility.Eligible;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
@@ -13,6 +14,7 @@ import java.util.Optional;
 
 @Builder
 @Data
+@Slf4j
 public class SimSwapResult {
 
     private final SimSwapConfig config;

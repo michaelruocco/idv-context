@@ -25,7 +25,7 @@ Feature: Lockout Policy Maintenance
         "key": {
           "id": "#(policyId)",
           "priority": 1,
-          "channelId": "default-channel",
+          "channelId": "default-channel1",
           "type": "channel"
         },
         "sequencePolicies": [
@@ -77,7 +77,7 @@ Feature: Lockout Policy Maintenance
         "key": {
           "id": "#(policyId)",
           "priority": 1,
-          "channelId": "default-channel",
+          "channelId": "default-channel1",
           "type": "channel"
         },
         "sequencePolicies": [
@@ -131,7 +131,7 @@ Feature: Lockout Policy Maintenance
         "key": {
           "id": "#(policyId)",
           "priority": 99,
-          "channelId": "default-channel",
+          "channelId": "default-channel2",
           "activityNames": [
             "default-activity"
           ],
@@ -190,7 +190,7 @@ Feature: Lockout Policy Maintenance
         "key": {
           "id": "#(policyId)",
           "priority": 99,
-          "channelId": "default-channel",
+          "channelId": "default-channel2",
           "activityNames": [
             "default-activity"
           ],
@@ -247,9 +247,9 @@ Feature: Lockout Policy Maintenance
         "key": {
           "id": "#(policyId1)",
           "priority": 99,
-          "channelId": "my-channel",
+          "channelId": "default-channel3",
           "activityNames": [
-            "my-activity"
+            "default-activity"
           ],
           "type": "channel-activity"
         },
@@ -265,7 +265,7 @@ Feature: Lockout Policy Maintenance
         "key": {
           "id": "#(policyId2)",
           "priority": 1,
-          "channelId": "my-channel",
+          "channelId": "default-channel3",
           "type": "channel"
         },
         "sequencePolicies": [
@@ -296,8 +296,8 @@ Feature: Lockout Policy Maintenance
       """
     And method POST
     And status 201
-    And param channelId = "my-channel"
-    And param activityName = "my-activity"
+    And param channelId = "default-channel3"
+    And param activityName = "default-activity"
     When method GET
     Then status 200
     And match response ==
@@ -307,9 +307,9 @@ Feature: Lockout Policy Maintenance
           "key": {
             "id": "#(policyId1)",
             "priority": 99,
-            "channelId": "my-channel",
+            "channelId": "default-channel3",
             "activityNames": [
-              "my-activity"
+              "default-activity"
             ],
             "type": "channel-activity"
           },
@@ -319,7 +319,7 @@ Feature: Lockout Policy Maintenance
           "key": {
             "id": "#(policyId2)",
             "priority": 1,
-            "channelId": "my-channel",
+            "channelId": "default-channel3",
             "type": "channel"
           },
           "sequencePolicies": [
@@ -358,7 +358,7 @@ Feature: Lockout Policy Maintenance
         "key": {
           "id": "#(policyId)",
           "priority": 1,
-          "channelId": "default-channel",
+          "channelId": "default-channel4",
           "type": "channel"
         },
         "sequencePolicies": []
@@ -372,7 +372,7 @@ Feature: Lockout Policy Maintenance
         "key": {
           "id": "#(policyId)",
           "priority": 20,
-          "channelId": "default-channel",
+          "channelId": "default-channel4",
           "activityNames": [ "default-activity" ],
           "aliasTypes": [ "default-alias" ],
           "type": "channel-activity-alias"
@@ -411,7 +411,7 @@ Feature: Lockout Policy Maintenance
         "key": {
           "id": "#(policyId)",
           "priority": 20,
-          "channelId": "default-channel",
+          "channelId": "default-channel4",
           "activityNames": [ "default-activity" ],
           "aliasTypes": [ "default-alias" ],
           "type": "channel-activity-alias"
@@ -451,7 +451,7 @@ Feature: Lockout Policy Maintenance
         "key": {
           "id": "#(policyId)",
           "priority": 1,
-          "channelId": "default-channel",
+          "channelId": "default-channel5",
           "type": "channel"
         },
         "sequencePolicies": []

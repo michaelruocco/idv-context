@@ -50,11 +50,11 @@ class ParallelKarateIntegrationTest {
 
     private static String[] getFeaturePaths() {
         return new String[]{
-                "classpath:identity",
-                "classpath:eligibility",
-                "classpath:lockout",
-                "classpath:context",
-                "classpath:actuator"
+                //"classpath:identity",
+                //"classpath:eligibility",
+                //"classpath:lockout",
+                "classpath:context"
+                //"classpath:actuator"
         };
     }
 

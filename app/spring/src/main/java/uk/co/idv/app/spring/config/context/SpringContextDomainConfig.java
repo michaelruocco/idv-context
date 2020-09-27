@@ -2,6 +2,7 @@ package uk.co.idv.app.spring.config.context;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.context.config.ContextFacadeConfig;
 import uk.co.idv.context.config.ContextServiceConfig;
 import uk.co.idv.context.config.repository.ContextPolicyRepositoryConfig;
@@ -29,6 +30,7 @@ public class SpringContextDomainConfig {
     public ContextServiceConfig contextServiceConfig(ParentContextRepositoryConfig repositoryConfig) {
         return ContextServiceConfig.builder()
                 .repositoryConfig(repositoryConfig)
+                .simSwapExecutorConfig(StubSimSwapExecutorConfig.buildDefault())
                 .build();
     }
 

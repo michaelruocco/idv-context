@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.lockout.LockoutConfigBuilder;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.common.usecases.id.NonRandomIdGenerator;
+import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.context.config.ContextFacadeConfig;
 import uk.co.idv.context.config.ContextServiceConfig;
 import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
@@ -51,6 +52,7 @@ class ContextIntegrationTest {
 
     private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
             .repositoryConfig(new InMemoryContextRepositoryConfig())
+            .simSwapExecutorConfig(StubSimSwapExecutorConfig.buildDefault(clock))
             .clock(clock)
             .idGenerator(idGenerator)
             .build();

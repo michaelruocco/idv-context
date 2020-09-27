@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.async.Delay;
-import uk.co.idv.common.usecases.duration.DurationCalculator;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
@@ -12,6 +11,8 @@ import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSw
 import java.time.Clock;
 import java.time.Instant;
 import java.util.function.Supplier;
+
+import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
 
 @Builder
 @Data
@@ -30,7 +31,7 @@ public class StubSimSwapEligibilitySupplier implements Supplier<Eligibility> {
         try {
             return perform();
         } finally {
-            log.debug("sim swap eligibility supplier for {} took {}ms", number, DurationCalculator.millisBetweenNowAnd(start));
+            log.debug("sim swap supplier took {}ms for {}", millisBetweenNowAnd(start), number);
         }
     }
 

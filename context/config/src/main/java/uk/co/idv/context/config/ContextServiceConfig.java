@@ -22,21 +22,18 @@ import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
 
 import java.time.Clock;
-import java.util.concurrent.Executors;
 
 @Builder
 public class ContextServiceConfig {
 
     private final ParentContextRepositoryConfig repositoryConfig;
+    private final StubSimSwapExecutorConfig simSwapExecutorConfig;
 
     @Builder.Default
     private final IdGenerator idGenerator = new RandomIdGenerator();
 
     @Builder.Default
     private final Clock clock = Clock.systemUTC();
-
-    @Builder.Default
-    private final StubSimSwapExecutorConfig simSwapExecutorConfig = buildDefaultStubConfig();
 
     public ContextService contextService() {
         return ContextService.builder()
@@ -89,12 +86,6 @@ public class ContextServiceConfig {
         return OtpPhoneNumberEligibilityCalculator.builder()
                 .clock(clock)
                 .simSwapExecutor(simSwapExecutorConfig.simSwapExecutor())
-                .build();
-    }
-
-    private static StubSimSwapExecutorConfig buildDefaultStubConfig() {
-        return StubSimSwapExecutorConfig.builder()
-                .executor(Executors.newFixedThreadPool(2))
                 .build();
     }
 

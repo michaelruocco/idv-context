@@ -7,6 +7,7 @@ import uk.co.idv.context.usecases.context.method.otp.delivery.phone.simswap.SimS
 import java.time.Clock;
 import java.time.Duration;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @Builder
 public class StubSimSwapExecutorConfig {
@@ -16,6 +17,17 @@ public class StubSimSwapExecutorConfig {
 
     private final Clock clock;
     private final ExecutorService executor;
+
+    public static StubSimSwapExecutorConfig buildDefault() {
+        return buildDefault(Clock.systemUTC());
+    }
+
+    public static StubSimSwapExecutorConfig buildDefault(Clock clock) {
+        return StubSimSwapExecutorConfig.builder()
+                .executor(Executors.newFixedThreadPool(2))
+                .clock(clock)
+                .build();
+    }
 
     public SimSwapExecutor simSwapExecutor() {
         return StubSimSwapExecutor.builder()
