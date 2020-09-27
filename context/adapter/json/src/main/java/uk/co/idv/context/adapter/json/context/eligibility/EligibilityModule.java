@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
+import uk.co.idv.context.entities.context.eligibility.AsyncEligibility;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 
 import java.util.Collections;
@@ -14,6 +15,7 @@ public class EligibilityModule extends SimpleModule {
         super("eligibility-module", Version.unknownVersion());
 
         addDeserializer(Eligibility.class, new EligibilityDeserializer());
+        addDeserializer(AsyncEligibility.class, new AsyncEligibilityDeserializer());
     }
 
     @Override

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.entities.async.FutureHandler;
+import uk.co.idv.context.entities.context.eligibility.AsyncEligibility;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 
@@ -13,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 @Builder
 @Data
 @Slf4j
-public class AsyncSimSwapEligibility implements Eligibility {
+public class AsyncFutureSimSwapEligibility implements AsyncEligibility {
 
     private final CompletableFuture<Eligibility> future;
     private final SimSwapConfig config;
@@ -28,10 +29,11 @@ public class AsyncSimSwapEligibility implements Eligibility {
         return getEligibilityFromFuture().getReason();
     }
 
+    @Override
     public boolean isComplete() {
         return future.isDone();
     }
-    
+
     private Eligibility getEligibilityFromFuture() {
         return FutureHandler.handle(future, buildDefaultEligibility());
     }

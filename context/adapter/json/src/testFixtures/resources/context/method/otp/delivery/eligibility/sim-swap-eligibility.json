@@ -1,4 +1,5 @@
 {
   "reason": "sim swap status failure not acceptable",
-  "eligible": false
+  "eligible": false,
+  "complete": true
 }

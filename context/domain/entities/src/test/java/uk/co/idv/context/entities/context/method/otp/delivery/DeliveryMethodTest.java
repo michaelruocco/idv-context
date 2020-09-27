@@ -2,7 +2,7 @@ package uk.co.idv.context.entities.context.method.otp.delivery;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncSimSwapEligibility;
+import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
 
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -82,7 +82,7 @@ class DeliveryMethodTest {
 
     @Test
     void shouldReturnFutureFromAsyncSimSwapEligibilityIfEligibilityIsAsyncSimSwapEligibility() {
-        AsyncSimSwapEligibility eligibility = mock(AsyncSimSwapEligibility.class);
+        AsyncFutureSimSwapEligibility eligibility = mock(AsyncFutureSimSwapEligibility.class);
         CompletableFuture<Eligibility> expectedFuture = givenFutureReturnedFrom(eligibility);
 
         DeliveryMethod method = DeliveryMethod.builder()
@@ -92,7 +92,7 @@ class DeliveryMethodTest {
         assertThat(method.getAsyncSimSwapEligibilityFuture()).contains(expectedFuture);
     }
 
-    private CompletableFuture<Eligibility> givenFutureReturnedFrom(AsyncSimSwapEligibility eligibility) {
+    private CompletableFuture<Eligibility> givenFutureReturnedFrom(AsyncFutureSimSwapEligibility eligibility) {
         CompletableFuture<Eligibility> future = mock(CompletableFuture.class);
         given(eligibility.getFuture()).willReturn(future);
         return future;

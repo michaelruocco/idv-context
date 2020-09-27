@@ -14,13 +14,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class AsyncSimSwapEligibilityTest {
+class AsyncFutureSimSwapEligibilityTest {
 
     @Test
     void shouldReturnFuture() {
         CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(mock(Eligibility.class));
 
-        AsyncSimSwapEligibility eligibility = AsyncSimSwapEligibility.builder()
+        AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)
                 .build();
 
@@ -31,7 +31,7 @@ class AsyncSimSwapEligibilityTest {
     void shouldReturnSimSwapConfig() {
         SimSwapConfig config = mock(SimSwapConfig.class);
 
-        AsyncSimSwapEligibility eligibility = AsyncSimSwapEligibility.builder()
+        AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .config(config)
                 .build();
 
@@ -42,7 +42,7 @@ class AsyncSimSwapEligibilityTest {
     void shouldEligibleIfFutureEligibilityIsEligible() {
         CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(new Eligible());
 
-        AsyncSimSwapEligibility eligibility = AsyncSimSwapEligibility.builder()
+        AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)
                 .build();
 
@@ -53,7 +53,7 @@ class AsyncSimSwapEligibilityTest {
     void shouldReturnEmptyReasonIfFutureEligibilityIsEligible() {
         CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(new Eligible());
 
-        AsyncSimSwapEligibility eligibility = AsyncSimSwapEligibility.builder()
+        AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)
                 .build();
 
@@ -64,7 +64,7 @@ class AsyncSimSwapEligibilityTest {
     void shouldIneligibleIfFutureEligibilityIsIneligible() {
         CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(new Ineligible("test reason"));
 
-        AsyncSimSwapEligibility eligibility = AsyncSimSwapEligibility.builder()
+        AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)
                 .build();
 
@@ -76,7 +76,7 @@ class AsyncSimSwapEligibilityTest {
         String expectedReason = "test reason";
         CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(new Ineligible(expectedReason));
 
-        AsyncSimSwapEligibility eligibility = AsyncSimSwapEligibility.builder()
+        AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)
                 .build();
 
@@ -89,7 +89,7 @@ class AsyncSimSwapEligibilityTest {
         SimSwapConfig config = mock(SimSwapConfig.class);
         given(config.isAcceptable("unknown")).willReturn(true);
 
-        AsyncSimSwapEligibility eligibility = AsyncSimSwapEligibility.builder()
+        AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)
                 .config(config)
                 .build();
@@ -104,7 +104,7 @@ class AsyncSimSwapEligibilityTest {
         SimSwapConfig config = mock(SimSwapConfig.class);
         given(config.isAcceptable("unknown")).willReturn(false);
 
-        AsyncSimSwapEligibility eligibility = AsyncSimSwapEligibility.builder()
+        AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)
                 .config(config)
                 .build();
@@ -119,7 +119,7 @@ class AsyncSimSwapEligibilityTest {
         SimSwapConfig config = mock(SimSwapConfig.class);
         given(config.isAcceptable("timeout")).willReturn(false);
 
-        AsyncSimSwapEligibility eligibility = AsyncSimSwapEligibility.builder()
+        AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)
                 .config(config)
                 .build();

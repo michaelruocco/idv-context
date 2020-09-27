@@ -9,7 +9,7 @@ import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncS
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class AsyncSimSwapEligibilitySerdeTest {
+class AsyncFutureSimSwapEligibilitySerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper()
             .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)

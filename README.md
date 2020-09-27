@@ -11,6 +11,7 @@
 
 ## Todo
 
+*   Add async sim swap functionality (don't wait for completion / write results from supplier / return is complete from future on async sim swap eligibility)
 *   Tidy up cloud formation templates and try out creating API gateway
 *   Json error handling for context errors (context policy not found, context not found)
 *   Add registering context expiry job -> via publishing context created event

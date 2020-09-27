@@ -4,24 +4,32 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.eligibility.Eligible;
-import uk.co.idv.context.entities.context.eligibility.Ineligible;
+import uk.co.idv.context.entities.context.eligibility.AsyncEligibility;
+import uk.co.idv.context.entities.context.eligibility.DefaultAsyncEligibility;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
-class EligibilityDeserializer extends StdDeserializer<Eligibility> {
+import java.util.Optional;
 
-    protected EligibilityDeserializer() {
-        super(Eligibility.class);
+class AsyncEligibilityDeserializer extends StdDeserializer<AsyncEligibility> {
+
+    protected AsyncEligibilityDeserializer() {
+        super(AsyncEligibility.class);
     }
 
     @Override
-    public Eligibility deserialize(JsonParser parser, DeserializationContext context) {
+    public AsyncEligibility deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
-        if (node.get("eligible").asBoolean()) {
-            return new Eligible();
-        }
-        return new Ineligible(node.get("reason").asText());
+        return DefaultAsyncEligibility.builder()
+                .eligible(node.get("eligible").asBoolean())
+                .complete(node.get("complete").asBoolean())
+                .reason(extractReason(node))
+                .build();
+    }
+
+    private String extractReason(JsonNode node) {
+        return Optional.ofNullable(node.get("reason"))
+                .map(JsonNode::asText)
+                .orElse(null);
     }
 
 }

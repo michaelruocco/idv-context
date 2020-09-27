@@ -2,7 +2,7 @@ package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncSimSwapEligibility;
+import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 
@@ -31,7 +31,7 @@ class StubSimSwapExecutorTest {
     void shouldPopulateEligibilityWithConfig() {
         givenSupplierCreated();
 
-        AsyncSimSwapEligibility eligibility = simSwapExecutor.executeSimSwap(number, config);
+        AsyncFutureSimSwapEligibility eligibility = simSwapExecutor.executeSimSwap(number, config);
 
         assertThat(eligibility.getConfig()).isEqualTo(config);
     }
@@ -40,7 +40,7 @@ class StubSimSwapExecutorTest {
     void shouldPopulateEligibilityFromSupplier() throws ExecutionException, InterruptedException {
         Eligibility expectedEligibility = givenEligibilityReturned();
 
-        AsyncSimSwapEligibility eligibility = simSwapExecutor.executeSimSwap(number, config);
+        AsyncFutureSimSwapEligibility eligibility = simSwapExecutor.executeSimSwap(number, config);
 
         assertThat(eligibility.getFuture().get()).isEqualTo(expectedEligibility);
     }

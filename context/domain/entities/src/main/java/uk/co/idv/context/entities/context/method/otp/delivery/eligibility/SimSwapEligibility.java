@@ -1,13 +1,13 @@
 package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
 
 import lombok.Builder;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.context.entities.context.eligibility.AsyncEligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 
 import java.util.Optional;
 
 @Builder
-public class SimSwapEligibility implements Eligibility {
+public class SimSwapEligibility implements AsyncEligibility {
 
     private final String status;
     private final SimSwapConfig config;
@@ -23,6 +23,11 @@ public class SimSwapEligibility implements Eligibility {
             return Optional.empty();
         }
         return Optional.of(toIneligibleReason(status));
+    }
+
+    @Override
+    public boolean isComplete() {
+        return true;
     }
 
     private static String toIneligibleReason(String status) {

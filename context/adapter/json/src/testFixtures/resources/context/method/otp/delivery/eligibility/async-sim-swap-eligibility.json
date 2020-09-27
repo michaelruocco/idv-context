@@ -1,4 +1,5 @@
 {
   "reason": "fake-reason",
-  "eligible": false
+  "eligible": false,
+  "complete": true
 }

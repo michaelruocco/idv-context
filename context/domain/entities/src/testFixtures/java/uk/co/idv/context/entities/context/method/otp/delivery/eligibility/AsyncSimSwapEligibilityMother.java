@@ -7,12 +7,12 @@ import java.util.concurrent.CompletableFuture;
 
 public interface AsyncSimSwapEligibilityMother {
 
-    static AsyncSimSwapEligibility ineligible() {
+    static AsyncFutureSimSwapEligibility ineligible() {
         return builder().build();
     }
 
-    static AsyncSimSwapEligibility.AsyncSimSwapEligibilityBuilder builder() {
-        return AsyncSimSwapEligibility.builder()
+    static AsyncFutureSimSwapEligibility.AsyncFutureSimSwapEligibilityBuilder builder() {
+        return AsyncFutureSimSwapEligibility.builder()
                 .config(SimSwapConfigMother.build())
                 .future(CompletableFuture.completedFuture(EligibilityMother.ineligible()));
     }

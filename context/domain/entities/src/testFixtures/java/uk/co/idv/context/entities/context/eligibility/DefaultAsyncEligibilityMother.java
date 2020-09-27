@@ -1,14 +1,23 @@
 package uk.co.idv.context.entities.context.eligibility;
 
 
-public interface EligibilityMother {
+public interface DefaultAsyncEligibilityMother {
 
-    static Eligible eligible() {
-        return new Eligible();
+    static AsyncEligibility eligible() {
+        return builder().build();
     }
 
-    static Ineligible ineligible() {
-        return new Ineligible("fake-reason");
+    static AsyncEligibility ineligible() {
+        return builder()
+                .eligible(false)
+                .reason("fake-reason")
+                .build();
+    }
+
+    static DefaultAsyncEligibility.DefaultAsyncEligibilityBuilder builder() {
+        return DefaultAsyncEligibility.builder()
+                .eligible(true)
+                .complete(true);
     }
 
 }

@@ -5,7 +5,7 @@ import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.async.Delay;
 import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncSimSwapEligibility;
+import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberMother;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.AcceptableSimSwapStatusesMother;
@@ -44,7 +44,7 @@ class SimSwapExecutorIntegrationTest {
     void shouldReturnIneligibleFailureResultForNumberEndingIn9() {
         OtpPhoneNumber number = buildNumberEndingIn(9);
 
-        AsyncSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
+        AsyncFutureSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
 
         waitForCompletion(eligibility);
         assertThat(eligibility.isEligible()).isFalse();
@@ -55,7 +55,7 @@ class SimSwapExecutorIntegrationTest {
     void shouldReturnIneligibleUnknownResultForNumberEndingIn8() {
         OtpPhoneNumber number = buildNumberEndingIn(8);
 
-        AsyncSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
+        AsyncFutureSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
 
         waitForCompletion(eligibility);
         assertThat(eligibility.isEligible()).isFalse();
@@ -66,7 +66,7 @@ class SimSwapExecutorIntegrationTest {
     void shouldReturnIneligibleTimeoutResultForNumberEndingIn7() {
         OtpPhoneNumber number = buildNumberEndingIn(7);
 
-        AsyncSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
+        AsyncFutureSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
 
         waitForCompletion(eligibility);
         assertThat(eligibility.isEligible()).isFalse();
@@ -77,7 +77,7 @@ class SimSwapExecutorIntegrationTest {
     void shouldReturnIneligibleSuccessResultWithLastSwappedDateForNumberEndingIn6() {
         OtpPhoneNumber number = buildNumberEndingIn(6);
 
-        AsyncSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
+        AsyncFutureSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
 
         waitForCompletion(eligibility);
         assertThat(eligibility.isEligible()).isFalse();
@@ -90,7 +90,7 @@ class SimSwapExecutorIntegrationTest {
         try {
             OtpPhoneNumber number = buildNumberEndingIn(5);
 
-            AsyncSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
+            AsyncFutureSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
 
             waitForCompletion(eligibility);
             assertThat(eligibility.isEligible()).isTrue();
@@ -103,7 +103,7 @@ class SimSwapExecutorIntegrationTest {
     void shouldReturnIneligibleAfterErrorForNumberEndingIn4() {
         OtpPhoneNumber number = buildNumberEndingIn(4);
 
-        AsyncSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
+        AsyncFutureSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
 
         waitForCompletion(eligibility);
         assertThat(eligibility.isEligible()).isFalse();
@@ -114,7 +114,7 @@ class SimSwapExecutorIntegrationTest {
     void shouldReturnEligibleSuccessResultForNumberEndingIn3() {
         OtpPhoneNumber number = buildNumberEndingIn(3);
 
-        AsyncSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
+        AsyncFutureSimSwapEligibility eligibility = executor.executeSimSwap(number, simSwapConfig);
 
         waitForCompletion(eligibility);
         assertThat(eligibility.isEligible()).isTrue();
@@ -125,7 +125,7 @@ class SimSwapExecutorIntegrationTest {
         return OtpPhoneNumberMother.withValue(value);
     }
 
-    private static void waitForCompletion(AsyncSimSwapEligibility eligibility) {
+    private static void waitForCompletion(AsyncFutureSimSwapEligibility eligibility) {
         Awaitility.await().atMost(Duration.ofMillis(500))
                 .pollDelay(Duration.ofMillis(50))
                 .until(() -> eligibility.getFuture().isDone());

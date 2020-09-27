@@ -3,7 +3,7 @@ package uk.co.idv.context.entities.context.method.otp.delivery;
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncSimSwapEligibility;
+import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -19,16 +19,16 @@ public class DeliveryMethod {
     private final Eligibility eligibility;
 
     public Optional<CompletableFuture<Eligibility>> getAsyncSimSwapEligibilityFuture() {
-        return getAsyncSimSwapEligibility().map(AsyncSimSwapEligibility::getFuture);
+        return getAsyncSimSwapEligibility().map(AsyncFutureSimSwapEligibility::getFuture);
     }
 
     public boolean isEligible() {
         return eligibility.isEligible();
     }
 
-    private Optional<AsyncSimSwapEligibility> getAsyncSimSwapEligibility() {
-        if (eligibility instanceof AsyncSimSwapEligibility) {
-            return Optional.of((AsyncSimSwapEligibility) eligibility);
+    private Optional<AsyncFutureSimSwapEligibility> getAsyncSimSwapEligibility() {
+        if (eligibility instanceof AsyncFutureSimSwapEligibility) {
+            return Optional.of((AsyncFutureSimSwapEligibility) eligibility);
         }
         return Optional.empty();
     }

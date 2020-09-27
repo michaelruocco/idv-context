@@ -4,6 +4,7 @@
   "value": "+447809123456",
   "eligibility": {
     "eligible": false,
-    "reason": "fake-reason"
+    "reason": "fake-reason",
+    "complete": true
   }
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncSimSwapEligibility;
+import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.SimSwapEligibility;
 
 import java.util.Collections;
@@ -15,7 +15,7 @@ public class SimSwapEligibilityModule extends SimpleModule {
         super("sim-swap-eligibility-module", Version.unknownVersion());
 
         setMixInAnnotation(SimSwapEligibility.class, SimSwapEligibilityMixin.class);
-        setMixInAnnotation(AsyncSimSwapEligibility.class, AsyncSimSwapEligibilityMixin.class);
+        setMixInAnnotation(AsyncFutureSimSwapEligibility.class, AsyncSimSwapEligibilityMixin.class);
     }
 
     @Override

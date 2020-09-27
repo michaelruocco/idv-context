@@ -374,7 +374,8 @@ Feature: Lockout Policy Maintenance
                     "value": "+447808247749",
                     "eligibility": {
                       "reason": "sim swap status failure is not allowed",
-                      "eligible": false
+                      "eligible": false,
+                      "complete": true
                     }
                   },
                   {
@@ -383,7 +384,8 @@ Feature: Lockout Policy Maintenance
                     "value": "+447808247748",
                     "eligibility": {
                       "reason": "sim swap status unknown is not allowed",
-                      "eligible": false
+                      "eligible": false,
+                      "complete": true
                     }
                   },
                   {
@@ -392,7 +394,8 @@ Feature: Lockout Policy Maintenance
                     "value": "+447808247747",
                     "eligibility": {
                       "reason": "sim swap status timeout is not allowed",
-                      "eligible": false
+                      "eligible": false,
+                      "complete": true
                     }
                   },
                   {
@@ -401,7 +404,8 @@ Feature: Lockout Policy Maintenance
                     "value": "+447808247746",
                     "eligibility": {
                       "reason": "#notnull",
-                      "eligible": false
+                      "eligible": false,
+                      "complete": true
                     }
                   },
                   {
@@ -410,7 +414,8 @@ Feature: Lockout Policy Maintenance
                     "value": "+447808247745",
                     "eligibility": {
                       "reason": "sim swap status timeout not acceptable",
-                      "eligible": false
+                      "eligible": false,
+                      "complete": false
                     }
                   },
                   {
@@ -419,7 +424,8 @@ Feature: Lockout Policy Maintenance
                     "value": "+447808247744",
                     "eligibility": {
                       "reason": "sim swap status unknown not acceptable",
-                      "eligible": false
+                      "eligible": false,
+                      "complete": true
                     }
                   },
                   {
@@ -427,7 +433,8 @@ Feature: Lockout Policy Maintenance
                     "type": "sms",
                     "value": "+447808247743",
                     "eligibility": {
-                      "eligible": true
+                      "eligible": true,
+                      "complete": true
                     }
                   }
                 ],
