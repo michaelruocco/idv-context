@@ -1,8 +1,8 @@
 package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.CsvSource;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 
@@ -10,7 +10,6 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -27,39 +26,59 @@ class StubSimSwapResultFactoryTest {
             .clock(clock)
             .build();
 
-    @ParameterizedTest
-    @MethodSource("provideLastDigitsAndExpectedStatusAndLastSwapped")
-    void shouldReturnSimSwapResultForLastDigitOfNumber(int lastDigit, String status, Instant lastSwapped) {
+    @Test
+    void shouldPopulateConfigOnResult() {
+        OtpPhoneNumber number = givenNumberWithLastDigit(1);
+
+        SimSwapResult result = factory.build(number, config);
+
+        assertThat(result.getConfig()).isEqualTo(config);
+    }
+
+    @Test
+    void shouldPopulateLastSwappedDateIfLastDigitIs6() {
+        OtpPhoneNumber number = givenNumberWithLastDigit(6);
+
+        SimSwapResult result = factory.build(number, config);
+
+        assertThat(result.getLastSwapped()).contains(NOW.minus(Duration.ofDays(5)));
+    }
+
+    @ParameterizedTest(name = "should return empty last swapped date for last digit {0}")
+    @CsvSource({"9","8","7","5","4","3","2","1","0"})
+    void shouldReturnEmptyLastSwappedDateIfLastDigitIsNot6(int lastDigit) {
         OtpPhoneNumber number = givenNumberWithLastDigit(lastDigit);
 
         SimSwapResult result = factory.build(number, config);
 
-        assertThat(result)
-                .hasFieldOrPropertyWithValue("status", status)
-                .hasFieldOrPropertyWithValue("config", config)
-                .hasFieldOrPropertyWithValue("lastSwapped", lastSwapped);
+        assertThat(result.getLastSwapped()).isEmpty();
+    }
+
+    @ParameterizedTest(name = "should return status {1} for number with last digit {0}")
+    @CsvSource({
+            "9,failure",
+            "8,unknown",
+            "7,timeout",
+            "6,success",
+            "5,success",
+            "4,success",
+            "3,success",
+            "2,success",
+            "1,success",
+            "0,success"
+    })
+    void shouldReturnSimSwapStatusForNumberWithLastDigit(int lastDigit, String expectedStatus) {
+        OtpPhoneNumber number = givenNumberWithLastDigit(lastDigit);
+
+        SimSwapResult result = factory.build(number, config);
+
+        assertThat(result.getStatus()).isEqualTo(expectedStatus);
     }
 
     private OtpPhoneNumber givenNumberWithLastDigit(int lastDigit) {
         OtpPhoneNumber number = mock(OtpPhoneNumber.class);
         given(number.getLastDigit()).willReturn(lastDigit);
         return number;
-    }
-
-    private static Stream<Arguments> provideLastDigitsAndExpectedStatusAndLastSwapped() {
-        final String success = "success";
-        return Stream.of(
-                Arguments.of(9, "failure", null),
-                Arguments.of(8, "unknown", null),
-                Arguments.of(7, "timeout", null),
-                Arguments.of(6, success, NOW.minus(Duration.ofDays(5))),
-                Arguments.of(5, success, null),
-                Arguments.of(4, success, null),
-                Arguments.of(3, success, null),
-                Arguments.of(2, success, null),
-                Arguments.of(1, success, null),
-                Arguments.of(0, success, null)
-        );
     }
 
 }

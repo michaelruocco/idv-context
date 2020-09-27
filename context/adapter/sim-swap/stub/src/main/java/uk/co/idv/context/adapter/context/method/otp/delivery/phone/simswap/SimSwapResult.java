@@ -25,6 +25,10 @@ public class SimSwapResult {
                 .orElse(toStatusEligibility());
     }
 
+    public Optional<Instant> getLastSwapped() {
+        return Optional.ofNullable(lastSwapped);
+    }
+
     private Eligibility toLastSwappedEligibility(Instant swappedAt, Instant now) {
         Optional<Instant> cutoff = config.calculateCutoff(now);
         if (cutoff.isEmpty()) {
@@ -41,10 +45,6 @@ public class SimSwapResult {
             return new Eligible();
         }
         return new SimSwapStatusNotAllowed(status);
-    }
-
-    private Optional<Instant> getLastSwapped() {
-        return Optional.ofNullable(lastSwapped);
     }
 
 }
