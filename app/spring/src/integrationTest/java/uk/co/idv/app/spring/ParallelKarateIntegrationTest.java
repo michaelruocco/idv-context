@@ -21,7 +21,7 @@ class ParallelKarateIntegrationTest {
     private static final Regions REGION = Regions.EU_WEST_1;
     private static final String ENVIRONMENT = "idv-local";
 
-    private static final int THREAD_COUNT = 2;
+    private static final int THREAD_COUNT = 4;
 
     @Container
     public static final LocalAwsServices AWS_SERVICES = new LocalAwsServices(REGION, ENVIRONMENT);
@@ -50,11 +50,11 @@ class ParallelKarateIntegrationTest {
 
     private static String[] getFeaturePaths() {
         return new String[]{
-                //"classpath:identity",
-                //"classpath:eligibility",
-                //"classpath:lockout",
-                "classpath:context"
-                //"classpath:actuator"
+                "classpath:identity",
+                "classpath:eligibility",
+                "classpath:lockout",
+                "classpath:context",
+                "classpath:actuator"
         };
     }
 

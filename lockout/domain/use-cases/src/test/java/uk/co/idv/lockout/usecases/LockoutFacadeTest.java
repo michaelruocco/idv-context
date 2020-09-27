@@ -34,6 +34,18 @@ class LockoutFacadeTest {
             .build();
 
     @Test
+    void shouldBuildAliases() {
+        String aliasType = "default-alias";
+        String aliasValue = "my-alias-value";
+        Alias expectedAlias = DefaultAliasMother.build();
+        given(aliasFactory.build(aliasType, aliasValue)).willReturn(expectedAlias);
+
+        Aliases aliases = facade.toAliases(aliasType, aliasValue);
+
+        assertThat(aliases).containsExactly(expectedAlias);
+    }
+
+    @Test
     void shouldBuildAlias() {
         String aliasType = "default-alias";
         String aliasValue = "my-alias-value";
