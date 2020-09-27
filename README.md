@@ -11,7 +11,7 @@
 
 ## Todo
 
-*   Add context karate test scenarios
+*   Make thread pool sizes configurable from system property / environment variables
 *   Tidy up cloud formation templates and try out creating API gateway
 *   Json error handling for context errors (context policy not found, context not found)
 *   Add registering context expiry job -> via publishing context created event

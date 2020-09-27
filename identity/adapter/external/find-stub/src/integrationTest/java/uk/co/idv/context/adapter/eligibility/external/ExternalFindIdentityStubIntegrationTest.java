@@ -20,7 +20,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ExternalFindIdentityStubIntegrationTest {
 
-    private final ExecutorService executor = Executors.newFixedThreadPool(1);
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
     private final ExternalFindIdentityStubConfig config = ExternalFindIdentityStubConfig.build(executor);
     private final ExternalFindIdentity find = ExternalFindIdentityStub.build(config);
 
