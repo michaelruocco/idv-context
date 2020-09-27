@@ -216,7 +216,8 @@ Feature: Lockout Policy Maintenance
           { "value": "+4407808247747" },
           { "value": "+4407808247746" },
           { "value": "+4407808247745" },
-          { "value": "+4407808247744" }
+          { "value": "+4407808247744" },
+          { "value": "+4407808247743" }
         ]
       }
       """
@@ -350,24 +351,13 @@ Feature: Lockout Policy Maintenance
               }
             ],
             "phoneNumbers": [
-              {
-                "value": "+4407808247749"
-              },
-              {
-                "value": "+4407808247748"
-              },
-              {
-                "value": "+4407808247747"
-              },
-              {
-                "value": "+4407808247746"
-              },
-              {
-                "value": "+4407808247745"
-              },
-              {
-                "value": "+4407808247744"
-              }
+              { "value": "+4407808247749" },
+              { "value": "+4407808247748" },
+              { "value": "+4407808247747" },
+              { "value": "+4407808247746" },
+              { "value": "+4407808247745" },
+              { "value": "+4407808247744" },
+              { "value": "+4407808247743" }
             ]
           }
         },
@@ -383,27 +373,8 @@ Feature: Lockout Policy Maintenance
                     "type": "sms",
                     "value": "+447808247749",
                     "eligibility": {
-                      "future": {
-                        "done": true,
-                        "cancelled": false,
-                        "completedExceptionally": false,
-                        "numberOfDependents": 0
-                      },
-                      "config": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6
-                      },
                       "reason": "sim swap status failure is not allowed",
                       "eligible": false
-                    },
-                    "asyncSimSwapEligibilityFuture": {
-                      "done": true,
-                      "cancelled": false,
-                      "completedExceptionally": false,
-                      "numberOfDependents": 0
                     }
                   },
                   {
@@ -411,27 +382,8 @@ Feature: Lockout Policy Maintenance
                     "type": "sms",
                     "value": "+447808247748",
                     "eligibility": {
-                      "future": {
-                        "done": true,
-                        "cancelled": false,
-                        "completedExceptionally": false,
-                        "numberOfDependents": 0
-                      },
-                      "config": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6
-                      },
                       "reason": "sim swap status unknown is not allowed",
                       "eligible": false
-                    },
-                    "asyncSimSwapEligibilityFuture": {
-                      "done": true,
-                      "cancelled": false,
-                      "completedExceptionally": false,
-                      "numberOfDependents": 0
                     }
                   },
                   {
@@ -439,27 +391,8 @@ Feature: Lockout Policy Maintenance
                     "type": "sms",
                     "value": "+447808247747",
                     "eligibility": {
-                      "future": {
-                        "done": true,
-                        "cancelled": false,
-                        "completedExceptionally": false,
-                        "numberOfDependents": 0
-                      },
-                      "config": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6
-                      },
                       "reason": "sim swap status timeout is not allowed",
                       "eligible": false
-                    },
-                    "asyncSimSwapEligibilityFuture": {
-                      "done": true,
-                      "cancelled": false,
-                      "completedExceptionally": false,
-                      "numberOfDependents": 0
                     }
                   },
                   {
@@ -467,27 +400,8 @@ Feature: Lockout Policy Maintenance
                     "type": "sms",
                     "value": "+447808247746",
                     "eligibility": {
-                      "future": {
-                        "done": true,
-                        "cancelled": false,
-                        "completedExceptionally": false,
-                        "numberOfDependents": 0
-                      },
-                      "config": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6
-                      },
                       "reason": "#notnull",
                       "eligible": false
-                    },
-                    "asyncSimSwapEligibilityFuture": {
-                      "done": true,
-                      "cancelled": false,
-                      "completedExceptionally": false,
-                      "numberOfDependents": 0
                     }
                   },
                   {
@@ -495,27 +409,8 @@ Feature: Lockout Policy Maintenance
                     "type": "sms",
                     "value": "+447808247745",
                     "eligibility": {
-                      "future": {
-                        "done": false,
-                        "cancelled": false,
-                        "completedExceptionally": false,
-                        "numberOfDependents": 2
-                      },
-                      "config": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6
-                      },
                       "reason": "sim swap status timeout not acceptable",
                       "eligible": false
-                    },
-                    "asyncSimSwapEligibilityFuture": {
-                      "done": false,
-                      "cancelled": false,
-                      "completedExceptionally": false,
-                      "numberOfDependents": 4
                     }
                   },
                   {
@@ -523,27 +418,16 @@ Feature: Lockout Policy Maintenance
                     "type": "sms",
                     "value": "+447808247744",
                     "eligibility": {
-                      "future": {
-                        "done": true,
-                        "cancelled": false,
-                        "completedExceptionally": true,
-                        "numberOfDependents": 0
-                      },
-                      "config": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6
-                      },
                       "reason": "sim swap status unknown not acceptable",
                       "eligible": false
-                    },
-                    "asyncSimSwapEligibilityFuture": {
-                      "done": true,
-                      "cancelled": false,
-                      "completedExceptionally": true,
-                      "numberOfDependents": 0
+                    }
+                  },
+                  {
+                    "id": "#uuid",
+                    "type": "sms",
+                    "value": "+447808247743",
+                    "eligibility": {
+                      "eligible": true
                     }
                   }
                 ],
@@ -558,16 +442,16 @@ Feature: Lockout Policy Maintenance
                 },
                 "successful": false,
                 "complete": false,
-                "eligible": false
+                "eligible": true
               }
             ],
-            "duration": 0,
-            "eligible": false,
+            "duration": 300000,
+            "eligible": true,
             "successful": false,
             "complete": false
           }
         ],
-        "eligible": false,
+        "eligible": true,
         "successful": false,
         "complete": false
       }

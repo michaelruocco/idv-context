@@ -4,10 +4,11 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.context.eligibility.EligibilityModule;
+import uk.co.idv.context.adapter.json.context.method.otp.delivery.eligibility.SimSwapEligibilityModule;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 public class DeliveryMethodModule extends SimpleModule {
 
@@ -23,7 +24,10 @@ public class DeliveryMethodModule extends SimpleModule {
 
     @Override
     public Iterable<? extends Module> getDependencies() {
-        return Collections.singleton(new EligibilityModule());
+        return Arrays.asList(
+                new EligibilityModule(),
+                new SimSwapEligibilityModule()
+        );
     }
 
 }

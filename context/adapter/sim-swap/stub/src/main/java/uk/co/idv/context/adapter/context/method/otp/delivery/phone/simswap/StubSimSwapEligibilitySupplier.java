@@ -31,12 +31,12 @@ public class StubSimSwapEligibilitySupplier implements Supplier<Eligibility> {
         try {
             return perform();
         } finally {
-            log.debug("sim swap supplier took {}ms for {}", millisBetweenNowAnd(start), number);
+            log.info("sim swap supplier took {}ms for {}", millisBetweenNowAnd(start), number);
         }
     }
 
     private Eligibility perform() {
-        log.debug("running stub sim swap eligibility supplier for {}", number);
+        log.info("running stub sim swap eligibility supplier for {}", number);
         if (shouldError()) {
             throw new StubSimSwapErrorException(number.getValue());
         }
@@ -44,7 +44,7 @@ public class StubSimSwapEligibilitySupplier implements Supplier<Eligibility> {
             delay.execute();
         }
         Eligibility eligibility = buildEligibility();
-        log.debug("sim swap eligibility supplier for {} returned eligibility {}", number, eligibility);
+        log.info("sim swap eligibility supplier for {} returned eligibility {}", number, eligibility);
         return eligibility;
     }
 

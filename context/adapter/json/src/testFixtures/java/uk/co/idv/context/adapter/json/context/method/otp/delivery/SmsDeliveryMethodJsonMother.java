@@ -8,4 +8,8 @@ public interface SmsDeliveryMethodJsonMother {
         return loadContentFromClasspath("context/method/otp/delivery/sms-delivery-method.json");
     }
 
+    static String smsIneligible() {
+        return loadContentFromClasspath("context/method/otp/delivery/sms-delivery-method-ineligible.json");
+    }
+
 }
