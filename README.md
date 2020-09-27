@@ -11,7 +11,6 @@
 
 ## Todo
 
-*   Customize config of redis tables
 *   Tidy up cloud formation templates and try out creating API gateway
 *   Json error handling for context errors (context policy not found, context not found)
 *   Add registering context expiry job -> via publishing context created event
