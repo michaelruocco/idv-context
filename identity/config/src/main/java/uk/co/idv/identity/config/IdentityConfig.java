@@ -1,6 +1,7 @@
 package uk.co.idv.identity.config;
 
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStub;
 import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStubConfig;
 import uk.co.idv.identity.adapter.json.IdentityErrorHandler;
@@ -21,9 +22,11 @@ import uk.co.idv.identity.usecases.identity.update.UpdateIdentity;
 
 import java.time.Duration;
 import java.util.Collections;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Builder
+@Slf4j
 public class IdentityConfig {
 
     @Builder.Default
@@ -79,11 +82,22 @@ public class IdentityConfig {
 
     private static ExternalFindIdentityStubConfig buildDefaultStubConfig() {
         return ExternalFindIdentityStubConfig.builder()
-                .executor(Executors.newFixedThreadPool(2))
+                .executor(buildEligibilityExecutor())
                 .timeout(Duration.ofMillis(250))
                 .phoneNumberDelay(Duration.ofMillis(400))
                 .emailAddressDelay(Duration.ofMillis(100))
                 .build();
+    }
+
+    private static ExecutorService buildEligibilityExecutor() {
+        return Executors.newFixedThreadPool(loadThreadPoolSize());
+    }
+
+    private static int loadThreadPoolSize() {
+        String key = "external.find.identity.thread.pool.size";
+        int size = Integer.parseInt(System.getProperty(key, "100"));
+        log.info("loaded {} value {}", key, size);
+        return size;
     }
 
 }

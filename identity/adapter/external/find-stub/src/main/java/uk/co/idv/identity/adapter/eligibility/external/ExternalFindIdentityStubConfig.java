@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.identity.usecases.eligibility.external.data.TimeoutProvider;
 
 import java.time.Duration;
@@ -11,6 +12,7 @@ import java.util.concurrent.ExecutorService;
 
 @Builder
 @Data
+@Slf4j
 public class ExternalFindIdentityStubConfig implements TimeoutProvider {
 
     private final ExecutorService executor;
