@@ -13,6 +13,10 @@ public interface OtpPhoneNumberConfigMother {
         return builder().build();
     }
 
+    static OtpPhoneNumberConfig withAsyncSimSwap() {
+        return withSimSwapConfig(SimSwapConfigMother.async());
+    }
+
     static OtpPhoneNumberConfig withSimSwapTimeout(Duration timeout) {
         return withSimSwapConfig(SimSwapConfigMother.withTimeout(timeout));
     }

@@ -79,6 +79,30 @@ class DeliveryMethodConfigsTest {
         assertThat(timeout).contains(longestTimeout);
     }
 
+    @Test
+    void shouldReturnHasAsyncSimSwapTrueIfAtLeastOnePhoneConfigWithAsyncSimSwap() {
+        VoiceDeliveryMethodConfig voiceConfig = VoiceDeliveryMethodConfigMother.voice();
+        EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.email();
+        SmsDeliveryMethodConfig smsConfig = SmsDeliveryMethodConfigMother.withAsyncSimSwap();
+        DeliveryMethodConfigs configs = new DeliveryMethodConfigs(voiceConfig, emailConfig, smsConfig);
+
+        boolean asyncSimSwap = configs.hasAsyncSimSwap();
+
+        assertThat(asyncSimSwap).isTrue();
+    }
+
+    @Test
+    void shouldReturnHasAsyncSimSwapFalseIfNoPhoneConfigsWithAsyncSimSwap() {
+        VoiceDeliveryMethodConfig voiceConfig = VoiceDeliveryMethodConfigMother.voice();
+        EmailDeliveryMethodConfig emailConfig = EmailDeliveryMethodConfigMother.email();
+        SmsDeliveryMethodConfig smsConfig = SmsDeliveryMethodConfigMother.sms();
+        DeliveryMethodConfigs configs = new DeliveryMethodConfigs(voiceConfig, emailConfig, smsConfig);
+
+        boolean asyncSimSwap = configs.hasAsyncSimSwap();
+
+        assertThat(asyncSimSwap).isFalse();
+    }
+
     private DeliveryMethodConfig givenConfigWithRequestedData(String item) {
         DeliveryMethodConfig config = mock(DeliveryMethodConfig.class);
         given(config.getRequestedData()).willReturn(RequestedDataMother.with(item));

@@ -9,6 +9,10 @@ public interface SimSwapConfigMother {
         return builder().build();
     }
 
+    static SimSwapConfig async() {
+        return builder().async(true).build();
+    }
+
     static SimSwapConfig withTimeout(Duration timeout) {
         return builder().timeout(timeout).build();
     }
@@ -21,7 +25,8 @@ public interface SimSwapConfigMother {
         return SimSwapConfig.builder()
                 .acceptableStatuses(AcceptableSimSwapStatusesMother.onlySuccess())
                 .timeout(Duration.ofSeconds(2))
-                .minDaysSinceSwap(5L);
+                .minDaysSinceSwap(5L)
+                .async(false);
     }
 
 }

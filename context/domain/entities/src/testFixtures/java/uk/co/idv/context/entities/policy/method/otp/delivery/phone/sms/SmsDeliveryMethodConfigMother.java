@@ -11,6 +11,10 @@ public interface SmsDeliveryMethodConfigMother {
         return withConfig(OtpPhoneNumberConfigMother.build());
     }
 
+    static SmsDeliveryMethodConfig withAsyncSimSwap() {
+        return withConfig(OtpPhoneNumberConfigMother.withAsyncSimSwap());
+    }
+
     static SmsDeliveryMethodConfig withSimSwapTimeout(Duration timeout) {
         return withConfig(OtpPhoneNumberConfigMother.withSimSwapTimeout(timeout));
     }

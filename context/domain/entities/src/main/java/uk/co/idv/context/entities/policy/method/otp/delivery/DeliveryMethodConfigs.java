@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.policy.RequestedDataMerger;
 import uk.co.idv.context.entities.policy.RequestedDataProvider;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
+import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 import uk.co.idv.identity.entities.identity.RequestedData;
 
 import java.time.Duration;
@@ -43,12 +44,23 @@ public class DeliveryMethodConfigs implements Iterable<DeliveryMethodConfig>, Re
     }
 
     public Optional<Duration> getLongestSimSwapConfigTimeout() {
-        return values.stream()
-                .filter(config -> config instanceof PhoneDeliveryMethodConfig)
-                .map(config -> (PhoneDeliveryMethodConfig) config)
+        return getPhoneConfigs()
                 .map(PhoneDeliveryMethodConfig::getSimSwapTimeout)
                 .flatMap(Optional::stream)
                 .max(Comparator.comparingLong(Duration::toMillis));
+    }
+
+    public boolean hasAsyncSimSwap() {
+        return getPhoneConfigs()
+                .map(PhoneDeliveryMethodConfig::getSimSwapConfig)
+                .flatMap(Optional::stream)
+                .anyMatch(SimSwapConfig::isAsync);
+    }
+
+    private Stream<PhoneDeliveryMethodConfig> getPhoneConfigs() {
+        return values.stream()
+                .filter(config -> config instanceof PhoneDeliveryMethodConfig)
+                .map(config -> (PhoneDeliveryMethodConfig) config);
     }
 
 }
