@@ -5,9 +5,9 @@ import lombok.Data;
 import uk.co.idv.identity.entities.channel.Channel;
 
 @Data
-public class As3 implements Channel {
+public class Abc implements Channel {
 
-    public static final String ID = "as3";
+    public static final String ID = "abc";
 
     @Override
     public String getId() {

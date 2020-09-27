@@ -38,7 +38,7 @@ public class IdentityConfig {
 
     public CreateEligibility createEligibility() {
         return new CompositeCreateEligibility(
-                as3CreateEligibility(),
+                abcCreateEligibility(),
                 defaultCreateEligibility()
         );
     }
@@ -59,9 +59,9 @@ public class IdentityConfig {
         return new DefaultCreateEligibility(internalCreateEligibility());
     }
 
-    private SupportedCreateEligibility as3CreateEligibility() {
+    private SupportedCreateEligibility abcCreateEligibility() {
         return ChannelCreateEligibility.builder()
-                .supportedChannelIds(Collections.singleton("as3"))
+                .supportedChannelIds(Collections.singleton("abc"))
                 .create(externalCreateEligibility())
                 .build();
     }

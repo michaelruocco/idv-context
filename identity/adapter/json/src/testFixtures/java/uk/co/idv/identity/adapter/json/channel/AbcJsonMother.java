@@ -2,10 +2,10 @@ package uk.co.idv.identity.adapter.json.channel;
 
 import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
-public interface As3JsonMother {
+public interface AbcJsonMother {
 
-    static String as3() {
-        return loadContentFromClasspath("channel/gb/as3.json");
+    static String abc() {
+        return loadContentFromClasspath("channel/gb/abc.json");
     }
 
 }

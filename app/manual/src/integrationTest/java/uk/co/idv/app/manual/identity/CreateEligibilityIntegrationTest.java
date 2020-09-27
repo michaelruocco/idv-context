@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
-import uk.co.idv.identity.entities.channel.gb.As3Mother;
+import uk.co.idv.identity.entities.channel.gb.AbcMother;
 import uk.co.idv.identity.entities.channel.gb.GbRsaMother;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
@@ -60,10 +60,10 @@ class CreateEligibilityIntegrationTest {
     }
 
     @Test
-    void shouldCreateIdentityWithExternalDataIfIdentityNotFoundForAs3() {
+    void shouldCreateIdentityWithExternalDataIfIdentityNotFoundForAbc() {
         CreateEligibilityRequest request = CreateEligibilityRequestMother.builder()
                 .aliases(AliasesMother.creditCardNumberOnly())
-                .channel(As3Mother.as3())
+                .channel(AbcMother.abc())
                 .build();
 
         IdentityEligibility eligibility = createEligibility.create(request);
@@ -76,7 +76,7 @@ class CreateEligibilityIntegrationTest {
 
 
     @Test
-    void shouldAddExternalDataToIdentityIfIdentityExistsForAs3() {
+    void shouldAddExternalDataToIdentityIfIdentityExistsForAbc() {
         DefaultAliases aliases = AliasesMother.creditCardNumberOnly();
         Identity identity = IdentityMother.exampleBuilder()
                 .aliases(aliases)
@@ -86,7 +86,7 @@ class CreateEligibilityIntegrationTest {
         Identity existing = facade.update(identity);
         CreateEligibilityRequest request = CreateEligibilityRequestMother.builder()
                 .aliases(aliases)
-                .channel(As3Mother.as3())
+                .channel(AbcMother.abc())
                 .build();
         createEligibility.create(request);
 

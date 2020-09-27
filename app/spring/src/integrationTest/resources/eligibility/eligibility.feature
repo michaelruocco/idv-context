@@ -108,7 +108,7 @@ Feature: Eligibility Requests
       """
       {
         "channel": {
-          "id": "as3",
+          "id": "abc",
           "country": "GB"
         },
         "aliases": [
@@ -129,7 +129,7 @@ Feature: Eligibility Requests
       """
       {
         "channel": {
-          "id": "as3",
+          "id": "abc",
           "country": "GB"
         },
         "aliases": [

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.channel.DefaultChannel;
 import uk.co.idv.identity.entities.channel.de.DeRsa;
-import uk.co.idv.identity.entities.channel.gb.As3;
+import uk.co.idv.identity.entities.channel.gb.Abc;
 import uk.co.idv.identity.entities.channel.gb.GbRsa;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
@@ -45,7 +45,7 @@ public class ChannelDeserializer extends StdDeserializer<Channel> {
     private static Map<String, Class<? extends Channel>> buildMappings() {
         return Map.of(
                 GbRsa.ID, GbRsa.class,
-                As3.ID, As3.class,
+                Abc.ID, Abc.class,
                 DeRsa.ID, DeRsa.class
         );
     }
