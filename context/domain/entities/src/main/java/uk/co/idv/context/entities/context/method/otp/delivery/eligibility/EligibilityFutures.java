@@ -21,6 +21,10 @@ public class EligibilityFutures implements Iterable<CompletableFuture<Eligibilit
         return futures.isEmpty();
     }
 
+    public boolean allDone() {
+        return all().isDone();
+    }
+
     public CompletableFuture<Void> all() {
         return CompletableFuture.allOf(futures.toArray(CompletableFuture[]::new));
     }

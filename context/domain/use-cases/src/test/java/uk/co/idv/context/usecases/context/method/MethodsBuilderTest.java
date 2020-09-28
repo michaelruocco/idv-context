@@ -3,9 +3,9 @@ package uk.co.idv.context.usecases.context.method;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.policy.method.MethodPolicies;
+import uk.co.idv.context.entities.context.method.MethodsRequest;
+import uk.co.idv.context.entities.context.method.MethodsRequestMother;
 import uk.co.idv.context.entities.policy.method.MethodPolicy;
-import uk.co.idv.identity.entities.identity.Identity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -19,13 +19,13 @@ class MethodsBuilderTest {
 
     @Test
     void shouldConvertMethodPoliciesToMethods() {
-        Identity identity = mock(Identity.class);
         MethodPolicy policy1 = mock(MethodPolicy.class);
         MethodPolicy policy2 = mock(MethodPolicy.class);
-        Method expectedMethod1 = givenPolicyConvertsToMethod(identity, policy1);
-        Method expectedMethod2 = givenPolicyConvertsToMethod(identity, policy2);
+        MethodsRequest request = MethodsRequestMother.withPolicies(policy1, policy2);
+        Method expectedMethod1 = givenPolicyConvertsToMethod(request, policy1);
+        Method expectedMethod2 = givenPolicyConvertsToMethod(request, policy2);
 
-        Methods methods = methodsBuilder.build(identity, new MethodPolicies(policy1, policy2));
+        Methods methods = methodsBuilder.build(request);
 
         assertThat(methods).containsExactly(
                 expectedMethod1,
@@ -33,9 +33,9 @@ class MethodsBuilderTest {
         );
     }
 
-    private Method givenPolicyConvertsToMethod(Identity identity, MethodPolicy policy) {
+    private Method givenPolicyConvertsToMethod(MethodsRequest request, MethodPolicy policy) {
         Method method = mock(Method.class);
-        given(methodBuilder.build(identity, policy)).willReturn(method);
+        given(methodBuilder.build(request, policy)).willReturn(method);
         return method;
     }
 

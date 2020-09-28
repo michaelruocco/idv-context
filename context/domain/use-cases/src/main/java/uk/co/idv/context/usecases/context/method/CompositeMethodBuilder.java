@@ -2,8 +2,8 @@ package uk.co.idv.context.usecases.context.method;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.method.Method;
+import uk.co.idv.context.entities.context.method.MethodsRequest;
 import uk.co.idv.context.entities.policy.method.MethodPolicy;
-import uk.co.idv.identity.entities.identity.Identity;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -18,9 +18,9 @@ public class CompositeMethodBuilder {
         this(Arrays.asList(builders));
     }
 
-    public Method build(Identity identity, MethodPolicy policy) {
+    public Method build(MethodsRequest request, MethodPolicy policy) {
         return findBuilder(policy)
-                .map(builder -> builder.build(identity, policy))
+                .map(builder -> builder.build(request, policy))
                 .orElseThrow(() -> new MethodBuilderNotConfiguredException(policy.getName()));
     }
 

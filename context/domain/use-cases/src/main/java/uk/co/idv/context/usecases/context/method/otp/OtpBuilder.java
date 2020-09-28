@@ -3,6 +3,7 @@ package uk.co.idv.context.usecases.context.method.otp;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.async.FutureWaiter;
+import uk.co.idv.context.entities.context.method.MethodsRequest;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.EligibilityFutures;
@@ -11,7 +12,6 @@ import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.context.usecases.context.method.MethodBuilder;
 import uk.co.idv.context.usecases.context.method.otp.delivery.DeliveryMethodConfigsConverter;
-import uk.co.idv.identity.entities.identity.Identity;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -31,13 +31,13 @@ public class OtpBuilder implements MethodBuilder {
     }
 
     @Override
-    public Otp build(Identity identity, MethodPolicy policy) {
+    public Otp build(MethodsRequest request, MethodPolicy policy) {
         OtpPolicy otpPolicy = (OtpPolicy) policy;
         DeliveryMethodConfigs configs = otpPolicy.getDeliveryMethodConfigs();
-        DeliveryMethods methods = configsConverter.toDeliveryMethods(identity, configs);
+        DeliveryMethods methods = configsConverter.toDeliveryMethods(request.getIdentity(), configs);
         waitForAnyAsyncSimSwaps(configs, methods);
         return Otp.builder()
-                .name(otpPolicy.getName())
+                .name(policy.getName())
                 .deliveryMethods(methods)
                 .otpConfig(otpPolicy.getMethodConfig())
                 .build();

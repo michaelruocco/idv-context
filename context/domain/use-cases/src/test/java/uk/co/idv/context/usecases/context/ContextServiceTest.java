@@ -1,11 +1,12 @@
 package uk.co.idv.context.usecases.context;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
+import uk.co.idv.context.entities.context.sequence.SequencesRequest;
+import uk.co.idv.context.entities.context.sequence.SequencesRequestMother;
 import uk.co.idv.context.usecases.context.expiry.ExpiryCalculator;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 
@@ -24,14 +25,14 @@ class ContextServiceTest {
 
     private static final Instant NOW = Instant.parse("2020-09-25T07:14:01.050Z");
 
-    private final IdGenerator idGenerator = mock(IdGenerator.class);
+    private final CreateContextRequestConverter requestConverter = mock(CreateContextRequestConverter.class);
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
     private final SequencesBuilder sequencesBuilder = mock(SequencesBuilder.class);
     private final ExpiryCalculator expiryCalculator = mock(ExpiryCalculator.class);
     private final ContextRepository repository = mock(ContextRepository.class);
 
     private final ContextService service = ContextService.builder()
-            .idGenerator(idGenerator)
+            .requestConverter(requestConverter)
             .clock(clock)
             .sequencesBuilder(sequencesBuilder)
             .expiryCalculator(expiryCalculator)
@@ -40,18 +41,18 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateIdOnContext() {
-        UUID expected = UUID.randomUUID();
-        given(idGenerator.generate()).willReturn(expected);
         DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        SequencesRequest sequencesRequest = givenConvertsToSequencesRequet(request);
 
         Context context = service.create(request);
 
-        assertThat(context.getId()).isEqualTo(expected);
+        assertThat(context.getId()).isEqualTo(sequencesRequest.getContextId());
     }
 
     @Test
     void shouldPopulateCreatedOnContext() {
         DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        givenConvertsToSequencesRequet(request);
 
         Context context = service.create(request);
 
@@ -61,6 +62,7 @@ class ContextServiceTest {
     @Test
     void shouldPopulateRequestOnContext() {
         DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        givenConvertsToSequencesRequet(request);
 
         Context context = service.create(request);
 
@@ -110,9 +112,20 @@ class ContextServiceTest {
                 .hasMessage(id.toString());
     }
 
+    private SequencesRequest givenConvertsToSequencesRequet(DefaultCreateContextRequest request) {
+        SequencesRequest sequencesRequest = SequencesRequestMother.build();
+        given(requestConverter.toSequencesRequest(request)).willReturn(sequencesRequest);
+        return sequencesRequest;
+    }
+
     private Sequences givenSequencesBuiltFromRequest(DefaultCreateContextRequest request) {
+        SequencesRequest sequencesRequest = givenConvertsToSequencesRequet(request);
+        return givenSequencesBuiltFromRequest(sequencesRequest);
+    }
+
+    private Sequences givenSequencesBuiltFromRequest(SequencesRequest request) {
         Sequences sequences = mock(Sequences.class);
-        given(sequencesBuilder.build(request.getIdentity(), request.getSequencePolicies())).willReturn(sequences);
+        given(sequencesBuilder.build(request)).willReturn(sequences);
         return sequences;
     }
 

@@ -2,6 +2,8 @@ package uk.co.idv.context.usecases.context.method.otp;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.async.FutureWaiter;
+import uk.co.idv.context.entities.context.method.MethodsRequest;
+import uk.co.idv.context.entities.context.method.MethodsRequestMother;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.EligibilityFutures;
@@ -10,7 +12,6 @@ import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
 import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.context.usecases.context.method.otp.delivery.DeliveryMethodConfigsConverter;
-import uk.co.idv.identity.entities.identity.Identity;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -54,58 +55,58 @@ class OtpBuilderTest {
 
     @Test
     void shouldThrowExceptionIfAttemptToBuildMethodWithUnsupportedMethodPolicy() {
-        Identity identity = mock(Identity.class);
+        MethodsRequest request = MethodsRequestMother.build();
         MethodPolicy policy = mock(MethodPolicy.class);
 
-        Throwable error = catchThrowable(() -> builder.build(identity, policy));
+        Throwable error = catchThrowable(() -> builder.build(request, policy));
 
         assertThat(error).isInstanceOf(ClassCastException.class);
     }
 
     @Test
     void shouldReturnOtpMethodWithNamePopulatedFromPolicy() {
-        Identity identity = mock(Identity.class);
+        MethodsRequest request = MethodsRequestMother.build();
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
-        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(identity, deliveryMethods);
+        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(request, deliveryMethods);
         String expectedName = "one-time-passcode";
         given(policy.getName()).willReturn(expectedName);
 
-        Otp otp = builder.build(identity, policy);
+        Otp otp = builder.build(request, policy);
 
         assertThat(otp.getName()).isEqualTo(expectedName);
     }
 
     @Test
     void shouldReturnOtpMethodWithDeliveryMethodsPopulated() {
-        Identity identity = mock(Identity.class);
+        MethodsRequest request = MethodsRequestMother.build();
         DeliveryMethods expectedDeliveryMethods = mock(DeliveryMethods.class);
-        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(identity, expectedDeliveryMethods);
+        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(request, expectedDeliveryMethods);
 
-        Otp otp = builder.build(identity, policy);
+        Otp otp = builder.build(request, policy);
 
         assertThat(otp.getDeliveryMethods()).isEqualTo(expectedDeliveryMethods);
     }
 
     @Test
     void shouldReturnOtpMethodWithMethodConfigPopulated() {
-        Identity identity = mock(Identity.class);
+        MethodsRequest request = MethodsRequestMother.build();
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
-        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(identity, deliveryMethods);
+        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(request, deliveryMethods);
         OtpConfig expectedMethodConfig = mock(OtpConfig.class);
         given(policy.getMethodConfig()).willReturn(expectedMethodConfig);
 
-        Otp otp = builder.build(identity, policy);
+        Otp otp = builder.build(request, policy);
 
         assertThat(otp.getConfig()).isEqualTo(expectedMethodConfig);
     }
 
     @Test
     void shouldNotWaitForAsyncSimSwapsIfTimeoutNotPresentAndEmptyFuturesReturnedFromDeliveryMethods() {
-        Identity identity = mock(Identity.class);
+        MethodsRequest request = MethodsRequestMother.build();
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
-        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(identity, deliveryMethods);
+        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(request, deliveryMethods);
 
-        builder.build(identity, policy);
+        builder.build(request, policy);
 
         verify(futureWaiter, never()).waitFor(any(CompletableFuture.class), any(Duration.class));
     }
@@ -114,13 +115,13 @@ class OtpBuilderTest {
     void shouldNotWaitForAsyncSimSwapsIfTimeoutPresentButEmptyFuturesReturnedFromDeliveryMethods() {
         DeliveryMethodConfigs configs = givenDeliveryMethodConfigsWithLongestSimSwapTimeout(Duration.ofMillis(1));
         OtpPolicy policy = givenPolicyWithDeliveryMethodConfigs(configs);
-        Identity identity = mock(Identity.class);
+        MethodsRequest request = MethodsRequestMother.build();
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
-        given(configsConverter.toDeliveryMethods(identity, configs)).willReturn(deliveryMethods);
+        given(configsConverter.toDeliveryMethods(request.getIdentity(), configs)).willReturn(deliveryMethods);
         EligibilityFutures futures = givenEligibilityFutures(deliveryMethods);
         given(futures.isEmpty()).willReturn(true);
 
-        builder.build(identity, policy);
+        builder.build(request, policy);
 
         verify(futureWaiter, never()).waitFor(any(CompletableFuture.class), any(Duration.class));
     }
@@ -130,23 +131,23 @@ class OtpBuilderTest {
         Duration expectedTimeout = Duration.ofMillis(1);
         DeliveryMethodConfigs configs = givenDeliveryMethodConfigsWithLongestSimSwapTimeout(expectedTimeout);
         OtpPolicy policy = givenPolicyWithDeliveryMethodConfigs(configs);
-        Identity identity = mock(Identity.class);
+        MethodsRequest request = MethodsRequestMother.build();
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
-        given(configsConverter.toDeliveryMethods(identity, configs)).willReturn(deliveryMethods);
+        given(configsConverter.toDeliveryMethods(request.getIdentity(), configs)).willReturn(deliveryMethods);
         EligibilityFutures futures = givenEligibilityFutures(deliveryMethods);
         given(futures.isEmpty()).willReturn(false);
         CompletableFuture<Void> expectedFuture = mock(CompletableFuture.class);
         given(futures.all()).willReturn(expectedFuture);
 
-        builder.build(identity, policy);
+        builder.build(request, policy);
 
         verify(futureWaiter).waitFor(expectedFuture, expectedTimeout);
     }
 
-    private OtpPolicy givenOtpPolicyThatWillReturnDeliveryMethods(Identity identity, DeliveryMethods deliveryMethods) {
+    private OtpPolicy givenOtpPolicyThatWillReturnDeliveryMethods(MethodsRequest request, DeliveryMethods deliveryMethods) {
         DeliveryMethodConfigs configs = mock(DeliveryMethodConfigs.class);
         OtpPolicy policy = givenPolicyWithDeliveryMethodConfigs(configs);
-        given(configsConverter.toDeliveryMethods(identity, configs)).willReturn(deliveryMethods);
+        given(configsConverter.toDeliveryMethods(request.getIdentity(), configs)).willReturn(deliveryMethods);
         return policy;
     }
 

@@ -2,11 +2,12 @@ package uk.co.idv.context.usecases.context.sequence;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.context.entities.context.method.MethodsRequest;
 import uk.co.idv.context.entities.context.sequence.Sequence;
+import uk.co.idv.context.entities.context.sequence.SequencesRequest;
 import uk.co.idv.context.entities.policy.method.MethodPolicies;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
 import uk.co.idv.context.usecases.context.method.MethodsBuilder;
-import uk.co.idv.identity.entities.identity.Identity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -20,21 +21,23 @@ class SequenceBuilderTest {
 
     @Test
     void shouldPopulateSequenceNameFromPolicy() {
-        Identity identity = mock(Identity.class);
+        SequencesRequest request = mock(SequencesRequest.class);
         String expectedName = "my-name";
 
-        Sequence sequence = sequenceBuilder.build(identity, givenSequencePolicyWithName(expectedName));
+        Sequence sequence = sequenceBuilder.build(request, givenSequencePolicyWithName(expectedName));
 
         assertThat(sequence.getName()).isEqualTo(expectedName);
     }
 
     @Test
     void shouldPopulateMethods() {
-        Identity identity = mock(Identity.class);
         MethodPolicies methodPolicies = mock(MethodPolicies.class);
-        Methods expectedMethods = givenPoliciesConvertToMethods(identity, methodPolicies);
+        SequencePolicy sequencePolicy = givenSequencePolicyWithMethodPolicies(methodPolicies);
+        SequencesRequest sequencesRequest = mock(SequencesRequest.class);
+        MethodsRequest methodsRequest = givenConvertsToMethodsRequest(sequencesRequest, sequencePolicy);
+        Methods expectedMethods = givenRequestBuildsMethods(methodsRequest);
 
-        Sequence sequence = sequenceBuilder.build(identity, givenSequencePolicyWithMethodPolicies(methodPolicies));
+        Sequence sequence = sequenceBuilder.build(sequencesRequest, sequencePolicy);
 
         assertThat(sequence.getMethods()).isEqualTo(expectedMethods);
     }
@@ -51,9 +54,15 @@ class SequenceBuilderTest {
         return policy;
     }
 
-    private Methods givenPoliciesConvertToMethods(Identity identity, MethodPolicies methodPolicies) {
+    private MethodsRequest givenConvertsToMethodsRequest(SequencesRequest request, SequencePolicy policy) {
+        MethodsRequest methodsRequest = mock(MethodsRequest.class);
+        given(request.toMethodsRequest(policy)).willReturn(methodsRequest);
+        return methodsRequest;
+    }
+
+    private Methods givenRequestBuildsMethods(MethodsRequest methodsRequest) {
         Methods methods = mock(Methods.class);
-        given(methodsBuilder.build(identity, methodPolicies)).willReturn(methods);
+        given(methodsBuilder.build(methodsRequest)).willReturn(methods);
         return methods;
     }
 

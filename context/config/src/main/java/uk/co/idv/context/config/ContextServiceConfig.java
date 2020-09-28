@@ -6,6 +6,7 @@ import uk.co.idv.common.usecases.id.RandomIdGenerator;
 import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
 import uk.co.idv.context.usecases.context.ContextService;
+import uk.co.idv.context.usecases.context.CreateContextRequestConverter;
 import uk.co.idv.context.usecases.context.method.CompositeMethodBuilder;
 import uk.co.idv.context.usecases.context.method.MethodBuilder;
 import uk.co.idv.context.usecases.context.method.MethodsBuilder;
@@ -37,15 +38,19 @@ public class ContextServiceConfig {
 
     public ContextService contextService() {
         return ContextService.builder()
-                .repository(repositoryConfig.contextRepository())
-                .idGenerator(idGenerator)
                 .clock(clock)
+                .repository(repositoryConfig.contextRepository())
+                .requestConverter(serviceCreateContextRequestConverter())
                 .sequencesBuilder(sequencesBuilder())
                 .build();
     }
 
     public ContextPolicyService policyService() {
         return new ContextPolicyService(repositoryConfig.policyRepository());
+    }
+
+    private CreateContextRequestConverter serviceCreateContextRequestConverter() {
+        return new CreateContextRequestConverter(idGenerator);
     }
 
     private SequencesBuilder sequencesBuilder() {
