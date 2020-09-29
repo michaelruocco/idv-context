@@ -16,8 +16,6 @@ import static org.mockito.Mockito.mock;
 
 class OtpPhoneNumberConverterTest {
 
-    private static final OtpPhoneNumber PHONE_NUMBER = OtpPhoneNumberMother.localMobile();
-
     private final PhoneDeliveryMethodConfig config = mock(PhoneDeliveryMethodConfig.class);
     private final IdGenerator idGenerator = mock(IdGenerator.class);
     private final OtpPhoneNumberEligibilityCalculator eligibilityCalculator = mock(OtpPhoneNumberEligibilityCalculator.class);
@@ -31,8 +29,9 @@ class OtpPhoneNumberConverterTest {
     void shouldPopulateIdOnDeliveryMethod() {
         UUID expectedId = UUID.randomUUID();
         given(idGenerator.generate()).willReturn(expectedId);
+        OtpPhoneNumber number = OtpPhoneNumberMother.localMobile();
 
-        DeliveryMethod method = converter.toDeliveryMethod(PHONE_NUMBER, config);
+        DeliveryMethod method = converter.toDeliveryMethod(number, config);
 
         assertThat(method.getId()).isEqualTo(expectedId);
     }
@@ -41,31 +40,53 @@ class OtpPhoneNumberConverterTest {
     void shouldPopulateTypeOnDeliveryMethod() {
         String expectedType = "sms";
         given(config.getType()).willReturn(expectedType);
+        OtpPhoneNumber number = OtpPhoneNumberMother.localMobile();
 
-        DeliveryMethod method = converter.toDeliveryMethod(PHONE_NUMBER, config);
+        DeliveryMethod method = converter.toDeliveryMethod(number, config);
 
         assertThat(method.getType()).isEqualTo(expectedType);
     }
 
     @Test
     void shouldPopulateValueOnDeliveryMethod() {
-        DeliveryMethod method = converter.toDeliveryMethod(PHONE_NUMBER, config);
+        OtpPhoneNumber number = OtpPhoneNumberMother.localMobile();
 
-        assertThat(method.getValue()).isEqualTo(PHONE_NUMBER.getValue());
+        DeliveryMethod method = converter.toDeliveryMethod(number, config);
+
+        assertThat(method.getValue()).isEqualTo(number.getValue());
+    }
+
+    @Test
+    void shouldPopulateLastUpdatedOnDeliveryMethod() {
+        OtpPhoneNumber number = OtpPhoneNumberMother.localMobile();
+
+        DeliveryMethod method = converter.toDeliveryMethod(number, config);
+
+        assertThat(method.getLastUpdated()).isEqualTo(number.getLastUpdated());
+    }
+
+    @Test
+    void shouldPopulatedLastUpdatedAsEmptyOnDeliveryMethodIfNotPresent() {
+        OtpPhoneNumber number = OtpPhoneNumberMother.withoutLastUpdated();
+
+        DeliveryMethod method = converter.toDeliveryMethod(number, config);
+
+        assertThat(method.getLastUpdated()).isEmpty();
     }
 
     @Test
     void shouldPopulateEligibilityOnDeliveryMethod() {
-        Eligibility expectedEligibility = givenCalculatedEligibility();
+        OtpPhoneNumber number = OtpPhoneNumberMother.localMobile();
+        Eligibility expectedEligibility = givenCalculatedEligibility(number);
 
-        DeliveryMethod method = converter.toDeliveryMethod(PHONE_NUMBER, config);
+        DeliveryMethod method = converter.toDeliveryMethod(number, config);
 
         assertThat(method.getEligibility()).isEqualTo(expectedEligibility);
     }
 
-    private Eligibility givenCalculatedEligibility() {
+    private Eligibility givenCalculatedEligibility(OtpPhoneNumber number) {
         Eligibility eligibility = mock(Eligibility.class);
-        given(eligibilityCalculator.toEligibility(PHONE_NUMBER, config)).willReturn(eligibility);
+        given(eligibilityCalculator.toEligibility(number, config)).willReturn(eligibility);
         return eligibility;
     }
 
