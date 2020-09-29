@@ -4,6 +4,7 @@ import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.eligibility.EligibilityMother;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncSimSwapEligibilityMother;
 
+import java.time.Instant;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -39,6 +40,7 @@ public interface DeliveryMethodMother {
                 .id(UUID.fromString("c9959188-969e-42f3-8178-42ef824c81d3"))
                 .type("sms")
                 .value("+4407808247743")
+                .lastUpdated(Instant.parse("2020-09-29T06:49:59.960Z"))
                 .eligibility(EligibilityMother.eligible());
     }
 

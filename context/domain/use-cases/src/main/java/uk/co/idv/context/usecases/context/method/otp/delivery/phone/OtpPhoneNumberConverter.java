@@ -17,6 +17,7 @@ public class OtpPhoneNumberConverter {
                 .id(idGenerator.generate())
                 .type(config.getType())
                 .value(number.getValue())
+
                 .eligibility(eligibilityCalculator.toEligibility(number, config))
                 .build();
     }

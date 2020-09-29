@@ -5,6 +5,7 @@ import lombok.Data;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
 
+import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
@@ -16,6 +17,7 @@ public class DeliveryMethod {
     private final UUID id;
     private final String type;
     private final String value;
+    private final Instant lastUpdated;
     private final Eligibility eligibility;
 
     public Optional<CompletableFuture<Eligibility>> getAsyncSimSwapEligibilityFuture() {
@@ -24,6 +26,10 @@ public class DeliveryMethod {
 
     public boolean isEligible() {
         return eligibility.isEligible();
+    }
+
+    public Optional<Instant> getLastUpdated() {
+        return Optional.ofNullable(lastUpdated);
     }
 
     private Optional<AsyncFutureSimSwapEligibility> getAsyncSimSwapEligibility() {

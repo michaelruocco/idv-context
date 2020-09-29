@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
 
+import java.time.Instant;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 
@@ -90,6 +91,17 @@ class DeliveryMethodTest {
                 .build();
 
         assertThat(method.getAsyncSimSwapEligibilityFuture()).contains(expectedFuture);
+    }
+
+    @Test
+    void shouldReturnLastUpdated() {
+        Instant lastUpdated = Instant.now();
+
+        DeliveryMethod method = DeliveryMethod.builder()
+                .lastUpdated(lastUpdated)
+                .build();
+
+        assertThat(method.getLastUpdated()).contains(lastUpdated);
     }
 
     private CompletableFuture<Eligibility> givenFutureReturnedFrom(AsyncFutureSimSwapEligibility eligibility) {
