@@ -25,7 +25,7 @@ public class Identities implements Iterable<Identity> {
     }
 
     public Identity getFirst() {
-        return IterableUtils.get(values, 0);
+        return IterableUtils.first(values);
     }
 
     public int size() {

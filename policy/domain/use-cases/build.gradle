@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     api project(":policy-entities")
+    implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
 
     testFixturesApi testFixtures(project(":policy-entities"))
 }

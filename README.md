@@ -11,7 +11,6 @@
 
 ## Todo
 
-*   DefaultCreateContextRequest to service context request, add class to convert ServiceCreateContextRequest to a SequencesRequest which will take ServiceCreateContextRequest generate an id and add it to pass into sequences builder
 *   Add manual application async sim swap integration test
 *   Add time to live onto context dynamo repository
 *   Functionality to post results to verification context

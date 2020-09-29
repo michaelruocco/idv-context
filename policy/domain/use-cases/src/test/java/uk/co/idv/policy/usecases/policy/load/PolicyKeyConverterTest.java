@@ -1,5 +1,6 @@
 package uk.co.idv.policy.usecases.policy.load;
 
+import org.apache.commons.collections4.IterableUtils;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.policy.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
@@ -7,7 +8,6 @@ import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.entities.policy.key.ChannelActivityAliasPolicyKeyMother;
 import uk.co.idv.policy.entities.policy.key.ChannelActivityPolicyKeyMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
-import uk.co.idv.policy.entities.policy.key.CollectionUtils;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -60,7 +60,7 @@ class PolicyKeyConverterTest {
     private static PolicyRequest toExpectedChannelActivityRequest(PolicyKey key) {
         return DefaultPolicyRequest.builder()
                 .channelId(key.getChannelId())
-                .activityName(CollectionUtils.getFirst(key.getActivityNames()))
+                .activityName(IterableUtils.first(key.getActivityNames()))
                 .aliasTypes(Collections.singleton(ALL))
                 .build();
     }
@@ -68,7 +68,7 @@ class PolicyKeyConverterTest {
     private static PolicyRequest toExpectedChannelActivityAliasRequest(PolicyKey key) {
         return DefaultPolicyRequest.builder()
                 .channelId(key.getChannelId())
-                .activityName(CollectionUtils.getFirst(key.getActivityNames()))
+                .activityName(IterableUtils.first(key.getActivityNames()))
                 .aliasTypes(key.getAliasTypes())
                 .build();
     }
