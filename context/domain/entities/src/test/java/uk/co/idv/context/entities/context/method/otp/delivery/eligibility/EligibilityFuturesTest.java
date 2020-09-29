@@ -55,6 +55,15 @@ class EligibilityFuturesTest {
     }
 
     @Test
+    void shouldReturnAllDoneTrueIfEmpty() {
+        EligibilityFutures futures = new EligibilityFutures(Collections.emptyList());
+
+        boolean allDone = futures.allDone();
+
+        assertThat(allDone).isTrue();
+    }
+
+    @Test
     void shouldReturnFalseIfAllFuturesAreNotComplete() {
         CompletableFuture<Eligibility> future1 = CompletableFuture.completedFuture(mock(Eligibility.class));
         CompletableFuture<Eligibility> future2 = CompletableFuture.supplyAsync(new DelayedSupplier<>(Duration.ofSeconds(1), mock(Eligibility.class)));
