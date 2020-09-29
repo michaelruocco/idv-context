@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.context.method.otp.simswap.async;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
@@ -44,14 +45,16 @@ class AsyncSimSwapUpdateContextTaskTest {
     void shouldExecuteSyncStrategyToWaitForFuturesToCompleteBeforeLoadingAndUpdatingContext() {
         UUID contextId = request.getContextId();
         Context context = givenContextLoaded(contextId);
-        Context updated = givenContextUpdatedTo(context, request.getDeliveryMethods());
+        Context expectedUpdated = givenContextUpdatedTo(context, request.getDeliveryMethods());
 
         task.run();
 
+        ArgumentCaptor<Context> captor = ArgumentCaptor.forClass(Context.class);
         InOrder inOrder = inOrder(syncStrategy, repository);
         inOrder.verify(syncStrategy).waitForSimSwapsToComplete(request);
         inOrder.verify(repository).load(contextId);
-        inOrder.verify(repository).save(updated);
+        inOrder.verify(repository).save(captor.capture());
+        assertThat(captor.getValue()).isEqualTo(expectedUpdated);
     }
 
     private Context givenContextLoaded(UUID id) {
