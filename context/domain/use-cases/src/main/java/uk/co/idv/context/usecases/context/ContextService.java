@@ -2,7 +2,7 @@ package uk.co.idv.context.usecases.context;
 
 import lombok.Builder;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.usecases.context.expiry.ExpiryCalculator;
 import uk.co.idv.context.entities.context.sequence.SequencesRequest;
@@ -23,7 +23,7 @@ public class ContextService {
     private final SequencesBuilder sequencesBuilder;
     private final ContextRepository repository;
 
-    public Context create(DefaultCreateContextRequest request) {
+    public Context create(ServiceCreateContextRequest request) {
         Instant created = clock.instant();
         SequencesRequest sequencesRequest = requestConverter.toSequencesRequest(request);
         Sequences sequences = sequencesBuilder.build(sequencesRequest);

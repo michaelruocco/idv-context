@@ -6,13 +6,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DefaultCreateContextRequestSerdeTest {
+class ServiceCreateContextRequestSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper()
             .registerModule(new CreateContextModule())
@@ -30,7 +30,7 @@ class DefaultCreateContextRequestSerdeTest {
 
     @Test
     void shouldDeserialize() throws JsonProcessingException {
-        CreateContextRequest request = MAPPER.readValue(JSON, DefaultCreateContextRequest.class);
+        CreateContextRequest request = MAPPER.readValue(JSON, ServiceCreateContextRequest.class);
 
         assertThat(request).isEqualTo(REQUEST);
     }

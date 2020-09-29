@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
@@ -26,7 +26,7 @@ class ContextDeserializer extends StdDeserializer<Context> {
                 .id(UUID.fromString(node.get("id").asText()))
                 .created(Instant.parse(node.get("created").asText()))
                 .expiry(Instant.parse(node.get("expiry").asText()))
-                .request(JsonNodeConverter.toObject(node.get("request"), parser, DefaultCreateContextRequest.class))
+                .request(JsonNodeConverter.toObject(node.get("request"), parser, ServiceCreateContextRequest.class))
                 .sequences(JsonNodeConverter.toObject(node.get("sequences"), parser, Sequences.class))
                 .build();
     }

@@ -10,7 +10,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnContextRequest() {
-        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .contextRequest(contextRequest)
@@ -21,7 +21,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnIdvIdFromContextRequest() {
-        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .contextRequest(contextRequest)
@@ -32,7 +32,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnAliasesFromContextRequest() {
-        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .contextRequest(contextRequest)
@@ -43,7 +43,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnChannelIdFromContextRequest() {
-        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .contextRequest(contextRequest)
@@ -54,7 +54,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnActivityNameFromContextRequest() {
-        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .contextRequest(contextRequest)
@@ -65,7 +65,7 @@ class ContextLockoutRequestTest {
 
     @Test
     void shouldReturnAliasTypesFromContextRequest() {
-        DefaultCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest contextRequest = DefaultCreateContextRequestMother.build();
 
         ContextLockoutRequest request = ContextLockoutRequest.builder()
                 .contextRequest(contextRequest)

@@ -8,13 +8,13 @@ import uk.co.idv.context.entities.policy.ContextPolicyMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class DefaultCreateContextRequestTest {
+class ServiceCreateContextRequestTest {
 
     @Test
     void shouldReturnInitialRequest() {
         CreateContextRequest initial = FacadeCreateContextRequestMother.build();
 
-        DefaultCreateContextRequest request = DefaultCreateContextRequest.builder()
+        ServiceCreateContextRequest request = ServiceCreateContextRequest.builder()
                 .initial(initial)
                 .build();
 
@@ -25,7 +25,7 @@ class DefaultCreateContextRequestTest {
     void shouldReturnChannelFromInitialRequest() {
         CreateContextRequest initial = FacadeCreateContextRequestMother.build();
 
-        CreateContextRequest request = DefaultCreateContextRequest.builder()
+        CreateContextRequest request = ServiceCreateContextRequest.builder()
                 .initial(initial)
                 .build();
 
@@ -36,7 +36,7 @@ class DefaultCreateContextRequestTest {
     void shouldReturnChannelIdFromInitialRequest() {
         CreateContextRequest initial = FacadeCreateContextRequestMother.build();
 
-        CreateContextRequest request = DefaultCreateContextRequest.builder()
+        CreateContextRequest request = ServiceCreateContextRequest.builder()
                 .initial(initial)
                 .build();
 
@@ -47,7 +47,7 @@ class DefaultCreateContextRequestTest {
     void shouldReturnActivityFromInitialRequest() {
         CreateContextRequest initial = FacadeCreateContextRequestMother.build();
 
-        CreateContextRequest request = DefaultCreateContextRequest.builder()
+        CreateContextRequest request = ServiceCreateContextRequest.builder()
                 .initial(initial)
                 .build();
 
@@ -58,7 +58,7 @@ class DefaultCreateContextRequestTest {
     void shouldReturnAliasesFromInitialRequest() {
         CreateContextRequest initial = FacadeCreateContextRequestMother.build();
 
-        CreateContextRequest request = DefaultCreateContextRequest.builder()
+        CreateContextRequest request = ServiceCreateContextRequest.builder()
                 .initial(initial)
                 .build();
 
@@ -69,7 +69,7 @@ class DefaultCreateContextRequestTest {
     void shouldReturnIdentity() {
         Identity identity = IdentityMother.example();
 
-        DefaultCreateContextRequest request = DefaultCreateContextRequest.builder()
+        ServiceCreateContextRequest request = ServiceCreateContextRequest.builder()
                 .identity(identity)
                 .build();
 
@@ -80,7 +80,7 @@ class DefaultCreateContextRequestTest {
     void shouldReturnIdvIdFromIdentity() {
         Identity identity = IdentityMother.example();
 
-        DefaultCreateContextRequest request = DefaultCreateContextRequest.builder()
+        ServiceCreateContextRequest request = ServiceCreateContextRequest.builder()
                 .identity(identity)
                 .build();
 
@@ -91,7 +91,7 @@ class DefaultCreateContextRequestTest {
     void shouldReturnPolicy() {
         ContextPolicy policy = ContextPolicyMother.build();
 
-        DefaultCreateContextRequest request = DefaultCreateContextRequest.builder()
+        ServiceCreateContextRequest request = ServiceCreateContextRequest.builder()
                 .policy(policy)
                 .build();
 
@@ -102,7 +102,7 @@ class DefaultCreateContextRequestTest {
     void shouldReturnPolicySequencePoliciesFromPolicy() {
         ContextPolicy policy = ContextPolicyMother.build();
 
-        DefaultCreateContextRequest request = DefaultCreateContextRequest.builder()
+        ServiceCreateContextRequest request = ServiceCreateContextRequest.builder()
                 .policy(policy)
                 .build();
 

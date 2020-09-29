@@ -94,6 +94,6 @@ aws cloudformation create-stack --stack-name idv-dev-service --template-body fil
 
 ```aws
 aws cloudformation delete-stack --stack-name idv-dev-service;
-aws cloudformation delete-stack --stack-name idv-dev-respositories;
+aws cloudformation delete-stack --stack-name idv-dev-repositories;
 aws cloudformation delete-stack --stack-name idv-dev-network;
 ```

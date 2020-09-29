@@ -7,7 +7,7 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import uk.co.idv.context.adapter.json.activity.ActivityModule;
 import uk.co.idv.context.adapter.json.policy.ContextPolicyModule;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 import uk.co.idv.identity.adapter.json.alias.AliasModule;
 import uk.co.idv.identity.adapter.json.channel.ChannelModule;
@@ -21,10 +21,10 @@ public class CreateContextModule extends SimpleModule {
         super("create-context-module", Version.unknownVersion());
 
         setMixInAnnotation(CreateContextRequest.class, CreateContextRequestMixin.class);
-        setMixInAnnotation(DefaultCreateContextRequest.class, DefaultCreateContextRequestMixin.class);
+        setMixInAnnotation(ServiceCreateContextRequest.class, DefaultCreateContextRequestMixin.class);
 
         addDeserializer(FacadeCreateContextRequest.class, new FacadeCreateContextRequestDeserializer());
-        addDeserializer(DefaultCreateContextRequest.class, new DefaultCreateContextRequestDeserializer());
+        addDeserializer(ServiceCreateContextRequest.class, new DefaultCreateContextRequestDeserializer());
     }
 
     @Override

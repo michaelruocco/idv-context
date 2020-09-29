@@ -13,7 +13,7 @@ import java.util.Collection;
 @Data
 public class ContextLockoutRequest implements LockoutRequest {
 
-    private final DefaultCreateContextRequest contextRequest;
+    private final ServiceCreateContextRequest contextRequest;
     private final Instant timestamp;
 
     @Override

@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.usecases.context.identity.IdentityLoader;
 import uk.co.idv.context.usecases.context.lockout.LockoutStateValidator;
 
@@ -23,7 +23,7 @@ public class ContextFacade {
 
     public Context create(CreateContextRequest request) {
         Instant start = Instant.now();
-        DefaultCreateContextRequest identityRequest = identityLoader.addIdentity(request);
+        ServiceCreateContextRequest identityRequest = identityLoader.addIdentity(request);
         stateValidator.validateLockoutState(identityRequest);
         Context context = contextService.create(identityRequest);
         log.info("create context took {}ms ", millisBetweenNowAnd(start));

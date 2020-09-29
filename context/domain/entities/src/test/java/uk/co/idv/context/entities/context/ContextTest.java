@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.context;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
@@ -53,7 +53,7 @@ class ContextTest {
 
     @Test
     void shouldReturnIdentityCreateContextRequest() {
-        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
 
         Context context = Context.builder()
                 .request(request)
@@ -64,7 +64,7 @@ class ContextTest {
 
     @Test
     void shouldReturnChannelFromCreateContextRequest() {
-        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
 
         Context context = Context.builder()
                 .request(request)
@@ -75,7 +75,7 @@ class ContextTest {
 
     @Test
     void shouldReturnActivityFromCreateContextRequest() {
-        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
 
         Context context = Context.builder()
                 .request(request)
@@ -86,7 +86,7 @@ class ContextTest {
 
     @Test
     void shouldReturnIdentityFromCreateContextRequest() {
-        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
 
         Context context = Context.builder()
                 .request(request)

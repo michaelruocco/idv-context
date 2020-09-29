@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.usecases.context.identity.IdentityLoader;
 import uk.co.idv.context.usecases.context.lockout.LockoutStateValidator;
 
@@ -30,7 +30,7 @@ class ContextFacadeTest {
     @Test
     void shouldCreateContext() {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
-        DefaultCreateContextRequest identityRequest = givenIdentityRequestLoaded(request);
+        ServiceCreateContextRequest identityRequest = givenIdentityRequestLoaded(request);
         Context expectedContext = givenContextCreated(identityRequest);
 
         Context context = facade.create(request);
@@ -41,7 +41,7 @@ class ContextFacadeTest {
     @Test
     void shouldValidateLockoutState() {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
-        DefaultCreateContextRequest identityRequest = givenIdentityRequestLoaded(request);
+        ServiceCreateContextRequest identityRequest = givenIdentityRequestLoaded(request);
 
         facade.create(request);
 
@@ -58,13 +58,13 @@ class ContextFacadeTest {
         assertThat(context).isEqualTo(expectedContext);
     }
 
-    private DefaultCreateContextRequest givenIdentityRequestLoaded(CreateContextRequest initialRequest) {
-        DefaultCreateContextRequest identityRequest = mock(DefaultCreateContextRequest.class);
+    private ServiceCreateContextRequest givenIdentityRequestLoaded(CreateContextRequest initialRequest) {
+        ServiceCreateContextRequest identityRequest = mock(ServiceCreateContextRequest.class);
         given(identityLoader.addIdentity(initialRequest)).willReturn(identityRequest);
         return identityRequest;
     }
 
-    private Context givenContextCreated(DefaultCreateContextRequest request) {
+    private Context givenContextCreated(ServiceCreateContextRequest request) {
         Context context = mock(Context.class);
         given(contextService.create(request)).willReturn(context);
         return context;

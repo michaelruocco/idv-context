@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.With;
 import uk.co.idv.context.entities.activity.Activity;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.sequence.Sequences;
@@ -23,7 +23,7 @@ public class Context {
     private final UUID id;
     private final Instant created;
     private final Instant expiry;
-    private final DefaultCreateContextRequest request;
+    private final ServiceCreateContextRequest request;
 
     @With
     private final Sequences sequences;

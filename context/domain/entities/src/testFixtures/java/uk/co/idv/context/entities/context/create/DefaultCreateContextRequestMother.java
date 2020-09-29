@@ -5,12 +5,12 @@ import uk.co.idv.identity.entities.identity.IdentityMother;
 
 public interface DefaultCreateContextRequestMother {
 
-    static DefaultCreateContextRequest build() {
+    static ServiceCreateContextRequest build() {
         return builder().build();
     }
 
-    static DefaultCreateContextRequest.DefaultCreateContextRequestBuilder builder() {
-        return DefaultCreateContextRequest.builder()
+    static ServiceCreateContextRequest.ServiceCreateContextRequestBuilder builder() {
+        return ServiceCreateContextRequest.builder()
                 .initial(FacadeCreateContextRequestMother.build())
                 .identity(IdentityMother.example())
                 .policy(ContextPolicyMother.build());

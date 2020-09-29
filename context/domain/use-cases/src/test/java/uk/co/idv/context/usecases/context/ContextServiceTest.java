@@ -2,7 +2,7 @@ package uk.co.idv.context.usecases.context;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.entities.context.sequence.SequencesRequest;
@@ -41,7 +41,7 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateIdOnContext() {
-        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
         SequencesRequest sequencesRequest = givenConvertsToSequencesRequet(request);
 
         Context context = service.create(request);
@@ -51,7 +51,7 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateCreatedOnContext() {
-        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
         givenConvertsToSequencesRequet(request);
 
         Context context = service.create(request);
@@ -61,7 +61,7 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateRequestOnContext() {
-        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
         givenConvertsToSequencesRequet(request);
 
         Context context = service.create(request);
@@ -71,7 +71,7 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateSequencesOnContext() {
-        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
         Sequences sequences = givenSequencesBuiltFromRequest(request);
 
         Context context = service.create(request);
@@ -81,7 +81,7 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateExpiryOnContext() {
-        DefaultCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
         Sequences sequences = givenSequencesBuiltFromRequest(request);
         Instant expectedExpiry = givenExpiryCalculatedFor(sequences);
 
@@ -112,13 +112,13 @@ class ContextServiceTest {
                 .hasMessage(id.toString());
     }
 
-    private SequencesRequest givenConvertsToSequencesRequet(DefaultCreateContextRequest request) {
+    private SequencesRequest givenConvertsToSequencesRequet(ServiceCreateContextRequest request) {
         SequencesRequest sequencesRequest = SequencesRequestMother.build();
         given(requestConverter.toSequencesRequest(request)).willReturn(sequencesRequest);
         return sequencesRequest;
     }
 
-    private Sequences givenSequencesBuiltFromRequest(DefaultCreateContextRequest request) {
+    private Sequences givenSequencesBuiltFromRequest(ServiceCreateContextRequest request) {
         SequencesRequest sequencesRequest = givenConvertsToSequencesRequet(request);
         return givenSequencesBuiltFromRequest(sequencesRequest);
     }

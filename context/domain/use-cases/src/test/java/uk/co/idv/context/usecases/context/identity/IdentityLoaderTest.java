@@ -5,7 +5,7 @@ import org.mockito.ArgumentCaptor;
 import uk.co.idv.context.entities.context.create.ContextCreateEligibilityRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibilityMother;
 import uk.co.idv.identity.entities.identity.FindIdentityRequest;
@@ -61,7 +61,7 @@ class IdentityLoaderTest {
         CreateContextRequest initialRequest = FacadeCreateContextRequestMother.build();
         givenEligibilityReturned();
 
-        DefaultCreateContextRequest identityRequest = loader.addIdentity(initialRequest);
+        ServiceCreateContextRequest identityRequest = loader.addIdentity(initialRequest);
 
         assertThat(identityRequest.getInitial()).isEqualTo(initialRequest);
     }
@@ -72,7 +72,7 @@ class IdentityLoaderTest {
         ContextPolicy policy = givenPolicyLoadedForRequest(request);
         givenEligibilityReturned();
 
-        DefaultCreateContextRequest identityRequest = loader.addIdentity(request);
+        ServiceCreateContextRequest identityRequest = loader.addIdentity(request);
 
         assertThat(identityRequest.getPolicy()).isEqualTo(policy);
     }
@@ -82,7 +82,7 @@ class IdentityLoaderTest {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         IdentityEligibility eligibility = givenEligibilityReturned();
 
-        DefaultCreateContextRequest identityRequest = loader.addIdentity(request);
+        ServiceCreateContextRequest identityRequest = loader.addIdentity(request);
 
         assertThat(identityRequest.getIdentity()).isEqualTo(eligibility.getIdentity());
     }

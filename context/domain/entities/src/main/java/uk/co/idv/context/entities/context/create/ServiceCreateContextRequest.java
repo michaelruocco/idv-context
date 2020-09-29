@@ -14,7 +14,7 @@ import java.util.Collection;
 
 @Builder
 @Data
-public class DefaultCreateContextRequest implements CreateContextRequest {
+public class ServiceCreateContextRequest implements CreateContextRequest {
 
     private final CreateContextRequest initial;
     private final ContextPolicy policy;
