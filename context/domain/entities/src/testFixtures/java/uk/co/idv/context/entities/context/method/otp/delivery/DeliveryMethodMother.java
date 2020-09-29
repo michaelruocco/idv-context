@@ -26,6 +26,21 @@ public interface DeliveryMethodMother {
         return builder().id(id).build();
     }
 
+    static DeliveryMethod withLastUpdated(Instant lastUpdated) {
+        return builder().lastUpdated(lastUpdated).build();
+    }
+
+    static DeliveryMethod withoutLastUpdated() {
+        return builder().lastUpdated(null).build();
+    }
+
+    static DeliveryMethod smsWithValue(String value) {
+        return builder().type("sms").value(value).build();
+    }
+
+    static DeliveryMethod emailWithValue(String value) {
+        return builder().type("email").value(value).build();
+    }
 
     static DeliveryMethod withEligibility(Eligibility eligibility) {
         return builder().eligibility(eligibility).build();

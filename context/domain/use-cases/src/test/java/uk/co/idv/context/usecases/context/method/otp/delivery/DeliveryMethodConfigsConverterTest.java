@@ -32,7 +32,7 @@ class DeliveryMethodConfigsConverterTest {
 
         DeliveryMethods methods = configsConverter.toDeliveryMethods(identity, new DeliveryMethodConfigs(config1, config2));
 
-        assertThat(methods).containsExactly(
+        assertThat(methods).containsExactlyInAnyOrder(
                 expectedMethod1,
                 expectedMethod2
         );

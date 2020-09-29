@@ -1,15 +1,16 @@
 package uk.co.idv.context.entities.context.method.otp.delivery;
 
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.eligibility.Eligible;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.EligibilityFutures;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.NoEligibleDeliveryMethodsAvailable;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -17,7 +18,6 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@RequiredArgsConstructor
 @Data
 public class DeliveryMethods implements Iterable<DeliveryMethod> {
 
@@ -25,6 +25,12 @@ public class DeliveryMethods implements Iterable<DeliveryMethod> {
 
     public DeliveryMethods(DeliveryMethod... values) {
         this(Arrays.asList(values));
+    }
+
+    public DeliveryMethods(Collection<DeliveryMethod> values) {
+        List<DeliveryMethod> sorted = new ArrayList<>(values);
+        sorted.sort(new DeliveryMethodComparator());
+        this.values = sorted;
     }
 
     @Override

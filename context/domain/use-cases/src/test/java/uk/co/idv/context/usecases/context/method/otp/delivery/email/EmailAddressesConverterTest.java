@@ -2,6 +2,7 @@ package uk.co.idv.context.usecases.context.method.otp.delivery.email;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
+import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.policy.method.otp.delivery.email.EmailDeliveryMethodConfig;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
@@ -31,7 +32,7 @@ class EmailAddressesConverterTest {
     }
 
     private DeliveryMethod givenAddressConvertsTo(String emailAddress, EmailDeliveryMethodConfig config) {
-        DeliveryMethod deliveryMethod = mock(DeliveryMethod.class);
+        DeliveryMethod deliveryMethod = DeliveryMethodMother.emailWithValue(emailAddress);
         given(addressConverter.toDeliveryMethod(emailAddress, config)).willReturn(deliveryMethod);
         return deliveryMethod;
     }

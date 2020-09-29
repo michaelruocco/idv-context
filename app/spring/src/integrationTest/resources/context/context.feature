@@ -373,39 +373,18 @@ Feature: Lockout Policy Maintenance
                   {
                     "id": "#uuid",
                     "type": "sms",
-                    "value": "+447808247749",
+                    "value": "+447808247743",
                     "eligibility": {
-                      "reason": "sim swap status failure is not allowed",
-                      "eligible": false,
+                      "eligible": true,
                       "complete": true
                     }
                   },
                   {
                     "id": "#uuid",
                     "type": "sms",
-                    "value": "+447808247748",
+                    "value": "+447808247744",
                     "eligibility": {
-                      "reason": "sim swap status unknown is not allowed",
-                      "eligible": false,
-                      "complete": true
-                    }
-                  },
-                  {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247747",
-                    "eligibility": {
-                      "reason": "sim swap status timeout is not allowed",
-                      "eligible": false,
-                      "complete": true
-                    }
-                  },
-                  {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247746",
-                    "eligibility": {
-                      "reason": "#notnull",
+                      "reason": "sim swap status unknown not acceptable",
                       "eligible": false,
                       "complete": true
                     }
@@ -423,9 +402,9 @@ Feature: Lockout Policy Maintenance
                   {
                     "id": "#uuid",
                     "type": "sms",
-                    "value": "+447808247744",
+                    "value": "+447808247746",
                     "eligibility": {
-                      "reason": "sim swap status unknown not acceptable",
+                      "reason": "#notnull",
                       "eligible": false,
                       "complete": true
                     }
@@ -433,9 +412,30 @@ Feature: Lockout Policy Maintenance
                   {
                     "id": "#uuid",
                     "type": "sms",
-                    "value": "+447808247743",
+                    "value": "+447808247747",
                     "eligibility": {
-                      "eligible": true,
+                      "reason": "sim swap status timeout is not allowed",
+                      "eligible": false,
+                      "complete": true
+                    }
+                  },
+                  {
+                    "id": "#uuid",
+                    "type": "sms",
+                    "value": "+447808247748",
+                    "eligibility": {
+                      "reason": "sim swap status unknown is not allowed",
+                      "eligible": false,
+                      "complete": true
+                    }
+                  },
+                  {
+                    "id": "#uuid",
+                    "type": "sms",
+                    "value": "+447808247749",
+                    "eligibility": {
+                      "reason": "sim swap status failure is not allowed",
+                      "eligible": false,
                       "complete": true
                     }
                   }

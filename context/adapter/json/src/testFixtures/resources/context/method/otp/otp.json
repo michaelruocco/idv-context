@@ -2,17 +2,17 @@
   "name": "one-time-passcode",
   "deliveryMethods": [
     {
-      "id": "cedbf56f-66d5-41e0-a669-01559b031c7c",
-      "type": "sms",
-      "value": "+447809123456",
+      "id": "d22d7d89-9127-4a01-a99c-baaaf34124c7",
+      "type": "voice",
+      "value": "+1604654321",
       "eligibility": {
         "eligible": true
       }
     },
     {
-      "id": "d22d7d89-9127-4a01-a99c-baaaf34124c7",
-      "type": "voice",
-      "value": "+1604654321",
+      "id": "cedbf56f-66d5-41e0-a669-01559b031c7c",
+      "type": "sms",
+      "value": "+447809123456",
       "eligibility": {
         "eligible": true
       }
