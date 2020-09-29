@@ -6,6 +6,9 @@ import uk.co.idv.context.entities.policy.method.MethodPolicy;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.identity.entities.identity.RequestedData;
 
+import java.time.Duration;
+import java.util.Optional;
+
 @Builder
 @Data
 public class OtpPolicy implements MethodPolicy {
@@ -23,6 +26,14 @@ public class OtpPolicy implements MethodPolicy {
     @Override
     public RequestedData getRequestedData() {
         return deliveryMethodConfigs.getRequestedData();
+    }
+
+    public boolean hasAsyncSimSwap() {
+        return deliveryMethodConfigs.hasAsyncSimSwap();
+    }
+
+    public Optional<Duration> getLongestSimSwapConfigTimeout() {
+        return deliveryMethodConfigs.getLongestSimSwapConfigTimeout();
     }
 
 }

@@ -4,6 +4,9 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.identity.entities.identity.RequestedData;
 
+import java.time.Duration;
+import java.util.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -41,6 +44,25 @@ class OtpPolicyTest {
         RequestedData requestedData = policy.getRequestedData();
 
         assertThat(requestedData).isEqualTo(expectedRequestedData);
+    }
+
+    @Test
+    void shouldReturnHasAsyncSimSwapFromDeliveryMethodConfigs() {
+        given(deliveryMethodConfigs.hasAsyncSimSwap()).willReturn(true);
+
+        boolean hasAsyncSimSwap = policy.hasAsyncSimSwap();
+
+        assertThat(hasAsyncSimSwap).isTrue();
+    }
+
+    @Test
+    void shouldReturnLongestSimSwapConfigTimeoutFromDeliveryMethodConfigs() {
+        Duration expectedTimeout = Duration.ofMinutes(5);
+        given(deliveryMethodConfigs.getLongestSimSwapConfigTimeout()).willReturn(Optional.of(expectedTimeout));
+
+        Optional<Duration> timeout = policy.getLongestSimSwapConfigTimeout();
+
+        assertThat(timeout).contains(expectedTimeout);
     }
 
 }

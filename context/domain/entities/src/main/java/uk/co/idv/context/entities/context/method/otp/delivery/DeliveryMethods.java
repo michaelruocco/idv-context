@@ -10,7 +10,10 @@ import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.NoElig
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Optional;
+import java.util.UUID;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -33,7 +36,7 @@ public class DeliveryMethods implements Iterable<DeliveryMethod> {
         return values.stream();
     }
 
-    public EligibilityFutures toFutures() {
+    public EligibilityFutures toSimSwapFutures() {
         return new EligibilityFutures(values.stream()
                 .map(DeliveryMethod::getAsyncSimSwapEligibilityFuture)
                 .flatMap(Optional::stream)
@@ -46,6 +49,18 @@ public class DeliveryMethods implements Iterable<DeliveryMethod> {
             return new Eligible();
         }
         return new NoEligibleDeliveryMethodsAvailable();
+    }
+
+    public DeliveryMethods replace(DeliveryMethods newValues) {
+        Map<UUID, DeliveryMethod> updated = asMap();
+        newValues.stream()
+                .filter(method -> updated.containsKey(method.getId()))
+                .forEach(method -> updated.put(method.getId(), method));
+        return new DeliveryMethods(updated.values());
+    }
+
+    private Map<UUID, DeliveryMethod> asMap() {
+        return values.stream().collect(Collectors.toMap(DeliveryMethod::getId, Function.identity()));
     }
 
     private boolean hasAtLeastOneEligible() {

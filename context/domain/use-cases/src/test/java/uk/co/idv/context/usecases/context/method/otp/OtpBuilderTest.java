@@ -1,38 +1,33 @@
 package uk.co.idv.context.usecases.context.method.otp;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.common.usecases.async.FutureWaiter;
+import org.mockito.ArgumentCaptor;
 import uk.co.idv.context.entities.context.method.MethodsRequest;
 import uk.co.idv.context.entities.context.method.MethodsRequestMother;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.EligibilityFutures;
+import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
 import uk.co.idv.context.entities.policy.method.MethodPolicy;
 import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
 import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.context.usecases.context.method.otp.delivery.DeliveryMethodConfigsConverter;
-
-import java.time.Duration;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
+import uk.co.idv.context.usecases.context.method.otp.simswap.SimSwap;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 
 class OtpBuilderTest {
 
     private final DeliveryMethodConfigsConverter configsConverter = mock(DeliveryMethodConfigsConverter.class);
-    private final FutureWaiter futureWaiter = mock(FutureWaiter.class);
+    private final SimSwap simSwap = mock(SimSwap.class);
 
     private final OtpBuilder builder = OtpBuilder.builder()
             .configsConverter(configsConverter)
-            .futureWaiter(futureWaiter)
+            .simSwap(simSwap)
             .build();
 
     @Test
@@ -101,47 +96,45 @@ class OtpBuilderTest {
     }
 
     @Test
-    void shouldNotWaitForAsyncSimSwapsIfTimeoutNotPresentAndEmptyFuturesReturnedFromDeliveryMethods() {
+    void shouldPassMethodRequestToSimSwap() {
         MethodsRequest request = MethodsRequestMother.build();
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
         OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(request, deliveryMethods);
 
         builder.build(request, policy);
 
-        verify(futureWaiter, never()).waitFor(any(CompletableFuture.class), any(Duration.class));
+        ArgumentCaptor<SimSwapRequest> captor = ArgumentCaptor.forClass(SimSwapRequest.class);
+        verify(simSwap).waitForSimSwapsIfRequired(captor.capture());
+        SimSwapRequest simSwapRequest = captor.getValue();
+        assertThat(simSwapRequest.getMethodsRequest()).isEqualTo(request);
     }
 
     @Test
-    void shouldNotWaitForAsyncSimSwapsIfTimeoutPresentButEmptyFuturesReturnedFromDeliveryMethods() {
-        DeliveryMethodConfigs configs = givenDeliveryMethodConfigsWithLongestSimSwapTimeout(Duration.ofMillis(1));
-        OtpPolicy policy = givenPolicyWithDeliveryMethodConfigs(configs);
-        MethodsRequest request = MethodsRequestMother.build();
+    void shouldPassDeliveryMethodsToSimSwap() {
+        MethodsRequest methodRequest = MethodsRequestMother.build();
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
-        given(configsConverter.toDeliveryMethods(request.getIdentity(), configs)).willReturn(deliveryMethods);
-        EligibilityFutures futures = givenEligibilityFutures(deliveryMethods);
-        given(futures.isEmpty()).willReturn(true);
+        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(methodRequest, deliveryMethods);
 
-        builder.build(request, policy);
+        builder.build(methodRequest, policy);
 
-        verify(futureWaiter, never()).waitFor(any(CompletableFuture.class), any(Duration.class));
+        ArgumentCaptor<SimSwapRequest> captor = ArgumentCaptor.forClass(SimSwapRequest.class);
+        verify(simSwap).waitForSimSwapsIfRequired(captor.capture());
+        SimSwapRequest simSwapRequest = captor.getValue();
+        assertThat(simSwapRequest.getDeliveryMethods()).isEqualTo(deliveryMethods);
     }
 
     @Test
-    void shouldWaitForAsyncSimSwapsIfTimeoutPresentAndFuturesReturnedFromDeliveryMethods() {
-        Duration expectedTimeout = Duration.ofMillis(1);
-        DeliveryMethodConfigs configs = givenDeliveryMethodConfigsWithLongestSimSwapTimeout(expectedTimeout);
-        OtpPolicy policy = givenPolicyWithDeliveryMethodConfigs(configs);
-        MethodsRequest request = MethodsRequestMother.build();
+    void shouldPassOtpPolicyToSimSwap() {
+        MethodsRequest methodRequest = MethodsRequestMother.build();
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
-        given(configsConverter.toDeliveryMethods(request.getIdentity(), configs)).willReturn(deliveryMethods);
-        EligibilityFutures futures = givenEligibilityFutures(deliveryMethods);
-        given(futures.isEmpty()).willReturn(false);
-        CompletableFuture<Void> expectedFuture = mock(CompletableFuture.class);
-        given(futures.all()).willReturn(expectedFuture);
+        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(methodRequest, deliveryMethods);
 
-        builder.build(request, policy);
+        builder.build(methodRequest, policy);
 
-        verify(futureWaiter).waitFor(expectedFuture, expectedTimeout);
+        ArgumentCaptor<SimSwapRequest> captor = ArgumentCaptor.forClass(SimSwapRequest.class);
+        verify(simSwap).waitForSimSwapsIfRequired(captor.capture());
+        SimSwapRequest simSwapRequest = captor.getValue();
+        assertThat(simSwapRequest.getPolicy()).isEqualTo(policy);
     }
 
     private OtpPolicy givenOtpPolicyThatWillReturnDeliveryMethods(MethodsRequest request, DeliveryMethods deliveryMethods) {
@@ -155,18 +148,6 @@ class OtpBuilderTest {
         OtpPolicy policy = mock(OtpPolicy.class);
         given(policy.getDeliveryMethodConfigs()).willReturn(configs);
         return policy;
-    }
-
-    private DeliveryMethodConfigs givenDeliveryMethodConfigsWithLongestSimSwapTimeout(Duration timeout) {
-        DeliveryMethodConfigs configs = mock(DeliveryMethodConfigs.class);
-        given(configs.getLongestSimSwapConfigTimeout()).willReturn(Optional.of(timeout));
-        return configs;
-    }
-
-    private EligibilityFutures givenEligibilityFutures(DeliveryMethods deliveryMethods) {
-        EligibilityFutures futures = mock(EligibilityFutures.class);
-        given(deliveryMethods.toFutures()).willReturn(futures);
-        return futures;
     }
 
 }

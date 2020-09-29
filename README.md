@@ -12,7 +12,7 @@
 ## Todo
 
 *   DefaultCreateContextRequest to service context request, add class to convert ServiceCreateContextRequest to a SequencesRequest which will take ServiceCreateContextRequest generate an id and add it to pass into sequences builder
-*   Add async sim swap functionality (don't wait for completion / write results from supplier / return is complete from future on async sim swap eligibility)
+*   Add manual application async sim swap integration test
 *   Add time to live onto context dynamo repository
 *   Tidy up cloud formation templates and try out creating API gateway
 *   Json error handling for context errors (context policy not found, context not found)
@@ -20,6 +20,7 @@
 *   Add publishing context expired event
 *   Functionality to post results to verification context
 *   Ensure attempts merged when identities merged -> via publishing identity merged event
+*   Configure default policies on startup
 *   Make stub delays and identity lookup timeout configurable (by channel / add identity eligibility policy?)
 *   Extract common dynamo adapter to its own separate library
 

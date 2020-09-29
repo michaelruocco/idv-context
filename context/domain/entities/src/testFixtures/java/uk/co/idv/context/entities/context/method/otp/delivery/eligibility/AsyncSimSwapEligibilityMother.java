@@ -1,5 +1,6 @@
 package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
 
+import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.eligibility.EligibilityMother;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfigMother;
 
@@ -9,6 +10,10 @@ public interface AsyncSimSwapEligibilityMother {
 
     static AsyncFutureSimSwapEligibility ineligible() {
         return builder().build();
+    }
+
+    static AsyncFutureSimSwapEligibility withFuture(CompletableFuture<Eligibility> future) {
+        return builder().future(future).build();
     }
 
     static AsyncFutureSimSwapEligibility.AsyncFutureSimSwapEligibilityBuilder builder() {

@@ -11,6 +11,10 @@ public interface MockMethodMother {
         return mock(Method.class);
     }
 
+    static <T extends Method> T mockMethod(Class<T> type) {
+        return mock(type);
+    }
+
     static <T extends Method> T givenEligibleAndIncompleteMethod(Class<T> type) {
         T method = givenEligibleMethod(type);
         given(method.isComplete()).willReturn(false);

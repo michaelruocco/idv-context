@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
+import lombok.With;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
@@ -15,6 +16,8 @@ import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
 public class Otp implements Method {
 
     private final String name;
+
+    @With
     private final DeliveryMethods deliveryMethods;
 
     @Getter(AccessLevel.NONE)
@@ -38,6 +41,10 @@ public class Otp implements Method {
     @Override
     public MethodConfig getConfig() {
         return otpConfig;
+    }
+
+    public Otp replaceDeliveryMethods(DeliveryMethods updated) {
+        return withDeliveryMethods(deliveryMethods.replace(updated));
     }
 
 }

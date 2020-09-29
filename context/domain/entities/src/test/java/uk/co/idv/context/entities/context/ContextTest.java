@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
 import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 
 import java.time.Duration;
@@ -165,6 +166,29 @@ class ContextTest {
                 .build();
 
         assertThat(context.getDuration()).isEqualTo(duration);
+    }
+
+    @Test
+    void shouldReplaceDeliveryMethodsOnSequences() {
+        Sequences sequences = mock(Sequences.class);
+        DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
+        Sequences expectedSequences = givenReplacedDeliveryMethodsSequences(sequences, deliveryMethods);
+        Context context = Context.builder()
+                .sequences(sequences)
+                .build();
+
+        Context updated = context.replaceDeliveryMethods(deliveryMethods);
+
+        assertThat(updated).usingRecursiveComparison()
+                .ignoringFields("sequences")
+                .isEqualTo(context);
+        assertThat(updated.getSequences()).isEqualTo(expectedSequences);
+    }
+
+    private Sequences givenReplacedDeliveryMethodsSequences(Sequences sequences, DeliveryMethods deliveryMethods) {
+        Sequences replaced = mock(Sequences.class);
+        given(sequences.replaceDeliveryMethods(deliveryMethods)).willReturn(replaced);
+        return replaced;
     }
 
 }

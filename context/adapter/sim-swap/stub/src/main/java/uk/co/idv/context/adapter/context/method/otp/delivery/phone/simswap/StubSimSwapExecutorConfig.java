@@ -57,7 +57,7 @@ public class StubSimSwapExecutorConfig {
     }
 
     private static int loadThreadPoolSize() {
-        String key = "sim.swap.thread.pool.size";
+        String key = "sim.swap.executor.thread.pool.size";
         int size = Integer.parseInt(System.getProperty(key, "100"));
         log.info("loaded {} value {}", key, size);
         return size;

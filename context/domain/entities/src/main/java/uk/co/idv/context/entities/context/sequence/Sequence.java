@@ -2,8 +2,10 @@ package uk.co.idv.context.entities.context.sequence;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.With;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -13,6 +15,8 @@ import java.util.Optional;
 public class Sequence {
 
     private final String name;
+
+    @With
     private final Methods methods;
 
     public Optional<Otp> findNextIncompleteEligibleOtp() {
@@ -35,4 +39,7 @@ public class Sequence {
         return methods.getDuration();
     }
 
+    public Sequence replaceOtpDeliveryMethods(DeliveryMethods newValues) {
+        return withMethods(methods.replaceDeliveryMethods(newValues));
+    }
 }

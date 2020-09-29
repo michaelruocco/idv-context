@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.context.sequence;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -95,6 +96,27 @@ class SequenceTest {
                 .build();
 
         assertThat(sequence.getDuration()).isEqualTo(duration);
+    }
+
+    @Test
+    void shouldReplaceDeliveryMethodsOnMethods() {
+        Methods methods = mock(Methods.class);
+        DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
+        Methods expectedMethods = givenReplacedDeliveryMethodsMethods(methods, deliveryMethods);
+        Sequence sequence = SequenceMother.withMethods(methods);
+
+        Sequence updated = sequence.replaceOtpDeliveryMethods(deliveryMethods);
+
+        assertThat(updated).usingRecursiveComparison()
+                .ignoringFields("methods")
+                .isEqualTo(sequence);
+        assertThat(updated.getMethods()).isEqualTo(expectedMethods);
+    }
+
+    private Methods givenReplacedDeliveryMethodsMethods(Methods methods, DeliveryMethods deliveryMethods) {
+        Methods replaced = mock(Methods.class);
+        given(methods.replaceDeliveryMethods(deliveryMethods)).willReturn(replaced);
+        return replaced;
     }
 
 }

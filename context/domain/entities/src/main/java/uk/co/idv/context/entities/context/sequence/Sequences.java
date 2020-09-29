@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.context.sequence;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -10,6 +11,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Data
@@ -50,6 +52,12 @@ public class Sequences implements Iterable<Sequence> {
                 .map(Sequence::getDuration)
                 .max(Comparator.comparingLong(Duration::toMillis))
                 .orElse(Duration.ZERO);
+    }
+
+    public Sequences replaceDeliveryMethods(DeliveryMethods newValues) {
+        return new Sequences(values.stream()
+                .map(sequence -> sequence.replaceOtpDeliveryMethods(newValues))
+                .collect(Collectors.toList()));
     }
 
 }

@@ -72,6 +72,22 @@ class OtpTest {
         assertThat(otp.getConfig()).isEqualTo(otpConfig);
     }
 
+    @Test
+    void shouldReplaceDeliveryMethods() {
+        DeliveryMethods deliveryMethods = givenDeliveryMethods();
+        DeliveryMethods newValues = givenDeliveryMethods();
+        DeliveryMethods replaced = givenDeliveryMethods();
+        given(deliveryMethods.replace(newValues)).willReturn(replaced);
+        Otp otp = OtpMother.withDeliveryMethods(deliveryMethods);
+
+        Otp updated = otp.replaceDeliveryMethods(newValues);
+
+        assertThat(updated).usingRecursiveComparison()
+                .ignoringFields("deliveryMethods")
+                .isEqualTo(otp);
+        assertThat(updated.getDeliveryMethods()).isEqualTo(replaced);
+    }
+
     private DeliveryMethods givenDeliveryMethodsWithEligibility(Eligibility eligibility) {
         DeliveryMethods deliveryMethods = givenDeliveryMethods();
         given(deliveryMethods.getEligibility()).willReturn(eligibility);

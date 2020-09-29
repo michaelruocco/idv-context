@@ -2,11 +2,14 @@ package uk.co.idv.context.entities.context.method;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 
 import java.time.Duration;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
 import static uk.co.idv.context.entities.context.method.MockMethodMother.givenCompleteMethod;
 import static uk.co.idv.context.entities.context.method.MockMethodMother.givenEligibleAndIncompleteMethod;
 import static uk.co.idv.context.entities.context.method.MockMethodMother.givenEligibleMethod;
@@ -145,5 +148,27 @@ class MethodsTest {
 
         assertThat(methods.getDuration()).isEqualTo(Duration.ofMinutes(5));
     }
+
+    @Test
+    void shouldReplaceDeliveryMethodsOnAllOtpMethods() {
+        Method method1 = mockMethod();
+        Otp method2 = mock(Otp.class);
+        Otp method3 = mock(Otp.class);
+        DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
+        Otp replaced2 = givenReplacedDeliveryMethodsOtp(method2, deliveryMethods);
+        Otp replaced3 = givenReplacedDeliveryMethodsOtp(method3, deliveryMethods);
+        Methods methods = new Methods(method1, method2, method3);
+
+        Methods replaced = methods.replaceDeliveryMethods(deliveryMethods);
+
+        assertThat(replaced).containsExactly(method1, replaced2, replaced3);
+    }
+
+    private Otp givenReplacedDeliveryMethodsOtp(Otp otp, DeliveryMethods deliveryMethods) {
+        Otp replaced = mockMethod(Otp.class);
+        given(otp.replaceDeliveryMethods(deliveryMethods)).willReturn(replaced);
+        return replaced;
+    }
+
 
 }

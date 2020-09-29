@@ -1,6 +1,7 @@
 package uk.co.idv.context.config;
 
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.common.usecases.id.RandomIdGenerator;
 import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
@@ -18,13 +19,19 @@ import uk.co.idv.context.usecases.context.method.otp.delivery.phone.OtpPhoneNumb
 import uk.co.idv.context.usecases.context.method.otp.delivery.phone.OtpPhoneNumberEligibilityCalculator;
 import uk.co.idv.context.usecases.context.method.otp.delivery.phone.OtpPhoneNumbersConverter;
 import uk.co.idv.context.usecases.context.method.otp.delivery.phone.PhoneDeliveryMethodConfigConverter;
+import uk.co.idv.context.usecases.context.method.otp.simswap.SimSwap;
+import uk.co.idv.context.usecases.context.method.otp.simswap.async.AsyncSimSwap;
+import uk.co.idv.context.usecases.context.method.otp.simswap.async.AsyncSimSwapUpdateContextTaskFactory;
+import uk.co.idv.context.usecases.context.method.otp.simswap.sync.SyncSimSwap;
 import uk.co.idv.context.usecases.context.sequence.SequenceBuilder;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
 
 import java.time.Clock;
+import java.util.concurrent.Executors;
 
 @Builder
+@Slf4j
 public class ContextServiceConfig {
 
     private final ParentContextRepositoryConfig repositoryConfig;
@@ -64,6 +71,7 @@ public class ContextServiceConfig {
     private MethodBuilder otpBuilder() {
         return OtpBuilder.builder()
                 .configsConverter(deliveryMethodConfigsConverter())
+                .simSwap(simSwap())
                 .build();
     }
 
@@ -92,6 +100,34 @@ public class ContextServiceConfig {
                 .clock(clock)
                 .simSwapExecutor(simSwapExecutorConfig.simSwapExecutor())
                 .build();
+    }
+
+    private SimSwap simSwap() {
+        return SimSwap.builder()
+                .async(asyncSimSwap())
+                .sync(new SyncSimSwap())
+                .build();
+    }
+
+    private AsyncSimSwap asyncSimSwap() {
+        return AsyncSimSwap.builder()
+                .taskFactory(simSwapUpdateContextTaskFactory())
+                .executor(Executors.newScheduledThreadPool(loadAsyncSimSwapThreadPoolSize()))
+                .build();
+    }
+
+    private AsyncSimSwapUpdateContextTaskFactory simSwapUpdateContextTaskFactory() {
+        return AsyncSimSwapUpdateContextTaskFactory.builder()
+                .repository(repositoryConfig.contextRepository())
+                .syncStrategy(new SyncSimSwap())
+                .build();
+    }
+
+    private static int loadAsyncSimSwapThreadPoolSize() {
+        String key = "async.sim.swap.thread.pool.size";
+        int size = Integer.parseInt(System.getProperty(key, "50"));
+        log.info("loaded {} value {}", key, size);
+        return size;
     }
 
 }

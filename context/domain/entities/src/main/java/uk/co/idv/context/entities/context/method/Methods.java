@@ -3,12 +3,14 @@ package uk.co.idv.context.entities.context.method;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 
 import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Data
@@ -54,6 +56,20 @@ public class Methods implements Iterable<Method> {
                 .filter(method -> type.isAssignableFrom(method.getClass()))
                 .map(type::cast)
                 .findFirst();
+    }
+
+    public Methods replaceDeliveryMethods(DeliveryMethods newValues) {
+        return new Methods(values.stream()
+                .map(method -> replaceDeliveryMethodsIfOtp(method, newValues))
+                .collect(Collectors.toList()));
+    }
+
+    private Method replaceDeliveryMethodsIfOtp(Method method, DeliveryMethods deliveryMethods) {
+        if (method instanceof Otp) {
+            Otp otp = (Otp) method;
+            return otp.replaceDeliveryMethods(deliveryMethods);
+        }
+        return method;
     }
 
 }

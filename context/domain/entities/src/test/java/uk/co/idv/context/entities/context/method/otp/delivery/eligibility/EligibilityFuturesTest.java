@@ -1,8 +1,10 @@
 package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.common.usecases.async.DelayedSupplier;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.CompletableFuture;
@@ -50,6 +52,28 @@ class EligibilityFuturesTest {
         CompletableFuture<Void> all = futures.all();
 
         assertThat(all).isCompletedExceptionally();
+    }
+
+    @Test
+    void shouldReturnFalseIfAllFuturesAreNotComplete() {
+        CompletableFuture<Eligibility> future1 = CompletableFuture.completedFuture(mock(Eligibility.class));
+        CompletableFuture<Eligibility> future2 = CompletableFuture.supplyAsync(new DelayedSupplier<>(Duration.ofSeconds(1), mock(Eligibility.class)));
+        EligibilityFutures futures = new EligibilityFutures(Arrays.asList(future1, future2));
+
+        boolean allDone = futures.allDone();
+
+        assertThat(allDone).isFalse();
+    }
+
+    @Test
+    void shouldReturnTrueIfAllFuturesComplete() {
+        CompletableFuture<Eligibility> future1 = CompletableFuture.completedFuture(mock(Eligibility.class));
+        CompletableFuture<Eligibility> future2 = CompletableFuture.completedFuture(mock(Eligibility.class));
+        EligibilityFutures futures = new EligibilityFutures(Arrays.asList(future1, future2));
+
+        boolean allDone = futures.allDone();
+
+        assertThat(allDone).isTrue();
     }
 
 }

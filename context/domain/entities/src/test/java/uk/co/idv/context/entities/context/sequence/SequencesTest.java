@@ -2,11 +2,13 @@ package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 
 import java.time.Duration;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenCompleteSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenEligibleSequence;
@@ -132,6 +134,26 @@ class SequencesTest {
         Sequences sequences = new Sequences(sequence1, sequence2);
 
         assertThat(sequences.getDuration()).isEqualTo(longest);
+    }
+
+    @Test
+    void shouldReplaceDeliveryMethodsOnAllSequences() {
+        Sequence sequence1 = mockSequence();
+        Sequence sequence2 = mockSequence();
+        DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
+        Sequence replaced1 = givenReplacedDeliveryMethodsSequences(sequence1, deliveryMethods);
+        Sequence replaced2 = givenReplacedDeliveryMethodsSequences(sequence2, deliveryMethods);
+        Sequences sequences = new Sequences(sequence1, sequence2);
+
+        Sequences replaced = sequences.replaceDeliveryMethods(deliveryMethods);
+
+        assertThat(replaced).containsExactly(replaced1, replaced2);
+    }
+
+    private Sequence givenReplacedDeliveryMethodsSequences(Sequence sequence, DeliveryMethods deliveryMethods) {
+        Sequence replaced = mock(Sequence.class);
+        given(sequence.replaceOtpDeliveryMethods(deliveryMethods)).willReturn(replaced);
+        return replaced;
     }
 
 }

@@ -2,9 +2,11 @@ package uk.co.idv.context.entities.context;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.With;
 import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequest;
 import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.identity.Identity;
@@ -22,6 +24,8 @@ public class Context {
     private final Instant created;
     private final Instant expiry;
     private final DefaultCreateContextRequest request;
+
+    @With
     private final Sequences sequences;
 
     public Channel getChannel() {
@@ -52,4 +56,7 @@ public class Context {
 
     public Duration getDuration() { return sequences.getDuration(); }
 
+    public Context replaceDeliveryMethods(DeliveryMethods newValues) {
+        return withSequences(sequences.replaceDeliveryMethods(newValues));
+    }
 }

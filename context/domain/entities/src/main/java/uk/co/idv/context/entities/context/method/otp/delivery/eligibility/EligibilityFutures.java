@@ -22,7 +22,7 @@ public class EligibilityFutures implements Iterable<CompletableFuture<Eligibilit
     }
 
     public boolean allDone() {
-        return all().isDone();
+        return isEmpty() || all().isDone();
     }
 
     public CompletableFuture<Void> all() {

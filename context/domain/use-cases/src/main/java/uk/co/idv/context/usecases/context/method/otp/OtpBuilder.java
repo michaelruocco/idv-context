@@ -2,28 +2,22 @@ package uk.co.idv.context.usecases.context.method.otp;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.common.usecases.async.FutureWaiter;
 import uk.co.idv.context.entities.context.method.MethodsRequest;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.EligibilityFutures;
+import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
 import uk.co.idv.context.entities.policy.method.MethodPolicy;
 import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.context.usecases.context.method.MethodBuilder;
 import uk.co.idv.context.usecases.context.method.otp.delivery.DeliveryMethodConfigsConverter;
-
-import java.time.Duration;
-import java.util.Optional;
+import uk.co.idv.context.usecases.context.method.otp.simswap.SimSwap;
 
 @Builder
 @Slf4j
 public class OtpBuilder implements MethodBuilder {
 
     private final DeliveryMethodConfigsConverter configsConverter;
-
-    @Builder.Default
-    private final FutureWaiter futureWaiter = new FutureWaiter();
+    private final SimSwap simSwap;
 
     @Override
     public boolean supports(MethodPolicy policy) {
@@ -33,22 +27,22 @@ public class OtpBuilder implements MethodBuilder {
     @Override
     public Otp build(MethodsRequest request, MethodPolicy policy) {
         OtpPolicy otpPolicy = (OtpPolicy) policy;
-        DeliveryMethodConfigs configs = otpPolicy.getDeliveryMethodConfigs();
-        DeliveryMethods methods = configsConverter.toDeliveryMethods(request.getIdentity(), configs);
-        waitForAnyAsyncSimSwaps(configs, methods);
         return Otp.builder()
                 .name(policy.getName())
-                .deliveryMethods(methods)
+                .deliveryMethods(buildDeliveryMethods(request, otpPolicy))
                 .otpConfig(otpPolicy.getMethodConfig())
                 .build();
     }
 
-    private void waitForAnyAsyncSimSwaps(DeliveryMethodConfigs configs, DeliveryMethods methods) {
-        Optional<Duration> timeout = configs.getLongestSimSwapConfigTimeout();
-        EligibilityFutures futures = methods.toFutures();
-        if (timeout.isPresent() && !futures.isEmpty()) {
-            futureWaiter.waitFor(futures.all(), timeout.get());
-        }
+    private DeliveryMethods buildDeliveryMethods(MethodsRequest request, OtpPolicy otpPolicy) {
+        DeliveryMethods deliveryMethods = configsConverter.toDeliveryMethods(request.getIdentity(), otpPolicy.getDeliveryMethodConfigs());
+        SimSwapRequest simSwapRequest = SimSwapRequest.builder()
+                .methodsRequest(request)
+                .deliveryMethods(deliveryMethods)
+                .policy(otpPolicy)
+                .build();
+        simSwap.waitForSimSwapsIfRequired(simSwapRequest);
+        return deliveryMethods;
     }
 
 }
