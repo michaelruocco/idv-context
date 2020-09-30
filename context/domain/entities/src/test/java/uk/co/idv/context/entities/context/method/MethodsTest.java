@@ -157,7 +157,7 @@ class MethodsTest {
         MethodQuery<Method> query = mock(MethodQuery.class);
         Methods methods = new Methods(method1, method2);
 
-        Optional<Method> method = methods.find(query);
+        methods.find(query);
 
         ArgumentCaptor<Stream<Method>> captor = ArgumentCaptor.forClass(Stream.class);
         verify(query).apply(captor.capture());
