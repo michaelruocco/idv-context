@@ -15,7 +15,7 @@ import java.util.concurrent.Executors;
 public class StubSimSwapExecutorConfig {
 
     @Builder.Default
-    private final Delay delay = new Delay(Duration.ofSeconds(3));
+    private final Delay delay = new Delay(Duration.ofMillis(3500));
 
     private final Clock clock;
     private final ExecutorService executor;

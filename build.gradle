@@ -58,7 +58,7 @@ subprojects {
         lombokVersion = "1.18.12"
         slf4jVersion = "1.7.30"
         commonsCollectionsVersion = "4.4"
-        awsSdkVersion = "1.11.871"
+        awsSdkVersion = "1.11.872"
         jacksonVersion = "2.11.2"
         jsonAdapterVersion = "0.1.7"
 
