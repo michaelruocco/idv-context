@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
+import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -27,10 +28,6 @@ public class Methods implements Iterable<Method> {
         return values.iterator();
     }
 
-    public Optional<Otp> findNextIncompleteEligibleOtp() {
-        return findNextIncompleteEligibleMethodOfType(Otp.class);
-    }
-
     public boolean isEligible() {
         return values.stream().allMatch(Method::isEligible);
     }
@@ -49,13 +46,8 @@ public class Methods implements Iterable<Method> {
                 .reduce(Duration.ZERO, Duration::plus);
     }
 
-    public <T> Optional<T> findNextIncompleteEligibleMethodOfType(Class<T> type) {
-        return values.stream()
-                .filter(method -> !method.isComplete())
-                .filter(Method::isEligible)
-                .filter(method -> type.isAssignableFrom(method.getClass()))
-                .map(type::cast)
-                .findFirst();
+    public <T extends Method> Optional<T> find(MethodQuery<T> query) {
+        return query.apply(values.stream());
     }
 
     public Methods replaceDeliveryMethods(DeliveryMethods newValues) {

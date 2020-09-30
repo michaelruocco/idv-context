@@ -2,6 +2,7 @@ package uk.co.idv.context.entities.context.method.otp.delivery;
 
 import lombok.Builder;
 import lombok.Data;
+import uk.co.idv.context.entities.context.eligibility.AsyncEligibility;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
 
@@ -30,6 +31,14 @@ public class DeliveryMethod {
 
     public Optional<Instant> getLastUpdated() {
         return Optional.ofNullable(lastUpdated);
+    }
+
+    public boolean isEligibilityComplete() {
+        if (eligibility instanceof AsyncEligibility) {
+            AsyncEligibility asyncEligibility = (AsyncEligibility) eligibility;
+            return asyncEligibility.isComplete();
+        }
+        return true;
     }
 
     private Optional<AsyncFutureSimSwapEligibility> getAsyncSimSwapEligibility() {

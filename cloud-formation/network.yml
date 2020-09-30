@@ -239,4 +239,3 @@ Outputs:
     Value: !Ref 'ECSSecurityGroup'
     Export:
       Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ECSSecurityGroup' ] ]
-        Name: !Join [ ':', [ !Ref 'AWS::StackName', 'ECSSecurityGroup' ] ]

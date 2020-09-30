@@ -65,6 +65,12 @@ public class DeliveryMethods implements Iterable<DeliveryMethod> {
         return new DeliveryMethods(updated.values());
     }
 
+    public Optional<DeliveryMethod> findByValue(UUID id) {
+        return values.stream()
+                .filter(method -> method.getId().equals(id))
+                .findFirst();
+    }
+
     private Map<UUID, DeliveryMethod> asMap() {
         return values.stream().collect(Collectors.toMap(DeliveryMethod::getId, Function.identity()));
     }

@@ -3,9 +3,10 @@ package uk.co.idv.context.entities.context.sequence;
 import lombok.Builder;
 import lombok.Data;
 import lombok.With;
+import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
+import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -19,8 +20,8 @@ public class Sequence {
     @With
     private final Methods methods;
 
-    public Optional<Otp> findNextIncompleteEligibleOtp() {
-        return methods.findNextIncompleteEligibleOtp();
+    public <T extends Method> Optional<T> find(MethodQuery<T> query) {
+        return methods.find(query);
     }
 
     public boolean isEligible() {

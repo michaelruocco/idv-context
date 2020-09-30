@@ -130,7 +130,8 @@ Resources:
             - Name: AWS_DYNAMO_DB_ENDPOINT_URI
               Value: https://dynamodb.eu-west-1.amazonaws.com
             - Name: REDIS_ENDPOINT_URI
-              Value: redis://idv-el-s1eadoniyq5h.rlvxip.0001.euw1.cache.amazonaws.com:6379
+              # needs to be updated to url of elasticache cluster if a new one is generated
+              Value: redis://idv-el-1kzwatlzq0nx9.rlvxip.0001.euw1.cache.amazonaws.com:6379
           #correct log group names
           LogConfiguration:
             LogDriver: 'awslogs'

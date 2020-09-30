@@ -14,4 +14,7 @@ public interface DeliveryMethodMixin {
     @JsonIgnore
     Optional<CompletableFuture<Eligibility>> getAsyncSimSwapEligibilityFuture();
 
+    @JsonIgnore
+    boolean isEligibilityComplete();
+
 }

@@ -1,17 +1,21 @@
 package uk.co.idv.context.entities.context.method;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
+import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
 import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 import static uk.co.idv.context.entities.context.method.MockMethodMother.givenCompleteMethod;
-import static uk.co.idv.context.entities.context.method.MockMethodMother.givenEligibleAndIncompleteMethod;
 import static uk.co.idv.context.entities.context.method.MockMethodMother.givenEligibleMethod;
 import static uk.co.idv.context.entities.context.method.MockMethodMother.givenIncompleteMethod;
 import static uk.co.idv.context.entities.context.method.MockMethodMother.givenIneligibleMethod;
@@ -23,7 +27,7 @@ import static uk.co.idv.context.entities.context.method.MockMethodMother.mockMet
 class MethodsTest {
 
     @Test
-    void shouldReturnMethods() {
+    void shouldBeIterable() {
         Method method1 = mockMethod();
         Method method2 = mockMethod();
 
@@ -36,47 +40,16 @@ class MethodsTest {
     }
 
     @Test
-    void shouldReturnOtpIfIncompleteAndEligible() {
+    void shouldReturnValues() {
         Method method1 = mockMethod();
-        Otp expectedOtp = givenEligibleAndIncompleteMethod(Otp.class);
-        Methods methods = new Methods(method1, expectedOtp);
-
-        Optional<Otp> otp = methods.findNextIncompleteEligibleOtp();
-
-        assertThat(otp).contains(expectedOtp);
-    }
-
-    @Test
-    void shouldNotReturnOtpIfComplete() {
-        Method method1 = mockMethod();
-        Method method2 = givenCompleteMethod(Otp.class);
-        Methods methods = new Methods(method1, method2);
-
-        Optional<Otp> otp = methods.findNextIncompleteEligibleOtp();
-
-        assertThat(otp).isEmpty();
-    }
-
-    @Test
-    void shouldNotReturnOtpIfEligible() {
-        Method method1 = mockMethod();
-        Method method2 = givenIneligibleMethod(Otp.class);
-        Methods methods = new Methods(method1, method2);
-
-        Optional<Otp> otp = methods.findNextIncompleteEligibleOtp();
-
-        assertThat(otp).isEmpty();
-    }
-
-    @Test
-    void shouldNotReturnOtpIfNotPresent() {
-        Method method1 = givenEligibleAndIncompleteMethod(Method.class);
         Method method2 = mockMethod();
+
         Methods methods = new Methods(method1, method2);
 
-        Optional<Otp> otp = methods.findNextIncompleteEligibleOtp();
-
-        assertThat(otp).isEmpty();
+        assertThat(methods.getValues()).containsExactly(
+                method1,
+                method2
+        );
     }
 
     @Test
@@ -164,11 +137,43 @@ class MethodsTest {
         assertThat(replaced).containsExactly(method1, replaced2, replaced3);
     }
 
+    @Test
+    void shouldReturnResultFromQuery() {
+        Method method1 = mockMethod();
+        Method method2 = mockMethod();
+        Method expectedMethod = mockMethod();
+        MethodQuery<Method> query = givenQueryReturningMethod(expectedMethod);
+        Methods methods = new Methods(method1, method2);
+
+        Optional<Method> method = methods.find(query);
+
+        assertThat(method).contains(expectedMethod);
+    }
+
+    @Test
+    void shouldPassMethodStreamToQuery() {
+        Method method1 = mockMethod();
+        Method method2 = mockMethod();
+        MethodQuery<Method> query = mock(MethodQuery.class);
+        Methods methods = new Methods(method1, method2);
+
+        Optional<Method> method = methods.find(query);
+
+        ArgumentCaptor<Stream<Method>> captor = ArgumentCaptor.forClass(Stream.class);
+        verify(query).apply(captor.capture());
+        assertThat(captor.getValue()).containsExactly(method1, method2);
+    }
+
     private Otp givenReplacedDeliveryMethodsOtp(Otp otp, DeliveryMethods deliveryMethods) {
         Otp replaced = mockMethod(Otp.class);
         given(otp.replaceDeliveryMethods(deliveryMethods)).willReturn(replaced);
         return replaced;
     }
 
+    static MethodQuery<Method> givenQueryReturningMethod(Method method) {
+        MethodQuery<Method> query = mock(MethodQuery.class);
+        given(query.apply(any(Stream.class))).willReturn(Optional.of(method));
+        return query;
+    }
 
 }

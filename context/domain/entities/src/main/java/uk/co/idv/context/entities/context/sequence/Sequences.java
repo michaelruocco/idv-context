@@ -2,8 +2,9 @@ package uk.co.idv.context.entities.context.sequence;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
+import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -26,13 +27,6 @@ public class Sequences implements Iterable<Sequence> {
     @Override
     public Iterator<Sequence> iterator() {
         return values.iterator();
-    }
-
-    public Optional<Otp> findNextIncompleteEligibleOtp() {
-        return values.stream()
-                .map(Sequence::findNextIncompleteEligibleOtp)
-                .flatMap(Optional::stream)
-                .findFirst();
     }
 
     public boolean isEligible() {
@@ -58,6 +52,13 @@ public class Sequences implements Iterable<Sequence> {
         return new Sequences(values.stream()
                 .map(sequence -> sequence.replaceOtpDeliveryMethods(newValues))
                 .collect(Collectors.toList()));
+    }
+
+    public <T extends Method> Optional<T> find(MethodQuery<T> query) {
+        return values.stream()
+                .map(sequence -> sequence.find(query))
+                .flatMap(Optional::stream)
+                .findFirst();
     }
 
 }

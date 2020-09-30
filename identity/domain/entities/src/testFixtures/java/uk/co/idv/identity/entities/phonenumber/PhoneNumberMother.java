@@ -17,6 +17,10 @@ public interface PhoneNumberMother {
                 .build();
     }
 
+    static PhoneNumber delayedSimSwapMobileNumber() {
+        return withNumber("07808247745");
+    }
+
     static PhoneNumber withoutLastUpdated() {
         return withLastUpdated(null);
     }

@@ -12,7 +12,6 @@
 ## Todo
 
 *   Add manual application async sim swap integration test
-*   Add time to live onto context dynamo repository
 *   Functionality to post results to verification context
 *   Tidy up cloud formation templates and try out creating API gateway
 *   Json error handling for context errors (context policy not found, context not found)
@@ -22,6 +21,7 @@
 *   Configure default policies on startup
 *   Make stub delays and identity lookup timeout configurable (by channel / add identity eligibility policy?)
 *   Extract common dynamo adapter to its own separate library
+*   Try out junit tagging for slow tests
 
 ## Useful commands
 

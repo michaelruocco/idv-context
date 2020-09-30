@@ -1,6 +1,8 @@
 package uk.co.idv.context.entities.context.sequence;
 
-import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.Method;
+import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
+import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -23,12 +25,6 @@ public interface MockSequenceMother {
     static Sequence givenIneligibleSequence() {
         Sequence sequence = mock(Sequence.class);
         given(sequence.isEligible()).willReturn(false);
-        return sequence;
-    }
-
-    static Sequence givenSequenceWithIncompleteEligibleOtp(Otp otp) {
-        Sequence sequence = mock(Sequence.class);
-        given(sequence.findNextIncompleteEligibleOtp()).willReturn(Optional.of(otp));
         return sequence;
     }
 
@@ -62,5 +58,22 @@ public interface MockSequenceMother {
         return sequence;
     }
 
+    static Sequence givenReplacedDeliveryMethodsSequences(Sequence sequence, DeliveryMethods deliveryMethods) {
+        Sequence replaced = mock(Sequence.class);
+        given(sequence.replaceOtpDeliveryMethods(deliveryMethods)).willReturn(replaced);
+        return replaced;
+    }
+
+    static <T extends Method> Sequence givenSequenceWithMethodReturnedForQuery(MethodQuery<T> query, T method) {
+        Sequence sequence = mock(Sequence.class);
+        given(sequence.find(query)).willReturn(Optional.of(method));
+        return sequence;
+    }
+
+    static <T extends Method> Sequence givenSequenceWithNoResultFor(MethodQuery<T> query) {
+        Sequence sequence = mock(Sequence.class);
+        given(sequence.find(query)).willReturn(Optional.empty());
+        return sequence;
+    }
 
 }

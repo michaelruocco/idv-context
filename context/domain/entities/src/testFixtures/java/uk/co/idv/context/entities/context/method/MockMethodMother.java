@@ -1,5 +1,6 @@
 package uk.co.idv.context.entities.context.method;
 
+
 import java.time.Duration;
 
 import static org.mockito.BDDMockito.given;
@@ -15,10 +16,8 @@ public interface MockMethodMother {
         return mock(type);
     }
 
-    static <T extends Method> T givenEligibleAndIncompleteMethod(Class<T> type) {
-        T method = givenEligibleMethod(type);
-        given(method.isComplete()).willReturn(false);
-        return method;
+    static Method givenEligibleMethod() {
+        return givenEligibleMethod(Method.class);
     }
 
     static <T extends Method> T givenEligibleMethod(Class<T> type) {
@@ -27,10 +26,18 @@ public interface MockMethodMother {
         return method;
     }
 
+    static Method givenIneligibleMethod() {
+        return givenIneligibleMethod(Method.class);
+    }
+
     static <T extends Method> T givenIneligibleMethod(Class<T> type) {
         T method = mock(type);
         given(method.isEligible()).willReturn(false);
         return method;
+    }
+
+    static Method givenCompleteMethod() {
+        return givenCompleteMethod(Method.class);
     }
 
     static <T extends Method> T givenCompleteMethod(Class<T> type) {

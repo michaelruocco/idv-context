@@ -19,4 +19,5 @@ dependencies {
     integrationTestImplementation testFixtures(project(":lockout-use-cases"))
     integrationTestImplementation testFixtures(project(":context-entities"))
     integrationTestImplementation testFixtures(project(":common-use-cases"))
+    integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
 }

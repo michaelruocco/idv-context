@@ -1,9 +1,10 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
+import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -38,15 +39,16 @@ class SequenceTest {
 
     @Test
     void shouldReturnIncompleteEligibleOtpFromMethodsIfPresent() {
-        Otp otp = mock(Otp.class);
-        Methods methods = mock(Methods.class);
-        given(methods.findNextIncompleteEligibleOtp()).willReturn(Optional.of(otp));
-
+        MethodQuery<Method> query = mock(MethodQuery.class);
+        Method expectedMethod = mock(Method.class);
+        Methods methods = givenMethodsWillReturnMethodForQuery(query, expectedMethod);
         Sequence sequence = Sequence.builder()
                 .methods(methods)
                 .build();
 
-        assertThat(sequence.findNextIncompleteEligibleOtp()).contains(otp);
+        Optional<Method> method = sequence.find(query);
+
+        assertThat(method).contains(expectedMethod);
     }
 
     @Test
@@ -117,6 +119,12 @@ class SequenceTest {
         Methods replaced = mock(Methods.class);
         given(methods.replaceDeliveryMethods(deliveryMethods)).willReturn(replaced);
         return replaced;
+    }
+
+    private Methods givenMethodsWillReturnMethodForQuery(MethodQuery<Method> query, Method method) {
+        Methods methods = mock(Methods.class);
+        given(methods.find(query)).willReturn(Optional.of(method));
+        return methods;
     }
 
 }

@@ -56,6 +56,9 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: "1"
         WriteCapacityUnits: "1"
+      TimeToLiveSpecification:
+        AttributeName: "ttl"
+        Enabled: true
 
   ElasticacheSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
@@ -69,12 +72,15 @@ Resources:
         FromPort: '6379'
         ToPort: '6379'
         # need to get security group id from network stack
-        SourceSecurityGroupId: 'sg-012a100210eb88d7f'
+        # this has to be updated when new network stack created
+        SourceSecurityGroupId: 'sg-00bb99d9b27932579'
 
   ElasticacheCluster:
     Type: 'AWS::ElastiCache::CacheCluster'
     Properties:
       # need to create group in this template and use it here
+      # this group has to belong in network vpc and contain network vpc subnets
+      # if a new stack is created this has to be manually updated
       CacheSubnetGroupName: idv-dev-redis-subnet-group
       AutoMinorVersionUpgrade: 'true'
       Engine: redis

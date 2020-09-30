@@ -3,8 +3,9 @@ package uk.co.idv.context.entities.context;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
-import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
+import uk.co.idv.context.entities.context.method.query.MethodQuery;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 
 import java.time.Duration;
@@ -107,16 +108,18 @@ class ContextTest {
     }
 
     @Test
-    void shouldReturnIncompleteEligibleOtpMethodFromSequencesIfOnePresent() {
-        Otp otp = mock(Otp.class);
-        Sequences sequences = mock(Sequences.class);
-        given(sequences.findNextIncompleteEligibleOtp()).willReturn(Optional.of(otp));
-
+    void shouldReturnResultOfQueryFromSequences() {
+        Method expectedMethod = mock(Method.class);
+        MethodQuery<Method> query = mock(MethodQuery.class);
+        Sequences sequences = givenSequencesWillReturnMethodForQuery(query, expectedMethod);
+        given(sequences.find(query)).willReturn(Optional.of(expectedMethod));
         Context context = Context.builder()
                 .sequences(sequences)
                 .build();
 
-        assertThat(context.findNextIncompleteEligibleOtp()).contains(otp);
+        Optional<Method> method = context.find(query);
+
+        assertThat(method).contains(expectedMethod);
     }
 
     @Test
@@ -189,6 +192,12 @@ class ContextTest {
         Sequences replaced = mock(Sequences.class);
         given(sequences.replaceDeliveryMethods(deliveryMethods)).willReturn(replaced);
         return replaced;
+    }
+
+    private Sequences givenSequencesWillReturnMethodForQuery(MethodQuery<Method> query, Method method) {
+        Sequences sequences = mock(Sequences.class);
+        given(sequences.find(query)).willReturn(Optional.of(method));
+        return sequences;
     }
 
 }

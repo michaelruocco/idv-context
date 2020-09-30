@@ -1,7 +1,9 @@
 package uk.co.idv.context.entities.context.method.otp.delivery;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.context.eligibility.DefaultAsyncEligibilityMother;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.context.entities.context.eligibility.EligibilityMother;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
 
 import java.time.Instant;
@@ -102,6 +104,28 @@ class DeliveryMethodTest {
                 .build();
 
         assertThat(method.getLastUpdated()).contains(lastUpdated);
+    }
+
+    @Test
+    void shouldReturnCompleteFromAsyncEligibility() {
+        Eligibility eligibility = DefaultAsyncEligibilityMother.builder()
+                .complete(false)
+                .build();
+
+        DeliveryMethod method = DeliveryMethod.builder()
+                .eligibility(eligibility)
+                .build();
+
+        assertThat(method.isEligibilityComplete()).isFalse();
+    }
+
+    @Test
+    void shouldReturnCompleteTrueIfNotAsyncEligibility() {
+        DeliveryMethod method = DeliveryMethod.builder()
+                .eligibility(EligibilityMother.eligible())
+                .build();
+
+        assertThat(method.isEligibilityComplete()).isTrue();
     }
 
     private CompletableFuture<Eligibility> givenFutureReturnedFrom(AsyncFutureSimSwapEligibility eligibility) {

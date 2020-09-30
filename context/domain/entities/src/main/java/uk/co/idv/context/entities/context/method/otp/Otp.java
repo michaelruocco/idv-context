@@ -7,9 +7,13 @@ import lombok.Getter;
 import lombok.With;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.method.Method;
+import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.policy.method.MethodConfig;
 import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
+
+import java.util.Optional;
+import java.util.UUID;
 
 @Builder
 @Data
@@ -45,6 +49,10 @@ public class Otp implements Method {
 
     public Otp replaceDeliveryMethods(DeliveryMethods updated) {
         return withDeliveryMethods(deliveryMethods.replace(updated));
+    }
+
+    public Optional<DeliveryMethod> findDeliveryMethod(UUID id) {
+        return deliveryMethods.findByValue(id);
     }
 
 }

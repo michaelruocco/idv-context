@@ -11,11 +11,8 @@ import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryCon
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
-import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
-import uk.co.idv.context.entities.policy.method.otp.OtpPolicyMother;
-import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextNotFoundException;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
@@ -37,7 +34,6 @@ import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
-import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -182,24 +178,6 @@ class ContextIntegrationTest {
     }
 
     @Test
-    void shouldPopulateOtpMethodOnContextIfOtpPolicyConfigured() {
-        CreateContextRequest request = FacadeCreateContextRequestMother.build();
-        ContextPolicy policy = ContextPolicyMother.builder()
-                .key(ChannelPolicyKeyMother.withChannelId(request.getChannelId()))
-                .sequencePolicies(SequencePoliciesMother.withMethodPolicy(OtpPolicyMother.build()))
-                .build();
-        contextPolicyService.create(policy);
-        givenContextPolicyExistsForChannel(request.getChannelId());
-        givenIdentityExistsForAliases(request.getAliases());
-        givenLockoutPolicyExistsForChannel(request.getChannelId());
-
-        Context context = contextFacade.create(request);
-
-        Optional<Otp> otp = context.findNextIncompleteEligibleOtp();
-        assertThat(otp).isPresent();
-    }
-
-    @Test
     void shouldThrowExceptionIfContextNotFound() {
         UUID id = UUID.randomUUID();
 
@@ -231,7 +209,11 @@ class ContextIntegrationTest {
     }
 
     private Identity givenIdentityExistsForAliases(Aliases aliases) {
-        return identityService.update(IdentityMother.withAliases(aliases));
+        return givenIdentityExists(IdentityMother.withAliases(aliases));
+    }
+
+    private Identity givenIdentityExists(Identity identity) {
+        return identityService.update(identity);
     }
 
     private void givenLockoutPolicyExistsForChannel(String channelId) {

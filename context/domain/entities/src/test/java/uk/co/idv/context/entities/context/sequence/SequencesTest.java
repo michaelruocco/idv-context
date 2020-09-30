@@ -1,21 +1,23 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.otp.Otp;
+import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
+import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenCompleteSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenEligibleSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIncompleteSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIneligibleSequence;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenReplacedDeliveryMethodsSequences;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWith;
-import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWithIncompleteEligibleOtp;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWithMethodReturnedForQuery;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWithNoResultFor;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSuccessfulSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenUnsuccessfulSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.mockSequence;
@@ -23,7 +25,7 @@ import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.moc
 class SequencesTest {
 
     @Test
-    void shouldReturnSequences() {
+    void shouldBeIterable() {
         Sequence sequence1 = mockSequence();
         Sequence sequence2 = mockSequence();
 
@@ -36,26 +38,41 @@ class SequencesTest {
     }
 
     @Test
-    void shouldReturnEmptyOptionalIfNoSequencesHaveIncompleteEligibleOtpMethod() {
+    void shouldReturnValues() {
         Sequence sequence1 = mockSequence();
         Sequence sequence2 = mockSequence();
+
         Sequences sequences = new Sequences(sequence1, sequence2);
 
-        Optional<Otp> otp = sequences.findNextIncompleteEligibleOtp();
-
-        assertThat(otp).isEmpty();
+        assertThat(sequences.getValues()).containsExactly(
+                sequence1,
+                sequence2
+        );
     }
 
     @Test
-    void shouldReturnOtpIfNoSequenceHasIncompleteEligibleOtpMethod() {
-        Sequence sequence1 = mockSequence();
-        Otp expectedOtp = mock(Otp.class);
-        Sequence sequence2 = givenSequenceWithIncompleteEligibleOtp(expectedOtp);
+    void shouldReturnResultFromQuery() {
+        MethodQuery<Method> query = mock(MethodQuery.class);
+        Sequence sequence1 = givenSequenceWithNoResultFor(query);
+        Method expectedMethod = mock(Method.class);
+        Sequence sequence2 = givenSequenceWithMethodReturnedForQuery(query, expectedMethod);
         Sequences sequences = new Sequences(sequence1, sequence2);
 
-        Optional<Otp> otp = sequences.findNextIncompleteEligibleOtp();
+        Optional<Method> method = sequences.find(query);
 
-        assertThat(otp).contains(expectedOtp);
+        assertThat(method).contains(expectedMethod);
+    }
+
+    @Test
+    void shouldReturnEmptyOptionalIfNoResultsReturnedFromAnySequences() {
+        MethodQuery<Method> query = mock(MethodQuery.class);
+        Sequence sequence1 = givenSequenceWithNoResultFor(query);
+        Sequence sequence2 = givenSequenceWithNoResultFor(query);
+        Sequences sequences = new Sequences(sequence1, sequence2);
+
+        Optional<Method> method = sequences.find(query);
+
+        assertThat(method).isEmpty();
     }
 
     @Test
@@ -148,12 +165,6 @@ class SequencesTest {
         Sequences replaced = sequences.replaceDeliveryMethods(deliveryMethods);
 
         assertThat(replaced).containsExactly(replaced1, replaced2);
-    }
-
-    private Sequence givenReplacedDeliveryMethodsSequences(Sequence sequence, DeliveryMethods deliveryMethods) {
-        Sequence replaced = mock(Sequence.class);
-        given(sequence.replaceOtpDeliveryMethods(deliveryMethods)).willReturn(replaced);
-        return replaced;
     }
 
 }
