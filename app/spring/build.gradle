@@ -43,7 +43,7 @@ dependencies {
     integrationTestImplementation "com.intuit.karate:karate-apache:${karateVersion}"
     integrationTestImplementation "com.intuit.karate:karate-junit5:${karateVersion}"
     integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
-    integrationTestImplementation "org.testcontainers:junit-jupiter:1.14.3"
+    integrationTestImplementation "org.testcontainers:junit-jupiter:1.15.0-rc2"
     integrationTestImplementation "com.amazonaws:aws-java-sdk-dynamodb:${awsSdkVersion}"
 }
 
