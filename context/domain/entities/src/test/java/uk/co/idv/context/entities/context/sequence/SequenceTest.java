@@ -7,7 +7,8 @@ import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
-import java.util.Optional;
+import java.util.Collection;
+import java.util.Collections;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -46,7 +47,7 @@ class SequenceTest {
                 .methods(methods)
                 .build();
 
-        Optional<Method> method = sequence.find(query);
+        Collection<Method> method = sequence.find(query);
 
         assertThat(method).contains(expectedMethod);
     }
@@ -123,7 +124,7 @@ class SequenceTest {
 
     private Methods givenMethodsWillReturnMethodForQuery(MethodQuery<Method> query, Method method) {
         Methods methods = mock(Methods.class);
-        given(methods.find(query)).willReturn(Optional.of(method));
+        given(methods.find(query)).willReturn(Collections.singleton(method));
         return methods;
     }
 

@@ -7,7 +7,7 @@ import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
-import java.util.Optional;
+import java.util.Collection;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -145,7 +145,7 @@ class MethodsTest {
         MethodQuery<Method> query = givenQueryReturningMethod(expectedMethod);
         Methods methods = new Methods(method1, method2);
 
-        Optional<Method> method = methods.find(query);
+        Collection<Method> method = methods.find(query);
 
         assertThat(method).contains(expectedMethod);
     }
@@ -154,7 +154,7 @@ class MethodsTest {
     void shouldPassMethodStreamToQuery() {
         Method method1 = mockMethod();
         Method method2 = mockMethod();
-        MethodQuery<Method> query = mock(MethodQuery.class);
+        MethodQuery<Method> query = givenQueryReturningMethod(method1);
         Methods methods = new Methods(method1, method2);
 
         methods.find(query);
@@ -172,7 +172,7 @@ class MethodsTest {
 
     static MethodQuery<Method> givenQueryReturningMethod(Method method) {
         MethodQuery<Method> query = mock(MethodQuery.class);
-        given(query.apply(any(Stream.class))).willReturn(Optional.of(method));
+        given(query.apply(any(Stream.class))).willReturn(Stream.of(method));
         return query;
     }
 

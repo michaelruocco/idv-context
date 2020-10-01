@@ -10,8 +10,8 @@ import uk.co.idv.context.entities.context.sequence.Sequences;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -178,12 +178,12 @@ class ContextTest {
         Method expectedMethod = mock(Method.class);
         MethodQuery<Method> query = mock(MethodQuery.class);
         Sequences sequences = givenSequencesWillReturnMethodForQuery(query, expectedMethod);
-        given(sequences.find(query)).willReturn(Optional.of(expectedMethod));
+        given(sequences.find(query)).willReturn(Stream.of(expectedMethod));
         Context context = Context.builder()
                 .sequences(sequences)
                 .build();
 
-        Optional<Method> method = context.find(query);
+        Stream<Method> method = context.find(query);
 
         assertThat(method).contains(expectedMethod);
     }
@@ -226,7 +226,7 @@ class ContextTest {
 
     private Sequences givenSequencesWillReturnMethodForQuery(MethodQuery<Method> query, Method method) {
         Sequences sequences = mock(Sequences.class);
-        given(sequences.find(query)).willReturn(Optional.of(method));
+        given(sequences.find(query)).willReturn(Stream.of(method));
         return sequences;
     }
 

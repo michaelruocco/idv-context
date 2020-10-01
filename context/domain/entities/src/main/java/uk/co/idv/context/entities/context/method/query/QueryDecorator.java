@@ -12,7 +12,7 @@ public class QueryDecorator<T extends Method> implements MethodQuery<T> {
     private final MethodQuery<T> query;
 
     @Override
-    public Optional<T> apply(Stream<Method> methods) {
+    public Stream<T> apply(Stream<Method> methods) {
         return query.apply(methods);
     }
 

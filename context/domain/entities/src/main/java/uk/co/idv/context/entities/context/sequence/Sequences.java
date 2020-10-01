@@ -11,8 +11,8 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Data
@@ -54,11 +54,10 @@ public class Sequences implements Iterable<Sequence> {
                 .collect(Collectors.toList()));
     }
 
-    public <T extends Method> Optional<T> find(MethodQuery<T> query) {
+    public <T extends Method> Stream<T> find(MethodQuery<T> query) {
         return values.stream()
                 .map(sequence -> sequence.find(query))
-                .flatMap(Optional::stream)
-                .findFirst();
+                .flatMap(Collection::stream);
     }
 
 }

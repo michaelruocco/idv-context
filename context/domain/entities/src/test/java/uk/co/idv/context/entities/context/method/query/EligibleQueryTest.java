@@ -3,7 +3,6 @@ package uk.co.idv.context.entities.context.method.query;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Method;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -22,9 +21,9 @@ class EligibleQueryTest {
     void shouldReturnMethodIfEligible() {
         Method eligible = givenEligibleMethod();
         Stream<Method> stream = Stream.of(eligible);
-        given(parent.apply(stream)).willReturn(Optional.of(eligible));
+        given(parent.apply(stream)).willReturn(Stream.of(eligible));
 
-        Optional<Method> method = decorator.apply(stream);
+        Stream<Method> method = decorator.apply(stream);
 
         assertThat(method).contains(eligible);
     }
@@ -33,9 +32,9 @@ class EligibleQueryTest {
     void shouldNotReturnMethodIfIneligible() {
         Method ineligible = givenIneligibleMethod();
         Stream<Method> stream = Stream.of(ineligible);
-        given(parent.apply(stream)).willReturn(Optional.of(ineligible));
+        given(parent.apply(stream)).willReturn(Stream.of(ineligible));
 
-        Optional<Method> method = decorator.apply(stream);
+        Stream<Method> method = decorator.apply(stream);
 
         assertThat(method).isEmpty();
     }
@@ -43,9 +42,9 @@ class EligibleQueryTest {
     @Test
     void shouldNotReturnMethodIfQueryReturnsEmpty() {
         Stream<Method> stream = Stream.of();
-        given(parent.apply(stream)).willReturn(Optional.empty());
+        given(parent.apply(stream)).willReturn(Stream.empty());
 
-        Optional<Method> method = decorator.apply(stream);
+        Stream<Method> method = decorator.apply(stream);
 
         assertThat(method).isEmpty();
     }

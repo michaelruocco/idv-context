@@ -14,8 +14,8 @@ import uk.co.idv.identity.entities.identity.Identity;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 
 @Builder
@@ -58,7 +58,7 @@ public class Context {
         return withSequences(sequences.replaceDeliveryMethods(newValues));
     }
 
-    public <T extends Method> Optional<T> find(MethodQuery<T> query) {
+    public <T extends Method> Stream<T> find(MethodQuery<T> query) {
         return sequences.find(query);
     }
 

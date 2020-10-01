@@ -6,7 +6,7 @@ import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
 
-public interface MethodQuery<T extends Method> extends Function<Stream<Method>, Optional<T>> {
+public interface MethodQuery<T extends Method> extends Function<Stream<Method>, Stream<T>> {
 
     Class<T> getType();
 

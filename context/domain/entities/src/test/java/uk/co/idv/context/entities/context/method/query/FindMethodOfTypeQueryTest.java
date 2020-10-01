@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.OtpMother;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -23,7 +22,7 @@ class FindMethodOfTypeQueryTest {
     void shouldReturnEmptyOptionalIfNoMethodsOfTypeInStream() {
         FindMethodOfTypeQuery<Otp> find = new FindMethodOfTypeQuery<>(Otp.class);
 
-        Optional<Otp> otp = find.apply(Stream.of(mockMethod(), mockMethod()));
+        Stream<Otp> otp = find.apply(Stream.of(mockMethod(), mockMethod()));
 
         assertThat(otp).isEmpty();
     }
@@ -33,7 +32,7 @@ class FindMethodOfTypeQueryTest {
         FindMethodOfTypeQuery<Otp> find = new FindMethodOfTypeQuery<>(Otp.class);
         Otp expected = OtpMother.build();
 
-        Optional<Otp> otp = find.apply(Stream.of(mockMethod(), expected));
+        Stream<Otp> otp = find.apply(Stream.of(mockMethod(), expected));
 
         assertThat(otp).contains(expected);
     }

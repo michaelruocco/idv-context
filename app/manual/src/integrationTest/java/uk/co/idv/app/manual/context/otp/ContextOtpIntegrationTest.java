@@ -37,6 +37,7 @@ import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 import java.time.Duration;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
@@ -86,8 +87,8 @@ class ContextOtpIntegrationTest {
 
         Context context = contextFacade.create(request);
 
-        Optional<Otp> otp = context.find(incompleteAndEligible(Otp.class));
-        assertThat(otp).isPresent();
+        Stream<Otp> otp = context.find(incompleteAndEligible(Otp.class));
+        assertThat(otp).isNotEmpty();
     }
 
     @Test
@@ -112,7 +113,9 @@ class ContextOtpIntegrationTest {
 
         UUID deliveryMethodId = UUID.fromString("85bbb05a-3cf8-45e5-bae8-430503164c3b");
         Optional<DeliveryMethod> deliveryMethod = context.find(methodOfType(Otp.class))
-                .flatMap(otp -> otp.findDeliveryMethod(deliveryMethodId));
+                .map(otp -> otp.findDeliveryMethod(deliveryMethodId))
+                .flatMap(Optional::stream)
+                .findFirst();
         assertThat(deliveryMethod).isPresent();
         assertThat(deliveryMethod.get().isEligibilityComplete()).isFalse();
 

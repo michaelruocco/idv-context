@@ -6,6 +6,7 @@ import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.usecases.context.ContextFacade;
 
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
@@ -26,10 +27,10 @@ public class DeliveryMethodEligibleAndComplete implements Callable<Boolean> {
     public Boolean call() {
         successful = contextFacade.find(contextId)
                 .find(incompleteAndEligible(Otp.class))
-                .flatMap(otp -> otp.findDeliveryMethod(deliveryMethodId))
+                .map(otp -> otp.findDeliveryMethod(deliveryMethodId))
+                .flatMap(Optional::stream)
                 .filter(DeliveryMethod::isEligible)
-                .map(DeliveryMethod::isEligibilityComplete)
-                .orElse(false);
+                .anyMatch(DeliveryMethod::isEligibilityComplete);
         return successful;
     }
 

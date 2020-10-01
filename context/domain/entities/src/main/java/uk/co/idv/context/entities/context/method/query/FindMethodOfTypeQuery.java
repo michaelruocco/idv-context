@@ -12,10 +12,9 @@ public class FindMethodOfTypeQuery<T extends Method> implements MethodQuery<T> {
     private final Class<T> type;
 
     @Override
-    public Optional<T> apply(Stream<Method> methods) {
+    public Stream<T> apply(Stream<Method> methods) {
         return methods.filter(method -> type.isAssignableFrom(method.getClass()))
-                .map(type::cast)
-                .findFirst();
+                .map(type::cast);
     }
 
     @Override

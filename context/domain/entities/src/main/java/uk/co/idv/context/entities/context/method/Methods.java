@@ -10,7 +10,6 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
@@ -46,8 +45,8 @@ public class Methods implements Iterable<Method> {
                 .reduce(Duration.ZERO, Duration::plus);
     }
 
-    public <T extends Method> Optional<T> find(MethodQuery<T> query) {
-        return query.apply(values.stream());
+    public <T extends Method> Collection<T> find(MethodQuery<T> query) {
+        return query.apply(values.stream()).collect(Collectors.toList());
     }
 
     public Methods replaceDeliveryMethods(DeliveryMethods newValues) {

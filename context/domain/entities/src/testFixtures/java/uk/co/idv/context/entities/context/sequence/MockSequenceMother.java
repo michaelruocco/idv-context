@@ -5,7 +5,7 @@ import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
-import java.util.Optional;
+import java.util.Collections;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -66,13 +66,13 @@ public interface MockSequenceMother {
 
     static <T extends Method> Sequence givenSequenceWithMethodReturnedForQuery(MethodQuery<T> query, T method) {
         Sequence sequence = mock(Sequence.class);
-        given(sequence.find(query)).willReturn(Optional.of(method));
+        given(sequence.find(query)).willReturn(Collections.singleton(method));
         return sequence;
     }
 
     static <T extends Method> Sequence givenSequenceWithNoResultFor(MethodQuery<T> query) {
         Sequence sequence = mock(Sequence.class);
-        given(sequence.find(query)).willReturn(Optional.empty());
+        given(sequence.find(query)).willReturn(Collections.emptyList());
         return sequence;
     }
 

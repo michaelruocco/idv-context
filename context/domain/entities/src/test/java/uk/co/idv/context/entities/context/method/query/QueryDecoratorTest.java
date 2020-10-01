@@ -3,7 +3,6 @@ package uk.co.idv.context.entities.context.method.query;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Method;
 
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -36,9 +35,9 @@ class QueryDecoratorTest {
     void shouldReturnMethodFromParentQuery() {
         Method expectedMethod = mockMethod();
         Stream<Method> stream = Stream.of(expectedMethod);
-        given(parent.apply(stream)).willReturn(Optional.of(expectedMethod));
+        given(parent.apply(stream)).willReturn(Stream.of(expectedMethod));
 
-        Optional<Method> method = decorator.apply(stream);
+        Stream<Method> method = decorator.apply(stream);
 
         assertThat(method).contains(expectedMethod);
     }

@@ -9,7 +9,7 @@ import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
-import java.util.Optional;
+import java.util.Collection;
 
 @Builder
 @Data
@@ -20,7 +20,7 @@ public class Sequence {
     @With
     private final Methods methods;
 
-    public <T extends Method> Optional<T> find(MethodQuery<T> query) {
+    public <T extends Method> Collection<T> find(MethodQuery<T> query) {
         return methods.find(query);
     }
 

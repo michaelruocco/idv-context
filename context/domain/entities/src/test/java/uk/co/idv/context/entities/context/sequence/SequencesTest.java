@@ -6,7 +6,7 @@ import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
-import java.util.Optional;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -58,7 +58,7 @@ class SequencesTest {
         Sequence sequence2 = givenSequenceWithMethodReturnedForQuery(query, expectedMethod);
         Sequences sequences = new Sequences(sequence1, sequence2);
 
-        Optional<Method> method = sequences.find(query);
+        Stream<Method> method = sequences.find(query);
 
         assertThat(method).contains(expectedMethod);
     }
@@ -70,7 +70,7 @@ class SequencesTest {
         Sequence sequence2 = givenSequenceWithNoResultFor(query);
         Sequences sequences = new Sequences(sequence1, sequence2);
 
-        Optional<Method> method = sequences.find(query);
+        Stream<Method> method = sequences.find(query);
 
         assertThat(method).isEmpty();
     }
