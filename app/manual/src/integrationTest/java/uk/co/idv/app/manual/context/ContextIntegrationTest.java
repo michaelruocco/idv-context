@@ -13,6 +13,7 @@ import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
+import uk.co.idv.context.usecases.context.ContextExpiredException;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextNotFoundException;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
@@ -30,20 +31,19 @@ import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
-import java.time.Clock;
 import java.time.Duration;
 import java.time.Instant;
-import java.time.ZoneId;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 class ContextIntegrationTest {
 
     private static final Instant NOW = Instant.now();
 
-    private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
+    private final UpdatableClock clock = new UpdatableClock(NOW);
     private final IdGenerator idGenerator = new NonRandomIdGenerator();
 
     private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
@@ -199,6 +199,24 @@ class ContextIntegrationTest {
         Context loaded = contextFacade.find(created.getId());
 
         assertThat(loaded).isEqualTo(created);
+    }
+
+    @Test
+    void shouldThrowExceptionIfContextHasExpired() {
+        CreateContextRequest request = FacadeCreateContextRequestMother.build();
+        givenContextPolicyExistsForChannel(request.getChannelId());
+        givenIdentityExistsForAliases(request.getAliases());
+        givenLockoutPolicyExistsForChannel(request.getChannelId());
+        Context created = contextFacade.create(request);
+        UUID id = created.getId();
+        clock.plus(created.getDuration().plusMinutes(1).plusMillis(1));
+
+        ContextExpiredException error = catchThrowableOfType(
+                () -> contextFacade.find(id),
+                ContextExpiredException.class);
+
+        assertThat(error.getId()).isEqualTo(id);
+        assertThat(error.getExpiry()).isEqualTo(created.getExpiry());
     }
 
     private void givenContextPolicyExistsForChannel(String channelId) {
