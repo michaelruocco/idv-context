@@ -11,7 +11,6 @@
 
 ## Todo
 
-*   Add manual app integration test for throwing error when context expired
 *   Functionality to post results to verification context
 *   Tidy up cloud formation templates and try out creating API gateway
 *   Json error handling for context errors (context policy not found, context not found)
