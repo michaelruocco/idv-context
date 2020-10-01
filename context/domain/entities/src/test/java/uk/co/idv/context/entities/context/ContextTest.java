@@ -4,9 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
 import uk.co.idv.context.entities.context.method.Method;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.otp.delivery.SmsDeliveryMethodMother;
 import uk.co.idv.context.entities.context.method.query.MethodQuery;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 
@@ -188,16 +186,6 @@ class ContextTest {
                 .ignoringFields("sequences")
                 .isEqualTo(context);
         assertThat(updated.getSequences()).isEqualTo(expectedSequences);
-    }
-
-    @Test
-    void shouldReturnDeliveryMethodIfExists() {
-        Context context = ContextMother.build();
-        DeliveryMethod expectedDeliveryMethod = SmsDeliveryMethodMother.sms();
-
-        Optional<DeliveryMethod> deliveryMethod = context.findDeliveryMethod(expectedDeliveryMethod.getId());
-
-        assertThat(deliveryMethod).contains(expectedDeliveryMethod);
     }
 
     private Sequences givenReplacedDeliveryMethodsSequences(Sequences sequences, DeliveryMethods deliveryMethods) {

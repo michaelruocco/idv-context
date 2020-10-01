@@ -7,6 +7,7 @@ import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.Eligib
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.NoEligibleDeliveryMethodsAvailable;
 
 import java.util.Collection;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
@@ -96,6 +97,27 @@ class DeliveryMethodsTest {
         DeliveryMethods updated = methods.replace(newValues);
 
         assertThat(updated).containsExactlyInAnyOrder(method1, replacement);
+    }
+
+    @Test
+    void shouldFindDeliveryMethodById() {
+        DeliveryMethod method1 = DeliveryMethodMother.withId(UUID.fromString("2cd5e569-8b84-4606-90bf-debf0c245f06"));
+        DeliveryMethod method2 = DeliveryMethodMother.withId(UUID.fromString("373fe399-b4a6-4e17-832d-0d7c606d4136"));
+        DeliveryMethods methods = new DeliveryMethods(method1, method2);
+
+        Optional<DeliveryMethod> found = methods.findByValue(method2.getId());
+
+        assertThat(found).contains(method2);
+    }
+
+    @Test
+    void shouldReturnEmptyOptionalIfMethodNotFound() {
+        DeliveryMethod method = DeliveryMethodMother.withId(UUID.fromString("2cd5e569-8b84-4606-90bf-debf0c245f06"));
+        DeliveryMethods methods = new DeliveryMethods(method);
+
+        Optional<DeliveryMethod> found = methods.findByValue(UUID.fromString("3f1a29d7-b617-4528-bd29-4362bd5e3e58"));
+
+        assertThat(found).isEmpty();
     }
 
 }
