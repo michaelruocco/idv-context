@@ -2,8 +2,9 @@ package uk.co.idv.context.usecases.context;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.entities.context.sequence.SequencesRequest;
 import uk.co.idv.context.entities.context.sequence.SequencesRequestMother;
@@ -18,12 +19,13 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class ContextServiceTest {
 
-    private static final Instant NOW = Instant.parse("2020-09-25T07:14:01.050Z");
+    private static final Instant NOW = Instant.parse("2020-09-13T07:14:01.050Z");
 
     private final CreateContextRequestConverter requestConverter = mock(CreateContextRequestConverter.class);
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
@@ -41,7 +43,7 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateIdOnContext() {
-        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
         SequencesRequest sequencesRequest = givenConvertsToSequencesRequet(request);
 
         Context context = service.create(request);
@@ -51,7 +53,7 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateCreatedOnContext() {
-        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
         givenConvertsToSequencesRequet(request);
 
         Context context = service.create(request);
@@ -61,7 +63,7 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateRequestOnContext() {
-        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
         givenConvertsToSequencesRequet(request);
 
         Context context = service.create(request);
@@ -71,7 +73,7 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateSequencesOnContext() {
-        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
         Sequences sequences = givenSequencesBuiltFromRequest(request);
 
         Context context = service.create(request);
@@ -81,7 +83,7 @@ class ContextServiceTest {
 
     @Test
     void shouldPopulateExpiryOnContext() {
-        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
         Sequences sequences = givenSequencesBuiltFromRequest(request);
         Instant expectedExpiry = givenExpiryCalculatedFor(sequences);
 
@@ -93,7 +95,7 @@ class ContextServiceTest {
     @Test
     void shouldFindContextIfExists() {
         UUID id = UUID.randomUUID();
-        Context expectedContext = givenContextFound(id);
+        Context expectedContext = givenContextFoundForId(id);
 
         Context context = service.find(id);
 
@@ -102,6 +104,22 @@ class ContextServiceTest {
 
     @Test
     void shouldThrowExceptionIfContextDoesNotExist() {
+        Instant expiry = NOW.minusMillis(1);
+        Context context = ContextMother.withExpiry(expiry);
+        UUID id = context.getId();
+        givenContextFound(context);
+
+        ContextExpiredException error = catchThrowableOfType(
+                () -> service.find(id),
+                ContextExpiredException.class
+        );
+
+        assertThat(error.getId()).isEqualTo(id);
+        assertThat(error.getExpiry()).isEqualTo(expiry);
+    }
+
+    @Test
+    void shouldThrowExceptionIfContextHasExpired() {
         UUID id = UUID.randomUUID();
         givenContextNotFound(id);
 
@@ -129,10 +147,14 @@ class ContextServiceTest {
         return sequences;
     }
 
-    private Context givenContextFound(UUID id) {
-        Context context = mock(Context.class);
-        given(repository.load(id)).willReturn(Optional.of(context));
+    private Context givenContextFoundForId(UUID id) {
+        Context context = ContextMother.withId(id);
+        givenContextFound(context);
         return context;
+    }
+
+    private void givenContextFound(Context context) {
+        given(repository.load(context.getId())).willReturn(Optional.of(context));
     }
 
     private void givenContextNotFound(UUID id) {

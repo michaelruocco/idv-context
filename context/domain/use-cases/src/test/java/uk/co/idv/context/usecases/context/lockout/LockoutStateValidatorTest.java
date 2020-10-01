@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import uk.co.idv.context.entities.context.create.ContextLockoutRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
 import uk.co.idv.lockout.entities.LockoutRequest;
 import uk.co.idv.lockout.entities.policy.LockoutState;
 import uk.co.idv.lockout.usecases.LockoutService;
@@ -30,7 +30,7 @@ class LockoutStateValidatorTest {
 
     @Test
     void shouldPassInitialRequestToLockoutService() {
-        ServiceCreateContextRequest initialRequest = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest initialRequest = ServiceCreateContextRequestMother.build();
 
         validator.validateLockoutState(initialRequest);
 
@@ -42,7 +42,7 @@ class LockoutStateValidatorTest {
 
     @Test
     void shouldPassTimestampToLockoutService() {
-        ServiceCreateContextRequest initialRequest = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest initialRequest = ServiceCreateContextRequestMother.build();
         Instant timestamp = givenNowTimestamp();
 
         validator.validateLockoutState(initialRequest);
@@ -55,7 +55,7 @@ class LockoutStateValidatorTest {
 
     @Test
     void shouldReturnLockoutState() {
-        ServiceCreateContextRequest initialRequest = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest initialRequest = ServiceCreateContextRequestMother.build();
         LockoutState expectedState = givenLockoutStateReturned();
 
         LockoutState state = validator.validateLockoutState(initialRequest);

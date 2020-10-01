@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -18,7 +18,7 @@ class ServiceCreateContextRequestSerdeTest {
             .registerModule(new CreateContextModule())
             .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-    private static final CreateContextRequest REQUEST = DefaultCreateContextRequestMother.build();
+    private static final CreateContextRequest REQUEST = ServiceCreateContextRequestMother.build();
     private static final String JSON = DefaultCreateContextRequestJsonMother.build();
 
     @Test

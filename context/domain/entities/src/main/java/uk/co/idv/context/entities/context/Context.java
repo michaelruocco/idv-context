@@ -62,4 +62,8 @@ public class Context {
         return sequences.find(query);
     }
 
+    public boolean hasExpired(Instant timestamp) {
+        return timestamp.isAfter(expiry);
+    }
+
 }

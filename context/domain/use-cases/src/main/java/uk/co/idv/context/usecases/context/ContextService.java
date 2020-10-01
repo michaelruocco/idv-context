@@ -39,7 +39,11 @@ public class ContextService {
     }
 
     public Context find(UUID id) {
-        return repository.load(id).orElseThrow(() -> new ContextNotFoundException(id));
+        Context context = repository.load(id).orElseThrow(() -> new ContextNotFoundException(id));
+        if (context.hasExpired(clock.instant())) {
+            throw new ContextExpiredException(id, context.getExpiry());
+        }
+        return context;
     }
 
 }

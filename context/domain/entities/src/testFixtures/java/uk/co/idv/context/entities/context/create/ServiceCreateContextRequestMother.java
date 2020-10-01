@@ -3,7 +3,7 @@ package uk.co.idv.context.entities.context.create;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.identity.entities.identity.IdentityMother;
 
-public interface DefaultCreateContextRequestMother {
+public interface ServiceCreateContextRequestMother {
 
     static ServiceCreateContextRequest build() {
         return builder().build();

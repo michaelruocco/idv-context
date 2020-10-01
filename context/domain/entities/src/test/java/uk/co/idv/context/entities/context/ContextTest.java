@@ -2,7 +2,7 @@ package uk.co.idv.context.entities.context;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
-import uk.co.idv.context.entities.context.create.DefaultCreateContextRequestMother;
+import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
 import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.query.MethodQuery;
@@ -54,7 +54,7 @@ class ContextTest {
 
     @Test
     void shouldReturnIdentityCreateContextRequest() {
-        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
 
         Context context = Context.builder()
                 .request(request)
@@ -65,7 +65,7 @@ class ContextTest {
 
     @Test
     void shouldReturnChannelFromCreateContextRequest() {
-        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
 
         Context context = Context.builder()
                 .request(request)
@@ -76,7 +76,7 @@ class ContextTest {
 
     @Test
     void shouldReturnActivityFromCreateContextRequest() {
-        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
 
         Context context = Context.builder()
                 .request(request)
@@ -87,7 +87,7 @@ class ContextTest {
 
     @Test
     void shouldReturnIdentityFromCreateContextRequest() {
-        ServiceCreateContextRequest request = DefaultCreateContextRequestMother.build();
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
 
         Context context = Context.builder()
                 .request(request)
@@ -105,21 +105,6 @@ class ContextTest {
                 .build();
 
         assertThat(context.getSequences()).isEqualTo(sequences);
-    }
-
-    @Test
-    void shouldReturnResultOfQueryFromSequences() {
-        Method expectedMethod = mock(Method.class);
-        MethodQuery<Method> query = mock(MethodQuery.class);
-        Sequences sequences = givenSequencesWillReturnMethodForQuery(query, expectedMethod);
-        given(sequences.find(query)).willReturn(Optional.of(expectedMethod));
-        Context context = Context.builder()
-                .sequences(sequences)
-                .build();
-
-        Optional<Method> method = context.find(query);
-
-        assertThat(method).contains(expectedMethod);
     }
 
     @Test
@@ -186,6 +171,51 @@ class ContextTest {
                 .ignoringFields("sequences")
                 .isEqualTo(context);
         assertThat(updated.getSequences()).isEqualTo(expectedSequences);
+    }
+
+    @Test
+    void shouldReturnResultOfQueryFromSequences() {
+        Method expectedMethod = mock(Method.class);
+        MethodQuery<Method> query = mock(MethodQuery.class);
+        Sequences sequences = givenSequencesWillReturnMethodForQuery(query, expectedMethod);
+        given(sequences.find(query)).willReturn(Optional.of(expectedMethod));
+        Context context = Context.builder()
+                .sequences(sequences)
+                .build();
+
+        Optional<Method> method = context.find(query);
+
+        assertThat(method).contains(expectedMethod);
+    }
+
+    @Test
+    void shouldReturnExpiredFalseIfCurrentTimeIsAfterExpiry() {
+        Instant expiry = Instant.parse("2020-09-30T21:00:00.000Z");
+        Context context = ContextMother.withExpiry(expiry);
+
+        boolean expired = context.hasExpired(expiry.minusMillis(1));
+
+        assertThat(expired).isFalse();
+    }
+
+    @Test
+    void shouldReturnExpiredFalseIfCurrentTimeIsEqualToExpiry() {
+        Instant expiry = Instant.parse("2020-09-30T21:00:00.000Z");
+        Context context = ContextMother.withExpiry(expiry);
+
+        boolean expired = context.hasExpired(expiry);
+
+        assertThat(expired).isFalse();
+    }
+
+    @Test
+    void shouldReturnExpiredTrueIfCurrentTimeIsAfterExpiry() {
+        Instant expiry = Instant.parse("2020-09-30T21:00:00.000Z");
+        Context context = ContextMother.withExpiry(expiry);
+
+        boolean expired = context.hasExpired(expiry.plusMillis(1));
+
+        assertThat(expired).isTrue();
     }
 
     private Sequences givenReplacedDeliveryMethodsSequences(Sequences sequences, DeliveryMethods deliveryMethods) {
