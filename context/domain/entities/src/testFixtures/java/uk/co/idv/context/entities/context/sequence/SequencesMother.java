@@ -7,4 +7,8 @@ public interface SequencesMother {
         return new Sequences(SequenceMother.otpOnly());
     }
 
+    static Sequences withSequences(Sequence... sequences) {
+        return new Sequences(sequences);
+    }
+
 }

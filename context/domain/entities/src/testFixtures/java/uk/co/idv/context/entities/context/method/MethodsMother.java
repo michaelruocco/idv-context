@@ -8,4 +8,8 @@ public interface MethodsMother {
         return new Methods(OtpMother.build());
     }
 
+    static Methods withMethods(Method... methods) {
+        return new Methods(methods);
+    }
+
 }

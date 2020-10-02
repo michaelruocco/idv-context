@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 
 import java.time.Duration;
@@ -156,23 +155,6 @@ class ContextTest {
     }
 
     @Test
-    void shouldReplaceDeliveryMethodsOnSequences() {
-        Sequences sequences = mock(Sequences.class);
-        DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
-        Sequences expectedSequences = givenReplacedDeliveryMethodsSequences(sequences, deliveryMethods);
-        Context context = Context.builder()
-                .sequences(sequences)
-                .build();
-
-        Context updated = context.replaceDeliveryMethods(deliveryMethods);
-
-        assertThat(updated).usingRecursiveComparison()
-                .ignoringFields("sequences")
-                .isEqualTo(context);
-        assertThat(updated.getSequences()).isEqualTo(expectedSequences);
-    }
-
-    @Test
     void shouldReturnExpiredFalseIfCurrentTimeIsAfterExpiry() {
         Instant expiry = Instant.parse("2020-09-30T21:00:00.000Z");
         Context context = ContextMother.withExpiry(expiry);
@@ -277,13 +259,6 @@ class ContextTest {
         Methods nextEligibleIncomplete = context.getNextEligibleIncompleteMethods(methodName);
 
         assertThat(nextEligibleIncomplete).isEqualTo(expectedMethods);
-    }
-
-    //TODO split into separate class
-    private Sequences givenReplacedDeliveryMethodsSequences(Sequences sequences, DeliveryMethods deliveryMethods) {
-        Sequences replaced = mock(Sequences.class);
-        given(sequences.replaceDeliveryMethods(deliveryMethods)).willReturn(replaced);
-        return replaced;
     }
 
     private Sequences givenSequencesWithNextMethods(String name, Methods methods) {

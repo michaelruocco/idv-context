@@ -2,8 +2,6 @@ package uk.co.idv.context.entities.context.method;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.context.method.otp.Otp;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -33,32 +31,25 @@ public class Methods implements Iterable<Method> {
     }
 
     public boolean isEligible() {
-        return values.stream().allMatch(Method::isEligible);
+        return stream().allMatch(Method::isEligible);
     }
 
     public boolean isComplete() {
-        return values.stream().allMatch(Method::isComplete);
+        return stream().allMatch(Method::isComplete);
     }
 
     public boolean isSuccessful() {
-        return values.stream().allMatch(Method::isSuccessful);
+        return stream().allMatch(Method::isSuccessful);
     }
 
     public Duration getDuration() {
-        return values.stream()
+        return stream()
                 .map(Method::getDuration)
                 .reduce(Duration.ZERO, Duration::plus);
     }
 
-    //TODO split into separate class
-    public Methods replaceDeliveryMethods(DeliveryMethods newValues) {
-        return new Methods(values.stream()
-                .map(method -> replaceDeliveryMethodsIfOtp(method, newValues))
-                .collect(Collectors.toList()));
-    }
-
     public <T extends Method> Stream<T> streamAsType(Class<T> type) {
-        return values.stream()
+        return stream()
                 .map(new MethodToType<>(type))
                 .flatMap(Optional::stream);
     }
@@ -68,24 +59,19 @@ public class Methods implements Iterable<Method> {
     }
 
     public Optional<Method> getNext() {
-        return values.stream().filter(method -> !method.isComplete()).findFirst();
+        return stream().filter(method -> !method.isComplete()).findFirst();
     }
 
     public Methods getEligibleIncomplete() {
-        return new Methods(values.stream()
+        return new Methods(stream()
                 .filter(Method::isEligible)
                 .filter(method -> !method.isComplete())
                 .collect(Collectors.toList())
         );
     }
 
-    //TODO split into separate class
-    private Method replaceDeliveryMethodsIfOtp(Method method, DeliveryMethods deliveryMethods) {
-        if (method instanceof Otp) {
-            Otp otp = (Otp) method;
-            return otp.replaceDeliveryMethods(deliveryMethods);
-        }
-        return method;
+    public Stream<Method> stream() {
+        return values.stream();
     }
 
 }

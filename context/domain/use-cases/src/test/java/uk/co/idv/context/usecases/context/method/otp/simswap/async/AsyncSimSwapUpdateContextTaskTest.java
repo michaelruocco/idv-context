@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.method.otp.ContextDeliveryMethodReplacer;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
 import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequestMother;
@@ -24,11 +25,13 @@ class AsyncSimSwapUpdateContextTaskTest {
     private final SimSwapRequest request = SimSwapRequestMother.build();
     private final ContextRepository repository = mock(ContextRepository.class);
     private final SyncSimSwap syncStrategy = mock(SyncSimSwap.class);
+    private final ContextDeliveryMethodReplacer deliveryMethodReplacer = mock(ContextDeliveryMethodReplacer.class);
 
     private final AsyncSimSwapUpdateContextTask task = AsyncSimSwapUpdateContextTask.builder()
             .repository(repository)
             .request(request)
             .syncStrategy(syncStrategy)
+            .deliveryMethodReplacer(deliveryMethodReplacer)
             .build();
 
     @Test
@@ -65,7 +68,7 @@ class AsyncSimSwapUpdateContextTaskTest {
 
     private Context givenContextUpdatedTo(Context context, DeliveryMethods deliveryMethods) {
         Context updated = mock(Context.class);
-        given(context.replaceDeliveryMethods(deliveryMethods)).willReturn(updated);
+        given(deliveryMethodReplacer.replace(context, deliveryMethods)).willReturn(updated);
         return updated;
     }
 

@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.With;
 import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -33,11 +32,6 @@ public class Sequence {
 
     public Duration getDuration() {
         return methods.getDuration();
-    }
-
-    //TODO split into separate class
-    public Sequence replaceOtpDeliveryMethods(DeliveryMethods newValues) {
-        return withMethods(methods.replaceDeliveryMethods(newValues));
     }
 
     public Optional<Method> getMethodIfNext(String name) {
