@@ -1,11 +1,9 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import uk.co.idv.context.entities.context.method.Method;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.query.MethodQuery;
 
 import java.time.Duration;
-import java.util.Collections;
+import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -17,25 +15,25 @@ public interface MockSequenceMother {
     }
 
     static Sequence givenEligibleSequence() {
-        Sequence sequence = mock(Sequence.class);
+        Sequence sequence = mockSequence();
         given(sequence.isEligible()).willReturn(true);
         return sequence;
     }
 
     static Sequence givenIneligibleSequence() {
-        Sequence sequence = mock(Sequence.class);
+        Sequence sequence = mockSequence();
         given(sequence.isEligible()).willReturn(false);
         return sequence;
     }
 
     static Sequence givenCompleteSequence() {
-        Sequence sequence = mock(Sequence.class);
+        Sequence sequence = mockSequence();
         given(sequence.isComplete()).willReturn(true);
         return sequence;
     }
 
     static Sequence givenIncompleteSequence() {
-        Sequence sequence = mock(Sequence.class);
+        Sequence sequence = mockSequence();
         given(sequence.isComplete()).willReturn(false);
         return sequence;
     }
@@ -47,32 +45,26 @@ public interface MockSequenceMother {
     }
 
     static Sequence givenUnsuccessfulSequence() {
-        Sequence sequence = mock(Sequence.class);
+        Sequence sequence = mockSequence();
         given(sequence.isSuccessful()).willReturn(false);
         return sequence;
     }
 
     static Sequence givenSequenceWith(Duration duration) {
-        Sequence sequence = mock(Sequence.class);
+        Sequence sequence = mockSequence();
         given(sequence.getDuration()).willReturn(duration);
         return sequence;
     }
 
-    static Sequence givenReplacedDeliveryMethodsSequences(Sequence sequence, DeliveryMethods deliveryMethods) {
-        Sequence replaced = mock(Sequence.class);
-        given(sequence.replaceOtpDeliveryMethods(deliveryMethods)).willReturn(replaced);
-        return replaced;
-    }
-
-    static <T extends Method> Sequence givenSequenceWithMethodReturnedForQuery(MethodQuery<T> query, T method) {
-        Sequence sequence = mock(Sequence.class);
-        given(sequence.find(query)).willReturn(Collections.singleton(method));
+    static Sequence givenSequenceWithoutNextMethod(String name) {
+        Sequence sequence = mockSequence();
+        given(sequence.getMethodIfNext(name)).willReturn(Optional.empty());
         return sequence;
     }
 
-    static <T extends Method> Sequence givenSequenceWithNoResultFor(MethodQuery<T> query) {
-        Sequence sequence = mock(Sequence.class);
-        given(sequence.find(query)).willReturn(Collections.emptyList());
+    static Sequence givenSequenceWithNextMethod(Method method) {
+        Sequence sequence = mockSequence();
+        given(sequence.getMethodIfNext(method.getName())).willReturn(Optional.of(method));
         return sequence;
     }
 

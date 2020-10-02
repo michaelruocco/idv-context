@@ -11,6 +11,7 @@ import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryCon
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
+import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.policy.ContextPolicy;
@@ -41,8 +42,6 @@ import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.awaitility.Awaitility.await;
-import static uk.co.idv.context.entities.context.method.query.MethodQueryFactory.incompleteAndEligible;
-import static uk.co.idv.context.entities.context.method.query.MethodQueryFactory.methodOfType;
 
 class ContextOtpIntegrationTest {
 
@@ -87,7 +86,8 @@ class ContextOtpIntegrationTest {
 
         Context context = contextFacade.create(request);
 
-        Stream<Otp> otp = context.find(incompleteAndEligible(Otp.class));
+        Methods methods = context.getNextEligibleIncompleteMethods("one-time-passcode");
+        Stream<Otp> otp = methods.streamAsType(Otp.class);
         assertThat(otp).isNotEmpty();
     }
 
@@ -112,7 +112,8 @@ class ContextOtpIntegrationTest {
         Context context = contextFacade.create(request);
 
         UUID deliveryMethodId = UUID.fromString("85bbb05a-3cf8-45e5-bae8-430503164c3b");
-        Optional<DeliveryMethod> deliveryMethod = context.find(methodOfType(Otp.class))
+        Methods methods = context.getNextMethods("one-time-passcode");
+        Optional<DeliveryMethod> deliveryMethod = methods.streamAsType(Otp.class)
                 .map(otp -> otp.findDeliveryMethod(deliveryMethodId))
                 .flatMap(Optional::stream)
                 .findFirst();
@@ -125,8 +126,9 @@ class ContextOtpIntegrationTest {
                 .deliveryMethodId(deliveryMethodId)
                 .build();
 
-        await().atMost(Duration.ofSeconds(4))
-                .pollDelay(Duration.ofMillis(500))
+        await().pollDelay(Duration.ofSeconds(3))
+                .pollInterval(Duration.ofMillis(250))
+                .atMost(Duration.ofSeconds(4))
                 .until(deliveryMethodEligibleAndComplete);
 
         assertThat(deliveryMethodEligibleAndComplete.isSuccessful()).isTrue();

@@ -3,12 +3,10 @@ package uk.co.idv.context.entities.context.sequence;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.query.MethodQuery;
+import uk.co.idv.context.entities.context.method.fake.FakeMethodMother;
 
 import java.time.Duration;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -36,20 +34,6 @@ class SequenceTest {
                 .build();
 
         assertThat(sequence.getMethods()).isEqualTo(methods);
-    }
-
-    @Test
-    void shouldReturnIncompleteEligibleOtpFromMethodsIfPresent() {
-        MethodQuery<Method> query = mock(MethodQuery.class);
-        Method expectedMethod = mock(Method.class);
-        Methods methods = givenMethodsWillReturnMethodForQuery(query, expectedMethod);
-        Sequence sequence = Sequence.builder()
-                .methods(methods)
-                .build();
-
-        Collection<Method> method = sequence.find(query);
-
-        assertThat(method).contains(expectedMethod);
     }
 
     @Test
@@ -102,30 +86,15 @@ class SequenceTest {
     }
 
     @Test
-    void shouldReplaceDeliveryMethodsOnMethods() {
+    void shouldReturnNextMethod() {
         Methods methods = mock(Methods.class);
-        DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
-        Methods expectedMethods = givenReplacedDeliveryMethodsMethods(methods, deliveryMethods);
+        Method method = FakeMethodMother.build();
+        given(methods.getNext(method.getName())).willReturn(Optional.of(method));
         Sequence sequence = SequenceMother.withMethods(methods);
 
-        Sequence updated = sequence.replaceOtpDeliveryMethods(deliveryMethods);
+        Optional<Method> next = sequence.getMethodIfNext(method.getName());
 
-        assertThat(updated).usingRecursiveComparison()
-                .ignoringFields("methods")
-                .isEqualTo(sequence);
-        assertThat(updated.getMethods()).isEqualTo(expectedMethods);
-    }
-
-    private Methods givenReplacedDeliveryMethodsMethods(Methods methods, DeliveryMethods deliveryMethods) {
-        Methods replaced = mock(Methods.class);
-        given(methods.replaceDeliveryMethods(deliveryMethods)).willReturn(replaced);
-        return replaced;
-    }
-
-    private Methods givenMethodsWillReturnMethodForQuery(MethodQuery<Method> query, Method method) {
-        Methods methods = mock(Methods.class);
-        given(methods.find(query)).willReturn(Collections.singleton(method));
-        return methods;
+        assertThat(next).contains(method);
     }
 
 }

@@ -5,9 +5,8 @@ import lombok.Data;
 import lombok.With;
 import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
-import uk.co.idv.context.entities.context.method.Method;
+import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.query.MethodQuery;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.identity.Identity;
@@ -15,8 +14,6 @@ import uk.co.idv.identity.entities.identity.Identity;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
-import java.util.stream.Stream;
-
 
 @Builder
 @Data
@@ -50,20 +47,50 @@ public class Context {
         return sequences.isComplete();
     }
 
-    public boolean isSuccessful() { return sequences.isSuccessful(); }
+    public boolean isSuccessful() {
+        return sequences.isSuccessful();
+    }
 
-    public Duration getDuration() { return sequences.getDuration(); }
+    public Duration getDuration() {
+        return sequences.getDuration();
+    }
 
     public Context replaceDeliveryMethods(DeliveryMethods newValues) {
         return withSequences(sequences.replaceDeliveryMethods(newValues));
     }
 
-    public <T extends Method> Stream<T> find(MethodQuery<T> query) {
-        return sequences.find(query);
+    public Methods getNextMethods(String name) {
+        return sequences.getMethodsIfNext(name);
+    }
+
+    public Methods getNextEligibleIncompleteMethods(String name) {
+        Methods methods = getNextMethods(name);
+        if (methods.isEmpty()) {
+            throw new NotNextMethodInSequenceException(name);
+        }
+        if (!methods.isEligible()) {
+            throw new MethodNotEligibleException(name);
+        }
+        if (methods.isComplete()) {
+            throw new MethodAlreadyCompleteException(name);
+        }
+        return methods.getEligibleIncomplete();
     }
 
     public boolean hasExpired(Instant timestamp) {
         return timestamp.isAfter(expiry);
     }
+
+    //TODO implement and test
+    //public Context addResultIfApplicable(Result result) {
+    //    findNextEligibleIncompleteMethods(result.getMethodName());
+    //    return withSequences(sequences.addResultIfApplicable(result));
+
+        //add new addResultIfApplicable method to sequences, sequence, methods, and method
+        //in each case it should only add the result if method is:
+        //next in sequence
+        //eligible
+        //incomplete
+    //}
 
 }

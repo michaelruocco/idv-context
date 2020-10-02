@@ -17,6 +17,10 @@ public interface Method {
 
     MethodConfig getConfig();
 
+    default boolean hasName(String name) {
+        return getName().equals(name);
+    }
+
     default boolean isEligible() {
         return getEligibility().isEligible();
     }

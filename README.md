@@ -11,6 +11,7 @@
 
 ## Todo
 
+*   Pull otp into separate module (under a new methods folder so we can have a module for each method)
 *   Functionality to post results to verification context
 *   Tidy up cloud formation templates and try out creating API gateway
 *   Json error handling for context errors (context policy not found, context not found)

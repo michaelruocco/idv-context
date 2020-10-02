@@ -1,35 +1,23 @@
 package uk.co.idv.context.entities.context.method;
 
 import org.junit.jupiter.api.Test;
-import org.mockito.ArgumentCaptor;
-import uk.co.idv.context.entities.context.method.otp.Otp;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.query.MethodQuery;
+import uk.co.idv.context.entities.context.eligibility.EligibilityMother;
+import uk.co.idv.context.entities.context.method.fake.FakeMethod;
+import uk.co.idv.context.entities.context.method.fake.FakeMethodMother;
 
 import java.time.Duration;
-import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static uk.co.idv.context.entities.context.method.MockMethodMother.givenCompleteMethod;
-import static uk.co.idv.context.entities.context.method.MockMethodMother.givenEligibleMethod;
-import static uk.co.idv.context.entities.context.method.MockMethodMother.givenIncompleteMethod;
-import static uk.co.idv.context.entities.context.method.MockMethodMother.givenIneligibleMethod;
-import static uk.co.idv.context.entities.context.method.MockMethodMother.givenMethodWith;
-import static uk.co.idv.context.entities.context.method.MockMethodMother.givenSuccessfulMethod;
-import static uk.co.idv.context.entities.context.method.MockMethodMother.givenUnsuccessfulMethod;
-import static uk.co.idv.context.entities.context.method.MockMethodMother.mockMethod;
 
 class MethodsTest {
 
     @Test
     void shouldBeIterable() {
-        Method method1 = mockMethod();
-        Method method2 = mockMethod();
+        Method method1 = FakeMethodMother.build();
+        Method method2 = FakeMethodMother.build();
 
         Methods methods = new Methods(method1, method2);
 
@@ -41,8 +29,8 @@ class MethodsTest {
 
     @Test
     void shouldReturnValues() {
-        Method method1 = mockMethod();
-        Method method2 = mockMethod();
+        Method method1 = FakeMethodMother.build();
+        Method method2 = FakeMethodMother.build();
 
         Methods methods = new Methods(method1, method2);
 
@@ -53,9 +41,27 @@ class MethodsTest {
     }
 
     @Test
+    void shouldReturnTrueIfEmpty() {
+        Methods methods = new Methods();
+
+        boolean empty = methods.isEmpty();
+
+        assertThat(empty).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfNotEmpty() {
+        Methods methods = new Methods(FakeMethodMother.build());
+
+        boolean empty = methods.isEmpty();
+
+        assertThat(empty).isFalse();
+    }
+
+    @Test
     void shouldReturnEligibleIfAllMethodsEligible() {
-        Method method1 = givenEligibleMethod(Method.class);
-        Method method2 = givenEligibleMethod(Method.class);
+        Method method1 = FakeMethodMother.eligible();
+        Method method2 = FakeMethodMother.eligible();
 
         Methods methods = new Methods(method1, method2);
 
@@ -63,19 +69,19 @@ class MethodsTest {
     }
 
     @Test
-    void shouldReturnIneligibleIfAtLeastOnMethodIsNotEligible() {
-        Method method1 = givenEligibleMethod(Method.class);
-        Method method2 = givenIneligibleMethod(Method.class);
+    void shouldReturnIneligibleIfAtLeastOnMethodIsIneligible() {
+        Method eligible = FakeMethodMother.eligible();
+        Method ineligible = FakeMethodMother.ineligible();
 
-        Methods methods = new Methods(method1, method2);
+        Methods methods = new Methods(eligible, ineligible);
 
         assertThat(methods.isEligible()).isFalse();
     }
 
     @Test
     void shouldReturnCompleteIfAllMethodsComplete() {
-        Method method1 = givenCompleteMethod(Method.class);
-        Method method2 = givenCompleteMethod(Method.class);
+        Method method1 = FakeMethodMother.complete();
+        Method method2 = FakeMethodMother.complete();
 
         Methods methods = new Methods(method1, method2);
 
@@ -84,18 +90,18 @@ class MethodsTest {
 
     @Test
     void shouldReturnIncompleteIfAtLeastOnMethodIsNotComplete() {
-        Method method1 = givenCompleteMethod(Method.class);
-        Method method2 = givenIncompleteMethod();
+        Method complete = FakeMethodMother.complete();
+        Method incomplete = FakeMethodMother.incomplete();
 
-        Methods methods = new Methods(method1, method2);
+        Methods methods = new Methods(complete, incomplete);
 
         assertThat(methods.isComplete()).isFalse();
     }
 
     @Test
     void shouldReturnSuccessfulIfAllMethodsSuccessful() {
-        Method method1 = givenSuccessfulMethod();
-        Method method2 = givenSuccessfulMethod();
+        Method method1 = FakeMethodMother.successful();
+        Method method2 = FakeMethodMother.successful();
 
         Methods methods = new Methods(method1, method2);
 
@@ -103,19 +109,19 @@ class MethodsTest {
     }
 
     @Test
-    void shouldReturnUnsuccessfulIfAtLeastOnMethodIsNotComplete() {
-        Method method1 = givenSuccessfulMethod();
-        Method method2 = givenUnsuccessfulMethod();
+    void shouldReturnUnsuccessfulIfAtLeastOnMethodIsNotSuccessful() {
+        Method successful = FakeMethodMother.successful();
+        Method unsuccessful = FakeMethodMother.unsuccessful();
 
-        Methods methods = new Methods(method1, method2);
+        Methods methods = new Methods(successful, unsuccessful);
 
         assertThat(methods.isSuccessful()).isFalse();
     }
 
     @Test
     void shouldReturnSumOfMethodDurations() {
-        Method method1 = givenMethodWith(Duration.ofMinutes(2));
-        Method method2 = givenMethodWith(Duration.ofMinutes(3));
+        Method method1 = FakeMethodMother.withDuration(Duration.ofMinutes(2));
+        Method method2 = FakeMethodMother.withDuration(Duration.ofMinutes(3));
 
         Methods methods = new Methods(method1, method2);
 
@@ -123,57 +129,94 @@ class MethodsTest {
     }
 
     @Test
-    void shouldReplaceDeliveryMethodsOnAllOtpMethods() {
-        Method method1 = mockMethod();
-        Otp method2 = mock(Otp.class);
-        Otp method3 = mock(Otp.class);
-        DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
-        Otp replaced2 = givenReplacedDeliveryMethodsOtp(method2, deliveryMethods);
-        Otp replaced3 = givenReplacedDeliveryMethodsOtp(method3, deliveryMethods);
-        Methods methods = new Methods(method1, method2, method3);
+    void shouldStreamMethodsThatMatchType() {
+        Method method = mock(Method.class);
+        FakeMethod fake = mock(FakeMethod.class);
+        Methods methods = new Methods(method, fake);
 
-        Methods replaced = methods.replaceDeliveryMethods(deliveryMethods);
+        Stream<FakeMethod> fakeMethods = methods.streamAsType(FakeMethod.class);
 
-        assertThat(replaced).containsExactly(method1, replaced2, replaced3);
+        assertThat(fakeMethods).containsExactly(fake);
     }
 
     @Test
-    void shouldReturnResultFromQuery() {
-        Method method1 = mockMethod();
-        Method method2 = mockMethod();
-        Method expectedMethod = mockMethod();
-        MethodQuery<Method> query = givenQueryReturningMethod(expectedMethod);
-        Methods methods = new Methods(method1, method2);
+    void shouldReturnNextIncompleteMethod() {
+        Method complete = FakeMethodMother.complete();
+        Method incomplete = FakeMethodMother.incomplete();
+        Methods methods = new Methods(complete, incomplete);
 
-        Collection<Method> method = methods.find(query);
+        Optional<Method> nextMethod = methods.getNext();
 
-        assertThat(method).contains(expectedMethod);
+        assertThat(nextMethod).contains(incomplete);
     }
 
     @Test
-    void shouldPassMethodStreamToQuery() {
-        Method method1 = mockMethod();
-        Method method2 = mockMethod();
-        MethodQuery<Method> query = givenQueryReturningMethod(method1);
+    void shouldNotReturnNextMethodIfAllComplete() {
+        Method method1 = FakeMethodMother.complete();
+        Method method2 = FakeMethodMother.complete();
         Methods methods = new Methods(method1, method2);
 
-        methods.find(query);
+        Optional<Method> nextMethod = methods.getNext();
 
-        ArgumentCaptor<Stream<Method>> captor = ArgumentCaptor.forClass(Stream.class);
-        verify(query).apply(captor.capture());
-        assertThat(captor.getValue()).containsExactly(method1, method2);
+        assertThat(nextMethod).isEmpty();
     }
 
-    private Otp givenReplacedDeliveryMethodsOtp(Otp otp, DeliveryMethods deliveryMethods) {
-        Otp replaced = mockMethod(Otp.class);
-        given(otp.replaceDeliveryMethods(deliveryMethods)).willReturn(replaced);
-        return replaced;
+    @Test
+    void shouldReturnNextIncompleteMethodIfNameMatches() {
+        Method complete = FakeMethodMother.complete();
+        Method incomplete = FakeMethodMother.incomplete();
+        Methods methods = new Methods(complete, incomplete);
+
+        Optional<Method> nextMethod = methods.getNext(incomplete.getName());
+
+        assertThat(nextMethod).contains(incomplete);
     }
 
-    static MethodQuery<Method> givenQueryReturningMethod(Method method) {
-        MethodQuery<Method> query = mock(MethodQuery.class);
-        given(query.apply(any(Stream.class))).willReturn(Stream.of(method));
-        return query;
+    @Test
+    void shouldNotReturnNextIncompleteMethodIfNameDoesNotMatch() {
+        Method complete = FakeMethodMother.complete();
+        Method incomplete = FakeMethodMother.incomplete();
+        Methods methods = new Methods(complete, incomplete);
+
+        Optional<Method> nextMethod = methods.getNext("other-name");
+
+        assertThat(nextMethod).isEmpty();
+    }
+
+    @Test
+    void shouldNotReturnIneligibleMethods() {
+        Method method = FakeMethodMother.ineligible();
+        Methods methods = new Methods(method);
+
+        Methods eligibleIncomplete = methods.getEligibleIncomplete();
+
+        assertThat(eligibleIncomplete).isEmpty();
+    }
+
+    @Test
+    void shouldNotReturnEligibleCompleteMethods() {
+        Method method = FakeMethodMother.builder()
+                .eligibility(EligibilityMother.eligible())
+                .complete(true)
+                .build();
+        Methods methods = new Methods(method);
+
+        Methods eligibleIncomplete = methods.getEligibleIncomplete();
+
+        assertThat(eligibleIncomplete).isEmpty();
+    }
+
+    @Test
+    void shouldNotReturnEligibleIncompleteMethods() {
+        Method method = FakeMethodMother.builder()
+                .eligibility(EligibilityMother.eligible())
+                .complete(false)
+                .build();
+        Methods methods = new Methods(method);
+
+        Methods eligibleIncomplete = methods.getEligibleIncomplete();
+
+        assertThat(eligibleIncomplete).containsExactly(method);
     }
 
 }

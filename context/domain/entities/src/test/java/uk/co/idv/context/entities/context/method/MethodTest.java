@@ -3,6 +3,8 @@ package uk.co.idv.context.entities.context.method;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.eligibility.EligibilityMother;
+import uk.co.idv.context.entities.context.method.fake.FakeMethod;
+import uk.co.idv.context.entities.context.method.fake.FakeMethodMother;
 import uk.co.idv.context.entities.policy.method.MethodConfig;
 
 import java.time.Duration;
@@ -60,6 +62,24 @@ class MethodTest {
                 .build();
 
         assertThat(method.getDuration()).isEqualTo(Duration.ZERO);
+    }
+
+    @Test
+    void shouldReturnHasNameTrueIfNameMatches() {
+        Method method = FakeMethodMother.build();
+
+        boolean hasName = method.hasName(method.getName());
+
+        assertThat(hasName).isTrue();
+    }
+
+    @Test
+    void shouldReturnHasNameFalseIfNameDoesNotMatch() {
+        Method method = FakeMethodMother.build();
+
+        boolean hasName = method.hasName("other-name");
+
+        assertThat(hasName).isFalse();
     }
 
     private MethodConfig givenConfigWith(Duration duration) {
