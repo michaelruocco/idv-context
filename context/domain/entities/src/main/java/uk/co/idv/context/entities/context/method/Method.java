@@ -1,6 +1,7 @@
 package uk.co.idv.context.entities.context.method;
 
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.context.entities.context.result.Result;
 import uk.co.idv.context.entities.policy.method.MethodConfig;
 
 import java.time.Duration;
@@ -16,6 +17,8 @@ public interface Method {
     boolean isSuccessful();
 
     MethodConfig getConfig();
+
+    Method add(Result result);
 
     default boolean hasName(String name) {
         return getName().equals(name);

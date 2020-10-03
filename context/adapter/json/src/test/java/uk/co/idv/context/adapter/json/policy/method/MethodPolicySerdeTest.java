@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.context.entities.policy.method.MethodPolicy;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
@@ -11,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MethodPolicySerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new MethodPolicyModule());
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new MethodPolicyModule());
 
     @ParameterizedTest(name = "should serialize method policy {1}")
     @ArgumentsSource(MethodPolicyArgumentsProvider.class)

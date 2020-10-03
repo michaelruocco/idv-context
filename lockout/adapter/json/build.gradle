@@ -11,10 +11,10 @@ dependencies {
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
     implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
-    testImplementation project(":identity-json")
     testImplementation testFixtures(project(":lockout-use-cases"))
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
 
+    testFixturesApi project(":identity-json")
     testFixturesApi testFixtures(project(":lockout-entities"))
     testFixturesApi "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
 }

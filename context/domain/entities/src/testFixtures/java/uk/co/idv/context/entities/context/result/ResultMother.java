@@ -9,6 +9,18 @@ public interface ResultMother {
         return builder().build();
     }
 
+    static Result successful() {
+        return build();
+    }
+
+    static Result unsuccessful() {
+        return builder().successful(false).build();
+    }
+
+    static Result withMethodName(String name) {
+        return builder().methodName(name).build();
+    }
+
     static Result.ResultBuilder builder() {
         return Result.builder()
                 .methodName("method-name")

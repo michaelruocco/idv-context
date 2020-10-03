@@ -6,7 +6,6 @@ import uk.co.idv.context.entities.context.method.fake.FakeMethod;
 import uk.co.idv.context.entities.context.method.fake.FakeMethodMother;
 
 import java.time.Duration;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -140,47 +139,37 @@ class MethodsTest {
     }
 
     @Test
-    void shouldReturnNextIncompleteMethod() {
-        Method complete = FakeMethodMother.complete();
-        Method incomplete = FakeMethodMother.incomplete();
+    void shouldReturnIsNextTrueIfMethodIsNext() {
+        Method complete = FakeMethodMother.builder()
+                .name("method1")
+                .complete(true)
+                .build();
+        Method incomplete = FakeMethodMother.builder()
+                .name("method2")
+                .complete(false)
+                .build();
         Methods methods = new Methods(complete, incomplete);
 
-        Optional<Method> nextMethod = methods.getNext();
+        boolean next = methods.isNext(incomplete.getName());
 
-        assertThat(nextMethod).contains(incomplete);
+        assertThat(next).isTrue();
     }
 
     @Test
-    void shouldNotReturnNextMethodIfAllComplete() {
-        Method method1 = FakeMethodMother.complete();
-        Method method2 = FakeMethodMother.complete();
+    void shouldNotReturnIsNextTrueIfMethodIsNotNext() {
+        Method method1 = FakeMethodMother.builder()
+                .name("method1")
+                .complete(false)
+                .build();
+        Method method2 = FakeMethodMother.builder()
+                .name("method2")
+                .complete(false)
+                .build();
         Methods methods = new Methods(method1, method2);
 
-        Optional<Method> nextMethod = methods.getNext();
+        boolean next = methods.isNext(method2.getName());
 
-        assertThat(nextMethod).isEmpty();
-    }
-
-    @Test
-    void shouldReturnNextIncompleteMethodIfNameMatches() {
-        Method complete = FakeMethodMother.complete();
-        Method incomplete = FakeMethodMother.incomplete();
-        Methods methods = new Methods(complete, incomplete);
-
-        Optional<Method> nextMethod = methods.getNext(incomplete.getName());
-
-        assertThat(nextMethod).contains(incomplete);
-    }
-
-    @Test
-    void shouldNotReturnNextIncompleteMethodIfNameDoesNotMatch() {
-        Method complete = FakeMethodMother.complete();
-        Method incomplete = FakeMethodMother.incomplete();
-        Methods methods = new Methods(complete, incomplete);
-
-        Optional<Method> nextMethod = methods.getNext("other-name");
-
-        assertThat(nextMethod).isEmpty();
+        assertThat(next).isFalse();
     }
 
     @Test

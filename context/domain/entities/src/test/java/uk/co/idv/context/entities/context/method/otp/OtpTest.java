@@ -6,6 +6,8 @@ import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethodsMother;
+import uk.co.idv.context.entities.context.result.Result;
+import uk.co.idv.context.entities.context.result.ResultMother;
 import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
 
 import java.util.Optional;
@@ -101,6 +103,19 @@ class OtpTest {
         Optional<DeliveryMethod> found = otp.findDeliveryMethod(expectedMethod.getId());
 
         assertThat(found).contains(expectedMethod);
+    }
+
+    @Test
+    void shouldAddResult() {
+        Result result = ResultMother.build();
+        Otp otp = OtpMother.build();
+
+        Otp updated = otp.add(result);
+
+        assertThat(updated).usingRecursiveComparison()
+                .ignoringFields("results")
+                .isEqualTo(otp);
+        assertThat(updated.getResults()).containsExactly(result);
     }
 
     private DeliveryMethods givenDeliveryMethodsWithEligibility(Eligibility eligibility) {

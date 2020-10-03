@@ -3,7 +3,11 @@ package uk.co.idv.context.entities.context;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
+import uk.co.idv.context.entities.context.eligibility.EligibilityMother;
+import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.context.entities.context.method.MethodsMother;
+import uk.co.idv.context.entities.context.method.fake.FakeMethodMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 
 import java.time.Duration;
@@ -185,24 +189,33 @@ class ContextTest {
     }
 
     @Test
-    void shouldReturnNextMethodsMatchingName() {
+    void shouldReturnNextIncompleteMethodsMatchingName() {
+        Method expected = FakeMethodMother.incomplete();
+        Context context = ContextMother.withMethod(expected);
+
+        Methods methods = context.getNextMethods(expected.getName());
+
+        assertThat(methods).containsExactly(expected);
+    }
+
+    @Test
+    void shouldNotBeNextMethodIfComplete() {
         String methodName = "method-name";
-        Methods expected = mock(Methods.class);
-        Sequences sequences = givenSequencesWithNextMethods(methodName, expected);
-        Context context = ContextMother.withSequences(sequences);
+        Method expected = FakeMethodMother.builder()
+                .name(methodName)
+                .complete(true)
+                .build();
+        Context context = ContextMother.withMethod(expected);
 
         Methods methods = context.getNextMethods(methodName);
 
-        assertThat(methods).isEqualTo(expected);
+        assertThat(methods).isEmpty();
     }
 
     @Test
     void shouldThrowExceptionIfMethodIsNotNextMethodInAnySequences() {
         String methodName = "method-name";
-        Methods methods = mock(Methods.class);
-        given(methods.isEmpty()).willReturn(true);
-        Sequences sequences = givenSequencesWithNextMethods(methodName, methods);
-        Context context = ContextMother.withSequences(sequences);
+        Context context = ContextMother.withMethods(MethodsMother.empty());
 
         Throwable error = catchThrowable(() -> context.getNextEligibleIncompleteMethods(methodName));
 
@@ -212,59 +225,16 @@ class ContextTest {
     }
 
     @Test
-    void shouldThrowExceptionIfAllNextMethodsAreIneligible() {
-        String methodName = "method-name";
-        Methods methods = mock(Methods.class);
-        given(methods.isEmpty()).willReturn(false);
-        given(methods.isEligible()).willReturn(false);
-        Sequences sequences = givenSequencesWithNextMethods(methodName, methods);
-        Context context = ContextMother.withSequences(sequences);
-
-        Throwable error = catchThrowable(() -> context.getNextEligibleIncompleteMethods(methodName));
-
-        assertThat(error)
-                .isInstanceOf(MethodNotEligibleException.class)
-                .hasMessage(methodName);
-    }
-
-    @Test
-    void shouldThrowExceptionIfAllNextMethodsAreComplete() {
-        String methodName = "method-name";
-        Methods methods = mock(Methods.class);
-        given(methods.isEmpty()).willReturn(false);
-        given(methods.isEligible()).willReturn(true);
-        given(methods.isComplete()).willReturn(true);
-        Sequences sequences = givenSequencesWithNextMethods(methodName, methods);
-        Context context = ContextMother.withSequences(sequences);
-
-        Throwable error = catchThrowable(() -> context.getNextEligibleIncompleteMethods(methodName));
-
-        assertThat(error)
-                .isInstanceOf(MethodAlreadyCompleteException.class)
-                .hasMessage(methodName);
-    }
-
-    @Test
     void shouldReturnNextMethodsMatchingNameThatAreEligibleAndIncomplete() {
-        String methodName = "method-name";
-        Methods methods = mock(Methods.class);
-        given(methods.isEmpty()).willReturn(false);
-        given(methods.isEligible()).willReturn(true);
-        given(methods.isComplete()).willReturn(false);
-        Methods expectedMethods = mock(Methods.class);
-        given(methods.getEligibleIncomplete()).willReturn(expectedMethods);
-        Sequences sequences = givenSequencesWithNextMethods(methodName, methods);
-        Context context = ContextMother.withSequences(sequences);
+        Method method = FakeMethodMother.builder()
+                .eligibility(EligibilityMother.eligible())
+                .complete(false)
+                .build();
+        Context context = ContextMother.withMethods(MethodsMother.withMethods(method));
 
-        Methods nextEligibleIncomplete = context.getNextEligibleIncompleteMethods(methodName);
+        Methods nextEligibleIncomplete = context.getNextEligibleIncompleteMethods(method.getName());
 
-        assertThat(nextEligibleIncomplete).isEqualTo(expectedMethods);
-    }
-
-    private Sequences givenSequencesWithNextMethods(String name, Methods methods) {
-        Sequences sequences = mock(Sequences.class);
-        given(sequences.getMethodsIfNext(name)).willReturn(methods);
-        return sequences;
+        assertThat(nextEligibleIncomplete).containsExactly(method);
     }
 
 }

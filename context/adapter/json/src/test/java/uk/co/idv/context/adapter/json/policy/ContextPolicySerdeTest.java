@@ -3,6 +3,7 @@ package uk.co.idv.context.adapter.json.policy;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 
@@ -11,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ContextPolicySerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new ContextPolicyModule());
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new ContextPolicyModule());
     private static final ContextPolicy POLICY = ContextPolicyMother.build();
     private static final String JSON = ContextPolicyJsonMother.build();
 

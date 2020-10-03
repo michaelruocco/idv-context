@@ -14,6 +14,8 @@ public class EligibilityModule extends SimpleModule {
     public EligibilityModule() {
         super("eligibility-module", Version.unknownVersion());
 
+        setMixInAnnotation(Eligibility.class, EligibilityMixin.class);
+
         addDeserializer(Eligibility.class, new EligibilityDeserializer());
         addDeserializer(AsyncEligibility.class, new AsyncEligibilityDeserializer());
     }

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.policy.method.MethodPolicies;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
@@ -20,7 +19,7 @@ public class MethodsDeserializer extends StdDeserializer<Methods> {
     };
 
     protected MethodsDeserializer() {
-        super(MethodPolicies.class);
+        super(Methods.class);
     }
 
     @Override

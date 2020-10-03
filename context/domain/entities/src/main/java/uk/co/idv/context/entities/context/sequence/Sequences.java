@@ -49,7 +49,7 @@ public class Sequences implements Iterable<Sequence> {
 
     public Methods getMethodsIfNext(String name) {
         return new Methods(stream()
-                .map(sequence -> sequence.getMethodIfNext(name))
+                .map(method -> method.getMethodIfNext(name))
                 .flatMap(Optional::stream)
                 .collect(Collectors.toList())
         );

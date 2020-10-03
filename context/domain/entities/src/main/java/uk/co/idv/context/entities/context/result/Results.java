@@ -29,4 +29,12 @@ public class Results implements Iterable<Result> {
         return new Results(updated);
     }
 
+    public boolean containsSuccessful() {
+        return values.stream().anyMatch(Result::isSuccessful);
+    }
+
+    public int size() {
+        return values.size();
+    }
+
 }

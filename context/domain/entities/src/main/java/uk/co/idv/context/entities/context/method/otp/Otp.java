@@ -4,28 +4,31 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import lombok.With;
 import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.policy.method.MethodConfig;
+import uk.co.idv.context.entities.context.result.Result;
+import uk.co.idv.context.entities.context.result.Results;
 import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
 
 import java.util.Optional;
 import java.util.UUID;
 
-@Builder
+@Builder(toBuilder = true)
 @Data
 public class Otp implements Method {
 
     private final String name;
 
-    @With
-    private final DeliveryMethods deliveryMethods;
-
     @Getter(AccessLevel.NONE)
     private final OtpConfig otpConfig;
+
+    @Builder.Default
+    private final Results results = new Results();
+
+    @Builder.Default
+    private final DeliveryMethods deliveryMethods = new DeliveryMethods();
 
     @Override
     public Eligibility getEligibility() {
@@ -43,16 +46,24 @@ public class Otp implements Method {
     }
 
     @Override
-    public MethodConfig getConfig() {
+    public OtpConfig getConfig() {
         return otpConfig;
-    }
-
-    public Otp replaceDeliveryMethods(DeliveryMethods updated) {
-        return withDeliveryMethods(deliveryMethods.replace(updated));
     }
 
     public Optional<DeliveryMethod> findDeliveryMethod(UUID id) {
         return deliveryMethods.findByValue(id);
+    }
+
+    public Otp add(Result result) {
+        return toBuilder()
+                .results(results.add(result))
+                .build();
+    }
+
+    public Otp replaceDeliveryMethods(DeliveryMethods updated) {
+        return toBuilder()
+                .deliveryMethods(deliveryMethods.replace(updated))
+                .build();
     }
 
 }

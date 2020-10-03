@@ -54,20 +54,24 @@ public class Methods implements Iterable<Method> {
                 .flatMap(Optional::stream);
     }
 
-    public Optional<Method> getNext(String name) {
-        return getNext().filter(method -> method.hasName(name));
-    }
-
-    public Optional<Method> getNext() {
-        return stream().filter(method -> !method.isComplete()).findFirst();
-    }
-
     public Methods getEligibleIncomplete() {
         return new Methods(stream()
                 .filter(Method::isEligible)
                 .filter(method -> !method.isComplete())
                 .collect(Collectors.toList())
         );
+    }
+
+    public boolean isNext(String name) {
+        return getNext(name).isPresent();
+    }
+
+    public Optional<Method> getNext(String name) {
+        return getNext().filter(method -> method.hasName(name));
+    }
+
+    public Optional<Method> getNext() {
+        return stream().filter(method -> !method.isComplete()).findFirst();
     }
 
     public Stream<Method> stream() {

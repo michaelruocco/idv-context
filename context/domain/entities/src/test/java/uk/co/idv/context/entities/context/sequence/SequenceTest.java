@@ -97,4 +97,19 @@ class SequenceTest {
         assertThat(next).contains(method);
     }
 
+    @Test
+    void shouldReturnWithUpdatedMethods() {
+        Methods methods = mock(Methods.class);
+        Methods updatedMethods = mock(Methods.class);
+        Sequence sequence = SequenceMother.withMethods(methods);
+
+        Sequence updatedSequence = sequence.withMethods(updatedMethods);
+
+        assertThat(updatedSequence)
+                .usingRecursiveComparison()
+                .ignoringFields("methods")
+                .isEqualTo(sequence);
+        assertThat(updatedSequence.getMethods()).isEqualTo(updatedMethods);
+    }
+
 }

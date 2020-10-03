@@ -3,6 +3,7 @@ package uk.co.idv.context.adapter.json.policy.method.otp;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
 import uk.co.idv.context.entities.policy.method.otp.OtpConfigMother;
 
@@ -11,7 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class OtpConfigSerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new OtpPolicyModule());
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new OtpPolicyModule());
     private static final OtpConfig CONFIG = OtpConfigMother.build();
     private static final String JSON = OtpConfigJsonMother.build();
 

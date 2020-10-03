@@ -3,8 +3,8 @@ package uk.co.idv.context.adapter.json.context.method;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.common.adapter.json.duration.DurationModule;
 import uk.co.idv.context.adapter.json.context.method.otp.OtpModule;
+import uk.co.idv.context.adapter.json.context.result.ResultModule;
 import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.Methods;
 
@@ -26,7 +26,7 @@ public class MethodModule extends SimpleModule {
     public Iterable<? extends Module> getDependencies() {
         return Arrays.asList(
                 new OtpModule(),
-                new DurationModule()
+                new ResultModule()
         );
     }
 

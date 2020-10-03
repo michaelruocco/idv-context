@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.entities.activity.Login;
+import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import java.time.Instant;
@@ -18,7 +19,7 @@ class LoginDeserializer extends StdDeserializer<Login> {
     @Override
     public Login deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
-        return new Login(Instant.parse(node.get("timestamp").asText()));
+        return new Login(JsonNodeConverter.toObject(node.get("timestamp"), parser, Instant.class));
     }
 
 }

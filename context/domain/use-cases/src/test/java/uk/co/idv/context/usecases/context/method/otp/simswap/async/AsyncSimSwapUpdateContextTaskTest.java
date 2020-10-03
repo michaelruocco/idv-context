@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.method.otp.ContextDeliveryMethodReplacer;
+import uk.co.idv.context.usecases.context.method.otp.delivery.ContextDeliveryMethodReplacer;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
 import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequestMother;

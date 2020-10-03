@@ -63,29 +63,11 @@ public class Context {
         if (methods.isEmpty()) {
             throw new NotNextMethodInSequenceException(name);
         }
-        if (!methods.isEligible()) {
-            throw new MethodNotEligibleException(name);
-        }
-        if (methods.isComplete()) {
-            throw new MethodAlreadyCompleteException(name);
-        }
         return methods.getEligibleIncomplete();
     }
 
     public boolean hasExpired(Instant timestamp) {
         return timestamp.isAfter(expiry);
     }
-
-    //TODO implement and test
-    //public Context addResultIfApplicable(Result result) {
-    //    findNextEligibleIncompleteMethods(result.getMethodName());
-    //    return withSequences(sequences.addResultIfApplicable(result));
-
-        //add new addResultIfApplicable method to sequences, sequence, methods, and method
-        //in each case it should only add the result if method is:
-        //next in sequence
-        //eligible
-        //incomplete
-    //}
 
 }

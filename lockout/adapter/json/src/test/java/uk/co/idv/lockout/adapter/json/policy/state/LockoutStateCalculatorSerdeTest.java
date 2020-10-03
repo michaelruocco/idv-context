@@ -2,9 +2,9 @@ package uk.co.idv.lockout.adapter.json.policy.state;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.lockout.entities.policy.LockoutStateCalculator;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
@@ -12,9 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class LockoutStateCalculatorSerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper()
-            .registerModule(new LockoutStateCalculatorModule())
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new LockoutStateCalculatorModule());
 
     @ParameterizedTest(name = "should serialize lockout state calculator {1}")
     @ArgumentsSource(LockoutStateCalculatorArgumentsProvider.class)

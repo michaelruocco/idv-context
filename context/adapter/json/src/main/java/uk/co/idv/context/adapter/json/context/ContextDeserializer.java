@@ -24,8 +24,8 @@ class ContextDeserializer extends StdDeserializer<Context> {
         JsonNode node = JsonParserConverter.toNode(parser);
         return Context.builder()
                 .id(UUID.fromString(node.get("id").asText()))
-                .created(Instant.parse(node.get("created").asText()))
-                .expiry(Instant.parse(node.get("expiry").asText()))
+                .created(JsonNodeConverter.toObject(node.get("created"), parser, Instant.class))
+                .expiry(JsonNodeConverter.toObject(node.get("expiry"), parser, Instant.class))
                 .request(JsonNodeConverter.toObject(node.get("request"), parser, ServiceCreateContextRequest.class))
                 .sequences(JsonNodeConverter.toObject(node.get("sequences"), parser, Sequences.class))
                 .build();

@@ -1,10 +1,10 @@
 package uk.co.idv.context.adapter.json.policy.method.otp.delivery.simswap;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
+import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.context.adapter.json.policy.method.otp.delivery.phone.simswap.SimSwapConfigModule;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 
@@ -13,9 +13,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SimSwapConfigSerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper()
-            .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
-            .registerModule(new SimSwapConfigModule());
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new SimSwapConfigModule());
 
     @ParameterizedTest(name = "should serialize sim swap config {1}")
     @ArgumentsSource(SimSwapConfigArgumentsProvider.class)

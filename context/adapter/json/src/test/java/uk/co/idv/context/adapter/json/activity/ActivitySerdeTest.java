@@ -13,8 +13,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 class ActivitySerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper()
-            .registerModule(new ActivityModule())
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)
+            .registerModule(new ActivityModule());
 
     @ParameterizedTest(name = "should serialize activity {1}")
     @ArgumentsSource(ActivityArgumentsProvider.class)

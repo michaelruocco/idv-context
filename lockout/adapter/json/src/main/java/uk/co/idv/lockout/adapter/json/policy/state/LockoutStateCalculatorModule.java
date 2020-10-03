@@ -3,7 +3,7 @@ package uk.co.idv.lockout.adapter.json.policy.state;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.common.adapter.json.duration.DurationModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.co.idv.lockout.adapter.json.policy.state.hard.HardLockoutStateCalculatorDeserializer;
 import uk.co.idv.lockout.adapter.json.policy.state.nonlocking.NonLockingStateCalculatorDeserializer;
 import uk.co.idv.lockout.adapter.json.policy.state.soft.RecurringSoftLockoutStateCalculatorDeserializer;
@@ -36,7 +36,7 @@ public class LockoutStateCalculatorModule extends SimpleModule {
 
     @Override
     public Iterable<? extends Module> getDependencies() {
-        return Collections.singleton(new DurationModule());
+        return Collections.singleton(new JavaTimeModule());
     }
 
     private void setUpDefaults() {

@@ -26,7 +26,7 @@ class OnlinePurchaseDeserializer extends StdDeserializer<OnlinePurchase> {
                 .reference(node.get("reference").asText())
                 .cost(JsonNodeConverter.toObject(node.get("cost"), parser, MonetaryAmount.class))
                 .cardNumber(JsonNodeConverter.toObject(node.get("cardNumber"), parser, CardNumber.class))
-                .timestamp(Instant.parse(node.get("timestamp").asText()))
+                .timestamp(JsonNodeConverter.toObject(node.get("timestamp"), parser, Instant.class))
                 .build();
     }
 

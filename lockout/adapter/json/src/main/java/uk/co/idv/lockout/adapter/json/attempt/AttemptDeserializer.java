@@ -30,7 +30,7 @@ public class AttemptDeserializer extends StdDeserializer<Attempt> {
                 .contextId(UUID.fromString(node.get("contextId").asText()))
                 .methodName(node.get("methodName").asText())
                 .verificationId(UUID.fromString(node.get("verificationId").asText()))
-                .timestamp(Instant.parse(node.get("timestamp").asText()))
+                .timestamp(JsonNodeConverter.toObject(node.get("timestamp"), parser, Instant.class))
                 .successful(node.get("successful").asBoolean())
                 .build();
     }

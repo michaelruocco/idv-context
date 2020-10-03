@@ -1,10 +1,9 @@
 package uk.co.idv.identity.adapter.json.eligibility;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibilityMother;
 
@@ -13,10 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class IdentityEligibilitySerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper()
-            .registerModule(new IdentityEligibilityModule())
-            .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new IdentityEligibilityModule());
     private static final String JSON = EligibilityJsonMother.build();
     private static final IdentityEligibility ELIGIBILITY = IdentityEligibilityMother.build();
 

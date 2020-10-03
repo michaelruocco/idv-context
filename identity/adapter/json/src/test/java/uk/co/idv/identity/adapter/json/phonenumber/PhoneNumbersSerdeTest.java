@@ -1,10 +1,9 @@
 package uk.co.idv.identity.adapter.json.phonenumber;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
@@ -13,10 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class PhoneNumbersSerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper()
-            .registerModule(new PhoneNumberModule())
-            .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
-            .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new PhoneNumberModule());
     private static final String JSON = PhoneNumbersJsonMother.build();
     private static final PhoneNumbers PHONE_NUMBERS = PhoneNumbersMother.two();
 

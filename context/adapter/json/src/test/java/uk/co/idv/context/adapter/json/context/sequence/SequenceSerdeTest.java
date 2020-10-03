@@ -1,9 +1,9 @@
 package uk.co.idv.context.adapter.json.context.sequence;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequenceMother;
 
@@ -12,9 +12,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SequenceSerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper()
-            .setSerializationInclusion(JsonInclude.Include.NON_ABSENT)
-            .registerModule(new SequenceModule());
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new SequenceModule());
     private static final Sequence SEQUENCE = SequenceMother.otpOnly();
     private static final String JSON = SequenceJsonMother.otpOnly();
 
