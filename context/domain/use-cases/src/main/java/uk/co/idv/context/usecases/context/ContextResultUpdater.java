@@ -47,7 +47,7 @@ public class ContextResultUpdater {
     }
 
     private boolean isApplicable(Method method, Result result) {
-        return method.hasName(result.getMethodName()) && method.isEligible() && !method.isComplete();
+        return method.hasName(result.getMethodName()) && method.isEligible();
     }
 
 }

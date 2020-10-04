@@ -95,7 +95,7 @@ class ContextResultUpdaterTest {
     }
 
     @Test
-    void shouldNotAddResultToCompleteOtherMethods() {
+    void shouldNotAddResultToOtherMethods() {
         Result result = ResultMother.build();
         Method method1 = FakeMethodMother.builder()
                 .name("other-method-name")
