@@ -2,8 +2,8 @@ package uk.co.idv.context.adapter.json.context.method;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.result.Results;
+import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.result.Results;
 
 import java.time.Duration;
 

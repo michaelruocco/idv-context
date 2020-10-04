@@ -1,8 +1,9 @@
 package uk.co.idv.context.entities.context.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.fake.FakeMethod;
-import uk.co.idv.context.entities.context.method.fake.FakeMethodMother;
+import uk.co.idv.method.entities.method.FakeMethod;
+import uk.co.idv.method.entities.method.FakeMethodMother;
+import uk.co.idv.method.entities.method.Method;
 
 import java.util.Optional;
 

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import uk.co.idv.context.entities.context.eligibility.AsyncEligibility;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.method.entities.eligibility.AsyncEligibility;
+import uk.co.idv.method.entities.eligibility.Eligibility;
 
 import java.util.Collections;
 

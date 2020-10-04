@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.context.sequence;
 
-import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.method.MethodsMother;
+import uk.co.idv.method.entities.method.Method;
 
 public interface SequenceMother {
 

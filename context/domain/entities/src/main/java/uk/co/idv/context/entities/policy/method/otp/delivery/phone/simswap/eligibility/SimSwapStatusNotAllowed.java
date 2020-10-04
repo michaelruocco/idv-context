@@ -1,6 +1,6 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.eligibility;
 
-import uk.co.idv.context.entities.context.eligibility.Ineligible;
+import uk.co.idv.method.entities.eligibility.Ineligible;
 
 public class SimSwapStatusNotAllowed extends Ineligible {
 

@@ -2,10 +2,9 @@ package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.async.DelayedSupplier;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.eligibility.Eligible;
-import uk.co.idv.context.entities.context.eligibility.Ineligible;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
+import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.eligibility.EligibilityMother;
 
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;
@@ -40,7 +39,7 @@ class AsyncFutureSimSwapEligibilityTest {
 
     @Test
     void shouldEligibleIfFutureEligibilityIsEligible() {
-        CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(new Eligible());
+        CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(EligibilityMother.eligible());
 
         AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)
@@ -51,7 +50,7 @@ class AsyncFutureSimSwapEligibilityTest {
 
     @Test
     void shouldReturnEmptyReasonIfFutureEligibilityIsEligible() {
-        CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(new Eligible());
+        CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(EligibilityMother.eligible());
 
         AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)
@@ -62,7 +61,7 @@ class AsyncFutureSimSwapEligibilityTest {
 
     @Test
     void shouldIneligibleIfFutureEligibilityIsIneligible() {
-        CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(new Ineligible("test reason"));
+        CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(EligibilityMother.ineligible());
 
         AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)
@@ -74,7 +73,7 @@ class AsyncFutureSimSwapEligibilityTest {
     @Test
     void shouldReasonFromIfFutureEligibilityIsIneligible() {
         String expectedReason = "test reason";
-        CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(new Ineligible(expectedReason));
+        CompletableFuture<Eligibility> future = CompletableFuture.completedFuture(EligibilityMother.ineligible(expectedReason));
 
         AsyncFutureSimSwapEligibility eligibility = AsyncFutureSimSwapEligibility.builder()
                 .future(future)

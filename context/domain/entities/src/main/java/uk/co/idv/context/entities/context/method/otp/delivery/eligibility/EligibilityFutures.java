@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.method.entities.eligibility.Eligibility;
 
 import java.util.Collection;
 import java.util.Iterator;

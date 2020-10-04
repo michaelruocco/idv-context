@@ -4,9 +4,10 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.policy.RequestedDataMerger;
-import uk.co.idv.context.entities.policy.RequestedDataProvider;
 import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.method.entities.policy.MethodPolicy;
+import uk.co.idv.method.entities.policy.RequestedDataMerger;
+import uk.co.idv.method.entities.policy.RequestedDataProvider;
 
 import java.util.Arrays;
 import java.util.Collection;

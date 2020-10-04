@@ -3,10 +3,10 @@ package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.method.entities.eligibility.Eligibility;
 
 import java.time.Duration;
 import java.time.Instant;

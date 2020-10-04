@@ -8,6 +8,7 @@ testSets {
 
 dependencies {
     implementation project(":context-use-cases")
+    implementation project(":common-method-entities")
     implementation testFixtures(project(":common-use-cases"))
 
     integrationTestImplementation testFixtures(project(":context-entities"))

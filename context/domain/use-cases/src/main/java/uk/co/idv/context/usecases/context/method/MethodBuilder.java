@@ -1,8 +1,8 @@
 package uk.co.idv.context.usecases.context.method;
 
-import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.MethodsRequest;
-import uk.co.idv.context.entities.policy.method.MethodPolicy;
+import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.policy.MethodPolicy;
 
 public interface MethodBuilder {
 

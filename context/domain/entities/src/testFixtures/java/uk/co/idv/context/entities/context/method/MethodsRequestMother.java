@@ -3,9 +3,9 @@ package uk.co.idv.context.entities.context.method;
 
 import uk.co.idv.context.entities.policy.method.MethodPolicies;
 import uk.co.idv.context.entities.policy.method.MethodPoliciesMother;
-import uk.co.idv.context.entities.policy.method.MethodPolicy;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
+import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import java.util.UUID;
 

@@ -1,10 +1,10 @@
 package uk.co.idv.context.entities.context.method.otp.delivery;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.eligibility.DefaultAsyncEligibilityMother;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.eligibility.EligibilityMother;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
+import uk.co.idv.method.entities.eligibility.DefaultAsyncEligibilityMother;
+import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.eligibility.EligibilityMother;
 
 import java.time.Instant;
 import java.util.UUID;

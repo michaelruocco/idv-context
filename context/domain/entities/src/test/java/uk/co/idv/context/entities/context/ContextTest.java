@@ -3,12 +3,12 @@ package uk.co.idv.context.entities.context;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
-import uk.co.idv.context.entities.context.eligibility.EligibilityMother;
-import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.method.MethodsMother;
-import uk.co.idv.context.entities.context.method.fake.FakeMethodMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
+import uk.co.idv.method.entities.eligibility.EligibilityMother;
+import uk.co.idv.method.entities.method.FakeMethodMother;
+import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
 import java.time.Instant;

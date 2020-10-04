@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import uk.co.idv.context.entities.context.result.Result;
-import uk.co.idv.context.entities.context.result.Results;
+import uk.co.idv.method.entities.result.Result;
+import uk.co.idv.method.entities.result.Results;
 
 import java.util.Collections;
 

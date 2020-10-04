@@ -4,9 +4,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.entities.async.FutureHandler;
-import uk.co.idv.context.entities.context.eligibility.AsyncEligibility;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
+import uk.co.idv.method.entities.eligibility.AsyncEligibility;
+import uk.co.idv.method.entities.eligibility.Eligibility;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;

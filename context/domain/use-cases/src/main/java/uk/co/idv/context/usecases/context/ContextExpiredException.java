@@ -1,11 +1,11 @@
 package uk.co.idv.context.usecases.context;
 
-import lombok.Data;
+import lombok.Getter;
 
 import java.time.Instant;
 import java.util.UUID;
 
-@Data
+@Getter
 public class ContextExpiredException extends RuntimeException {
 
     private final UUID id;

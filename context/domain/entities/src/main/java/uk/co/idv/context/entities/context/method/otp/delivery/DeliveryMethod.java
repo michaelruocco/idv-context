@@ -2,9 +2,9 @@ package uk.co.idv.context.entities.context.method.otp.delivery;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.context.eligibility.AsyncEligibility;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
+import uk.co.idv.method.entities.eligibility.AsyncEligibility;
+import uk.co.idv.method.entities.eligibility.Eligibility;
 
 import java.time.Instant;
 import java.util.Optional;

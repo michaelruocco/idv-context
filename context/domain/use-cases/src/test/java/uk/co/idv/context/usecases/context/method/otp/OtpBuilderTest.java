@@ -7,12 +7,12 @@ import uk.co.idv.context.entities.context.method.MethodsRequestMother;
 import uk.co.idv.context.entities.context.method.otp.Otp;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
-import uk.co.idv.context.entities.policy.method.MethodPolicy;
 import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
 import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.context.usecases.context.method.otp.delivery.DeliveryMethodConfigsConverter;
 import uk.co.idv.context.usecases.context.method.otp.simswap.SimSwap;
+import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

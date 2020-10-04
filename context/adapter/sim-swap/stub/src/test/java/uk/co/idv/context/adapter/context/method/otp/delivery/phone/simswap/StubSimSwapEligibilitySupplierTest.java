@@ -2,9 +2,9 @@ package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.async.Delay;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
+import uk.co.idv.method.entities.eligibility.Eligibility;
 
 import java.time.Clock;
 import java.time.Instant;

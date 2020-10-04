@@ -2,8 +2,8 @@ package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.fake.FakeMethod;
-import uk.co.idv.context.entities.context.method.fake.FakeMethodMother;
+import uk.co.idv.method.entities.method.FakeMethodMother;
+import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
 
@@ -127,7 +127,7 @@ class SequencesTest {
 
     @Test
     void shouldReturnMethodsIfNext() {
-        FakeMethod method = FakeMethodMother.build();
+        Method method = FakeMethodMother.build();
         Sequence sequence1 = givenSequenceWithoutNextMethod(method.getName());
         Sequence sequence2 = givenSequenceWithNextMethod(method);
         Sequences sequences = new Sequences(sequence1, sequence2);

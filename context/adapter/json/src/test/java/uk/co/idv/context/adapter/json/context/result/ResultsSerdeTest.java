@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.result.Results;
-import uk.co.idv.context.entities.context.result.ResultsMother;
+import uk.co.idv.method.entities.result.Results;
+import uk.co.idv.method.entities.result.ResultsMother;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;

@@ -1,11 +1,11 @@
 package uk.co.idv.context.usecases.context;
 
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.result.Result;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.Sequences;
+import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.result.Result;
 
 import java.util.stream.Collectors;
 

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicies;
 import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.method.entities.policy.RequestedDataProvider;
 import uk.co.idv.policy.entities.policy.Policy;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;

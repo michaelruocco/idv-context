@@ -1,10 +1,9 @@
 package uk.co.idv.context.entities.context.method.otp.delivery;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.eligibility.Eligible;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.EligibilityFutures;
 import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.NoEligibleDeliveryMethodsAvailable;
+import uk.co.idv.method.entities.eligibility.Eligibility;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -71,7 +70,7 @@ class DeliveryMethodsTest {
 
         Eligibility eligibility = methods.getEligibility();
 
-        assertThat(eligibility).isInstanceOf(Eligible.class);
+        assertThat(eligibility.isEligible()).isTrue();
     }
 
     @Test

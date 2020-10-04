@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
 
 import lombok.Builder;
-import uk.co.idv.context.entities.context.eligibility.AsyncEligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
+import uk.co.idv.method.entities.eligibility.AsyncEligibility;
 
 import java.util.Optional;
 

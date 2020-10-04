@@ -4,9 +4,9 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.async.Delay;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
+import uk.co.idv.method.entities.eligibility.Eligibility;
 
 import java.time.Clock;
 import java.time.Instant;

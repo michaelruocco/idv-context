@@ -1,10 +1,9 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.eligibility.Eligible;
 import uk.co.idv.context.entities.policy.method.otp.delivery.eligibility.UpdatedAfterCutoff;
 import uk.co.idv.context.entities.policy.method.otp.delivery.eligibility.UnknownLastUpdatedNotAllowed;
+import uk.co.idv.method.entities.eligibility.Eligibility;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -48,7 +47,7 @@ class LastUpdatedConfigTest {
 
         Eligibility eligibility = config.toEligibility(number, Instant.now());
 
-        assertThat(eligibility).isInstanceOf(Eligible.class);
+        assertThat(eligibility.isEligible()).isTrue();
     }
 
     @Test
@@ -83,7 +82,7 @@ class LastUpdatedConfigTest {
 
         Eligibility eligibility = config.toEligibility(number, now);
 
-        assertThat(eligibility).isInstanceOf(Eligible.class);
+        assertThat(eligibility.isEligible()).isTrue();
     }
 
     @Test
@@ -95,7 +94,7 @@ class LastUpdatedConfigTest {
 
         Eligibility eligibility = config.toEligibility(number, now);
 
-        assertThat(eligibility).isInstanceOf(Eligible.class);
+        assertThat(eligibility.isEligible()).isTrue();
     }
 
     @Test
@@ -106,7 +105,7 @@ class LastUpdatedConfigTest {
 
         Eligibility eligibility = config.toEligibility(number, now);
 
-        assertThat(eligibility).isInstanceOf(Eligible.class);
+        assertThat(eligibility.isEligible()).isTrue();
     }
 
 }

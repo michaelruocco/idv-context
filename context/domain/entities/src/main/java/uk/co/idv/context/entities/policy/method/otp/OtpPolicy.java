@@ -2,9 +2,9 @@ package uk.co.idv.context.entities.policy.method.otp;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.policy.method.MethodPolicy;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import java.time.Duration;
 import java.util.Optional;

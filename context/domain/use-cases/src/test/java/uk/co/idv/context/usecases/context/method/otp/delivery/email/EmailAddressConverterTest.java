@@ -2,7 +2,6 @@ package uk.co.idv.context.usecases.context.method.otp.delivery.email;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.id.IdGenerator;
-import uk.co.idv.context.entities.context.eligibility.Eligible;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
 
@@ -52,7 +51,7 @@ class EmailAddressConverterTest {
     void shouldPopulateEligibilityOnDeliveryMethod() {
         DeliveryMethod method = converter.toDeliveryMethod(EMAIL_ADDRESS, config);
 
-        assertThat(method.getEligibility()).isInstanceOf(Eligible.class);
+        assertThat(method.isEligible()).isTrue();
     }
 
 }

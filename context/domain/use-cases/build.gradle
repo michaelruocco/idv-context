@@ -7,6 +7,7 @@ dependencies {
     api "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}"
 
     implementation project(":common-use-cases")
+    implementation project(":common-method-entities")
     implementation project(":identity-use-cases")
     implementation project(":lockout-use-cases")
 

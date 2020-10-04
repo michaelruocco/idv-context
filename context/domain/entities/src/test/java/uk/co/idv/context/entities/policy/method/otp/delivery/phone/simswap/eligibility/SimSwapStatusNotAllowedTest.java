@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.eligibility;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
+import uk.co.idv.method.entities.eligibility.Eligibility;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

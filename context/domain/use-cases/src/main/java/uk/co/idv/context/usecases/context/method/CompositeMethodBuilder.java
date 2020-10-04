@@ -1,9 +1,9 @@
 package uk.co.idv.context.usecases.context.method;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.MethodsRequest;
-import uk.co.idv.context.entities.policy.method.MethodPolicy;
+import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import java.util.Arrays;
 import java.util.Collection;

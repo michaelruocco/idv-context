@@ -4,13 +4,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.method.Method;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.result.Result;
-import uk.co.idv.context.entities.context.result.Results;
 import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
+import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.result.Result;
+import uk.co.idv.method.entities.result.Results;
 
 import java.util.Optional;
 import java.util.UUID;

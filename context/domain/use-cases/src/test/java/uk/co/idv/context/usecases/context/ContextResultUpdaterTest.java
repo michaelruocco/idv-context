@@ -4,13 +4,13 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.idv.context.entities.context.NotNextMethodInSequenceException;
-import uk.co.idv.context.entities.context.eligibility.EligibilityMother;
-import uk.co.idv.context.entities.context.method.Method;
-import uk.co.idv.context.entities.context.method.fake.FakeMethodMother;
-import uk.co.idv.context.entities.context.result.Result;
-import uk.co.idv.context.entities.context.result.ResultMother;
 import uk.co.idv.context.entities.context.sequence.SequenceMother;
 import uk.co.idv.context.entities.context.sequence.SequencesMother;
+import uk.co.idv.method.entities.eligibility.EligibilityMother;
+import uk.co.idv.method.entities.method.FakeMethodMother;
+import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.result.Result;
+import uk.co.idv.method.entities.result.ResultMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

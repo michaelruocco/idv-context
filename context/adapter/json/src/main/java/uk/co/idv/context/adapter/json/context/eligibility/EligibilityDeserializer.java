@@ -4,10 +4,10 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.context.eligibility.AsyncEligibility;
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.eligibility.Eligible;
-import uk.co.idv.context.entities.context.eligibility.Ineligible;
+import uk.co.idv.method.entities.eligibility.AsyncEligibility;
+import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.eligibility.Eligible;
+import uk.co.idv.method.entities.eligibility.Ineligible;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 

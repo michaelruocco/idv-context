@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.policy.method.otp.OtpPolicyModule;
 import uk.co.idv.context.entities.policy.method.MethodPolicies;
-import uk.co.idv.context.entities.policy.method.MethodPolicy;
+import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import java.util.Collections;
 

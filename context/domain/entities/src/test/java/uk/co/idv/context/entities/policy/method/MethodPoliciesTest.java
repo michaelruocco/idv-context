@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.policy.method;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.identity.RequestedData;
 import uk.co.idv.identity.entities.identity.RequestedDataMother;
+import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import java.util.stream.Stream;
 

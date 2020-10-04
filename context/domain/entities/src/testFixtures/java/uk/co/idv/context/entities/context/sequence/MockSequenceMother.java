@@ -1,6 +1,6 @@
 package uk.co.idv.context.entities.context.sequence;
 
-import uk.co.idv.context.entities.context.method.Method;
+import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
 import java.util.Optional;

@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
 
-import uk.co.idv.context.entities.context.eligibility.Eligibility;
-import uk.co.idv.context.entities.context.eligibility.EligibilityMother;
 import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfigMother;
+import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.eligibility.EligibilityMother;
 
 import java.util.concurrent.CompletableFuture;
 

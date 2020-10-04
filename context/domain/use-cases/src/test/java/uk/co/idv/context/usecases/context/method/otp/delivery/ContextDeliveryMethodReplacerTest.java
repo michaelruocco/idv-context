@@ -3,14 +3,14 @@ package uk.co.idv.context.usecases.context.method.otp.delivery;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
-import uk.co.idv.context.entities.context.eligibility.EligibilityMother;
-import uk.co.idv.context.entities.context.method.Method;
-import uk.co.idv.context.entities.context.method.fake.FakeMethodMother;
 import uk.co.idv.context.entities.context.method.otp.OtpMother;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethodsMother;
+import uk.co.idv.method.entities.eligibility.EligibilityMother;
+import uk.co.idv.method.entities.method.FakeMethodMother;
+import uk.co.idv.method.entities.method.Method;
 
 import java.util.UUID;
 
