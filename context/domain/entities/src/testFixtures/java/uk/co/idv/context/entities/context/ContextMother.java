@@ -26,6 +26,10 @@ public interface ContextMother {
         return builder().expiry(expiry).build();
     }
 
+    static Context withSequences(Sequence... sequences) {
+        return withSequences(new Sequences(sequences));
+    }
+
     static Context withSequences(Sequences sequences) {
         return builder().sequences(sequences).build();
     }

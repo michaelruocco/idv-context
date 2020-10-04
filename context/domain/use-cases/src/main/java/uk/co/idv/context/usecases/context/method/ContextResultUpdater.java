@@ -39,7 +39,7 @@ public class ContextResultUpdater {
         return method;
     }
 
-    public Method addResultIfApplicable(Method method, Result result) {
+    private Method addResultIfApplicable(Method method, Result result) {
         if (isApplicable(method, result)) {
             return method.add(result);
         }

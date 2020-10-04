@@ -54,8 +54,8 @@ public class Context {
         return sequences.getDuration();
     }
 
-    public Methods getNextMethods(String name) {
-        return sequences.getMethodsIfNext(name);
+    public boolean hasExpired(Instant timestamp) {
+        return timestamp.isAfter(expiry);
     }
 
     public Methods getNextEligibleIncompleteMethods(String name) {
@@ -66,8 +66,8 @@ public class Context {
         return methods.getEligibleIncomplete();
     }
 
-    public boolean hasExpired(Instant timestamp) {
-        return timestamp.isAfter(expiry);
+    public Methods getNextMethods(String name) {
+        return sequences.getMethodsIfNext(name);
     }
 
 }

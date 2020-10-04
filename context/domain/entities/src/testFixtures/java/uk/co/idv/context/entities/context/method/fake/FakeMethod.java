@@ -17,7 +17,9 @@ public class FakeMethod implements Method {
     private final MethodConfig config;
     private final boolean complete;
     private final boolean successful;
-    private final Results results;
+
+    @Builder.Default
+    private final Results results = new Results();
 
     @Override
     public FakeMethod add(Result result) {
