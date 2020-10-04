@@ -8,8 +8,6 @@ dependencies {
     api "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
 
     implementation project(":identity-json")
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
     testImplementation testFixtures(project(":lockout-use-cases"))
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"

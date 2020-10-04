@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.context.method;
+package uk.co.idv.context.usecases.context;
 
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.method.Method;

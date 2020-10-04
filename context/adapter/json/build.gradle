@@ -7,8 +7,6 @@ dependencies {
     api project(":identity-json")
     api project(":common-json")
 
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
     implementation "org.zalando:jackson-datatype-money:1.2.0"
     implementation project(":policy-json")
 

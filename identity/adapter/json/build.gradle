@@ -6,9 +6,6 @@ dependencies {
     api project(":identity-use-cases")
     api project(":common-json")
 
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
-    implementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
-
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
 
     testFixturesApi testFixtures(project(":identity-use-cases"))

@@ -4,6 +4,8 @@ plugins {
 
 dependencies {
     api "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
+    api "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
+    api "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
 
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
 
