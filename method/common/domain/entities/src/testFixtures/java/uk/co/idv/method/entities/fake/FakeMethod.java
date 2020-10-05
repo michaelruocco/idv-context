@@ -1,8 +1,10 @@
-package uk.co.idv.method.entities.method;
+package uk.co.idv.method.entities.fake;
 
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.method.MethodConfig;
 import uk.co.idv.method.entities.result.Result;
 import uk.co.idv.method.entities.result.Results;
 

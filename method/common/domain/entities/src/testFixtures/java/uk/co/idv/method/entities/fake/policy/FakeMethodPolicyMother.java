@@ -1,4 +1,4 @@
-package uk.co.idv.method.entities.policy;
+package uk.co.idv.method.entities.fake.policy;
 
 import uk.co.idv.identity.entities.identity.RequestedDataMother;
 

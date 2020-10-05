@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
-import uk.co.idv.method.entities.method.FakeMethodMother;
+import uk.co.idv.method.entities.fake.FakeMethodMother;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.otp.OtpMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;

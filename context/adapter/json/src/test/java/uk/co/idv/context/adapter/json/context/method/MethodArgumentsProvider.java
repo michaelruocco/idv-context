@@ -4,7 +4,7 @@ import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.ArgumentsProvider;
 import uk.co.idv.context.adapter.json.context.method.fake.FakeMethodJsonMother;
-import uk.co.idv.method.entities.method.FakeMethodMother;
+import uk.co.idv.method.entities.fake.FakeMethodMother;
 
 import java.util.stream.Stream;
 

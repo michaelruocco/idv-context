@@ -2,8 +2,8 @@ package uk.co.idv.context.adapter.json.context.method.fake;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.method.entities.method.FakeMethod;
-import uk.co.idv.method.entities.policy.FakeMethodConfig;
+import uk.co.idv.method.entities.fake.FakeMethod;
+import uk.co.idv.method.entities.fake.policy.FakeMethodConfig;
 
 public class FakeMethodModule extends SimpleModule {
 
