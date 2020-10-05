@@ -1,0 +1,41 @@
+{
+  "name": "one-time-passcode",
+  "deliveryMethods": [
+    {
+      "id": "d22d7d89-9127-4a01-a99c-baaaf34124c7",
+      "type": "voice",
+      "value": "+1604654321",
+      "eligibility": {
+        "eligible": true
+      }
+    },
+    {
+      "id": "cedbf56f-66d5-41e0-a669-01559b031c7c",
+      "type": "sms",
+      "value": "+447809123456",
+      "eligibility": {
+        "eligible": true
+      }
+    },
+    {
+      "id": "51c560bd-4b47-4209-b70f-74f82720d960",
+      "type": "email",
+      "value": "joe.bloggs@hotmail.com",
+      "eligibility": {
+        "eligible": true
+      }
+    }
+  ],
+  "complete": false,
+  "successful": false,
+  "config": {
+    "maxNumberOfAttempts": 3,
+    "duration": 300000,
+    "passcodeConfig": {
+      "length": 8,
+      "duration": 120000,
+      "maxNumberOfDeliveries": 2
+    }
+  },
+  "eligible": true
+}
