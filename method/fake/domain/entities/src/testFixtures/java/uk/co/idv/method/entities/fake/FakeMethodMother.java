@@ -3,7 +3,6 @@ package uk.co.idv.method.entities.fake;
 
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
 import uk.co.idv.method.entities.method.MethodConfig;
-import uk.co.idv.method.entities.fake.policy.FakeMethodConfigMother;
 
 import java.time.Duration;
 

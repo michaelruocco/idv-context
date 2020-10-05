@@ -1,6 +1,7 @@
 package uk.co.idv.method.entities.fake.policy;
 
 import uk.co.idv.identity.entities.identity.RequestedDataMother;
+import uk.co.idv.method.entities.fake.FakeMethodConfigMother;
 
 public interface FakeMethodPolicyMother {
 

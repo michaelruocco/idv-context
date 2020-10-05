@@ -99,6 +99,9 @@ project(':method-entities').projectDir = file('method/common/domain/entities')
 include ':otp-entities'
 project(':otp-entities').projectDir = file('method/otp/domain/entities')
 
+include ':fake-method-entities'
+project(':fake-method-entities').projectDir = file('method/fake/domain/entities')
+
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')
 

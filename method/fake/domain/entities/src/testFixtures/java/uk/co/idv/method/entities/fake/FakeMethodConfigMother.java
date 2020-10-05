@@ -1,4 +1,4 @@
-package uk.co.idv.method.entities.fake.policy;
+package uk.co.idv.method.entities.fake;
 
 import java.time.Duration;
 
