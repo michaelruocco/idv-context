@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
+import uk.co.idv.context.adapter.json.context.method.MethodMapping;
+import uk.co.idv.context.adapter.json.context.method.fake.FakeMethodMapping;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.entities.context.sequence.SequencesMother;
 
@@ -12,9 +14,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class SequencesSerdeTest {
 
-    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new SequenceModule());
-    private static final Sequences SEQUENCES = SequencesMother.otpOnly();
-    private static final String JSON = SequencesJsonMother.otpOnly();
+    private static final MethodMapping MAPPING = new FakeMethodMapping();
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new SequenceModule(MAPPING));
+    private static final Sequences SEQUENCES = SequencesMother.fakeOnly();
+    private static final String JSON = SequencesJsonMother.fakeOnly();
 
     @Test
     void shouldSerialize() throws JsonProcessingException {

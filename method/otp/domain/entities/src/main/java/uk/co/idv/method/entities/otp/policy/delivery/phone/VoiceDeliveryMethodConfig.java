@@ -1,7 +1,4 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.phone.voice;
-
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
+package uk.co.idv.method.entities.otp.policy.delivery.phone;
 
 public class VoiceDeliveryMethodConfig extends PhoneDeliveryMethodConfig {
 

@@ -4,11 +4,11 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.email.EmailDeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.sms.SmsDeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.voice.VoiceDeliveryMethodConfig;
 import uk.co.idv.identity.entities.alias.Alias;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.email.EmailDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SmsDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.VoiceDeliveryMethodConfig;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 

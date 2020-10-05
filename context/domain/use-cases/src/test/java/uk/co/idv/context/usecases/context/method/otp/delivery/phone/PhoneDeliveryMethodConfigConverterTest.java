@@ -1,14 +1,14 @@
 package uk.co.idv.context.usecases.context.method.otp.delivery.phone;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumbers;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.sms.SmsDeliveryMethodConfigMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumbers;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.PhoneDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.sms.SmsDeliveryMethodConfigMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

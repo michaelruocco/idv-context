@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.AcceptableSimSwapStatuses;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.AcceptableSimSwapStatuses;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 

@@ -1,14 +1,14 @@
 package uk.co.idv.context.usecases.context.method.otp.delivery.phone;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethodMother;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumbersMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumbers;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumber;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumberMother;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumbers;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumbersMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.PhoneDeliveryMethodConfig;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

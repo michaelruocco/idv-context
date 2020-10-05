@@ -2,12 +2,12 @@ package uk.co.idv.context.usecases.context.method.otp.delivery.phone;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumbers;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
 import uk.co.idv.context.usecases.context.method.otp.delivery.DeliveryMethodConfigConverter;
 import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumbers;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.PhoneDeliveryMethodConfig;
 
 @Builder
 @Slf4j

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
-import uk.co.idv.context.entities.policy.method.otp.PasscodeConfig;
-import uk.co.idv.context.entities.policy.method.otp.PasscodeConfigMother;
+import uk.co.idv.method.entities.otp.PasscodeConfig;
+import uk.co.idv.method.entities.otp.PasscodeConfigMother;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;

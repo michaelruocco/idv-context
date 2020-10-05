@@ -15,9 +15,10 @@ dependencies {
     integrationTestImplementation project(":identity-external-find-stub")
     integrationTestImplementation project(":lockout-in-memory-repository")
 
+    integrationTestImplementation testFixtures(project(":context-entities"))
+    integrationTestImplementation testFixtures(project(":otp-entities"))
     integrationTestImplementation testFixtures(project(":identity-use-cases"))
     integrationTestImplementation testFixtures(project(":lockout-use-cases"))
-    integrationTestImplementation testFixtures(project(":context-entities"))
     integrationTestImplementation testFixtures(project(":common-use-cases"))
     integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
 }

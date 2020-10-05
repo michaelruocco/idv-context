@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.co.idv.context.adapter.json.policy.method.otp.delivery.DeliveryMethodConfigModule;
-import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
-import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
-import uk.co.idv.context.entities.policy.method.otp.PasscodeConfig;
+import uk.co.idv.method.entities.otp.OtpConfig;
+import uk.co.idv.method.entities.otp.PasscodeConfig;
+import uk.co.idv.method.entities.otp.policy.OtpPolicy;
 
 import java.util.Arrays;
 

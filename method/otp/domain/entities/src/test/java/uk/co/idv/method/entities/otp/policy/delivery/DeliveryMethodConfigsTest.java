@@ -1,14 +1,14 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery;
+package uk.co.idv.method.entities.otp.policy.delivery;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.method.otp.delivery.email.EmailDeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.email.EmailDeliveryMethodConfigMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.sms.SmsDeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.sms.SmsDeliveryMethodConfigMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.voice.VoiceDeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.voice.VoiceDeliveryMethodConfigMother;
 import uk.co.idv.identity.entities.identity.RequestedData;
 import uk.co.idv.identity.entities.identity.RequestedDataMother;
+import uk.co.idv.method.entities.otp.policy.delivery.email.EmailDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.email.EmailDeliveryMethodConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SmsDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.VoiceDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.sms.SmsDeliveryMethodConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.voice.VoiceDeliveryMethodConfigMother;
 
 import java.time.Duration;
 import java.util.Optional;

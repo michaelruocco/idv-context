@@ -15,7 +15,8 @@ public interface FakeMethodConfigMother {
     static FakeMethodConfig.FakeMethodConfigBuilder builder() {
         return FakeMethodConfig.builder()
                 .maxNumberOfAttempts(3)
-                .duration(Duration.ofMinutes(5));
+                .duration(Duration.ofMinutes(5))
+                .fakeValue("fake");
     }
 
 }

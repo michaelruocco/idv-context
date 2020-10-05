@@ -1,7 +1,8 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.phone.eligibility;
+package uk.co.idv.method.entities.otp.delivery.phone.eligbility;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.otp.delivery.phone.eligibility.NotAMobileNumber;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

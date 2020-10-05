@@ -5,8 +5,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumbers;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumber;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumbers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

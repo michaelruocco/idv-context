@@ -3,21 +3,19 @@ package uk.co.idv.context.adapter.json.context;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.common.adapter.json.ObjectMapperFactory;
+import uk.co.idv.context.adapter.json.context.method.MethodMapping;
+import uk.co.idv.context.adapter.json.context.method.fake.FakeMethodMapping;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
 
-import static com.fasterxml.jackson.databind.DeserializationFeature.*;
-import static com.fasterxml.jackson.databind.SerializationFeature.*;
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ContextSerdeTest {
 
-    private static final ObjectMapper MAPPER = new ObjectMapper()
-            .disable(WRITE_DATES_AS_TIMESTAMPS)
-            .disable(WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS)
-            .disable(READ_DATE_TIMESTAMPS_AS_NANOSECONDS)
-            .registerModule(new ContextModule());
+    private static final MethodMapping MAPPING = new FakeMethodMapping();
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new ContextModule(MAPPING));
     private static final Context CONTEXT = ContextMother.build();
     private static final String JSON = ContextJsonMother.build();
 
@@ -25,6 +23,7 @@ class ContextSerdeTest {
     void shouldSerialize() throws JsonProcessingException {
         String json = MAPPER.writeValueAsString(CONTEXT);
 
+        System.out.println("JSON " + json);
         assertThatJson(json).isEqualTo(JSON);
     }
 

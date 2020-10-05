@@ -2,11 +2,11 @@ package uk.co.idv.context.usecases.context.method.otp.delivery;
 
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.otp.Otp;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.otp.Otp;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
 
 import java.util.stream.Collectors;
 

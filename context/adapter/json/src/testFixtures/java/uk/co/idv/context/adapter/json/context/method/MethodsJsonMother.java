@@ -4,7 +4,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
 public interface MethodsJsonMother {
 
-    static String otpOnly() {
+    static String fakeOnly() {
         return loadContentFromClasspath("context/method/methods.json");
     }
 

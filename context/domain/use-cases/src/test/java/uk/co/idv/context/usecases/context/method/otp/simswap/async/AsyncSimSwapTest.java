@@ -1,7 +1,7 @@
 package uk.co.idv.context.usecases.context.method.otp.simswap.async;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
+import uk.co.idv.method.entities.otp.simswap.SimSwapRequest;
 
 import java.time.Duration;
 import java.util.concurrent.ScheduledExecutorService;

@@ -5,9 +5,9 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.neovisionaries.i18n.CountryCode;
-import uk.co.idv.context.entities.policy.method.otp.delivery.LastUpdatedConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.LastUpdatedConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.OtpPhoneNumberConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 

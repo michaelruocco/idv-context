@@ -1,10 +1,9 @@
-package uk.co.idv.context.entities.context.method.otp.simswap;
+package uk.co.idv.method.entities.otp.simswap;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.MethodsRequest;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.EligibilityFutures;
-import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
+import uk.co.idv.method.entities.eligibility.EligibilityFutures;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.policy.OtpPolicy;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -18,14 +17,14 @@ import static org.mockito.Mockito.mock;
 class SimSwapRequestTest {
 
     @Test
-    void shouldReturnMethodsRequest() {
-        MethodsRequest methodsRequest = mock(MethodsRequest.class);
+    void shouldReturnContextId() {
+        UUID id = UUID.randomUUID();
 
         SimSwapRequest request = SimSwapRequest.builder()
-                .methodsRequest(methodsRequest)
+                .contextId(id)
                 .build();
 
-        assertThat(request.getMethodsRequest()).isEqualTo(methodsRequest);
+        assertThat(request.getContextId()).isEqualTo(id);
     }
 
     @Test
@@ -48,19 +47,6 @@ class SimSwapRequestTest {
                 .build();
 
         assertThat(request.getDeliveryMethods()).isEqualTo(deliveryMethods);
-    }
-
-    @Test
-    void shouldReturnContextIdFromMethodsRequest() {
-        MethodsRequest methodsRequest = mock(MethodsRequest.class);
-        UUID id = UUID.randomUUID();
-        given(methodsRequest.getContextId()).willReturn(id);
-
-        SimSwapRequest request = SimSwapRequest.builder()
-                .methodsRequest(methodsRequest)
-                .build();
-
-        assertThat(request.getContextId()).isEqualTo(id);
     }
 
     @Test

@@ -1,10 +1,10 @@
 package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.eligibility.SimSwapStatusNotAllowed;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.eligibility.SimSwappedAfterCutoff;
 import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
+import uk.co.idv.method.entities.otp.simswap.eligibility.SimSwapStatusNotAllowed;
+import uk.co.idv.method.entities.otp.simswap.eligibility.SimSwappedAfterCutoff;
 
 import java.time.Duration;
 import java.time.Instant;

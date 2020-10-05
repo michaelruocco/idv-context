@@ -1,10 +1,10 @@
 package uk.co.idv.identity.usecases.eligibility.external.data;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.common.usecases.async.DelayedSupplier;
-import uk.co.idv.common.usecases.async.FailingSupplier;
+import uk.co.idv.common.entities.async.DelayedSupplier;
+import uk.co.idv.common.entities.async.FailingSupplier;
 import uk.co.idv.common.usecases.async.FutureWaiter;
-import uk.co.idv.common.usecases.async.SuccessfulSupplier;
+import uk.co.idv.common.entities.async.SuccessfulSupplier;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;

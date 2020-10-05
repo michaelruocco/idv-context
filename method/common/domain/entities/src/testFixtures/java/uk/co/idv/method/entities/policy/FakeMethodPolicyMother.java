@@ -1,21 +1,18 @@
 package uk.co.idv.method.entities.policy;
 
-import java.time.Duration;
+import uk.co.idv.identity.entities.identity.RequestedDataMother;
 
-public interface FakeMethodConfigMother {
+public interface FakeMethodPolicyMother {
 
-    static FakeMethodConfig build() {
+    static FakeMethodPolicy build() {
         return builder().build();
     }
 
-    static FakeMethodConfig withDuration(Duration duration) {
-        return builder().duration(duration).build();
-    }
-
-    static FakeMethodConfig.FakeMethodConfigBuilder builder() {
-        return FakeMethodConfig.builder()
-                .maxNumberOfAttempts(3)
-                .duration(Duration.ofMinutes(5));
+    static FakeMethodPolicy.FakeMethodPolicyBuilder builder() {
+        return FakeMethodPolicy.builder()
+                .name("fake-method")
+                .config(FakeMethodConfigMother.build())
+                .requestedData(RequestedDataMother.noneRequested());
     }
 
 }

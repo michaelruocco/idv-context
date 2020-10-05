@@ -2,8 +2,8 @@ package uk.co.idv.context.usecases.context.method.otp.delivery.email;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.id.IdGenerator;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfig;
 
 import java.util.UUID;
 

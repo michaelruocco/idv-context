@@ -1,4 +1,4 @@
-package uk.co.idv.context.entities.policy.method.otp;
+package uk.co.idv.method.entities.otp;
 
 import lombok.Builder;
 import lombok.Data;

@@ -1,10 +1,10 @@
-package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
+package uk.co.idv.method.entities.otp.simswap.eligibility;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.entities.async.DelayedSupplier;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
 
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;

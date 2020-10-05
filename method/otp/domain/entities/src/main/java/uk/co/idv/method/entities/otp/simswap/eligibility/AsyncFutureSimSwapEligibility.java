@@ -1,12 +1,12 @@
-package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
+package uk.co.idv.method.entities.otp.simswap.eligibility;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.entities.async.FutureHandler;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 import uk.co.idv.method.entities.eligibility.AsyncEligibility;
 import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
 
 import java.util.Optional;
 import java.util.concurrent.CompletableFuture;

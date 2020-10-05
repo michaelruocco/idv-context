@@ -1,4 +1,6 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap;
+package uk.co.idv.method.entities.otp.policy.delivery.phone.simswap;
+
+import uk.co.idv.method.entities.otp.policy.delivery.phone.AcceptableSimSwapStatuses;
 
 public interface AcceptableSimSwapStatusesMother {
 

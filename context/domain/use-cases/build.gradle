@@ -7,11 +7,14 @@ dependencies {
     api "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}"
 
     implementation project(":common-use-cases")
-    implementation project(":common-method-entities")
+    implementation project(":method-entities")
+    implementation project(":otp-entities")
     implementation project(":identity-use-cases")
     implementation project(":lockout-use-cases")
 
     testImplementation testFixtures(project(":context-entities"))
     testImplementation testFixtures(project(":policy-entities"))
+    testImplementation testFixtures(project(":method-entities"))
+    testImplementation testFixtures(project(":otp-entities"))
     testImplementation "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}:test-fixtures"
 }

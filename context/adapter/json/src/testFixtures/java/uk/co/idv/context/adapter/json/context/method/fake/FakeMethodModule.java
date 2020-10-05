@@ -1,28 +1,17 @@
-package uk.co.idv.context.adapter.json.context.method.otp;
+package uk.co.idv.context.adapter.json.context.method.fake;
 
 import com.fasterxml.jackson.core.Version;
-import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.context.adapter.json.context.method.otp.delivery.DeliveryMethodModule;
-import uk.co.idv.context.adapter.json.policy.method.otp.OtpPolicyModule;
-import uk.co.idv.method.entities.otp.Otp;
+import uk.co.idv.method.entities.method.FakeMethod;
+import uk.co.idv.method.entities.policy.FakeMethodConfig;
 
-import java.util.Arrays;
+public class FakeMethodModule extends SimpleModule {
 
-public class OtpModule extends SimpleModule {
-
-    public OtpModule() {
+    public FakeMethodModule() {
         super("otp-module", Version.unknownVersion());
 
-        addDeserializer(Otp.class, new OtpDeserializer());
-    }
-
-    @Override
-    public Iterable<? extends Module> getDependencies() {
-        return Arrays.asList(
-                new DeliveryMethodModule(),
-                new OtpPolicyModule()
-        );
+        addDeserializer(FakeMethod.class, new FakeMethodDeserializer());
+        addDeserializer(FakeMethodConfig.class, new FakeMethodConfigDeserializer());
     }
 
 }

@@ -6,7 +6,7 @@ import uk.co.idv.method.entities.method.Method;
 
 public interface SequenceMother {
 
-    static Sequence otpOnly() {
+    static Sequence fakeOnly() {
         return builder().build();
     }
 
@@ -21,7 +21,7 @@ public interface SequenceMother {
     static Sequence.SequenceBuilder builder() {
         return Sequence.builder()
                 .name("default-sequence")
-                .methods(MethodsMother.otpOnly());
+                .methods(MethodsMother.fakeOnly());
     }
 
 }

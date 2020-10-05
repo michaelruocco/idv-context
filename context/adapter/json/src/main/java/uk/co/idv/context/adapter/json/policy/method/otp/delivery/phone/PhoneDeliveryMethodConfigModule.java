@@ -7,11 +7,11 @@ import uk.co.idv.context.adapter.json.context.method.otp.delivery.LastUpdatedCon
 import uk.co.idv.context.adapter.json.policy.method.otp.delivery.phone.simswap.SimSwapConfigModule;
 import uk.co.idv.context.adapter.json.policy.method.otp.delivery.phone.sms.SmsDeliveryMethodConfigDeserializer;
 import uk.co.idv.context.adapter.json.policy.method.otp.delivery.phone.voice.VoiceDeliveryMethodConfigDeserializer;
-import uk.co.idv.context.entities.policy.method.otp.delivery.LastUpdatedConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.sms.SmsDeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.voice.VoiceDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.LastUpdatedConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.OtpPhoneNumberConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.PhoneDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SmsDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.VoiceDeliveryMethodConfig;
 
 import java.util.Collections;
 

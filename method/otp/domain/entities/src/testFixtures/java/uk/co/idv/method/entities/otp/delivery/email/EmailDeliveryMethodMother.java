@@ -1,7 +1,7 @@
-package uk.co.idv.context.entities.context.method.otp.delivery;
+package uk.co.idv.method.entities.otp.delivery.email;
 
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod.DeliveryMethodBuilder;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 
 import java.util.UUID;
 
@@ -11,7 +11,7 @@ public interface EmailDeliveryMethodMother {
         return builder().build();
     }
 
-    static DeliveryMethodBuilder builder() {
+    static DeliveryMethod.DeliveryMethodBuilder builder() {
         return DeliveryMethod.builder()
                 .id(UUID.fromString("51c560bd-4b47-4209-b70f-74f82720d960"))
                 .type("email")

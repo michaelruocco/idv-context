@@ -2,7 +2,7 @@ package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.common.usecases.async.Delay;
+import uk.co.idv.common.entities.async.Delay;
 import uk.co.idv.context.usecases.context.method.otp.delivery.phone.simswap.SimSwapExecutor;
 
 import java.time.Clock;

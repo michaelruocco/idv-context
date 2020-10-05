@@ -1,10 +1,9 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
+package uk.co.idv.method.entities.otp.policy.delivery.phone;
 
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfigMother;
 import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.simswap.SimSwapConfigMother;
 
 import java.time.Duration;
 import java.util.Optional;

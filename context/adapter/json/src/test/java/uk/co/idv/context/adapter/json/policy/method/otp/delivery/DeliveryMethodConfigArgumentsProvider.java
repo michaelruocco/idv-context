@@ -6,9 +6,9 @@ import org.junit.jupiter.params.provider.ArgumentsProvider;
 import uk.co.idv.context.adapter.json.policy.method.otp.delivery.email.EmailDeliveryMethodConfigJsonMother;
 import uk.co.idv.context.adapter.json.policy.method.otp.delivery.phone.SmsDeliveryMethodConfigJsonMother;
 import uk.co.idv.context.adapter.json.policy.method.otp.delivery.phone.VoiceDeliveryMethodConfigJsonMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.email.EmailDeliveryMethodConfigMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.sms.SmsDeliveryMethodConfigMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.voice.VoiceDeliveryMethodConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.email.EmailDeliveryMethodConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.sms.SmsDeliveryMethodConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.voice.VoiceDeliveryMethodConfigMother;
 
 import java.util.stream.Stream;
 

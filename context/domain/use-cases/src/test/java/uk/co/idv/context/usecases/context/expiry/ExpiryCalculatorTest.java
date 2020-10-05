@@ -18,7 +18,7 @@ class ExpiryCalculatorTest {
     @Test
     void shouldAddSequencesDurationToCreatedAndThenAddBuffer() {
         Instant created = Instant.now();
-        Sequences sequences = SequencesMother.otpOnly();
+        Sequences sequences = SequencesMother.fakeOnly();
 
         Instant expiry = calculator.calculate(created, sequences);
 

@@ -1,10 +1,9 @@
-package uk.co.idv.context.entities.context.method.otp.simswap;
+package uk.co.idv.method.entities.otp.simswap;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.context.method.MethodsRequest;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.policy.OtpPolicy;
 
 import java.time.Duration;
 import java.util.UUID;
@@ -16,12 +15,12 @@ public class SimSwapRequest {
 
     private static final Duration DEFAULT_TIMEOUT = Duration.ofSeconds(5);
 
-    private final MethodsRequest methodsRequest;
+    private final UUID contextId;
     private final OtpPolicy policy;
     private final DeliveryMethods deliveryMethods;
 
     public UUID getContextId() {
-        return methodsRequest.getContextId();
+        return contextId;
     }
 
     public boolean hasAsyncSimSwap() {

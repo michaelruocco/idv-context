@@ -1,28 +1,30 @@
-package uk.co.idv.context.adapter.json.context.method.otp;
+package uk.co.idv.context.adapter.json.context.method.fake;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.method.entities.otp.Otp;
-import uk.co.idv.method.entities.otp.OtpConfig;
-import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.context.adapter.json.context.method.ResultsExtractor;
+import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.method.FakeMethod;
+import uk.co.idv.method.entities.policy.FakeMethodConfig;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
-class OtpDeserializer extends StdDeserializer<Otp> {
+class FakeMethodDeserializer extends StdDeserializer<FakeMethod> {
 
-    protected OtpDeserializer() {
-        super(Otp.class);
+    protected FakeMethodDeserializer() {
+        super(FakeMethod.class);
     }
 
     @Override
-    public Otp deserialize(JsonParser parser, DeserializationContext context) {
+    public FakeMethod deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
-        return Otp.builder()
+        return FakeMethod.builder()
                 .name(node.get("name").asText())
-                .otpConfig(JsonNodeConverter.toObject(node.get("config"), parser, OtpConfig.class))
-                .deliveryMethods(JsonNodeConverter.toObject(node.get("deliveryMethods"), parser, DeliveryMethods.class))
+                .config(JsonNodeConverter.toObject(node.get("config"), parser, FakeMethodConfig.class))
+                .eligibility(JsonNodeConverter.toObject(node.get("eligibility"), parser, Eligibility.class))
+                .results(ResultsExtractor.extractResults(node, parser))
                 .build();
     }
 

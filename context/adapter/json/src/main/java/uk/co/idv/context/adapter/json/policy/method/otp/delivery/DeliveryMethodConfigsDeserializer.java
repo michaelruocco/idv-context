@@ -5,8 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfigs;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 

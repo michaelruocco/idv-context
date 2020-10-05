@@ -5,11 +5,11 @@ import org.mockito.ArgumentCaptor;
 import org.mockito.InOrder;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.usecases.context.method.otp.delivery.ContextDeliveryMethodReplacer;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
-import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequestMother;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.method.otp.simswap.sync.SyncSimSwap;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.delivery.phone.simswap.SimSwapRequestMother;
+import uk.co.idv.method.entities.otp.simswap.SimSwapRequest;
 
 import java.util.Optional;
 import java.util.UUID;

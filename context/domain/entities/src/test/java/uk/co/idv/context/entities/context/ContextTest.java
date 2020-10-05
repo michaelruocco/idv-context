@@ -215,7 +215,7 @@ class ContextTest {
     @Test
     void shouldThrowExceptionIfMethodIsNotNextMethodInAnySequences() {
         String methodName = "method-name";
-        Context context = ContextMother.withMethods(MethodsMother.empty());
+        Context context = ContextMother.withMethods(MethodsMother.fakeOnly());
 
         Throwable error = catchThrowable(() -> context.getNextEligibleIncompleteMethods(methodName));
 

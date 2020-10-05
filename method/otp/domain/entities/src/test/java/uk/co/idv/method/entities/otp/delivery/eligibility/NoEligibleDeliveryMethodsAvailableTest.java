@@ -1,4 +1,4 @@
-package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
+package uk.co.idv.method.entities.otp.delivery.eligibility;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.method.entities.eligibility.Eligibility;

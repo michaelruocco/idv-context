@@ -1,7 +1,7 @@
 package uk.co.idv.identity.adapter.eligibility.external.data;
 
 import lombok.Builder;
-import uk.co.idv.common.usecases.async.Delay;
+import uk.co.idv.common.entities.async.Delay;
 import uk.co.idv.identity.adapter.eligibility.external.data.emailaddress.StubEmailAddressSupplier;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;

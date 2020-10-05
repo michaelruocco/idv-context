@@ -6,6 +6,6 @@ public interface MethodPolicy extends RequestedDataProvider {
 
     String getName();
 
-    MethodConfig getMethodConfig();
+    MethodConfig getConfig();
 
 }

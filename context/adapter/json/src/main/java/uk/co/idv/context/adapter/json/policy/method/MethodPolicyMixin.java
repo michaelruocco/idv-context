@@ -1,20 +1,11 @@
-package uk.co.idv.context.adapter.json.policy.method.otp;
+package uk.co.idv.context.adapter.json.policy.method;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import uk.co.idv.identity.entities.identity.RequestedData;
 
-import java.time.Duration;
-import java.util.Optional;
-
-public interface OtpPolicyMixin {
+public interface MethodPolicyMixin {
 
     @JsonIgnore
     RequestedData getRequestedData();
-
-    @JsonIgnore
-    boolean hasAsyncSimSwap();
-
-    @JsonIgnore
-    Optional<Duration> getLongestSimSwapConfigTimeout();
 
 }

@@ -1,9 +1,9 @@
 package uk.co.idv.context.usecases.context.method.otp.delivery.email;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.policy.method.otp.delivery.email.EmailDeliveryMethodConfig;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.policy.delivery.email.EmailDeliveryMethodConfig;
 
 import java.util.stream.Collectors;
 

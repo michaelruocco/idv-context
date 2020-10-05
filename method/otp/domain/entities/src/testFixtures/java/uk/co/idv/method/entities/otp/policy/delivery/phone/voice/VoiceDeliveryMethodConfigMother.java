@@ -1,7 +1,8 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.phone.voice;
+package uk.co.idv.method.entities.otp.policy.delivery.phone.voice;
 
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.OtpPhoneNumberConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.OtpPhoneNumberConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.VoiceDeliveryMethodConfig;
 
 import java.time.Duration;
 

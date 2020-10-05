@@ -2,7 +2,7 @@ package uk.co.idv.context.usecases.context.method.otp.simswap.async;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
+import uk.co.idv.method.entities.otp.simswap.SimSwapRequest;
 
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;

@@ -53,8 +53,9 @@ class MethodsRequestTest {
         SequencesRequest sequencesRequest = SequencesRequest.builder()
                 .contextId(id)
                 .build();
+        SequencePolicy policy = SequencePolicyMother.build();
 
-        MethodsRequest methodsRequest = sequencesRequest.toMethodsRequest(SequencePolicyMother.build());
+        MethodsRequest methodsRequest = sequencesRequest.toMethodsRequest(policy);
 
         assertThat(methodsRequest.getContextId()).isEqualTo(id);
     }
@@ -65,8 +66,9 @@ class MethodsRequestTest {
         SequencesRequest sequencesRequest = SequencesRequest.builder()
                 .identity(identity)
                 .build();
+        SequencePolicy policy = SequencePolicyMother.build();
 
-        MethodsRequest methodsRequest = sequencesRequest.toMethodsRequest(SequencePolicyMother.build());
+        MethodsRequest methodsRequest = sequencesRequest.toMethodsRequest(policy);
 
         assertThat(methodsRequest.getIdentity()).isEqualTo(identity);
     }

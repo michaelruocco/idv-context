@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.policy.method.otp.delivery.LastUpdatedConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.LastUpdatedConfig;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import java.util.Optional;

@@ -12,5 +12,6 @@ public class FakeMethodConfig implements MethodConfig {
 
     private final int maxNumberOfAttempts;
     private final Duration duration;
+    private final String fakeValue;
 
 }

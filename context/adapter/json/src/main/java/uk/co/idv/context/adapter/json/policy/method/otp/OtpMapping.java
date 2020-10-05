@@ -1,35 +1,35 @@
-package uk.co.idv.context.adapter.json.context.method.fake;
+package uk.co.idv.context.adapter.json.policy.method.otp;
 
 import com.fasterxml.jackson.databind.Module;
 import uk.co.idv.context.adapter.json.context.method.MethodMapping;
-import uk.co.idv.context.adapter.json.policy.method.fake.FakeMethodPolicyModule;
-import uk.co.idv.method.entities.method.FakeMethod;
+import uk.co.idv.context.adapter.json.context.method.otp.OtpModule;
 import uk.co.idv.method.entities.method.Method;
-import uk.co.idv.method.entities.policy.FakeMethodPolicy;
+import uk.co.idv.method.entities.otp.Otp;
+import uk.co.idv.method.entities.otp.policy.OtpPolicy;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import java.util.Arrays;
 import java.util.Collection;
 
-public class FakeMethodMapping implements MethodMapping {
+public class OtpMapping implements MethodMapping {
 
     @Override
     public String getName() {
-        return "fake-method";
+        return "one-time-passcode";
     }
 
     @Override
     public Class<? extends Method> getMethodType() {
-        return FakeMethod.class;
+        return Otp.class;
     }
 
     @Override
     public Class<? extends MethodPolicy> getPolicyType() {
-        return FakeMethodPolicy.class;
+        return OtpPolicy.class;
     }
 
     public Collection<Module> getModules() {
-        return Arrays.asList(new FakeMethodModule(), new FakeMethodPolicyModule());
+        return Arrays.asList(new OtpModule(), new OtpPolicyModule());
     }
 
 }

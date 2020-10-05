@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;

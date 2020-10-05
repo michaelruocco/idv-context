@@ -2,8 +2,8 @@ package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumber;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
 
 import java.time.Clock;
 import java.time.Duration;

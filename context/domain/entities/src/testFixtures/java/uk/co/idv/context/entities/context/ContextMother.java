@@ -50,7 +50,7 @@ public interface ContextMother {
                 .created(Instant.parse("2020-09-14T20:02:02.002Z"))
                 .expiry(Instant.parse("2020-09-14T20:08:02.002Z"))
                 .request(ServiceCreateContextRequestMother.build())
-                .sequences(SequencesMother.otpOnly());
+                .sequences(SequencesMother.fakeOnly());
     }
 
 }

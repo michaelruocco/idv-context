@@ -1,9 +1,10 @@
-package uk.co.idv.context.entities.policy.method.otp;
+package uk.co.idv.method.entities.otp.policy;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.method.entities.otp.OtpConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfigs;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import java.time.Duration;
@@ -15,7 +16,7 @@ public class OtpPolicy implements MethodPolicy {
 
     public static final String NAME = "one-time-passcode";
 
-    private final OtpConfig methodConfig;
+    private final OtpConfig config;
     private final DeliveryMethodConfigs deliveryMethodConfigs;
 
     @Override

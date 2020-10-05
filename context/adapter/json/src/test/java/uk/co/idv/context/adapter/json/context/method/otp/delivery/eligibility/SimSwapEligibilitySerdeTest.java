@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.SimSwapEligibilityMother;
 import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.otp.delivery.phone.simswap.SimSwapEligibilityMother;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 

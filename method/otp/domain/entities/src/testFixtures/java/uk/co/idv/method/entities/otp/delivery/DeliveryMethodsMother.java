@@ -1,4 +1,8 @@
-package uk.co.idv.context.entities.context.method.otp.delivery;
+package uk.co.idv.method.entities.otp.delivery;
+
+import uk.co.idv.method.entities.otp.delivery.email.EmailDeliveryMethodMother;
+import uk.co.idv.method.entities.otp.delivery.phone.sms.SmsDeliveryMethodMother;
+import uk.co.idv.method.entities.otp.delivery.phone.voice.VoiceDeliveryMethodMother;
 
 public interface DeliveryMethodsMother {
 

@@ -1,8 +1,9 @@
-package uk.co.idv.method.entities.otp;
+package uk.co.idv.method.entities.otp.policy;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.method.entities.otp.OtpConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfigs;
 
 import java.time.Duration;
 import java.util.Optional;
@@ -17,7 +18,7 @@ class OtpPolicyTest {
     private final OtpConfig otpConfig = mock(OtpConfig.class);
 
     private final OtpPolicy policy = OtpPolicy.builder()
-            .methodConfig(otpConfig)
+            .config(otpConfig)
             .deliveryMethodConfigs(deliveryMethodConfigs)
             .build();
 
@@ -28,7 +29,7 @@ class OtpPolicyTest {
 
     @Test
     void shouldReturnMethodConfig() {
-        assertThat(policy.getMethodConfig()).isEqualTo(otpConfig);
+        assertThat(policy.getConfig()).isEqualTo(otpConfig);
     }
 
     @Test

@@ -1,9 +1,9 @@
-package uk.co.idv.context.entities.context.method.otp.delivery;
+package uk.co.idv.method.entities.otp.delivery.phone.sms;
 
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod.DeliveryMethodBuilder;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncSimSwapEligibilityMother;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
+import uk.co.idv.method.entities.otp.delivery.phone.simswap.AsyncSimSwapEligibilityMother;
 
 import java.util.UUID;
 
@@ -21,7 +21,7 @@ public interface SmsDeliveryMethodMother {
         return builder().eligibility(eligibility).build();
     }
 
-    static DeliveryMethodBuilder builder() {
+    static DeliveryMethod.DeliveryMethodBuilder builder() {
         return DeliveryMethod.builder()
                 .id(UUID.fromString("cedbf56f-66d5-41e0-a669-01559b031c7c"))
                 .type("sms")

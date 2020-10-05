@@ -1,8 +1,8 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery;
+package uk.co.idv.method.entities.otp.policy.delivery;
 
-import uk.co.idv.context.entities.policy.method.otp.delivery.email.EmailDeliveryMethodConfigMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.sms.SmsDeliveryMethodConfigMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.voice.VoiceDeliveryMethodConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.email.EmailDeliveryMethodConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.sms.SmsDeliveryMethodConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.voice.VoiceDeliveryMethodConfigMother;
 
 public interface DeliveryMethodConfigsMother {
 

@@ -2,9 +2,9 @@ package uk.co.idv.context.usecases.context.method.otp.delivery.phone;
 
 import lombok.Builder;
 import uk.co.idv.common.usecases.id.IdGenerator;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumber;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.PhoneDeliveryMethodConfig;
 
 @Builder
 public class OtpPhoneNumberConverter {

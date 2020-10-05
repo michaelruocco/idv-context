@@ -2,7 +2,7 @@ package uk.co.idv.context.usecases.context.method.otp.simswap.sync;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.common.usecases.async.FutureWaiter;
-import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
+import uk.co.idv.method.entities.otp.simswap.SimSwapRequest;
 
 import java.time.Duration;
 import java.util.concurrent.CompletableFuture;

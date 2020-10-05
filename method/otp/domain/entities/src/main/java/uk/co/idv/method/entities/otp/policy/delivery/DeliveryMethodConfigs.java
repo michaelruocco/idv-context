@@ -1,12 +1,12 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery;
+package uk.co.idv.method.entities.otp.policy.delivery;
 
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.PhoneDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
 import uk.co.idv.method.entities.policy.RequestedDataMerger;
 import uk.co.idv.method.entities.policy.RequestedDataProvider;
 

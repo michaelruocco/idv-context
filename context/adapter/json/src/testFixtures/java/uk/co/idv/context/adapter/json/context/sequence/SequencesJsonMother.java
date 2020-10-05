@@ -4,7 +4,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
 public interface SequencesJsonMother {
 
-    static String otpOnly() {
+    static String fakeOnly() {
         return loadContentFromClasspath("context/sequence/sequences.json");
     }
 

@@ -1,12 +1,12 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap;
+package uk.co.idv.method.entities.otp.policy.delivery.phone;
 
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.AcceptableSimSwapStatuses.SUCCESS;
-import static uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.AcceptableSimSwapStatuses.FAILURE;
-import static uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.AcceptableSimSwapStatuses.UNKNOWN;
-import static uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.AcceptableSimSwapStatuses.TIMEOUT;
+import static uk.co.idv.method.entities.otp.policy.delivery.phone.AcceptableSimSwapStatuses.FAILURE;
+import static uk.co.idv.method.entities.otp.policy.delivery.phone.AcceptableSimSwapStatuses.SUCCESS;
+import static uk.co.idv.method.entities.otp.policy.delivery.phone.AcceptableSimSwapStatuses.TIMEOUT;
+import static uk.co.idv.method.entities.otp.policy.delivery.phone.AcceptableSimSwapStatuses.UNKNOWN;
 
 
 class AcceptableSimSwapStatusesTest {

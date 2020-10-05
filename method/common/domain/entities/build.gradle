@@ -5,6 +5,8 @@ plugins {
 dependencies {
     api project(":identity-entities")
 
+    testImplementation testFixtures(project(":common-entities"))
+
     testFixturesApi testFixtures(project(":identity-entities"))
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"

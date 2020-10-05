@@ -1,12 +1,11 @@
-package uk.co.idv.context.entities.context.method.otp;
+package uk.co.idv.method.entities.otp;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethodMother;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethodsMother;
-import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
 import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethodsMother;
 import uk.co.idv.method.entities.result.Result;
 import uk.co.idv.method.entities.result.ResultMother;
 

@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
-import uk.co.idv.context.entities.policy.method.otp.PasscodeConfig;
+import uk.co.idv.method.entities.otp.OtpConfig;
+import uk.co.idv.method.entities.otp.PasscodeConfig;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 

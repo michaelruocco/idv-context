@@ -1,6 +1,4 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
-
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber.OtpPhoneNumberBuilder;
+package uk.co.idv.method.entities.otp.delivery.phone;
 
 import java.time.Instant;
 
@@ -40,7 +38,7 @@ public interface OtpPhoneNumberMother {
         return builder().value(value).build();
     }
 
-    static OtpPhoneNumberBuilder builder() {
+    static OtpPhoneNumber.OtpPhoneNumberBuilder builder() {
         return OtpPhoneNumber.builder()
                 .value("+447089111111")
                 .lastUpdated(Instant.parse("2020-08-29T20:55:12.825Z"))

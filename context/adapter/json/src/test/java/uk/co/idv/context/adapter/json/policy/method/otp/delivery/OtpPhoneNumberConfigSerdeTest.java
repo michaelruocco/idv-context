@@ -6,7 +6,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.context.adapter.json.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfigModule;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.OtpPhoneNumberConfig;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 import static org.assertj.core.api.Assertions.assertThat;

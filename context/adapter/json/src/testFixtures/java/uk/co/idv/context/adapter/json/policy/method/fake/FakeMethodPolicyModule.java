@@ -1,15 +1,15 @@
-package uk.co.idv.context.adapter.json.context.method.fake;
+package uk.co.idv.context.adapter.json.policy.method.fake;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.method.entities.method.FakeMethod;
+import uk.co.idv.method.entities.policy.FakeMethodPolicy;
 
-public class FakeMethodModule extends SimpleModule {
+public class FakeMethodPolicyModule extends SimpleModule {
 
-    public FakeMethodModule() {
-        super("otp-module", Version.unknownVersion());
+    public FakeMethodPolicyModule() {
+        super("fake-method-policy-module", Version.unknownVersion());
 
-        addDeserializer(FakeMethod.class, new FakeMethodDeserializer());
+        addDeserializer(FakeMethodPolicy.class, new FakeMethodPolicyDeserializer());
     }
 
 }

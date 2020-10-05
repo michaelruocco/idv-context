@@ -1,13 +1,13 @@
 package uk.co.idv.context.usecases.context.method.otp.delivery.phone;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumberMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 import uk.co.idv.context.usecases.context.method.otp.delivery.phone.simswap.SimSwapExecutor;
 import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumber;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumberMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.PhoneDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
+import uk.co.idv.method.entities.otp.simswap.eligibility.AsyncFutureSimSwapEligibility;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -85,4 +85,5 @@ class OtpPhoneNumberEligibilityCalculatorTest {
         given(simSwapExecutor.executeSimSwap(phoneNumber, config)).willReturn(eligibility);
         return eligibility;
     }
+
 }

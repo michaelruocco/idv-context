@@ -1,6 +1,7 @@
-package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
+package uk.co.idv.method.entities.otp.delivery.phone.simswap;
 
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.simswap.SimSwapConfigMother;
+import uk.co.idv.method.entities.otp.simswap.eligibility.SimSwapEligibility;
 
 public interface SimSwapEligibilityMother {
 

@@ -8,9 +8,12 @@ testSets {
 
 dependencies {
     implementation project(":context-use-cases")
-    implementation project(":common-method-entities")
-    implementation testFixtures(project(":common-use-cases"))
+    implementation project(":method-entities")
+    implementation project(":otp-entities")
+    implementation project(":common-use-cases")
+    implementation testFixtures(project(":common-entities"))
 
     integrationTestImplementation testFixtures(project(":context-entities"))
+    integrationTestImplementation testFixtures(project(":otp-entities"))
     integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
 }

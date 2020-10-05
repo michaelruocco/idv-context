@@ -1,4 +1,4 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.eligibility;
+package uk.co.idv.method.entities.otp.delivery.eligibility;
 
 import uk.co.idv.method.entities.eligibility.Ineligible;
 

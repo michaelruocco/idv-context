@@ -1,4 +1,4 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap;
+package uk.co.idv.method.entities.otp.policy.delivery.phone;
 
 import org.junit.jupiter.api.Test;
 

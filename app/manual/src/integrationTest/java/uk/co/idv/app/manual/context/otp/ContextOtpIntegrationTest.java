@@ -12,11 +12,8 @@ import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.otp.Otp;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
-import uk.co.idv.context.entities.policy.method.otp.OtpPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
@@ -33,6 +30,9 @@ import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
+import uk.co.idv.method.entities.otp.Otp;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
+import uk.co.idv.method.entities.otp.policy.OtpPolicyMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import java.time.Duration;
@@ -137,6 +137,7 @@ class ContextOtpIntegrationTest {
     private void givenContextPolicyExistsForChannel(String channelId) {
         ContextPolicy policy = ContextPolicyMother.builder()
                 .key(ChannelPolicyKeyMother.withChannelId(channelId))
+                .sequencePolicies(SequencePoliciesMother.withMethodPolicy(OtpPolicyMother.build()))
                 .build();
         contextPolicyService.create(policy);
     }

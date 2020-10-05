@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
+import uk.co.idv.context.adapter.json.context.method.MethodMapping;
+import uk.co.idv.context.adapter.json.context.method.fake.FakeMethodMapping;
 import uk.co.idv.context.entities.policy.method.MethodPolicies;
 import uk.co.idv.context.entities.policy.method.MethodPoliciesMother;
 
@@ -12,7 +14,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MethodPoliciesSerdeTest {
 
-    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new MethodPolicyModule());
+    private static final MethodMapping MAPPING = new FakeMethodMapping();
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new MethodPolicyModule(MAPPING));
     private static final MethodPolicies POLICIES = MethodPoliciesMother.build();
     private static final String JSON = MethodPoliciesJsonMother.build();
 

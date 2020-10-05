@@ -1,9 +1,9 @@
 package uk.co.idv.context.usecases.context.method.otp.simswap;
 
 import lombok.Builder;
-import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
 import uk.co.idv.context.usecases.context.method.otp.simswap.async.AsyncSimSwap;
 import uk.co.idv.context.usecases.context.method.otp.simswap.sync.SyncSimSwap;
+import uk.co.idv.method.entities.otp.simswap.SimSwapRequest;
 
 @Builder
 public class SimSwap {

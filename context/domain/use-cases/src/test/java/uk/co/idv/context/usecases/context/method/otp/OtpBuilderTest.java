@@ -4,14 +4,14 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import uk.co.idv.context.entities.context.method.MethodsRequest;
 import uk.co.idv.context.entities.context.method.MethodsRequestMother;
-import uk.co.idv.context.entities.context.method.otp.Otp;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
-import uk.co.idv.context.entities.policy.method.otp.OtpConfig;
-import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
 import uk.co.idv.context.usecases.context.method.otp.delivery.DeliveryMethodConfigsConverter;
 import uk.co.idv.context.usecases.context.method.otp.simswap.SimSwap;
+import uk.co.idv.method.entities.otp.Otp;
+import uk.co.idv.method.entities.otp.OtpConfig;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.policy.OtpPolicy;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfigs;
+import uk.co.idv.method.entities.otp.simswap.SimSwapRequest;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -88,7 +88,7 @@ class OtpBuilderTest {
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
         OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(request, deliveryMethods);
         OtpConfig expectedMethodConfig = mock(OtpConfig.class);
-        given(policy.getMethodConfig()).willReturn(expectedMethodConfig);
+        given(policy.getConfig()).willReturn(expectedMethodConfig);
 
         Otp otp = builder.build(request, policy);
 
@@ -96,7 +96,7 @@ class OtpBuilderTest {
     }
 
     @Test
-    void shouldPassMethodRequestToSimSwap() {
+    void shouldPassContextIdToSimSwap() {
         MethodsRequest request = MethodsRequestMother.build();
         DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
         OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(request, deliveryMethods);
@@ -106,7 +106,7 @@ class OtpBuilderTest {
         ArgumentCaptor<SimSwapRequest> captor = ArgumentCaptor.forClass(SimSwapRequest.class);
         verify(simSwap).waitForSimSwapsIfRequired(captor.capture());
         SimSwapRequest simSwapRequest = captor.getValue();
-        assertThat(simSwapRequest.getMethodsRequest()).isEqualTo(request);
+        assertThat(simSwapRequest.getContextId()).isEqualTo(request.getContextId());
     }
 
     @Test

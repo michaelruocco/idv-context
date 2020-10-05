@@ -1,4 +1,4 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.eligibility;
+package uk.co.idv.method.entities.otp.simswap.eligibility;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.method.entities.eligibility.Eligibility;

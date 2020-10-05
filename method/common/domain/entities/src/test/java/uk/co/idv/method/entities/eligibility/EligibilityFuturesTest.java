@@ -1,8 +1,7 @@
-package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
+package uk.co.idv.method.entities.eligibility;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.common.usecases.async.DelayedSupplier;
-import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.common.entities.async.DelayedSupplier;
 
 import java.time.Duration;
 import java.util.Arrays;

@@ -1,4 +1,4 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery;
+package uk.co.idv.method.entities.otp.policy.delivery;
 
 import java.time.Instant;
 import java.util.Optional;

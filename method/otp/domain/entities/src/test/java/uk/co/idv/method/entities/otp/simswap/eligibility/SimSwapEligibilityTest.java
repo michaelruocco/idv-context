@@ -1,9 +1,9 @@
-package uk.co.idv.context.entities.context.method.otp.delivery.eligibility;
+package uk.co.idv.method.entities.otp.simswap.eligibility;
 
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
 
-import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -18,7 +18,7 @@ class SimSwapEligibilityTest {
                 .config(givenSimSwapConfigAcceptingStatus(status))
                 .build();
 
-        assertThat(eligibility.isEligible()).isTrue();
+        AssertionsForClassTypes.assertThat(eligibility.isEligible()).isTrue();
     }
 
     @Test
@@ -30,7 +30,7 @@ class SimSwapEligibilityTest {
                 .config(givenSimSwapConfigAcceptingStatus(status))
                 .build();
 
-        assertThat(eligibility.getReason()).isEmpty();
+        AssertionsForClassTypes.assertThat(eligibility.getReason()).isEmpty();
     }
 
     @Test
@@ -42,7 +42,7 @@ class SimSwapEligibilityTest {
                 .config(givenSimSwapConfigRejectingStatus(status))
                 .build();
 
-        assertThat(eligibility.isEligible()).isFalse();
+        AssertionsForClassTypes.assertThat(eligibility.isEligible()).isFalse();
     }
 
     @Test
@@ -55,7 +55,7 @@ class SimSwapEligibilityTest {
                 .build();
 
         String expectedMessage = String.format("sim swap status %s not acceptable", status);
-        assertThat(eligibility.getReason()).contains(expectedMessage);
+        AssertionsForClassTypes.assertThat(eligibility.getReason()).contains(expectedMessage);
     }
 
     private SimSwapConfig givenSimSwapConfigAcceptingStatus(String status) {

@@ -1,7 +1,7 @@
-package uk.co.idv.context.entities.context.method.otp.delivery;
+package uk.co.idv.method.entities.otp.delivery.phone.voice;
 
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod.DeliveryMethodBuilder;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 
 import java.util.UUID;
 
@@ -11,7 +11,7 @@ public interface VoiceDeliveryMethodMother {
         return builder().build();
     }
 
-    static DeliveryMethodBuilder builder() {
+    static DeliveryMethod.DeliveryMethodBuilder builder() {
         return DeliveryMethod.builder()
                 .id(UUID.fromString("d22d7d89-9127-4a01-a99c-baaaf34124c7"))
                 .type("voice")

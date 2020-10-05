@@ -4,28 +4,25 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.adapter.json.context.method.ResultsExtractor;
-import uk.co.idv.method.entities.eligibility.Eligibility;
-import uk.co.idv.method.entities.method.DefaultMethodConfig;
-import uk.co.idv.method.entities.method.FakeMethod;
-import uk.co.idv.method.entities.result.Results;
+import uk.co.idv.method.entities.policy.FakeMethodConfig;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
-class FakeMethodDeserializer extends StdDeserializer<FakeMethod> {
+import java.time.Duration;
 
-    protected FakeMethodDeserializer() {
-        super(FakeMethod.class);
+class FakeMethodConfigDeserializer extends StdDeserializer<FakeMethodConfig> {
+
+    protected FakeMethodConfigDeserializer() {
+        super(FakeMethodConfig.class);
     }
 
     @Override
-    public FakeMethod deserialize(JsonParser parser, DeserializationContext context) {
+    public FakeMethodConfig deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
-        return FakeMethod.builder()
-                .name(node.get("name").asText())
-                .config(JsonNodeConverter.toObject(node.get("config"), parser, DefaultMethodConfig.class))
-                .eligibility(JsonNodeConverter.toObject(node.get("eligibility"), parser, Eligibility.class))
-                .results(ResultsExtractor.extractResults(node, parser))
+        return FakeMethodConfig.builder()
+                .duration(JsonNodeConverter.toObject(node.get("duration"), parser, Duration.class))
+                .maxNumberOfAttempts(node.get("maxNumberOfAttempts").asInt())
+                .fakeValue(node.get("fakeValue").asText())
                 .build();
     }
 

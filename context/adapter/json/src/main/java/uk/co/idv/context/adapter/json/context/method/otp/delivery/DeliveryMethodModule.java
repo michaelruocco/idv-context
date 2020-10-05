@@ -5,8 +5,8 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.context.eligibility.EligibilityModule;
 import uk.co.idv.context.adapter.json.context.method.otp.delivery.eligibility.SimSwapEligibilityModule;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
 
 import java.util.Arrays;
 

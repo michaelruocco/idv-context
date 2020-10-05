@@ -1,8 +1,8 @@
-package uk.co.idv.context.entities.context.method.otp.delivery;
+package uk.co.idv.method.entities.otp.delivery;
 
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncSimSwapEligibilityMother;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
+import uk.co.idv.method.entities.otp.delivery.phone.simswap.AsyncSimSwapEligibilityMother;
 
 import java.time.Instant;
 import java.util.UUID;

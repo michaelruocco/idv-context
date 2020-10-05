@@ -3,11 +3,11 @@ package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.eligibility.SimSwapStatusNotAllowed;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.eligibility.SimSwappedAfterCutoff;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.eligibility.Eligible;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
+import uk.co.idv.method.entities.otp.simswap.eligibility.SimSwapStatusNotAllowed;
+import uk.co.idv.method.entities.otp.simswap.eligibility.SimSwappedAfterCutoff;
 
 import java.time.Instant;
 import java.util.Optional;

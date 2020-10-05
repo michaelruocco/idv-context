@@ -1,9 +1,9 @@
 package uk.co.idv.context.usecases.context.method.otp.simswap.async;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.method.otp.simswap.sync.SyncSimSwap;
+import uk.co.idv.method.entities.otp.simswap.SimSwapRequest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

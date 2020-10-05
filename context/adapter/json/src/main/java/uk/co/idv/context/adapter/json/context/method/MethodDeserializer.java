@@ -4,26 +4,22 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.context.method.otp.Otp;
-import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
+import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class MethodDeserializer extends StdDeserializer<Method> {
 
     private final Map<String, Class<? extends Method>> mappings;
 
-    protected MethodDeserializer() {
-        this(buildMappings());
-    }
-
-    public MethodDeserializer(Map<String, Class<? extends Method>> mappings) {
+    public MethodDeserializer(Collection<MethodMapping> mappings) {
         super(Method.class);
-        this.mappings = mappings;
+        this.mappings = toMap(mappings);
     }
 
     @Override
@@ -42,10 +38,11 @@ public class MethodDeserializer extends StdDeserializer<Method> {
                 .orElseThrow(() -> new InvalidMethodNameException(name));
     }
 
-    private static Map<String, Class<? extends Method>> buildMappings() {
-        return Map.of(
-                OtpPolicy.NAME, Otp.class
-        );
+    private static Map<String, Class<? extends Method>> toMap(Collection<MethodMapping> mappings) {
+        return mappings.stream().collect(Collectors.toMap(
+                MethodMapping::getName,
+                MethodMapping::getMethodType
+        ));
     }
 
 }

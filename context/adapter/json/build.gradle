@@ -9,11 +9,13 @@ dependencies {
 
     implementation "org.zalando:jackson-datatype-money:1.2.0"
     implementation project(":policy-json")
-    implementation project(":common-method-entities")
+    implementation project(":method-entities")
+    implementation project(":otp-entities")
 
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
 
     testFixturesApi testFixtures(project(":context-entities"))
     testFixturesApi testFixtures(project(":common-json"))
-    testFixturesApi testFixtures(project(":common-method-entities"))
+    testFixturesApi testFixtures(project(":method-entities"))
+    testFixturesApi testFixtures(project(":otp-entities"))
 }

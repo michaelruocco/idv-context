@@ -2,8 +2,8 @@ package uk.co.idv.context.adapter.json.context.method;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 
 import java.time.Duration;
 import java.util.Collection;

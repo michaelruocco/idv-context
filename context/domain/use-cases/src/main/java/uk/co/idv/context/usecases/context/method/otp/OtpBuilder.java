@@ -3,13 +3,13 @@ package uk.co.idv.context.usecases.context.method.otp;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.context.method.MethodsRequest;
-import uk.co.idv.context.entities.context.method.otp.Otp;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.context.method.otp.simswap.SimSwapRequest;
-import uk.co.idv.context.entities.policy.method.otp.OtpPolicy;
 import uk.co.idv.context.usecases.context.method.MethodBuilder;
 import uk.co.idv.context.usecases.context.method.otp.delivery.DeliveryMethodConfigsConverter;
 import uk.co.idv.context.usecases.context.method.otp.simswap.SimSwap;
+import uk.co.idv.method.entities.otp.Otp;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.policy.OtpPolicy;
+import uk.co.idv.method.entities.otp.simswap.SimSwapRequest;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 
 @Builder
@@ -30,14 +30,14 @@ public class OtpBuilder implements MethodBuilder {
         return Otp.builder()
                 .name(policy.getName())
                 .deliveryMethods(buildDeliveryMethods(request, otpPolicy))
-                .otpConfig(otpPolicy.getMethodConfig())
+                .otpConfig(otpPolicy.getConfig())
                 .build();
     }
 
     private DeliveryMethods buildDeliveryMethods(MethodsRequest request, OtpPolicy otpPolicy) {
         DeliveryMethods deliveryMethods = configsConverter.toDeliveryMethods(request.getIdentity(), otpPolicy.getDeliveryMethodConfigs());
         SimSwapRequest simSwapRequest = SimSwapRequest.builder()
-                .methodsRequest(request)
+                .contextId(request.getContextId())
                 .deliveryMethods(deliveryMethods)
                 .policy(otpPolicy)
                 .build();

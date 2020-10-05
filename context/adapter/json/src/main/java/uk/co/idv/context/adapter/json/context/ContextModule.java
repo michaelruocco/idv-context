@@ -5,15 +5,24 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.co.idv.context.adapter.json.context.create.CreateContextModule;
+import uk.co.idv.context.adapter.json.context.method.MethodMapping;
 import uk.co.idv.context.adapter.json.context.sequence.SequenceModule;
 import uk.co.idv.context.entities.context.Context;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 public class ContextModule extends SimpleModule {
 
-    public ContextModule() {
+    private final Collection<MethodMapping> mappings;
+
+    public ContextModule(MethodMapping... mappings) {
+        this(Arrays.asList(mappings));
+    }
+
+    public ContextModule(Collection<MethodMapping> mappings) {
         super("context-module", Version.unknownVersion());
+        this.mappings = mappings;
 
         setMixInAnnotation(Context.class, ContextMixin.class);
 
@@ -23,8 +32,8 @@ public class ContextModule extends SimpleModule {
     @Override
     public Iterable<? extends Module> getDependencies() {
         return Arrays.asList(
-                new CreateContextModule(),
-                new SequenceModule(),
+                new SequenceModule(mappings),
+                new CreateContextModule(mappings),
                 new JavaTimeModule()
         );
     }

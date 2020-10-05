@@ -4,6 +4,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
+import uk.co.idv.context.adapter.json.context.method.MethodMapping;
+import uk.co.idv.context.adapter.json.context.method.fake.FakeMethodMapping;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
@@ -13,7 +15,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ServiceCreateContextRequestSerdeTest {
 
-    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new CreateContextModule());
+    private static final MethodMapping MAPPING = new FakeMethodMapping();
+    private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new CreateContextModule(MAPPING));
     private static final CreateContextRequest REQUEST = ServiceCreateContextRequestMother.build();
     private static final String JSON = DefaultCreateContextRequestJsonMother.build();
 

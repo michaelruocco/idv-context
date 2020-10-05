@@ -1,9 +1,10 @@
-package uk.co.idv.context.entities.policy.method.otp;
+package uk.co.idv.method.entities.otp.policy;
 
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigs;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfigsMother;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.sms.SmsDeliveryMethodConfigMother;
+import uk.co.idv.method.entities.otp.OtpConfigMother;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfigs;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfigsMother;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.sms.SmsDeliveryMethodConfigMother;
 
 public interface OtpPolicyMother {
 
@@ -25,7 +26,7 @@ public interface OtpPolicyMother {
 
     static OtpPolicy.OtpPolicyBuilder builder() {
         return OtpPolicy.builder()
-                .methodConfig(OtpConfigMother.build())
+                .config(OtpConfigMother.build())
                 .deliveryMethodConfigs(DeliveryMethodConfigsMother.oneOfEach());
     }
 

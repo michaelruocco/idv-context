@@ -1,11 +1,11 @@
 package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 
 import lombok.Builder;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.AsyncFutureSimSwapEligibility;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumber;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.simswap.SimSwapConfig;
 import uk.co.idv.context.usecases.context.method.otp.delivery.phone.simswap.SimSwapExecutor;
 import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumber;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
+import uk.co.idv.method.entities.otp.simswap.eligibility.AsyncFutureSimSwapEligibility;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;

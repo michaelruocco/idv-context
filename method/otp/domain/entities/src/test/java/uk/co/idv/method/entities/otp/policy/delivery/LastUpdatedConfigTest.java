@@ -1,9 +1,9 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery;
+package uk.co.idv.method.entities.otp.policy.delivery;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.method.otp.delivery.eligibility.UpdatedAfterCutoff;
-import uk.co.idv.context.entities.policy.method.otp.delivery.eligibility.UnknownLastUpdatedNotAllowed;
 import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.otp.delivery.eligibility.UnknownLastUpdatedNotAllowed;
+import uk.co.idv.method.entities.otp.delivery.eligibility.UpdatedAfterCutoff;
 
 import java.time.Duration;
 import java.time.Instant;

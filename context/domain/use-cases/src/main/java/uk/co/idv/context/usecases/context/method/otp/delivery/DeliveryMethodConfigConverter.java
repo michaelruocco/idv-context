@@ -1,8 +1,8 @@
 package uk.co.idv.context.usecases.context.method.otp.delivery;
 
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
 import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfig;
 
 public interface DeliveryMethodConfigConverter {
 

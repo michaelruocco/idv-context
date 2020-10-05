@@ -1,10 +1,10 @@
-package uk.co.idv.context.entities.context.method.otp.delivery;
+package uk.co.idv.method.entities.otp.delivery;
 
 import lombok.Data;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.EligibilityFutures;
-import uk.co.idv.context.entities.context.method.otp.delivery.eligibility.NoEligibleDeliveryMethodsAvailable;
 import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.eligibility.EligibilityFutures;
 import uk.co.idv.method.entities.eligibility.Eligible;
+import uk.co.idv.method.entities.otp.delivery.eligibility.NoEligibleDeliveryMethodsAvailable;
 
 import java.util.ArrayList;
 import java.util.Arrays;

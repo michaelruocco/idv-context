@@ -165,7 +165,7 @@ Feature: Lockout Policy Maintenance
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
-                "methodConfig": {
+                "config": {
                   "maxNumberOfAttempts": 3,
                   "duration": 300000,
                   "passcodeConfig": {
@@ -303,7 +303,7 @@ Feature: Lockout Policy Maintenance
                 "name": "one-time-passcode",
                 "methodPolicies": [
                   {
-                    "methodConfig": {
+                    "config": {
                       "maxNumberOfAttempts": 3,
                       "duration": 300000,
                       "passcodeConfig": {
@@ -451,7 +451,9 @@ Feature: Lockout Policy Maintenance
                 },
                 "successful": false,
                 "complete": false,
-                "eligible": true
+                "eligibility": {
+                  "eligible": true
+                }
               }
             ],
             "duration": 300000,

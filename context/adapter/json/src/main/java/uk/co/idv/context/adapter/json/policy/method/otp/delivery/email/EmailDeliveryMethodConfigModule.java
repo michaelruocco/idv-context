@@ -2,7 +2,7 @@ package uk.co.idv.context.adapter.json.policy.method.otp.delivery.email;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.context.entities.policy.method.otp.delivery.email.EmailDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.policy.delivery.email.EmailDeliveryMethodConfig;
 
 public class EmailDeliveryMethodConfigModule extends SimpleModule {
 

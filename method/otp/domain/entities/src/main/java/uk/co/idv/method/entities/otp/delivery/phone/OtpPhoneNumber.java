@@ -1,8 +1,8 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.phone;
+package uk.co.idv.method.entities.otp.delivery.phone;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.policy.method.otp.delivery.Updatable;
+import uk.co.idv.method.entities.otp.policy.delivery.Updatable;
 
 import java.time.Instant;
 import java.util.Optional;

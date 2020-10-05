@@ -1,9 +1,9 @@
 package uk.co.idv.context.usecases.context.method.otp.delivery.phone;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.context.method.otp.delivery.DeliveryMethods;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.OtpPhoneNumbers;
-import uk.co.idv.context.entities.policy.method.otp.delivery.phone.PhoneDeliveryMethodConfig;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumbers;
+import uk.co.idv.method.entities.otp.policy.delivery.phone.PhoneDeliveryMethodConfig;
 
 import java.util.stream.Collectors;
 

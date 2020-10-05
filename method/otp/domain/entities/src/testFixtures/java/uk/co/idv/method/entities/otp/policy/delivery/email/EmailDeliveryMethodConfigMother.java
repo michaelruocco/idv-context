@@ -1,4 +1,4 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.email;
+package uk.co.idv.method.entities.otp.policy.delivery.email;
 
 public interface EmailDeliveryMethodConfigMother {
 

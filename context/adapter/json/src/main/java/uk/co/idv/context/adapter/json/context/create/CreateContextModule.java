@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import uk.co.idv.context.adapter.json.activity.ActivityModule;
+import uk.co.idv.context.adapter.json.context.method.MethodMapping;
 import uk.co.idv.context.adapter.json.policy.ContextPolicyModule;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
@@ -14,11 +15,19 @@ import uk.co.idv.identity.adapter.json.channel.ChannelModule;
 import uk.co.idv.identity.adapter.json.identity.IdentityModule;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 public class CreateContextModule extends SimpleModule {
 
-    public CreateContextModule() {
+    private final transient Collection<MethodMapping> mappings;
+
+    public CreateContextModule(MethodMapping... mappings) {
+        this(Arrays.asList(mappings));
+    }
+
+    public CreateContextModule(Collection<MethodMapping> mappings) {
         super("create-context-module", Version.unknownVersion());
+        this.mappings = mappings;
 
         setMixInAnnotation(CreateContextRequest.class, CreateContextRequestMixin.class);
         setMixInAnnotation(ServiceCreateContextRequest.class, DefaultCreateContextRequestMixin.class);
@@ -34,7 +43,7 @@ public class CreateContextModule extends SimpleModule {
                 new ActivityModule(),
                 new AliasModule(),
                 new Jdk8Module(),
-                new ContextPolicyModule(),
+                new ContextPolicyModule(mappings),
                 new IdentityModule()
         );
     }

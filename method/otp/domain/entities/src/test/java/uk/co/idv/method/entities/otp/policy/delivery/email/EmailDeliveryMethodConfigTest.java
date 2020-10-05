@@ -1,8 +1,8 @@
-package uk.co.idv.context.entities.policy.method.otp.delivery.email;
+package uk.co.idv.method.entities.otp.policy.delivery.email;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.method.otp.delivery.DeliveryMethodConfig;
 import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfig;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

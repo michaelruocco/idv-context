@@ -2,17 +2,17 @@ package uk.co.idv.context.adapter.json.context.method;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;
-import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.method.entities.result.Results;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 
 import java.util.Optional;
 
-public interface RequestedDataExtractor {
+public interface ResultsExtractor {
 
-    static RequestedData extractRequestedData(JsonNode node, JsonParser parser) {
-        return Optional.ofNullable(node.get("requestedData"))
-                .map(dataNode -> JsonNodeConverter.toObject(dataNode, parser, RequestedData.class))
-                .orElse(new RequestedData());
+    static Results extractResults(JsonNode node, JsonParser parser) {
+        return Optional.ofNullable(node.get("results"))
+                .map(dataNode -> JsonNodeConverter.toObject(dataNode, parser, Results.class))
+                .orElse(new Results());
     }
 
 }
