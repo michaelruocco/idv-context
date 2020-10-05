@@ -3,10 +3,10 @@ package uk.co.idv.context.adapter.json.policy.sequence;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.context.adapter.json.context.method.MethodMapping;
 import uk.co.idv.context.adapter.json.policy.method.MethodPolicyModule;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicies;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
+import uk.co.idv.method.adapter.json.MethodMapping;
 
 import java.util.Arrays;
 import java.util.Collection;

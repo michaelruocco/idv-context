@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.json.policy.method.fake;
+package uk.co.idv.method.adapter.json.fake.policy;
 
 import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 

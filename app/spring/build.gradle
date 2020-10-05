@@ -28,13 +28,14 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
     implementation project(":common-dynamo-db")
-    implementation project(":identity-json")
     implementation project(":identity-config")
-    implementation project(":identity-external-find-stub")
-    implementation project(":lockout-json")
     implementation project(":lockout-config")
-    implementation project(":context-json")
     implementation project(":context-config")
+    implementation project(":identity-json")
+    implementation project(":lockout-json")
+    implementation project(":context-json")
+    implementation project(":method-json")
+    implementation project(":identity-external-find-stub")
 
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
     testImplementation testFixtures(project(":lockout-entities"))

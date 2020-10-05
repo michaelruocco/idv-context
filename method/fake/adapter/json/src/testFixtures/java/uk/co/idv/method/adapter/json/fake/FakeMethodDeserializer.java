@@ -1,10 +1,10 @@
-package uk.co.idv.context.adapter.json.context.method.fake;
+package uk.co.idv.method.adapter.json.fake;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.adapter.json.context.method.ResultsExtractor;
+import uk.co.idv.method.adapter.json.result.ResultsExtractor;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.fake.FakeMethod;
 import uk.co.idv.method.entities.fake.FakeMethodConfig;

@@ -96,11 +96,17 @@ project(':context-config').projectDir = file('context/config')
 include ':method-entities'
 project(':method-entities').projectDir = file('method/common/domain/entities')
 
+include ':method-json'
+project(':method-json').projectDir = file('method/common/adapter/json')
+
 include ':otp-entities'
 project(':otp-entities').projectDir = file('method/otp/domain/entities')
 
 include ':fake-method-entities'
 project(':fake-method-entities').projectDir = file('method/fake/domain/entities')
+
+include ':fake-method-json'
+project(':fake-method-json').projectDir = file('method/fake/adapter/json')
 
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')

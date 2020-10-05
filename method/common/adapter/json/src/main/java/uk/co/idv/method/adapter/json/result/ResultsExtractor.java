@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.json.context.method;
+package uk.co.idv.method.adapter.json.result;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.JsonNode;

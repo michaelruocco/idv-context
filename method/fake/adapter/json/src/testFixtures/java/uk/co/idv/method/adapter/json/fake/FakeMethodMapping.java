@@ -1,11 +1,11 @@
-package uk.co.idv.context.adapter.json.context.method.fake;
+package uk.co.idv.method.adapter.json.fake;
 
 import com.fasterxml.jackson.databind.Module;
-import uk.co.idv.context.adapter.json.context.method.MethodMapping;
-import uk.co.idv.context.adapter.json.policy.method.fake.FakeMethodPolicyModule;
+import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.fake.policy.FakeMethodPolicyModule;
 import uk.co.idv.method.entities.fake.FakeMethod;
-import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.fake.policy.FakeMethodPolicy;
+import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import java.util.Arrays;

@@ -5,16 +5,16 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.co.idv.context.adapter.json.context.create.CreateContextModule;
-import uk.co.idv.context.adapter.json.context.method.MethodMapping;
 import uk.co.idv.context.adapter.json.context.sequence.SequenceModule;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.method.adapter.json.MethodMapping;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 public class ContextModule extends SimpleModule {
 
-    private final Collection<MethodMapping> mappings;
+    private final transient Collection<MethodMapping> mappings;
 
     public ContextModule(MethodMapping... mappings) {
         this(Arrays.asList(mappings));

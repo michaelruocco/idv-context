@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.json.context.method;
+package uk.co.idv.method.adapter.json;
 
 import com.fasterxml.jackson.databind.Module;
 import uk.co.idv.method.entities.method.Method;

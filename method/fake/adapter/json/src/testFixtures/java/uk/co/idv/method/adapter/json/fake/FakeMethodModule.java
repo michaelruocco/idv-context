@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.json.context.method.fake;
+package uk.co.idv.method.adapter.json.fake;
 
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.module.SimpleModule;
