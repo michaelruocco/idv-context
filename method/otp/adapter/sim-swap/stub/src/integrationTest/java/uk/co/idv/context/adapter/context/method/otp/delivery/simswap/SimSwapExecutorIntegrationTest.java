@@ -5,12 +5,12 @@ import org.awaitility.Awaitility;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.entities.async.Delay;
 import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
-import uk.co.idv.context.usecases.context.method.otp.delivery.phone.simswap.SimSwapExecutor;
 import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumberMother;
 import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
 import uk.co.idv.method.entities.otp.policy.delivery.phone.simswap.AcceptableSimSwapStatusesMother;
 import uk.co.idv.method.entities.otp.simswap.eligibility.AsyncFutureSimSwapEligibility;
+import uk.co.idv.method.usecases.otp.delivery.phone.simswap.SimSwapExecutor;
 
 import java.time.Clock;
 import java.time.Duration;

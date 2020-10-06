@@ -1,0 +1,17 @@
+plugins {
+    id "java-test-fixtures"
+}
+
+dependencies {
+    api project(":method-json")
+    implementation project(":method-entities")
+    implementation project(":otp-entities")
+    implementation project(":common-json")
+
+    testImplementation testFixtures(project(":otp-entities"))
+    testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
+
+    testFixturesImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}

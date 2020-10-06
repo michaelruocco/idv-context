@@ -2,7 +2,7 @@ package uk.co.idv.context.usecases.context.method;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.MethodsRequest;
+import uk.co.idv.method.entities.method.MethodsRequest;
 
 import java.util.stream.Collectors;
 

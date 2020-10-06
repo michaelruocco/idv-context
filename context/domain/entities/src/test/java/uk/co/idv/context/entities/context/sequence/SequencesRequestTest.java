@@ -1,9 +1,11 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.MethodsRequest;
-import uk.co.idv.context.entities.policy.method.MethodPolicies;
+import uk.co.idv.context.entities.policy.sequence.SequencePolicies;
+import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
+import uk.co.idv.context.entities.policy.sequence.SequencePolicyMother;
 import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.method.entities.method.MethodsRequest;
 
 import java.util.UUID;
 
@@ -16,7 +18,7 @@ class SequencesRequestTest {
     void shouldReturnContextId() {
         UUID id = UUID.randomUUID();
 
-        MethodsRequest request = MethodsRequest.builder()
+        SequencesRequest request = SequencesRequest.builder()
                 .contextId(id)
                 .build();
 
@@ -27,7 +29,7 @@ class SequencesRequestTest {
     void shouldReturnIdentity() {
         Identity identity = mock(Identity.class);
 
-        MethodsRequest request = MethodsRequest.builder()
+        SequencesRequest request = SequencesRequest.builder()
                 .identity(identity)
                 .build();
 
@@ -35,14 +37,53 @@ class SequencesRequestTest {
     }
 
     @Test
-    void shouldReturnMethodPolicies() {
-        MethodPolicies policies = mock(MethodPolicies.class);
+    void shouldReturnSequencePolicies() {
+        SequencePolicies policies = mock(SequencePolicies.class);
 
-        MethodsRequest request = MethodsRequest.builder()
+        SequencesRequest request = SequencesRequest.builder()
                 .policies(policies)
                 .build();
 
         assertThat(request.getPolicies()).isEqualTo(policies);
+    }
+
+    @Test
+    void shouldPopulateContextIdOnMethodsRequest() {
+        UUID id = UUID.randomUUID();
+        SequencesRequest sequencesRequest = SequencesRequest.builder()
+                .contextId(id)
+                .build();
+        SequencePolicy policy = SequencePolicyMother.build();
+
+        MethodsRequest methodsRequest = sequencesRequest.toMethodsRequest(policy);
+
+        assertThat(methodsRequest.getContextId()).isEqualTo(id);
+    }
+
+    @Test
+    void shouldPopulateIdentityOnMethodsRequest() {
+        Identity identity = mock(Identity.class);
+        SequencesRequest sequencesRequest = SequencesRequest.builder()
+                .identity(identity)
+                .build();
+        SequencePolicy policy = SequencePolicyMother.build();
+
+        MethodsRequest methodsRequest = sequencesRequest.toMethodsRequest(policy);
+
+        assertThat(methodsRequest.getIdentity()).isEqualTo(identity);
+    }
+
+    @Test
+    void shouldPopulateMethodPoliciesOnMethodsRequest() {
+        Identity identity = mock(Identity.class);
+        SequencesRequest sequencesRequest = SequencesRequest.builder()
+                .identity(identity)
+                .build();
+        SequencePolicy policy = SequencePolicyMother.build();
+
+        MethodsRequest methodsRequest = sequencesRequest.toMethodsRequest(policy);
+
+        assertThat(methodsRequest.getPolicies()).isEqualTo(policy.getMethodPolicies());
     }
 
 }

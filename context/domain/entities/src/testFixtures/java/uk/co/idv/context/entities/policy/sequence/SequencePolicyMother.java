@@ -1,6 +1,6 @@
 package uk.co.idv.context.entities.policy.sequence;
 
-import uk.co.idv.context.entities.policy.method.MethodPoliciesMother;
+import uk.co.idv.method.entities.policy.MethodPoliciesMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 
 public interface SequencePolicyMother {

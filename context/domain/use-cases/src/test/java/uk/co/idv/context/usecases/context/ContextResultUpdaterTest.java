@@ -7,8 +7,8 @@ import uk.co.idv.context.entities.context.NotNextMethodInSequenceException;
 import uk.co.idv.context.entities.context.sequence.SequenceMother;
 import uk.co.idv.context.entities.context.sequence.SequencesMother;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
-import uk.co.idv.method.entities.fake.FakeMethodMother;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 import uk.co.idv.method.entities.result.Result;
 import uk.co.idv.method.entities.result.ResultMother;
 

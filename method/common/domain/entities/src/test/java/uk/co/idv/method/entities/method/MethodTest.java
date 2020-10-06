@@ -3,8 +3,8 @@ package uk.co.idv.method.entities.method;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
-import uk.co.idv.method.entities.fake.FakeMethod;
-import uk.co.idv.method.entities.fake.FakeMethodMother;
+import uk.co.idv.method.entities.method.fake.FakeMethod;
+import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
 

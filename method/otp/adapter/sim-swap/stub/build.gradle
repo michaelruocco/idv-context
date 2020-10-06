@@ -7,7 +7,7 @@ testSets {
 }
 
 dependencies {
-    implementation project(":context-use-cases")
+    implementation project(":otp-use-cases")
     implementation project(":method-entities")
     implementation project(":otp-entities")
     implementation project(":common-use-cases")

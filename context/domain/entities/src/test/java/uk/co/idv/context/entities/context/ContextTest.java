@@ -7,8 +7,8 @@ import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.method.MethodsMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
-import uk.co.idv.method.entities.fake.FakeMethodMother;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
 import java.time.Instant;

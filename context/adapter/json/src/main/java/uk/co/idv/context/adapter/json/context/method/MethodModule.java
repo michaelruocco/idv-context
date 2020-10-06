@@ -3,11 +3,11 @@ package uk.co.idv.context.adapter.json.context.method;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.context.adapter.json.context.eligibility.EligibilityModule;
-import uk.co.idv.context.adapter.json.context.result.ResultModule;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.eligibility.EligibilityModule;
 import uk.co.idv.method.adapter.json.method.MethodMixin;
+import uk.co.idv.method.adapter.json.result.ResultModule;
 import uk.co.idv.method.entities.method.DefaultMethodConfig;
 import uk.co.idv.method.entities.method.Method;
 

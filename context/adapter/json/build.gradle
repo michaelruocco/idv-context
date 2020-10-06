@@ -14,11 +14,10 @@ dependencies {
     implementation project(":method-json")
 
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
-    testImplementation testFixtures(project(":fake-method-json"))
+    testImplementation testFixtures(project(":method-json"))
 
     testFixturesApi testFixtures(project(":context-entities"))
     testFixturesApi testFixtures(project(":common-json"))
     testFixturesApi testFixtures(project(":method-entities"))
     testFixturesApi testFixtures(project(":otp-entities"))
-    testFixturesApi testFixtures(project(":fake-method-entities"))
 }

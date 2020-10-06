@@ -1,0 +1,20 @@
+plugins {
+    id "java-test-fixtures"
+}
+
+ext {
+    localPhoneNumberVersion = "0.1.1"
+}
+
+dependencies {
+    implementation project(":method-entities")
+    implementation project(":otp-entities")
+    implementation project(":method-use-cases")
+    implementation project(":context-use-cases")
+    implementation project(":common-use-cases")
+    implementation "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}"
+
+    testImplementation testFixtures(project(":otp-entities"))
+    testImplementation testFixtures(project(":context-entities"))
+    testImplementation "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}:test-fixtures"
+}

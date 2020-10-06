@@ -1,4 +1,16 @@
+plugins {
+    id "java-test-fixtures"
+}
+
 dependencies {
     implementation project(":common-json")
     implementation project(":method-entities")
+
+    testImplementation testFixtures(project(":method-entities"))
+    testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
+
+    testFixturesImplementation project(":method-entities")
+    testFixturesImplementation testFixtures(project(":method-entities"))
+    testFixturesImplementation project(":common-json")
+    testFixturesImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
 }

@@ -4,38 +4,25 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.common.usecases.id.RandomIdGenerator;
-import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
 import uk.co.idv.context.usecases.context.ContextService;
 import uk.co.idv.context.usecases.context.CreateContextRequestConverter;
 import uk.co.idv.context.usecases.context.method.CompositeMethodBuilder;
-import uk.co.idv.context.usecases.context.method.MethodBuilder;
 import uk.co.idv.context.usecases.context.method.MethodsBuilder;
-import uk.co.idv.context.usecases.context.method.otp.OtpBuilder;
-import uk.co.idv.context.usecases.context.method.otp.delivery.CompositeDeliveryMethodConfigConverter;
-import uk.co.idv.context.usecases.context.method.otp.delivery.DeliveryMethodConfigsConverter;
-import uk.co.idv.context.usecases.context.method.otp.delivery.email.EmailDeliveryMethodConfigConverter;
-import uk.co.idv.context.usecases.context.method.otp.delivery.phone.OtpPhoneNumberConverter;
-import uk.co.idv.context.usecases.context.method.otp.delivery.phone.OtpPhoneNumberEligibilityCalculator;
-import uk.co.idv.context.usecases.context.method.otp.delivery.phone.OtpPhoneNumbersConverter;
-import uk.co.idv.context.usecases.context.method.otp.delivery.phone.PhoneDeliveryMethodConfigConverter;
-import uk.co.idv.context.usecases.context.method.otp.simswap.SimSwap;
-import uk.co.idv.context.usecases.context.method.otp.simswap.async.AsyncSimSwap;
-import uk.co.idv.context.usecases.context.method.otp.simswap.async.AsyncSimSwapUpdateContextTaskFactory;
-import uk.co.idv.context.usecases.context.method.otp.simswap.sync.SyncSimSwap;
 import uk.co.idv.context.usecases.context.sequence.SequenceBuilder;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
+import uk.co.idv.method.usecases.MethodBuilder;
 
 import java.time.Clock;
-import java.util.concurrent.Executors;
+import java.util.Collection;
 
 @Builder
 @Slf4j
 public class ContextServiceConfig {
 
     private final ParentContextRepositoryConfig repositoryConfig;
-    private final StubSimSwapExecutorConfig simSwapExecutorConfig;
+    private final Collection<MethodBuilder> methodBuilders;
 
     @Builder.Default
     private final IdGenerator idGenerator = new RandomIdGenerator();
@@ -56,78 +43,16 @@ public class ContextServiceConfig {
         return new ContextPolicyService(repositoryConfig.policyRepository());
     }
 
-    private CreateContextRequestConverter serviceCreateContextRequestConverter() {
-        return new CreateContextRequestConverter(idGenerator);
-    }
-
     private SequencesBuilder sequencesBuilder() {
         return new SequencesBuilder(new SequenceBuilder(methodsBuilder()));
     }
 
     private MethodsBuilder methodsBuilder() {
-        return new MethodsBuilder(new CompositeMethodBuilder(otpBuilder()));
+        return new MethodsBuilder(new CompositeMethodBuilder(methodBuilders));
     }
 
-    private MethodBuilder otpBuilder() {
-        return OtpBuilder.builder()
-                .configsConverter(deliveryMethodConfigsConverter())
-                .simSwap(simSwap())
-                .build();
-    }
-
-    private DeliveryMethodConfigsConverter deliveryMethodConfigsConverter() {
-        return new DeliveryMethodConfigsConverter(new CompositeDeliveryMethodConfigConverter(
-                phoneDeliveryMethodConfigConverter(),
-                new EmailDeliveryMethodConfigConverter()
-        ));
-    }
-
-    private PhoneDeliveryMethodConfigConverter phoneDeliveryMethodConfigConverter() {
-        return PhoneDeliveryMethodConfigConverter.builder()
-                .otpNumbersConverter(new OtpPhoneNumbersConverter(otpPhoneNumberConverter()))
-                .build();
-    }
-
-    private OtpPhoneNumberConverter otpPhoneNumberConverter() {
-        return OtpPhoneNumberConverter.builder()
-                .idGenerator(idGenerator)
-                .eligibilityCalculator(otpPhoneNumberEligibilityCalculator())
-                .build();
-    }
-
-    private OtpPhoneNumberEligibilityCalculator otpPhoneNumberEligibilityCalculator() {
-        return OtpPhoneNumberEligibilityCalculator.builder()
-                .clock(clock)
-                .simSwapExecutor(simSwapExecutorConfig.simSwapExecutor())
-                .build();
-    }
-
-    private SimSwap simSwap() {
-        return SimSwap.builder()
-                .async(asyncSimSwap())
-                .sync(new SyncSimSwap())
-                .build();
-    }
-
-    private AsyncSimSwap asyncSimSwap() {
-        return AsyncSimSwap.builder()
-                .taskFactory(simSwapUpdateContextTaskFactory())
-                .executor(Executors.newScheduledThreadPool(loadAsyncSimSwapThreadPoolSize()))
-                .build();
-    }
-
-    private AsyncSimSwapUpdateContextTaskFactory simSwapUpdateContextTaskFactory() {
-        return AsyncSimSwapUpdateContextTaskFactory.builder()
-                .repository(repositoryConfig.contextRepository())
-                .syncStrategy(new SyncSimSwap())
-                .build();
-    }
-
-    private static int loadAsyncSimSwapThreadPoolSize() {
-        String key = "async.sim.swap.thread.pool.size";
-        int size = Integer.parseInt(System.getProperty(key, "50"));
-        log.info("loaded {} value {}", key, size);
-        return size;
+    private CreateContextRequestConverter serviceCreateContextRequestConverter() {
+        return new CreateContextRequestConverter(idGenerator);
     }
 
 }

@@ -8,7 +8,7 @@ dependencies {
     api project(":lockout-entities")
 
     testFixturesApi testFixtures(project(":identity-entities"))
-    testFixturesApi testFixtures(project(":fake-method-entities"))
+    testFixturesApi testFixtures(project(":method-entities"))
     testFixturesImplementation testFixtures(project(":policy-entities"))
     testFixturesImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"

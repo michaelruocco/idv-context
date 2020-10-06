@@ -1,10 +1,11 @@
 package uk.co.idv.context.usecases.context.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.MethodsRequest;
-import uk.co.idv.context.entities.context.method.MethodsRequestMother;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.method.MethodsRequest;
+import uk.co.idv.method.entities.method.MethodsRequestMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
+import uk.co.idv.method.usecases.MethodBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

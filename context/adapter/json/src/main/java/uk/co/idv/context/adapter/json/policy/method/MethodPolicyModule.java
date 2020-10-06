@@ -4,8 +4,9 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import uk.co.idv.context.entities.policy.method.MethodPolicies;
 import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.policy.MethodPolicyMixin;
+import uk.co.idv.method.entities.policy.MethodPolicies;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import java.util.ArrayList;

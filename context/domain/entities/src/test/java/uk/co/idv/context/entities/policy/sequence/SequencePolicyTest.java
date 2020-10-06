@@ -1,9 +1,9 @@
 package uk.co.idv.context.entities.policy.sequence;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.policy.method.MethodPolicies;
 import uk.co.idv.identity.entities.identity.RequestedData;
 import uk.co.idv.identity.entities.identity.RequestedDataMother;
+import uk.co.idv.method.entities.policy.MethodPolicies;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

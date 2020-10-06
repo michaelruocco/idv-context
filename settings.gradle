@@ -93,11 +93,17 @@ project(':context-config').projectDir = file('context/config')
 include ':method-entities'
 project(':method-entities').projectDir = file('method/common/domain/entities')
 
+include ':method-use-cases'
+project(':method-use-cases').projectDir = file('method/common/domain/use-cases')
+
 include ':method-json'
 project(':method-json').projectDir = file('method/common/adapter/json')
 
 include ':otp-entities'
 project(':otp-entities').projectDir = file('method/otp/domain/entities')
+
+include ':otp-use-cases'
+project(':otp-use-cases').projectDir = file('method/otp/domain/use-cases')
 
 include ':otp-json'
 project(':otp-json').projectDir = file('method/otp/adapter/json')
@@ -105,11 +111,8 @@ project(':otp-json').projectDir = file('method/otp/adapter/json')
 include ':otp-sim-swap-stub'
 project(':otp-sim-swap-stub').projectDir = file('method/otp/adapter/sim-swap/stub')
 
-include ':fake-method-entities'
-project(':fake-method-entities').projectDir = file('method/fake/domain/entities')
-
-include ':fake-method-json'
-project(':fake-method-json').projectDir = file('method/fake/adapter/json')
+include ':otp-config'
+project(':otp-config').projectDir = file('method/otp/config')
 
 include ':manual-app'
 project(':manual-app').projectDir = file('app/manual')

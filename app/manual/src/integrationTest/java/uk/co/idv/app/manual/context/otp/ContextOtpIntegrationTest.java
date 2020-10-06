@@ -7,6 +7,7 @@ import uk.co.idv.common.usecases.id.NonRandomIdGenerator;
 import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.context.config.ContextFacadeConfig;
 import uk.co.idv.context.config.ContextServiceConfig;
+import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
 import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
@@ -30,12 +31,14 @@ import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
+import uk.co.idv.method.config.otp.OtpConfig;
 import uk.co.idv.method.entities.otp.Otp;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.policy.OtpPolicyMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import java.time.Duration;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
@@ -47,10 +50,18 @@ class ContextOtpIntegrationTest {
 
     private final IdGenerator idGenerator = new NonRandomIdGenerator();
 
-    private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
-            .repositoryConfig(new InMemoryContextRepositoryConfig())
+    private final ParentContextRepositoryConfig contextRepositoryConfig = new InMemoryContextRepositoryConfig();
+
+    private final OtpConfig otpConfig = OtpConfig.builder()
             .simSwapExecutorConfig(StubSimSwapExecutorConfig.buildDefault())
             .idGenerator(idGenerator)
+            .contextRepository(contextRepositoryConfig.contextRepository())
+            .build();
+
+    private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
+            .repositoryConfig(contextRepositoryConfig)
+            .idGenerator(idGenerator)
+            .methodBuilders(Collections.singleton(otpConfig.otpBuilder()))
             .build();
 
     private final IdentityConfig identityConfig = IdentityConfig.builder()

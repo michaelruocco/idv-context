@@ -3,7 +3,8 @@ package uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.entities.async.Delay;
-import uk.co.idv.context.usecases.context.method.otp.delivery.phone.simswap.SimSwapExecutor;
+import uk.co.idv.method.usecases.otp.delivery.phone.simswap.SimSwapExecutor;
+import uk.co.idv.method.usecases.otp.delivery.phone.simswap.SimSwapExecutorConfig;
 
 import java.time.Clock;
 import java.time.Duration;
@@ -12,7 +13,7 @@ import java.util.concurrent.Executors;
 
 @Builder
 @Slf4j
-public class StubSimSwapExecutorConfig {
+public class StubSimSwapExecutorConfig implements SimSwapExecutorConfig {
 
     @Builder.Default
     private final Delay delay = new Delay(Duration.ofMillis(3500));

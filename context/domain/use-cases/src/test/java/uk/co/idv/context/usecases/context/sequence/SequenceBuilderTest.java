@@ -2,12 +2,12 @@ package uk.co.idv.context.usecases.context.sequence;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.MethodsRequest;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequencesRequest;
-import uk.co.idv.context.entities.policy.method.MethodPolicies;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
 import uk.co.idv.context.usecases.context.method.MethodsBuilder;
+import uk.co.idv.method.entities.method.MethodsRequest;
+import uk.co.idv.method.entities.policy.MethodPolicies;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

@@ -1,0 +1,6 @@
+dependencies {
+    api project(":method-use-cases")
+    api project(":otp-use-cases")
+    implementation project(":common-use-cases")
+    implementation project(":context-use-cases")
+}
