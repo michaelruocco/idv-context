@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.method.entities.otp.simswap.SimSwapRequest;
-import uk.co.idv.method.usecases.otp.delivery.ContextDeliveryMethodReplacer;
+import uk.co.idv.method.usecases.otp.delivery.OtpDeliveryMethodReplacer;
 import uk.co.idv.method.usecases.otp.simswap.sync.SyncSimSwap;
 
 import java.util.Optional;
@@ -19,7 +19,6 @@ public class AsyncSimSwapUpdateContextTask implements Runnable {
     private final ContextRepository repository;
     private final SimSwapRequest request;
     private final SyncSimSwap syncStrategy;
-    private final ContextDeliveryMethodReplacer deliveryMethodReplacer;
 
     @Override
     public void run() {
@@ -32,7 +31,7 @@ public class AsyncSimSwapUpdateContextTask implements Runnable {
     }
 
     private void updateContextDeliveryMethods(Context context) {
-        Context updated = deliveryMethodReplacer.replace(context, request.getDeliveryMethods());
+        Context updated = context.apply(new OtpDeliveryMethodReplacer(request.getDeliveryMethods()));
         log.info("updating context {} with updated delivery methods with sim swap eligibility", updated.getId());
         repository.save(updated);
     }

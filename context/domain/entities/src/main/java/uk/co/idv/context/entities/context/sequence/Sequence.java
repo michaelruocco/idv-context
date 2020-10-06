@@ -8,6 +8,7 @@ import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 
 @Builder
 @Data
@@ -36,6 +37,11 @@ public class Sequence {
 
     public Optional<Method> getMethodIfNext(String name) {
         return methods.getNext(name);
+    }
+
+    //TODO test
+    public Sequence apply(UnaryOperator<Method> function) {
+        return withMethods(methods.apply(function));
     }
 
 }

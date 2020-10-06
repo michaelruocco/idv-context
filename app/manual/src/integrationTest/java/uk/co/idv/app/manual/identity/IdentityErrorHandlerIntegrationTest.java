@@ -1,6 +1,7 @@
 package uk.co.idv.app.manual.identity;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.identity.config.DefaultIdentityConfig;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
@@ -14,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class IdentityErrorHandlerIntegrationTest {
 
-    private final IdentityConfig config = IdentityConfig.builder()
+    private final IdentityConfig config = DefaultIdentityConfig.builder()
             .build();
 
     private final ErrorHandler handler = config.errorHandler();

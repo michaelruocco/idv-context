@@ -5,6 +5,7 @@ import uk.co.idv.method.entities.method.Method;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 public interface Methods extends Iterable<Method> {
@@ -32,5 +33,7 @@ public interface Methods extends Iterable<Method> {
     Stream<Method> stream();
 
     Collection<Method> getValues();
+
+    Methods apply(UnaryOperator<Method> function);
 
 }

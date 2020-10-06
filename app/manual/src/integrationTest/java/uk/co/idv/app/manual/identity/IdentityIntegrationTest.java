@@ -2,6 +2,7 @@ package uk.co.idv.app.manual.identity;
 
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.identity.config.DefaultIdentityConfig;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
@@ -33,7 +34,7 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 class IdentityIntegrationTest {
 
-    private final IdentityConfig identityConfig = IdentityConfig.builder()
+    private final IdentityConfig identityConfig = DefaultIdentityConfig.builder()
             .build();
     private final IdentityService service = identityConfig.identityService();
 

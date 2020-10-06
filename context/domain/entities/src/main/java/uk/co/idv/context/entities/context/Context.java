@@ -9,10 +9,12 @@ import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
+import java.util.function.UnaryOperator;
 
 @Builder
 @Data
@@ -68,6 +70,11 @@ public class Context {
 
     public Methods getNextMethods(String name) {
         return sequences.getMethodsIfNext(name);
+    }
+
+    //TODO test
+    public Context apply(UnaryOperator<Method> function) {
+        return withSequences(sequences.apply(function));
     }
 
 }

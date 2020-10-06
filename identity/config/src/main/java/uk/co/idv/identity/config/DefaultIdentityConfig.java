@@ -24,17 +24,19 @@ import java.util.Collections;
 
 @Builder
 @Slf4j
-public class IdentityConfig {
+public class DefaultIdentityConfig implements IdentityConfig {
 
     @Builder.Default
     private final IdentityRepository repository = new InMemoryIdentityRepository();
 
     private final ExternalFindIdentity externalFindIdentity = StubExternalFindIdentity.withExampleConfig();
 
+    @Override
     public FindIdentity findIdentity() {
         return new FindIdentity(repository);
     }
 
+    @Override
     public CreateEligibility createEligibility() {
         return new CompositeCreateEligibility(
                 abcCreateEligibility(),
@@ -42,14 +44,17 @@ public class IdentityConfig {
         );
     }
 
+    @Override
     public IdentityService identityService() {
         return IdentityService.build(repository);
     }
 
+    @Override
     public AliasFactory aliasFactory() {
         return new DefaultAliasFactory();
     }
 
+    @Override
     public IdentityErrorHandler errorHandler() {
         return new IdentityErrorHandler();
     }

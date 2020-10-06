@@ -20,7 +20,7 @@ import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextNotFoundException;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
 import uk.co.idv.context.usecases.policy.NoContextPoliciesConfiguredException;
-import uk.co.idv.identity.config.IdentityConfig;
+import uk.co.idv.identity.config.DefaultIdentityConfig;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
@@ -67,7 +67,7 @@ class ContextIntegrationTest {
             .clock(clock)
             .methodBuilders(Collections.singleton(otpConfig.otpBuilder()))
             .build();
-    private final IdentityConfig identityConfig = IdentityConfig.builder()
+    private final DefaultIdentityConfig identityConfig = DefaultIdentityConfig.builder()
             .build();
 
     private final LockoutConfig lockoutConfig = LockoutConfigBuilder.builder()

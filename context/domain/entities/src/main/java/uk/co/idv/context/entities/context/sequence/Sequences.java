@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.method.DefaultMethods;
 import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -11,6 +12,7 @@ import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -58,6 +60,13 @@ public class Sequences implements Iterable<Sequence> {
 
     public Stream<Sequence> stream() {
         return values.stream();
+    }
+
+    //TODO test
+    public Sequences apply(UnaryOperator<Method> function) {
+        return new Sequences(values.stream()
+                .map(sequence -> sequence.apply(function))
+                .collect(Collectors.toList()));
     }
 
 }

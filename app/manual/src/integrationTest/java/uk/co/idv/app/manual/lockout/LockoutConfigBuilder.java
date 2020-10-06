@@ -1,6 +1,7 @@
 package uk.co.idv.app.manual.lockout;
 
 import lombok.Builder;
+import uk.co.idv.identity.config.DefaultIdentityConfig;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.lockout.config.repository.LockoutRepositoryConfig;
@@ -10,7 +11,7 @@ import uk.co.idv.lockout.config.repository.inmemory.InMemoryLockoutRepositoryCon
 public class LockoutConfigBuilder {
 
     @Builder.Default
-    private final IdentityConfig identityConfig = IdentityConfig.builder().build();
+    private final IdentityConfig identityConfig = DefaultIdentityConfig.builder().build();
 
     @Builder.Default
     private final LockoutRepositoryConfig repositoryConfig = new InMemoryLockoutRepositoryConfig();

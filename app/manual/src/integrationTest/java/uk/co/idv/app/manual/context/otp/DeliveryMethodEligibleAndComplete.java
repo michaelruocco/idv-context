@@ -24,6 +24,8 @@ public class DeliveryMethodEligibleAndComplete implements Callable<Boolean> {
 
     @Override
     public Boolean call() {
+        //TODO see if we can apply similar functional solution to getting next eligible
+        //and complete methods in same way we did for updating delivery methods
         Context context = contextFacade.find(contextId);
         Methods methods = context.getNextEligibleIncompleteMethods("one-time-passcode");
         successful = isDeliveryMethodEligibilityComplete(methods);

@@ -9,6 +9,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -88,6 +89,14 @@ public class DefaultMethods implements Methods {
     @Override
     public Stream<Method> stream() {
         return values.stream();
+    }
+
+    //TODO test
+    @Override
+    public Methods apply(UnaryOperator<Method> function) {
+        return new DefaultMethods(values.stream()
+                .map(function)
+                .collect(Collectors.toList()));
     }
 
 }

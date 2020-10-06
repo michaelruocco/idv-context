@@ -3,6 +3,7 @@ package uk.co.idv.app.spring.config.identity;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.identity.config.DefaultIdentityConfig;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.identity.config.repository.IdentityRepositoryConfig;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
@@ -14,7 +15,7 @@ public class SpringIdentityDomainConfig {
 
     @Bean
     public IdentityConfig identityConfig(IdentityRepositoryConfig repositoryConfig) {
-        return IdentityConfig.builder()
+        return DefaultIdentityConfig.builder()
                 .repository(repositoryConfig.identityRepository())
                 .build();
     }

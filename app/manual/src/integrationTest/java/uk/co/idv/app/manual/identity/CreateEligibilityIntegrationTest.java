@@ -1,6 +1,7 @@
 package uk.co.idv.app.manual.identity;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.identity.config.DefaultIdentityConfig;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
@@ -23,7 +24,7 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 class CreateEligibilityIntegrationTest {
 
-    private final IdentityConfig identityConfig = IdentityConfig.builder()
+    private final IdentityConfig identityConfig = DefaultIdentityConfig.builder()
             .build();
 
     private final CreateEligibility createEligibility = identityConfig.createEligibility();

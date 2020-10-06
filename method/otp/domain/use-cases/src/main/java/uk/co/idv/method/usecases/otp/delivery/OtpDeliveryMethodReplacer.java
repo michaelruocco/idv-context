@@ -1,41 +1,21 @@
 package uk.co.idv.method.usecases.otp.delivery;
 
-import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.method.DefaultMethods;
-import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.sequence.Sequence;
-import uk.co.idv.context.entities.context.sequence.Sequences;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.otp.Otp;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
 
-import java.util.stream.Collectors;
+import java.util.function.UnaryOperator;
 
-public class ContextDeliveryMethodReplacer {
+@Data
+@RequiredArgsConstructor
+public class OtpDeliveryMethodReplacer implements UnaryOperator<Method> {
 
-    public Context replace(Context context, DeliveryMethods newValues) {
-        Sequences sequences = context.getSequences();
-        return context.withSequences(replaceDeliveryMethods(sequences, newValues));
-    }
+    private final DeliveryMethods deliveryMethods;
 
-    private Sequences replaceDeliveryMethods(Sequences sequences, DeliveryMethods newValues) {
-        return new Sequences(sequences.stream()
-                .map(sequence -> replaceOtpDeliveryMethods(sequence, newValues))
-                .collect(Collectors.toList()));
-    }
-
-    private Sequence replaceOtpDeliveryMethods(Sequence sequence, DeliveryMethods newValues) {
-        return sequence.withMethods(replaceDeliveryMethods(sequence.getMethods(), newValues));
-    }
-
-    private Methods replaceDeliveryMethods(Methods methods, DeliveryMethods newValues) {
-        return new DefaultMethods(methods.stream()
-                .map(method -> replaceDeliveryMethodsIfOtp(method, newValues))
-                .collect(Collectors.toList()));
-    }
-
-    //TODO pass
-    private Method replaceDeliveryMethodsIfOtp(Method method, DeliveryMethods deliveryMethods) {
+    @Override
+    public Method apply(Method method) {
         if (method instanceof Otp) {
             Otp otp = (Otp) method;
             return otp.replaceDeliveryMethods(deliveryMethods);
