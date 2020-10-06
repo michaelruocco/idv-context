@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-class ExternalFindIdentityStubConfigTest {
+class StubExternalFindIdentityConfigTest {
 
     private static final Duration NO_DELAY = Duration.ZERO;
     private static final Duration OTHER_DELAY = Duration.ofMillis(5);
@@ -17,7 +17,7 @@ class ExternalFindIdentityStubConfigTest {
     void shouldReturnExecutor() {
         ExecutorService executor = mock(ExecutorService.class);
 
-        ExternalFindIdentityStubConfig config = ExternalFindIdentityStubConfig.build(executor);
+        StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.build(executor);
 
         assertThat(config.getExecutor()).isEqualTo(executor);
     }
@@ -26,7 +26,7 @@ class ExternalFindIdentityStubConfigTest {
     void shouldReturnNoPhoneNumberDelayIfNotSet() {
         ExecutorService executor = mock(ExecutorService.class);
 
-        ExternalFindIdentityStubConfig config = ExternalFindIdentityStubConfig.build(executor);
+        StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.build(executor);
 
         assertThat(config.getPhoneNumberDelay()).isEqualTo(NO_DELAY);
     }
@@ -35,7 +35,7 @@ class ExternalFindIdentityStubConfigTest {
     void shouldReturnNoEmailAddressDelayIfNotSet() {
         ExecutorService executor = mock(ExecutorService.class);
 
-        ExternalFindIdentityStubConfig config = ExternalFindIdentityStubConfig.build(executor);
+        StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.build(executor);
 
         assertThat(config.getEmailAddressDelay()).isEqualTo(NO_DELAY);
     }
@@ -44,14 +44,14 @@ class ExternalFindIdentityStubConfigTest {
     void shouldReturn2SecondTimeoutForAllChannelsIfNotSet() {
         ExecutorService executor = mock(ExecutorService.class);
 
-        ExternalFindIdentityStubConfig config = ExternalFindIdentityStubConfig.build(executor);
+        StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.build(executor);
 
         assertThat(config.getTimeout("any-channel-id")).isEqualTo(Duration.ofSeconds(2));
     }
 
     @Test
     void shouldReturnNumberDelay() {
-        ExternalFindIdentityStubConfig config = ExternalFindIdentityStubConfig.builder()
+        StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.builder()
                 .phoneNumberDelay(OTHER_DELAY)
                 .build();
 
@@ -60,7 +60,7 @@ class ExternalFindIdentityStubConfigTest {
 
     @Test
     void shouldReturnEmailAddressDelay() {
-        ExternalFindIdentityStubConfig config = ExternalFindIdentityStubConfig.builder()
+        StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.builder()
                 .emailAddressDelay(OTHER_DELAY)
                 .build();
 
@@ -71,7 +71,7 @@ class ExternalFindIdentityStubConfigTest {
     void shouldReturnTimeoutForAllChannelsIfSet() {
         Duration timeout = Duration.ofSeconds(5);
 
-        ExternalFindIdentityStubConfig config = ExternalFindIdentityStubConfig.builder()
+        StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.builder()
                 .timeout(timeout)
                 .build();
 

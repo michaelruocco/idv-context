@@ -2,8 +2,7 @@ package uk.co.idv.identity.config;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStub;
-import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStubConfig;
+import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentity;
 import uk.co.idv.identity.adapter.json.IdentityErrorHandler;
 import uk.co.idv.identity.adapter.repository.InMemoryIdentityRepository;
 import uk.co.idv.identity.entities.alias.AliasFactory;
@@ -14,16 +13,14 @@ import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.DefaultCreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.SupportedCreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.external.ExternalCreateEligibility;
+import uk.co.idv.identity.usecases.eligibility.external.ExternalFindIdentity;
 import uk.co.idv.identity.usecases.eligibility.internal.InternalCreateEligibility;
 import uk.co.idv.identity.usecases.identity.IdentityService;
 import uk.co.idv.identity.usecases.identity.IdentityRepository;
 import uk.co.idv.identity.usecases.identity.find.FindIdentity;
 import uk.co.idv.identity.usecases.identity.update.UpdateIdentity;
 
-import java.time.Duration;
 import java.util.Collections;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 
 @Builder
 @Slf4j
@@ -32,8 +29,7 @@ public class IdentityConfig {
     @Builder.Default
     private final IdentityRepository repository = new InMemoryIdentityRepository();
 
-    @Builder.Default
-    private final ExternalFindIdentityStubConfig stubConfig = buildDefaultStubConfig();
+    private final ExternalFindIdentity externalFindIdentity = StubExternalFindIdentity.withExampleConfig();
 
     public FindIdentity findIdentity() {
         return new FindIdentity(repository);
@@ -71,33 +67,13 @@ public class IdentityConfig {
 
     private ExternalCreateEligibility externalCreateEligibility() {
         return ExternalCreateEligibility.builder()
-                .find(ExternalFindIdentityStub.build(stubConfig))
+                .find(externalFindIdentity)
                 .update(UpdateIdentity.buildExternal(repository))
                 .build();
     }
 
     private CreateEligibility internalCreateEligibility() {
         return InternalCreateEligibility.build(repository);
-    }
-
-    private static ExternalFindIdentityStubConfig buildDefaultStubConfig() {
-        return ExternalFindIdentityStubConfig.builder()
-                .executor(buildEligibilityExecutor())
-                .timeout(Duration.ofMillis(250))
-                .phoneNumberDelay(Duration.ofMillis(400))
-                .emailAddressDelay(Duration.ofMillis(100))
-                .build();
-    }
-
-    private static ExecutorService buildEligibilityExecutor() {
-        return Executors.newFixedThreadPool(loadThreadPoolSize());
-    }
-
-    private static int loadThreadPoolSize() {
-        String key = "external.find.identity.thread.pool.size";
-        int size = Integer.parseInt(System.getProperty(key, "100"));
-        log.info("loaded {} value {}", key, size);
-        return size;
     }
 
 }

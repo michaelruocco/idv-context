@@ -3,7 +3,7 @@ package uk.co.idv.identity.adapter.eligibility.external.data;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.async.FutureWaiter;
-import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStubConfig;
+import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
 import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoader;
 import uk.co.idv.identity.usecases.eligibility.external.data.DataFutures;
 import uk.co.idv.identity.usecases.eligibility.external.data.DataSupplierFactory;
@@ -35,7 +35,7 @@ class StubAsyncDataLoaderIntegrationTest {
 
     @Test
     void shouldLoadStubbedData() {
-        ExternalFindIdentityStubConfig config = ExternalFindIdentityStubConfig.builder()
+        StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.builder()
                 .executor(EXECUTOR)
                 .phoneNumberDelay(PHONE_NUMBER_DELAY)
                 .emailAddressDelay(EMAIL_ADDRESS_DELAY)
@@ -69,7 +69,7 @@ class StubAsyncDataLoaderIntegrationTest {
         assertThat(countTimesPhoneNumbersLoaded(dataFutures)).isEqualTo(NUMBER_OF_RUNS);
     }
 
-    public static DataSupplierFactory toSupplierFactory(ExternalFindIdentityStubConfig config) {
+    public static DataSupplierFactory toSupplierFactory(StubExternalFindIdentityConfig config) {
         return StubDataSupplierFactory.builder()
                 .phoneNumberDelay(config.getPhoneNumberDelay())
                 .emailAddressDelay(config.getEmailAddressDelay())

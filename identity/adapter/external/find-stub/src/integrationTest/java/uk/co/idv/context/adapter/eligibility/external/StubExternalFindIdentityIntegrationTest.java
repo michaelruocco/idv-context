@@ -1,8 +1,8 @@
 package uk.co.idv.context.adapter.eligibility.external;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStub;
-import uk.co.idv.identity.adapter.eligibility.external.ExternalFindIdentityStubConfig;
+import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentity;
+import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.DebitCardNumberMother;
@@ -18,11 +18,11 @@ import java.util.concurrent.Executors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class ExternalFindIdentityStubIntegrationTest {
+class StubExternalFindIdentityIntegrationTest {
 
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final ExternalFindIdentityStubConfig config = ExternalFindIdentityStubConfig.build(executor);
-    private final ExternalFindIdentity find = ExternalFindIdentityStub.build(config);
+    private final StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.build(executor);
+    private final ExternalFindIdentity find = StubExternalFindIdentity.build(config);
 
     @Test
     void shouldFindStubbedIdentityWithCountryCode() {

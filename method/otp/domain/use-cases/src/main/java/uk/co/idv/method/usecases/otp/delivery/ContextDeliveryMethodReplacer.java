@@ -28,7 +28,7 @@ public class ContextDeliveryMethodReplacer {
         return sequence.withMethods(replaceDeliveryMethods(sequence.getMethods(), newValues));
     }
 
-    private DefaultMethods replaceDeliveryMethods(Methods methods, DeliveryMethods newValues) {
+    private Methods replaceDeliveryMethods(Methods methods, DeliveryMethods newValues) {
         return new DefaultMethods(methods.stream()
                 .map(method -> replaceDeliveryMethodsIfOtp(method, newValues))
                 .collect(Collectors.toList()));

@@ -8,13 +8,17 @@ import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoader;
 import uk.co.idv.identity.usecases.eligibility.external.data.DataSupplierFactory;
 import uk.co.idv.identity.usecases.eligibility.external.data.FindIdentityRequestConverter;
 
-public class ExternalFindIdentityStub {
+public class StubExternalFindIdentity {
 
-    private ExternalFindIdentityStub() {
+    private StubExternalFindIdentity() {
         // factory methods only
     }
 
-    public static ExternalFindIdentity build(ExternalFindIdentityStubConfig config) {
+    public static ExternalFindIdentity withExampleConfig() {
+        return build(StubExternalFindIdentityConfig.buildExample());
+    }
+
+    public static ExternalFindIdentity build(StubExternalFindIdentityConfig config) {
         return ExternalFindIdentity.builder()
                 .converter(new FindIdentityRequestConverter(config))
                 .aliasLoader(new StubAliasLoader())
@@ -22,7 +26,7 @@ public class ExternalFindIdentityStub {
                 .build();
     }
 
-    private static AsyncDataLoader toAsyncDataLoader(ExternalFindIdentityStubConfig config) {
+    private static AsyncDataLoader toAsyncDataLoader(StubExternalFindIdentityConfig config) {
         return AsyncDataLoader.builder()
                 .executor(config.getExecutor())
                 .supplierFactory(toSupplierFactory(config))
@@ -30,7 +34,7 @@ public class ExternalFindIdentityStub {
                 .build();
     }
 
-    private static DataSupplierFactory toSupplierFactory(ExternalFindIdentityStubConfig config) {
+    private static DataSupplierFactory toSupplierFactory(StubExternalFindIdentityConfig config) {
         return StubDataSupplierFactory.builder()
                 .phoneNumberDelay(config.getPhoneNumberDelay())
                 .emailAddressDelay(config.getEmailAddressDelay())
