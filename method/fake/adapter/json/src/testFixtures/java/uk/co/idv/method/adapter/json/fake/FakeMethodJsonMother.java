@@ -5,7 +5,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface FakeMethodJsonMother {
 
     static String build() {
-        return loadContentFromClasspath("context/method/fake/fake.json");
+        return loadContentFromClasspath("fake.json");
     }
 
 }

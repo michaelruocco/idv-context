@@ -5,7 +5,7 @@ import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 public interface FakeMethodPolicyJsonMother {
 
     static String build() {
-        return loadContentFromClasspath("policy/method/fake/fake-policy.json");
+        return loadContentFromClasspath("fake-policy.json");
     }
 
 }

@@ -75,9 +75,6 @@ project(':context-entities').projectDir = file('context/domain/entities')
 include ':context-use-cases'
 project(':context-use-cases').projectDir = file('context/domain/use-cases')
 
-include ':context-sim-swap-stub'
-project(':context-sim-swap-stub').projectDir = file('context/adapter/sim-swap/stub')
-
 include ':context-in-memory-repository'
 project(':context-in-memory-repository').projectDir = file('context/adapter/repository/in-memory')
 
@@ -101,6 +98,12 @@ project(':method-json').projectDir = file('method/common/adapter/json')
 
 include ':otp-entities'
 project(':otp-entities').projectDir = file('method/otp/domain/entities')
+
+include ':otp-json'
+project(':otp-json').projectDir = file('method/otp/adapter/json')
+
+include ':otp-sim-swap-stub'
+project(':otp-sim-swap-stub').projectDir = file('method/otp/adapter/sim-swap/stub')
 
 include ':fake-method-entities'
 project(':fake-method-entities').projectDir = file('method/fake/domain/entities')
