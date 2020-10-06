@@ -34,6 +34,7 @@ public class ContextDeliveryMethodReplacer {
                 .collect(Collectors.toList()));
     }
 
+    //TODO pass
     private Method replaceDeliveryMethodsIfOtp(Method method, DeliveryMethods deliveryMethods) {
         if (method instanceof Otp) {
             Otp otp = (Otp) method;
