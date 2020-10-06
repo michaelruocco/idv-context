@@ -11,7 +11,6 @@
 
 ## Todo
 
-*   Pull otp into separate module (under a new methods folder so we can have a module for each method)
 *   Functionality to post results to verification context
 *   Return eligibility reasons against methods and sequences
 *   Tidy up cloud formation templates and try out creating API gateway

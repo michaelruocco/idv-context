@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.context;
 
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.method.DefaultMethods;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.Sequences;
@@ -26,8 +27,8 @@ public class ContextResultUpdater {
         return sequence.withMethods(addResultIfApplicable(sequence.getMethods(), result));
     }
 
-    private Methods addResultIfApplicable(Methods methods, Result result) {
-        return new Methods(methods.stream()
+    private DefaultMethods addResultIfApplicable(Methods methods, Result result) {
+        return new DefaultMethods(methods.stream()
                 .map(method -> addResultIfNextAndApplicable(methods, method, result))
                 .collect(Collectors.toList()));
     }

@@ -10,7 +10,7 @@ class RequestedDataTest {
 
     @Test
     void shouldReturnEmailAddressesRequestedTrueIfRequested() {
-        RequestedData requestedData = RequestedDataMother.onlyEmailAddresses();
+        RequestedData requestedData = RequestedDataMother.emailAddressesOnly();
 
         boolean isRequested = requestedData.emailAddressesRequested();
 
@@ -28,7 +28,7 @@ class RequestedDataTest {
 
     @Test
     void shouldReturnPhoneNumbersRequestedTrueIfRequested() {
-        RequestedData requestedData = RequestedDataMother.onlyPhoneNumbers();
+        RequestedData requestedData = RequestedDataMother.phoneNumbersOnly();
 
         boolean isRequested = requestedData.phoneNumbersRequested();
 
@@ -50,8 +50,8 @@ class RequestedDataTest {
         RequestedData requestedData = RequestedDataMother.allRequested();
 
         assertThat(requestedData).containsExactly(
-                RequestedData.EMAIL_ADDRESSES,
-                RequestedData.PHONE_NUMBERS
+                RequestedDataItems.EMAIL_ADDRESSES,
+                RequestedDataItems.PHONE_NUMBERS
         );
     }
 
@@ -62,26 +62,26 @@ class RequestedDataTest {
         Stream<String> items = requestedData.stream();
 
         assertThat(items).containsExactly(
-                RequestedData.EMAIL_ADDRESSES,
-                RequestedData.PHONE_NUMBERS
+                RequestedDataItems.EMAIL_ADDRESSES,
+                RequestedDataItems.PHONE_NUMBERS
         );
     }
 
     @Test
     void shouldReturnPhoneNumbersOnly() {
-        RequestedData requestedData = RequestedData.phoneNumbersOnly();
+        RequestedData requestedData = RequestedDataMother.phoneNumbersOnly();
 
         assertThat(requestedData).containsExactly(
-                RequestedData.PHONE_NUMBERS
+                RequestedDataItems.PHONE_NUMBERS
         );
     }
 
     @Test
     void shouldReturnEmailAddressesOnly() {
-        RequestedData requestedData = RequestedData.emailAddressesOnly();
+        RequestedData requestedData = RequestedDataMother.emailAddressesOnly();
 
         assertThat(requestedData).containsExactly(
-                RequestedData.EMAIL_ADDRESSES
+                RequestedDataItems.EMAIL_ADDRESSES
         );
     }
 

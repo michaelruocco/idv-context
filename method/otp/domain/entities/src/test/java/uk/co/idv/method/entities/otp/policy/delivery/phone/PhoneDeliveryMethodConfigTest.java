@@ -2,7 +2,7 @@ package uk.co.idv.method.entities.otp.policy.delivery.phone;
 
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.entities.identity.RequestedData;
+import uk.co.idv.identity.entities.identity.RequestedDataMother;
 import uk.co.idv.method.entities.otp.policy.delivery.phone.simswap.SimSwapConfigMother;
 
 import java.time.Duration;
@@ -27,7 +27,7 @@ class PhoneDeliveryMethodConfigTest {
 
     @Test
     void shouldRequestPhoneNumbers() {
-        assertThat(config.getRequestedData()).isEqualTo(RequestedData.phoneNumbersOnly());
+        assertThat(config.getRequestedData()).isEqualTo(RequestedDataMother.phoneNumbersOnly());
     }
 
     @Test

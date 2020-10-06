@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.context.sequence;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.context.method.DefaultMethods;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequencesRequest;
@@ -61,7 +62,7 @@ class SequenceBuilderTest {
     }
 
     private Methods givenRequestBuildsMethods(MethodsRequest methodsRequest) {
-        Methods methods = mock(Methods.class);
+        Methods methods = mock(DefaultMethods.class);
         given(methodsBuilder.build(methodsRequest)).willReturn(methods);
         return methods;
     }

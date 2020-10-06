@@ -19,7 +19,7 @@ class MethodsTest {
         Method method1 = FakeMethodMother.build();
         Method method2 = FakeMethodMother.build();
 
-        Methods methods = new Methods(method1, method2);
+        Methods methods = new DefaultMethods(method1, method2);
 
         assertThat(methods).containsExactly(
                 method1,
@@ -32,7 +32,7 @@ class MethodsTest {
         Method method1 = FakeMethodMother.build();
         Method method2 = FakeMethodMother.build();
 
-        Methods methods = new Methods(method1, method2);
+        Methods methods = new DefaultMethods(method1, method2);
 
         assertThat(methods.getValues()).containsExactly(
                 method1,
@@ -42,7 +42,7 @@ class MethodsTest {
 
     @Test
     void shouldReturnTrueIfEmpty() {
-        Methods methods = new Methods();
+        Methods methods = new DefaultMethods();
 
         boolean empty = methods.isEmpty();
 
@@ -51,7 +51,7 @@ class MethodsTest {
 
     @Test
     void shouldReturnFalseIfNotEmpty() {
-        Methods methods = new Methods(FakeMethodMother.build());
+        Methods methods = new DefaultMethods(FakeMethodMother.build());
 
         boolean empty = methods.isEmpty();
 
@@ -63,7 +63,7 @@ class MethodsTest {
         Method method1 = FakeMethodMother.eligible();
         Method method2 = FakeMethodMother.eligible();
 
-        Methods methods = new Methods(method1, method2);
+        Methods methods = new DefaultMethods(method1, method2);
 
         assertThat(methods.isEligible()).isTrue();
     }
@@ -73,7 +73,7 @@ class MethodsTest {
         Method eligible = FakeMethodMother.eligible();
         Method ineligible = FakeMethodMother.ineligible();
 
-        Methods methods = new Methods(eligible, ineligible);
+        Methods methods = new DefaultMethods(eligible, ineligible);
 
         assertThat(methods.isEligible()).isFalse();
     }
@@ -83,7 +83,7 @@ class MethodsTest {
         Method method1 = FakeMethodMother.complete();
         Method method2 = FakeMethodMother.complete();
 
-        Methods methods = new Methods(method1, method2);
+        Methods methods = new DefaultMethods(method1, method2);
 
         assertThat(methods.isComplete()).isTrue();
     }
@@ -93,7 +93,7 @@ class MethodsTest {
         Method complete = FakeMethodMother.complete();
         Method incomplete = FakeMethodMother.incomplete();
 
-        Methods methods = new Methods(complete, incomplete);
+        Methods methods = new DefaultMethods(complete, incomplete);
 
         assertThat(methods.isComplete()).isFalse();
     }
@@ -103,7 +103,7 @@ class MethodsTest {
         Method method1 = FakeMethodMother.successful();
         Method method2 = FakeMethodMother.successful();
 
-        Methods methods = new Methods(method1, method2);
+        Methods methods = new DefaultMethods(method1, method2);
 
         assertThat(methods.isSuccessful()).isTrue();
     }
@@ -113,7 +113,7 @@ class MethodsTest {
         Method successful = FakeMethodMother.successful();
         Method unsuccessful = FakeMethodMother.unsuccessful();
 
-        Methods methods = new Methods(successful, unsuccessful);
+        Methods methods = new DefaultMethods(successful, unsuccessful);
 
         assertThat(methods.isSuccessful()).isFalse();
     }
@@ -123,7 +123,7 @@ class MethodsTest {
         Method method1 = FakeMethodMother.withDuration(Duration.ofMinutes(2));
         Method method2 = FakeMethodMother.withDuration(Duration.ofMinutes(3));
 
-        Methods methods = new Methods(method1, method2);
+        Methods methods = new DefaultMethods(method1, method2);
 
         assertThat(methods.getDuration()).isEqualTo(Duration.ofMinutes(5));
     }
@@ -132,7 +132,7 @@ class MethodsTest {
     void shouldStreamMethodsThatMatchType() {
         Method method = mock(Method.class);
         FakeMethod fake = mock(FakeMethod.class);
-        Methods methods = new Methods(method, fake);
+        Methods methods = new DefaultMethods(method, fake);
 
         Stream<FakeMethod> fakeMethods = methods.streamAsType(FakeMethod.class);
 
@@ -149,7 +149,7 @@ class MethodsTest {
                 .name("method2")
                 .complete(false)
                 .build();
-        Methods methods = new Methods(complete, incomplete);
+        Methods methods = new DefaultMethods(complete, incomplete);
 
         boolean next = methods.isNext(incomplete.getName());
 
@@ -166,7 +166,7 @@ class MethodsTest {
                 .name("method2")
                 .complete(false)
                 .build();
-        Methods methods = new Methods(method1, method2);
+        Methods methods = new DefaultMethods(method1, method2);
 
         boolean next = methods.isNext(method2.getName());
 
@@ -176,7 +176,7 @@ class MethodsTest {
     @Test
     void shouldNotReturnIneligibleMethods() {
         Method method = FakeMethodMother.ineligible();
-        Methods methods = new Methods(method);
+        Methods methods = new DefaultMethods(method);
 
         Methods eligibleIncomplete = methods.getEligibleIncomplete();
 
@@ -189,7 +189,7 @@ class MethodsTest {
                 .eligibility(EligibilityMother.eligible())
                 .complete(true)
                 .build();
-        Methods methods = new Methods(method);
+        Methods methods = new DefaultMethods(method);
 
         Methods eligibleIncomplete = methods.getEligibleIncomplete();
 
@@ -202,7 +202,7 @@ class MethodsTest {
                 .eligibility(EligibilityMother.eligible())
                 .complete(false)
                 .build();
-        Methods methods = new Methods(method);
+        Methods methods = new DefaultMethods(method);
 
         Methods eligibleIncomplete = methods.getEligibleIncomplete();
 

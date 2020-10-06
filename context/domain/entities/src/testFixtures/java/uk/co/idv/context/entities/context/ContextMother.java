@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.context;
 
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.context.entities.context.method.DefaultMethods;
 import uk.co.idv.context.entities.context.method.MethodsMother;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequenceMother;
@@ -34,7 +34,7 @@ public interface ContextMother {
         return builder().sequences(sequences).build();
     }
 
-    static Context withMethods(Methods methods) {
+    static Context withMethods(DefaultMethods methods) {
         Sequence sequence = SequenceMother.withMethods(methods);
         return ContextMother.withSequences(SequencesMother.withSequences(sequence));
     }

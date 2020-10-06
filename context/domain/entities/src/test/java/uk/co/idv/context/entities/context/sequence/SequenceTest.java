@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.context.entities.context.method.DefaultMethods;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
@@ -27,7 +27,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnMethods() {
-        Methods methods = mock(Methods.class);
+        DefaultMethods methods = mock(DefaultMethods.class);
 
         Sequence sequence = Sequence.builder()
                 .methods(methods)
@@ -38,7 +38,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnEligibleFromMethods() {
-        Methods methods = mock(Methods.class);
+        DefaultMethods methods = mock(DefaultMethods.class);
         given(methods.isEligible()).willReturn(true);
 
         Sequence sequence = Sequence.builder()
@@ -50,7 +50,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnCompleteFromMethods() {
-        Methods methods = mock(Methods.class);
+        DefaultMethods methods = mock(DefaultMethods.class);
         given(methods.isComplete()).willReturn(true);
 
         Sequence sequence = Sequence.builder()
@@ -62,7 +62,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnSuccessfulFromMethods() {
-        Methods methods = mock(Methods.class);
+        DefaultMethods methods = mock(DefaultMethods.class);
         given(methods.isSuccessful()).willReturn(true);
 
         Sequence sequence = Sequence.builder()
@@ -74,7 +74,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnDurationFromMethods() {
-        Methods methods = mock(Methods.class);
+        DefaultMethods methods = mock(DefaultMethods.class);
         Duration duration = Duration.ofMinutes(5);
         given(methods.getDuration()).willReturn(duration);
 
@@ -87,7 +87,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnNextMethod() {
-        Methods methods = mock(Methods.class);
+        DefaultMethods methods = mock(DefaultMethods.class);
         Method method = FakeMethodMother.build();
         given(methods.getNext(method.getName())).willReturn(Optional.of(method));
         Sequence sequence = SequenceMother.withMethods(methods);
@@ -99,8 +99,8 @@ class SequenceTest {
 
     @Test
     void shouldReturnWithUpdatedMethods() {
-        Methods methods = mock(Methods.class);
-        Methods updatedMethods = mock(Methods.class);
+        DefaultMethods methods = mock(DefaultMethods.class);
+        DefaultMethods updatedMethods = mock(DefaultMethods.class);
         Sequence sequence = SequenceMother.withMethods(methods);
 
         Sequence updatedSequence = sequence.withMethods(updatedMethods);

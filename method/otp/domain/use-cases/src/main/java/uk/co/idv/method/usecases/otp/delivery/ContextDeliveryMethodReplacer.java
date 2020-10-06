@@ -1,6 +1,7 @@
 package uk.co.idv.method.usecases.otp.delivery;
 
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.method.DefaultMethods;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.Sequences;
@@ -27,8 +28,8 @@ public class ContextDeliveryMethodReplacer {
         return sequence.withMethods(replaceDeliveryMethods(sequence.getMethods(), newValues));
     }
 
-    private Methods replaceDeliveryMethods(Methods methods, DeliveryMethods newValues) {
-        return new Methods(methods.stream()
+    private DefaultMethods replaceDeliveryMethods(Methods methods, DeliveryMethods newValues) {
+        return new DefaultMethods(methods.stream()
                 .map(method -> replaceDeliveryMethodsIfOtp(method, newValues))
                 .collect(Collectors.toList()));
     }

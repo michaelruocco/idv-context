@@ -7,19 +7,19 @@ import java.util.Collections;
 public interface RequestedDataMother {
 
     static RequestedData allRequested() {
-        return with(RequestedData.allItems());
+        return with(RequestedDataItems.all());
     }
 
     static RequestedData noneRequested() {
         return with(Collections.emptyList());
     }
 
-    static RequestedData onlyEmailAddresses() {
-        return RequestedData.emailAddressesOnly();
+    static RequestedData emailAddressesOnly() {
+        return new EmailAddressesOnly();
     }
 
-    static RequestedData onlyPhoneNumbers() {
-        return RequestedData.phoneNumbersOnly();
+    static RequestedData phoneNumbersOnly() {
+        return new PhoneNumbersOnly();
     }
 
     static RequestedData with(String... items) {

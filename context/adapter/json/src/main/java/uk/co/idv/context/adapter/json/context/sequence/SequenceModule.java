@@ -14,7 +14,7 @@ import java.util.Collections;
 
 public class SequenceModule extends SimpleModule {
 
-    private final Collection<MethodMapping> mappings;
+    private final transient Collection<MethodMapping> mappings;
 
     public SequenceModule(MethodMapping... mappings) {
         this(Arrays.asList(mappings));

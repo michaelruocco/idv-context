@@ -1,82 +1,36 @@
 package uk.co.idv.context.entities.context.method;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
 import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
-import java.util.Arrays;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@RequiredArgsConstructor
-@Data
-public class Methods implements Iterable<Method> {
+public interface Methods extends Iterable<Method> {
 
-    private final Collection<Method> values;
+    boolean isEmpty();
 
-    public Methods(Method... values) {
-        this(Arrays.asList(values));
-    }
+    boolean isEligible();
 
-    @Override
-    public Iterator<Method> iterator() {
-        return values.iterator();
-    }
+    boolean isComplete();
 
-    public boolean isEmpty() {
-        return values.isEmpty();
-    }
+    boolean isSuccessful();
 
-    public boolean isEligible() {
-        return stream().allMatch(Method::isEligible);
-    }
+    Duration getDuration();
 
-    public boolean isComplete() {
-        return stream().allMatch(Method::isComplete);
-    }
+    <T extends Method> Stream<T> streamAsType(Class<T> type);
 
-    public boolean isSuccessful() {
-        return stream().allMatch(Method::isSuccessful);
-    }
+    Methods getEligibleIncomplete();
 
-    public Duration getDuration() {
-        return stream()
-                .map(Method::getDuration)
-                .reduce(Duration.ZERO, Duration::plus);
-    }
+    boolean isNext(String name);
 
-    public <T extends Method> Stream<T> streamAsType(Class<T> type) {
-        return stream()
-                .map(new MethodToType<>(type))
-                .flatMap(Optional::stream);
-    }
+    Optional<Method> getNext(String name);
 
-    public Methods getEligibleIncomplete() {
-        return new Methods(stream()
-                .filter(Method::isEligible)
-                .filter(method -> !method.isComplete())
-                .collect(Collectors.toList())
-        );
-    }
+    Optional<Method> getNext();
 
-    public boolean isNext(String name) {
-        return getNext(name).isPresent();
-    }
+    Stream<Method> stream();
 
-    public Optional<Method> getNext(String name) {
-        return getNext().filter(method -> method.hasName(name));
-    }
-
-    public Optional<Method> getNext() {
-        return stream().filter(method -> !method.isComplete()).findFirst();
-    }
-
-    public Stream<Method> stream() {
-        return values.stream();
-    }
+    Collection<Method> getValues();
 
 }
