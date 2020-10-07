@@ -8,7 +8,6 @@ import uk.co.idv.method.adapter.json.MethodMapping;
 import uk.co.idv.method.adapter.json.eligibility.EligibilityModule;
 import uk.co.idv.method.adapter.json.method.MethodMixin;
 import uk.co.idv.method.adapter.json.result.ResultModule;
-import uk.co.idv.method.entities.method.DefaultMethodConfig;
 import uk.co.idv.method.entities.method.Method;
 
 import java.util.ArrayList;
@@ -33,7 +32,6 @@ public class MethodModule extends SimpleModule {
 
         addDeserializer(Method.class, new MethodDeserializer(mappings));
         addDeserializer(Methods.class, new MethodsDeserializer());
-        addDeserializer(DefaultMethodConfig.class, new DefaultMethodConfigDeserializer());
     }
 
     @Override
