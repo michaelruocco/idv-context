@@ -39,7 +39,6 @@ public class Sequence {
         return methods.getNext(name);
     }
 
-    //TODO test
     public Sequence apply(UnaryOperator<Method> function) {
         return withMethods(methods.apply(function));
     }

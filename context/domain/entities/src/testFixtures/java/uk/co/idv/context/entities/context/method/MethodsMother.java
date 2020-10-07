@@ -5,11 +5,11 @@ import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 public interface MethodsMother {
 
-    static DefaultMethods fakeOnly() {
-        return new DefaultMethods(FakeMethodMother.build());
+    static Methods fakeOnly() {
+        return with(FakeMethodMother.build());
     }
 
-    static DefaultMethods withMethods(Method... methods) {
+    static Methods with(Method... methods) {
         return new DefaultMethods(methods);
     }
 

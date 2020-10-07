@@ -4,6 +4,7 @@ import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -66,6 +67,12 @@ public interface MockSequenceMother {
         Sequence sequence = mockSequence();
         given(sequence.getMethodIfNext(method.getName())).willReturn(Optional.of(method));
         return sequence;
+    }
+
+    static Sequence givenUpdatedSequence(UnaryOperator<Method> function, Sequence sequence) {
+        Sequence updated = mock(Sequence.class);
+        given(sequence.apply(function)).willReturn(updated);
+        return updated;
     }
 
 }

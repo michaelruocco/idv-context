@@ -62,7 +62,6 @@ public class Sequences implements Iterable<Sequence> {
         return values.stream();
     }
 
-    //TODO test
     public Sequences apply(UnaryOperator<Method> function) {
         return new Sequences(values.stream()
                 .map(sequence -> sequence.apply(function))

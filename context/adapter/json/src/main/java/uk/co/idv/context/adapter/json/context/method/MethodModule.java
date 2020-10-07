@@ -3,7 +3,6 @@ package uk.co.idv.context.adapter.json.context.method;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import uk.co.idv.context.entities.context.method.DefaultMethods;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.adapter.json.MethodMapping;
 import uk.co.idv.method.adapter.json.eligibility.EligibilityModule;
@@ -30,7 +29,7 @@ public class MethodModule extends SimpleModule {
         this.mappings = mappings;
 
         setMixInAnnotation(Method.class, MethodMixin.class);
-        setMixInAnnotation(DefaultMethods.class, MethodsMixin.class);
+        setMixInAnnotation(Methods.class, MethodsMixin.class);
 
         addDeserializer(Method.class, new MethodDeserializer(mappings));
         addDeserializer(Methods.class, new MethodsDeserializer());

@@ -11,7 +11,7 @@ public interface SequencesMother {
         return new Sequences();
     }
 
-    static Sequences withSequences(Sequence... sequences) {
+    static Sequences with(Sequence... sequences) {
         return new Sequences(sequences);
     }
 

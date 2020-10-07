@@ -7,12 +7,14 @@ import uk.co.idv.method.entities.method.fake.FakeMethod;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class MethodsTest {
+class DefaultMethodsTest {
 
     @Test
     void shouldBeIterable() {
@@ -207,6 +209,26 @@ class MethodsTest {
         Methods eligibleIncomplete = methods.getEligibleIncomplete();
 
         assertThat(eligibleIncomplete).containsExactly(method);
+    }
+
+    @Test
+    void shouldApplyFunctionToAllMethods() {
+        UnaryOperator<Method> function = mock(UnaryOperator.class);
+        Method method1 = FakeMethodMother.withName("method1");
+        Method method2 = FakeMethodMother.withName("method2");
+        Method updatedMethod1 = givenUpdatedMethod(function, method1);
+        Method updatedMethod2 = givenUpdatedMethod(function, method2);
+        Methods methods = MethodsMother.with(method1, method2);
+
+        Methods updated = methods.apply(function);
+
+        assertThat(updated).containsExactly(updatedMethod1, updatedMethod2);
+    }
+
+    static Method givenUpdatedMethod(UnaryOperator<Method> function, Method method) {
+        Method updated = mock(Method.class);
+        given(function.apply(method)).willReturn(updated);
+        return updated;
     }
 
 }

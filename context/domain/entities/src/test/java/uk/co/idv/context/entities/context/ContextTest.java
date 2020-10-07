@@ -13,6 +13,7 @@ import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
+import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -230,11 +231,33 @@ class ContextTest {
                 .eligibility(EligibilityMother.eligible())
                 .complete(false)
                 .build();
-        Context context = ContextMother.withMethods(MethodsMother.withMethods(method));
+        Context context = ContextMother.withMethods(MethodsMother.with(method));
 
         Methods nextEligibleIncomplete = context.getNextEligibleIncompleteMethods(method.getName());
 
         assertThat(nextEligibleIncomplete).containsExactly(method);
+    }
+
+    @Test
+    void shouldApplyFunctionToSequences() {
+        UnaryOperator<Method> function = mock(UnaryOperator.class);
+        Sequences sequences = mock(Sequences.class);
+        Sequences updatedSequences = givenUpdatedSequences(function, sequences);
+        Context context = ContextMother.withSequences(sequences);
+
+        Context updated = context.apply(function);
+
+        assertThat(updated.getSequences()).isEqualTo(updatedSequences);
+        assertThat(updated)
+                .usingRecursiveComparison()
+                .ignoringFields("sequences")
+                .isEqualTo(context);
+    }
+
+    private Sequences givenUpdatedSequences(UnaryOperator<Method> function, Sequences sequences) {
+        Sequences updated = mock(Sequences.class);
+        given(sequences.apply(function)).willReturn(updated);
+        return updated;
     }
 
 }

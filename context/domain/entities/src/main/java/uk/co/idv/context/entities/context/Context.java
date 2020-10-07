@@ -72,7 +72,6 @@ public class Context {
         return sequences.getMethodsIfNext(name);
     }
 
-    //TODO test
     public Context apply(UnaryOperator<Method> function) {
         return withSequences(sequences.apply(function));
     }

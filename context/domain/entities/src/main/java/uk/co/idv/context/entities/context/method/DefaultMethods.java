@@ -91,7 +91,6 @@ public class DefaultMethods implements Methods {
         return values.stream();
     }
 
-    //TODO test
     @Override
     public Methods apply(UnaryOperator<Method> function) {
         return new DefaultMethods(values.stream()

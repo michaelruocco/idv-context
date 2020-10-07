@@ -1,12 +1,13 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.DefaultMethods;
+import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -27,7 +28,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnMethods() {
-        DefaultMethods methods = mock(DefaultMethods.class);
+        Methods methods = mock(Methods.class);
 
         Sequence sequence = Sequence.builder()
                 .methods(methods)
@@ -38,7 +39,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnEligibleFromMethods() {
-        DefaultMethods methods = mock(DefaultMethods.class);
+        Methods methods = mock(Methods.class);
         given(methods.isEligible()).willReturn(true);
 
         Sequence sequence = Sequence.builder()
@@ -50,7 +51,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnCompleteFromMethods() {
-        DefaultMethods methods = mock(DefaultMethods.class);
+        Methods methods = mock(Methods.class);
         given(methods.isComplete()).willReturn(true);
 
         Sequence sequence = Sequence.builder()
@@ -62,7 +63,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnSuccessfulFromMethods() {
-        DefaultMethods methods = mock(DefaultMethods.class);
+        Methods methods = mock(Methods.class);
         given(methods.isSuccessful()).willReturn(true);
 
         Sequence sequence = Sequence.builder()
@@ -74,7 +75,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnDurationFromMethods() {
-        DefaultMethods methods = mock(DefaultMethods.class);
+        Methods methods = mock(Methods.class);
         Duration duration = Duration.ofMinutes(5);
         given(methods.getDuration()).willReturn(duration);
 
@@ -87,7 +88,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnNextMethod() {
-        DefaultMethods methods = mock(DefaultMethods.class);
+        Methods methods = mock(Methods.class);
         Method method = FakeMethodMother.build();
         given(methods.getNext(method.getName())).willReturn(Optional.of(method));
         Sequence sequence = SequenceMother.withMethods(methods);
@@ -99,8 +100,8 @@ class SequenceTest {
 
     @Test
     void shouldReturnWithUpdatedMethods() {
-        DefaultMethods methods = mock(DefaultMethods.class);
-        DefaultMethods updatedMethods = mock(DefaultMethods.class);
+        Methods methods = mock(Methods.class);
+        Methods updatedMethods = mock(Methods.class);
         Sequence sequence = SequenceMother.withMethods(methods);
 
         Sequence updatedSequence = sequence.withMethods(updatedMethods);
@@ -110,6 +111,28 @@ class SequenceTest {
                 .ignoringFields("methods")
                 .isEqualTo(sequence);
         assertThat(updatedSequence.getMethods()).isEqualTo(updatedMethods);
+    }
+
+    @Test
+    void shouldApplyFunctionToSequences() {
+        UnaryOperator<Method> function = mock(UnaryOperator.class);
+        Methods methods = mock(Methods.class);
+        Methods updatedMethods = givenUpdatedMethods(function, methods);
+        Sequence sequence = SequenceMother.withMethods(methods);
+
+        Sequence updated = sequence.apply(function);
+
+        assertThat(updated.getMethods()).isEqualTo(updatedMethods);
+        assertThat(updated)
+                .usingRecursiveComparison()
+                .ignoringFields("methods")
+                .isEqualTo(sequence);
+    }
+
+    private Methods givenUpdatedMethods(UnaryOperator<Method> function, Methods methods) {
+        Methods updated = mock(Methods.class);
+        given(methods.apply(function)).willReturn(updated);
+        return updated;
     }
 
 }
