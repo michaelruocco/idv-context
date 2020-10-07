@@ -21,7 +21,7 @@ public class Otp implements Method {
     private final String name;
 
     @Getter(AccessLevel.NONE)
-    private final OtpConfig otpConfig;
+    private final OtpConfig config;
 
     @Builder.Default
     private final Results results = new Results();
@@ -36,17 +36,17 @@ public class Otp implements Method {
 
     @Override
     public boolean isComplete() {
-        return false;
+        return isSuccessful() || !hasAttemptsRemaining();
     }
 
     @Override
     public boolean isSuccessful() {
-        return false;
+        return results.containsSuccessful();
     }
 
     @Override
     public OtpConfig getConfig() {
-        return otpConfig;
+        return config;
     }
 
     public Optional<DeliveryMethod> findDeliveryMethod(UUID id) {
@@ -63,6 +63,10 @@ public class Otp implements Method {
         return toBuilder()
                 .deliveryMethods(deliveryMethods.replace(updated))
                 .build();
+    }
+
+    private boolean hasAttemptsRemaining() {
+        return results.size() < config.getMaxNumberOfAttempts();
     }
 
 }

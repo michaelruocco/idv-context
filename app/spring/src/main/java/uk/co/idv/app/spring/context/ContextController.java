@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
+import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
 import uk.co.idv.context.usecases.context.ContextFacade;
 
 import java.net.URI;
@@ -36,6 +37,11 @@ public class ContextController {
     @GetMapping("/{id}")
     public Context getContext(@PathVariable("id") UUID id) {
         return facade.find(id);
+    }
+
+    @PostMapping("/results")
+    public Context recordResult(@RequestBody FacadeRecordResultRequest request) {
+        return facade.record(request);
     }
 
     private static URI buildGetUri(UUID id) {

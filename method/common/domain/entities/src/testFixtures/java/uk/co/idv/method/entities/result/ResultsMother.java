@@ -1,5 +1,8 @@
 package uk.co.idv.method.entities.result;
 
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
+
 public interface ResultsMother {
 
     static Results build() {
@@ -8,6 +11,12 @@ public interface ResultsMother {
 
     static Results with(Result result) {
         return new Results(result);
+    }
+
+    static Results withUnsuccessfulAttempts(int numberOfAttempts) {
+        return new Results(IntStream.rangeClosed(1,numberOfAttempts)
+                .mapToObj(i -> ResultMother.unsuccessful())
+                .collect(Collectors.toList()));
     }
 
 }

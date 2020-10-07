@@ -31,7 +31,7 @@ public class FakeMethod implements Method {
         if (overrideComplete != null) {
             return overrideComplete;
         }
-        return results.containsSuccessful() || !hasAttemptsRemaining();
+        return isSuccessful() || !hasAttemptsRemaining();
     }
 
     @Override

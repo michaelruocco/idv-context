@@ -11,7 +11,8 @@
 
 ## Todo
 
-*   Functionality to post results to verification context
+*   Add karate tests for posting results to verification context
+*   Add updating lockout state when results posted
 *   Return eligibility reasons against methods and sequences
 *   Tidy up cloud formation templates and try out creating API gateway
 *   Json error handling for context errors (context policy not found, context not found)

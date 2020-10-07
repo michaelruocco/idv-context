@@ -8,6 +8,8 @@ import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
+import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
+import uk.co.idv.context.entities.result.FacadeRecordResultRequestMother;
 import uk.co.idv.context.usecases.context.ContextFacade;
 
 import java.util.UUID;
@@ -58,6 +60,16 @@ class ContextControllerTest {
         assertThat(context).isEqualTo(expectedContext);
     }
 
+    @Test
+    void shouldRecordResult() {
+        FacadeRecordResultRequest request = FacadeRecordResultRequestMother.build();
+        Context expectedContext = givenContextUpdatedFor(request);
+
+        Context context = controller.recordResult(request);
+
+        assertThat(context).isEqualTo(expectedContext);
+    }
+
     private Context givenContextCreatedFor(CreateContextRequest request) {
         Context context = ContextMother.build();
         given(facade.create(request)).willReturn(context);
@@ -67,6 +79,12 @@ class ContextControllerTest {
     private Context givenContextLoadedFor(UUID id) {
         Context context = ContextMother.build();
         given(facade.find(id)).willReturn(context);
+        return context;
+    }
+
+    private Context givenContextUpdatedFor(FacadeRecordResultRequest request) {
+        Context context = ContextMother.build();
+        given(facade.record(request)).willReturn(context);
         return context;
     }
 
