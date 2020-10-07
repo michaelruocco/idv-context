@@ -34,8 +34,12 @@ public class ContextService {
                 .request(request)
                 .sequences(sequences)
                 .build();
-        repository.save(context);
+        save(context);
         return context;
+    }
+
+    public void save(Context context) {
+        repository.save(context);
     }
 
     public Context find(UUID id) {

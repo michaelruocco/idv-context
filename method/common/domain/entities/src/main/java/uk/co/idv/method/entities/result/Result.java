@@ -12,8 +12,8 @@ public class Result {
 
     private final String methodName;
     private final boolean successful;
-    private final UUID verificationId;
     private final Instant timestamp;
+    private final UUID verificationId;
 
     public boolean isFor(String otherMethodName) {
         return this.methodName.equals(otherMethodName);

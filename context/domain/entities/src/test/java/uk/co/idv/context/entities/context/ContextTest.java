@@ -239,6 +239,19 @@ class ContextTest {
     }
 
     @Test
+    void shouldReturnTrueIfContainsNextMethodsMatchingNameThatAreEligibleAndIncomplete() {
+        Method method = FakeMethodMother.builder()
+                .eligibility(EligibilityMother.eligible())
+                .complete(false)
+                .build();
+        Context context = ContextMother.withMethods(MethodsMother.with(method));
+
+        boolean hasNextEligibleIncomplete = context.hasNextEligibleIncompleteMethods(method.getName());
+
+        assertThat(hasNextEligibleIncomplete).isTrue();
+    }
+
+    @Test
     void shouldApplyFunctionToSequences() {
         UnaryOperator<Method> function = mock(UnaryOperator.class);
         Sequences sequences = mock(Sequences.class);

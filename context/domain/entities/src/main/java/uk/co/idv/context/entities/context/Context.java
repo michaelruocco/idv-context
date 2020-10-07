@@ -60,6 +60,10 @@ public class Context {
         return timestamp.isAfter(expiry);
     }
 
+    public boolean hasNextEligibleIncompleteMethods(String name) {
+        return !getNextEligibleIncompleteMethods(name).isEmpty();
+    }
+
     public Methods getNextEligibleIncompleteMethods(String name) {
         Methods methods = getNextMethods(name);
         if (methods.isEmpty()) {

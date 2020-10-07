@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.co.idv.context.adapter.json.context.create.CreateContextModule;
 import uk.co.idv.context.adapter.json.context.sequence.SequenceModule;
+import uk.co.idv.context.adapter.json.result.RecordRequestModule;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.method.adapter.json.MethodMapping;
 
@@ -34,7 +35,8 @@ public class ContextModule extends SimpleModule {
         return Arrays.asList(
                 new SequenceModule(mappings),
                 new CreateContextModule(mappings),
-                new JavaTimeModule()
+                new JavaTimeModule(),
+                new RecordRequestModule()
         );
     }
 
