@@ -21,5 +21,6 @@ dependencies {
     integrationTestImplementation testFixtures(project(":identity-use-cases"))
     integrationTestImplementation testFixtures(project(":lockout-use-cases"))
     integrationTestImplementation testFixtures(project(":common-use-cases"))
+    integrationTestImplementation testFixtures(project(":method-use-cases"))
     integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
 }

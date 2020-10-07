@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.lockout.LockoutConfigBuilder;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.common.usecases.id.NonRandomIdGenerator;
-import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.context.config.ContextFacadeConfig;
 import uk.co.idv.context.config.ContextServiceConfig;
 import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
@@ -31,8 +30,8 @@ import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
-import uk.co.idv.method.config.otp.OtpConfig;
-import uk.co.idv.method.entities.otp.policy.OtpPolicyMother;
+import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
+import uk.co.idv.method.usecases.FakeMethodBuilderMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import java.time.Duration;
@@ -53,19 +52,11 @@ class ContextIntegrationTest {
 
     private final ParentContextRepositoryConfig contextRepositoryConfig = new InMemoryContextRepositoryConfig();
 
-    //TODO replace with fake method config/build builder
-    private final OtpConfig otpConfig = OtpConfig.builder()
-            .simSwapExecutorConfig(StubSimSwapExecutorConfig.buildDefault())
-            .idGenerator(idGenerator)
-            .clock(clock)
-            .contextRepository(contextRepositoryConfig.contextRepository())
-            .build();
-
     private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
             .repositoryConfig(contextRepositoryConfig)
             .idGenerator(idGenerator)
             .clock(clock)
-            .methodBuilders(Collections.singleton(otpConfig.otpBuilder()))
+            .methodBuilders(Collections.singleton(FakeMethodBuilderMother.build()))
             .build();
     private final DefaultIdentityConfig identityConfig = DefaultIdentityConfig.builder()
             .build();
@@ -236,7 +227,7 @@ class ContextIntegrationTest {
     private void givenContextPolicyExistsForChannel(String channelId) {
         ContextPolicy policy = ContextPolicyMother.builder()
                 .key(ChannelPolicyKeyMother.withChannelId(channelId))
-                .sequencePolicies(SequencePoliciesMother.withMethodPolicy(OtpPolicyMother.build()))
+                .sequencePolicies(SequencePoliciesMother.withMethodPolicy(FakeMethodPolicyMother.build()))
                 .build();
         contextPolicyService.create(policy);
     }
