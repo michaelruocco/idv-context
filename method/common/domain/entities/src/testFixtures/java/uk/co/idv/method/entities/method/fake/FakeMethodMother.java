@@ -33,26 +33,24 @@ public interface FakeMethodMother {
     }
 
     static FakeMethod complete() {
-        return builder().complete(true).build();
+        return builder().overrideComplete(true).build();
     }
 
     static FakeMethod incomplete() {
-        return builder().build();
+        return builder().overrideComplete(false).build();
     }
 
     static FakeMethod successful() {
-        return builder().successful(true).build();
+        return builder().overrideSuccessful(true).build();
     }
 
     static FakeMethod unsuccessful() {
-        return builder().build();
+        return builder().overrideSuccessful(false).build();
     }
 
     static FakeMethod.FakeMethodBuilder builder() {
         return FakeMethod.builder()
                 .name("fake-method")
-                .complete(false)
-                .successful(false)
                 .config(FakeMethodConfigMother.build())
                 .eligibility(EligibilityMother.eligible());
     }

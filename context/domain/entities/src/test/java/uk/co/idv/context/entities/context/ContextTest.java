@@ -204,7 +204,7 @@ class ContextTest {
         String methodName = "method-name";
         Method expected = FakeMethodMother.builder()
                 .name(methodName)
-                .complete(true)
+                .overrideComplete(true)
                 .build();
         Context context = ContextMother.withMethod(expected);
 
@@ -229,7 +229,7 @@ class ContextTest {
     void shouldReturnNextMethodsMatchingNameThatAreEligibleAndIncomplete() {
         Method method = FakeMethodMother.builder()
                 .eligibility(EligibilityMother.eligible())
-                .complete(false)
+                .overrideComplete(false)
                 .build();
         Context context = ContextMother.withMethods(MethodsMother.with(method));
 
@@ -242,7 +242,7 @@ class ContextTest {
     void shouldReturnTrueIfContainsNextMethodsMatchingNameThatAreEligibleAndIncomplete() {
         Method method = FakeMethodMother.builder()
                 .eligibility(EligibilityMother.eligible())
-                .complete(false)
+                .overrideComplete(false)
                 .build();
         Context context = ContextMother.withMethods(MethodsMother.with(method));
 

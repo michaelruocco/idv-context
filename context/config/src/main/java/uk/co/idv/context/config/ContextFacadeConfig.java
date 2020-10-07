@@ -24,6 +24,7 @@ public class ContextFacadeConfig {
                 .identityLoader(identityLoader())
                 .stateValidator(stateValidator())
                 .contextService(serviceConfig.contextService())
+                .resultService(serviceConfig.resultService())
                 .build();
     }
 

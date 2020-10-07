@@ -9,11 +9,14 @@ import uk.co.idv.context.config.ContextServiceConfig;
 import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
 import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.NotNextMethodInSequenceException;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
+import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
+import uk.co.idv.context.entities.result.FacadeRecordResultRequestMother;
 import uk.co.idv.context.usecases.context.ContextExpiredException;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextNotFoundException;
@@ -31,6 +34,8 @@ import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
+import uk.co.idv.method.entities.result.Result;
+import uk.co.idv.method.entities.result.ResultMother;
 import uk.co.idv.method.usecases.FakeMethodBuilderMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
@@ -65,7 +70,7 @@ class ContextIntegrationTest {
             .identityConfig(identityConfig)
             .build().build();
 
-    private final ContextFacadeConfig contextConfig = ContextFacadeConfig.builder()
+    private final ContextFacadeConfig facadeConfig = ContextFacadeConfig.builder()
             .clock(clock)
             .serviceConfig(serviceConfig)
             .lockoutService(lockoutConfig.lockoutService())
@@ -76,7 +81,7 @@ class ContextIntegrationTest {
     private final IdentityService identityService = identityConfig.identityService();
     private final LockoutPolicyService lockoutPolicyService = lockoutConfig.policyService();
 
-    private final ContextFacade contextFacade = contextConfig.contextFacade();
+    private final ContextFacade contextFacade = facadeConfig.contextFacade();
 
     @Test
     void shouldThrowExceptionIfNoContextPoliciesConfigured() {
@@ -222,6 +227,64 @@ class ContextIntegrationTest {
 
         assertThat(error.getId()).isEqualTo(id);
         assertThat(error.getExpiry()).isEqualTo(created.getExpiry());
+    }
+
+    @Test
+    void shouldPopulateResultOnContext() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        givenIdentityExistsForAliases(createRequest.getAliases());
+        givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        Context context = contextFacade.create(createRequest);
+
+        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+                .contextId(context.getId())
+                .result(ResultMother.withMethodName("fake-method"))
+                .build();
+        Context updated = contextFacade.record(recordRequest);
+
+        assertThat(updated.isComplete()).isTrue();
+    }
+
+    @Test
+    void shouldThrowExceptionIfResultMethodIsNotOnContext() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        givenIdentityExistsForAliases(createRequest.getAliases());
+        givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        Context context = contextFacade.create(createRequest);
+
+        Result result = ResultMother.withMethodName("another-method");
+        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+                .contextId(context.getId())
+                .result(result)
+                .build();
+        Throwable error = catchThrowable(() -> contextFacade.record(recordRequest));
+
+        assertThat(error)
+                .isInstanceOf(NotNextMethodInSequenceException.class)
+                .hasMessage(result.getMethodName());
+    }
+
+    @Test
+    void shouldThrowExceptionIfAttemptToPopulateResultOnContextThatIsAlreadyComplete() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        givenIdentityExistsForAliases(createRequest.getAliases());
+        givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        Context context = contextFacade.create(createRequest);
+        Result result = ResultMother.withMethodName("fake-method");
+        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+                .contextId(context.getId())
+                .result(result)
+                .build();
+       contextFacade.record(recordRequest);
+
+        Throwable error = catchThrowable(() -> contextFacade.record(recordRequest));
+
+        assertThat(error)
+                .isInstanceOf(NotNextMethodInSequenceException.class)
+                .hasMessage(result.getMethodName());
     }
 
     private void givenContextPolicyExistsForChannel(String channelId) {

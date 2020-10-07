@@ -145,11 +145,11 @@ class DefaultMethodsTest {
     void shouldReturnIsNextTrueIfMethodIsNext() {
         Method complete = FakeMethodMother.builder()
                 .name("method1")
-                .complete(true)
+                .overrideComplete(true)
                 .build();
         Method incomplete = FakeMethodMother.builder()
                 .name("method2")
-                .complete(false)
+                .overrideComplete(false)
                 .build();
         Methods methods = new DefaultMethods(complete, incomplete);
 
@@ -162,11 +162,11 @@ class DefaultMethodsTest {
     void shouldNotReturnIsNextTrueIfMethodIsNotNext() {
         Method method1 = FakeMethodMother.builder()
                 .name("method1")
-                .complete(false)
+                .overrideComplete(false)
                 .build();
         Method method2 = FakeMethodMother.builder()
                 .name("method2")
-                .complete(false)
+                .overrideComplete(false)
                 .build();
         Methods methods = new DefaultMethods(method1, method2);
 
@@ -189,7 +189,7 @@ class DefaultMethodsTest {
     void shouldNotReturnEligibleCompleteMethods() {
         Method method = FakeMethodMother.builder()
                 .eligibility(EligibilityMother.eligible())
-                .complete(true)
+                .overrideComplete(true)
                 .build();
         Methods methods = new DefaultMethods(method);
 
@@ -202,7 +202,7 @@ class DefaultMethodsTest {
     void shouldNotReturnEligibleIncompleteMethods() {
         Method method = FakeMethodMother.builder()
                 .eligibility(EligibilityMother.eligible())
-                .complete(false)
+                .overrideComplete(false)
                 .build();
         Methods methods = new DefaultMethods(method);
 

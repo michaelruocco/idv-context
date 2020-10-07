@@ -9,6 +9,8 @@ import uk.co.idv.context.usecases.context.ContextService;
 import uk.co.idv.context.usecases.context.CreateContextRequestConverter;
 import uk.co.idv.context.usecases.context.method.CompositeMethodBuilder;
 import uk.co.idv.context.usecases.context.method.MethodsBuilder;
+import uk.co.idv.context.usecases.context.result.ContextResultUpdater;
+import uk.co.idv.context.usecases.context.result.ResultService;
 import uk.co.idv.context.usecases.context.sequence.SequenceBuilder;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
@@ -41,6 +43,13 @@ public class ContextServiceConfig {
 
     public ContextPolicyService policyService() {
         return new ContextPolicyService(repositoryConfig.policyRepository());
+    }
+
+    public ResultService resultService() {
+        return ResultService.builder()
+                .repository(repositoryConfig.contextRepository())
+                .resultUpdater(new ContextResultUpdater())
+                .build();
     }
 
     private SequencesBuilder sequencesBuilder() {

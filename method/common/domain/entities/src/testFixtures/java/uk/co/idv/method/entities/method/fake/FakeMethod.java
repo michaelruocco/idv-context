@@ -1,7 +1,9 @@
 package uk.co.idv.method.entities.method.fake;
 
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodConfig;
@@ -15,11 +17,34 @@ public class FakeMethod implements Method {
     private final String name;
     private final Eligibility eligibility;
     private final MethodConfig config;
-    private final boolean complete;
-    private final boolean successful;
+
+    @Getter(AccessLevel.NONE)
+    private final Boolean overrideComplete;
+    @Getter(AccessLevel.NONE)
+    private final Boolean overrideSuccessful;
 
     @Builder.Default
     private final Results results = new Results();
+
+    @Override
+    public boolean isComplete() {
+        if (overrideComplete != null) {
+            return overrideComplete;
+        }
+        return results.containsSuccessful() || !hasAttemptsRemaining();
+    }
+
+    @Override
+    public boolean isSuccessful() {
+        if (overrideSuccessful != null) {
+            return overrideSuccessful;
+        }
+        return results.containsSuccessful();
+    }
+
+    private boolean hasAttemptsRemaining() {
+        return results.size() < config.getMaxNumberOfAttempts();
+    }
 
     @Override
     public FakeMethod add(Result result) {
