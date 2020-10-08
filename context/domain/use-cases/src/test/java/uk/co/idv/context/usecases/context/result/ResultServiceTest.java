@@ -29,7 +29,7 @@ class ResultServiceTest {
 
         Context updated = service.record(request);
 
-        assertThat(updated).isEqualTo(updated);
+        assertThat(updated).isEqualTo(expected);
     }
 
     @Test
