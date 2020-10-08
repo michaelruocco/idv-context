@@ -1,9 +1,7 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.entities.method.Method;
-import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
 import java.util.function.UnaryOperator;
@@ -15,8 +13,6 @@ import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.giv
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIncompleteSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIneligibleSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWith;
-import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWithNextMethod;
-import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWithoutNextMethod;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSuccessfulSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenUnsuccessfulSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenUpdatedSequence;
@@ -129,19 +125,7 @@ class SequencesTest {
     }
 
     @Test
-    void shouldReturnMethodsIfNext() {
-        Method method = FakeMethodMother.build();
-        Sequence sequence1 = givenSequenceWithoutNextMethod(method.getName());
-        Sequence sequence2 = givenSequenceWithNextMethod(method);
-        Sequences sequences = new Sequences(sequence1, sequence2);
-
-        Methods methods = sequences.getMethodsIfNext(method.getName());
-
-        assertThat(methods).containsExactly(method);
-    }
-
-    @Test
-    void shouldApplyFunctionToAllSequences() {
+    void shouldUpdateMethodsOnAllSequences() {
         UnaryOperator<Method> function = mock(UnaryOperator.class);
         Sequence sequence1 = mockSequence();
         Sequence sequence2 = mockSequence();
@@ -149,7 +133,7 @@ class SequencesTest {
         Sequence updatedSequence2 = givenUpdatedSequence(function, sequence2);
         Sequences sequences = SequencesMother.with(sequence1, sequence2);
 
-        Sequences updated = sequences.apply(function);
+        Sequences updated = sequences.updateMethods(function);
 
         assertThat(updated).containsExactly(updatedSequence1, updatedSequence2);
     }

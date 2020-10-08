@@ -69,7 +69,7 @@ class AsyncSimSwapUpdateContextTaskTest {
         task.run();
 
         ArgumentCaptor<OtpDeliveryMethodReplacer> captor = ArgumentCaptor.forClass(OtpDeliveryMethodReplacer.class);
-        verify(context).apply(captor.capture());
+        verify(context).updateMethods(captor.capture());
         OtpDeliveryMethodReplacer replacer = captor.getValue();
         assertThat(replacer.getDeliveryMethods()).isEqualTo(request.getDeliveryMethods());
     }
@@ -82,7 +82,7 @@ class AsyncSimSwapUpdateContextTaskTest {
 
     private Context givenContextUpdatedTo(Context context) {
         Context updated = mock(Context.class);
-        given(context.apply(any(UnaryOperator.class))).willReturn(updated);
+        given(context.updateMethods(any(UnaryOperator.class))).willReturn(updated);
         return updated;
     }
 

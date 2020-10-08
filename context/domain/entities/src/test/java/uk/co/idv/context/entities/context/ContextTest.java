@@ -3,12 +3,8 @@ package uk.co.idv.context.entities.context;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
-import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.MethodsMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
-import uk.co.idv.method.entities.eligibility.EligibilityMother;
 import uk.co.idv.method.entities.method.Method;
-import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -16,7 +12,6 @@ import java.util.UUID;
 import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -190,75 +185,13 @@ class ContextTest {
     }
 
     @Test
-    void shouldReturnNextIncompleteMethodsMatchingName() {
-        Method expected = FakeMethodMother.incomplete();
-        Context context = ContextMother.withMethod(expected);
-
-        Methods methods = context.getNextMethods(expected.getName());
-
-        assertThat(methods).containsExactly(expected);
-    }
-
-    @Test
-    void shouldNotBeNextMethodIfComplete() {
-        String methodName = "method-name";
-        Method expected = FakeMethodMother.builder()
-                .name(methodName)
-                .overrideComplete(true)
-                .build();
-        Context context = ContextMother.withMethod(expected);
-
-        Methods methods = context.getNextMethods(methodName);
-
-        assertThat(methods).isEmpty();
-    }
-
-    @Test
-    void shouldThrowExceptionIfMethodIsNotNextMethodInAnySequences() {
-        String methodName = "method-name";
-        Context context = ContextMother.withMethods(MethodsMother.fakeOnly());
-
-        Throwable error = catchThrowable(() -> context.getNextEligibleIncompleteMethods(methodName));
-
-        assertThat(error)
-                .isInstanceOf(NotNextMethodInSequenceException.class)
-                .hasMessage(methodName);
-    }
-
-    @Test
-    void shouldReturnNextMethodsMatchingNameThatAreEligibleAndIncomplete() {
-        Method method = FakeMethodMother.builder()
-                .eligibility(EligibilityMother.eligible())
-                .overrideComplete(false)
-                .build();
-        Context context = ContextMother.withMethods(MethodsMother.with(method));
-
-        Methods nextEligibleIncomplete = context.getNextEligibleIncompleteMethods(method.getName());
-
-        assertThat(nextEligibleIncomplete).containsExactly(method);
-    }
-
-    @Test
-    void shouldReturnTrueIfContainsNextMethodsMatchingNameThatAreEligibleAndIncomplete() {
-        Method method = FakeMethodMother.builder()
-                .eligibility(EligibilityMother.eligible())
-                .overrideComplete(false)
-                .build();
-        Context context = ContextMother.withMethods(MethodsMother.with(method));
-
-        boolean hasNextEligibleIncomplete = context.hasNextEligibleIncompleteMethods(method.getName());
-
-        assertThat(hasNextEligibleIncomplete).isTrue();
-    }
-
-    @Test
     void shouldApplyFunctionToSequences() {
         UnaryOperator<Method> function = mock(UnaryOperator.class);
         Sequences sequences = mock(Sequences.class);
         Sequences updatedSequences = givenUpdatedSequences(function, sequences);
         Context context = ContextMother.withSequences(sequences);
 
-        Context updated = context.apply(function);
+        Context updated = context.updateMethods(function);
 
         assertThat(updated.getSequences()).isEqualTo(updatedSequences);
         assertThat(updated)
@@ -269,7 +202,7 @@ class ContextTest {
 
     private Sequences givenUpdatedSequences(UnaryOperator<Method> function, Sequences sequences) {
         Sequences updated = mock(Sequences.class);
-        given(sequences.apply(function)).willReturn(updated);
+        given(sequences.updateMethods(function)).willReturn(updated);
         return updated;
     }
 

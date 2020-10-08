@@ -1,7 +1,6 @@
 package uk.co.idv.context.adapter.json.context.method;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 
@@ -31,8 +30,5 @@ public interface MethodsMixin {
 
     @JsonIgnore
     Optional<Method> getNext();
-
-    @JsonIgnore
-    Methods getEligibleIncomplete();
 
 }

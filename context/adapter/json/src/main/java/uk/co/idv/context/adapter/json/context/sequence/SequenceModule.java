@@ -24,6 +24,7 @@ public class SequenceModule extends SimpleModule {
         super("sequence-module", Version.unknownVersion());
         this.mappings = mappings;
 
+        setMixInAnnotation(Sequence.class, SequenceMixin.class);
         setMixInAnnotation(Sequences.class, SequencesMixin.class);
 
         addDeserializer(Sequence.class, new SequenceDeserializer());

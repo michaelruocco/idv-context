@@ -50,24 +50,6 @@ public class Methods implements Iterable<Method> {
                 .reduce(Duration.ZERO, Duration::plus);
     }
 
-    public <T extends Method> Stream<T> streamAsType(Class<T> type) {
-        return stream()
-                .map(new MethodToType<>(type))
-                .flatMap(Optional::stream);
-    }
-
-    public Methods getEligibleIncomplete() {
-        return new Methods(stream()
-                .filter(Method::isEligible)
-                .filter(method -> !method.isComplete())
-                .collect(Collectors.toList())
-        );
-    }
-
-    public boolean isNext(String name) {
-        return getNext(name).isPresent();
-    }
-
     public Optional<Method> getNext(String name) {
         return getNext().filter(method -> method.hasName(name));
     }
@@ -80,7 +62,7 @@ public class Methods implements Iterable<Method> {
         return values.stream();
     }
 
-    public Methods apply(UnaryOperator<Method> function) {
+    public Methods update(UnaryOperator<Method> function) {
         return new Methods(values.stream()
                 .map(function)
                 .collect(Collectors.toList()));

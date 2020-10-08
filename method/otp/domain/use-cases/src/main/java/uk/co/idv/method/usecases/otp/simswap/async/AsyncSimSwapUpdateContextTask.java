@@ -31,7 +31,7 @@ public class AsyncSimSwapUpdateContextTask implements Runnable {
     }
 
     private void updateContextDeliveryMethods(Context context) {
-        Context updated = context.apply(new OtpDeliveryMethodReplacer(request.getDeliveryMethods()));
+        Context updated = context.updateMethods(new OtpDeliveryMethodReplacer(request.getDeliveryMethods()));
         log.info("updating context {} with updated delivery methods with sim swap eligibility", updated.getId());
         repository.save(updated);
     }

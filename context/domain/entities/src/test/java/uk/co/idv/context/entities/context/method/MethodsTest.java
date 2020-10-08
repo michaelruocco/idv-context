@@ -1,14 +1,12 @@
 package uk.co.idv.context.entities.context.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.method.entities.eligibility.EligibilityMother;
 import uk.co.idv.method.entities.method.Method;
-import uk.co.idv.method.entities.method.fake.FakeMethod;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
+import java.util.Optional;
 import java.util.function.UnaryOperator;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -131,18 +129,7 @@ class MethodsTest {
     }
 
     @Test
-    void shouldStreamMethodsThatMatchType() {
-        Method method = mock(Method.class);
-        FakeMethod fake = mock(FakeMethod.class);
-        Methods methods = new Methods(method, fake);
-
-        Stream<FakeMethod> fakeMethods = methods.streamAsType(FakeMethod.class);
-
-        assertThat(fakeMethods).containsExactly(fake);
-    }
-
-    @Test
-    void shouldReturnIsNextTrueIfMethodIsNext() {
+    void shouldReturnNextIncompleteMethodMatchingName() {
         Method complete = FakeMethodMother.builder()
                 .name("method1")
                 .overrideComplete(true)
@@ -153,9 +140,9 @@ class MethodsTest {
                 .build();
         Methods methods = new Methods(complete, incomplete);
 
-        boolean next = methods.isNext(incomplete.getName());
+        Optional<Method> next = methods.getNext(incomplete.getName());
 
-        assertThat(next).isTrue();
+        assertThat(next).contains(incomplete);
     }
 
     @Test
@@ -170,49 +157,13 @@ class MethodsTest {
                 .build();
         Methods methods = new Methods(method1, method2);
 
-        boolean next = methods.isNext(method2.getName());
+        Optional<Method> next = methods.getNext(method2.getName());
 
-        assertThat(next).isFalse();
+        assertThat(next).isEmpty();
     }
 
     @Test
-    void shouldNotReturnIneligibleMethods() {
-        Method method = FakeMethodMother.ineligible();
-        Methods methods = new Methods(method);
-
-        Methods eligibleIncomplete = methods.getEligibleIncomplete();
-
-        assertThat(eligibleIncomplete).isEmpty();
-    }
-
-    @Test
-    void shouldNotReturnEligibleCompleteMethods() {
-        Method method = FakeMethodMother.builder()
-                .eligibility(EligibilityMother.eligible())
-                .overrideComplete(true)
-                .build();
-        Methods methods = new Methods(method);
-
-        Methods eligibleIncomplete = methods.getEligibleIncomplete();
-
-        assertThat(eligibleIncomplete).isEmpty();
-    }
-
-    @Test
-    void shouldNotReturnEligibleIncompleteMethods() {
-        Method method = FakeMethodMother.builder()
-                .eligibility(EligibilityMother.eligible())
-                .overrideComplete(false)
-                .build();
-        Methods methods = new Methods(method);
-
-        Methods eligibleIncomplete = methods.getEligibleIncomplete();
-
-        assertThat(eligibleIncomplete).containsExactly(method);
-    }
-
-    @Test
-    void shouldApplyFunctionToAllMethods() {
+    void shouldUpdateMethods() {
         UnaryOperator<Method> function = mock(UnaryOperator.class);
         Method method1 = FakeMethodMother.withName("method1");
         Method method2 = FakeMethodMother.withName("method2");
@@ -220,7 +171,7 @@ class MethodsTest {
         Method updatedMethod2 = givenUpdatedMethod(function, method2);
         Methods methods = MethodsMother.with(method1, method2);
 
-        Methods updated = methods.apply(function);
+        Methods updated = methods.update(function);
 
         assertThat(updated).containsExactly(updatedMethod1, updatedMethod2);
     }

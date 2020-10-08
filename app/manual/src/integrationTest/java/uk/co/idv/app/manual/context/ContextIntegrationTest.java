@@ -9,7 +9,7 @@ import uk.co.idv.context.config.ContextServiceConfig;
 import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
 import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.NotNextMethodInSequenceException;
+import uk.co.idv.context.usecases.context.NotNextMethodException;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.entities.policy.ContextPolicy;
@@ -262,7 +262,7 @@ class ContextIntegrationTest {
         Throwable error = catchThrowable(() -> contextFacade.record(recordRequest));
 
         assertThat(error)
-                .isInstanceOf(NotNextMethodInSequenceException.class)
+                .isInstanceOf(NotNextMethodException.class)
                 .hasMessage(result.getMethodName());
     }
 
@@ -283,7 +283,7 @@ class ContextIntegrationTest {
         Throwable error = catchThrowable(() -> contextFacade.record(recordRequest));
 
         assertThat(error)
-                .isInstanceOf(NotNextMethodInSequenceException.class)
+                .isInstanceOf(NotNextMethodException.class)
                 .hasMessage(result.getMethodName());
     }
 

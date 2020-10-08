@@ -3,12 +3,9 @@ package uk.co.idv.app.manual.context.otp;
 import lombok.Builder;
 import lombok.Getter;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.usecases.context.ContextFacade;
-import uk.co.idv.method.entities.otp.Otp;
-import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethodEligible;
 
-import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.Callable;
 
@@ -25,17 +22,8 @@ public class DeliveryMethodEligibleAndComplete implements Callable<Boolean> {
     @Override
     public Boolean call() {
         Context context = contextFacade.find(contextId);
-        Methods methods = context.getNextEligibleIncompleteMethods("one-time-passcode");
-        successful = isDeliveryMethodEligibilityComplete(methods);
+        successful = context.query(new DeliveryMethodEligible(deliveryMethodId));
         return successful;
-    }
-
-    private boolean isDeliveryMethodEligibilityComplete(Methods methods) {
-        return methods.streamAsType(Otp.class)
-                .map(otp -> otp.findDeliveryMethod(deliveryMethodId))
-                .flatMap(Optional::stream)
-                .filter(DeliveryMethod::isEligible)
-                .anyMatch(DeliveryMethod::isEligibilityComplete);
     }
 
 }

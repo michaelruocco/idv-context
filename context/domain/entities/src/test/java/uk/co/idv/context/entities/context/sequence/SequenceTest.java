@@ -93,7 +93,7 @@ class SequenceTest {
         given(methods.getNext(method.getName())).willReturn(Optional.of(method));
         Sequence sequence = SequenceMother.withMethods(methods);
 
-        Optional<Method> next = sequence.getMethodIfNext(method.getName());
+        Optional<Method> next = sequence.getNext(method.getName());
 
         assertThat(next).contains(method);
     }
@@ -114,13 +114,13 @@ class SequenceTest {
     }
 
     @Test
-    void shouldApplyFunctionToSequences() {
+    void shouldUpdateMethodsToSequences() {
         UnaryOperator<Method> function = mock(UnaryOperator.class);
         Methods methods = mock(Methods.class);
         Methods updatedMethods = givenUpdatedMethods(function, methods);
         Sequence sequence = SequenceMother.withMethods(methods);
 
-        Sequence updated = sequence.apply(function);
+        Sequence updated = sequence.updateMethods(function);
 
         assertThat(updated.getMethods()).isEqualTo(updatedMethods);
         assertThat(updated)
@@ -131,7 +131,7 @@ class SequenceTest {
 
     private Methods givenUpdatedMethods(UnaryOperator<Method> function, Methods methods) {
         Methods updated = mock(Methods.class);
-        given(methods.apply(function)).willReturn(updated);
+        given(methods.update(function)).willReturn(updated);
         return updated;
     }
 

@@ -59,19 +59,19 @@ public interface MockSequenceMother {
 
     static Sequence givenSequenceWithoutNextMethod(String name) {
         Sequence sequence = mockSequence();
-        given(sequence.getMethodIfNext(name)).willReturn(Optional.empty());
+        given(sequence.getNext(name)).willReturn(Optional.empty());
         return sequence;
     }
 
     static Sequence givenSequenceWithNextMethod(Method method) {
         Sequence sequence = mockSequence();
-        given(sequence.getMethodIfNext(method.getName())).willReturn(Optional.of(method));
+        given(sequence.getNext(method.getName())).willReturn(Optional.of(method));
         return sequence;
     }
 
     static Sequence givenUpdatedSequence(UnaryOperator<Method> function, Sequence sequence) {
         Sequence updated = mock(Sequence.class);
-        given(sequence.apply(function)).willReturn(updated);
+        given(sequence.updateMethods(function)).willReturn(updated);
         return updated;
     }
 

@@ -1,16 +1,16 @@
-package uk.co.idv.context.entities.context;
+package uk.co.idv.context.usecases.context;
 
 import org.junit.jupiter.api.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NotNextMethodInSequenceExceptionTest {
+class MethodNotEligibleExceptionTest {
 
     @Test
     void shouldReturnMessage() {
         String message = "method-name";
 
-        Throwable error = new NotNextMethodInSequenceException(message);
+        Throwable error = new MethodNotEligibleException(message);
 
         assertThat(error.getMessage()).isEqualTo(message);
     }

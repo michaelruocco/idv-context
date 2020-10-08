@@ -12,7 +12,6 @@ import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryCon
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
-import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
@@ -32,14 +31,14 @@ import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 import uk.co.idv.method.config.otp.OtpConfig;
+import uk.co.idv.method.entities.otp.GetOtpIfNextEligible;
 import uk.co.idv.method.entities.otp.Otp;
-import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethodEligibilityIncomplete;
 import uk.co.idv.method.entities.otp.policy.OtpPolicyMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import java.time.Duration;
 import java.util.Collections;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -97,9 +96,8 @@ class ContextOtpIntegrationTest {
 
         Context context = contextFacade.create(request);
 
-        Methods methods = context.getNextEligibleIncompleteMethods("one-time-passcode");
-        Stream<Otp> otp = methods.streamAsType(Otp.class);
-        assertThat(otp).isNotEmpty();
+        Stream<Otp> otps = context.query(new GetOtpIfNextEligible());
+        assertThat(otps).hasSize(1);
     }
 
     @Test
@@ -123,13 +121,7 @@ class ContextOtpIntegrationTest {
         Context context = contextFacade.create(request);
 
         UUID deliveryMethodId = UUID.fromString("85bbb05a-3cf8-45e5-bae8-430503164c3b");
-        Methods methods = context.getNextMethods("one-time-passcode");
-        Optional<DeliveryMethod> deliveryMethod = methods.streamAsType(Otp.class)
-                .map(otp -> otp.findDeliveryMethod(deliveryMethodId))
-                .flatMap(Optional::stream)
-                .findFirst();
-        assertThat(deliveryMethod).isPresent();
-        assertThat(deliveryMethod.get().isEligibilityComplete()).isFalse();
+        assertThat(context.query(new DeliveryMethodEligibilityIncomplete(deliveryMethodId))).isFalse();
 
         DeliveryMethodEligibleAndComplete deliveryMethodEligibleAndComplete = DeliveryMethodEligibleAndComplete.builder()
                 .contextFacade(contextFacade)

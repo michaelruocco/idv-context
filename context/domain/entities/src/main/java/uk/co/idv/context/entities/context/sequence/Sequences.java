@@ -2,7 +2,6 @@ package uk.co.idv.context.entities.context.sequence;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
@@ -10,7 +9,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Optional;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -49,21 +47,13 @@ public class Sequences implements Iterable<Sequence> {
                 .orElse(Duration.ZERO);
     }
 
-    public Methods getMethodsIfNext(String name) {
-        return new Methods(stream()
-                .map(method -> method.getMethodIfNext(name))
-                .flatMap(Optional::stream)
-                .collect(Collectors.toList())
-        );
-    }
-
     public Stream<Sequence> stream() {
         return values.stream();
     }
 
-    public Sequences apply(UnaryOperator<Method> function) {
+    public Sequences updateMethods(UnaryOperator<Method> function) {
         return new Sequences(values.stream()
-                .map(sequence -> sequence.apply(function))
+                .map(sequence -> sequence.updateMethods(function))
                 .collect(Collectors.toList()));
     }
 
