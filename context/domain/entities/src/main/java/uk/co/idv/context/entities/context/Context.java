@@ -72,7 +72,7 @@ public class Context {
         return query(new HasEligibleMethod(name));
     }
 
-    public <T extends Method> Stream<T> query(Function<MethodSequence, Optional<T>> query)  {
+    public <T> Stream<T> query(Function<MethodSequence, Optional<T>> query)  {
         return sequences.stream().map(query).flatMap(Optional::stream);
     }
 

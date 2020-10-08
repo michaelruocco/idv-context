@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.usecases.context.ContextFacade;
-import uk.co.idv.method.entities.otp.delivery.DeliveryMethodEligible;
+import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodEligible;
 
 import java.util.UUID;
 import java.util.concurrent.Callable;

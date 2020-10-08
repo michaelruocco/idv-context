@@ -33,7 +33,7 @@ import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 import uk.co.idv.method.config.otp.OtpConfig;
 import uk.co.idv.method.entities.otp.GetOtpIfNextEligible;
 import uk.co.idv.method.entities.otp.Otp;
-import uk.co.idv.method.entities.otp.delivery.DeliveryMethodEligibilityIncomplete;
+import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodEligibilityIncomplete;
 import uk.co.idv.method.entities.otp.policy.OtpPolicyMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
@@ -121,7 +121,7 @@ class ContextOtpIntegrationTest {
         Context context = contextFacade.create(request);
 
         UUID deliveryMethodId = UUID.fromString("85bbb05a-3cf8-45e5-bae8-430503164c3b");
-        assertThat(context.query(new DeliveryMethodEligibilityIncomplete(deliveryMethodId))).isFalse();
+        assertThat(context.query(new DeliveryMethodEligibilityIncomplete(deliveryMethodId))).isTrue();
 
         DeliveryMethodEligibleAndComplete deliveryMethodEligibleAndComplete = DeliveryMethodEligibleAndComplete.builder()
                 .contextFacade(contextFacade)

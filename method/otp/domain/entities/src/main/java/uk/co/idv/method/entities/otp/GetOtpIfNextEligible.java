@@ -13,9 +13,7 @@ public class GetOtpIfNextEligible implements Function<MethodSequence, Optional<O
         if (!sequence.isEligible()) {
             return Optional.empty();
         }
-        return sequence.getNext("one-time-passcode")
-                .map(new MethodToType<>(Otp.class))
-                .map(Optional::get);
+        return sequence.getNext().flatMap(new MethodToType<>(Otp.class));
     }
 
 }
