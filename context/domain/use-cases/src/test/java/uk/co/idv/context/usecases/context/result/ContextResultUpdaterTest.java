@@ -55,7 +55,6 @@ class ContextResultUpdaterTest {
         ServiceRecordResultRequest request = ServiceRecordResultRequestMother.builder()
                 .context(context)
                 .build();
-        Context expectedUpdated = mock(Context.class);
         given(context.hasNextEligibleIncompleteMethods(request.getMethodName())).willReturn(true);
 
         updater.addResultIfApplicable(request);
