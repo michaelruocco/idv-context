@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.context.entities.context.method.DefaultMethods;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
@@ -26,7 +25,7 @@ public class MethodsDeserializer extends StdDeserializer<Methods> {
     @Override
     public Methods deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
-        return new DefaultMethods(JsonNodeConverter.toCollection(node, parser, METHOD_COLLECTION));
+        return new Methods(JsonNodeConverter.toCollection(node, parser, METHOD_COLLECTION));
     }
 
 }

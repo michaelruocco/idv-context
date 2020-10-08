@@ -1,39 +1,89 @@
 package uk.co.idv.context.entities.context.method;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public interface Methods extends Iterable<Method> {
+@RequiredArgsConstructor
+@Data
+public class Methods implements Iterable<Method> {
 
-    boolean isEmpty();
+    private final Collection<Method> values;
 
-    boolean isEligible();
+    public Methods(Method... values) {
+        this(Arrays.asList(values));
+    }
 
-    boolean isComplete();
+    @Override
+    public Iterator<Method> iterator() {
+        return values.iterator();
+    }
 
-    boolean isSuccessful();
+    public boolean isEmpty() {
+        return values.isEmpty();
+    }
 
-    Duration getDuration();
+    public boolean isEligible() {
+        return stream().allMatch(Method::isEligible);
+    }
 
-    <T extends Method> Stream<T> streamAsType(Class<T> type);
+    public boolean isComplete() {
+        return stream().allMatch(Method::isComplete);
+    }
 
-    Methods getEligibleIncomplete();
+    public boolean isSuccessful() {
+        return stream().allMatch(Method::isSuccessful);
+    }
 
-    boolean isNext(String name);
+    public Duration getDuration() {
+        return stream()
+                .map(Method::getDuration)
+                .reduce(Duration.ZERO, Duration::plus);
+    }
 
-    Optional<Method> getNext(String name);
+    public <T extends Method> Stream<T> streamAsType(Class<T> type) {
+        return stream()
+                .map(new MethodToType<>(type))
+                .flatMap(Optional::stream);
+    }
 
-    Optional<Method> getNext();
+    public Methods getEligibleIncomplete() {
+        return new Methods(stream()
+                .filter(Method::isEligible)
+                .filter(method -> !method.isComplete())
+                .collect(Collectors.toList())
+        );
+    }
 
-    Stream<Method> stream();
+    public boolean isNext(String name) {
+        return getNext(name).isPresent();
+    }
 
-    Collection<Method> getValues();
+    public Optional<Method> getNext(String name) {
+        return getNext().filter(method -> method.hasName(name));
+    }
 
-    Methods apply(UnaryOperator<Method> function);
+    public Optional<Method> getNext() {
+        return stream().filter(method -> !method.isComplete()).findFirst();
+    }
+
+    public Stream<Method> stream() {
+        return values.stream();
+    }
+
+    public Methods apply(UnaryOperator<Method> function) {
+        return new Methods(values.stream()
+                .map(function)
+                .collect(Collectors.toList()));
+    }
 
 }

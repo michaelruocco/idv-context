@@ -10,7 +10,7 @@ public interface MethodsMother {
     }
 
     static Methods with(Method... methods) {
-        return new DefaultMethods(methods);
+        return new Methods(methods);
     }
 
 }

@@ -14,14 +14,14 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class DefaultMethodsTest {
+class MethodsTest {
 
     @Test
     void shouldBeIterable() {
         Method method1 = FakeMethodMother.build();
         Method method2 = FakeMethodMother.build();
 
-        Methods methods = new DefaultMethods(method1, method2);
+        Methods methods = new Methods(method1, method2);
 
         assertThat(methods).containsExactly(
                 method1,
@@ -34,7 +34,7 @@ class DefaultMethodsTest {
         Method method1 = FakeMethodMother.build();
         Method method2 = FakeMethodMother.build();
 
-        Methods methods = new DefaultMethods(method1, method2);
+        Methods methods = new Methods(method1, method2);
 
         assertThat(methods.getValues()).containsExactly(
                 method1,
@@ -44,7 +44,7 @@ class DefaultMethodsTest {
 
     @Test
     void shouldReturnTrueIfEmpty() {
-        Methods methods = new DefaultMethods();
+        Methods methods = new Methods();
 
         boolean empty = methods.isEmpty();
 
@@ -53,7 +53,7 @@ class DefaultMethodsTest {
 
     @Test
     void shouldReturnFalseIfNotEmpty() {
-        Methods methods = new DefaultMethods(FakeMethodMother.build());
+        Methods methods = new Methods(FakeMethodMother.build());
 
         boolean empty = methods.isEmpty();
 
@@ -65,7 +65,7 @@ class DefaultMethodsTest {
         Method method1 = FakeMethodMother.eligible();
         Method method2 = FakeMethodMother.eligible();
 
-        Methods methods = new DefaultMethods(method1, method2);
+        Methods methods = new Methods(method1, method2);
 
         assertThat(methods.isEligible()).isTrue();
     }
@@ -75,7 +75,7 @@ class DefaultMethodsTest {
         Method eligible = FakeMethodMother.eligible();
         Method ineligible = FakeMethodMother.ineligible();
 
-        Methods methods = new DefaultMethods(eligible, ineligible);
+        Methods methods = new Methods(eligible, ineligible);
 
         assertThat(methods.isEligible()).isFalse();
     }
@@ -85,7 +85,7 @@ class DefaultMethodsTest {
         Method method1 = FakeMethodMother.complete();
         Method method2 = FakeMethodMother.complete();
 
-        Methods methods = new DefaultMethods(method1, method2);
+        Methods methods = new Methods(method1, method2);
 
         assertThat(methods.isComplete()).isTrue();
     }
@@ -95,7 +95,7 @@ class DefaultMethodsTest {
         Method complete = FakeMethodMother.complete();
         Method incomplete = FakeMethodMother.incomplete();
 
-        Methods methods = new DefaultMethods(complete, incomplete);
+        Methods methods = new Methods(complete, incomplete);
 
         assertThat(methods.isComplete()).isFalse();
     }
@@ -105,7 +105,7 @@ class DefaultMethodsTest {
         Method method1 = FakeMethodMother.successful();
         Method method2 = FakeMethodMother.successful();
 
-        Methods methods = new DefaultMethods(method1, method2);
+        Methods methods = new Methods(method1, method2);
 
         assertThat(methods.isSuccessful()).isTrue();
     }
@@ -115,7 +115,7 @@ class DefaultMethodsTest {
         Method successful = FakeMethodMother.successful();
         Method unsuccessful = FakeMethodMother.unsuccessful();
 
-        Methods methods = new DefaultMethods(successful, unsuccessful);
+        Methods methods = new Methods(successful, unsuccessful);
 
         assertThat(methods.isSuccessful()).isFalse();
     }
@@ -125,7 +125,7 @@ class DefaultMethodsTest {
         Method method1 = FakeMethodMother.withDuration(Duration.ofMinutes(2));
         Method method2 = FakeMethodMother.withDuration(Duration.ofMinutes(3));
 
-        Methods methods = new DefaultMethods(method1, method2);
+        Methods methods = new Methods(method1, method2);
 
         assertThat(methods.getDuration()).isEqualTo(Duration.ofMinutes(5));
     }
@@ -134,7 +134,7 @@ class DefaultMethodsTest {
     void shouldStreamMethodsThatMatchType() {
         Method method = mock(Method.class);
         FakeMethod fake = mock(FakeMethod.class);
-        Methods methods = new DefaultMethods(method, fake);
+        Methods methods = new Methods(method, fake);
 
         Stream<FakeMethod> fakeMethods = methods.streamAsType(FakeMethod.class);
 
@@ -151,7 +151,7 @@ class DefaultMethodsTest {
                 .name("method2")
                 .overrideComplete(false)
                 .build();
-        Methods methods = new DefaultMethods(complete, incomplete);
+        Methods methods = new Methods(complete, incomplete);
 
         boolean next = methods.isNext(incomplete.getName());
 
@@ -168,7 +168,7 @@ class DefaultMethodsTest {
                 .name("method2")
                 .overrideComplete(false)
                 .build();
-        Methods methods = new DefaultMethods(method1, method2);
+        Methods methods = new Methods(method1, method2);
 
         boolean next = methods.isNext(method2.getName());
 
@@ -178,7 +178,7 @@ class DefaultMethodsTest {
     @Test
     void shouldNotReturnIneligibleMethods() {
         Method method = FakeMethodMother.ineligible();
-        Methods methods = new DefaultMethods(method);
+        Methods methods = new Methods(method);
 
         Methods eligibleIncomplete = methods.getEligibleIncomplete();
 
@@ -191,7 +191,7 @@ class DefaultMethodsTest {
                 .eligibility(EligibilityMother.eligible())
                 .overrideComplete(true)
                 .build();
-        Methods methods = new DefaultMethods(method);
+        Methods methods = new Methods(method);
 
         Methods eligibleIncomplete = methods.getEligibleIncomplete();
 
@@ -204,7 +204,7 @@ class DefaultMethodsTest {
                 .eligibility(EligibilityMother.eligible())
                 .overrideComplete(false)
                 .build();
-        Methods methods = new DefaultMethods(method);
+        Methods methods = new Methods(method);
 
         Methods eligibleIncomplete = methods.getEligibleIncomplete();
 
