@@ -3,13 +3,20 @@ package uk.co.idv.context.entities.context;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
+import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.Sequences;
+import uk.co.idv.context.entities.context.sequence.SequencesMother;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.sequence.MethodSequence;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
+import java.util.function.Function;
+import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -185,7 +192,7 @@ class ContextTest {
     }
 
     @Test
-    void shouldApplyFunctionToSequences() {
+    void shouldUpdateMethodsOnAllSequences() {
         UnaryOperator<Method> function = mock(UnaryOperator.class);
         Sequences sequences = mock(Sequences.class);
         Sequences updatedSequences = givenUpdatedSequences(function, sequences);
@@ -198,6 +205,50 @@ class ContextTest {
                 .usingRecursiveComparison()
                 .ignoringFields("sequences")
                 .isEqualTo(context);
+    }
+
+    @Test
+    void shouldReturnTrueIfAnySequencesMatchPredicateQuery() {
+        Predicate<MethodSequence> query = mock(Predicate.class);
+        Sequence sequence1 = mock(Sequence.class);
+        Sequence sequence2 = mock(Sequence.class);
+        given(query.test(sequence1)).willReturn(false);
+        given(query.test(sequence2)).willReturn(true);
+        Context context = ContextMother.withSequences(SequencesMother.with(sequence1, sequence2));
+
+        boolean result = context.query(query);
+
+        assertThat(result).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfNoSequencesMatchPredicateQuery() {
+        Predicate<MethodSequence> query = mock(Predicate.class);
+        Sequence sequence1 = mock(Sequence.class);
+        Sequence sequence2 = mock(Sequence.class);
+        given(query.test(sequence1)).willReturn(false);
+        given(query.test(sequence2)).willReturn(false);
+        Context context = ContextMother.withSequences(SequencesMother.with(sequence1, sequence2));
+
+        boolean result = context.query(query);
+
+        assertThat(result).isFalse();
+    }
+
+    @Test
+    void shouldReturnResultsFromQueryFunction() {
+        Function<MethodSequence, Optional<Method>> query = mock(Function.class);
+        Sequence sequence1 = mock(Sequence.class);
+        Sequence sequence2 = mock(Sequence.class);
+        Method method1 = mock(Method.class);
+        Method method2 = mock(Method.class);
+        given(query.apply(sequence1)).willReturn(Optional.of(method1));
+        given(query.apply(sequence2)).willReturn(Optional.of(method2));
+        Context context = ContextMother.withSequences(SequencesMother.with(sequence1, sequence2));
+
+        Stream<Method> result = context.query(query);
+
+        assertThat(result).containsExactly(method1, method2);
     }
 
     private Sequences givenUpdatedSequences(UnaryOperator<Method> function, Sequences sequences) {

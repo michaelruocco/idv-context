@@ -12,7 +12,6 @@ import java.util.function.Predicate;
 public class HasEligibleMethod implements Predicate<MethodSequence> {
 
     private final String methodName;
-    private boolean hasNext;
 
     @Override
     public boolean test(MethodSequence sequence) {

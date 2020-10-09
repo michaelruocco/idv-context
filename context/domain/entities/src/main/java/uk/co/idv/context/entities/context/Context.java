@@ -64,14 +64,6 @@ public class Context {
         return timestamp.isAfter(expiry);
     }
 
-    public boolean hasNextMethod(String name) {
-        return query(new HasNextMethod(name));
-    }
-
-    public boolean hasEligibleMethod(String name) {
-        return query(new HasEligibleMethod(name));
-    }
-
     public <T> Stream<T> query(Function<MethodSequence, Optional<T>> query)  {
         return sequences.stream().map(query).flatMap(Optional::stream);
     }
