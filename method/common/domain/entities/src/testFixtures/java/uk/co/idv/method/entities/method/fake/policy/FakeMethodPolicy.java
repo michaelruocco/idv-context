@@ -10,8 +10,14 @@ import uk.co.idv.method.entities.policy.MethodPolicy;
 @Data
 public class FakeMethodPolicy implements MethodPolicy {
 
+    private static final RequestedData EMPTY_REQUESTED_DATA = new RequestedData();
+
     private final String name;
     private final MethodConfig config;
-    private final RequestedData requestedData;
+
+    @Override
+    public RequestedData getRequestedData() {
+        return EMPTY_REQUESTED_DATA;
+    }
 
 }

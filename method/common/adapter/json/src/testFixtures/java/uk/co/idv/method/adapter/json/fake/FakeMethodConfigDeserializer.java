@@ -10,9 +10,9 @@ import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import java.time.Duration;
 
-class FakeMethodConfigDeserializer extends StdDeserializer<FakeMethodConfig> {
+public class FakeMethodConfigDeserializer extends StdDeserializer<FakeMethodConfig> {
 
-    protected FakeMethodConfigDeserializer() {
+    public FakeMethodConfigDeserializer() {
         super(FakeMethodConfig.class);
     }
 
