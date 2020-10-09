@@ -3,6 +3,9 @@ package uk.co.idv.method.entities.method.fake;
 
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
 import uk.co.idv.method.entities.method.MethodConfig;
+import uk.co.idv.method.entities.result.Result;
+import uk.co.idv.method.entities.result.Results;
+import uk.co.idv.method.entities.result.ResultsMother;
 
 import java.time.Duration;
 
@@ -10,6 +13,10 @@ public interface FakeMethodMother {
 
     static FakeMethod build() {
         return builder().build();
+    }
+
+    static FakeMethod withResults() {
+        return withResults(ResultsMother.build());
     }
 
     static FakeMethod withName(String name) {
@@ -22,6 +29,14 @@ public interface FakeMethodMother {
 
     static FakeMethod withConfig(MethodConfig config) {
         return builder().config(config).build();
+    }
+
+    static FakeMethod withResult(Result result) {
+        return builder().results(ResultsMother.with(result)).build();
+    }
+
+    static FakeMethod withResults(Results results) {
+        return builder().results(results).build();
     }
 
     static FakeMethod eligible() {
@@ -52,7 +67,8 @@ public interface FakeMethodMother {
         return FakeMethod.builder()
                 .name("fake-method")
                 .config(FakeMethodConfigMother.build())
-                .eligibility(EligibilityMother.eligible());
+                .eligibility(EligibilityMother.eligible())
+                .results(ResultsMother.empty());
     }
 
 }

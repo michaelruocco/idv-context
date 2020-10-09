@@ -10,7 +10,7 @@ import java.util.Arrays;
 
 public abstract class AbstractContextModule extends SimpleModule {
 
-    public AbstractContextModule(String name, Version version) {
+    protected AbstractContextModule(String name, Version version) {
         super(name, version);
     }
 

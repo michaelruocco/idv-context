@@ -1,0 +1,21 @@
+{
+  "name": "fake-method",
+  "complete": true,
+  "successful": true,
+  "config": {
+    "maxNumberOfAttempts": 3,
+    "duration": 300000,
+    "fakeValue": "fake"
+  },
+  "eligibility": {
+    "eligible": true
+  },
+  "results": [
+    {
+      "methodName": "fake-method",
+      "successful": true,
+      "timestamp": "2020-10-01T19:10:22Z",
+      "verificationId": "be08a961-8e0d-431d-ad44-4d8d872d1f4a"
+    }
+  ]
+}

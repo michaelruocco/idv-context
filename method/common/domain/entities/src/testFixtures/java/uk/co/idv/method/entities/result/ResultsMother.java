@@ -9,12 +9,16 @@ public interface ResultsMother {
         return with(ResultMother.build());
     }
 
+    static Results empty() {
+        return new Results();
+    }
+
     static Results with(Result result) {
         return new Results(result);
     }
 
     static Results withUnsuccessfulAttempts(int numberOfAttempts) {
-        return new Results(IntStream.rangeClosed(1,numberOfAttempts)
+        return new Results(IntStream.rangeClosed(1, numberOfAttempts)
                 .mapToObj(i -> ResultMother.unsuccessful())
                 .collect(Collectors.toList()));
     }
