@@ -3,6 +3,7 @@ package uk.co.idv.app.spring.context;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -39,7 +40,7 @@ public class ContextController {
         return facade.find(id);
     }
 
-    @PostMapping("/results")
+    @PatchMapping("/results")
     public Context recordResult(@RequestBody FacadeRecordResultRequest request) {
         return facade.record(request);
     }
