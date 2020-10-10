@@ -1,7 +1,6 @@
 package uk.co.idv.context.usecases.context.expiry;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.context.sequence.Sequences;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -17,8 +16,8 @@ public class ExpiryCalculator {
         this(DEFAULT_BUFFER);
     }
 
-    public Instant calculate(Instant created, Sequences sequences) {
-        return created.plus(sequences.getDuration()).plus(buffer);
+    public Instant calculate(Instant created, Duration duration) {
+        return created.plus(duration).plus(buffer);
     }
 
 }

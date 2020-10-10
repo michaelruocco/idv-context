@@ -33,7 +33,7 @@ public class ContextService {
         Context context = Context.builder()
                 .id(sequencesRequest.getContextId())
                 .created(created)
-                .expiry(expiryCalculator.calculate(created, sequences))
+                .expiry(calculateExpiry(created, sequences))
                 .request(request)
                 .sequences(sequences)
                 .build();
@@ -48,6 +48,10 @@ public class ContextService {
         }
         lockoutService.validateLockoutState(context);
         return context;
+    }
+
+    private Instant calculateExpiry(Instant created, Sequences sequences) {
+        return expiryCalculator.calculate(created, sequences.getDuration());
     }
 
 }

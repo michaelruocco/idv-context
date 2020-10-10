@@ -1,8 +1,6 @@
 package uk.co.idv.context.usecases.context.expiry;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.sequence.Sequences;
-import uk.co.idv.context.entities.context.sequence.SequencesMother;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -18,12 +16,12 @@ class ExpiryCalculatorTest {
     @Test
     void shouldAddSequencesDurationToCreatedAndThenAddBuffer() {
         Instant created = Instant.now();
-        Sequences sequences = SequencesMother.fakeOnly();
+        Duration duration = Duration.ofMinutes(5);
 
-        Instant expiry = calculator.calculate(created, sequences);
+        Instant expiry = calculator.calculate(created, duration);
 
         Instant expectedExpiry = created
-                .plus(sequences.getDuration())
+                .plus(duration)
                 .plus(buffer);
         assertThat(expiry).isEqualTo(expectedExpiry);
     }

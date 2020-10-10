@@ -14,6 +14,7 @@ import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 import uk.co.idv.lockout.usecases.state.LockedOutException;
 
 import java.time.Clock;
+import java.time.Duration;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.util.Optional;
@@ -59,6 +60,7 @@ class ContextServiceTest {
     void shouldPopulateIdOnContext() {
         ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
         SequencesRequest sequencesRequest = givenConvertsToSequencesRequest(request);
+        givenSequencesBuiltFromRequest(request);
 
         Context context = service.create(request);
 
@@ -69,6 +71,7 @@ class ContextServiceTest {
     void shouldPopulateCreatedOnContext() {
         ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
         givenConvertsToSequencesRequest(request);
+        givenSequencesBuiltFromRequest(request);
 
         Context context = service.create(request);
 
@@ -79,6 +82,7 @@ class ContextServiceTest {
     void shouldPopulateRequestOnContext() {
         ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
         givenConvertsToSequencesRequest(request);
+        givenSequencesBuiltFromRequest(request);
 
         Context context = service.create(request);
 
@@ -188,8 +192,10 @@ class ContextServiceTest {
     }
 
     private Instant givenExpiryCalculatedFor(Sequences sequences) {
+        Duration duration = Duration.ofMinutes(5);
         Instant expiry = Instant.parse("2020-09-25T07:20:01.050Z");
-        given(expiryCalculator.calculate(NOW, sequences)).willReturn(expiry);
+        given(sequences.getDuration()).willReturn(duration);
+        given(expiryCalculator.calculate(NOW, duration)).willReturn(expiry);
         return expiry;
     }
 
