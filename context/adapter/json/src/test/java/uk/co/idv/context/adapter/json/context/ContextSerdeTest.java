@@ -23,6 +23,7 @@ class ContextSerdeTest {
     void shouldSerialize() throws JsonProcessingException {
         String json = MAPPER.writeValueAsString(CONTEXT);
 
+        System.out.println("JSON " + json);
         assertThatJson(json).isEqualTo(JSON);
     }
 

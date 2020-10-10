@@ -11,8 +11,6 @@
 
 ## Todo
 
-*   Use interface where context used in AsyncSimSwapUpdateContextTask
-
 *   Add karate tests for posting results to verification context -> remove posting attempts to lockout state
 
 *   Remove duplication between RecordAttemptRequest, DefaultRecordAttempt request, this may be covered by
