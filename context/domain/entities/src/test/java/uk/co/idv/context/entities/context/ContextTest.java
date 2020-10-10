@@ -341,7 +341,7 @@ class ContextTest {
         Context original = ContextMother.withSequences(givenSequencesWithCompletedMethodCount(1));
         Context updated =  ContextMother.withSequences(givenSequencesWithCompletedMethodCount(1));
 
-        boolean hasMoreCompletedMethods = updated.hasMoreCompletedSequencesThan(original);
+        boolean hasMoreCompletedMethods = updated.hasMoreCompletedMethodsThan(original);
 
         assertThat(hasMoreCompletedMethods).isFalse();
     }
