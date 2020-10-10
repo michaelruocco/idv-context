@@ -11,12 +11,11 @@
 
 ## Todo
 
-*   Add karate tests for posting results to verification context -> remove posting attempts to lockout state
+*   Move integration tests for resetting lockout state to work with posting results tests
+    so that we can remove the endpoint / facade functionality for posting attempts to lockout state
 
 *   Remove duplication between RecordAttemptRequest, DefaultRecordAttempt request, this may be covered by
     removing posting attempts to lockout state
-
-*   Return eligibility reasons against methods and sequences
 
 *   Allow passing in mobile numbers / email address with channel
 
