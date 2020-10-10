@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.common.usecases.id.RandomIdGenerator;
+import uk.co.idv.context.usecases.context.ContextMethodUpdater;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.method.usecases.MethodBuilder;
 import uk.co.idv.method.usecases.otp.OtpBuilder;
@@ -86,7 +87,7 @@ public class OtpConfig {
 
     private AsyncSimSwapUpdateContextTaskFactory simSwapUpdateContextTaskFactory() {
         return AsyncSimSwapUpdateContextTaskFactory.builder()
-                .repository(contextRepository)
+                .updater(new ContextMethodUpdater(contextRepository))
                 .syncStrategy(new SyncSimSwap())
                 .build();
     }
