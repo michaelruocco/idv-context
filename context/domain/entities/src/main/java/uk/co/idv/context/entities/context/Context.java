@@ -6,6 +6,8 @@ import lombok.With;
 import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.sequence.Sequences;
+import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.method.entities.method.Method;
@@ -13,6 +15,7 @@ import uk.co.idv.method.entities.sequence.MethodSequence;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
@@ -36,12 +39,32 @@ public class Context {
         return request.getChannel();
     }
 
+    public String getChannelId() {
+        return request.getChannelId();
+    }
+
     public Activity getActivity() {
         return request.getActivity();
     }
 
+    public String getActivityName() {
+        return request.getActivityName();
+    }
+
     public Identity getIdentity() {
         return request.getIdentity();
+    }
+
+    public IdvId getIdvId() {
+        return request.getIdvId();
+    }
+
+    public Aliases getAliases() {
+        return request.getAliases();
+    }
+
+    public Collection<String> getAliasTypes() {
+        return request.getAliasTypes();
     }
 
     public boolean isEligible() {
@@ -74,6 +97,22 @@ public class Context {
 
     public Context updateMethods(UnaryOperator<Method> function) {
         return withSequences(sequences.updateMethods(function));
+    }
+
+    public boolean hasMoreCompletedSequencesThan(Context original) {
+        return getCompletedSequenceCount() > original.getCompletedSequenceCount();
+    }
+
+    public boolean hasMoreCompletedMethodsThan(Context original) {
+        return getCompletedMethodCount() > original.getCompletedMethodCount();
+    }
+
+    private long getCompletedSequenceCount() {
+        return sequences.getCompletedCount();
+    }
+
+    private long getCompletedMethodCount() {
+        return sequences.getCompletedMethodCount();
     }
 
 }

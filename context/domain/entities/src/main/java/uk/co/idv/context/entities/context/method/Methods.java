@@ -68,4 +68,8 @@ public class Methods implements Iterable<Method> {
                 .collect(Collectors.toList()));
     }
 
+    public long getCompletedCount() {
+       return stream().filter(Method::isComplete).count();
+    }
+
 }

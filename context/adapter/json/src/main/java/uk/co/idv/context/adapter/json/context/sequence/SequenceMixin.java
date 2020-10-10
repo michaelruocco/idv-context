@@ -10,4 +10,7 @@ public interface SequenceMixin {
     @JsonIgnore
     Optional<Method> getNext();
 
+    @JsonIgnore
+    long getCompletedCount();
+
 }

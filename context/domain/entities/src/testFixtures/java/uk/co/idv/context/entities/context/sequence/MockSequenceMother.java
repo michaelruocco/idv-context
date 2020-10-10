@@ -3,7 +3,6 @@ package uk.co.idv.context.entities.context.sequence;
 import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
-import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 import static org.mockito.BDDMockito.given;
@@ -57,22 +56,16 @@ public interface MockSequenceMother {
         return sequence;
     }
 
-    static Sequence givenSequenceWithoutNextMethod(String name) {
-        Sequence sequence = mockSequence();
-        given(sequence.getNext(name)).willReturn(Optional.empty());
-        return sequence;
-    }
-
-    static Sequence givenSequenceWithNextMethod(Method method) {
-        Sequence sequence = mockSequence();
-        given(sequence.getNext(method.getName())).willReturn(Optional.of(method));
-        return sequence;
-    }
-
     static Sequence givenUpdatedSequence(UnaryOperator<Method> function, Sequence sequence) {
         Sequence updated = mock(Sequence.class);
         given(sequence.updateMethods(function)).willReturn(updated);
         return updated;
+    }
+
+    static Sequence givenSequenceWithCompletedCount(long count) {
+        Sequence sequence = mockSequence();
+        given(sequence.getCompletedCount()).willReturn(count);
+        return sequence;
     }
 
 }

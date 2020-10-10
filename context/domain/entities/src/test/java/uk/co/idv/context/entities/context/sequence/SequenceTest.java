@@ -90,6 +90,18 @@ class SequenceTest {
     void shouldReturnNextMethod() {
         Methods methods = mock(Methods.class);
         Method method = FakeMethodMother.build();
+        given(methods.getNext()).willReturn(Optional.of(method));
+        Sequence sequence = SequenceMother.withMethods(methods);
+
+        Optional<Method> next = sequence.getNext();
+
+        assertThat(next).contains(method);
+    }
+
+    @Test
+    void shouldReturnNextMethodWithName() {
+        Methods methods = mock(Methods.class);
+        Method method = FakeMethodMother.build();
         given(methods.getNext(method.getName())).willReturn(Optional.of(method));
         Sequence sequence = SequenceMother.withMethods(methods);
 
@@ -129,10 +141,26 @@ class SequenceTest {
                 .isEqualTo(sequence);
     }
 
+    @Test
+    void shouldReturnCompletedCount() {
+        long expected = 3;
+        Methods methods = givenMethodsWithCompletedCount(expected);
+
+        Sequence sequence = SequenceMother.withMethods(methods);
+
+        assertThat(sequence.getCompletedCount()).isEqualTo(expected);
+    }
+
     private Methods givenUpdatedMethods(UnaryOperator<Method> function, Methods methods) {
         Methods updated = mock(Methods.class);
         given(methods.update(function)).willReturn(updated);
         return updated;
+    }
+
+    private Methods givenMethodsWithCompletedCount(long count) {
+        Methods methods = mock(Methods.class);
+        given(methods.getCompletedCount()).willReturn(count);
+        return methods;
     }
 
 }

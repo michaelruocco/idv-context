@@ -9,7 +9,7 @@ import uk.co.idv.context.config.ContextServiceConfig;
 import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
 import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.usecases.context.NotNextMethodException;
+import uk.co.idv.context.usecases.context.result.NotNextMethodException;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.entities.policy.ContextPolicy;
@@ -57,12 +57,6 @@ class ContextIntegrationTest {
 
     private final ParentContextRepositoryConfig contextRepositoryConfig = new InMemoryContextRepositoryConfig();
 
-    private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
-            .repositoryConfig(contextRepositoryConfig)
-            .idGenerator(idGenerator)
-            .clock(clock)
-            .methodBuilders(Collections.singleton(FakeMethodBuilderMother.build()))
-            .build();
     private final DefaultIdentityConfig identityConfig = DefaultIdentityConfig.builder()
             .build();
 
@@ -70,10 +64,17 @@ class ContextIntegrationTest {
             .identityConfig(identityConfig)
             .build().build();
 
+    private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
+            .lockoutConfig(lockoutConfig)
+            .repositoryConfig(contextRepositoryConfig)
+            .idGenerator(idGenerator)
+            .clock(clock)
+            .methodBuilders(Collections.singleton(FakeMethodBuilderMother.build()))
+            .build();
+
     private final ContextFacadeConfig facadeConfig = ContextFacadeConfig.builder()
             .clock(clock)
             .serviceConfig(serviceConfig)
-            .lockoutService(lockoutConfig.lockoutService())
             .createEligibility(identityConfig.createEligibility())
             .build();
 

@@ -31,4 +31,7 @@ public interface MethodsMixin {
     @JsonIgnore
     Optional<Method> getNext();
 
+    @JsonIgnore
+    long getCompletedCount();
+
 }

@@ -30,20 +30,20 @@ public class SpringContextDomainConfig {
 
     @Bean
     public ContextServiceConfig contextServiceConfig(ParentContextRepositoryConfig repositoryConfig,
+                                                     LockoutConfig lockoutConfig,
                                                      Collection<MethodBuilder> methodBuilders) {
         return ContextServiceConfig.builder()
                 .repositoryConfig(repositoryConfig)
+                .lockoutConfig(lockoutConfig)
                 .methodBuilders(methodBuilders)
                 .build();
     }
 
     @Bean
     public ContextFacadeConfig contextFacadeConfig(ContextServiceConfig serviceConfig,
-                                                   LockoutConfig lockoutConfig,
                                                    IdentityConfig identityConfig) {
         return ContextFacadeConfig.builder()
                 .serviceConfig(serviceConfig)
-                .lockoutService(lockoutConfig.lockoutService())
                 .createEligibility(identityConfig.createEligibility())
                 .build();
     }

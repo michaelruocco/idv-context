@@ -57,4 +57,12 @@ public class Sequences implements Iterable<Sequence> {
                 .collect(Collectors.toList()));
     }
 
+    public long getCompletedCount() {
+        return stream().filter(Sequence::isComplete).count();
+    }
+
+    public long getCompletedMethodCount() {
+        return stream().mapToLong(Sequence::getCompletedCount).sum();
+    }
+
 }

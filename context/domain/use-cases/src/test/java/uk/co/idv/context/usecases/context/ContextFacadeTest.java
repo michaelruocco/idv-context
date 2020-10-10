@@ -10,7 +10,6 @@ import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
 import uk.co.idv.context.entities.result.FacadeRecordResultRequestMother;
 import uk.co.idv.context.entities.result.ServiceRecordResultRequest;
 import uk.co.idv.context.usecases.context.identity.IdentityLoader;
-import uk.co.idv.context.usecases.context.lockout.LockoutStateValidator;
 import uk.co.idv.context.usecases.context.result.ResultService;
 
 import java.util.UUID;
@@ -24,13 +23,11 @@ import static org.mockito.Mockito.verify;
 class ContextFacadeTest {
 
     private final IdentityLoader identityLoader = mock(IdentityLoader.class);
-    private final LockoutStateValidator stateValidator = mock(LockoutStateValidator.class);
     private final ContextService contextService = mock(ContextService.class);
     private final ResultService resultService = mock(ResultService.class);
 
     private final ContextFacade facade = ContextFacade.builder()
             .identityLoader(identityLoader)
-            .stateValidator(stateValidator)
             .contextService(contextService)
             .resultService(resultService)
             .build();
@@ -47,16 +44,6 @@ class ContextFacadeTest {
     }
 
     @Test
-    void shouldValidateLockoutStateOnCreate() {
-        CreateContextRequest request = FacadeCreateContextRequestMother.build();
-        ServiceCreateContextRequest identityRequest = givenIdentityRequestLoaded(request);
-
-        facade.create(request);
-
-        verify(stateValidator).validateLockoutState(identityRequest);
-    }
-
-    @Test
     void shouldFindContext() {
         UUID id = UUID.randomUUID();
         Context expectedContext = givenContextFound(id);
@@ -64,16 +51,6 @@ class ContextFacadeTest {
         Context context = facade.find(id);
 
         assertThat(context).isEqualTo(expectedContext);
-    }
-
-    @Test
-    void shouldValidateLockoutStateRecord() {
-        FacadeRecordResultRequest request = FacadeRecordResultRequestMother.build();
-        Context context = givenContextFound(request.getContextId());
-
-        facade.record(request);
-
-        verify(stateValidator).validateLockoutState(context);
     }
 
     @Test
@@ -90,6 +67,7 @@ class ContextFacadeTest {
     void shouldPassRequestWithLoadedContextToUpdateResult() {
         FacadeRecordResultRequest facadeRequest = FacadeRecordResultRequestMother.build();
         Context expected = givenContextFound(facadeRequest.getContextId());
+        givenUpdatedContext();
 
         facade.record(facadeRequest);
 
@@ -102,6 +80,7 @@ class ContextFacadeTest {
     @Test
     void shouldPassRequestWithResultToUpdateResult() {
         FacadeRecordResultRequest facadeRequest = FacadeRecordResultRequestMother.build();
+        givenUpdatedContext();
 
         facade.record(facadeRequest);
 

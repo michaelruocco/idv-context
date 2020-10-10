@@ -22,4 +22,7 @@ public interface MethodMixin {
     @JsonInclude(JsonInclude.Include.NON_EMPTY)
     Results getResults();
 
+    @JsonIgnore
+    long getCompletedCount();
+
 }

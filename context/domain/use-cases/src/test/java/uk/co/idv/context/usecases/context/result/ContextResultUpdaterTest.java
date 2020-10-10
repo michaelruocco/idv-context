@@ -7,8 +7,9 @@ import uk.co.idv.context.entities.context.HasEligibleMethod;
 import uk.co.idv.context.entities.context.HasNextMethod;
 import uk.co.idv.context.entities.result.ServiceRecordResultRequest;
 import uk.co.idv.context.entities.result.ServiceRecordResultRequestMother;
-import uk.co.idv.context.usecases.context.MethodNotEligibleException;
-import uk.co.idv.context.usecases.context.NotNextMethodException;
+import uk.co.idv.context.entities.result.ServiceRecordResultResponse;
+import uk.co.idv.method.entities.result.Result;
+import uk.co.idv.method.entities.result.ResultMother;
 
 import java.util.function.UnaryOperator;
 
@@ -26,11 +27,11 @@ class ContextResultUpdaterTest {
 
     @Test
     void shouldThrowExceptionIfNotNextMethod() {
-        Context context = mock(Context.class);
+        Context original = mock(Context.class);
         ServiceRecordResultRequest request = ServiceRecordResultRequestMother.builder()
-                .context(context)
+                .context(original)
                 .build();
-        given(context.query(any(HasNextMethod.class))).willReturn(false);
+        given(original.query(any(HasNextMethod.class))).willReturn(false);
 
         Throwable error = catchThrowable(() -> updater.addResultIfApplicable(request));
 
@@ -41,29 +42,28 @@ class ContextResultUpdaterTest {
 
     @Test
     void shouldPassMethodNameWhenCheckingHasNextMethod() {
-        Context context = mock(Context.class);
+        Context original = mock(Context.class);
+        givenContextUpdatedSuccessfully(original);
         ServiceRecordResultRequest request = ServiceRecordResultRequestMother.builder()
-                .context(context)
+                .context(original)
                 .build();
-        given(context.query(any(HasNextMethod.class))).willReturn(true);
-        given(context.query(any(HasEligibleMethod.class))).willReturn(true);
 
         updater.addResultIfApplicable(request);
 
         ArgumentCaptor<HasNextMethod> captor = ArgumentCaptor.forClass(HasNextMethod.class);
-        verify(context, times(2)).query(captor.capture());
+        verify(original, times(2)).query(captor.capture());
         HasNextMethod hasNextMethod = captor.getAllValues().get(0);
         assertThat(hasNextMethod.getMethodName()).isEqualTo(request.getMethodName());
     }
 
     @Test
     void shouldThrowExceptionIfMethodNotEligible() {
-        Context context = mock(Context.class);
+        Context original = mock(Context.class);
         ServiceRecordResultRequest request = ServiceRecordResultRequestMother.builder()
-                .context(context)
+                .context(original)
                 .build();
-        given(context.query(any(HasNextMethod.class))).willReturn(true);
-        given(context.query(any(HasEligibleMethod.class))).willReturn(false);
+        given(original.query(any(HasNextMethod.class))).willReturn(true);
+        given(original.query(any(HasEligibleMethod.class))).willReturn(false);
 
         Throwable error = catchThrowable(() -> updater.addResultIfApplicable(request));
 
@@ -74,52 +74,83 @@ class ContextResultUpdaterTest {
 
     @Test
     void shouldPassMethodNameWhenCheckingHasEligibleMethod() {
-        Context context = mock(Context.class);
+        Context original = mock(Context.class);
+        givenContextUpdatedSuccessfully(original);
         ServiceRecordResultRequest request = ServiceRecordResultRequestMother.builder()
-                .context(context)
+                .context(original)
                 .build();
-        given(context.query(any(HasNextMethod.class))).willReturn(true);
-        given(context.query(any(HasEligibleMethod.class))).willReturn(true);
 
         updater.addResultIfApplicable(request);
 
         ArgumentCaptor<HasEligibleMethod> captor = ArgumentCaptor.forClass(HasEligibleMethod.class);
-        verify(context, times(2)).query(captor.capture());
+        verify(original, times(2)).query(captor.capture());
         HasEligibleMethod hasEligibleMethod = captor.getAllValues().get(1);
         assertThat(hasEligibleMethod.getMethodName()).isEqualTo(request.getMethodName());
     }
 
     @Test
-    void shouldReturnUpdatedRequest() {
-        Context context = mock(Context.class);
+    void shouldReturnUpdatedContext() {
+        Context original = mock(Context.class);
+        Context expected = givenContextUpdatedSuccessfully(original);
         ServiceRecordResultRequest request = ServiceRecordResultRequestMother.builder()
-                .context(context)
+                .context(original)
                 .build();
-        Context expectedUpdated = mock(Context.class);
-        given(context.query(any(HasNextMethod.class))).willReturn(true);
-        given(context.query(any(HasEligibleMethod.class))).willReturn(true);
-        given(context.updateMethods(any(UnaryOperator.class))).willReturn(expectedUpdated);
 
-        Context updated = updater.addResultIfApplicable(request);
+        ServiceRecordResultResponse response = updater.addResultIfApplicable(request);
 
-        assertThat(updated).isEqualTo(expectedUpdated);
+        assertThat(response.getUpdated()).isEqualTo(expected);
     }
 
     @Test
     void shouldApplyAddResultIfApplicableWithRequest() {
-        Context context = mock(Context.class);
+        Context original = mock(Context.class);
+        givenContextUpdatedSuccessfully(original);
         ServiceRecordResultRequest request = ServiceRecordResultRequestMother.builder()
-                .context(context)
+                .context(original)
                 .build();
-        given(context.query(any(HasNextMethod.class))).willReturn(true);
-        given(context.query(any(HasEligibleMethod.class))).willReturn(true);
 
         updater.addResultIfApplicable(request);
 
         ArgumentCaptor<AddResultIfApplicable> captor = ArgumentCaptor.forClass(AddResultIfApplicable.class);
-        verify(context).updateMethods(captor.capture());
+        verify(original).updateMethods(captor.capture());
         AddResultIfApplicable addResultFunction = captor.getValue();
         assertThat(addResultFunction.getRequest()).isEqualTo(request);
+    }
+
+    @Test
+    void shouldReturnOriginalContext() {
+        Context original = mock(Context.class);
+        givenContextUpdatedSuccessfully(original);
+        ServiceRecordResultRequest request = ServiceRecordResultRequestMother.builder()
+                .context(original)
+                .build();
+
+        ServiceRecordResultResponse response = updater.addResultIfApplicable(request);
+
+        assertThat(response.getOriginal()).isEqualTo(original);
+    }
+
+    @Test
+    void shouldReturnResultFromRequest() {
+        Context original = mock(Context.class);
+        Result result = ResultMother.build();
+        givenContextUpdatedSuccessfully(original);
+        ServiceRecordResultRequest request = ServiceRecordResultRequestMother.builder()
+                .context(original)
+                .result(result)
+                .build();
+
+        ServiceRecordResultResponse response = updater.addResultIfApplicable(request);
+
+        assertThat(response.getResult()).isEqualTo(result);
+    }
+
+    private Context givenContextUpdatedSuccessfully(Context original) {
+        Context updated = mock(Context.class);
+        given(original.query(any(HasNextMethod.class))).willReturn(true);
+        given(original.query(any(HasEligibleMethod.class))).willReturn(true);
+        given(original.updateMethods(any(UnaryOperator.class))).willReturn(updated);
+        return updated;
     }
 
 }

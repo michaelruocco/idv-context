@@ -13,6 +13,7 @@ import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.giv
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIncompleteSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIneligibleSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWith;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWithCompletedCount;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSuccessfulSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenUnsuccessfulSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenUpdatedSequence;
@@ -136,6 +137,29 @@ class SequencesTest {
         Sequences updated = sequences.updateMethods(function);
 
         assertThat(updated).containsExactly(updatedSequence1, updatedSequence2);
+    }
+
+    @Test
+    void shouldReturnCompletedSequencesCount() {
+        Sequence sequence1 = givenCompleteSequence();
+        Sequence sequence2 = givenCompleteSequence();
+        Sequence sequence3 = givenIncompleteSequence();
+        Sequences sequences = SequencesMother.with(sequence1, sequence2, sequence3);
+
+        long count = sequences.getCompletedCount();
+
+        assertThat(count).isEqualTo(2);
+    }
+
+    @Test
+    void shouldReturnCompletedMethodCount() {
+        Sequence sequence1 = givenSequenceWithCompletedCount(2);
+        Sequence sequence2 = givenSequenceWithCompletedCount(1);
+        Sequences sequences = SequencesMother.with(sequence1, sequence2);
+
+        long count = sequences.getCompletedMethodCount();
+
+        assertThat(count).isEqualTo(3);
     }
 
 }

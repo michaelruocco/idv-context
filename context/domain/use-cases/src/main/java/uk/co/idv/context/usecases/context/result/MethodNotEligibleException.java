@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.context;
+package uk.co.idv.context.usecases.context.result;
 
 public class MethodNotEligibleException extends RuntimeException {
 

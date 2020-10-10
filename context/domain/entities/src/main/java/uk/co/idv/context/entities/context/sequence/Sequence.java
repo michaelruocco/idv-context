@@ -52,4 +52,8 @@ public class Sequence implements MethodSequence {
         return withMethods(methods.update(function));
     }
 
+    public long getCompletedCount() {
+        return methods.getCompletedCount();
+    }
+
 }

@@ -80,6 +80,17 @@ class ContextTest {
     }
 
     @Test
+    void shouldReturnChannelIdFromCreateContextRequest() {
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
+
+        Context context = Context.builder()
+                .request(request)
+                .build();
+
+        assertThat(context.getChannelId()).isEqualTo(request.getChannelId());
+    }
+
+    @Test
     void shouldReturnActivityFromCreateContextRequest() {
         ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
 
@@ -91,6 +102,17 @@ class ContextTest {
     }
 
     @Test
+    void shouldReturnActivityNameFromCreateContextRequest() {
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
+
+        Context context = Context.builder()
+                .request(request)
+                .build();
+
+        assertThat(context.getActivityName()).isEqualTo(request.getActivityName());
+    }
+
+    @Test
     void shouldReturnIdentityFromCreateContextRequest() {
         ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
 
@@ -99,6 +121,39 @@ class ContextTest {
                 .build();
 
         assertThat(context.getIdentity()).isEqualTo(request.getIdentity());
+    }
+
+    @Test
+    void shouldReturnIdvIdFromCreateContextRequest() {
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
+
+        Context context = Context.builder()
+                .request(request)
+                .build();
+
+        assertThat(context.getIdvId()).isEqualTo(request.getIdvId());
+    }
+
+    @Test
+    void shouldReturnAliasesFromCreateContextRequest() {
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
+
+        Context context = Context.builder()
+                .request(request)
+                .build();
+
+        assertThat(context.getAliases()).isEqualTo(request.getAliases());
+    }
+
+    @Test
+    void shouldReturnAliasTypesFromCreateContextRequest() {
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
+
+        Context context = Context.builder()
+                .request(request)
+                .build();
+
+        assertThat(context.getAliasTypes()).isEqualTo(request.getAliasTypes());
     }
 
     @Test
@@ -251,10 +306,62 @@ class ContextTest {
         assertThat(result).containsExactly(method1, method2);
     }
 
-    private Sequences givenUpdatedSequences(UnaryOperator<Method> function, Sequences sequences) {
+    @Test
+    void shouldReturnHasMoreCompletedSequencesTrueIfUpdatedHasMoreCompletedSequencesThanOriginal() {
+        Context original = ContextMother.withSequences(givenSequencesWithCompletedCount(1));
+        Context updated =  ContextMother.withSequences(givenSequencesWithCompletedCount(2));
+
+        boolean hasMoreCompletedSequences = updated.hasMoreCompletedSequencesThan(original);
+
+        assertThat(hasMoreCompletedSequences).isTrue();
+    }
+
+    @Test
+    void shouldReturnHasMoreCompletedSequencesFalseIfUpdatedDoesNotHaveMoreCompletedSequencesThanOriginal() {
+        Context original = ContextMother.withSequences(givenSequencesWithCompletedCount(1));
+        Context updated =  ContextMother.withSequences(givenSequencesWithCompletedCount(1));
+
+        boolean hasMoreCompletedSequences = updated.hasMoreCompletedSequencesThan(original);
+
+        assertThat(hasMoreCompletedSequences).isFalse();
+    }
+
+    @Test
+    void shouldReturnHasMoreCompletedMethodsTrueIfUpdatedHasMoreCompletedMethodsThanOriginal() {
+        Context original = ContextMother.withSequences(givenSequencesWithCompletedMethodCount(1));
+        Context updated =  ContextMother.withSequences(givenSequencesWithCompletedMethodCount(2));
+
+        boolean hasMoreCompletedMethods = updated.hasMoreCompletedMethodsThan(original);
+
+        assertThat(hasMoreCompletedMethods).isTrue();
+    }
+
+    @Test
+    void shouldReturnHasMoreCompletedMethodsFalseIfUpdatedDoesNotHaveMoreCompletedMethodsThanOriginal() {
+        Context original = ContextMother.withSequences(givenSequencesWithCompletedMethodCount(1));
+        Context updated =  ContextMother.withSequences(givenSequencesWithCompletedMethodCount(1));
+
+        boolean hasMoreCompletedMethods = updated.hasMoreCompletedSequencesThan(original);
+
+        assertThat(hasMoreCompletedMethods).isFalse();
+    }
+
+    static Sequences givenUpdatedSequences(UnaryOperator<Method> function, Sequences sequences) {
         Sequences updated = mock(Sequences.class);
         given(sequences.updateMethods(function)).willReturn(updated);
         return updated;
+    }
+
+    static Sequences givenSequencesWithCompletedCount(long count) {
+        Sequences sequences = mock(Sequences.class);
+        given(sequences.getCompletedCount()).willReturn(count);
+        return sequences;
+    }
+
+    static Sequences givenSequencesWithCompletedMethodCount(long count) {
+        Sequences sequences = mock(Sequences.class);
+        given(sequences.getCompletedMethodCount()).willReturn(count);
+        return sequences;
     }
 
 }

@@ -6,6 +6,7 @@ import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.usecases.context.expiry.ExpiryCalculator;
 import uk.co.idv.context.entities.context.sequence.SequencesRequest;
+import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 
 import java.time.Clock;
@@ -18,12 +19,14 @@ public class ContextService {
     @Builder.Default
     private final ExpiryCalculator expiryCalculator = new ExpiryCalculator();
 
+    private final ContextLockoutService lockoutService;
     private final CreateContextRequestConverter requestConverter;
     private final Clock clock;
     private final SequencesBuilder sequencesBuilder;
     private final ContextRepository repository;
 
     public Context create(ServiceCreateContextRequest request) {
+        lockoutService.validateLockoutState(request);
         Instant created = clock.instant();
         SequencesRequest sequencesRequest = requestConverter.toSequencesRequest(request);
         Sequences sequences = sequencesBuilder.build(sequencesRequest);
@@ -34,12 +37,8 @@ public class ContextService {
                 .request(request)
                 .sequences(sequences)
                 .build();
-        save(context);
-        return context;
-    }
-
-    public void save(Context context) {
         repository.save(context);
+        return context;
     }
 
     public Context find(UUID id) {
@@ -47,6 +46,7 @@ public class ContextService {
         if (context.hasExpired(clock.instant())) {
             throw new ContextExpiredException(id, context.getExpiry());
         }
+        lockoutService.validateLockoutState(context);
         return context;
     }
 

@@ -7,6 +7,7 @@ import uk.co.idv.common.usecases.id.RandomIdGenerator;
 import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
 import uk.co.idv.context.usecases.context.ContextService;
 import uk.co.idv.context.usecases.context.CreateContextRequestConverter;
+import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
 import uk.co.idv.context.usecases.context.method.CompositeMethodBuilder;
 import uk.co.idv.context.usecases.context.method.MethodsBuilder;
 import uk.co.idv.context.usecases.context.result.ContextResultUpdater;
@@ -14,6 +15,7 @@ import uk.co.idv.context.usecases.context.result.ResultService;
 import uk.co.idv.context.usecases.context.sequence.SequenceBuilder;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
+import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.method.usecases.MethodBuilder;
 
 import java.time.Clock;
@@ -25,6 +27,7 @@ public class ContextServiceConfig {
 
     private final ParentContextRepositoryConfig repositoryConfig;
     private final Collection<MethodBuilder> methodBuilders;
+    private final LockoutConfig lockoutConfig;
 
     @Builder.Default
     private final IdGenerator idGenerator = new RandomIdGenerator();
@@ -35,6 +38,7 @@ public class ContextServiceConfig {
     public ContextService contextService() {
         return ContextService.builder()
                 .clock(clock)
+                .lockoutService(lockoutService())
                 .repository(repositoryConfig.contextRepository())
                 .requestConverter(serviceCreateContextRequestConverter())
                 .sequencesBuilder(sequencesBuilder())
@@ -47,6 +51,7 @@ public class ContextServiceConfig {
 
     public ResultService resultService() {
         return ResultService.builder()
+                .lockoutService(lockoutService())
                 .repository(repositoryConfig.contextRepository())
                 .resultUpdater(new ContextResultUpdater())
                 .build();
@@ -63,5 +68,13 @@ public class ContextServiceConfig {
     private CreateContextRequestConverter serviceCreateContextRequestConverter() {
         return new CreateContextRequestConverter(idGenerator);
     }
+
+    private ContextLockoutService lockoutService() {
+        return ContextLockoutService.builder()
+                .lockoutService(lockoutConfig.lockoutService())
+                .clock(clock)
+                .build();
+    }
+
 
 }

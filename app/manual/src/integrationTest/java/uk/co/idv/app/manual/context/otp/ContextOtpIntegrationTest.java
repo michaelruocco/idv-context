@@ -57,12 +57,6 @@ class ContextOtpIntegrationTest {
             .contextRepository(contextRepositoryConfig.contextRepository())
             .build();
 
-    private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
-            .repositoryConfig(contextRepositoryConfig)
-            .idGenerator(idGenerator)
-            .methodBuilders(Collections.singleton(otpConfig.otpBuilder()))
-            .build();
-
     private final DefaultIdentityConfig identityConfig = DefaultIdentityConfig.builder()
             .build();
 
@@ -70,9 +64,15 @@ class ContextOtpIntegrationTest {
             .identityConfig(identityConfig)
             .build().build();
 
+    private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
+            .repositoryConfig(contextRepositoryConfig)
+            .idGenerator(idGenerator)
+            .lockoutConfig(lockoutConfig)
+            .methodBuilders(Collections.singleton(otpConfig.otpBuilder()))
+            .build();
+
     private final ContextFacadeConfig contextConfig = ContextFacadeConfig.builder()
             .serviceConfig(serviceConfig)
-            .lockoutService(lockoutConfig.lockoutService())
             .createEligibility(identityConfig.createEligibility())
             .build();
 

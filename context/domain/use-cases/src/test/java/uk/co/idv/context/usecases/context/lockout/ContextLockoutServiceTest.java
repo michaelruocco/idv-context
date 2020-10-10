@@ -2,11 +2,15 @@ package uk.co.idv.context.usecases.context.lockout;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
+import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.idv.context.entities.context.create.ContextLockoutRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
-import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
+import uk.co.idv.context.entities.context.lockout.ContextRecordAttemptRequest;
+import uk.co.idv.context.entities.lockout.ContextRecordAttemptRequestMother;
 import uk.co.idv.lockout.entities.LockoutRequest;
 import uk.co.idv.lockout.entities.policy.LockoutState;
+import uk.co.idv.lockout.entities.policy.RecordAttemptRequest;
 import uk.co.idv.lockout.usecases.LockoutService;
 
 import java.time.Clock;
@@ -18,21 +22,22 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class LockoutStateValidatorTest {
+class ContextLockoutServiceTest {
 
     private final Clock clock = mock(Clock.class);
     private final LockoutService lockoutService = mock(LockoutService.class);
 
-    private final LockoutStateValidator validator = LockoutStateValidator.builder()
+    private final ContextLockoutService contextLockoutService = ContextLockoutService.builder()
             .clock(clock)
             .lockoutService(lockoutService)
             .build();
 
     @Test
     void shouldPassInitialRequestToLockoutService() {
-        ServiceCreateContextRequest initialRequest = ServiceCreateContextRequestMother.build();
+        Context context = ContextMother.build();
+        ServiceCreateContextRequest initialRequest = context.getRequest();
 
-        validator.validateLockoutState(initialRequest);
+        contextLockoutService.validateLockoutState(context);
 
         ArgumentCaptor<ContextLockoutRequest> captor = ArgumentCaptor.forClass(ContextLockoutRequest.class);
         verify(lockoutService).loadAndValidateState(captor.capture());
@@ -42,10 +47,10 @@ class LockoutStateValidatorTest {
 
     @Test
     void shouldPassTimestampToLockoutService() {
-        ServiceCreateContextRequest initialRequest = ServiceCreateContextRequestMother.build();
+        Context context = ContextMother.build();
         Instant timestamp = givenNowTimestamp();
 
-        validator.validateLockoutState(initialRequest);
+        contextLockoutService.validateLockoutState(context);
 
         ArgumentCaptor<ContextLockoutRequest> captor = ArgumentCaptor.forClass(ContextLockoutRequest.class);
         verify(lockoutService).loadAndValidateState(captor.capture());
@@ -55,10 +60,21 @@ class LockoutStateValidatorTest {
 
     @Test
     void shouldReturnLockoutState() {
-        ServiceCreateContextRequest initialRequest = ServiceCreateContextRequestMother.build();
-        LockoutState expectedState = givenLockoutStateReturned();
+        Context context = ContextMother.build();
+        LockoutState expectedState = givenLockoutStateLoaded();
 
-        LockoutState state = validator.validateLockoutState(initialRequest);
+        LockoutState state = contextLockoutService.validateLockoutState(context);
+
+        assertThat(state).isEqualTo(expectedState);
+    }
+
+
+    @Test
+    void shouldRecordAttemptIfRequired() {
+        ContextRecordAttemptRequest request = ContextRecordAttemptRequestMother.build();
+        LockoutState expectedState = givenLockoutStateUpdated(request);
+
+        LockoutState state = contextLockoutService.recordAttemptIfRequired(request);
 
         assertThat(state).isEqualTo(expectedState);
     }
@@ -69,9 +85,15 @@ class LockoutStateValidatorTest {
         return now;
     }
 
-    private LockoutState givenLockoutStateReturned() {
+    private LockoutState givenLockoutStateLoaded() {
         LockoutState state = mock(LockoutState.class);
         given(lockoutService.loadAndValidateState(any(LockoutRequest.class))).willReturn(state);
+        return state;
+    }
+
+    private LockoutState givenLockoutStateUpdated(RecordAttemptRequest request) {
+        LockoutState state = mock(LockoutState.class);
+        given(lockoutService.recordAttemptIfRequired(request)).willReturn(state);
         return state;
     }
 

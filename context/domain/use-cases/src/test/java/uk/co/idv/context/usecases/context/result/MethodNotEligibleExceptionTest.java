@@ -1,4 +1,4 @@
-package uk.co.idv.context.usecases.context;
+package uk.co.idv.context.usecases.context.result;
 
 import org.junit.jupiter.api.Test;
 

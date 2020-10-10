@@ -176,6 +176,18 @@ class MethodsTest {
         assertThat(updated).containsExactly(updatedMethod1, updatedMethod2);
     }
 
+    @Test
+    void shouldReturnCompletedCount() {
+        Method method1 = FakeMethodMother.complete();
+        Method method2 = FakeMethodMother.complete();
+        Method method3 = FakeMethodMother.incomplete();
+        Methods methods = MethodsMother.with(method1, method2, method3);
+
+        long completedCount = methods.getCompletedCount();
+
+        assertThat(completedCount).isEqualTo(2);
+    }
+
     static Method givenUpdatedMethod(UnaryOperator<Method> function, Method method) {
         Method updated = mock(Method.class);
         given(function.apply(method)).willReturn(updated);

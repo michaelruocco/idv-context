@@ -11,9 +11,9 @@
 
 ## Todo
 
-*   Add karate tests for posting results to verification context
-*   Add updating lockout state when results posted
+*   Add karate tests for posting results to verification context -> remove posting attempts to lockout state
 *   Return eligibility reasons against methods and sequences
+*   Allow passing in mobile numbers / email address with channel
 *   Tidy up cloud formation templates and try out creating API gateway
 *   Json error handling for context errors (context policy not found, context not found)
 *   Add registering context expiry job -> via publishing context created event
@@ -23,6 +23,8 @@
 *   Make stub delays and identity lookup timeout configurable (by channel / add identity eligibility policy?)
 *   Extract common dynamo adapter to its own separate library
 *   Try out junit tagging for slow tests
+*   Add specific method result types, e.g. for OTP delivery time, actual and used otp codes, verify type, 
+    maybe delivery id for sending message
 
 ## Useful commands
 
