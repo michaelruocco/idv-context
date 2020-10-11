@@ -1,32 +1,19 @@
 package uk.co.idv.app.spring.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.common.adapter.json.ObjectMapperFactory;
-import uk.co.idv.context.adapter.json.context.ContextModule;
-import uk.co.idv.identity.adapter.json.IdentityParentModule;
-import uk.co.idv.lockout.adapter.json.LockoutParentModule;
-import uk.co.idv.method.adapter.json.MethodMapping;
-import uk.co.idv.method.adapter.json.otp.OtpMapping;
 import uk.co.mruoc.json.JsonConverter;
 import uk.co.mruoc.json.jackson.JacksonJsonConverter;
-
-import java.util.Collection;
-import java.util.Collections;
 
 @Configuration
 public class SpringJacksonConfig {
 
     @Bean
+    @ConditionalOnProperty(value = "response.filtering.enabled", havingValue = "false", matchIfMissing = true)
     public ObjectMapper objectMapper() {
-        return ObjectMapperFactory.build(
-                new JavaTimeModule(),
-                new IdentityParentModule(),
-                new LockoutParentModule(),
-                new ContextModule(methodMappings())
-        );
+        return SpringObjectMapperFactory.build();
     }
 
     @Bean
@@ -34,7 +21,4 @@ public class SpringJacksonConfig {
         return new JacksonJsonConverter(mapper);
     }
 
-    private Collection<MethodMapping> methodMappings() {
-        return Collections.singleton(new OtpMapping());
-    }
 }

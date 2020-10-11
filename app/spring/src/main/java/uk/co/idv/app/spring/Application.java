@@ -11,7 +11,8 @@ import org.springframework.context.annotation.Configuration;
 public class Application {
 
     public static void main(String[] args) {
-        SpringApplication.run(Application.class, args);
+        /*ConfigurableApplicationContext context = */SpringApplication.run(Application.class, args);
+        //SquigglyConfig.init(context);
     }
 
 }

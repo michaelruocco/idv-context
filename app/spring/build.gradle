@@ -39,6 +39,9 @@ dependencies {
     implementation project(":otp-json")
     implementation project(":identity-external-find-stub")
 
+    implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
+    implementation 'com.github.bohnman:squiggly-filter-jackson:1.3.18'
+
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
     testImplementation testFixtures(project(":lockout-entities"))
     testImplementation testFixtures(project(":context-entities"))
@@ -58,6 +61,7 @@ bootRun {
     systemProperties = System.getProperties()
     systemProperty "spring.profiles.active", System.properties.getOrDefault("spring.profiles.active", "stubbed")
     systemProperty "server.port", System.properties.getOrDefault("server.port", "8081")
+    systemProperty "response.filtering.enabled", System.properties.getOrDefault("response.filtering.enabled", "true")
 }
 
 integrationTest {
