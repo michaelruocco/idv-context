@@ -18,6 +18,7 @@ public class ChannelArgumentsProvider implements ArgumentsProvider {
                 Arguments.of(DefaultChannelJsonMother.build(), DefaultChannelMother.build()),
                 Arguments.of(DefaultChannelJsonMother.withData(), DefaultChannelMother.withData()),
                 Arguments.of(AbcJsonMother.abc(), AbcMother.abc()),
+                Arguments.of(AbcJsonMother.withData(), AbcMother.withData()),
                 Arguments.of(GbRsaJsonMother.gbRsa(), GbRsaMother.rsa()),
                 Arguments.of(GbRsaJsonMother.gbRsaWithoutIssuerSessionId(), GbRsaMother.withoutIssuerSessionId()),
                 Arguments.of(DeRsaJsonMother.deRsa(), DeRsaMother.rsa())

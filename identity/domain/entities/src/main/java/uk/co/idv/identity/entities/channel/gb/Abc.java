@@ -1,13 +1,25 @@
 package uk.co.idv.identity.entities.channel.gb;
 
 import com.neovisionaries.i18n.CountryCode;
+import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.identity.entities.channel.Channel;
+import uk.co.idv.identity.entities.channel.provideddata.EmailAddressesProvider;
+import uk.co.idv.identity.entities.channel.provideddata.PhoneNumbersProvider;
+import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
 @Data
-public class Abc implements Channel {
+@Builder
+public class Abc implements Channel, PhoneNumbersProvider, EmailAddressesProvider {
 
     public static final String ID = "abc";
+
+    @Builder.Default
+    private final PhoneNumbers phoneNumbers = new PhoneNumbers();
+
+    @Builder.Default
+    private final EmailAddresses emailAddresses = new EmailAddresses();
 
     @Override
     public String getId() {

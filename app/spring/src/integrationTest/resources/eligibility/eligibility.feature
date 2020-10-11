@@ -200,7 +200,13 @@ Feature: Eligibility Requests
       {
         "channel": {
           "id": "abc",
-          "country": "GB"
+          "country": "GB",
+          "phoneNumbers": [
+            { "value": "07809123456" }
+          ],
+          "emailAddresses": [
+            "bugs.bunny@sky.co.uk"
+          ]
         },
         "aliases": [
           {
@@ -229,9 +235,13 @@ Feature: Eligibility Requests
               "value": "#uuid"
             }
           ],
+          "phoneNumbers":[
+            { "value": "07809123456" }
+          ],
           "emailAddresses": [
             "joe.bloggs@hotmail.co.uk",
-            "joebloggs@yahoo.co.uk"
+            "joebloggs@yahoo.co.uk",
+            "bugs.bunny@sky.co.uk"
           ]
         }
       }

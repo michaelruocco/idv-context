@@ -2,8 +2,12 @@ package uk.co.idv.identity.adapter.json.channel.gb;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import uk.co.idv.identity.adapter.json.emailaddress.EmailAddressExtractor;
+import uk.co.idv.identity.adapter.json.phonenumber.PhoneNumbersExtractor;
 import uk.co.idv.identity.entities.channel.gb.Abc;
+import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 public class AbcChannelDeserializer extends StdDeserializer<Abc> {
 
@@ -13,7 +17,11 @@ public class AbcChannelDeserializer extends StdDeserializer<Abc> {
 
     @Override
     public Abc deserialize(JsonParser parser, DeserializationContext context) {
-        return new Abc();
+        JsonNode node = JsonParserConverter.toNode(parser);
+        return Abc.builder()
+                .emailAddresses(EmailAddressExtractor.toEmailAddresses(node, parser))
+                .phoneNumbers(PhoneNumbersExtractor.toPhoneNumbers(node, parser))
+                .build();
     }
 
 }

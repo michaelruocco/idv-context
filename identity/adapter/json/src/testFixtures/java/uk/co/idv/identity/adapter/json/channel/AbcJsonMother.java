@@ -8,4 +8,8 @@ public interface AbcJsonMother {
         return loadContentFromClasspath("channel/gb/abc.json");
     }
 
+    static Object withData() {
+        return loadContentFromClasspath("channel/gb/abc-with-data.json");
+    }
+
 }
