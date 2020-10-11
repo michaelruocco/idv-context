@@ -17,8 +17,6 @@
 *   Remove duplication between RecordAttemptRequest, DefaultRecordAttempt request, this may be covered by
     removing posting attempts to lockout state
 
-*   Allow passing in mobile numbers / email address with channel
-
 *   Remove country from identity and channels
 
 *   Tidy up cloud formation templates and try out creating API gateway

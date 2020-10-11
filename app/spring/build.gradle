@@ -3,7 +3,7 @@ plugins {
     id "org.springframework.boot" version "2.3.4.RELEASE"
     id "io.spring.dependency-management" version "1.0.10.RELEASE"
     id "com.bmuschko.docker-remote-api" version "6.6.1"
-    id "com.avast.gradle.docker-compose" version "0.13.3"
+    id "com.avast.gradle.docker-compose" version "0.13.4"
 }
 
 import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
