@@ -71,9 +71,8 @@ class LockoutStateRequestTest {
 
         LockoutStateRequest updated = request.withAttempts(empty);
 
-        assertThat(updated)
-                .isEqualToIgnoringGivenFields(request, "attempts")
-                .hasFieldOrPropertyWithValue("attempts", empty);
+        assertThat(updated).usingRecursiveComparison().ignoringFields("attempts").isEqualTo(request);
+        assertThat(updated.getAttempts()).isEqualTo(empty);
     }
 
     @Test
@@ -112,7 +111,7 @@ class LockoutStateRequestTest {
 
         LockoutStateRequest updated = request.removeAttempts(AttemptsMother.withAttempts(attempt1));
 
-        assertThat(updated).isEqualToIgnoringGivenFields(request,"attempts");
+        assertThat(updated).usingRecursiveComparison().ignoringFields("attempts").isEqualTo(request);
         assertThat(updated.getAttempts()).containsExactly(attempt2);
     }
 

@@ -21,7 +21,7 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class IdentityTest {
+class DefaultIdentityTest {
 
     @Test
     void shouldReturnCountry() {
@@ -144,7 +144,7 @@ class IdentityTest {
 
         Identity updatedIdentity = identity.setIdvId(idvId);
 
-        assertThat(updatedIdentity).isEqualToIgnoringGivenFields(updatedIdentity, "aliases");
+        assertThat(updatedIdentity).usingRecursiveComparison().ignoringFields("aliases").isEqualTo(identity);
         assertThat(updatedIdentity.getAliases()).isEqualTo(updatedAliases);
     }
 
@@ -229,7 +229,7 @@ class IdentityTest {
 
         Identity updated = identity.removeIdvId();
 
-        assertThat(updated).isEqualToIgnoringGivenFields(identity, "aliases");
+        assertThat(updated).usingRecursiveComparison().ignoringFields("aliases").isEqualTo(identity);
         assertThat(updated.getAliases()).containsExactlyElementsOf(identity.getAliases().remove(identity.getIdvId()));
     }
 
@@ -247,6 +247,28 @@ class IdentityTest {
         Identity identity = IdentityMother.withoutCountry();
 
         assertThat(identity.hasCountry()).isFalse();
+    }
+
+    @Test
+    void shouldReturnCopyWithUpdatedPhoneNumbers() {
+        PhoneNumbers phoneNumbers = PhoneNumbersMother.empty();
+        Identity identity = IdentityMother.example();
+
+        Identity updated = identity.withPhoneNumbers(phoneNumbers);
+
+        assertThat(updated).usingRecursiveComparison().ignoringFields("phoneNumbers").isEqualTo(identity);
+        assertThat(updated.getPhoneNumbers()).isEqualTo(phoneNumbers);
+    }
+
+    @Test
+    void shouldReturnCopyWithUpdatedEmailAddresses() {
+        EmailAddresses emailAddresses = EmailAddressesMother.with("joe.bloggs@hotmail.co.uk");
+        Identity identity = IdentityMother.example();
+
+        Identity updated = identity.withEmailAddresses(emailAddresses);
+
+        assertThat(updated).usingRecursiveComparison().ignoringFields("emailAddresses").isEqualTo(identity);
+        assertThat(updated.getEmailAddresses()).isEqualTo(emailAddresses);
     }
 
 }

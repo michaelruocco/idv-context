@@ -1,0 +1,13 @@
+{
+  "id": "default-channel",
+  "country": "GB",
+  "phoneNumbers": [
+    {
+      "value": "+447089111111",
+      "lastUpdated":"2020-08-29T20:55:12.825Z"
+    }
+  ],
+  "emailAddresses": [
+    "bugs.bunny@sky.co.uk"
+  ]
+}

@@ -8,4 +8,8 @@ public interface DefaultChannelJsonMother {
         return loadContentFromClasspath("channel/default-channel.json");
     }
 
+    static String withData() {
+        return loadContentFromClasspath("channel/default-channel-with-data.json");
+    }
+
 }

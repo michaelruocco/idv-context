@@ -16,6 +16,7 @@ public class ChannelArgumentsProvider implements ArgumentsProvider {
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
                 Arguments.of(DefaultChannelJsonMother.build(), DefaultChannelMother.build()),
+                Arguments.of(DefaultChannelJsonMother.withData(), DefaultChannelMother.withData()),
                 Arguments.of(AbcJsonMother.abc(), AbcMother.abc()),
                 Arguments.of(GbRsaJsonMother.gbRsa(), GbRsaMother.rsa()),
                 Arguments.of(GbRsaJsonMother.gbRsaWithoutIssuerSessionId(), GbRsaMother.withoutIssuerSessionId()),

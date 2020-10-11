@@ -3,6 +3,7 @@ package uk.co.idv.identity.entities.identity;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.Builder;
 import lombok.Data;
+import lombok.With;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
@@ -17,7 +18,11 @@ public class DefaultIdentity implements Identity {
 
     private final CountryCode country;
     private final Aliases aliases;
+
+    @With
     private final PhoneNumbers phoneNumbers;
+
+    @With
     private final EmailAddresses emailAddresses;
 
     @Override

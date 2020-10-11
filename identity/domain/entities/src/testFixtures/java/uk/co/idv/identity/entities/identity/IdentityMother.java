@@ -6,8 +6,8 @@ import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
-import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
 public interface IdentityMother {
@@ -29,7 +29,7 @@ public interface IdentityMother {
     }
 
     static Identity withPhoneNumbers(PhoneNumber... phoneNumbers) {
-        return withPhoneNumbers(PhoneNumbersMother.with(phoneNumbers));
+        return exampleBuilder().phoneNumbers(PhoneNumbersMother.with(phoneNumbers)).build();
     }
 
     static Identity withPhoneNumbers(PhoneNumbers phoneNumbers) {

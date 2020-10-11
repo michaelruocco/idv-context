@@ -36,7 +36,7 @@ class IdvIdAllocatorTest {
 
         Identity updated = allocator.allocateIfRequired(identity);
 
-        assertThat(updated).isEqualToIgnoringGivenFields(identity, "aliases");
+        assertThat(updated).usingRecursiveComparison().ignoringFields("aliases").isEqualTo(identity);
         assertThat(updated.getAliases()).containsAll(identity.getAliases());
         assertThat(updated.getIdvId()).isEqualTo(idvId);
     }

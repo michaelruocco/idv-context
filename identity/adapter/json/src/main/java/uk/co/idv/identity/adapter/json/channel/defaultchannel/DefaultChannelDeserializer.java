@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.neovisionaries.i18n.CountryCode;
+import uk.co.idv.identity.adapter.json.emailaddress.EmailAddressExtractor;
+import uk.co.idv.identity.adapter.json.phonenumber.PhoneNumbersExtractor;
 import uk.co.idv.identity.entities.channel.DefaultChannel;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
@@ -20,6 +22,8 @@ public class DefaultChannelDeserializer extends StdDeserializer<DefaultChannel> 
         return DefaultChannel.builder()
                 .id(node.get("id").asText())
                 .country(extractCountry(node))
+                .emailAddresses(EmailAddressExtractor.toEmailAddresses(node, parser))
+                .phoneNumbers(PhoneNumbersExtractor.toPhoneNumbers(node, parser))
                 .build();
     }
 

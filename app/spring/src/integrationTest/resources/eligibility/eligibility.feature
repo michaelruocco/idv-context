@@ -166,3 +166,73 @@ Feature: Eligibility Requests
         }
       }
       """
+
+  Scenario: Create eligibility - Success - Create with provided channel data
+    Given request
+      """
+      {
+        "channel": {
+          "id": "abc",
+          "country": "GB",
+          "phoneNumbers": [
+            { "value": "07809123456" }
+          ],
+          "emailAddresses": [
+            "bugs.bunny@sky.co.uk"
+          ]
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4928111111111114"
+          }
+        ],
+        "requestedData": [
+          "phone-numbers",
+          "email-addresses"
+        ]
+      }
+      """
+    When method POST
+    Then status 201
+    And match response ==
+      """
+      {
+        "channel": {
+          "id": "abc",
+          "country": "GB"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4928111111111114"
+          }
+        ],
+        "requestedData": [
+          "phone-numbers",
+          "email-addresses"
+        ],
+        identity: {
+          "idvId": "#uuid",
+          "country": "GB",
+          "aliases": [
+            {
+              "type": "credit-card-number",
+              "value": "4928111111111114"
+            },
+            {
+              "type": "debit-card-number",
+              "value": "5928111111111114"
+            }
+            {
+              "type": "idv-id",
+              "value": "#uuid"
+            }
+          ],
+          "emailAddresses": [
+            "joe.bloggs@hotmail.co.uk",
+            "joebloggs@yahoo.co.uk"
+          ]
+        }
+      }
+      """

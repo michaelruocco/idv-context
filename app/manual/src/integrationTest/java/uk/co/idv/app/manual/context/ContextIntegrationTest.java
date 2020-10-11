@@ -192,7 +192,7 @@ class ContextIntegrationTest {
 
         Context context = contextFacade.create(request);
 
-        assertThat(context.getIdentity()).isEqualTo(expectedIdentity);
+        assertThat(context.getIdentity()).usingRecursiveComparison().isEqualTo(expectedIdentity);
     }
 
     @Test

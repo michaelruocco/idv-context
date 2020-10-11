@@ -17,13 +17,17 @@ public interface Identity {
 
     boolean hasAlias(Alias alias);
 
-    PhoneNumbers getPhoneNumbers();
-
     Aliases getAliases();
 
     Aliases getAliasesNotPresent(Identity other);
 
     EmailAddresses getEmailAddresses();
+
+    Identity withEmailAddresses(EmailAddresses emailAddresses);
+
+    PhoneNumbers getPhoneNumbers();
+
+    Identity withPhoneNumbers(PhoneNumbers phoneNumbers);
 
     boolean hasIdvId();
 

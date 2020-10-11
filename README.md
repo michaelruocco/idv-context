@@ -19,6 +19,8 @@
 
 *   Allow passing in mobile numbers / email address with channel
 
+*   Remove country from identity and channels
+
 *   Tidy up cloud formation templates and try out creating API gateway
 
 *   Json error handling for context errors (context policy not found, context not found)
