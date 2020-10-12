@@ -8,7 +8,7 @@ Feature: Eligibility Requests
       """
       {
         "channel": {
-          "id": "gb-rsa",
+          "id": "default-channel",
           "country": "GB"
         },
         "aliases": [
@@ -52,7 +52,7 @@ Feature: Eligibility Requests
       """
       {
         "channel": {
-          "id": "gb-rsa",
+          "id": "default-channel",
           "country": "GB"
         },
         "aliases": [
@@ -73,7 +73,7 @@ Feature: Eligibility Requests
       """
       {
         "channel": {
-          "id": "gb-rsa",
+          "id": "default-channel",
           "country": "GB"
         },
         "aliases": [
