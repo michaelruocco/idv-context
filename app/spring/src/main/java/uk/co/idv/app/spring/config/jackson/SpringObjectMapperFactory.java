@@ -1,4 +1,4 @@
-package uk.co.idv.app.spring.config;
+package uk.co.idv.app.spring.config.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;

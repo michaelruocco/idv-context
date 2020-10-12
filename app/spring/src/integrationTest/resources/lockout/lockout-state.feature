@@ -1,11 +1,36 @@
 Feature: Lockout State Requests
 
   Background:
+    * def policyId = "7226cc2e-5b56-4405-a525-2111a7676c57"
+    * def channelId = "lockout-state-channel"
+    * def activityName = "lockout-state-activity"
+    Given request
+      """
+      {
+        "key": {
+          "id": "#(policyId)",
+          "priority": 1,
+          "channelId": "#(channelId)",
+          "type": "channel"
+        },
+        "stateCalculator": {
+          "type": "hard-lockout",
+          "maxNumberOfAttempts": 2
+        },
+        "recordAttemptPolicy": {
+          "type": "always-record"
+        }
+      }
+      """
+    And url baseUrl + "/lockout-policies"
+    And method POST
+    And status 201
+
     * url baseUrl + "/lockout-states"
 
   Scenario: Get state - Error - Identity not found
-    Given param channelId = "state-channel"
-    And param activityName = "state-activity"
+    Given param channelId = channelId
+    And param activityName = activityName
     And param aliasType = "idv-id"
     And param aliasValue = "9427672c-1536-44c1-9044-6db6ee1fdcb7"
     When method GET
@@ -34,8 +59,8 @@ Feature: Lockout State Requests
     And url baseUrl + "/identities"
     And method POST
     And status 201
-    And param channelId = "state-channel"
-    And param activityName = "state-activity"
+    And param channelId = "no-lockout-policy-channel"
+    And param activityName = "no-lockout-policy-activity"
     And param aliasType = aliasType
     And param aliasValue = aliasValue
     And url baseUrl + "/lockout-states"
@@ -51,8 +76,8 @@ Feature: Lockout State Requests
           "aliasTypes": [
             "#(aliasType)"
           ],
-          "activityName": "state-activity",
-          "channelId": "state-channel"
+          "activityName": "no-lockout-policy-activity",
+          "channelId": "no-lockout-policy-channel"
         }
       }
       """
@@ -72,31 +97,8 @@ Feature: Lockout State Requests
     And url baseUrl + "/identities"
     And method POST
     And status 201
-    * def policyId = "7226cc2e-5b56-4405-a525-2111a7676c57"
-    * def channelId = "state-channel-1"
-    And request
-      """
-      {
-        "key": {
-          "id": "#(policyId)",
-          "priority": 1,
-          "channelId": "#(channelId)",
-          "type": "channel"
-        },
-        "stateCalculator": {
-          "type": "hard-lockout",
-          "maxNumberOfAttempts": 2
-        },
-        "recordAttemptPolicy": {
-          "type": "always-record"
-        }
-      }
-      """
-    And url baseUrl + "/lockout-policies"
-    And method POST
-    And status 201
     And param channelId = channelId
-    And param activityName = "state-activity"
+    And param activityName = activityName
     And param aliasType = aliasType
     And param aliasValue = aliasValue
     And url baseUrl + "/lockout-states"
@@ -133,29 +135,6 @@ Feature: Lockout State Requests
     And url baseUrl + "/identities"
     And method POST
     And status 201
-    * def policyId = "902ac00c-020b-4320-9566-c490ba93800c"
-    * def channelId = "state-channel-1"
-    And request
-      """
-      {
-        "key": {
-          "id": "#(policyId)",
-          "priority": 1,
-          "channelId": "#(channelId)",
-          "type": "channel"
-        },
-        "stateCalculator": {
-          "type": "hard-lockout",
-          "maxNumberOfAttempts": 2
-        },
-        "recordAttemptPolicy": {
-          "type": "always-record"
-        }
-      }
-      """
-    And url baseUrl + "/lockout-policies"
-    And method POST
-    And status 201
     * def contextId = "92cc7f98-8927-4222-9601-d7a166095061"
     * def verificationId = "b316d7b8-68e5-4f9c-8251-a37520237f82"
     And request
@@ -165,7 +144,7 @@ Feature: Lockout State Requests
         "methodComplete": false,
         "attempt": {
           "channelId": "#(channelId)",
-          "activityName": "default-activity",
+          "activityName": "#(activityName)",
           "aliases": [
             {
               "type": "#(aliasType)",
@@ -205,7 +184,7 @@ Feature: Lockout State Requests
               "type": "idv-id",
               "value": "#(aliasValue)"
             },
-            "activityName":"default-activity",
+            "activityName":"#(activityName)",
             "aliases": [
               {
                 "type":"idv-id",
@@ -238,29 +217,6 @@ Feature: Lockout State Requests
     And url baseUrl + "/identities"
     And method POST
     And status 201
-    * def policyId = "99dcae1f-4466-445b-b2c5-9866db616bfe"
-    * def channelId = "state-channel-1"
-    And request
-      """
-      {
-        "key": {
-          "id": "#(policyId)",
-          "priority": 1,
-          "channelId": "#(channelId)",
-          "type": "channel"
-        },
-        "stateCalculator": {
-          "type": "hard-lockout",
-          "maxNumberOfAttempts": 2
-        },
-        "recordAttemptPolicy": {
-          "type": "always-record"
-        }
-      }
-      """
-    And url baseUrl + "/lockout-policies"
-    And method POST
-    And status 201
     * def contextId = "a1918808-4d17-42b7-9b20-8dddeed07f13"
     * def verificationId = "1b299b59-d846-4607-babf-fa26b8a0b44c"
     And request
@@ -270,7 +226,7 @@ Feature: Lockout State Requests
         "methodComplete": false,
         "attempt": {
           "channelId": "#(channelId)",
-          "activityName": "default-activity",
+          "activityName": "#(activityName)",
           "aliases": [
             {
               "type": "#(aliasType)",
@@ -296,7 +252,7 @@ Feature: Lockout State Requests
       """
       {
         "channelId": "#(channelId)",
-        "activityName": "default-activity",
+        "activityName": "#(activityName)",
         "aliases": [
           {
             "type": "idv-id",

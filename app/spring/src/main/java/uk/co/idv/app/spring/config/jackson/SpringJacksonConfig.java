@@ -1,4 +1,4 @@
-package uk.co.idv.app.spring.config;
+package uk.co.idv.app.spring.config.jackson;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;

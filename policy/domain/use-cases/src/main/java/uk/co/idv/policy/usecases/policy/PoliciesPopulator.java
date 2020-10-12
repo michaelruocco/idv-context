@@ -11,6 +11,10 @@ public class PoliciesPopulator<P extends Policy> {
 
     private final PolicyPopulator<P> populator;
 
+    public PoliciesPopulator(PolicyService<P> service) {
+        this(new PolicyPopulator<>(service));
+    }
+
     public void populate(Policies<P> policies) {
         policies.stream().forEach(populator::tryPopulate);
     }
