@@ -457,7 +457,9 @@ Feature: Lockout Policy Maintenance
               }
             ],
             "duration": 300000,
-            "eligible": true,
+            "eligibility": {
+              "eligible": true
+            },
             "successful": false,
             "complete": false
           }
@@ -706,7 +708,9 @@ Feature: Lockout Policy Maintenance
               }
             ],
             "duration": 300000,
-            "eligible": true,
+            "eligibility": {
+              "eligible": true
+            },
             "successful": false,
             "complete": false
           }
@@ -863,7 +867,9 @@ Feature: Lockout Policy Maintenance
               }
             ],
             "duration": 300000,
-            "eligible": true,
+            "eligibility": {
+              "eligible": true
+            },
             "successful": false,
             "complete": false
           }

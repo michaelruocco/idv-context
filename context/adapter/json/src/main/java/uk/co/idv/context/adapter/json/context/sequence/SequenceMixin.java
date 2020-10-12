@@ -8,6 +8,9 @@ import java.util.Optional;
 public interface SequenceMixin {
 
     @JsonIgnore
+    boolean isEligible();
+
+    @JsonIgnore
     Optional<Method> getNext();
 
     @JsonIgnore

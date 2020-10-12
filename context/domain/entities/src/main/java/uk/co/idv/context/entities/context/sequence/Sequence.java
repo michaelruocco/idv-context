@@ -4,13 +4,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.With;
 import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.eligibility.Eligible;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.sequence.MethodSequence;
 
 import java.time.Duration;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Builder
@@ -29,7 +33,7 @@ public class Sequence implements MethodSequence, Iterable<Method> {
 
     @Override
     public boolean isEligible() {
-        return stream().allMatch(Method::isEligible);
+        return getEligibility().isEligible();
     }
 
     @Override
@@ -69,4 +73,18 @@ public class Sequence implements MethodSequence, Iterable<Method> {
         return methods.stream();
     }
 
+    public Eligibility getEligibility() {
+        Collection<String> names = getIneligibleMethodNames();
+        if (names.isEmpty()) {
+            return new Eligible();
+        }
+        return new SequenceIneligible(names);
+    }
+
+    private Collection<String> getIneligibleMethodNames() {
+        return methods.stream()
+                .filter(method -> !method.isEligible())
+                .map(Method::getName)
+                .collect(Collectors.toSet());
+    }
 }

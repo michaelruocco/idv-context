@@ -11,6 +11,7 @@ public interface MethodSequence {
     boolean isComplete();
 
     Optional<Method> getNext();
+
     Optional<Method> getNext(String name);
 
 }

@@ -93,7 +93,9 @@
         }
       ],
       "duration": 300000,
-      "eligible": true,
+      "eligibility": {
+        "eligible": true
+      },
       "successful": false,
       "complete": false
     }
