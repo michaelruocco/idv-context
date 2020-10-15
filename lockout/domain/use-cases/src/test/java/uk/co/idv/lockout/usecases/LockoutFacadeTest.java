@@ -7,12 +7,10 @@ import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.DefaultAliasMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
-import uk.co.idv.lockout.entities.DefaultRecordAttemptRequestMother;
 import uk.co.idv.lockout.entities.ExternalLockoutRequest;
 import uk.co.idv.lockout.entities.DefaultExternalLockoutRequestMother;
 import uk.co.idv.lockout.entities.LockoutRequest;
 import uk.co.idv.lockout.entities.policy.LockoutState;
-import uk.co.idv.lockout.entities.policy.RecordAttemptRequest;
 import uk.co.idv.identity.usecases.identity.find.FindIdentity;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -83,16 +81,6 @@ class LockoutFacadeTest {
         assertThat(state).isEqualTo(expectedState);
     }
 
-    @Test
-    void shouldRecordAttempt() {
-        RecordAttemptRequest request = DefaultRecordAttemptRequestMother.build();
-        LockoutState expectedState = givenLockoutStateUpdated(request);
-
-        LockoutState state = facade.recordAttempt(request);
-
-        assertThat(state).isEqualTo(expectedState);
-    }
-
     private Identity givenIdentityFoundForAliases(Aliases aliases) {
         Identity identity = IdentityMother.example();
         given(findIdentity.find(aliases)).willReturn(identity);
@@ -108,12 +96,6 @@ class LockoutFacadeTest {
     private LockoutState givenLockoutStateReset(LockoutRequest request) {
         LockoutState state = mock(LockoutState.class);
         given(lockoutService.resetState(request)).willReturn(state);
-        return state;
-    }
-
-    private LockoutState givenLockoutStateUpdated(RecordAttemptRequest request) {
-        LockoutState state = mock(LockoutState.class);
-        given(lockoutService.recordAttemptIfRequired(request)).willReturn(state);
         return state;
     }
 

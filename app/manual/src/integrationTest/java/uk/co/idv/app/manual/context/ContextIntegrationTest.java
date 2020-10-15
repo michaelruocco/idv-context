@@ -31,9 +31,14 @@ import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.lockout.entities.DefaultExternalLockoutRequest;
 import uk.co.idv.lockout.entities.ExternalLockoutRequest;
 import uk.co.idv.lockout.entities.attempt.Attempt;
+import uk.co.idv.lockout.entities.policy.AttemptsFilter;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.entities.policy.LockoutState;
+import uk.co.idv.lockout.entities.policy.hard.HardLockoutStateCalculatorMother;
+import uk.co.idv.lockout.entities.policy.recordattempt.NeverRecordAttemptPolicy;
+import uk.co.idv.lockout.entities.policy.recordattempt.RecordAttemptWhenMethodCompletePolicy;
+import uk.co.idv.lockout.entities.policy.soft.SoftLockoutStateCalculatorMother;
 import uk.co.idv.lockout.usecases.LockoutFacade;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
@@ -44,6 +49,7 @@ import uk.co.idv.method.entities.result.Result;
 import uk.co.idv.method.entities.result.ResultMother;
 import uk.co.idv.method.usecases.MethodBuilders;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -374,6 +380,168 @@ class ContextIntegrationTest {
                 .hasMessage(identity.getIdvId().format());
     }
 
+    @Test
+    void shouldNotRecordAttemptIfPolicyIsRecordOnMethodCompleteAndMethodIsNotComplete() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        givenIdentityExistsForAliases(createRequest.getAliases());
+        LockoutPolicy lockoutPolicy = LockoutPolicyMother.builder()
+                .key(ChannelPolicyKeyMother.withChannelId(createRequest.getChannelId()))
+                .recordAttemptPolicy(new RecordAttemptWhenMethodCompletePolicy())
+                .build();
+        givenLockoutPolicyExists(lockoutPolicy);
+        Context context = contextFacade.create(createRequest);
+
+        Result result = ResultMother.builder()
+                .methodName("fake-method")
+                .successful(false)
+                .build();
+        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+                .contextId(context.getId())
+                .result(result)
+                .build();
+        contextFacade.record(recordRequest);
+
+        ExternalLockoutRequest lockoutRequest = DefaultExternalLockoutRequest.builder()
+                .activityName(createRequest.getActivityName())
+                .aliases(createRequest.getAliases())
+                .channelId(createRequest.getChannelId())
+                .build();
+        LockoutState state = lockoutFacade.loadState(lockoutRequest);
+
+        assertThat(state.getAttempts()).isEmpty();
+    }
+
+    @Test
+    void shouldNotRecordAttemptIfPolicyIsNeverRecord() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        givenIdentityExistsForAliases(createRequest.getAliases());
+        LockoutPolicy lockoutPolicy = LockoutPolicyMother.builder()
+                .key(ChannelPolicyKeyMother.withChannelId(createRequest.getChannelId()))
+                .recordAttemptPolicy(new NeverRecordAttemptPolicy())
+                .build();
+        givenLockoutPolicyExists(lockoutPolicy);
+        Context context = contextFacade.create(createRequest);
+
+        Result result = ResultMother.builder()
+                .methodName("fake-method")
+                .successful(false)
+                .build();
+        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+                .contextId(context.getId())
+                .result(result)
+                .build();
+        contextFacade.record(recordRequest);
+
+        ExternalLockoutRequest lockoutRequest = DefaultExternalLockoutRequest.builder()
+                .activityName(createRequest.getActivityName())
+                .aliases(createRequest.getAliases())
+                .channelId(createRequest.getChannelId())
+                .build();
+        LockoutState state = lockoutFacade.loadState(lockoutRequest);
+
+        assertThat(state.getAttempts()).isEmpty();
+    }
+
+    @Test
+    void shouldBeLockedIfHardLockoutPolicyConfiguredAndMaxAttemptsReached() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        givenIdentityExistsForAliases(createRequest.getAliases());
+        LockoutPolicy lockoutPolicy = LockoutPolicyMother.builder()
+                .key(ChannelPolicyKeyMother.withChannelId(createRequest.getChannelId()))
+                .stateCalculator(HardLockoutStateCalculatorMother.withMaxNumberOfAttempts(2))
+                .build();
+        givenLockoutPolicyExists(lockoutPolicy);
+        Context context = contextFacade.create(createRequest);
+
+        Result result = ResultMother.builder()
+                .methodName("fake-method")
+                .successful(false)
+                .build();
+        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+                .contextId(context.getId())
+                .result(result)
+                .build();
+        contextFacade.record(recordRequest);
+        contextFacade.record(recordRequest);
+        LockedOutException error = catchThrowableOfType(
+                () -> contextFacade.record(recordRequest),
+                LockedOutException.class
+        );
+
+        LockoutState state = error.getState();
+        assertThat(state.isLocked()).isTrue();
+        assertThat(state.getMessage()).isEqualTo("maximum number of attempts [2] reached");
+    }
+
+    @Test
+    void shouldBeLockedIfSoftLockoutPolicyConfiguredAndBoundaryAttemptsReached() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        givenIdentityExistsForAliases(createRequest.getAliases());
+        LockoutPolicy lockoutPolicy = LockoutPolicyMother.builder()
+                .key(ChannelPolicyKeyMother.withChannelId(createRequest.getChannelId()))
+                .stateCalculator(SoftLockoutStateCalculatorMother.build())
+                .build();
+        givenLockoutPolicyExists(lockoutPolicy);
+        Context context = contextFacade.create(createRequest);
+
+        Result result = ResultMother.builder()
+                .methodName("fake-method")
+                .successful(false)
+                .build();
+        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+                .contextId(context.getId())
+                .result(result)
+                .build();
+        contextFacade.record(recordRequest);
+        LockedOutException error = catchThrowableOfType(
+                () -> contextFacade.record(recordRequest),
+                LockedOutException.class
+        );
+
+        LockoutState state = error.getState();
+        assertThat(state.isLocked()).isTrue();
+        assertThat(state.getMessage()).isEqualTo("soft lock began at 2020-10-01T19:10:22Z and expiring at 2020-10-01T19:11:22Z");
+    }
+
+    @Test
+    void shouldResetLockoutStateOnSuccessfulAttempt() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        givenIdentityExistsForAliases(createRequest.getAliases());
+        givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        Context context = contextFacade.create(createRequest);
+
+        Result result = ResultMother.builder()
+                .methodName("fake-method")
+                .successful(false)
+                .build();
+        FacadeRecordResultRequest recordUnsuccessfulRequest = FacadeRecordResultRequestMother.builder()
+                .contextId(context.getId())
+                .result(result)
+                .build();
+        contextFacade.record(recordUnsuccessfulRequest);
+        FacadeRecordResultRequest recordSuccessfulRequest = FacadeRecordResultRequestMother.builder()
+                .contextId(context.getId())
+                .result(ResultMother.withMethodName("fake-method"))
+                .build();
+        contextFacade.record(recordSuccessfulRequest);
+
+        ExternalLockoutRequest lockoutRequest = DefaultExternalLockoutRequest.builder()
+                .activityName(createRequest.getActivityName())
+                .aliases(createRequest.getAliases())
+                .channelId(createRequest.getChannelId())
+                .build();
+        LockoutState state = lockoutFacade.loadState(lockoutRequest);
+
+        assertThat(state.isLocked()).isFalse();
+        assertThat(state.getAttempts()).isEmpty();
+        assertThat(state.getMessage()).contains("");
+    }
+
     private void givenContextPolicyExistsForChannel(String channelId) {
         ContextPolicy policy = ContextPolicyMother.builder()
                 .key(ChannelPolicyKeyMother.withChannelId(channelId))
@@ -391,9 +559,15 @@ class ContextIntegrationTest {
     }
 
     private void givenLockoutPolicyExistsForChannel(String channelId) {
+        PolicyKey key = ChannelPolicyKeyMother.withChannelId(channelId);
         LockoutPolicy policy = LockoutPolicyMother.builder()
-                .key(ChannelPolicyKeyMother.withChannelId(channelId))
+                .key(key)
+                .attemptsFilter(new AttemptsFilter(key))
                 .build();
+        givenLockoutPolicyExists(policy);
+    }
+
+    private void givenLockoutPolicyExists(LockoutPolicy policy) {
         lockoutPolicyService.create(policy);
     }
 

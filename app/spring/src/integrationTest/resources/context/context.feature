@@ -160,43 +160,43 @@ Feature: Lockout Policy Maintenance
           "type": "channel"
         },
         "sequencePolicies": [
-        {
-            "name": "one-time-passcode",
-            "methodPolicies": [
-              {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "deliveryMethodConfigs": [
-                  {
-                    "type": "sms",
-                    "phoneNumberConfig": {
-                      "country": "GB",
-                      "allowInternational": false,
-                      "lastUpdatedConfig": {
-                        "allowUnknown": true,
-                        "minDaysSinceUpdate": 5
-                      },
-                      "simSwapConfig": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6,
-                        "async": false
-                      }
+          {
+          "name": "one-time-passcode",
+          "methodPolicies": [
+            {
+              "name": "one-time-passcode",
+              "config": {
+                "maxNumberOfAttempts": 3,
+                "duration": 300000,
+                "passcodeConfig": {
+                  "length": 8,
+                  "duration": 120000,
+                  "maxNumberOfDeliveries": 2
+                }
+              },
+              "deliveryMethodConfigs": [
+                {
+                  "type": "sms",
+                  "phoneNumberConfig": {
+                    "country": "GB",
+                    "allowInternational": false,
+                    "lastUpdatedConfig": {
+                      "allowUnknown": true,
+                      "minDaysSinceUpdate": 5
+                    },
+                    "simSwapConfig": {
+                      "acceptableStatuses": [
+                        "success"
+                      ],
+                      "timeout": 2000,
+                      "minDaysSinceSwap": 6,
+                      "async": false
                     }
                   }
-                ]
-              }
-            ]
+                }
+              ]
+            }
+          ]
           }
         ]
       }
@@ -470,7 +470,7 @@ Feature: Lockout Policy Maintenance
       }
       """
 
-  Scenario: Post result - Success - Result Added to context and lockout attempt recorded
+  Scenario: Post result - Success - Result Added to context
     Given url baseUrl + "/context-policies"
     * def contextPolicyId = "03ac7483-0006-4d99-b38f-dd33d3004e0a"
     And request

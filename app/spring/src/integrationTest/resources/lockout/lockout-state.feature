@@ -129,42 +129,98 @@ Feature: Lockout State Requests
         "country": "GB",
         "aliases": [
           { "type": "#(aliasType)", "value": "#(aliasValue)" }
+        ],
+        "emailAddresses": [
+          "joe.bloggs@hotmail.co.uk"
         ]
       }
       """
     And url baseUrl + "/identities"
     And method POST
     And status 201
-    * def contextId = "92cc7f98-8927-4222-9601-d7a166095061"
-    * def verificationId = "b316d7b8-68e5-4f9c-8251-a37520237f82"
+    * def policyId = "9c69b143-299e-486d-89b8-0ac6ff91b0b8"
     And request
       """
       {
-        "sequenceComplete": false,
-        "methodComplete": false,
-        "attempt": {
+        "key": {
+          "id": "#(policyId)",
+          "priority": 1,
           "channelId": "#(channelId)",
-          "activityName": "#(activityName)",
-          "aliases": [
-            {
-              "type": "#(aliasType)",
-              "value": "#(aliasValue)"
-            }
-          ],
-          "idvId": {
-            "type": "idv-id",
+          "type": "channel"
+        },
+        "sequencePolicies": [
+          {
+            "name": "one-time-passcode",
+            "methodPolicies": [
+              {
+                "name": "one-time-passcode",
+                "config": {
+                  "maxNumberOfAttempts": 3,
+                  "duration": 300000,
+                  "passcodeConfig": {
+                    "length": 8,
+                    "duration": 120000,
+                    "maxNumberOfDeliveries": 2
+                  }
+                },
+                "deliveryMethodConfigs": [
+                  {
+                    "type": "email"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+      """
+    And url baseUrl + "/context-policies"
+    And method POST
+    And status 201
+    And request
+      """
+      {
+        "channel": {
+          "id": "#(channelId)",
+          "country": "GB"
+        },
+        "activity": {
+          "name": "#(activityName)",
+          "timestamp": "2020-09-27T06:56:47.522Z"
+        },
+        "aliases": [
+          {
+            "type": "#(aliasType)",
             "value": "#(aliasValue)"
-          },
-          "contextId": "#(contextId)",
-          "methodName": "default-method",
-          "verificationId": "#(verificationId)",
-          "timestamp":"2020-08-27T08:15:58.977Z",
+          }
+        ]
+      }
+      """
+    And url baseUrl + "/contexts"
+    And method POST
+    And status 201
+    * def contextId = response.id
+    And request
+      """
+      {
+        "contextId": "#(contextId)",
+        "result": {
+          "methodName": "one-time-passcode",
+          "verificationId": "b9808fe7-26ec-415e-88db-e1bfb5d1380e",
+          "timestamp": "2020-09-27T06:57:47.522Z",
           "successful": false
         }
       }
       """
+    And url baseUrl + "/contexts/results"
+    And method PATCH
+    And status 200
+    And param channelId = channelId
+    And param activityName = activityName
+    And param aliasType = aliasType
+    And param aliasValue = aliasValue
     And url baseUrl + "/lockout-states"
-    When method PATCH
+    When method GET
     Then status 200
     And match response ==
       """
@@ -184,18 +240,18 @@ Feature: Lockout State Requests
               "type": "idv-id",
               "value": "#(aliasValue)"
             },
-            "activityName":"#(activityName)",
             "aliases": [
               {
-                "type":"idv-id",
-                "value":"#(aliasValue)"
+                "type": "#(aliasType)",
+                "value": "#(aliasValue)"
               }
             ],
-            "methodName": "default-method",
-            "contextId": "#(contextId)",
+            "activityName": "lockout-state-activity",
+            "methodName": "one-time-passcode",
+            "contextId": "#uuid",
             "channelId": "#(channelId)",
-            "verificationId": "#(verificationId)",
-            "timestamp": "2020-08-27T08:15:58.977Z",
+            "verificationId": "b9808fe7-26ec-415e-88db-e1bfb5d1380e",
+            "timestamp": "2020-09-27T06:57:47.522Z",
             "successful": false
           }
         ]
@@ -211,41 +267,90 @@ Feature: Lockout State Requests
         "country": "GB",
         "aliases": [
           { "type": "#(aliasType)", "value": "#(aliasValue)" }
+        ],
+        "emailAddresses": [
+          "joe.bloggs@hotmail.co.uk"
         ]
       }
       """
     And url baseUrl + "/identities"
     And method POST
     And status 201
-    * def contextId = "a1918808-4d17-42b7-9b20-8dddeed07f13"
-    * def verificationId = "1b299b59-d846-4607-babf-fa26b8a0b44c"
+    * def policyId = "9c69b143-299e-486d-89b8-0ac6ff91b0b8"
     And request
       """
       {
-        "sequenceComplete": false,
-        "methodComplete": false,
-        "attempt": {
+        "key": {
+          "id": "#(policyId)",
+          "priority": 1,
           "channelId": "#(channelId)",
-          "activityName": "#(activityName)",
-          "aliases": [
-            {
-              "type": "#(aliasType)",
-              "value": "#(aliasValue)"
-            }
-          ],
-          "idvId": {
-            "type": "idv-id",
+          "type": "channel"
+        },
+        "sequencePolicies": [
+          {
+            "name": "one-time-passcode",
+            "methodPolicies": [
+              {
+                "name": "one-time-passcode",
+                "config": {
+                  "maxNumberOfAttempts": 3,
+                  "duration": 300000,
+                  "passcodeConfig": {
+                    "length": 8,
+                    "duration": 120000,
+                    "maxNumberOfDeliveries": 2
+                  }
+                },
+                "deliveryMethodConfigs": [
+                  {
+                    "type": "email"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+      """
+    And url baseUrl + "/context-policies"
+    And method POST
+    And status 201
+    And request
+      """
+      {
+        "channel": {
+          "id": "#(channelId)",
+          "country": "GB"
+        },
+        "activity": {
+          "name": "#(activityName)",
+          "timestamp": "2020-09-27T06:56:47.522Z"
+        },
+        "aliases": [
+          {
+            "type": "#(aliasType)",
             "value": "#(aliasValue)"
-          },
-          "contextId": "#(contextId)",
-          "methodName": "default-method",
-          "verificationId": "#(verificationId)",
-          "timestamp":"2020-08-27T08:15:58.977Z",
+          }
+        ]
+      }
+      """
+    And url baseUrl + "/contexts"
+    And method POST
+    And status 201
+    * def contextId = response.id
+    And request
+      """
+      {
+        "contextId": "#(contextId)",
+        "result": {
+          "methodName": "one-time-passcode",
+          "verificationId": "b9808fe7-26ec-415e-88db-e1bfb5d1380e",
+          "timestamp": "2020-09-27T06:57:47.522Z",
           "successful": false
         }
       }
       """
-    And url baseUrl + "/lockout-states"
+    And url baseUrl + "/contexts/results"
     And method PATCH
     And status 200
     And request
@@ -261,6 +366,7 @@ Feature: Lockout State Requests
         ]
       }
       """
+    And url baseUrl + "/lockout-states"
     When method PUT
     Then status 200
     And match response ==
