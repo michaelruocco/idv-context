@@ -6,6 +6,7 @@ import uk.co.idv.app.manual.AppConfig;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.lockout.usecases.LockoutFacade;
+import uk.co.idv.lockout.usecases.policy.LockoutPoliciesPopulator;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 
 @Configuration
@@ -24,6 +25,11 @@ public class SpringLockoutDomainConfig {
     @Bean
     public LockoutPolicyService lockoutPolicyService(LockoutConfig lockoutConfig) {
         return lockoutConfig.getPolicyService();
+    }
+
+    @Bean
+    public LockoutPoliciesPopulator lockoutPoliciesPopulator(LockoutConfig lockoutConfig) {
+        return lockoutConfig.getPoliciesPopulator();
     }
 
     @Bean

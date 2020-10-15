@@ -1,12 +1,13 @@
 package uk.co.idv.app.manual.adapter.channel;
 
-import uk.co.idv.context.config.ContextPoliciesProvider;
-import uk.co.idv.lockout.config.LockoutPoliciesProvider;
+import uk.co.idv.context.entities.policy.ContextPolicy;
+import uk.co.idv.lockout.entities.policy.LockoutPolicy;
+import uk.co.idv.policy.entities.policy.Policies;
 
 public interface ChannelAdapter {
 
-    ContextPoliciesProvider contextPoliciesProvider();
+    Policies<ContextPolicy> getContextPolicies();
 
-    LockoutPoliciesProvider lockoutPoliciesProvider();
+    Policies<LockoutPolicy> getLockoutPolicies();
 
 }

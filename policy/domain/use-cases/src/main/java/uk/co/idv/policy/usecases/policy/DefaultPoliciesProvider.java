@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
-public class DefaultPoliciesProvider<P extends Policy> implements PoliciesProvider<P> {
+public class DefaultPoliciesProvider<P extends Policy> {
 
     private final JsonConverter converter;
     private final Class<P> type;

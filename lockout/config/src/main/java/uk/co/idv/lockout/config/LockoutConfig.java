@@ -47,9 +47,8 @@ public class LockoutConfig {
                 .build();
     }
 
-    public void populatePolicies(LockoutPoliciesProvider policiesProvider) {
-        LockoutPoliciesPopulator populator = new LockoutPoliciesPopulator(getPolicyService());
-        populator.populate(policiesProvider);
+    public LockoutPoliciesPopulator getPoliciesPopulator() {
+        return new LockoutPoliciesPopulator(getPolicyService());
     }
 
     public LockoutPolicyService getPolicyService() {

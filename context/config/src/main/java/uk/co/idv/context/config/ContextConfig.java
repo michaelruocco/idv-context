@@ -2,7 +2,6 @@ package uk.co.idv.context.config;
 
 import lombok.Builder;
 import uk.co.idv.common.usecases.id.IdGenerator;
-import uk.co.idv.common.usecases.id.RandomIdGenerator;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.ContextService;
@@ -27,12 +26,8 @@ import java.time.Clock;
 @Builder
 public class ContextConfig {
 
-    @Builder.Default
-    private final Clock clock = Clock.systemUTC();
-
-    @Builder.Default
-    private final IdGenerator idGenerator = new RandomIdGenerator();
-
+    private final Clock clock;
+    private final IdGenerator idGenerator;
     private final MethodBuilders methodBuilders;
     private final ContextPolicyRepository policyRepository;
     private final ContextRepository contextRepository;
@@ -47,9 +42,8 @@ public class ContextConfig {
                 .build();
     }
 
-    public void populatePolicies(ContextPoliciesProvider policiesProvider) {
-        ContextPoliciesPopulator populator = new ContextPoliciesPopulator(getPolicyService());
-        populator.populate(policiesProvider);
+    public ContextPoliciesPopulator getPoliciesPopulator() {
+        return new ContextPoliciesPopulator(getPolicyService());
     }
 
     public ContextPolicyService getPolicyService() {

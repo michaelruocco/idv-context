@@ -11,6 +11,7 @@ import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.entities.policy.hard.HardLockoutPolicyMother;
 import uk.co.idv.lockout.entities.policy.hard.HardLockoutStateCalculatorMother;
+import uk.co.idv.lockout.usecases.policy.LockoutPoliciesPopulator;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.adapter.json.otp.OtpMapping;
 import uk.co.idv.policy.entities.policy.Policies;
@@ -140,7 +141,8 @@ class LockoutPolicyIntegrationTest {
 
     @Test
     void shouldPopulateConfiguredPolicies() {
-        lockoutConfig.populatePolicies(channelAdapter.lockoutPoliciesProvider());
+        LockoutPoliciesPopulator populator = lockoutConfig.getPoliciesPopulator();
+        populator.populate(channelAdapter.getLockoutPolicies());
 
         Policies<LockoutPolicy> policies = policyService.loadAll();
 
@@ -159,7 +161,8 @@ class LockoutPolicyIntegrationTest {
                 .build();
         policyService.create(existingPolicy);
 
-        lockoutConfig.populatePolicies(channelAdapter.lockoutPoliciesProvider());
+        LockoutPoliciesPopulator populator = lockoutConfig.getPoliciesPopulator();
+        populator.populate(channelAdapter.getLockoutPolicies());
 
         Policies<LockoutPolicy> policies = policyService.loadAll();
         assertThat(policies).containsExactlyInAnyOrder(

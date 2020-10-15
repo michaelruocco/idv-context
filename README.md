@@ -11,8 +11,6 @@
 
 ## Todo
 
-*   Add tests for methodmappings
-
 *   Move integration tests for resetting lockout state to work with posting results tests
     so that we can remove the endpoint / facade functionality for posting attempts to lockout state
 

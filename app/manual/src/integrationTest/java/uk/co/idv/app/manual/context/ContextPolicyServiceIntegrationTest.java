@@ -16,6 +16,7 @@ import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicyMother;
+import uk.co.idv.context.usecases.policy.ContextPoliciesPopulator;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.adapter.json.fake.FakeMethodMapping;
@@ -158,7 +159,8 @@ class ContextPolicyServiceIntegrationTest {
 
     @Test
     void shouldPopulateConfiguredPolicies() {
-        appConfig.populatePolicies(channelAdapter.contextPoliciesProvider());
+        ContextPoliciesPopulator populator = appConfig.getContextConfig().getPoliciesPopulator();
+        populator.populate(channelAdapter.getContextPolicies());
 
         Policies<ContextPolicy> policies = policyService.loadAll();
 
@@ -177,7 +179,8 @@ class ContextPolicyServiceIntegrationTest {
                 .build();
         policyService.create(existingPolicy);
 
-        appConfig.populatePolicies(channelAdapter.contextPoliciesProvider());
+        ContextPoliciesPopulator populator = appConfig.getContextConfig().getPoliciesPopulator();
+        populator.populate(channelAdapter.getContextPolicies());
 
         Policies<ContextPolicy> policies = policyService.loadAll();
         assertThat(policies).containsExactlyInAnyOrder(
