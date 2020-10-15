@@ -1,14 +1,14 @@
 package uk.co.idv.app.manual.context.otp;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.app.manual.lockout.LockoutConfigBuilder;
-import uk.co.idv.common.usecases.id.IdGenerator;
+import uk.co.idv.app.manual.AppConfig;
+import uk.co.idv.app.manual.adapter.app.AppAdapter;
+import uk.co.idv.app.manual.adapter.app.DefaultAppAdapter;
+import uk.co.idv.app.manual.adapter.repository.InMemoryRepositoryAdapter;
+import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
 import uk.co.idv.common.usecases.id.NonRandomIdGenerator;
-import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
-import uk.co.idv.context.config.ContextFacadeConfig;
-import uk.co.idv.context.config.ContextServiceConfig;
-import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
-import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
+import uk.co.idv.context.adapter.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
+import uk.co.idv.context.config.ContextConfig;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
@@ -17,7 +17,6 @@ import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
-import uk.co.idv.identity.config.DefaultIdentityConfig;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.identity.entities.identity.Identity;
@@ -26,19 +25,19 @@ import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumberMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 import uk.co.idv.identity.usecases.identity.IdentityService;
-import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
-import uk.co.idv.method.config.otp.OtpConfig;
+import uk.co.idv.method.config.AppMethodConfig;
+import uk.co.idv.method.config.otp.AppOtpConfig;
 import uk.co.idv.method.entities.otp.GetOtpIfNextEligible;
 import uk.co.idv.method.entities.otp.Otp;
 import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodEligibilityIncomplete;
 import uk.co.idv.method.entities.otp.policy.OtpPolicyMother;
+import uk.co.idv.method.usecases.MethodBuilders;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import java.time.Duration;
-import java.util.Collections;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -47,40 +46,26 @@ import static org.awaitility.Awaitility.await;
 
 class ContextOtpIntegrationTest {
 
-    private final IdGenerator idGenerator = new NonRandomIdGenerator();
-
-    private final ParentContextRepositoryConfig contextRepositoryConfig = new InMemoryContextRepositoryConfig();
-
-    private final OtpConfig otpConfig = OtpConfig.builder()
+    private final RepositoryAdapter repositoryAdapter = new InMemoryRepositoryAdapter();
+    private final AppAdapter appAdapter = DefaultAppAdapter.builder()
+            .repositoryAdapter(repositoryAdapter)
+            .idGenerator(new NonRandomIdGenerator())
+            .build();
+    private final AppMethodConfig otpConfig = AppOtpConfig.builder()
             .simSwapExecutorConfig(StubSimSwapExecutorConfig.buildDefault())
-            .idGenerator(idGenerator)
-            .contextRepository(contextRepositoryConfig.contextRepository())
+            .clock(appAdapter.getClock())
+            .idGenerator(appAdapter.getIdGenerator())
+            .contextRepository(repositoryAdapter.getContextRepository())
             .build();
+    private final MethodBuilders methodBuilders = new MethodBuilders(otpConfig.methodBuilder());
+    private final AppConfig appConfig = new AppConfig(methodBuilders, repositoryAdapter, appAdapter);
 
-    private final DefaultIdentityConfig identityConfig = DefaultIdentityConfig.builder()
-            .build();
+    private final ContextConfig contextConfig = appConfig.getContextConfig();
+    private final ContextPolicyService contextPolicyService = contextConfig.getPolicyService();
+    private final ContextFacade contextFacade = contextConfig.getFacade();
+    private final IdentityService identityService = appConfig.getIdentityConfig().identityService();
+    private final LockoutPolicyService lockoutPolicyService = appConfig.getLockoutConfig().getPolicyService();
 
-    private final LockoutConfig lockoutConfig = LockoutConfigBuilder.builder()
-            .identityConfig(identityConfig)
-            .build().build();
-
-    private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
-            .repositoryConfig(contextRepositoryConfig)
-            .idGenerator(idGenerator)
-            .lockoutConfig(lockoutConfig)
-            .methodBuilders(Collections.singleton(otpConfig.otpBuilder()))
-            .build();
-
-    private final ContextFacadeConfig contextConfig = ContextFacadeConfig.builder()
-            .serviceConfig(serviceConfig)
-            .createEligibility(identityConfig.createEligibility())
-            .build();
-
-    private final ContextPolicyService contextPolicyService = serviceConfig.policyService();
-    private final IdentityService identityService = identityConfig.identityService();
-    private final LockoutPolicyService lockoutPolicyService = lockoutConfig.policyService();
-
-    private final ContextFacade contextFacade = contextConfig.contextFacade();
 
     @Test
     void shouldPopulateOtpMethodOnContextIfOtpPolicyConfigured() {

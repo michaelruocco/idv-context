@@ -1,0 +1,12 @@
+plugins {
+    id "java-test-fixtures"
+}
+
+dependencies {
+    api project(":method-json")
+    api project(":method-use-cases")
+    implementation project(":common-json")
+
+    testFixturesApi testFixtures(project(":method-json"))
+    testFixturesApi testFixtures(project(":method-use-cases"))
+}

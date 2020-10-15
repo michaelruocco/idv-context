@@ -1,7 +1,7 @@
 package uk.co.idv.method.adapter.json.otp;
 
 import com.fasterxml.jackson.databind.Module;
-import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.otp.policy.OtpPolicyModule;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.otp.Otp;

@@ -1,13 +1,13 @@
 package uk.co.idv.app.manual.context;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.app.manual.lockout.LockoutConfigBuilder;
-import uk.co.idv.common.usecases.id.IdGenerator;
+import uk.co.idv.app.manual.AppConfig;
+import uk.co.idv.app.manual.adapter.app.AppAdapter;
+import uk.co.idv.app.manual.adapter.app.DefaultAppAdapter;
+import uk.co.idv.app.manual.adapter.repository.InMemoryRepositoryAdapter;
+import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
 import uk.co.idv.common.usecases.id.NonRandomIdGenerator;
-import uk.co.idv.context.config.ContextFacadeConfig;
-import uk.co.idv.context.config.ContextServiceConfig;
-import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
-import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
+import uk.co.idv.context.config.ContextConfig;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.usecases.context.result.NotNextMethodException;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
@@ -22,7 +22,6 @@ import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextNotFoundException;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
 import uk.co.idv.context.usecases.policy.NoContextPoliciesConfiguredException;
-import uk.co.idv.identity.config.DefaultIdentityConfig;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
@@ -39,15 +38,15 @@ import uk.co.idv.lockout.usecases.LockoutFacade;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.lockout.usecases.state.LockedOutException;
+import uk.co.idv.method.config.AppFakeMethodConfig;
 import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
 import uk.co.idv.method.entities.result.Result;
 import uk.co.idv.method.entities.result.ResultMother;
-import uk.co.idv.method.usecases.FakeMethodBuilderMother;
+import uk.co.idv.method.usecases.MethodBuilders;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Collections;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -58,38 +57,25 @@ class ContextIntegrationTest {
 
     private static final Instant NOW = Instant.parse("2020-10-06T21:00:00.000Z");
 
+    private final MethodBuilders methodBuilders = new MethodBuilders(new AppFakeMethodConfig().methodBuilder());
+    private final RepositoryAdapter repositoryAdapter = new InMemoryRepositoryAdapter();
     private final UpdatableClock clock = new UpdatableClock(NOW);
-    private final IdGenerator idGenerator = new NonRandomIdGenerator();
-
-    private final ParentContextRepositoryConfig contextRepositoryConfig = new InMemoryContextRepositoryConfig();
-
-    private final DefaultIdentityConfig identityConfig = DefaultIdentityConfig.builder()
-            .build();
-
-    private final LockoutConfig lockoutConfig = LockoutConfigBuilder.builder()
-            .identityConfig(identityConfig)
-            .build().build();
-
-    private final ContextServiceConfig serviceConfig = ContextServiceConfig.builder()
-            .lockoutConfig(lockoutConfig)
-            .repositoryConfig(contextRepositoryConfig)
-            .idGenerator(idGenerator)
+    private final AppAdapter appAdapter = DefaultAppAdapter.builder()
+            .repositoryAdapter(repositoryAdapter)
             .clock(clock)
-            .methodBuilders(Collections.singleton(FakeMethodBuilderMother.build()))
+            .idGenerator(new NonRandomIdGenerator())
             .build();
+    private final AppConfig appConfig = new AppConfig(methodBuilders, repositoryAdapter, appAdapter);
 
-    private final ContextFacadeConfig facadeConfig = ContextFacadeConfig.builder()
-            .clock(clock)
-            .serviceConfig(serviceConfig)
-            .createEligibility(identityConfig.createEligibility())
-            .build();
+    private final ContextConfig contextConfig = appConfig.getContextConfig();
+    private final ContextPolicyService contextPolicyService = contextConfig.getPolicyService();
+    private final ContextFacade contextFacade = contextConfig.getFacade();
 
-    private final ContextPolicyService contextPolicyService = serviceConfig.policyService();
-    private final IdentityService identityService = identityConfig.identityService();
-    private final LockoutPolicyService lockoutPolicyService = lockoutConfig.policyService();
+    private final IdentityService identityService = appConfig.getIdentityConfig().identityService();
 
-    private final ContextFacade contextFacade = facadeConfig.contextFacade();
-    private final LockoutFacade lockoutFacade = lockoutConfig.lockoutFacade();
+    private final LockoutConfig lockoutConfig = appConfig.getLockoutConfig();
+    private final LockoutPolicyService lockoutPolicyService = lockoutConfig.getPolicyService();
+    private final LockoutFacade lockoutFacade = lockoutConfig.getFacade();
 
     @Test
     void shouldThrowExceptionIfNoContextPoliciesConfigured() {

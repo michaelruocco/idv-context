@@ -1,0 +1,32 @@
+{
+  "key": {
+    "id": "98eb6d18-0d62-4883-a719-448286bc7a4b",
+    "priority": 99,
+    "channelId": "abc",
+    "type": "channel"
+  },
+  "sequencePolicies": [
+    {
+      "name": "one-time-passcode",
+      "methodPolicies": [
+        {
+          "name": "one-time-passcode",
+          "config": {
+            "maxNumberOfAttempts": 3,
+            "duration": 300000,
+            "passcodeConfig": {
+              "length": 8,
+              "duration": 120000,
+              "maxNumberOfDeliveries": 2
+            }
+          },
+          "deliveryMethodConfigs": [
+            {
+              "type": "email"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

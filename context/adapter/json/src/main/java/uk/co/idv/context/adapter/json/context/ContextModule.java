@@ -8,20 +8,20 @@ import uk.co.idv.context.adapter.json.context.create.CreateContextModule;
 import uk.co.idv.context.adapter.json.context.sequence.SequenceModule;
 import uk.co.idv.context.adapter.json.result.RecordRequestModule;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMappings;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 public class ContextModule extends SimpleModule {
 
-    private final transient Collection<MethodMapping> mappings;
+    private final transient MethodMappings mappings;
 
     public ContextModule(MethodMapping... mappings) {
-        this(Arrays.asList(mappings));
+        this(new MethodMappings(mappings));
     }
 
-    public ContextModule(Collection<MethodMapping> mappings) {
+    public ContextModule(MethodMappings mappings) {
         super("context-module", Version.unknownVersion());
         this.mappings = mappings;
 

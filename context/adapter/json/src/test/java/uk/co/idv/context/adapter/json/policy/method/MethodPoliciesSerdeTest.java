@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
-import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.fake.FakeMethodMapping;
 import uk.co.idv.method.entities.policy.MethodPolicies;
 import uk.co.idv.method.entities.policy.MethodPoliciesMother;

@@ -1,0 +1,48 @@
+{
+  "key": {
+    "id": "29afbb27-cc37-4ba4-810f-57915e90eac2",
+    "priority": 99,
+    "channelId": "gb-rsa",
+    "type": "channel"
+  },
+  "sequencePolicies": [
+    {
+      "name": "one-time-passcode",
+      "methodPolicies": [
+        {
+          "name": "one-time-passcode",
+          "config": {
+            "maxNumberOfAttempts": 3,
+            "duration": 300000,
+            "passcodeConfig": {
+              "length": 8,
+              "duration": 120000,
+              "maxNumberOfDeliveries": 2
+            }
+          },
+          "deliveryMethodConfigs": [
+            {
+              "type": "sms",
+              "phoneNumberConfig": {
+                "country": "GB",
+                "allowInternational": false,
+                "lastUpdatedConfig": {
+                  "allowUnknown": true,
+                  "minDaysSinceUpdate": 5
+                },
+                "simSwapConfig": {
+                  "acceptableStatuses": [
+                    "success"
+                  ],
+                  "timeout": 2000,
+                  "minDaysSinceSwap": 5,
+                  "async": false
+                }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -17,7 +17,7 @@ class LockoutErrorHandlerIntegrationTest {
     private final LockoutConfig config = LockoutConfig.builder()
             .build();
 
-    private final ErrorHandler handler = config.errorHandler();
+    private final ErrorHandler handler = config.getErrorHandler();
 
     @Test
     void shouldHandlePolicyNotFoundException() {

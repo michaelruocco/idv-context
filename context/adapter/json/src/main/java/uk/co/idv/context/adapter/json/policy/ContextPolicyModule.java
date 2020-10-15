@@ -5,21 +5,21 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.policy.sequence.SequencePolicyModule;
 import uk.co.idv.context.entities.policy.ContextPolicy;
-import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.policy.adapter.json.PolicyModule;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 public class ContextPolicyModule extends SimpleModule {
 
-    private final transient Collection<MethodMapping> mappings;
+    private final transient MethodMappings mappings;
 
     public ContextPolicyModule(MethodMapping... mappings) {
-        this(Arrays.asList(mappings));
+        this(new MethodMappings(mappings));
     }
 
-    public ContextPolicyModule(Collection<MethodMapping> mappings) {
+    public ContextPolicyModule(MethodMappings mappings) {
         super("context-policy-module", Version.unknownVersion());
         this.mappings = mappings;
 

@@ -1,7 +1,7 @@
 package uk.co.idv.method.adapter.json.fake;
 
 import com.fasterxml.jackson.databind.Module;
-import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.fake.policy.FakeMethodPolicyModule;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.fake.FakeMethod;

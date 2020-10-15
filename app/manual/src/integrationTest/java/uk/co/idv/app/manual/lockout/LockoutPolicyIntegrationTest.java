@@ -1,9 +1,18 @@
 package uk.co.idv.app.manual.lockout;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.app.manual.JsonConfig;
+import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;
+import uk.co.idv.app.manual.adapter.channel.DefaultChannelAdapter;
+import uk.co.idv.app.manual.otp.AbcPolicyMother;
+import uk.co.idv.app.manual.otp.GbRsaPolicyMother;
 import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
+import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.entities.policy.hard.HardLockoutPolicyMother;
+import uk.co.idv.lockout.entities.policy.hard.HardLockoutStateCalculatorMother;
+import uk.co.idv.method.adapter.json.method.MethodMappings;
+import uk.co.idv.method.adapter.json.otp.OtpMapping;
 import uk.co.idv.policy.entities.policy.Policies;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
@@ -21,8 +30,9 @@ class LockoutPolicyIntegrationTest {
 
     private final LockoutConfigBuilder lockoutConfigBuilder = LockoutConfigBuilder.builder().build();
     private final LockoutConfig lockoutConfig = lockoutConfigBuilder.build();
-
-    private final LockoutPolicyService policyService = lockoutConfig.policyService();
+    private final LockoutPolicyService policyService = lockoutConfig.getPolicyService();
+    private final JsonConfig jsonConfig = new JsonConfig(new MethodMappings(new OtpMapping()));
+    private final ChannelAdapter channelAdapter = new DefaultChannelAdapter(jsonConfig.getJsonConverter());
 
     @Test
     void shouldThrowExceptionIfPolicyNotFoundById() {
@@ -126,6 +136,36 @@ class LockoutPolicyIntegrationTest {
 
         Policies<LockoutPolicy> policies = policyService.loadAll();
         assertThat(policies).containsExactly(policy2);
+    }
+
+    @Test
+    void shouldPopulateConfiguredPolicies() {
+        lockoutConfig.populatePolicies(channelAdapter.lockoutPoliciesProvider());
+
+        Policies<LockoutPolicy> policies = policyService.loadAll();
+
+        assertThat(policies).containsExactlyInAnyOrder(
+                AbcPolicyMother.abcLockoutPolicy(),
+                GbRsaPolicyMother.gbRsaLockoutPolicy()
+        );
+    }
+
+    @Test
+    void shouldNotOverwriteExistingPoliciesWhenPopulatingConfiguredPolicies() {
+        LockoutPolicy abcPolicy = AbcPolicyMother.abcLockoutPolicy();
+        LockoutPolicy existingPolicy = LockoutPolicyMother.builder()
+                .key(abcPolicy.getKey())
+                .stateCalculator(HardLockoutStateCalculatorMother.build())
+                .build();
+        policyService.create(existingPolicy);
+
+        lockoutConfig.populatePolicies(channelAdapter.lockoutPoliciesProvider());
+
+        Policies<LockoutPolicy> policies = policyService.loadAll();
+        assertThat(policies).containsExactlyInAnyOrder(
+                existingPolicy,
+                GbRsaPolicyMother.gbRsaLockoutPolicy()
+        );
     }
 
 }

@@ -5,18 +5,17 @@ import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodsRequest;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 import uk.co.idv.method.usecases.MethodBuilder;
+import uk.co.idv.method.usecases.MethodBuilders;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Optional;
 
 @RequiredArgsConstructor
 public class CompositeMethodBuilder {
 
-    private final Collection<MethodBuilder> builders;
+    private final MethodBuilders builders;
 
     public CompositeMethodBuilder(MethodBuilder... builders) {
-        this(Arrays.asList(builders));
+        this(new MethodBuilders(builders));
     }
 
     public Method build(MethodsRequest request, MethodPolicy policy) {
@@ -26,9 +25,7 @@ public class CompositeMethodBuilder {
     }
 
     public Optional<MethodBuilder> findBuilder(MethodPolicy policy) {
-        return builders.stream()
-                .filter(builder -> builder.supports(policy))
-                .findFirst();
+        return builders.findBuilderSupporting(policy);
     }
 
 }

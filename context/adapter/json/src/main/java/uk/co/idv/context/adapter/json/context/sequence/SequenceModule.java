@@ -6,21 +6,20 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.context.method.MethodModule;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.Sequences;
-import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMappings;
 
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 
 public class SequenceModule extends SimpleModule {
 
-    private final transient Collection<MethodMapping> mappings;
+    private final transient MethodMappings mappings;
 
     public SequenceModule(MethodMapping... mappings) {
-        this(Arrays.asList(mappings));
+        this(new MethodMappings(mappings));
     }
 
-    public SequenceModule(Collection<MethodMapping> mappings) {
+    public SequenceModule(MethodMappings mappings) {
         super("sequence-module", Version.unknownVersion());
         this.mappings = mappings;
 

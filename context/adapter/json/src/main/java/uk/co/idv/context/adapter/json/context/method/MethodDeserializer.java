@@ -4,23 +4,21 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
-import java.util.Collection;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class MethodDeserializer extends StdDeserializer<Method> {
 
     private final Map<String, Class<? extends Method>> mappings;
 
-    public MethodDeserializer(Collection<MethodMapping> mappings) {
+    public MethodDeserializer(MethodMappings mappings) {
         super(Method.class);
-        this.mappings = toMap(mappings);
+        this.mappings = mappings.toMethodTypeMap();
     }
 
     @Override
@@ -37,13 +35,6 @@ public class MethodDeserializer extends StdDeserializer<Method> {
     private Class<? extends Method> toMappingType(String name) {
         return Optional.ofNullable(mappings.get(name))
                 .orElseThrow(() -> new InvalidMethodNameException(name));
-    }
-
-    private static Map<String, Class<? extends Method>> toMap(Collection<MethodMapping> mappings) {
-        return mappings.stream().collect(Collectors.toMap(
-                MethodMapping::getName,
-                MethodMapping::getMethodType
-        ));
     }
 
 }

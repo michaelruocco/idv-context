@@ -7,6 +7,7 @@ import uk.co.idv.identity.usecases.identity.IdentityService;
 import uk.co.idv.identity.usecases.identity.find.FindIdentity;
 
 public interface IdentityConfig {
+
     FindIdentity findIdentity();
 
     CreateEligibility createEligibility();
@@ -16,4 +17,5 @@ public interface IdentityConfig {
     AliasFactory aliasFactory();
 
     IdentityErrorHandler errorHandler();
+
 }

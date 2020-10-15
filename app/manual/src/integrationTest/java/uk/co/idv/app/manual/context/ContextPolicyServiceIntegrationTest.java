@@ -1,12 +1,28 @@
 package uk.co.idv.app.manual.context;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.config.ContextServiceConfig;
-import uk.co.idv.context.config.repository.inmemory.InMemoryContextRepositoryConfig;
+import uk.co.idv.app.manual.AppConfig;
+import uk.co.idv.app.manual.JsonConfig;
+import uk.co.idv.app.manual.adapter.app.AppAdapter;
+import uk.co.idv.app.manual.adapter.app.DefaultAppAdapter;
+import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;
+import uk.co.idv.app.manual.adapter.channel.DefaultChannelAdapter;
+import uk.co.idv.app.manual.adapter.repository.InMemoryRepositoryAdapter;
+import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
+import uk.co.idv.app.manual.otp.AbcPolicyMother;
+import uk.co.idv.app.manual.otp.GbRsaPolicyMother;
+import uk.co.idv.context.adapter.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
+import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicyMother;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
+import uk.co.idv.method.adapter.json.method.MethodMappings;
+import uk.co.idv.method.adapter.json.fake.FakeMethodMapping;
+import uk.co.idv.method.adapter.json.otp.OtpMapping;
+import uk.co.idv.method.config.AppMethodConfig;
+import uk.co.idv.method.config.otp.AppOtpConfig;
+import uk.co.idv.method.usecases.MethodBuilders;
 import uk.co.idv.policy.entities.policy.Policies;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.entities.policy.PolicyRequestMother;
@@ -21,11 +37,20 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 class ContextPolicyServiceIntegrationTest {
 
-    private final ContextServiceConfig config = ContextServiceConfig.builder()
-            .repositoryConfig(new InMemoryContextRepositoryConfig())
+    private final RepositoryAdapter repositoryAdapter = new InMemoryRepositoryAdapter();
+    private final AppAdapter appAdapter = DefaultAppAdapter.builder().build();
+    private final AppMethodConfig otpConfig = AppOtpConfig.builder()
+            .simSwapExecutorConfig(StubSimSwapExecutorConfig.buildDefault())
+            .clock(appAdapter.getClock())
+            .idGenerator(appAdapter.getIdGenerator())
+            .contextRepository(repositoryAdapter.getContextRepository())
             .build();
+    private final MethodBuilders methodBuilders = new MethodBuilders(otpConfig.methodBuilder());
+    private final AppConfig appConfig = new AppConfig(methodBuilders, repositoryAdapter, appAdapter);
+    private final JsonConfig jsonConfig = new JsonConfig(new MethodMappings(new FakeMethodMapping(), new OtpMapping()));
+    private final ChannelAdapter channelAdapter = new DefaultChannelAdapter(jsonConfig.getJsonConverter());
 
-    private final ContextPolicyService policyService = config.policyService();
+    private final ContextPolicyService policyService = appConfig.getContextConfig().getPolicyService();
 
     @Test
     void shouldThrowExceptionIfPolicyNotFoundById() {
@@ -129,6 +154,36 @@ class ContextPolicyServiceIntegrationTest {
 
         Policies<ContextPolicy> policies = policyService.loadAll();
         assertThat(policies).containsExactly(policy2);
+    }
+
+    @Test
+    void shouldPopulateConfiguredPolicies() {
+        appConfig.populatePolicies(channelAdapter.contextPoliciesProvider());
+
+        Policies<ContextPolicy> policies = policyService.loadAll();
+
+        assertThat(policies).containsExactlyInAnyOrder(
+                AbcPolicyMother.abcContextPolicy(),
+                GbRsaPolicyMother.gbRsaContextPolicy()
+        );
+    }
+
+    @Test
+    void shouldNotOverwriteExistingPoliciesWhenPopulatingConfiguredPolicies() {
+        ContextPolicy abcPolicy = AbcPolicyMother.abcContextPolicy();
+        ContextPolicy existingPolicy = ContextPolicyMother.builder()
+                .key(abcPolicy.getKey())
+                .sequencePolicies(SequencePoliciesMother.empty())
+                .build();
+        policyService.create(existingPolicy);
+
+        appConfig.populatePolicies(channelAdapter.contextPoliciesProvider());
+
+        Policies<ContextPolicy> policies = policyService.loadAll();
+        assertThat(policies).containsExactlyInAnyOrder(
+                existingPolicy,
+                GbRsaPolicyMother.gbRsaContextPolicy()
+        );
     }
 
 }

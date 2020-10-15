@@ -11,6 +11,7 @@ import uk.co.idv.lockout.usecases.LockoutService;
 import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
 import uk.co.idv.lockout.usecases.attempt.LoadAttempts;
 import uk.co.idv.lockout.usecases.attempt.SaveAttempts;
+import uk.co.idv.lockout.usecases.policy.LockoutPoliciesPopulator;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyRepository;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 import uk.co.idv.lockout.usecases.state.LoadLockoutState;
@@ -28,7 +29,7 @@ public class LockoutConfig {
     private final FindIdentity findIdentity;
     private final AliasFactory aliasFactory;
 
-    public LockoutFacade lockoutFacade() {
+    public LockoutFacade getFacade() {
         return LockoutFacade.builder()
                 .lockoutService(lockoutService())
                 .converter(lockoutRequestConverter())
@@ -46,11 +47,16 @@ public class LockoutConfig {
                 .build();
     }
 
-    public LockoutPolicyService policyService() {
+    public void populatePolicies(LockoutPoliciesProvider policiesProvider) {
+        LockoutPoliciesPopulator populator = new LockoutPoliciesPopulator(getPolicyService());
+        populator.populate(policiesProvider);
+    }
+
+    public LockoutPolicyService getPolicyService() {
         return new LockoutPolicyService(policyRepository);
     }
 
-    public LockoutErrorHandler errorHandler() {
+    public LockoutErrorHandler getErrorHandler() {
         return new LockoutErrorHandler();
     }
 
@@ -60,7 +66,7 @@ public class LockoutConfig {
 
     private RecordAttempt recordAttempt() {
         return RecordAttempt.builder()
-                .policyService(policyService())
+                .policyService(getPolicyService())
                 .reset(resetState())
                 .save(saveAttempts())
                 .load(loadState())
@@ -70,7 +76,7 @@ public class LockoutConfig {
     private ResetLockoutState resetState() {
         return ResetLockoutState.builder()
                 .loadAttempts(loadAttempts())
-                .policyService(policyService())
+                .policyService(getPolicyService())
                 .saveAttempts(saveAttempts())
                 .build();
     }
@@ -85,7 +91,7 @@ public class LockoutConfig {
     private LoadLockoutState loadState() {
         return LoadLockoutState.builder()
                 .loadAttempts(loadAttempts())
-                .policyService(policyService())
+                .policyService(getPolicyService())
                 .build();
     }
 

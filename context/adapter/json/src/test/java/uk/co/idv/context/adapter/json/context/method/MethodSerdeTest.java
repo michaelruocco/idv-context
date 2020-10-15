@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
-import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.fake.FakeMethodMapping;
 import uk.co.idv.method.entities.method.Method;
 

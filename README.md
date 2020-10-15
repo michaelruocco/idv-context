@@ -11,6 +11,8 @@
 
 ## Todo
 
+*   Add tests for methodmappings
+
 *   Move integration tests for resetting lockout state to work with posting results tests
     so that we can remove the endpoint / facade functionality for posting attempts to lockout state
 
@@ -26,8 +28,6 @@
 *   Add publishing context expired event
 
 *   Ensure attempts merged when identities merged -> via publishing identity merged event
-
-*   Configure default policies on startup
 
 *   Make stub delays and identity lookup timeout configurable (by channel / add identity eligibility policy?)
 

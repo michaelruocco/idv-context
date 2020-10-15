@@ -27,12 +27,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    implementation project(":manual-app")
     implementation project(":common-dynamo-db")
     implementation project(":identity-config")
     implementation project(":lockout-config")
     implementation project(":context-config")
     implementation project(":identity-json")
+    implementation project(":method-config")
     implementation project(":otp-config")
+    implementation project(":otp-sim-swap-stub-config")
     implementation project(":lockout-json")
     implementation project(":context-json")
     implementation project(":method-json")

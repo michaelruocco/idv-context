@@ -11,7 +11,9 @@ import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
 @Builder
 public class ResultService {
 
-    private final ContextResultUpdater resultUpdater;
+    @Builder.Default
+    private final ContextResultUpdater resultUpdater = new ContextResultUpdater();
+
     private final ContextRepository repository;
     private final ContextLockoutService lockoutService;
 

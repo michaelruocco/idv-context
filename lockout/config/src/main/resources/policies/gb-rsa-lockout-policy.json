@@ -1,0 +1,15 @@
+{
+  "key": {
+    "id": "235b1924-3401-4899-9365-9fd9e2b01001",
+    "priority": 99,
+    "channelId": "gb-rsa",
+    "type": "channel"
+  },
+  "stateCalculator": {
+    "type": "hard-lockout",
+    "maxNumberOfAttempts": 3
+  },
+  "recordAttemptPolicy": {
+    "type": "always-record"
+  }
+}

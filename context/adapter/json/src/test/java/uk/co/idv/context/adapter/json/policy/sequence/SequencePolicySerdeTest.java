@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicyMother;
-import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.fake.FakeMethodMapping;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;

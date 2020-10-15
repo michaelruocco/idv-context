@@ -1,0 +1,18 @@
+{
+  "key": {
+    "id": "b253ba5e-8133-47f0-bb7a-29a53ce7ba1d",
+    "priority": 99,
+    "channelId": "abc",
+    "type": "channel"
+  },
+  "stateCalculator": {
+    "type": "recurring-soft-lockout",
+    "interval": {
+      "numberOfAttempts": 1,
+      "duration": 60000
+    }
+  },
+  "recordAttemptPolicy": {
+    "type": "always-record"
+  }
+}

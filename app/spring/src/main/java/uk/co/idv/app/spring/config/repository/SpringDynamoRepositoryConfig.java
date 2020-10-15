@@ -5,13 +5,15 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import uk.co.idv.context.adapter.dynamo.EnvironmentDynamoTablesFactory;
 import uk.co.idv.context.adapter.dynamo.DynamoTables;
-import uk.co.idv.context.config.repository.ContextRepositoryConfig;
 import uk.co.idv.context.config.repository.dynamo.DynamoContextRepositoryConfig;
-import uk.co.idv.identity.config.repository.IdentityRepositoryConfig;
+import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.identity.config.repository.dynamo.DynamoIdentityRepositoryConfig;
-import uk.co.idv.lockout.config.repository.AttemptRepositoryConfig;
+import uk.co.idv.identity.usecases.identity.IdentityRepository;
 import uk.co.idv.lockout.config.repository.dynamo.DynamoAttemptRepositoryConfig;
+import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
 import uk.co.mruoc.json.JsonConverter;
+
+import java.time.Clock;
 
 import static uk.co.idv.app.spring.config.repository.EnvironmentLoader.loadEnvironment;
 
@@ -20,24 +22,29 @@ import static uk.co.idv.app.spring.config.repository.EnvironmentLoader.loadEnvir
 public class SpringDynamoRepositoryConfig {
 
     @Bean
-    public IdentityRepositoryConfig identityRepositoryConfig(JsonConverter jsonConverter, DynamoTables tables) {
-        return new DynamoIdentityRepositoryConfig(jsonConverter, tables);
+    public IdentityRepository identityRepository(JsonConverter jsonConverter, DynamoTables tables) {
+        return new DynamoIdentityRepositoryConfig(jsonConverter, tables).identityRepository();
     }
 
     @Bean
-    public AttemptRepositoryConfig attemptRepositoryConfig(JsonConverter jsonConverter, DynamoTables tables) {
+    public AttemptRepository attemptRepository(JsonConverter jsonConverter, DynamoTables tables) {
         return DynamoAttemptRepositoryConfig.builder()
                 .jsonConverter(jsonConverter)
                 .tables(tables)
-                .build();
+                .build()
+                .attemptRepository();
     }
 
     @Bean
-    public ContextRepositoryConfig contextRepositoryConfig(JsonConverter jsonConverter, DynamoTables tables) {
+    public ContextRepository contextRepository(Clock clock,
+                                               JsonConverter jsonConverter,
+                                               DynamoTables tables) {
         return DynamoContextRepositoryConfig.builder()
+                .clock(clock)
                 .jsonConverter(jsonConverter)
                 .tables(tables)
-                .build();
+                .build()
+                .contextRepository();
     }
 
     @Bean

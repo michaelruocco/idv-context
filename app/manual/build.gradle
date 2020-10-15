@@ -1,5 +1,6 @@
 plugins {
     id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+    id "java-test-fixtures"
 }
 
 testSets {
@@ -10,17 +11,26 @@ dependencies {
     implementation project(":identity-config")
     implementation project(":lockout-config")
     implementation project(":context-config")
+    implementation project(":method-config")
     implementation project(":otp-config")
+    implementation project(":otp-sim-swap-stub-config")
+    implementation project(":context-json")
+    implementation project(":method-json")
+    implementation project(":otp-json")
 
     integrationTestImplementation project(":identity-in-memory-repository")
     integrationTestImplementation project(":identity-external-find-stub")
     integrationTestImplementation project(":lockout-in-memory-repository")
 
-    integrationTestImplementation testFixtures(project(":context-entities"))
-    integrationTestImplementation testFixtures(project(":otp-entities"))
+    testFixturesApi testFixtures(project(":context-entities"))
+    testFixturesApi testFixtures(project(":lockout-entities"))
+    testFixturesApi testFixtures(project(":policy-entities"))
+    testFixturesApi testFixtures(project(":otp-entities"))
+    integrationTestImplementation testFixtures(project(":method-config"))
     integrationTestImplementation testFixtures(project(":identity-use-cases"))
     integrationTestImplementation testFixtures(project(":lockout-use-cases"))
     integrationTestImplementation testFixtures(project(":common-use-cases"))
     integrationTestImplementation testFixtures(project(":method-use-cases"))
+    integrationTestImplementation testFixtures(project(":otp-use-cases"))
     integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
 }

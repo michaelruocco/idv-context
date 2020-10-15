@@ -7,7 +7,7 @@ import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
-import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.fake.FakeMethodMapping;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;

@@ -12,20 +12,20 @@ import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 import uk.co.idv.identity.adapter.json.alias.AliasModule;
 import uk.co.idv.identity.adapter.json.channel.ChannelModule;
 import uk.co.idv.identity.adapter.json.identity.IdentityModule;
-import uk.co.idv.method.adapter.json.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMapping;
+import uk.co.idv.method.adapter.json.method.MethodMappings;
 
 import java.util.Arrays;
-import java.util.Collection;
 
 public class CreateContextModule extends SimpleModule {
 
-    private final transient Collection<MethodMapping> mappings;
+    private final transient MethodMappings mappings;
 
     public CreateContextModule(MethodMapping... mappings) {
-        this(Arrays.asList(mappings));
+        this(new MethodMappings(mappings));
     }
 
-    public CreateContextModule(Collection<MethodMapping> mappings) {
+    public CreateContextModule(MethodMappings mappings) {
         super("create-context-module", Version.unknownVersion());
         this.mappings = mappings;
 

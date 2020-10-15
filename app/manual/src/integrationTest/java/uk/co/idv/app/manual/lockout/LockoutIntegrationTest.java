@@ -41,8 +41,8 @@ class LockoutIntegrationTest {
             .build();
 
     private final LockoutConfig lockoutConfig = lockoutConfigBuilder.build();
-    private final LockoutPolicyService policyService = lockoutConfig.policyService();
-    private final LockoutFacade lockoutFacade = lockoutConfig.lockoutFacade();
+    private final LockoutPolicyService policyService = lockoutConfig.getPolicyService();
+    private final LockoutFacade lockoutFacade = lockoutConfig.getFacade();
 
     @Test
     void shouldThrowExceptionIfIdentityDoesNotExistOnRecordAttempt() {

@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import uk.co.idv.app.manual.JsonConfig;
 
 @Configuration
 @ConditionalOnProperty(value = "response.filtering.enabled", havingValue = "true")
@@ -22,8 +23,8 @@ public class SquigglyConfig {
     }
 
     @Bean
-    public ObjectMapper squigglybjectMapper() {
-        ObjectMapper mapper = SpringObjectMapperFactory.build();
+    public ObjectMapper squigglyObjectMapper(JsonConfig jsonConfig) {
+        ObjectMapper mapper = jsonConfig.getObjectMapper();
         Squiggly.init(mapper, new RequestSquigglyContextProvider());
         return mapper;
     }

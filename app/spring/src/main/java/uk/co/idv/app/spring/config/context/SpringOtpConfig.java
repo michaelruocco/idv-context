@@ -2,21 +2,24 @@ package uk.co.idv.app.spring.config.context;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.context.adapter.context.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
-import uk.co.idv.context.config.repository.ContextRepositoryConfig;
-import uk.co.idv.method.config.otp.OtpConfig;
-import uk.co.idv.method.usecases.MethodBuilder;
+import uk.co.idv.app.manual.adapter.app.AppAdapter;
+import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
+import uk.co.idv.context.adapter.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
+import uk.co.idv.method.config.AppMethodConfig;
+import uk.co.idv.method.config.otp.AppOtpConfig;
 
 @Configuration
 public class SpringOtpConfig {
 
     @Bean
-    public MethodBuilder otpConfig(ContextRepositoryConfig contextRepositoryConfig) {
-        return OtpConfig.builder()
-                .contextRepository(contextRepositoryConfig.contextRepository())
+    public AppMethodConfig otpConfig(AppAdapter appAdapter,
+                                     RepositoryAdapter repositoryAdapter) {
+        return AppOtpConfig.builder()
                 .simSwapExecutorConfig(StubSimSwapExecutorConfig.buildDefault())
-                .build()
-                .otpBuilder();
+                .clock(appAdapter.getClock())
+                .idGenerator(appAdapter.getIdGenerator())
+                .contextRepository(repositoryAdapter.getContextRepository())
+                .build();
     }
 
 }

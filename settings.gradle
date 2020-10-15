@@ -99,6 +99,9 @@ project(':method-use-cases').projectDir = file('method/common/domain/use-cases')
 include ':method-json'
 project(':method-json').projectDir = file('method/common/adapter/json')
 
+include ':method-config'
+project(':method-config').projectDir = file('method/common/config')
+
 include ':otp-entities'
 project(':otp-entities').projectDir = file('method/otp/domain/entities')
 
@@ -110,6 +113,9 @@ project(':otp-json').projectDir = file('method/otp/adapter/json')
 
 include ':otp-sim-swap-stub'
 project(':otp-sim-swap-stub').projectDir = file('method/otp/adapter/sim-swap/stub')
+
+include ':otp-sim-swap-stub-config'
+project(':otp-sim-swap-stub-config').projectDir = file('method/otp/adapter/sim-swap/config')
 
 include ':otp-config'
 project(':otp-config').projectDir = file('method/otp/config')

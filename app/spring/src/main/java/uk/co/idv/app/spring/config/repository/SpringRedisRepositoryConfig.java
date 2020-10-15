@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import uk.co.idv.context.adapter.repository.RedissonMapFactory;
-import uk.co.idv.context.config.repository.ContextPolicyRepositoryConfig;
 import uk.co.idv.context.config.repository.redis.RedisContextPolicyRepositoryConfig;
-import uk.co.idv.lockout.config.repository.LockoutPolicyRepositoryConfig;
+import uk.co.idv.context.usecases.policy.ContextPolicyRepository;
 import uk.co.idv.lockout.config.repository.redis.RedisLockoutPolicyRepositoryConfig;
+import uk.co.idv.lockout.usecases.policy.LockoutPolicyRepository;
 import uk.co.mruoc.json.JsonConverter;
 
 import static uk.co.idv.app.spring.config.repository.EnvironmentLoader.loadEnvironment;
@@ -21,21 +21,23 @@ import static uk.co.idv.app.spring.config.repository.EnvironmentLoader.loadEnvir
 public class SpringRedisRepositoryConfig {
 
     @Bean
-    public LockoutPolicyRepositoryConfig lockoutPolicyRepositoryConfig(RedissonMapFactory mapFactory,
-                                                                       JsonConverter jsonConverter) {
+    public LockoutPolicyRepository lockoutPolicyRepository(RedissonMapFactory mapFactory,
+                                                           JsonConverter jsonConverter) {
         return RedisLockoutPolicyRepositoryConfig.builder()
                 .policies(mapFactory.buildPolicyMap("lockout-policy"))
                 .jsonConverter(jsonConverter)
-                .build();
+                .build()
+                .policyRepository();
     }
 
     @Bean
-    public ContextPolicyRepositoryConfig contextPolicyRepositoryConfig(RedissonMapFactory mapFactory,
-                                                                       JsonConverter jsonConverter) {
+    public ContextPolicyRepository contextPolicyRepository(RedissonMapFactory mapFactory,
+                                                           JsonConverter jsonConverter) {
         return RedisContextPolicyRepositoryConfig.builder()
                 .policies(mapFactory.buildPolicyMap("context-policy"))
                 .jsonConverter(jsonConverter)
-                .build();
+                .build()
+                .policyRepository();
     }
 
     @Bean

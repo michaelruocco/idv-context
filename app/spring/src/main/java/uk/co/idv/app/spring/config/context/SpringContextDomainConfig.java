@@ -2,60 +2,27 @@ package uk.co.idv.app.spring.config.context;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.context.config.ContextFacadeConfig;
-import uk.co.idv.context.config.ContextServiceConfig;
-import uk.co.idv.context.config.repository.ContextPolicyRepositoryConfig;
-import uk.co.idv.context.config.repository.ContextRepositoryConfig;
-import uk.co.idv.context.config.repository.DefaultParentContextRepositoryConfig;
-import uk.co.idv.context.config.repository.ParentContextRepositoryConfig;
+import uk.co.idv.app.manual.AppConfig;
+import uk.co.idv.context.config.ContextConfig;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
-import uk.co.idv.identity.config.IdentityConfig;
-import uk.co.idv.lockout.config.LockoutConfig;
-import uk.co.idv.method.usecases.MethodBuilder;
-
-import java.util.Collection;
 
 @Configuration
 public class SpringContextDomainConfig {
 
     @Bean
-    public ParentContextRepositoryConfig parentRepositoryConfig(ContextRepositoryConfig contextRepositoryConfig,
-                                                                ContextPolicyRepositoryConfig policyRepositoryConfig) {
-        return DefaultParentContextRepositoryConfig.builder()
-                .contextRepositoryConfig(contextRepositoryConfig)
-                .policyRepositoryConfig(policyRepositoryConfig)
-                .build();
+    public ContextConfig contextConfig(AppConfig appConfig) {
+        return appConfig.getContextConfig();
     }
 
     @Bean
-    public ContextServiceConfig contextServiceConfig(ParentContextRepositoryConfig repositoryConfig,
-                                                     LockoutConfig lockoutConfig,
-                                                     Collection<MethodBuilder> methodBuilders) {
-        return ContextServiceConfig.builder()
-                .repositoryConfig(repositoryConfig)
-                .lockoutConfig(lockoutConfig)
-                .methodBuilders(methodBuilders)
-                .build();
+    public ContextFacade contextFacade(ContextConfig contextConfig) {
+        return contextConfig.getFacade();
     }
 
     @Bean
-    public ContextFacadeConfig contextFacadeConfig(ContextServiceConfig serviceConfig,
-                                                   IdentityConfig identityConfig) {
-        return ContextFacadeConfig.builder()
-                .serviceConfig(serviceConfig)
-                .createEligibility(identityConfig.createEligibility())
-                .build();
-    }
-
-    @Bean
-    public ContextPolicyService contextPolicyService(ContextServiceConfig config) {
-        return config.policyService();
-    }
-
-    @Bean
-    public ContextFacade contextFacade(ContextFacadeConfig config) {
-        return config.contextFacade();
+    public ContextPolicyService contextPolicyService(ContextConfig contextConfig) {
+        return contextConfig.getPolicyService();
     }
 
 }
