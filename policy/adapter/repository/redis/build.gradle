@@ -1,7 +1,7 @@
 dependencies {
     api project(":lockout-use-cases")
     api project(":lockout-json")
-    api "org.redisson:redisson:3.13.5"
+    api "org.redisson:redisson:3.13.6"
 
     testImplementation testFixtures(project(":policy-entities"))
 }
