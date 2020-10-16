@@ -34,40 +34,40 @@ include ':identity-config'
 project(':identity-config').projectDir = file('identity/config')
 
 include ':policy-entities'
-project(':policy-entities').projectDir = file('policy/domain/entities')
+project(':policy-entities').projectDir = file('context/policy/domain/entities')
 
 include ':policy-use-cases'
-project(':policy-use-cases').projectDir = file('policy/domain/use-cases')
+project(':policy-use-cases').projectDir = file('context/policy/domain/use-cases')
 
 include ':policy-in-memory-repository'
-project(':policy-in-memory-repository').projectDir = file('policy/adapter/repository/in-memory')
+project(':policy-in-memory-repository').projectDir = file('context/policy/adapter/repository/in-memory')
 
 include ':policy-redis-repository'
-project(':policy-redis-repository').projectDir = file('policy/adapter/repository/redis')
+project(':policy-redis-repository').projectDir = file('context/policy/adapter/repository/redis')
 
 include ':policy-json'
-project(':policy-json').projectDir = file('policy/adapter/json')
+project(':policy-json').projectDir = file('context/policy/adapter/json')
 
 include ':lockout-entities'
-project(':lockout-entities').projectDir = file('lockout/domain/entities')
+project(':lockout-entities').projectDir = file('context/lockout/domain/entities')
 
 include ':lockout-use-cases'
-project(':lockout-use-cases').projectDir = file('lockout/domain/use-cases')
+project(':lockout-use-cases').projectDir = file('context/lockout/domain/use-cases')
 
 include ':lockout-in-memory-repository'
-project(':lockout-in-memory-repository').projectDir = file('lockout/adapter/repository/in-memory')
+project(':lockout-in-memory-repository').projectDir = file('context/lockout/adapter/repository/in-memory')
 
 include ':lockout-redis-repository'
-project(':lockout-redis-repository').projectDir = file('lockout/adapter/repository/redis')
+project(':lockout-redis-repository').projectDir = file('context/lockout/adapter/repository/redis')
 
 include ':lockout-dynamo-db-repository'
-project(':lockout-dynamo-db-repository').projectDir = file('lockout/adapter/repository/dynamo-db')
+project(':lockout-dynamo-db-repository').projectDir = file('context/lockout/adapter/repository/dynamo-db')
 
 include ':lockout-json'
-project(':lockout-json').projectDir = file('lockout/adapter/json')
+project(':lockout-json').projectDir = file('context/lockout/adapter/json')
 
 include ':lockout-config'
-project(':lockout-config').projectDir = file('lockout/config')
+project(':lockout-config').projectDir = file('context/lockout/config')
 
 include ':context-entities'
 project(':context-entities').projectDir = file('context/domain/entities')
