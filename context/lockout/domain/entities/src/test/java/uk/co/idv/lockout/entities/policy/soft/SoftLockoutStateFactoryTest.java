@@ -19,12 +19,23 @@ class SoftLockoutStateFactoryTest {
 
     private final LockoutStateRequest request = mock(LockoutStateRequest.class);
     private final Duration duration = Duration.ofMinutes(5);
-    private final Attempts attempts = AttemptsMother.build();
 
     private final SoftLockoutStateFactory factory = new SoftLockoutStateFactory();
 
     @Test
+    void shouldReturnUnlockedStateThereAreNoAttempts() {
+        Attempts attempts = AttemptsMother.empty();
+        given(request.getAttempts()).willReturn(attempts);
+        given(request.getMostRecentAttemptTimestamp()).willReturn(Optional.empty());
+
+        LockoutState state = factory.build(duration, request);
+
+        assertThat(state).isInstanceOf(UnlockedState.class);
+        assertThat(state.getAttempts()).isEmpty();
+    }
+    @Test
     void shouldReturnUnlockedStateIfNewAttemptIsAfterExpiry() {
+        Attempts attempts = AttemptsMother.build();
         Instant expiry = Instant.now();
         givenExpiry(expiry);
         givenNewAttemptAfter(expiry);
@@ -38,6 +49,7 @@ class SoftLockoutStateFactoryTest {
 
     @Test
     void shouldReturnSoftLockoutStateIfNewAttemptIsBeforeExpiry() {
+        Attempts attempts = AttemptsMother.build();
         Instant expiry = Instant.now();
         givenExpiry(expiry);
         givenNewAttemptBefore(expiry);
