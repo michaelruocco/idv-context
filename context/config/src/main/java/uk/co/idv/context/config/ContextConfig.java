@@ -1,11 +1,15 @@
 package uk.co.idv.context.config;
 
 import lombok.Builder;
+import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.ContextService;
 import uk.co.idv.context.usecases.context.CreateContextRequestConverter;
+import uk.co.idv.context.usecases.context.event.create.CompositeContextCreatedHandler;
+import uk.co.idv.context.usecases.context.event.create.ContextCreatedHandler;
+import uk.co.idv.context.usecases.context.event.create.ExpiryContextCreatedHandler;
 import uk.co.idv.context.usecases.context.identity.IdentityLoader;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
 import uk.co.idv.context.usecases.context.method.CompositeMethodBuilder;
@@ -22,8 +26,10 @@ import uk.co.idv.lockout.usecases.LockoutService;
 import uk.co.idv.method.usecases.MethodBuilders;
 
 import java.time.Clock;
+import java.util.concurrent.Executors;
 
 @Builder
+@Slf4j
 public class ContextConfig {
 
     private final Clock clock;
@@ -57,6 +63,7 @@ public class ContextConfig {
                 .repository(contextRepository)
                 .requestConverter(serviceCreateContextRequestConverter())
                 .sequencesBuilder(sequencesBuilder())
+                .createdHandler(contextCreated())
                 .build();
     }
 
@@ -92,6 +99,24 @@ public class ContextConfig {
                 .lockoutService(lockoutService)
                 .clock(clock)
                 .build();
+    }
+
+    private ContextCreatedHandler contextCreated() {
+        return new CompositeContextCreatedHandler(scheduleExpiryOnContextCreated());
+    }
+
+    private ExpiryContextCreatedHandler scheduleExpiryOnContextCreated() {
+        return ExpiryContextCreatedHandler.builder()
+                .clock(clock)
+                .executor(Executors.newScheduledThreadPool(contextExpiryThreadPoolSize()))
+                .build();
+    }
+
+    private static int contextExpiryThreadPoolSize() {
+        String key = "context.expiry.thread.pool.size";
+        int size = Integer.parseInt(System.getProperty(key, "100"));
+        log.info("loaded {} value {}", key, size);
+        return size;
     }
 
 }

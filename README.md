@@ -11,19 +11,9 @@
 
 ## Todo
 
-*   Move integration tests for resetting lockout state to work with posting results tests
-    so that we can remove the endpoint / facade functionality for posting attempts to lockout state
-
-*   Remove duplication between RecordAttemptRequest, DefaultRecordAttempt request, this may be covered by
-    removing posting attempts to lockout state
-
 *   Tidy up cloud formation templates and try out creating API gateway
 
 *   Json error handling for context errors (context policy not found, context not found)
-
-*   Add registering context expiry job -> via publishing context created event
-
-*   Add publishing context expired event
 
 *   Ensure attempts merged when identities merged -> via publishing identity merged event
 

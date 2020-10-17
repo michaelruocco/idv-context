@@ -6,10 +6,13 @@ import org.springframework.context.annotation.Primary;
 import uk.co.idv.app.manual.AppConfig;
 import uk.co.idv.app.manual.adapter.app.AppAdapter;
 import uk.co.idv.app.manual.adapter.app.DefaultAppAdapter;
+import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;
 import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
 import uk.co.idv.common.adapter.json.error.handler.CommonApiErrorHandler;
 import uk.co.idv.common.adapter.json.error.handler.CompositeErrorHandler;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.context.config.ContextConfig;
+import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.method.config.AppMethodConfig;
 import uk.co.idv.method.usecases.MethodBuilders;
 
@@ -56,6 +59,17 @@ public class SpringCommonDomainConfig {
                                RepositoryAdapter repositoryAdapter,
                                AppAdapter appAdapter) {
         return new AppConfig(methodBuilders, repositoryAdapter, appAdapter);
+    }
+
+    @Bean
+    public StartupListener startupListener(ContextConfig contextConfig,
+                                           LockoutConfig lockoutConfig,
+                                           ChannelAdapter channelAdapter) {
+        return StartupListener.builder()
+                .contextPoliciesPopulator(contextConfig.getPoliciesPopulator())
+                .lockoutPoliciesPopulator(lockoutConfig.getPoliciesPopulator())
+                .channelAdapter(channelAdapter)
+                .build();
     }
 
 }

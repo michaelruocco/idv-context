@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.context;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
@@ -8,6 +9,7 @@ import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMoth
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.entities.context.sequence.SequencesRequest;
 import uk.co.idv.context.entities.context.sequence.SequencesRequestMother;
+import uk.co.idv.context.usecases.context.event.create.ContextCreatedHandler;
 import uk.co.idv.context.usecases.context.expiry.ExpiryCalculator;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
@@ -25,6 +27,7 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class ContextServiceTest {
 
@@ -35,6 +38,7 @@ class ContextServiceTest {
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
     private final SequencesBuilder sequencesBuilder = mock(SequencesBuilder.class);
     private final ExpiryCalculator expiryCalculator = mock(ExpiryCalculator.class);
+    private final ContextCreatedHandler createdHandler = mock(ContextCreatedHandler.class);
     private final ContextRepository repository = mock(ContextRepository.class);
 
     private final ContextService service = ContextService.builder()
@@ -43,6 +47,7 @@ class ContextServiceTest {
             .clock(clock)
             .sequencesBuilder(sequencesBuilder)
             .expiryCalculator(expiryCalculator)
+            .createdHandler(createdHandler)
             .repository(repository)
             .build();
 
@@ -108,6 +113,30 @@ class ContextServiceTest {
         Context context = service.create(request);
 
         assertThat(context.getExpiry()).isEqualTo(expectedExpiry);
+    }
+
+    @Test
+    void shouldSaveContext() {
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
+        Sequences sequences = givenSequencesBuiltFromRequest(request);
+
+        Context context = service.create(request);
+
+        ArgumentCaptor<Context> captor = ArgumentCaptor.forClass(Context.class);
+        verify(repository).save(captor.capture());
+        assertThat(captor.getValue()).isEqualTo(context);
+    }
+
+    @Test
+    void shouldPublishContextCreatedOnCreate() {
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
+        givenSequencesBuiltFromRequest(request);
+
+        Context context = service.create(request);
+
+        ArgumentCaptor<Context> captor = ArgumentCaptor.forClass(Context.class);
+        verify(createdHandler).created(captor.capture());
+        assertThat(captor.getValue()).isEqualTo(context);
     }
 
     @Test

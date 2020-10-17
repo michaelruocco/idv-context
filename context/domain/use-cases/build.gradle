@@ -1,5 +1,3 @@
-
-
 dependencies {
     api project(":context-entities")
 
@@ -14,4 +12,5 @@ dependencies {
     testImplementation testFixtures(project(":policy-entities"))
     testImplementation testFixtures(project(":method-entities"))
     testImplementation testFixtures(project(":otp-entities"))
+    testImplementation "com.github.stefanbirkner:system-lambda:1.1.1"
 }

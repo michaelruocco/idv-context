@@ -4,6 +4,7 @@ import lombok.Builder;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.sequence.Sequences;
+import uk.co.idv.context.usecases.context.event.create.ContextCreatedHandler;
 import uk.co.idv.context.usecases.context.expiry.ExpiryCalculator;
 import uk.co.idv.context.entities.context.sequence.SequencesRequest;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
@@ -23,6 +24,7 @@ public class ContextService {
     private final CreateContextRequestConverter requestConverter;
     private final Clock clock;
     private final SequencesBuilder sequencesBuilder;
+    private final ContextCreatedHandler createdHandler;
     private final ContextRepository repository;
 
     public Context create(ServiceCreateContextRequest request) {
@@ -38,6 +40,7 @@ public class ContextService {
                 .sequences(sequences)
                 .build();
         repository.save(context);
+        createdHandler.created(context);
         return context;
     }
 
