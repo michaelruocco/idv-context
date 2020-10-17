@@ -29,16 +29,7 @@ public class ContextService {
 
     public Context create(ServiceCreateContextRequest request) {
         lockoutService.validateLockoutState(request);
-        Instant created = clock.instant();
-        SequencesRequest sequencesRequest = requestConverter.toSequencesRequest(request);
-        Sequences sequences = sequencesBuilder.build(sequencesRequest);
-        Context context = Context.builder()
-                .id(sequencesRequest.getContextId())
-                .created(created)
-                .expiry(calculateExpiry(created, sequences))
-                .request(request)
-                .sequences(sequences)
-                .build();
+        Context context = buildContext(request);
         repository.save(context);
         createdHandler.created(context);
         return context;
@@ -55,6 +46,19 @@ public class ContextService {
 
     private Instant calculateExpiry(Instant created, Sequences sequences) {
         return expiryCalculator.calculate(created, sequences.getDuration());
+    }
+
+    private Context buildContext(ServiceCreateContextRequest request) {
+        Instant created = clock.instant();
+        SequencesRequest sequencesRequest = requestConverter.toSequencesRequest(request);
+        Sequences sequences = sequencesBuilder.build(sequencesRequest);
+        return Context.builder()
+                .id(sequencesRequest.getContextId())
+                .created(created)
+                .expiry(calculateExpiry(created, sequences))
+                .request(request)
+                .sequences(sequences)
+                .build();
     }
 
 }
