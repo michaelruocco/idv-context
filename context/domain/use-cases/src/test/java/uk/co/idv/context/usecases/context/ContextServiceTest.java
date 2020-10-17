@@ -118,7 +118,7 @@ class ContextServiceTest {
     @Test
     void shouldSaveContext() {
         ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
-        Sequences sequences = givenSequencesBuiltFromRequest(request);
+        givenSequencesBuiltFromRequest(request);
 
         Context context = service.create(request);
 

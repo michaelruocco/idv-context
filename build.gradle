@@ -55,10 +55,10 @@ subprojects {
     ext {
         testSetsPluginVersion = "3.0.1"
 
-        lombokVersion = "1.18.14"
+        lombokVersion = "1.18.16"
         slf4jVersion = "1.7.30"
         commonsCollectionsVersion = "4.4"
-        awsSdkVersion = "1.11.880"
+        awsSdkVersion = "1.11.882"
         jacksonVersion = "2.11.3"
         jsonAdapterVersion = "0.1.7"
 
