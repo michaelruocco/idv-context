@@ -14,7 +14,7 @@ import static org.mockito.Mockito.verify;
 
 class IdvIdAllocatorTest {
 
-    private final RandomIdvIdGenerator idGenerator = mock(RandomIdvIdGenerator.class);
+    private final IdvIdGenerator idGenerator = mock(IdvIdGenerator.class);
 
     private final IdvIdAllocator allocator = new IdvIdAllocator(idGenerator);
 

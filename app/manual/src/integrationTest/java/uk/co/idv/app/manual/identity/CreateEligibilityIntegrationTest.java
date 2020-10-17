@@ -1,7 +1,9 @@
 package uk.co.idv.app.manual.identity;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
 import uk.co.idv.identity.config.DefaultIdentityConfig;
+import uk.co.idv.identity.config.ExternalFindIdentityConfig;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
@@ -27,8 +29,8 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 class CreateEligibilityIntegrationTest {
 
-    private final IdentityConfig identityConfig = DefaultIdentityConfig.builder()
-            .build();
+    private final ExternalFindIdentityConfig findIdentityConfig = StubExternalFindIdentityConfig.build();
+    private final IdentityConfig identityConfig = DefaultIdentityConfig.build(findIdentityConfig);
 
     private final CreateEligibility createEligibility = identityConfig.createEligibility();
     private final IdentityService facade = identityConfig.identityService();

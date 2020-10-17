@@ -1,7 +1,10 @@
 package uk.co.idv.app.manual.lockout;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
 import uk.co.idv.identity.config.DefaultIdentityConfig;
+import uk.co.idv.identity.config.ExternalFindIdentityConfig;
+import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
@@ -19,7 +22,8 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 class LockoutIntegrationTest {
 
-    private final DefaultIdentityConfig identityConfig = DefaultIdentityConfig.builder().build();
+    private final ExternalFindIdentityConfig findIdentityConfig = StubExternalFindIdentityConfig.build();
+    private final IdentityConfig identityConfig = DefaultIdentityConfig.build(findIdentityConfig);
     private final IdentityService identityService = identityConfig.identityService();
 
     private final LockoutConfigBuilder lockoutConfigBuilder = LockoutConfigBuilder.builder()

@@ -27,8 +27,11 @@ project(':identity-dynamo-db-repository').projectDir = file('identity/adapter/re
 include ':identity-json'
 project(':identity-json').projectDir = file('identity/adapter/json')
 
-include ':identity-external-find-stub'
-project(':identity-external-find-stub').projectDir = file('identity/adapter/external/find-stub')
+include ':identity-external-find-stub-use-cases'
+project(':identity-external-find-stub-use-cases').projectDir = file('identity/adapter/external-find/stub/domain/use-cases')
+
+include ':identity-external-find-stub-config'
+project(':identity-external-find-stub-config').projectDir = file('identity/adapter/external-find/stub/config')
 
 include ':identity-config'
 project(':identity-config').projectDir = file('identity/config')
@@ -115,7 +118,7 @@ include ':otp-sim-swap-stub'
 project(':otp-sim-swap-stub').projectDir = file('method/otp/adapter/sim-swap/stub')
 
 include ':otp-sim-swap-stub-config'
-project(':otp-sim-swap-stub-config').projectDir = file('method/otp/adapter/sim-swap/config')
+project(':otp-sim-swap-stub-config').projectDir = file('method/otp/adapter/sim-swap/stub/config')
 
 include ':otp-config'
 project(':otp-config').projectDir = file('method/otp/config')

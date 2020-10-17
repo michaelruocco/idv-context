@@ -3,6 +3,7 @@ package uk.co.idv.identity.usecases.identity.merge;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.event.MergeIdentitiesEvent;
 import uk.co.idv.identity.entities.identity.Identities;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.usecases.identity.IdentityRepository;
@@ -12,21 +13,17 @@ import uk.co.idv.identity.usecases.identity.idvid.IdvIdAllocator;
 @Slf4j
 public class MergeIdentities {
 
-    @Builder.Default
-    private final IdvIdAllocator idvIdAllocator = new IdvIdAllocator();
+    private final IdvIdAllocator idvIdAllocator;
     private final IdentityRepository repository;
+    private final MergeIdentitiesHandler handler;
 
-    public static MergeIdentities build(IdentityRepository repository) {
-        return MergeIdentities.builder()
-                .repository(repository)
-                .build();
-    }
-
-    public Identity merge(Identity identity, Identities existing) {
+    public Identity merge(Identity identity, Identities original) {
         Identity identityWithId = idvIdAllocator.allocateIfRequired(identity);
-        delete(existing);
-        Identity merged = doMerge(identityWithId, existing);
-        return save(merged);
+        Identity merged = doMerge(identityWithId, original);
+        delete(original);
+        Identity saved = save(merged);
+        publishMerge(saved, original);
+        return saved;
     }
 
     private void delete(Identities existing) {
@@ -44,6 +41,14 @@ public class MergeIdentities {
         log.debug("saving merged identity {}", identity);
         repository.create(identity);
         return identity;
+    }
+
+    private void publishMerge(Identity merged, Identities original) {
+        MergeIdentitiesEvent event = MergeIdentitiesEvent.builder()
+                .merged(merged)
+                .original(original)
+                .build();
+        handler.merged(event);
     }
 
 }

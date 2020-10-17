@@ -14,14 +14,6 @@ public class CreateIdentity {
     private final IdentityValidator validator;
     private final IdentityRepository repository;
 
-    public static CreateIdentity build(IdentityRepository repository) {
-        return CreateIdentity.builder()
-                .idvIdAllocator(new IdvIdAllocator())
-                .validator(new IdentityValidator())
-                .repository(repository)
-                .build();
-    }
-
     public Identity create(Identity identity) {
         validator.validate(identity);
         Identity identityWithId = idvIdAllocator.allocateIfRequired(identity);

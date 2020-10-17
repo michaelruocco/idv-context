@@ -6,7 +6,6 @@ import uk.co.idv.identity.entities.identity.FindIdentityRequest;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.IdentityEligibilityFactory;
-import uk.co.idv.identity.usecases.identity.IdentityRepository;
 import uk.co.idv.identity.usecases.identity.find.FindIdentity;
 
 @Builder
@@ -15,12 +14,6 @@ public class InternalCreateEligibility implements CreateEligibility {
     @Builder.Default
     private final IdentityEligibilityFactory factory = new IdentityEligibilityFactory();
     private final FindIdentity find;
-
-    public static CreateEligibility build(IdentityRepository repository) {
-        return InternalCreateEligibility.builder()
-                .find(new FindIdentity(repository))
-                .build();
-    }
 
     @Override
     public IdentityEligibility create(FindIdentityRequest request) {

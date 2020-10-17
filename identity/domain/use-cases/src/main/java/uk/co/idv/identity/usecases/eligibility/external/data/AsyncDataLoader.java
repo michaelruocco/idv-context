@@ -14,9 +14,11 @@ import java.util.function.Supplier;
 @Slf4j
 public class AsyncDataLoader {
 
+    @Builder.Default
+    private final FutureWaiter futureWaiter = new FutureWaiter();
+
     private final Executor executor;
     private final DataSupplierFactory supplierFactory;
-    private final FutureWaiter futureWaiter;
 
     public DataFutures loadData(AsyncDataLoadRequest request) {
         DataFutures futures = initiateLoad(request);

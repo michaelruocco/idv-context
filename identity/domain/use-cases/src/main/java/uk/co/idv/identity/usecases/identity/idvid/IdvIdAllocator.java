@@ -2,6 +2,7 @@ package uk.co.idv.identity.usecases.identity.idvid;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.identity.Identity;
 
@@ -9,10 +10,10 @@ import uk.co.idv.identity.entities.identity.Identity;
 @Slf4j
 public class IdvIdAllocator {
 
-    private final RandomIdvIdGenerator idGenerator;
+    private final IdvIdGenerator idvIdGenerator;
 
-    public IdvIdAllocator() {
-        this(new RandomIdvIdGenerator());
+    public IdvIdAllocator(IdGenerator idGenerator) {
+        this(new IdvIdGenerator(idGenerator));
     }
 
     public Identity allocateIfRequired(Identity identity) {
@@ -24,7 +25,7 @@ public class IdvIdAllocator {
     }
 
     private Identity allocateIdvId(Identity identity) {
-        IdvId idvId = idGenerator.generate();
+        IdvId idvId = idvIdGenerator.generate();
         Identity identityWithId = identity.setIdvId(idvId);
         log.info("allocated idvId {} to identity {}", idvId, identityWithId);
         return identityWithId;

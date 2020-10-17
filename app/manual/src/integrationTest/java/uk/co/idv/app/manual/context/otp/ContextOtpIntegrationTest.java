@@ -105,7 +105,7 @@ class ContextOtpIntegrationTest {
 
         Context context = contextFacade.create(request);
 
-        UUID deliveryMethodId = UUID.fromString("85bbb05a-3cf8-45e5-bae8-430503164c3b");
+        UUID deliveryMethodId = UUID.fromString("446846e6-bf16-4da5-af5b-9ad4a240fe5d");
         assertThat(context.query(new DeliveryMethodEligibilityIncomplete(deliveryMethodId))).isTrue();
 
         DeliveryMethodEligibleAndComplete deliveryMethodEligibleAndComplete = DeliveryMethodEligibleAndComplete.builder()

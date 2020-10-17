@@ -72,12 +72,4 @@ class IdvIdTest {
         assertThat(IdvId.isIdvId(alias)).isTrue();
     }
 
-    @Test
-    void shouldGenerateRandomIdvId() {
-        Alias idvId1 = IdvId.random();
-        Alias idvId2 = IdvId.random();
-
-        assertThat(idvId1).isNotEqualTo(idvId2);
-    }
-
 }

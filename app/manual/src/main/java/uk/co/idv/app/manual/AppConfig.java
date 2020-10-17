@@ -2,6 +2,8 @@ package uk.co.idv.app.manual;
 
 import lombok.Data;
 import uk.co.idv.app.manual.adapter.app.AppAdapter;
+import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
+import uk.co.idv.identity.config.ExternalFindIdentityConfig;
 import uk.co.idv.method.usecases.MethodBuilders;
 import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
 import uk.co.idv.context.config.ContextConfig;
@@ -9,9 +11,12 @@ import uk.co.idv.identity.config.DefaultIdentityConfig;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.lockout.config.LockoutConfig;
 
+import java.util.Collections;
+
 @Data
 public class AppConfig {
 
+    private final ExternalFindIdentityConfig externalFindIdentityConfig = StubExternalFindIdentityConfig.build();
     private final IdentityConfig identityConfig;
     private final LockoutConfig lockoutConfig;
     private final ContextConfig contextConfig;
@@ -19,14 +24,18 @@ public class AppConfig {
     public AppConfig(MethodBuilders methodBuilders,
                      RepositoryAdapter repositoryAdapter,
                      AppAdapter appAdapter) {
-        this.identityConfig = identityConfig(repositoryAdapter);
+        this.identityConfig = identityConfig(repositoryAdapter, appAdapter);
         this.lockoutConfig = lockoutConfig(repositoryAdapter, identityConfig);
         this.contextConfig = contextConfig(repositoryAdapter, appAdapter, methodBuilders, identityConfig, lockoutConfig);
     }
 
-    private IdentityConfig identityConfig(RepositoryAdapter repositoryAdapter) {
+    private IdentityConfig identityConfig(RepositoryAdapter repositoryAdapter,
+                                          AppAdapter appAdapter) {
         return DefaultIdentityConfig.builder()
+                .idGenerator(appAdapter.getIdGenerator())
                 .repository(repositoryAdapter.getIdentityRepository())
+                .mergeHandlers(Collections.emptyList())
+                .externalFindIdentityConfig(externalFindIdentityConfig)
                 .build();
     }
 
