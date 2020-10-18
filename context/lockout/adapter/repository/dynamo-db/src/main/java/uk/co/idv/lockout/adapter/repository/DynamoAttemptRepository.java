@@ -1,5 +1,6 @@
 package uk.co.idv.lockout.adapter.repository;
 
+import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
 import com.amazonaws.services.dynamodbv2.document.Table;
@@ -10,6 +11,7 @@ import uk.co.idv.lockout.entities.attempt.Attempts;
 import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
 
 import java.time.Instant;
+import java.util.Collection;
 import java.util.Optional;
 
 import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
@@ -20,6 +22,7 @@ public class DynamoAttemptRepository implements AttemptRepository {
 
     private final AttemptItemConverter converter;
     private final Table table;
+    private final DynamoDB dynamoDb;
 
     @Override
     public void save(Attempts attempts) {
@@ -45,6 +48,20 @@ public class DynamoAttemptRepository implements AttemptRepository {
             log.info("took {}ms to load attempts using idvId {}",
                     millisBetweenNowAnd(start),
                     idvId);
+        }
+    }
+
+    @Override
+    public void delete(Collection<IdvId> idvIds) {
+        Instant start = Instant.now();
+        try {
+            if (!idvIds.isEmpty()) {
+                dynamoDb.batchWriteItem(converter.toBatchDeleteItems(idvIds));
+            }
+        } finally {
+            log.info("took {}ms to delete attempts with idvIds {}",
+                    millisBetweenNowAnd(start),
+                    idvIds);
         }
     }
 

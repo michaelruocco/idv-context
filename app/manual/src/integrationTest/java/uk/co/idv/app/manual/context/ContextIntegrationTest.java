@@ -122,7 +122,7 @@ class ContextIntegrationTest {
 
         Context context = contextFacade.create(request);
 
-        assertThat(context.getId()).isEqualTo(UUID.fromString("85bbb05a-3cf8-45e5-bae8-430503164c3b"));
+        assertThat(context.getId()).isEqualTo(UUID.fromString("0ec36d6b-145b-4c1e-9201-1f47a8eec9a5"));
     }
 
     @Test

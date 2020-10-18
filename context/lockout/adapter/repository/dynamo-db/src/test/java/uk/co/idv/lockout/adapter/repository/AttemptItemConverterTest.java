@@ -2,6 +2,9 @@ package uk.co.idv.lockout.adapter.repository;
 
 import com.amazonaws.services.dynamodbv2.document.Item;
 import com.amazonaws.services.dynamodbv2.document.PrimaryKey;
+import com.amazonaws.services.dynamodbv2.document.Table;
+import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.alias.IdvIdMother;
@@ -9,15 +12,28 @@ import uk.co.idv.lockout.entities.attempt.Attempts;
 import uk.co.idv.lockout.entities.attempt.AttemptsMother;
 import uk.co.mruoc.json.JsonConverter;
 
+import java.util.Arrays;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class AttemptItemConverterTest {
 
-    private final JsonConverter jsonConverter = mock(JsonConverter.class);
+    private static final String TABLE_NAME = "table-name";
 
-    private final AttemptItemConverter itemConverter = new AttemptItemConverter(jsonConverter);
+    private final JsonConverter jsonConverter = mock(JsonConverter.class);
+    private final Table table = mock(Table.class);
+
+    private final AttemptItemConverter itemConverter = AttemptItemConverter.builder()
+            .jsonConverter(jsonConverter)
+            .table(table)
+            .build();
+
+    @BeforeEach
+    void setUp() {
+        given(table.getTableName()).willReturn(TABLE_NAME);
+    }
 
     @Test
     void shouldConvertIdToPrimaryKey() {
@@ -54,5 +70,21 @@ class AttemptItemConverterTest {
                 .withJSON("body", json);
         assertThat(item).isEqualTo(expectedItem);
     }
+
+    @Test
+    void shouldConvertIdvIdsToTableWriteItemsForDelete() {
+        IdvId idvId1 = IdvIdMother.idvId();
+        IdvId idvId2 = IdvIdMother.idvId1();
+
+        TableWriteItems writeItems = itemConverter.toBatchDeleteItems(Arrays.asList(idvId1, idvId2));
+
+        assertThat(writeItems.getTableName()).isEqualTo(TABLE_NAME);
+        assertThat(writeItems.getPrimaryKeysToDelete()).containsExactly(
+                new PrimaryKey("idvId", idvId1.getValue()),
+                new PrimaryKey("idvId", idvId2.getValue())
+        );
+    }
+
+
 
 }

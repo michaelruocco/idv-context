@@ -1,6 +1,8 @@
 package uk.co.idv.app.manual.lockout;
 
 import lombok.Builder;
+import uk.co.idv.common.usecases.id.IdGenerator;
+import uk.co.idv.common.usecases.id.RandomIdGenerator;
 import uk.co.idv.identity.config.DefaultIdentityConfig;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.lockout.config.LockoutConfig;
@@ -11,6 +13,9 @@ import uk.co.idv.lockout.config.repository.inmemory.InMemoryLockoutRepositoryCon
 public class LockoutConfigBuilder {
 
     @Builder.Default
+    private final IdGenerator idGenerator = new RandomIdGenerator();
+
+    @Builder.Default
     private final IdentityConfig identityConfig = DefaultIdentityConfig.builder().build();
 
     @Builder.Default
@@ -18,6 +23,7 @@ public class LockoutConfigBuilder {
 
     public LockoutConfig build() {
         return LockoutConfig.builder()
+                .idGenerator(idGenerator)
                 .findIdentity(identityConfig.findIdentity())
                 .aliasFactory(identityConfig.aliasFactory())
                 .attemptRepository(repositoryConfig.attemptRepository())

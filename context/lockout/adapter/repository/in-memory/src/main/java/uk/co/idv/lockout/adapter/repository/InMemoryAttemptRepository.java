@@ -4,6 +4,7 @@ import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.lockout.entities.attempt.Attempts;
 import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -20,6 +21,11 @@ public class InMemoryAttemptRepository implements AttemptRepository {
     @Override
     public Optional<Attempts> load(IdvId idvId) {
         return Optional.ofNullable(store.get(idvId));
+    }
+
+    @Override
+    public void delete(Collection<IdvId> idvIds) {
+        idvIds.forEach(store::remove);
     }
 
 }

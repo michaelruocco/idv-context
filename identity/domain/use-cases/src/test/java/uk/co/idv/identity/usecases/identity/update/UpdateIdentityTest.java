@@ -71,7 +71,7 @@ class UpdateIdentityTest {
 
     private Identity givenOneExistingIdentity(Aliases aliases) {
         Identity existing = IdentityMother.example();
-        given(repository.load(aliases)).willReturn(IdentitiesMother.of(existing));
+        given(repository.load(aliases)).willReturn(IdentitiesMother.with(existing));
         return existing;
     }
 

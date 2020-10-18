@@ -30,14 +30,13 @@ import uk.co.idv.identity.usecases.identity.save.external.ExternalSaveIdentitySt
 import uk.co.idv.identity.usecases.identity.save.internal.InternalSaveIdentityStrategy;
 import uk.co.idv.identity.usecases.identity.update.UpdateIdentity;
 
-import java.util.Collection;
 import java.util.Collections;
 
 @Builder
 @Slf4j
 public class DefaultIdentityConfig implements IdentityConfig {
 
-    private final Collection<MergeIdentitiesHandler> mergeHandlers;
+    private final CompositeMergeIdentitiesHandler mergeHandler = new CompositeMergeIdentitiesHandler();
     private final ExternalFindIdentityConfig externalFindIdentityConfig;
     private final IdGenerator idGenerator;
     private final IdentityRepository repository;
@@ -47,7 +46,6 @@ public class DefaultIdentityConfig implements IdentityConfig {
                 .externalFindIdentityConfig(externalFindIdentityConfig)
                 .idGenerator(new RandomIdGenerator())
                 .repository(new InMemoryIdentityRepository())
-                .mergeHandlers(Collections.emptyList())
                 .build();
     }
 
@@ -81,6 +79,11 @@ public class DefaultIdentityConfig implements IdentityConfig {
     @Override
     public IdentityErrorHandler errorHandler() {
         return new IdentityErrorHandler();
+    }
+
+    @Override
+    public void addMergeIdentitiesHandler(MergeIdentitiesHandler handler) {
+        mergeHandler.addHandler(handler);
     }
 
     private SupportedCreateEligibility defaultCreateEligibility() {
@@ -127,7 +130,7 @@ public class DefaultIdentityConfig implements IdentityConfig {
     private MergeIdentities mergeIdentities() {
         return MergeIdentities.builder()
                 .idvIdAllocator(idvIdAllocator())
-                .handler(new CompositeMergeIdentitiesHandler(mergeHandlers))
+                .handler(mergeHandler)
                 .repository(repository)
                 .build();
     }

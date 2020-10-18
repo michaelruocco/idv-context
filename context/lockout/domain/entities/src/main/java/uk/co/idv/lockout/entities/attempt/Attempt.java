@@ -2,6 +2,7 @@ package uk.co.idv.lockout.entities.attempt;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.With;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
@@ -14,10 +15,12 @@ import java.util.UUID;
 @Data
 public class Attempt implements PolicyRequest {
 
+    @With
+    private final IdvId idvId;
+
     private final String channelId;
     private final String activityName;
     private final Aliases aliases;
-    private final IdvId idvId;
 
     private final UUID contextId;
     private final String methodName;

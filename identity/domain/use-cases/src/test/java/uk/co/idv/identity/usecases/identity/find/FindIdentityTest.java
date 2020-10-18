@@ -96,7 +96,7 @@ class FindIdentityTest {
     }
 
     private void givenOneExistingIdentity(Aliases aliases, Identity identity) {
-        given(repository.load(aliases)).willReturn(IdentitiesMother.of(identity));
+        given(repository.load(aliases)).willReturn(IdentitiesMother.with(identity));
     }
 
     private Identities givenMoreThanOneExistingIdentity(Aliases aliases) {

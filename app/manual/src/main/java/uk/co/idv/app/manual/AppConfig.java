@@ -11,8 +11,6 @@ import uk.co.idv.identity.config.DefaultIdentityConfig;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.lockout.config.LockoutConfig;
 
-import java.util.Collections;
-
 @Data
 public class AppConfig {
 
@@ -25,8 +23,9 @@ public class AppConfig {
                      RepositoryAdapter repositoryAdapter,
                      AppAdapter appAdapter) {
         this.identityConfig = identityConfig(repositoryAdapter, appAdapter);
-        this.lockoutConfig = lockoutConfig(repositoryAdapter, identityConfig);
+        this.lockoutConfig = lockoutConfig(repositoryAdapter, appAdapter, identityConfig);
         this.contextConfig = contextConfig(repositoryAdapter, appAdapter, methodBuilders, identityConfig, lockoutConfig);
+        identityConfig.addMergeIdentitiesHandler(lockoutConfig.getMergeIdentitiesHandler());
     }
 
     private IdentityConfig identityConfig(RepositoryAdapter repositoryAdapter,
@@ -34,14 +33,15 @@ public class AppConfig {
         return DefaultIdentityConfig.builder()
                 .idGenerator(appAdapter.getIdGenerator())
                 .repository(repositoryAdapter.getIdentityRepository())
-                .mergeHandlers(Collections.emptyList())
                 .externalFindIdentityConfig(externalFindIdentityConfig)
                 .build();
     }
 
     private LockoutConfig lockoutConfig(RepositoryAdapter repositoryAdapter,
+                                        AppAdapter appAdapter,
                                         IdentityConfig identityConfig) {
         return LockoutConfig.builder()
+                .idGenerator(appAdapter.getIdGenerator())
                 .attemptRepository(repositoryAdapter.getAttemptRepository())
                 .policyRepository(repositoryAdapter.getLockoutPolicyRepository())
                 .findIdentity(identityConfig.findIdentity())

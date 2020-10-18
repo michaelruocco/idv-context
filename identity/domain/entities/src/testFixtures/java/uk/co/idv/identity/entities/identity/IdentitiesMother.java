@@ -5,17 +5,17 @@ import java.util.Arrays;
 public interface IdentitiesMother {
 
     static Identities two() {
-        return of(
+        return with(
                 IdentityMother.example(),
                 IdentityMother.example1()
         );
     }
 
     static Identities empty() {
-        return of();
+        return with();
     }
 
-    static Identities of(Identity... identities) {
+    static Identities with(Identity... identities) {
         return new Identities(Arrays.asList(identities));
     }
 

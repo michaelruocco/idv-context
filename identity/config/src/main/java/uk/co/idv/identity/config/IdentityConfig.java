@@ -5,6 +5,7 @@ import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.identity.usecases.identity.IdentityService;
 import uk.co.idv.identity.usecases.identity.find.FindIdentity;
+import uk.co.idv.identity.usecases.identity.merge.MergeIdentitiesHandler;
 
 public interface IdentityConfig {
 
@@ -17,5 +18,7 @@ public interface IdentityConfig {
     AliasFactory aliasFactory();
 
     IdentityErrorHandler errorHandler();
+
+    void addMergeIdentitiesHandler(MergeIdentitiesHandler handler);
 
 }

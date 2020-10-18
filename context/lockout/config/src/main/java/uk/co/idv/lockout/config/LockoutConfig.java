@@ -1,8 +1,9 @@
 package uk.co.idv.lockout.config;
 
 import lombok.Builder;
-import uk.co.idv.common.usecases.id.RandomIdGenerator;
+import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.usecases.identity.find.FindIdentity;
+import uk.co.idv.identity.usecases.identity.merge.MergeIdentitiesHandler;
 import uk.co.idv.lockout.adapter.json.error.handler.LockoutErrorHandler;
 import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.lockout.usecases.ExternalLockoutRequestConverter;
@@ -10,6 +11,7 @@ import uk.co.idv.lockout.usecases.LockoutFacade;
 import uk.co.idv.lockout.usecases.LockoutService;
 import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
 import uk.co.idv.lockout.usecases.attempt.LoadAttempts;
+import uk.co.idv.lockout.usecases.attempt.MergeAttempts;
 import uk.co.idv.lockout.usecases.attempt.SaveAttempts;
 import uk.co.idv.lockout.usecases.policy.LockoutPoliciesPopulator;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyRepository;
@@ -24,6 +26,7 @@ import java.time.Clock;
 @Builder
 public class LockoutConfig {
 
+    private final IdGenerator idGenerator;
     private final LockoutPolicyRepository policyRepository;
     private final AttemptRepository attemptRepository;
     private final FindIdentity findIdentity;
@@ -57,6 +60,13 @@ public class LockoutConfig {
 
     public LockoutErrorHandler getErrorHandler() {
         return new LockoutErrorHandler();
+    }
+
+    public MergeIdentitiesHandler getMergeIdentitiesHandler() {
+        return MergeAttempts.builder()
+                .repository(attemptRepository)
+                .idGenerator(idGenerator)
+                .build();
     }
 
     private ExternalLockoutRequestConverter lockoutRequestConverter() {
@@ -96,7 +106,7 @@ public class LockoutConfig {
 
     private LoadAttempts loadAttempts() {
         return LoadAttempts.builder()
-                .idGenerator(new RandomIdGenerator())
+                .idGenerator(idGenerator)
                 .repository(attemptRepository)
                 .build();
     }

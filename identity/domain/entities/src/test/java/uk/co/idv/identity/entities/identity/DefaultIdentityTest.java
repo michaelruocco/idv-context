@@ -215,7 +215,7 @@ class DefaultIdentityTest {
         Identity other1 = IdentityMother.withAliases(AliasesMother.idvIdAndDebitCardNumber());
         Identity other2 = IdentityMother.withAliases(AliasesMother.idvIdAndCreditCardNumber());
 
-        Identity added = identity.addData(IdentitiesMother.of(other1, other2));
+        Identity added = identity.addData(IdentitiesMother.with(other1, other2));
 
         assertThat(added.getAliases()).containsExactly(
                 DebitCardNumberMother.debitCardNumber(),

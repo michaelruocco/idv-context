@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @Data
 public class Attempts implements Iterable<Attempt> {
@@ -71,6 +72,10 @@ public class Attempts implements Iterable<Attempt> {
 
     public Collection<Attempt> toCollection() {
         return UnmodifiableCollection.unmodifiableCollection(values);
+    }
+
+    public Stream<Attempt> stream() {
+        return values.stream();
     }
 
     private void validate(IdvId attemptIdvId) {
