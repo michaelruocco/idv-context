@@ -8,6 +8,7 @@ testSets {
 
 dependencies {
     api testFixtures(project(":common-entities"))
+    implementation project(":common-use-cases")
     implementation project(":otp-use-cases")
     implementation project(":otp-sim-swap-stub")
 

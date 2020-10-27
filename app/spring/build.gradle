@@ -19,13 +19,18 @@ configurations {
 
 ext {
     karateVersion = "0.9.6"
+    logbackJsonVersion = "0.1.5"
+}
+
+repositories {
+    maven { url "https://oss.jfrog.org/artifactory/oss-snapshot-local" }
 }
 
 dependencies {
-    implementation 'org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation "org.springframework.boot:spring-boot-dependencies:2.3.4.RELEASE"
+    implementation "org.springframework.boot:spring-boot-starter-web"
+    implementation "org.springframework.boot:spring-boot-starter-hateoas"
+    implementation "org.springframework.boot:spring-boot-starter-actuator"
 
     implementation project(":manual-app")
     implementation project(":common-dynamo-db")
@@ -41,9 +46,13 @@ dependencies {
     implementation project(":method-json")
     implementation project(":otp-json")
     implementation project(":identity-external-find-stub-config")
-
     implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
-    implementation 'com.github.bohnman:squiggly-filter-jackson:1.3.18'
+    implementation "com.github.bohnman:squiggly-filter-jackson:1.3.18"
+    implementation "com.github.michaelruocco:spring-filters:0.1.2"
+    implementation "com.github.michaelruocco:json-masker:1.0.2"
+    implementation "commons-io:commons-io:2.8.0"
+    implementation "ch.qos.logback.contrib:logback-json-classic:${logbackJsonVersion}"
+    implementation "ch.qos.logback.contrib:logback-jackson:${logbackJsonVersion}"
 
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
     testImplementation testFixtures(project(":lockout-entities"))
@@ -80,8 +89,8 @@ docker {
 }
 
 task buildImage(type: DockerBuildImage) {
-    inputDir.set(file('.'))
-    images.add('michaelruocco/verification-context-spring-app:latest')
+    inputDir.set(file("."))
+    images.add("michaelruocco/verification-context-spring-app:latest")
 }
 
 task pushImage(type: DockerPushImage) {

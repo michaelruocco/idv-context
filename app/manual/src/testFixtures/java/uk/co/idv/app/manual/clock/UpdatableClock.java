@@ -1,6 +1,7 @@
-package uk.co.idv.app.manual.context;
+package uk.co.idv.app.manual.clock;
 
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 
 import java.time.Clock;
 import java.time.Duration;
@@ -8,6 +9,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 
 @AllArgsConstructor
+@EqualsAndHashCode(callSuper = true)
 public class UpdatableClock extends Clock {
 
     private Instant now;

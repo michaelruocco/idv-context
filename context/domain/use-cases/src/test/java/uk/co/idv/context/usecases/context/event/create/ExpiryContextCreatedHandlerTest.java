@@ -28,11 +28,11 @@ class ExpiryContextCreatedHandlerTest {
             .build();
 
     @Test
-    void shouldShouldExpiryHandlerWhenContextExpires() {
+    void shouldScheduleExpiryHandlerWhenContextExpires() {
         Duration expectedDelay = Duration.ofMillis(5);
         Instant now = Instant.now();
         givenCurrentTime(now);
-        Context context =givenContextWithExpiry(now.plus(expectedDelay));
+        Context context = givenContextWithExpiry(now.plus(expectedDelay));
 
         handler.created(context);
 

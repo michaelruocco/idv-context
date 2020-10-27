@@ -3,6 +3,7 @@ package uk.co.idv.context.adapter.method.otp.delivery.phone.simswap;
 import lombok.Builder;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import uk.co.idv.common.entities.async.Delay;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumber;
@@ -10,6 +11,7 @@ import uk.co.idv.method.entities.otp.policy.delivery.phone.SimSwapConfig;
 
 import java.time.Clock;
 import java.time.Instant;
+import java.util.Map;
 import java.util.function.Supplier;
 
 import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
@@ -19,6 +21,7 @@ import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetwee
 @Slf4j
 public class StubSimSwapEligibilitySupplier implements Supplier<Eligibility> {
 
+    private final Map<String, String> mdc = MDC.getCopyOfContextMap();
     private final StubSimSwapResultFactory resultFactory;
     private final SimSwapConfig config;
     private final OtpPhoneNumber number;
@@ -27,11 +30,13 @@ public class StubSimSwapEligibilitySupplier implements Supplier<Eligibility> {
 
     @Override
     public Eligibility get() {
+        MDC.setContextMap(mdc);
         Instant start = Instant.now();
         try {
             return perform();
         } finally {
             log.info("sim swap supplier took {}ms for {}", millisBetweenNowAnd(start), number);
+            MDC.clear();
         }
     }
 

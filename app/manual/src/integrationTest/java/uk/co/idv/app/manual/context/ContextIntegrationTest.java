@@ -6,6 +6,7 @@ import uk.co.idv.app.manual.adapter.app.AppAdapter;
 import uk.co.idv.app.manual.adapter.app.DefaultAppAdapter;
 import uk.co.idv.app.manual.adapter.repository.InMemoryRepositoryAdapter;
 import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
+import uk.co.idv.app.manual.clock.UpdatableClock;
 import uk.co.idv.common.usecases.id.NonRandomIdGenerator;
 import uk.co.idv.context.config.ContextConfig;
 import uk.co.idv.context.entities.context.Context;

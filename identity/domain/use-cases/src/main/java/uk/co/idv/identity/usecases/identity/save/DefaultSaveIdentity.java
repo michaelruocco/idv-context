@@ -28,9 +28,8 @@ public class DefaultSaveIdentity implements SaveIdentity {
     }
 
     private void logUnchanged(Identity save, Identity existing) {
-        log.info("skipping identity update no changes updated {} existing {}",
-                save,
-                existing);
+        log.info("skipping identity update as identity is unchanged {}", existing.getIdvIdValue());
+        log.debug("updated {} existing {}", save, existing);
     }
 
 }

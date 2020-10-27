@@ -18,7 +18,7 @@ public class IdvIdAllocator {
 
     public Identity allocateIfRequired(Identity identity) {
         if (identity.hasIdvId()) {
-            log.debug("identity {} already has idvId, idvId not allocated", identity);
+            log.info("identity already has idvId {} new idvId not allocated", identity.getIdvIdValue());
             return identity;
         }
         return allocateIdvId(identity);
@@ -27,7 +27,7 @@ public class IdvIdAllocator {
     private Identity allocateIdvId(Identity identity) {
         IdvId idvId = idvIdGenerator.generate();
         Identity identityWithId = identity.setIdvId(idvId);
-        log.info("allocated idvId {} to identity {}", idvId, identityWithId);
+        log.info("allocated idvId {}", idvId.getValue());
         return identityWithId;
     }
 

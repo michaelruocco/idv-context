@@ -1,3 +1,7 @@
+configurations {
+    compile.exclude module: "slf4j-simple"
+}
+
 dependencies {
     api project(":context-entities")
 
@@ -8,6 +12,7 @@ dependencies {
     implementation project(":lockout-use-cases")
     implementation project(":method-use-cases")
 
+    testRuntimeOnly "ch.qos.logback:logback-classic:1.2.3"
     testImplementation testFixtures(project(":context-entities"))
     testImplementation testFixtures(project(":policy-entities"))
     testImplementation testFixtures(project(":method-entities"))

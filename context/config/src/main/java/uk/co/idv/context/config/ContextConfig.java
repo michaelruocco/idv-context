@@ -6,10 +6,14 @@ import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.ContextService;
+import uk.co.idv.context.usecases.context.CreateContext;
 import uk.co.idv.context.usecases.context.CreateContextRequestConverter;
+import uk.co.idv.context.usecases.context.FindContext;
+import uk.co.idv.context.usecases.context.MdcPopulator;
 import uk.co.idv.context.usecases.context.event.create.CompositeContextCreatedHandler;
 import uk.co.idv.context.usecases.context.event.create.ContextCreatedHandler;
 import uk.co.idv.context.usecases.context.event.create.ExpiryContextCreatedHandler;
+import uk.co.idv.context.usecases.context.event.create.LoggingContextCreatedHandler;
 import uk.co.idv.context.usecases.context.identity.IdentityLoader;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
 import uk.co.idv.context.usecases.context.method.CompositeMethodBuilder;
@@ -58,12 +62,8 @@ public class ContextConfig {
 
     private ContextService contextService() {
         return ContextService.builder()
-                .clock(clock)
-                .lockoutService(lockoutService())
-                .repository(contextRepository)
-                .requestConverter(serviceCreateContextRequestConverter())
-                .sequencesBuilder(sequencesBuilder())
-                .createdHandler(contextCreated())
+                .createContext(createContext())
+                .findContext(findContext())
                 .build();
     }
 
@@ -79,6 +79,26 @@ public class ContextConfig {
         return IdentityLoader.builder()
                 .createEligibility(createEligibility)
                 .policyService(getPolicyService())
+                .build();
+    }
+
+    private CreateContext createContext() {
+        return CreateContext.builder()
+                .clock(clock)
+                .lockoutService(lockoutService())
+                .repository(contextRepository)
+                .requestConverter(serviceCreateContextRequestConverter())
+                .sequencesBuilder(sequencesBuilder())
+                .createdHandler(contextCreated())
+                .build();
+    }
+
+    private FindContext findContext() {
+        return FindContext.builder()
+                .clock(clock)
+                .lockoutService(lockoutService())
+                .repository(contextRepository)
+                .mdcPopulator(mdcPopulator())
                 .build();
     }
 
@@ -102,14 +122,25 @@ public class ContextConfig {
     }
 
     private ContextCreatedHandler contextCreated() {
-        return new CompositeContextCreatedHandler(scheduleExpiryOnContextCreated());
+        return new CompositeContextCreatedHandler(
+                loggingContextCreatedHandler(),
+                expiryContextCreatedHandler()
+        );
     }
 
-    private ExpiryContextCreatedHandler scheduleExpiryOnContextCreated() {
+    private ExpiryContextCreatedHandler expiryContextCreatedHandler() {
         return ExpiryContextCreatedHandler.builder()
                 .clock(clock)
                 .executor(Executors.newScheduledThreadPool(contextExpiryThreadPoolSize()))
                 .build();
+    }
+
+    private LoggingContextCreatedHandler loggingContextCreatedHandler() {
+        return new LoggingContextCreatedHandler(mdcPopulator());
+    }
+
+    private MdcPopulator mdcPopulator() {
+        return new MdcPopulator();
     }
 
     private static int contextExpiryThreadPoolSize() {

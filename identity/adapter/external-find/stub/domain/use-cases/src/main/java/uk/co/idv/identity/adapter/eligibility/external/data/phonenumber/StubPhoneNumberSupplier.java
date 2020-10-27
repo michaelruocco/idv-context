@@ -6,6 +6,7 @@ import uk.co.idv.identity.adapter.eligibility.external.data.StubDataSupplier;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoadRequest;
 
+
 @Slf4j
 public class StubPhoneNumberSupplier extends StubDataSupplier<PhoneNumbers> {
 

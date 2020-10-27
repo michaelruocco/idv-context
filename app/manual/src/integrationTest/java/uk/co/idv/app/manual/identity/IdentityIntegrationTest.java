@@ -105,15 +105,15 @@ class IdentityIntegrationTest {
         Alias alias = CreditCardNumberMother.creditCardNumber();
         Identity initial = IdentityMother.withAliases(alias);
         Identity created = service.update(initial);
+        Identity updated = IdentityMother.withAliases(alias, IdvIdMother.idvId());
 
-        IdvId updated = IdvIdMother.idvId();
         CannotUpdateIdvIdException error = catchThrowableOfType(
-                () -> service.update(IdentityMother.withAliases(alias, updated)),
+                () -> service.update(updated),
                 CannotUpdateIdvIdException.class
         );
 
         assertThat(error.getExisting()).isEqualTo(created.getIdvId());
-        assertThat(error.getUpdated()).isEqualTo(updated);
+        assertThat(error.getUpdated()).isEqualTo(updated.getIdvId());
     }
 
     @Test
@@ -142,10 +142,12 @@ class IdentityIntegrationTest {
         Identity merged = service.update(mergeInput);
 
         IdvId idvId = merged.getIdvId();
-        assertThat(idvId).isNotEqualTo(creditIdentity.getIdvId());
-        assertThat(idvId).isNotEqualTo(debitIdentity.getIdvId());
-        assertThat(merged).isEqualTo(service.find(AliasesMother.with(creditCardNumber)));
-        assertThat(merged).isEqualTo(service.find(AliasesMother.with(debitCardNumber)));
+        assertThat(idvId)
+                .isNotEqualTo(creditIdentity.getIdvId())
+                .isNotEqualTo(debitIdentity.getIdvId());
+        assertThat(merged)
+                .isEqualTo(service.find(AliasesMother.with(creditCardNumber)))
+                .isEqualTo(service.find(AliasesMother.with(debitCardNumber)));
     }
 
     @Test
@@ -184,8 +186,9 @@ class IdentityIntegrationTest {
         Aliases aliases = merged.getAliases();
         assertThat(aliases).hasSize(3);
         assertThat(aliases.hasIdvId()).isTrue();
-        assertThat(aliases).containsAll(creditIdentity.removeIdvId().getAliases());
-        assertThat(aliases).containsAll(debitIdentity.removeIdvId().getAliases());
+        assertThat(aliases)
+                .containsAll(creditIdentity.removeIdvId().getAliases())
+                .containsAll(debitIdentity.removeIdvId().getAliases());
     }
 
     @Test
@@ -199,9 +202,10 @@ class IdentityIntegrationTest {
         Identity merged = service.update(mergeInput);
 
         EmailAddresses emailAddresses = merged.getEmailAddresses();
-        assertThat(emailAddresses).hasSize(2);
-        assertThat(emailAddresses).containsAll(creditIdentity.getEmailAddresses());
-        assertThat(emailAddresses).containsAll(debitIdentity.getEmailAddresses());
+        assertThat(emailAddresses)
+                .hasSize(2)
+                .containsAll(creditIdentity.getEmailAddresses())
+                .containsAll(debitIdentity.getEmailAddresses());
     }
 
     @Test
@@ -215,9 +219,10 @@ class IdentityIntegrationTest {
         Identity merged = service.update(mergeInput);
 
         PhoneNumbers phoneNumbers = merged.getPhoneNumbers();
-        assertThat(phoneNumbers).hasSize(2);
-        assertThat(phoneNumbers).containsAll(creditIdentity.getPhoneNumbers());
-        assertThat(phoneNumbers).containsAll(debitIdentity.getPhoneNumbers());
+        assertThat(phoneNumbers)
+                .hasSize(2)
+                .containsAll(creditIdentity.getPhoneNumbers())
+                .containsAll(debitIdentity.getPhoneNumbers());
     }
 
     private static Identity buildCreditIdentity(CreditCardNumber alias) {

@@ -13,6 +13,9 @@
 
 *   Add integration test for merging lockout attempts when identity merged
 
+*   Add functionality to mask mobile numbers on post response by adding flag to policy then using json masker in
+    response filter using jsonpath to see if policy flag is true
+
 *   Tidy up cloud formation templates and try out creating API gateway
 
 *   Json error handling for context errors (context policy not found, context not found)

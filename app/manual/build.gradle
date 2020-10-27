@@ -21,11 +21,6 @@ dependencies {
 
     integrationTestImplementation project(":identity-in-memory-repository")
     integrationTestImplementation project(":lockout-in-memory-repository")
-
-    testFixturesApi testFixtures(project(":context-entities"))
-    testFixturesApi testFixtures(project(":lockout-entities"))
-    testFixturesApi testFixtures(project(":policy-entities"))
-    testFixturesApi testFixtures(project(":otp-entities"))
     integrationTestImplementation testFixtures(project(":method-config"))
     integrationTestImplementation testFixtures(project(":identity-use-cases"))
     integrationTestImplementation testFixtures(project(":lockout-use-cases"))
@@ -33,4 +28,11 @@ dependencies {
     integrationTestImplementation testFixtures(project(":method-use-cases"))
     integrationTestImplementation testFixtures(project(":otp-use-cases"))
     integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
+
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesApi testFixtures(project(":context-entities"))
+    testFixturesApi testFixtures(project(":lockout-entities"))
+    testFixturesApi testFixtures(project(":policy-entities"))
+    testFixturesApi testFixtures(project(":otp-entities"))
 }
