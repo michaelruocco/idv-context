@@ -1,4 +1,4 @@
-package uk.co.idv.app.spring.config.context;
+package uk.co.idv.app.spring.config.method;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

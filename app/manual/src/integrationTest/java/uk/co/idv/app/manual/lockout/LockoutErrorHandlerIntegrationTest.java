@@ -15,7 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 class LockoutErrorHandlerIntegrationTest {
 
     private final LockoutConfig config = LockoutConfig.builder().build();
-    private final ErrorHandler handler = config.getErrorHandler();
+    private final ErrorHandler handler = config.errorHandler();
 
     @Test
     void shouldHandlePolicyNotFoundException() {

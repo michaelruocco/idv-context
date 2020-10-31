@@ -2,6 +2,9 @@ package uk.co.idv.app.manual;
 
 import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;
 import uk.co.idv.app.manual.config.AppConfig;
+import uk.co.idv.common.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.handler.CompositeErrorHandler;
+import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.config.ContextConfig;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
@@ -28,6 +31,7 @@ import uk.co.idv.policy.entities.policy.Policies;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
+import java.util.Optional;
 import java.util.UUID;
 
 public class Application {
@@ -43,10 +47,13 @@ public class Application {
     private IdentityService identityService;
     private CreateEligibility createEligibility;
 
+    private ErrorHandler errorHandler;
+
     public Application(AppConfig appConfig) {
         setUpContext(appConfig);
         setUpLockout(appConfig);
         setUpIdentity(appConfig);
+        setUpErrorHandler(appConfig);
     }
 
     public void populatePolicies(ChannelAdapter channelAdapter) {
@@ -154,24 +161,37 @@ public class Application {
         return contextFacade.record(request);
     }
 
+    public Optional<ApiError> handle(Throwable error) {
+        return errorHandler.apply(error);
+    }
+
     private void setUpContext(AppConfig appConfig) {
         ContextConfig contextConfig = appConfig.getContextConfig();
-        this.contextPolicyService = contextConfig.getPolicyService();
+        this.contextPolicyService = contextConfig.policyService();
         this.contextFacade = contextConfig.getFacade();
-        this.contextPoliciesPopulator = contextConfig.getPoliciesPopulator();
+        this.contextPoliciesPopulator = contextConfig.policiesPopulator();
     }
 
     private void setUpLockout(AppConfig appConfig) {
         LockoutConfig lockoutConfig = appConfig.getLockoutConfig();
-        this.lockoutPolicyService = lockoutConfig.getPolicyService();
-        this.lockoutFacade = lockoutConfig.getFacade();
-        this.lockoutPoliciesPopulator = lockoutConfig.getPoliciesPopulator();
+        this.lockoutPolicyService = lockoutConfig.policyService();
+        this.lockoutFacade = lockoutConfig.facade();
+        this.lockoutPoliciesPopulator = lockoutConfig.policiesPopulator();
     }
 
     private void setUpIdentity(AppConfig appConfig) {
         IdentityConfig identityConfig = appConfig.getIdentityConfig();
         this.identityService = identityConfig.identityService();
         this.createEligibility = identityConfig.createEligibility();
+    }
+
+    private void setUpErrorHandler(AppConfig appConfig) {
+        this.errorHandler = new CompositeErrorHandler(
+                appConfig.getErrorHandler(),
+                appConfig.getContextConfig().errorHandler(),
+                appConfig.getLockoutConfig().errorHandler(),
+                appConfig.getIdentityConfig().errorHandler()
+        );
     }
 
 }

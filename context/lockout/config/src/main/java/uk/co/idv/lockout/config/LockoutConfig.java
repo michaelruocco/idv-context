@@ -30,7 +30,7 @@ public class LockoutConfig {
     private final AttemptRepository attemptRepository;
     private final FindIdentity findIdentity;
 
-    public LockoutFacade getFacade() {
+    public LockoutFacade facade() {
         return LockoutFacade.builder()
                 .lockoutService(lockoutService())
                 .converter(lockoutRequestConverter())
@@ -47,15 +47,15 @@ public class LockoutConfig {
                 .build();
     }
 
-    public LockoutPoliciesPopulator getPoliciesPopulator() {
-        return new LockoutPoliciesPopulator(getPolicyService());
+    public LockoutPoliciesPopulator policiesPopulator() {
+        return new LockoutPoliciesPopulator(policyService());
     }
 
-    public LockoutPolicyService getPolicyService() {
+    public LockoutPolicyService policyService() {
         return new LockoutPolicyService(policyRepository);
     }
 
-    public LockoutErrorHandler getErrorHandler() {
+    public LockoutErrorHandler errorHandler() {
         return new LockoutErrorHandler();
     }
 
@@ -72,7 +72,7 @@ public class LockoutConfig {
 
     private RecordAttempt recordAttempt() {
         return RecordAttempt.builder()
-                .policyService(getPolicyService())
+                .policyService(policyService())
                 .reset(resetState())
                 .save(saveAttempts())
                 .load(loadState())
@@ -82,7 +82,7 @@ public class LockoutConfig {
     private ResetLockoutState resetState() {
         return ResetLockoutState.builder()
                 .loadAttempts(loadAttempts())
-                .policyService(getPolicyService())
+                .policyService(policyService())
                 .saveAttempts(saveAttempts())
                 .build();
     }
@@ -97,7 +97,7 @@ public class LockoutConfig {
     private LoadLockoutState loadState() {
         return LoadLockoutState.builder()
                 .loadAttempts(loadAttempts())
-                .policyService(getPolicyService())
+                .policyService(policyService())
                 .build();
     }
 

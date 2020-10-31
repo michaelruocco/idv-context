@@ -1,3 +1,7 @@
+plugins {
+    id "java-test-fixtures"
+}
+
 configurations {
     compile.exclude module: "slf4j-simple"
 }
@@ -18,4 +22,7 @@ dependencies {
     testImplementation testFixtures(project(":method-entities"))
     testImplementation testFixtures(project(":otp-entities"))
     testImplementation "com.github.stefanbirkner:system-lambda:1.1.1"
+
+    testFixturesApi testFixtures(project(":context-entities"))
+    testFixturesApi testFixtures(project(":policy-use-cases"))
 }

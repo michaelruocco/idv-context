@@ -1,4 +1,4 @@
-Feature: Lockout Policy Maintenance
+Feature: Context Policy Maintenance
 
   Background:
     * url baseUrl + "/context-policies"

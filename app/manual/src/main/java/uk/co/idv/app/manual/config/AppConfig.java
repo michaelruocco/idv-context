@@ -2,6 +2,7 @@ package uk.co.idv.app.manual.config;
 
 import lombok.Data;
 import uk.co.idv.app.manual.adapter.app.AppAdapter;
+import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
 import uk.co.idv.identity.config.ExternalFindIdentityConfig;
 import uk.co.idv.method.usecases.MethodBuilders;
@@ -19,6 +20,7 @@ public class AppConfig {
     private final IdentityConfig identityConfig;
     private final LockoutConfig lockoutConfig;
     private final ContextConfig contextConfig;
+    private final ErrorHandler errorHandler;
 
     public AppConfig(MethodBuilders methodBuilders,
                      RepositoryAdapter repositoryAdapter,
@@ -26,6 +28,7 @@ public class AppConfig {
         this.identityConfig = identityConfig(repositoryAdapter, appAdapter);
         this.lockoutConfig = lockoutConfig(repositoryAdapter, appAdapter, identityConfig);
         this.contextConfig = contextConfig(repositoryAdapter, appAdapter, methodBuilders, identityConfig, lockoutConfig);
+        this.errorHandler = appAdapter.getErrorHandler();
         identityConfig.addMergeIdentitiesHandler(lockoutConfig.getMergeIdentitiesHandler());
     }
 

@@ -1,5 +1,6 @@
 dependencies {
     api project(":context-use-cases")
+    api project(":context-json")
     api project(":otp-sim-swap-stub")
 
     implementation project(":identity-config")

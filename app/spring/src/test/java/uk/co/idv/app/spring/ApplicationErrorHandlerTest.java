@@ -3,8 +3,8 @@ package uk.co.idv.app.spring;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import uk.co.idv.app.manual.Application;
 import uk.co.idv.common.adapter.json.error.ApiError;
-import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 
 import java.util.Optional;
 
@@ -14,9 +14,9 @@ import static org.mockito.Mockito.mock;
 
 class ApplicationErrorHandlerTest {
 
-    private final ErrorHandler errorHandler = mock(ErrorHandler.class);
+    private final Application application = mock(Application.class);
 
-    private final ApplicationErrorHandler handler = new ApplicationErrorHandler(errorHandler);
+    private final ApplicationErrorHandler handler = new ApplicationErrorHandler(application);
 
     @Test
     void shouldConvertThrowableToResponseEntityWithError() {
@@ -32,7 +32,7 @@ class ApplicationErrorHandlerTest {
     private void givenConvertedToErrorWithStatus(Throwable cause, HttpStatus status) {
         ApiError error = mock(ApiError.class);
         given(error.getStatus()).willReturn(status.value());
-        given(errorHandler.apply(cause)).willReturn(Optional.of(error));
+        given(application.handle(cause)).willReturn(Optional.of(error));
     }
 
 }

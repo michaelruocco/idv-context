@@ -1,4 +1,4 @@
-Feature: Lockout Policy Maintenance
+Feature: Create Requests
 
   Background:
     * url baseUrl + "/contexts"
@@ -24,13 +24,20 @@ Feature: Lockout Policy Maintenance
       }
       """
     When method POST
-    Then status 500
+    Then status 422
     And match response ==
       """
       {
-        "status": 500,
-        "title": "Internal server error",
-        "message": "channel: context-test-channel1, activity: default-activity, alias types: [credit-card-number]"
+        "status": 422,
+        "title": "Context policy not configured",
+        "message": "Context policy not configured for channel, activity and alias combination",
+        "meta": {
+          "aliasTypes": [
+            "credit-card-number"
+          ],
+          "activityName": "default-activity",
+          "channelId": "context-test-channel1"
+        }
       }
       """
 

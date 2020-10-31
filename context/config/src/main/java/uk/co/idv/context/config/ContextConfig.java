@@ -3,6 +3,7 @@ package uk.co.idv.context.config;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.id.IdGenerator;
+import uk.co.idv.context.adapter.json.error.handler.ContextErrorHandler;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.ContextService;
@@ -52,12 +53,16 @@ public class ContextConfig {
                 .build();
     }
 
-    public ContextPoliciesPopulator getPoliciesPopulator() {
-        return new ContextPoliciesPopulator(getPolicyService());
+    public ContextPoliciesPopulator policiesPopulator() {
+        return new ContextPoliciesPopulator(policyService());
     }
 
-    public ContextPolicyService getPolicyService() {
+    public ContextPolicyService policyService() {
         return new ContextPolicyService(policyRepository);
+    }
+
+    public ContextErrorHandler errorHandler() {
+        return new ContextErrorHandler();
     }
 
     private ContextService contextService() {
@@ -78,7 +83,7 @@ public class ContextConfig {
     private IdentityLoader identityLoader() {
         return IdentityLoader.builder()
                 .createEligibility(createEligibility)
-                .policyService(getPolicyService())
+                .policyService(policyService())
                 .build();
     }
 

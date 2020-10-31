@@ -11,6 +11,8 @@
 
 ## Todo
 
+*   Move ApiError to entities and rename Error and move Error Handlers into use cases
+
 *   Add integration test for merging lockout attempts when identity merged
 
 *   Add functionality to mask mobile numbers on post response by adding flag to policy then using json masker in

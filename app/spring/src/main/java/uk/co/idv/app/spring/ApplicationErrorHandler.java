@@ -6,8 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import uk.co.idv.app.manual.Application;
 import uk.co.idv.common.adapter.json.error.ApiError;
-import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.common.adapter.json.error.internalserver.InternalServerError;
 
 import java.util.Optional;
@@ -17,11 +17,11 @@ import java.util.Optional;
 @Slf4j
 public class ApplicationErrorHandler {
 
-    private final ErrorHandler errorHandler;
+    private final Application application;
 
     @ExceptionHandler(Throwable.class)
     public ResponseEntity<ApiError> handleException(Throwable throwable) {
-        Optional<ApiError> error = errorHandler.apply(throwable);
+        Optional<ApiError> error = application.handle(throwable);
         return toResponseEntity(error.orElse(toInternalServerError(throwable)));
     }
 
