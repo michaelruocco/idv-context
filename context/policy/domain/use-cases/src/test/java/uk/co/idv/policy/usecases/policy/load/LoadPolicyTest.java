@@ -1,7 +1,6 @@
 package uk.co.idv.policy.usecases.policy.load;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.policy.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.policy.entities.policy.MockPolicyMother;
 import uk.co.idv.policy.entities.policy.Policies;
 import uk.co.idv.policy.entities.policy.Policy;
@@ -52,7 +51,19 @@ class LoadPolicyTest {
     }
 
     @Test
-    void shouldLoadPoliciesApplicableToRequest() {
+    void shouldLoadAllPoliciesIfRequestIsEmpty() {
+        Policies<Policy> allPolicies = mock(Policies.class);
+        given(repository.loadAll()).willReturn(allPolicies);
+
+        PolicyRequest request = givenEmptyPolicyRequest();
+
+        Policies<Policy> policies = loadPolicy.load(request);
+
+        assertThat(policies).isEqualTo(allPolicies);
+    }
+
+    @Test
+    void shouldLoadPoliciesApplicableToRequestIfRequestIsNotEmpty() {
         Policies<Policy> allPolicies = mock(Policies.class);
         given(repository.loadAll()).willReturn(allPolicies);
 
@@ -88,9 +99,16 @@ class LoadPolicyTest {
         );
     }
 
+    private PolicyRequest givenEmptyPolicyRequest() {
+        PolicyRequest request = mock(PolicyRequest.class);
+        given(request.isEmpty()).willReturn(true);
+        return request;
+    }
+
     private PolicyRequest givenPoliciesApplicableToRequest(Policies<Policy> allPolicies,
                                                            Policy... policies) {
-        PolicyRequest request = mock(DefaultPolicyRequest.class);
+        PolicyRequest request = mock(PolicyRequest.class);
+        given(request.isEmpty()).willReturn(false);
         Policies<Policy> applicablePolicies = new Policies<>(policies);
         given(allPolicies.getApplicable(request)).willReturn(applicablePolicies);
         return request;

@@ -5,13 +5,13 @@ import org.junitpioneer.jupiter.SetSystemProperty;
 
 import static org.assertj.core.api.Assertions.assertThatCode;
 
-class ApplicationTest {
+class SpringApplicationTest {
 
     @Test
     @SetSystemProperty(key = "spring.profiles.active", value = "stubbed")
     @SetSystemProperty(key = "server.port", value = "0")
     void applicationShouldStartWithStubbedProfile() {
-        assertThatCode(() -> Application.main(new String[0])).doesNotThrowAnyException();
+        assertThatCode(() -> SpringApplication.main(new String[0])).doesNotThrowAnyException();
     }
 
 }

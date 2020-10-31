@@ -4,12 +4,10 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import uk.co.idv.app.manual.Application;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.soft.SoftLockoutPolicyMother;
 import uk.co.idv.policy.entities.policy.DefaultPolicyRequest;
-import uk.co.idv.policy.entities.policy.Policies;
-import uk.co.idv.policy.entities.policy.PolicyRequest;
-import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 
 import java.util.Collections;
 import java.util.UUID;
@@ -17,36 +15,25 @@ import java.util.UUID;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 class LockoutPolicyControllerTest {
 
-    private final LockoutPolicyService service = mock(LockoutPolicyService.class);
+    private final Application application = mock(Application.class);
 
-    private final LockoutPolicyController controller = new LockoutPolicyController(service);
+    private final LockoutPolicyController controller = new LockoutPolicyController(application);
 
     @Test
     void shouldGetPolicyById() {
         UUID id = UUID.randomUUID();
         LockoutPolicy expectedPolicy = SoftLockoutPolicyMother.build();
-        given(service.load(id)).willReturn(expectedPolicy);
+        given(application.loadLockoutPolicy(id)).willReturn(expectedPolicy);
 
         LockoutPolicy policy = controller.getPolicy(id);
 
         assertThat(policy).isEqualTo(expectedPolicy);
-    }
-
-    @Test
-    void shouldGetAllPoliciesIfNoArgumentsProvided() {
-        Policies<LockoutPolicy> expectedPolicies = new Policies<>();
-        given(service.loadAll()).willReturn(expectedPolicies);
-
-        Policies<LockoutPolicy> policies = controller.getPolicies(null, null, null);
-
-        assertThat(policies).isEqualTo(expectedPolicies);
     }
 
     @Test
@@ -58,7 +45,7 @@ class LockoutPolicyControllerTest {
         controller.getPolicies(channelId, activityName, aliasType);
 
         ArgumentCaptor<DefaultPolicyRequest> request = ArgumentCaptor.forClass(DefaultPolicyRequest.class);
-        verify(service).load(request.capture());
+        verify(application).loadLockoutPolicies(request.capture());
         assertThat(request.getValue())
                 .hasFieldOrPropertyWithValue("channelId", channelId)
                 .hasFieldOrPropertyWithValue("activityName", activityName)
@@ -66,25 +53,14 @@ class LockoutPolicyControllerTest {
     }
 
     @Test
-    void shouldGetAllPoliciesByPolicyRequestIfAtLeastOneArgumentProvided() {
-        String channelId = "my-channel";
-        Policies<LockoutPolicy> expectedPolicies = new Policies<>();
-        given(service.load(any(PolicyRequest.class))).willReturn(expectedPolicies);
-
-        Policies<LockoutPolicy> policies = controller.getPolicies(channelId, null, null);
-
-        assertThat(policies).isEqualTo(expectedPolicies);
-    }
-
-    @Test
     void shouldCreatePolicy() {
         LockoutPolicy created = SoftLockoutPolicyMother.build();
         LockoutPolicy expected = mock(LockoutPolicy.class);
-        given(service.load(created.getId())).willReturn(expected);
+        given(application.loadLockoutPolicy(created.getId())).willReturn(expected);
 
         ResponseEntity<LockoutPolicy> response = controller.create(created);
 
-        verify(service).create(created);
+        verify(application).create(created);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isEqualTo(expected);
     }
@@ -105,11 +81,11 @@ class LockoutPolicyControllerTest {
     void shouldUpdatePolicy() {
         LockoutPolicy policy = SoftLockoutPolicyMother.build();
         LockoutPolicy expected = mock(LockoutPolicy.class);
-        given(service.load(policy.getId())).willReturn(expected);
+        given(application.loadLockoutPolicy(policy.getId())).willReturn(expected);
 
         LockoutPolicy updated = controller.update(policy);
 
-        verify(service).update(policy);
+        verify(application).update(policy);
         assertThat(updated).isEqualTo(expected);
     }
 
@@ -119,7 +95,7 @@ class LockoutPolicyControllerTest {
 
         ResponseEntity<Object> response = controller.delete(id);
 
-        verify(service).delete(id);
+        verify(application).deleteLockoutPolicy(id);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         assertThat(response.getBody()).isNull();
     }

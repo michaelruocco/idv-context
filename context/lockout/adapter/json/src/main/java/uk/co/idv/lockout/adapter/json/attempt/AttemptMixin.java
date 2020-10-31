@@ -9,4 +9,7 @@ public interface AttemptMixin {
     @JsonIgnore
     Collection<String> getAliasTypes();
 
+    @JsonIgnore
+    boolean isEmpty();
+
 }

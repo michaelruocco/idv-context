@@ -15,4 +15,7 @@ public interface CreateContextRequestMixin {
     @JsonIgnore
     String getActivityName();
 
+    @JsonIgnore
+    boolean isEmpty();
+
 }

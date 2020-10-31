@@ -17,7 +17,7 @@ class AttemptsSerdeTest {
             .registerModules(new AttemptModule(), new AliasModule())
             .disable(WRITE_DATES_AS_TIMESTAMPS);
 
-    private static final String JSON = VerificationAttemptsJsonMother.build();
+    private static final String JSON = AttemptsJsonMother.build();
     private static final Attempts ATTEMPTS = AttemptsMother.withNumberOfAttempts(2);
 
     @Test

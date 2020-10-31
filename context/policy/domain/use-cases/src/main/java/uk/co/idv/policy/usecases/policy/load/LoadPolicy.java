@@ -37,6 +37,9 @@ public class LoadPolicy<T extends Policy> {
     }
 
     public Policies<T> load(PolicyRequest request) {
+        if (request.isEmpty()) {
+            return loadAll();
+        }
         return load(Collections.singleton(request));
     }
 
