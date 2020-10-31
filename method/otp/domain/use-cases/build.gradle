@@ -3,7 +3,7 @@ plugins {
 }
 
 ext {
-    localPhoneNumberVersion = "0.1.1"
+    localPhoneNumberVersion = "1.0.0"
 }
 
 dependencies {

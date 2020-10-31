@@ -7,7 +7,7 @@ dependencies {
     api project(":identity-json")
     api project(":common-json")
 
-    implementation "org.zalando:jackson-datatype-money:1.2.0"
+    implementation "org.zalando:jackson-datatype-money:1.2.1"
     implementation project(":policy-json")
     implementation project(":method-entities")
     implementation project(":otp-entities")
