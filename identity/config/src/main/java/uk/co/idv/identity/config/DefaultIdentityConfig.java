@@ -3,9 +3,7 @@ package uk.co.idv.identity.config;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.id.IdGenerator;
-import uk.co.idv.common.usecases.id.RandomIdGenerator;
 import uk.co.idv.identity.adapter.json.IdentityErrorHandler;
-import uk.co.idv.identity.adapter.repository.InMemoryIdentityRepository;
 import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.identity.entities.alias.DefaultAliasFactory;
 import uk.co.idv.identity.usecases.eligibility.ChannelCreateEligibility;
@@ -40,14 +38,6 @@ public class DefaultIdentityConfig implements IdentityConfig {
     private final ExternalFindIdentityConfig externalFindIdentityConfig;
     private final IdGenerator idGenerator;
     private final IdentityRepository repository;
-
-    public static IdentityConfig build(ExternalFindIdentityConfig externalFindIdentityConfig) {
-        return DefaultIdentityConfig.builder()
-                .externalFindIdentityConfig(externalFindIdentityConfig)
-                .idGenerator(new RandomIdGenerator())
-                .repository(new InMemoryIdentityRepository())
-                .build();
-    }
 
     @Override
     public FindIdentity findIdentity() {
