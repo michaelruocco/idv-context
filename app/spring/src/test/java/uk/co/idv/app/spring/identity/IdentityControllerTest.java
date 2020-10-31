@@ -3,9 +3,9 @@ package uk.co.idv.app.spring.identity;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import uk.co.idv.app.manual.Application;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
-import uk.co.idv.identity.usecases.identity.IdentityService;
 
 import java.util.UUID;
 
@@ -17,15 +17,15 @@ import static org.mockito.Mockito.mock;
 
 class IdentityControllerTest {
 
-    private final IdentityService facade = mock(IdentityService.class);
+    private final Application application = mock(Application.class);
 
-    private final IdentityController controller = new IdentityController(facade);
+    private final IdentityController controller = new IdentityController(application);
 
     @Test
     void shouldUpsertIdentity() {
         Identity identity = IdentityMother.example();
         Identity expected = IdentityMother.example1();
-        given(facade.update(identity)).willReturn(expected);
+        given(application.update(identity)).willReturn(expected);
 
         ResponseEntity<Identity> response = controller.upsertIdentity(identity);
 
@@ -37,7 +37,7 @@ class IdentityControllerTest {
     void shouldReturnLocationForUpsertedIdentity() {
         Identity identity = IdentityMother.example();
         Identity expected = IdentityMother.example1();
-        given(facade.update(identity)).willReturn(expected);
+        given(application.update(identity)).willReturn(expected);
 
         ResponseEntity<Identity> response = controller.upsertIdentity(identity);
 
@@ -52,7 +52,7 @@ class IdentityControllerTest {
         String aliasType = "my-alias-type";
         String aliasValue = "my-alias-value";
         Identity expected = IdentityMother.example();
-        given(facade.find(aliasType, aliasValue)).willReturn(expected);
+        given(application.findIdentity(aliasType, aliasValue)).willReturn(expected);
 
         Identity identity = controller.getIdentity(aliasType, aliasValue);
 
@@ -63,7 +63,7 @@ class IdentityControllerTest {
     void shouldGetIdentityByIdvId() {
         UUID idvId = UUID.randomUUID();
         Identity expected = IdentityMother.example();
-        given(facade.find(idvId)).willReturn(expected);
+        given(application.findIdentity(idvId)).willReturn(expected);
 
         Identity identity = controller.getIdentity(idvId);
 

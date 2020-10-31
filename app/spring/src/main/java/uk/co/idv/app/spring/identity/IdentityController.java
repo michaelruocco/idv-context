@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import uk.co.idv.app.manual.Application;
 import uk.co.idv.identity.entities.identity.Identity;
-import uk.co.idv.identity.usecases.identity.IdentityService;
 
 import java.net.URI;
 import java.util.UUID;
@@ -23,22 +23,22 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/identities")
 public class IdentityController {
 
-    private final IdentityService facade;
+    private final Application application;
 
     @GetMapping
     public Identity getIdentity(@RequestParam String aliasType,
                                 @RequestParam String aliasValue) {
-        return facade.find(aliasType, aliasValue);
+        return application.findIdentity(aliasType, aliasValue);
     }
 
     @GetMapping("/{idvId}")
     public Identity getIdentity(@PathVariable("idvId") UUID id) {
-        return facade.find(id);
+        return application.findIdentity(id);
     }
 
     @PostMapping
     public ResponseEntity<Identity> upsertIdentity(@RequestBody Identity identity) {
-        Identity updated = facade.update(identity);
+        Identity updated = application.update(identity);
         return ResponseEntity
                 .created(buildGetUri(updated.getIdvIdValue()))
                 .body(updated);
