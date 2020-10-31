@@ -46,7 +46,6 @@ public class AppConfig {
                 .attemptRepository(repositoryAdapter.getAttemptRepository())
                 .policyRepository(repositoryAdapter.getLockoutPolicyRepository())
                 .findIdentity(identityConfig.findIdentity())
-                .aliasFactory(identityConfig.aliasFactory())
                 .build();
     }
 

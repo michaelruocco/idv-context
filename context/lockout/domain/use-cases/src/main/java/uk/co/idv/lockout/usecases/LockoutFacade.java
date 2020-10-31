@@ -1,10 +1,6 @@
 package uk.co.idv.lockout.usecases;
 
 import lombok.Builder;
-import uk.co.idv.identity.entities.alias.Alias;
-import uk.co.idv.identity.entities.alias.AliasFactory;
-import uk.co.idv.identity.entities.alias.Aliases;
-import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.lockout.entities.ExternalLockoutRequest;
 import uk.co.idv.lockout.entities.LockoutRequest;
@@ -16,16 +12,7 @@ public class LockoutFacade {
 
     private final FindIdentity findIdentity;
     private final LockoutService lockoutService;
-    private final AliasFactory aliasFactory;
     private final ExternalLockoutRequestConverter converter;
-
-    public Aliases toAliases(String type, String value) {
-        return new DefaultAliases(toAlias(type, value));
-    }
-
-    public Alias toAlias(String type, String value) {
-        return aliasFactory.build(type, value);
-    }
 
     public LockoutState loadState(ExternalLockoutRequest externalRequest) {
         LockoutRequest lockoutRequest = toLockoutRequest(externalRequest);

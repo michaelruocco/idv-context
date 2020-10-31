@@ -114,6 +114,10 @@ public class Application {
         return identityService.update(identity);
     }
 
+    public Aliases toAliases(String type, String value) {
+        return identityService.toAliases(type, value);
+    }
+
     public Identity findIdentity(String aliasType, String aliasValue) {
         return identityService.find(aliasType, aliasValue);
     }

@@ -24,7 +24,7 @@ class IdentityServiceTest {
     private final FindIdentity find = mock(FindIdentity.class);
     private final AliasFactory aliasFactory = mock(AliasFactory.class);
 
-    private final IdentityService facade = IdentityService.builder()
+    private final IdentityService service = IdentityService.builder()
             .update(update)
             .find(find)
             .aliasFactory(aliasFactory)
@@ -36,7 +36,7 @@ class IdentityServiceTest {
         Identity expected = IdentityMother.example1();
         given(update.update(input)).willReturn(expected);
 
-        Identity identity = facade.update(input);
+        Identity identity = service.update(input);
 
         assertThat(identity).isEqualTo(expected);
     }
@@ -47,7 +47,7 @@ class IdentityServiceTest {
         Identity expected = IdentityMother.example1();
         given(find.find(aliases)).willReturn(expected);
 
-        Identity identity = facade.find(aliases);
+        Identity identity = service.find(aliases);
 
         assertThat(identity).isEqualTo(expected);
     }
@@ -59,7 +59,7 @@ class IdentityServiceTest {
         Alias alias = givenAliasCreatedForTypeAndValue(type, value);
         Identity expectedIdentity = givenIdentityFoundForAlias(alias);
 
-        Identity identity = facade.find(type, value);
+        Identity identity = service.find(type, value);
 
         assertThat(identity).isEqualTo(expectedIdentity);
     }
@@ -70,9 +70,20 @@ class IdentityServiceTest {
         Alias alias = givenAliasReturnedForIdvId(idvIdValue);
         Identity expectedIdentity = givenIdentityFoundForAlias(alias);
 
-        Identity identity = facade.find(idvIdValue);
+        Identity identity = service.find(idvIdValue);
 
         assertThat(identity).isEqualTo(expectedIdentity);
+    }
+
+    @Test
+    void shouldConvertAliasTypeAndValueToAliases() {
+        String type = "my-alias-type";
+        String value = "my-alias-value";
+        Alias expectedAlias = givenAliasCreatedForTypeAndValue(type, value);
+
+        Aliases aliases = service.toAliases(type, value);
+
+        assertThat(aliases).containsExactly(expectedAlias);
     }
 
     private Alias givenAliasReturnedForIdvId(UUID value) {

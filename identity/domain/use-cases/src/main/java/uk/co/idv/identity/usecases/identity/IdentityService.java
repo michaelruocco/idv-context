@@ -34,7 +34,7 @@ public class IdentityService {
         return find.find(toAliases(IdvId.TYPE, idvId.toString()));
     }
 
-    private Aliases toAliases(String type, String value) {
+    public Aliases toAliases(String type, String value) {
         return new DefaultAliases(aliasFactory.build(type, value));
     }
 

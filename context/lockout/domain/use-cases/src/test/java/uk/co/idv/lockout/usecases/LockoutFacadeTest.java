@@ -1,10 +1,7 @@
 package uk.co.idv.lockout.usecases;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.entities.alias.Alias;
-import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.identity.entities.alias.Aliases;
-import uk.co.idv.identity.entities.alias.DefaultAliasMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
 import uk.co.idv.lockout.entities.ExternalLockoutRequest;
@@ -21,39 +18,13 @@ class LockoutFacadeTest {
 
     private final FindIdentity findIdentity = mock(FindIdentity.class);
     private final LockoutService lockoutService = mock(LockoutService.class);
-    private final AliasFactory aliasFactory = mock(AliasFactory.class);
     private final ExternalLockoutRequestConverter converter = mock(ExternalLockoutRequestConverter.class);
 
     private final LockoutFacade facade = LockoutFacade.builder()
             .findIdentity(findIdentity)
             .lockoutService(lockoutService)
-            .aliasFactory(aliasFactory)
             .converter(converter)
             .build();
-
-    @Test
-    void shouldBuildAliases() {
-        String aliasType = "default-alias";
-        String aliasValue = "my-alias-value";
-        Alias expectedAlias = DefaultAliasMother.build();
-        given(aliasFactory.build(aliasType, aliasValue)).willReturn(expectedAlias);
-
-        Aliases aliases = facade.toAliases(aliasType, aliasValue);
-
-        assertThat(aliases).containsExactly(expectedAlias);
-    }
-
-    @Test
-    void shouldBuildAlias() {
-        String aliasType = "default-alias";
-        String aliasValue = "my-alias-value";
-        Alias expectedAlias = DefaultAliasMother.build();
-        given(aliasFactory.build(aliasType, aliasValue)).willReturn(expectedAlias);
-
-        Alias alias = facade.toAlias(aliasType, aliasValue);
-
-        assertThat(alias).isEqualTo(expectedAlias);
-    }
 
     @Test
     void shouldLoadLockoutState() {

@@ -5,7 +5,6 @@ import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.usecases.identity.find.FindIdentity;
 import uk.co.idv.identity.usecases.identity.merge.MergeIdentitiesHandler;
 import uk.co.idv.lockout.adapter.json.error.handler.LockoutErrorHandler;
-import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.lockout.usecases.ExternalLockoutRequestConverter;
 import uk.co.idv.lockout.usecases.LockoutFacade;
 import uk.co.idv.lockout.usecases.LockoutService;
@@ -30,14 +29,12 @@ public class LockoutConfig {
     private final LockoutPolicyRepository policyRepository;
     private final AttemptRepository attemptRepository;
     private final FindIdentity findIdentity;
-    private final AliasFactory aliasFactory;
 
     public LockoutFacade getFacade() {
         return LockoutFacade.builder()
                 .lockoutService(lockoutService())
                 .converter(lockoutRequestConverter())
                 .findIdentity(findIdentity)
-                .aliasFactory(aliasFactory)
                 .build();
     }
 
