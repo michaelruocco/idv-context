@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import uk.co.idv.app.manual.Application;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
-import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
 
 @RestController
@@ -16,13 +16,13 @@ import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
 @RequestMapping("/eligibility")
 public class EligibilityController {
 
-    private final CreateEligibility createEligibility;
+    private final Application application;
 
     @PostMapping
     public ResponseEntity<IdentityEligibility> createEligibility(@RequestBody CreateEligibilityRequest request) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
-                .body(createEligibility.create(request));
+                .body(application.create(request));
     }
 
 }
