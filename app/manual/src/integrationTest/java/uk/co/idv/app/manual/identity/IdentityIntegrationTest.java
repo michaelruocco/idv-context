@@ -2,10 +2,8 @@ package uk.co.idv.app.manual.identity;
 
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
-import uk.co.idv.identity.config.DefaultIdentityConfig;
-import uk.co.idv.identity.config.ExternalFindIdentityConfig;
-import uk.co.idv.identity.config.IdentityConfig;
+import uk.co.idv.app.manual.Application;
+import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
@@ -25,7 +23,6 @@ import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.identity.usecases.identity.IdentityService;
 import uk.co.idv.identity.usecases.identity.create.CountryNotProvidedException;
 import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
 import uk.co.idv.identity.usecases.identity.save.CannotUpdateIdvIdException;
@@ -36,15 +33,14 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 class IdentityIntegrationTest {
 
-    private final ExternalFindIdentityConfig findIdentityConfig = StubExternalFindIdentityConfig.build();
-    private final IdentityConfig identityConfig = DefaultIdentityConfig.build(findIdentityConfig);
-    private final IdentityService service = identityConfig.identityService();
+    private final TestHarness harness = new TestHarness();
+    private final Application application = harness.getApplication();
 
     @Test
     void shouldThrowExceptionForUnsupportedAliasType() {
         String type = "ABC";
 
-        Throwable error = catchThrowable(() -> service.find(type, "123"));
+        Throwable error = catchThrowable(() -> application.findIdentity(type, "123"));
 
         assertThat(error)
                 .isInstanceOf(UnsupportedAliasTypeException.class)
@@ -56,7 +52,7 @@ class IdentityIntegrationTest {
         Aliases aliases = AliasesMother.with(IdvIdMother.idvId());
 
         IdentityNotFoundException error = catchThrowableOfType(
-                () -> service.find(aliases),
+                () -> application.findIdentity(aliases),
                 IdentityNotFoundException.class
         );
 
@@ -67,7 +63,7 @@ class IdentityIntegrationTest {
     void shouldThrowExceptionIfIdentityDoesBelongToCountry() {
         Identity identity = IdentityMother.withoutCountry();
 
-        Throwable error = catchThrowable(() -> service.update(identity));
+        Throwable error = catchThrowable(() -> application.update(identity));
 
         assertThat(error).isInstanceOf(CountryNotProvidedException.class);
     }
@@ -80,7 +76,7 @@ class IdentityIntegrationTest {
                 .phoneNumbers(PhoneNumbersMother.empty())
                 .build();
 
-        Identity created = service.update(identity);
+        Identity created = application.update(identity);
 
         assertThat(created.hasIdvId()).isTrue();
     }
@@ -93,9 +89,9 @@ class IdentityIntegrationTest {
                 .emailAddresses(EmailAddressesMother.empty())
                 .phoneNumbers(PhoneNumbersMother.empty())
                 .build();
-        Identity created = service.update(identity);
+        Identity created = application.update(identity);
 
-        Identity found = service.find(aliases);
+        Identity found = application.findIdentity(aliases);
 
         assertThat(found).isEqualTo(created);
     }
@@ -104,11 +100,11 @@ class IdentityIntegrationTest {
     void cannotUpdateIdvIdOnIdentityAfterCreation() {
         Alias alias = CreditCardNumberMother.creditCardNumber();
         Identity initial = IdentityMother.withAliases(alias);
-        Identity created = service.update(initial);
+        Identity created = application.update(initial);
         Identity updated = IdentityMother.withAliases(alias, IdvIdMother.idvId());
 
         CannotUpdateIdvIdException error = catchThrowableOfType(
-                () -> service.update(updated),
+                () -> application.update(updated),
                 CannotUpdateIdvIdException.class
         );
 
@@ -122,10 +118,10 @@ class IdentityIntegrationTest {
         Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
         Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
         Identity initial = IdentityMother.withAliases(idvId, creditCardNumber, debitCardNumber);
-        Identity created = service.update(initial);
+        Identity created = application.update(initial);
 
         Identity change = IdentityMother.withAliases(idvId, creditCardNumber);
-        Identity updated = service.update(change);
+        Identity updated = application.update(change);
 
         assertThat(created.getAliases()).containsExactly(idvId, creditCardNumber, debitCardNumber);
         assertThat(updated.getAliases()).containsExactly(idvId, creditCardNumber);
@@ -134,38 +130,38 @@ class IdentityIntegrationTest {
     @Test
     void shouldMergeIdentities() {
         CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Identity creditIdentity = service.update(buildCreditIdentity(creditCardNumber));
+        Identity creditIdentity = application.update(buildCreditIdentity(creditCardNumber));
         DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
-        Identity debitIdentity = service.update(buildDebitIdentity(debitCardNumber));
+        Identity debitIdentity = application.update(buildDebitIdentity(debitCardNumber));
         Identity mergeInput = buildMergeInput(creditCardNumber, debitCardNumber);
 
-        Identity merged = service.update(mergeInput);
+        Identity merged = application.update(mergeInput);
 
         IdvId idvId = merged.getIdvId();
         assertThat(idvId)
                 .isNotEqualTo(creditIdentity.getIdvId())
                 .isNotEqualTo(debitIdentity.getIdvId());
         assertThat(merged)
-                .isEqualTo(service.find(AliasesMother.with(creditCardNumber)))
-                .isEqualTo(service.find(AliasesMother.with(debitCardNumber)));
+                .isEqualTo(application.findIdentity(AliasesMother.with(creditCardNumber)))
+                .isEqualTo(application.findIdentity(AliasesMother.with(debitCardNumber)));
     }
 
     @Test
     void shouldThrowExceptionIfAttemptToMergeTwoIdentitiesWithDifferentCountries() {
         CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Identity gbIdentity = service.update(EmptyIdentityMother.builder()
+        Identity gbIdentity = application.update(EmptyIdentityMother.builder()
                 .aliases(AliasesMother.with(creditCardNumber))
                 .country(CountryCode.GB)
                 .build());
         DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
-        Identity deIdentity = service.update(EmptyIdentityMother.builder()
+        Identity deIdentity = application.update(EmptyIdentityMother.builder()
                 .aliases(AliasesMother.with(debitCardNumber))
                 .country(CountryCode.DE)
                 .build());
         Identity mergeInput = buildMergeInput(creditCardNumber, debitCardNumber);
 
         CountryMismatchException error = catchThrowableOfType(
-                () -> service.update(mergeInput),
+                () -> application.update(mergeInput),
                 CountryMismatchException.class
         );
 
@@ -176,12 +172,12 @@ class IdentityIntegrationTest {
     @Test
     void shouldMergeAliasesWhenMergingIdentity() {
         CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Identity creditIdentity = service.update(buildCreditIdentity(creditCardNumber));
+        Identity creditIdentity = application.update(buildCreditIdentity(creditCardNumber));
         DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
-        Identity debitIdentity = service.update(buildDebitIdentity(debitCardNumber));
+        Identity debitIdentity = application.update(buildDebitIdentity(debitCardNumber));
         Identity mergeInput = buildMergeInput(creditCardNumber, debitCardNumber);
 
-        Identity merged = service.update(mergeInput);
+        Identity merged = application.update(mergeInput);
 
         Aliases aliases = merged.getAliases();
         assertThat(aliases).hasSize(3);
@@ -194,12 +190,12 @@ class IdentityIntegrationTest {
     @Test
     void shouldMergeEmailAddressesWhenMergingIdentity() {
         CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Identity creditIdentity = service.update(buildCreditIdentity(creditCardNumber));
+        Identity creditIdentity = application.update(buildCreditIdentity(creditCardNumber));
         DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
-        Identity debitIdentity = service.update(buildDebitIdentity(debitCardNumber));
+        Identity debitIdentity = application.update(buildDebitIdentity(debitCardNumber));
         Identity mergeInput = buildMergeInput(creditCardNumber, debitCardNumber);
 
-        Identity merged = service.update(mergeInput);
+        Identity merged = application.update(mergeInput);
 
         EmailAddresses emailAddresses = merged.getEmailAddresses();
         assertThat(emailAddresses)
@@ -211,12 +207,12 @@ class IdentityIntegrationTest {
     @Test
     void shouldMergePhoneNumbersWhenMergingIdentity() {
         CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Identity creditIdentity = service.update(buildCreditIdentity(creditCardNumber));
+        Identity creditIdentity = application.update(buildCreditIdentity(creditCardNumber));
         DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
-        Identity debitIdentity = service.update(buildDebitIdentity(debitCardNumber));
+        Identity debitIdentity = application.update(buildDebitIdentity(debitCardNumber));
         Identity mergeInput = buildMergeInput(creditCardNumber, debitCardNumber);
 
-        Identity merged = service.update(mergeInput);
+        Identity merged = application.update(mergeInput);
 
         PhoneNumbers phoneNumbers = merged.getPhoneNumbers();
         assertThat(phoneNumbers)

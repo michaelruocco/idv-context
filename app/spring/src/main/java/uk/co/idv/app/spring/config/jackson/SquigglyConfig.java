@@ -8,7 +8,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.app.manual.JsonConfig;
+import uk.co.idv.app.manual.config.JsonConfig;
 
 @Configuration
 @ConditionalOnProperty(value = "response.filtering.enabled", havingValue = "true")

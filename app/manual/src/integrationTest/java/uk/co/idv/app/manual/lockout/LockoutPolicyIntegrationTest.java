@@ -1,25 +1,19 @@
 package uk.co.idv.app.manual.lockout;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.app.manual.JsonConfig;
-import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;
-import uk.co.idv.app.manual.adapter.channel.DefaultChannelAdapter;
+import uk.co.idv.app.manual.Application;
+import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.app.manual.otp.AbcPolicyMother;
 import uk.co.idv.app.manual.otp.GbRsaPolicyMother;
-import uk.co.idv.lockout.config.LockoutConfig;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.entities.policy.hard.HardLockoutPolicyMother;
 import uk.co.idv.lockout.entities.policy.hard.HardLockoutStateCalculatorMother;
-import uk.co.idv.lockout.usecases.policy.LockoutPoliciesPopulator;
-import uk.co.idv.method.adapter.json.method.MethodMappings;
-import uk.co.idv.method.adapter.json.otp.OtpMapping;
 import uk.co.idv.policy.entities.policy.Policies;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.entities.policy.PolicyRequestMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
-import uk.co.idv.lockout.usecases.policy.LockoutPolicyService;
 import uk.co.idv.policy.usecases.policy.load.PolicyNotFoundException;
 
 import java.util.UUID;
@@ -29,17 +23,14 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 class LockoutPolicyIntegrationTest {
 
-    private final LockoutConfigBuilder lockoutConfigBuilder = LockoutConfigBuilder.builder().build();
-    private final LockoutConfig lockoutConfig = lockoutConfigBuilder.build();
-    private final LockoutPolicyService policyService = lockoutConfig.getPolicyService();
-    private final JsonConfig jsonConfig = new JsonConfig(new MethodMappings(new OtpMapping()));
-    private final ChannelAdapter channelAdapter = new DefaultChannelAdapter(jsonConfig.getJsonConverter());
+    private final TestHarness harness = new TestHarness();
+    private final Application application = harness.getApplication();
 
     @Test
     void shouldThrowExceptionIfPolicyNotFoundById() {
         UUID id = UUID.randomUUID();
 
-        Throwable error = catchThrowable(() -> policyService.load(id));
+        Throwable error = catchThrowable(() -> application.loadLockoutPolicy(id));
 
         assertThat(error)
                 .isInstanceOf(PolicyNotFoundException.class)
@@ -50,14 +41,14 @@ class LockoutPolicyIntegrationTest {
     void shouldReturnEmptyPoliciesByKeyIfNoPoliciesFound() {
         PolicyKey key = ChannelPolicyKeyMother.build();
 
-        Policies<LockoutPolicy> policies = policyService.load(key);
+        Policies<LockoutPolicy> policies = application.loadLockoutPolicies(key);
 
         assertThat(policies).isEmpty();
     }
 
     @Test
     void shouldReturnEmptyPoliciesIfLoadAllWhenNoPoliciesSaved() {
-        Policies<LockoutPolicy> policies = policyService.loadAll();
+        Policies<LockoutPolicy> policies = application.loadAllLockoutPolicies();
 
         assertThat(policies).isEmpty();
     }
@@ -65,9 +56,9 @@ class LockoutPolicyIntegrationTest {
     @Test
     void shouldLoadCreatedLockoutPolicyById() {
         LockoutPolicy expected = HardLockoutPolicyMother.build();
-        policyService.create(expected);
+        application.create(expected);
 
-        LockoutPolicy loaded = policyService.load(expected.getId());
+        LockoutPolicy loaded = application.loadLockoutPolicy(expected.getId());
 
         assertThat(loaded).isEqualTo(expected);
     }
@@ -75,10 +66,10 @@ class LockoutPolicyIntegrationTest {
     @Test
     void shouldLoadCreatedLockoutPolicyByPolicyRequest() {
         LockoutPolicy expected = HardLockoutPolicyMother.build();
-        policyService.create(expected);
+        application.create(expected);
         PolicyRequest request = PolicyRequestMother.build();
 
-        Policies<LockoutPolicy> loaded = policyService.load(request);
+        Policies<LockoutPolicy> loaded = application.loadLockoutPolicies(request);
 
         assertThat(loaded).containsExactly(expected);
     }
@@ -86,9 +77,9 @@ class LockoutPolicyIntegrationTest {
     @Test
     void shouldLoadCreatedLockoutPolicyByKey() {
         LockoutPolicy expected = HardLockoutPolicyMother.build();
-        policyService.create(expected);
+        application.create(expected);
 
-        Policies<LockoutPolicy> loaded = policyService.load(expected.getKey());
+        Policies<LockoutPolicy> loaded = application.loadLockoutPolicies(expected.getKey());
 
         assertThat(loaded).containsExactly(expected);
     }
@@ -96,9 +87,9 @@ class LockoutPolicyIntegrationTest {
     @Test
     void shouldLoadCreatedLockoutPolicyWhenAllPoliciesLoaded() {
         LockoutPolicy expected = HardLockoutPolicyMother.build();
-        policyService.create(expected);
+        application.create(expected);
 
-        Policies<LockoutPolicy> loaded = policyService.loadAll();
+        Policies<LockoutPolicy> loaded = application.loadAllLockoutPolicies();
 
         assertThat(loaded).containsExactly(expected);
     }
@@ -107,7 +98,7 @@ class LockoutPolicyIntegrationTest {
     void shouldThrowExceptionIfAttemptToUpdatePolicyThatDoesNotExist() {
         LockoutPolicy policy = HardLockoutPolicyMother.build();
 
-        Throwable error = catchThrowable(() -> policyService.update(policy));
+        Throwable error = catchThrowable(() -> application.update(policy));
 
         assertThat(error)
                 .isInstanceOf(PolicyNotFoundException.class)
@@ -117,12 +108,12 @@ class LockoutPolicyIntegrationTest {
     @Test
     void shouldUpdatePolicy() {
         LockoutPolicy initial = HardLockoutPolicyMother.withMaxNumberOfAttempts(2);
-        policyService.create(initial);
+        application.create(initial);
         LockoutPolicy update = HardLockoutPolicyMother.withMaxNumberOfAttempts(4);
 
-        policyService.update(update);
+        application.update(update);
 
-        LockoutPolicy loaded = policyService.load(update.getId());
+        LockoutPolicy loaded = application.loadLockoutPolicy(update.getId());
         assertThat(loaded).isEqualTo(update);
     }
 
@@ -130,21 +121,20 @@ class LockoutPolicyIntegrationTest {
     void shouldDeletePolicy() {
         LockoutPolicy policy1 = HardLockoutPolicyMother.withId(UUID.randomUUID());
         LockoutPolicy policy2 = HardLockoutPolicyMother.withId(UUID.randomUUID());
-        policyService.create(policy1);
-        policyService.create(policy2);
+        application.create(policy1);
+        application.create(policy2);
 
-        policyService.delete(policy1.getId());
+        application.deleteLockoutPolicy(policy1.getId());
 
-        Policies<LockoutPolicy> policies = policyService.loadAll();
+        Policies<LockoutPolicy> policies = application.loadAllLockoutPolicies();
         assertThat(policies).containsExactly(policy2);
     }
 
     @Test
     void shouldPopulateConfiguredPolicies() {
-        LockoutPoliciesPopulator populator = lockoutConfig.getPoliciesPopulator();
-        populator.populate(channelAdapter.getLockoutPolicies());
+        application.populatePolicies(harness.getChannelAdapter());
 
-        Policies<LockoutPolicy> policies = policyService.loadAll();
+        Policies<LockoutPolicy> policies = application.loadAllLockoutPolicies();
 
         assertThat(policies).containsExactlyInAnyOrder(
                 AbcPolicyMother.abcLockoutPolicy(),
@@ -159,12 +149,11 @@ class LockoutPolicyIntegrationTest {
                 .key(abcPolicy.getKey())
                 .stateCalculator(HardLockoutStateCalculatorMother.build())
                 .build();
-        policyService.create(existingPolicy);
+        application.create(existingPolicy);
 
-        LockoutPoliciesPopulator populator = lockoutConfig.getPoliciesPopulator();
-        populator.populate(channelAdapter.getLockoutPolicies());
+        application.populatePolicies(harness.getChannelAdapter());
 
-        Policies<LockoutPolicy> policies = policyService.loadAll();
+        Policies<LockoutPolicy> policies = application.loadAllLockoutPolicies();
         assertThat(policies).containsExactlyInAnyOrder(
                 existingPolicy,
                 GbRsaPolicyMother.gbRsaLockoutPolicy()

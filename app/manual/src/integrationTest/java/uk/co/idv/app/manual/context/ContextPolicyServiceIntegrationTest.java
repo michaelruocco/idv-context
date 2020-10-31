@@ -1,29 +1,14 @@
 package uk.co.idv.app.manual.context;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.app.manual.AppConfig;
-import uk.co.idv.app.manual.JsonConfig;
-import uk.co.idv.app.manual.adapter.app.AppAdapter;
-import uk.co.idv.app.manual.adapter.app.DefaultAppAdapter;
-import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;
-import uk.co.idv.app.manual.adapter.channel.DefaultChannelAdapter;
-import uk.co.idv.app.manual.adapter.repository.InMemoryRepositoryAdapter;
-import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
+import uk.co.idv.app.manual.Application;
+import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.app.manual.otp.AbcPolicyMother;
 import uk.co.idv.app.manual.otp.GbRsaPolicyMother;
-import uk.co.idv.context.adapter.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicyMother;
-import uk.co.idv.context.usecases.policy.ContextPoliciesPopulator;
-import uk.co.idv.context.usecases.policy.ContextPolicyService;
-import uk.co.idv.method.adapter.json.method.MethodMappings;
-import uk.co.idv.method.adapter.json.fake.FakeMethodMapping;
-import uk.co.idv.method.adapter.json.otp.OtpMapping;
-import uk.co.idv.method.config.AppMethodConfig;
-import uk.co.idv.method.config.otp.AppOtpConfig;
-import uk.co.idv.method.usecases.MethodBuilders;
 import uk.co.idv.policy.entities.policy.Policies;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.entities.policy.PolicyRequestMother;
@@ -38,26 +23,14 @@ import static org.assertj.core.api.Assertions.catchThrowable;
 
 class ContextPolicyServiceIntegrationTest {
 
-    private final RepositoryAdapter repositoryAdapter = new InMemoryRepositoryAdapter();
-    private final AppAdapter appAdapter = DefaultAppAdapter.builder().build();
-    private final AppMethodConfig otpConfig = AppOtpConfig.builder()
-            .simSwapExecutorConfig(StubSimSwapExecutorConfig.buildDefault())
-            .clock(appAdapter.getClock())
-            .idGenerator(appAdapter.getIdGenerator())
-            .contextRepository(repositoryAdapter.getContextRepository())
-            .build();
-    private final MethodBuilders methodBuilders = new MethodBuilders(otpConfig.methodBuilder());
-    private final AppConfig appConfig = new AppConfig(methodBuilders, repositoryAdapter, appAdapter);
-    private final JsonConfig jsonConfig = new JsonConfig(new MethodMappings(new FakeMethodMapping(), new OtpMapping()));
-    private final ChannelAdapter channelAdapter = new DefaultChannelAdapter(jsonConfig.getJsonConverter());
-
-    private final ContextPolicyService policyService = appConfig.getContextConfig().getPolicyService();
+    private final TestHarness harness = new TestHarness();
+    private final Application application = harness.getApplication();
 
     @Test
     void shouldThrowExceptionIfPolicyNotFoundById() {
         UUID id = UUID.randomUUID();
 
-        Throwable error = catchThrowable(() -> policyService.load(id));
+        Throwable error = catchThrowable(() -> application.loadContextPolicy(id));
 
         assertThat(error)
                 .isInstanceOf(PolicyNotFoundException.class)
@@ -68,14 +41,14 @@ class ContextPolicyServiceIntegrationTest {
     void shouldReturnEmptyPoliciesByKeyIfNoPoliciesFound() {
         PolicyKey key = ChannelPolicyKeyMother.build();
 
-        Policies<ContextPolicy> policies = policyService.load(key);
+        Policies<ContextPolicy> policies = application.loadContextPolicies(key);
 
         assertThat(policies).isEmpty();
     }
 
     @Test
     void shouldReturnEmptyPoliciesIfLoadAllWhenNoPoliciesSaved() {
-        Policies<ContextPolicy> policies = policyService.loadAll();
+        Policies<ContextPolicy> policies = application.loadAllContextPolicies();
 
         assertThat(policies).isEmpty();
     }
@@ -83,9 +56,9 @@ class ContextPolicyServiceIntegrationTest {
     @Test
     void shouldLoadCreatedContextPolicyById() {
         ContextPolicy expected = ContextPolicyMother.build();
-        policyService.create(expected);
+        application.create(expected);
 
-        ContextPolicy loaded = policyService.load(expected.getId());
+        ContextPolicy loaded = application.loadContextPolicy(expected.getId());
 
         assertThat(loaded).isEqualTo(expected);
     }
@@ -93,10 +66,10 @@ class ContextPolicyServiceIntegrationTest {
     @Test
     void shouldLoadCreatedContextPolicyByPolicyRequest() {
         ContextPolicy expected = ContextPolicyMother.build();
-        policyService.create(expected);
+        application.create(expected);
         PolicyRequest request = PolicyRequestMother.build();
 
-        Policies<ContextPolicy> loaded = policyService.load(request);
+        Policies<ContextPolicy> loaded = application.loadContextPolicies(request);
 
         assertThat(loaded).containsExactly(expected);
     }
@@ -104,9 +77,9 @@ class ContextPolicyServiceIntegrationTest {
     @Test
     void shouldLoadCreatedContextPolicyByKey() {
         ContextPolicy expected = ContextPolicyMother.build();
-        policyService.create(expected);
+        application.create(expected);
 
-        Policies<ContextPolicy> loaded = policyService.load(expected.getKey());
+        Policies<ContextPolicy> loaded = application.loadContextPolicies(expected.getKey());
 
         assertThat(loaded).containsExactly(expected);
     }
@@ -114,9 +87,9 @@ class ContextPolicyServiceIntegrationTest {
     @Test
     void shouldLoadCreatedContextPolicyWhenAllPoliciesLoaded() {
         ContextPolicy expected = ContextPolicyMother.build();
-        policyService.create(expected);
+        application.create(expected);
 
-        Policies<ContextPolicy> loaded = policyService.loadAll();
+        Policies<ContextPolicy> loaded = application.loadAllContextPolicies();
 
         assertThat(loaded).containsExactly(expected);
     }
@@ -125,7 +98,7 @@ class ContextPolicyServiceIntegrationTest {
     void shouldThrowExceptionIfAttemptToUpdatePolicyThatDoesNotExist() {
         ContextPolicy policy = ContextPolicyMother.build();
 
-        Throwable error = catchThrowable(() -> policyService.update(policy));
+        Throwable error = catchThrowable(() -> application.update(policy));
 
         assertThat(error)
                 .isInstanceOf(PolicyNotFoundException.class)
@@ -135,12 +108,12 @@ class ContextPolicyServiceIntegrationTest {
     @Test
     void shouldUpdatePolicy() {
         ContextPolicy initial = ContextPolicyMother.withPolicy(SequencePolicyMother.withName("sequence"));
-        policyService.create(initial);
+        application.create(initial);
         ContextPolicy update = ContextPolicyMother.withPolicy(SequencePolicyMother.withName("updated-sequence"));
 
-        policyService.update(update);
+        application.update(update);
 
-        ContextPolicy loaded = policyService.load(update.getId());
+        ContextPolicy loaded = application.loadContextPolicy(update.getId());
         assertThat(loaded).isEqualTo(update);
     }
 
@@ -148,21 +121,20 @@ class ContextPolicyServiceIntegrationTest {
     void shouldDeletePolicy() {
         ContextPolicy policy1 = ContextPolicyMother.withKey(ChannelPolicyKeyMother.withId(UUID.randomUUID()));
         ContextPolicy policy2 = ContextPolicyMother.withKey(ChannelPolicyKeyMother.withId(UUID.randomUUID()));
-        policyService.create(policy1);
-        policyService.create(policy2);
+        application.create(policy1);
+        application.create(policy2);
 
-        policyService.delete(policy1.getId());
+        application.deleteContextPolicy(policy1.getId());
 
-        Policies<ContextPolicy> policies = policyService.loadAll();
+        Policies<ContextPolicy> policies = application.loadAllContextPolicies();
         assertThat(policies).containsExactly(policy2);
     }
 
     @Test
     void shouldPopulateConfiguredPolicies() {
-        ContextPoliciesPopulator populator = appConfig.getContextConfig().getPoliciesPopulator();
-        populator.populate(channelAdapter.getContextPolicies());
+        application.populatePolicies(harness.getChannelAdapter());
 
-        Policies<ContextPolicy> policies = policyService.loadAll();
+        Policies<ContextPolicy> policies = application.loadAllContextPolicies();
 
         assertThat(policies).containsExactlyInAnyOrder(
                 AbcPolicyMother.abcContextPolicy(),
@@ -177,12 +149,11 @@ class ContextPolicyServiceIntegrationTest {
                 .key(abcPolicy.getKey())
                 .sequencePolicies(SequencePoliciesMother.empty())
                 .build();
-        policyService.create(existingPolicy);
+        application.create(existingPolicy);
 
-        ContextPoliciesPopulator populator = appConfig.getContextConfig().getPoliciesPopulator();
-        populator.populate(channelAdapter.getContextPolicies());
+        application.populatePolicies(harness.getChannelAdapter());
 
-        Policies<ContextPolicy> policies = policyService.loadAll();
+        Policies<ContextPolicy> policies = application.loadAllContextPolicies();
         assertThat(policies).containsExactlyInAnyOrder(
                 existingPolicy,
                 GbRsaPolicyMother.gbRsaContextPolicy()

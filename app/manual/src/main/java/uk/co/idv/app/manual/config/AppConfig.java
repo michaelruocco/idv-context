@@ -1,4 +1,4 @@
-package uk.co.idv.app.manual;
+package uk.co.idv.app.manual.config;
 
 import lombok.Data;
 import uk.co.idv.app.manual.adapter.app.AppAdapter;
@@ -15,6 +15,7 @@ import uk.co.idv.lockout.config.LockoutConfig;
 public class AppConfig {
 
     private final ExternalFindIdentityConfig externalFindIdentityConfig = StubExternalFindIdentityConfig.build();
+
     private final IdentityConfig identityConfig;
     private final LockoutConfig lockoutConfig;
     private final ContextConfig contextConfig;

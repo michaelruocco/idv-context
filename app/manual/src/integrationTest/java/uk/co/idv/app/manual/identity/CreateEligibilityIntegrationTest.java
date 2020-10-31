@@ -1,10 +1,8 @@
 package uk.co.idv.app.manual.identity;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
-import uk.co.idv.identity.config.DefaultIdentityConfig;
-import uk.co.idv.identity.config.ExternalFindIdentityConfig;
-import uk.co.idv.identity.config.IdentityConfig;
+import uk.co.idv.app.manual.Application;
+import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
@@ -18,10 +16,8 @@ import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumberMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequestMother;
-import uk.co.idv.identity.usecases.identity.IdentityService;
 import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,11 +25,8 @@ import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
 class CreateEligibilityIntegrationTest {
 
-    private final ExternalFindIdentityConfig findIdentityConfig = StubExternalFindIdentityConfig.build();
-    private final IdentityConfig identityConfig = DefaultIdentityConfig.build(findIdentityConfig);
-
-    private final CreateEligibility createEligibility = identityConfig.createEligibility();
-    private final IdentityService facade = identityConfig.identityService();
+    private final TestHarness harness = new TestHarness();
+    private final Application application = harness.getApplication();
 
     @Test
     void shouldThrowExceptionIfIdentityNotFoundForRsa() {
@@ -43,7 +36,7 @@ class CreateEligibilityIntegrationTest {
                 .build();
 
         IdentityNotFoundException error = catchThrowableOfType(
-                () -> createEligibility.create(request),
+                () -> application.create(request),
                 IdentityNotFoundException.class
         );
 
@@ -54,13 +47,13 @@ class CreateEligibilityIntegrationTest {
     void shouldReturnIdentityWithInternalDataIfIdentityExistsForRsa() {
         DefaultAliases aliases = AliasesMother.creditCardNumberOnly();
         Identity identity = IdentityMother.withAliases(aliases);
-        Identity created = facade.update(identity);
+        Identity created = application.update(identity);
         CreateEligibilityRequest request = CreateEligibilityRequestMother.builder()
                 .aliases(aliases)
                 .channel(GbRsaMother.rsa())
                 .build();
 
-        IdentityEligibility eligibility = createEligibility.create(request);
+        IdentityEligibility eligibility = application.create(request);
 
         assertThat(eligibility.getIdentity()).usingRecursiveComparison().isEqualTo(created);
     }
@@ -72,7 +65,7 @@ class CreateEligibilityIntegrationTest {
                 .channel(AbcMother.abc())
                 .build();
 
-        IdentityEligibility eligibility = createEligibility.create(request);
+        IdentityEligibility eligibility = application.create(request);
 
         Identity identity = eligibility.getIdentity();
         assertThat(identity.hasIdvId()).isTrue();
@@ -88,14 +81,14 @@ class CreateEligibilityIntegrationTest {
                 .phoneNumbers(PhoneNumbersMother.with(PhoneNumberMother.withNumber("+447890123456")))
                 .emailAddresses(EmailAddressesMother.with("test@email.com"))
                 .build();
-        Identity existing = facade.update(identity);
+        Identity existing = application.update(identity);
         CreateEligibilityRequest request = CreateEligibilityRequestMother.builder()
                 .aliases(aliases)
                 .channel(AbcMother.abc())
                 .build();
-        createEligibility.create(request);
+        application.create(request);
 
-        Identity updated = facade.find(request.getAliases());
+        Identity updated = application.findIdentity(request.getAliases());
 
         assertThat(updated.getIdvId()).isEqualTo(existing.getIdvId());
         assertThat(updated.getPhoneNumbers()).containsExactlyElementsOf(existing.getPhoneNumbers());
@@ -112,14 +105,14 @@ class CreateEligibilityIntegrationTest {
                 .phoneNumbers(PhoneNumbersMother.empty())
                 .emailAddresses(EmailAddressesMother.empty())
                 .build();
-        facade.update(identity);
+        application.update(identity);
         DefaultChannel channel = DefaultChannelMother.build();
         CreateEligibilityRequest request = CreateEligibilityRequestMother.builder()
                 .aliases(aliases)
                 .channel(channel)
                 .build();
 
-        IdentityEligibility eligibility = createEligibility.create(request);
+        IdentityEligibility eligibility = application.create(request);
 
         Identity updated = eligibility.getIdentity();
         assertThat(updated)

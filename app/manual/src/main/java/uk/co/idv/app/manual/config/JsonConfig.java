@@ -1,4 +1,4 @@
-package uk.co.idv.app.manual;
+package uk.co.idv.app.manual.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Data;

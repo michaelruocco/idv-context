@@ -15,9 +15,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class IdentityErrorHandlerIntegrationTest {
 
-    private final IdentityConfig config = DefaultIdentityConfig.builder()
-            .build();
-
+    private final IdentityConfig config = DefaultIdentityConfig.builder().build();
     private final ErrorHandler handler = config.errorHandler();
 
     @Test

@@ -2,7 +2,7 @@ package uk.co.idv.app.spring.config.context;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.app.manual.AppConfig;
+import uk.co.idv.app.manual.config.AppConfig;
 import uk.co.idv.context.config.ContextConfig;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.policy.ContextPoliciesPopulator;

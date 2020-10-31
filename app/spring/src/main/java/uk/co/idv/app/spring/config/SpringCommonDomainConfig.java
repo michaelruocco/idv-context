@@ -3,7 +3,7 @@ package uk.co.idv.app.spring.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
-import uk.co.idv.app.manual.AppConfig;
+import uk.co.idv.app.manual.config.AppConfig;
 import uk.co.idv.app.manual.adapter.app.AppAdapter;
 import uk.co.idv.app.manual.adapter.app.DefaultAppAdapter;
 import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;

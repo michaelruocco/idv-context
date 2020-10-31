@@ -2,7 +2,7 @@ package uk.co.idv.app.spring.config.identity;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.app.manual.AppConfig;
+import uk.co.idv.app.manual.config.AppConfig;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
