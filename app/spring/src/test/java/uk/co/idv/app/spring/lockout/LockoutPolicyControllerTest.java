@@ -8,6 +8,8 @@ import uk.co.idv.app.manual.Application;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.soft.SoftLockoutPolicyMother;
 import uk.co.idv.policy.entities.policy.DefaultPolicyRequest;
+import uk.co.idv.policy.entities.policy.Policies;
+import uk.co.idv.policy.entities.policy.PolicyRequest;
 
 import java.util.Collections;
 import java.util.UUID;
@@ -15,6 +17,7 @@ import java.util.UUID;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -50,6 +53,17 @@ class LockoutPolicyControllerTest {
                 .hasFieldOrPropertyWithValue("channelId", channelId)
                 .hasFieldOrPropertyWithValue("activityName", activityName)
                 .hasFieldOrPropertyWithValue("aliasTypes", Collections.singleton(aliasType));
+    }
+
+    @Test
+    void shouldGetAllPoliciesByPolicyRequestIfAtLeastOneArgumentProvided() {
+        String channelId = "my-channel";
+        Policies<LockoutPolicy> expectedPolicies = new Policies<>();
+        given(application.loadLockoutPolicies(any(PolicyRequest.class))).willReturn(expectedPolicies);
+
+        Policies<LockoutPolicy> policies = controller.getPolicies(channelId, null, null);
+
+        assertThat(policies).isEqualTo(expectedPolicies);
     }
 
     @Test

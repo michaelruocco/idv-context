@@ -3,6 +3,7 @@ package uk.co.idv.app.spring.context;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import uk.co.idv.app.manual.Application;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
@@ -10,7 +11,6 @@ import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
 import uk.co.idv.context.entities.result.FacadeRecordResultRequestMother;
-import uk.co.idv.context.usecases.context.ContextFacade;
 
 import java.util.UUID;
 
@@ -22,9 +22,9 @@ import static org.mockito.Mockito.mock;
 
 class ContextControllerTest {
 
-    private final ContextFacade facade = mock(ContextFacade.class);
+    private final Application application = mock(Application.class);
 
-    private final ContextController controller = new ContextController(facade);
+    private final ContextController controller = new ContextController(application);
 
     @Test
     void shouldCreateContext() {
@@ -72,19 +72,19 @@ class ContextControllerTest {
 
     private Context givenContextCreatedFor(CreateContextRequest request) {
         Context context = ContextMother.build();
-        given(facade.create(request)).willReturn(context);
+        given(application.create(request)).willReturn(context);
         return context;
     }
 
     private Context givenContextLoadedFor(UUID id) {
         Context context = ContextMother.build();
-        given(facade.find(id)).willReturn(context);
+        given(application.findContext(id)).willReturn(context);
         return context;
     }
 
     private Context givenContextUpdatedFor(FacadeRecordResultRequest request) {
         Context context = ContextMother.build();
-        given(facade.record(request)).willReturn(context);
+        given(application.record(request)).willReturn(context);
         return context;
     }
 

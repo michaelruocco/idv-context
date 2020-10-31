@@ -4,9 +4,9 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import uk.co.idv.app.manual.Application;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
-import uk.co.idv.context.usecases.policy.ContextPolicyService;
 import uk.co.idv.policy.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.policy.entities.policy.Policies;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
@@ -24,29 +24,19 @@ import static org.mockito.Mockito.verify;
 
 class ContextPolicyControllerTest {
 
-    private final ContextPolicyService service = mock(ContextPolicyService.class);
+    private final Application application = mock(Application.class);
 
-    private final ContextPolicyController controller = new ContextPolicyController(service);
+    private final ContextPolicyController controller = new ContextPolicyController(application);
 
     @Test
     void shouldGetPolicyById() {
         UUID id = UUID.randomUUID();
         ContextPolicy expectedPolicy = ContextPolicyMother.build();
-        given(service.load(id)).willReturn(expectedPolicy);
+        given(application.loadContextPolicy(id)).willReturn(expectedPolicy);
 
         ContextPolicy policy = controller.getPolicy(id);
 
         assertThat(policy).isEqualTo(expectedPolicy);
-    }
-
-    @Test
-    void shouldGetAllPoliciesIfNoArgumentsProvided() {
-        Policies<ContextPolicy> expectedPolicies = new Policies<>();
-        given(service.loadAll()).willReturn(expectedPolicies);
-
-        Policies<ContextPolicy> policies = controller.getPolicies(null, null, null);
-
-        assertThat(policies).isEqualTo(expectedPolicies);
     }
 
     @Test
@@ -58,7 +48,7 @@ class ContextPolicyControllerTest {
         controller.getPolicies(channelId, activityName, aliasType);
 
         ArgumentCaptor<DefaultPolicyRequest> request = ArgumentCaptor.forClass(DefaultPolicyRequest.class);
-        verify(service).load(request.capture());
+        verify(application).loadContextPolicies(request.capture());
         assertThat(request.getValue())
                 .hasFieldOrPropertyWithValue("channelId", channelId)
                 .hasFieldOrPropertyWithValue("activityName", activityName)
@@ -69,7 +59,7 @@ class ContextPolicyControllerTest {
     void shouldGetAllPoliciesByPolicyRequestIfAtLeastOneArgumentProvided() {
         String channelId = "my-channel";
         Policies<ContextPolicy> expectedPolicies = new Policies<>();
-        given(service.load(any(PolicyRequest.class))).willReturn(expectedPolicies);
+        given(application.loadContextPolicies(any(PolicyRequest.class))).willReturn(expectedPolicies);
 
         Policies<ContextPolicy> policies = controller.getPolicies(channelId, null, null);
 
@@ -80,11 +70,11 @@ class ContextPolicyControllerTest {
     void shouldCreatePolicy() {
         ContextPolicy created = ContextPolicyMother.build();
         ContextPolicy expected = mock(ContextPolicy.class);
-        given(service.load(created.getId())).willReturn(expected);
+        given(application.loadContextPolicy(created.getId())).willReturn(expected);
 
         ResponseEntity<ContextPolicy> response = controller.create(created);
 
-        verify(service).create(created);
+        verify(application).create(created);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
         assertThat(response.getBody()).isEqualTo(expected);
     }
@@ -105,11 +95,11 @@ class ContextPolicyControllerTest {
     void shouldUpdatePolicy() {
         ContextPolicy policy = ContextPolicyMother.build();
         ContextPolicy expected = mock(ContextPolicy.class);
-        given(service.load(policy.getId())).willReturn(expected);
+        given(application.loadContextPolicy(policy.getId())).willReturn(expected);
 
         ContextPolicy updated = controller.update(policy);
 
-        verify(service).update(policy);
+        verify(application).update(policy);
         assertThat(updated).isEqualTo(expected);
     }
 
@@ -119,7 +109,7 @@ class ContextPolicyControllerTest {
 
         ResponseEntity<Object> response = controller.delete(id);
 
-        verify(service).delete(id);
+        verify(application).deleteContextPolicy(id);
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
         assertThat(response.getBody()).isNull();
     }
