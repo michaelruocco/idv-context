@@ -77,7 +77,7 @@ springBoot {
 
 bootRun {
     systemProperties = System.getProperties()
-    systemProperty "spring.profiles.active", System.properties.getOrDefault("spring.profiles.active", "stubbed")
+    systemProperty "spring.profiles.active", System.properties.getOrDefault("spring.profiles.active", "local,stubbed")
     systemProperty "server.port", System.properties.getOrDefault("server.port", "8081")
     systemProperty "response.filtering.enabled", System.properties.getOrDefault("response.filtering.enabled", "true")
 }
