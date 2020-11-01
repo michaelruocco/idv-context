@@ -22,6 +22,8 @@ import uk.co.mruoc.spring.filter.logging.response.TransformingResponseBodyExtrac
 import uk.co.mruoc.spring.filter.logging.response.ResponseBodyExtractor;
 import uk.co.mruoc.spring.filter.logging.response.ResponseLoggingFilter;
 import uk.co.mruoc.spring.filter.logging.response.SimpleResponseBodyExtractor;
+import uk.co.mruoc.spring.filter.logging.uritransform.TransformRequestUriMdcPopulatorFilter;
+import uk.co.mruoc.spring.filter.logging.uritransform.UuidIdStringTransformer;
 
 import java.time.Clock;
 import java.util.Collection;
@@ -122,6 +124,16 @@ public class FilterConfig {
         bean.setOrder(4);
         bean.addUrlPatterns(getDefaultUrlPatterns());
         bean.setName("defaultResponseLoggingFilter");
+        return bean;
+    }
+
+    @Bean
+    public FilterRegistrationBean<TransformRequestUriMdcPopulatorFilter> getContextUriTransformerFilter() {
+        FilterRegistrationBean<TransformRequestUriMdcPopulatorFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new TransformRequestUriMdcPopulatorFilter(new UuidIdStringTransformer()));
+        bean.setOrder(5);
+        bean.addUrlPatterns("/contexts/*");
+        bean.setName("getContextUriTransformerFilter");
         return bean;
     }
 

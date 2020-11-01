@@ -11,16 +11,14 @@
 
 ## Todo
 
-*   Json error handling for context errors (context not found, context expired)
-
-*   Add mandatory header validator for channel id and correlation id and uri transformer uri
-
-*   Tidy up cloud formation templates and try out creating API gateway
+*   Add mandatory header validator for channel id and correlation id
 
 *   Add functionality to mask mobile numbers on post response by adding flag to policy then using json masker in
     response filter using jsonpath to see if policy flag is true
     
-*   Add functionality to log transformed uri to allow log aggregation for endpoints that contain unique ids
+*   Add spring app integration test for context expiry and endpoint to control time from test
+
+*   Tidy up cloud formation templates and try out creating API gateway
 
 *   Make stub delays and identity lookup timeout configurable (by channel / add identity eligibility policy?)
 

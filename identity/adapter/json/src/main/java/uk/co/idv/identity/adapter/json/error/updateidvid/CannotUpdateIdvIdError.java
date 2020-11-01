@@ -6,7 +6,6 @@ import uk.co.idv.common.adapter.json.error.DefaultApiError;
 import uk.co.idv.identity.entities.alias.IdvId;
 import java.util.Map;
 
-@Builder
 @Getter
 public class CannotUpdateIdvIdError extends DefaultApiError {
 
@@ -16,6 +15,7 @@ public class CannotUpdateIdvIdError extends DefaultApiError {
     private final IdvId updated;
     private final IdvId existing;
 
+    @Builder
     public CannotUpdateIdvIdError(IdvId updated, IdvId existing) {
         super(STATUS, TITLE, toMessage(updated, existing), toMap(updated, existing));
         this.updated = updated;
