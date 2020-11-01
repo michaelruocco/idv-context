@@ -886,3 +886,60 @@ Feature: Create Requests
         "complete": false
       }
       """
+
+  Scenario: Create and get context - Success - context returned
+    Given url baseUrl + "/identities"
+    And request
+      """
+      {
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4927111111111115" }
+        ],
+        "phoneNumbers": [
+          { "value": "+4407808247743" }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    And url baseUrl + "/contexts"
+    And request
+      """
+      {
+        "channel": {
+          "id": "abc",
+          "country": "GB"
+        },
+        "activity": {
+          "name": "login",
+          "timestamp": "2020-09-27T06:56:47.522Z"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111115"
+          }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    * def contextId = response.id
+    And url baseUrl + "/contexts/" + contextId
+    And method GET
+    And status 200
+
+  Scenario: Get context - Error - context not found
+    * def contextId = "bacf1ac9-d33e-4e2f-9fff-a01bfab45bbd"
+    Given url baseUrl + "/contexts/" + contextId
+    When method GET
+    Then status 404
+    And match response ==
+      """
+      {
+        "status": 404,
+        "title": "Context not found",
+        "message": "#(contextId)"
+      }
+      """

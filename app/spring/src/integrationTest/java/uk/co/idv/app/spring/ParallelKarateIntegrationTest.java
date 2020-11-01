@@ -80,6 +80,7 @@ class ParallelKarateIntegrationTest {
         System.setProperty("aws.dynamo.db.endpoint.uri", AWS_SERVICES.getDynamoEndpointUri());
         System.setProperty("redis.endpoint.uri", REDIS.getEndpointUri());
         System.setProperty("response.filtering.enabled", "true");
+        System.setProperty("spring.profiles.active", "local");
     }
 
 }
