@@ -18,6 +18,8 @@
     
 *   Add spring app integration test for context expiry and endpoint to control time from test
 
+*   Add postman collection to repo and run in build pipeline
+
 *   Tidy up cloud formation templates and try out creating API gateway
 
 *   Make stub delays and identity lookup timeout configurable (by channel / add identity eligibility policy?)
