@@ -15,6 +15,8 @@ import uk.co.idv.context.adapter.method.otp.delivery.phone.simswap.StubSimSwapEx
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
+import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
+import uk.co.idv.context.entities.result.FacadeRecordResultRequestMother;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
@@ -29,12 +31,15 @@ import uk.co.idv.method.config.AppMethodConfig;
 import uk.co.idv.method.config.otp.AppOtpConfig;
 import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
+import uk.co.idv.method.entities.result.Result;
+import uk.co.idv.method.entities.result.ResultMother;
 import uk.co.idv.method.usecases.MethodBuilders;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
 import java.time.Duration;
 import java.time.Instant;
+import java.util.UUID;
 
 public class TestHarness {
 
@@ -118,6 +123,18 @@ public class TestHarness {
 
     public void givenLockoutPolicyExists(LockoutPolicy policy) {
         application.create(policy);
+    }
+
+    public void givenUnsuccessfulResultRecorded(UUID contextId) {
+        Result result = ResultMother.builder()
+                .methodName("fake-method")
+                .successful(false)
+                .build();
+        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+                .contextId(contextId)
+                .result(result)
+                .build();
+        application.record(recordRequest);
     }
 
 }

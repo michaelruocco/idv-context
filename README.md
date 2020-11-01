@@ -13,9 +13,9 @@
 
 *   Move ApiError to entities and rename Error and move Error Handlers into use cases
 
-*   Add integration test for merging lockout attempts when identity merged
-
 *   Json error handling for context errors (context not found, context expired)
+
+*   Add mandatory header validator for channel id and correlation id and uri transformer uri
 
 *   Tidy up cloud formation templates and try out creating API gateway
 
