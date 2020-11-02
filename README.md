@@ -22,12 +22,12 @@
 
 *   Tidy up cloud formation templates and try out creating API gateway
 
+*   Add specific method result types, e.g. for OTP delivery time, actual and used otp codes, verify type, 
+    maybe delivery id for sending message
+    
 *   Make stub delays and identity lookup timeout configurable (by channel / add identity eligibility policy?)
 
 *   Extract common dynamo adapter to its own separate library
-
-*   Add specific method result types, e.g. for OTP delivery time, actual and used otp codes, verify type, 
-    maybe delivery id for sending message
 
 ## Useful commands
 
