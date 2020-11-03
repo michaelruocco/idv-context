@@ -11,6 +11,8 @@
 
 ## Todo
 
+*   Move MDC clear filter into spring filters library
+
 *   Add mandatory header validator for channel id and correlation id
 
 *   Add functionality to mask mobile numbers on post response by adding flag to policy then using json masker in
@@ -20,7 +22,8 @@
 
 *   Add postman collection to repo and run in build pipeline
 
-*   Tidy up cloud formation templates and try out creating API gateway
+*   Tidy up cloud formation templates and try out creating API gateway, set specific name for cluster,
+    tidy up log stream name, set execution role for context service
 
 *   Add specific method result types, e.g. for OTP delivery time, actual and used otp codes, verify type, 
     maybe delivery id for sending message
@@ -86,19 +89,19 @@ aws cloudformation create-stack --stack-name idv-dev-network --template-body fil
 ```
 
 ```aws
-//generate repository resources using cloud formation (relies on network stack already being created)
-aws cloudformation create-stack --stack-name idv-dev-repositories --template-body file://cloud-formation/repositories.yml
+//generate service resources using cloud formation (relies on network stack already being created)
+aws cloudformation create-stack --stack-name idv-dev-verification-context-service --template-body file://cloud-formation/service.yml
 ```
 
+#### Update image used by running task
+
 ```aws
-//generate service resources using cloud formation (relies on network stack already being created
-aws cloudformation create-stack --stack-name idv-dev-service --template-body file://cloud-formation/service.yml
+aws ecs update-service --cluster <cluster name> --service <service name> --force-new-deployment
 ```
 
 #### Deleting AWS resources
 
 ```aws
-aws cloudformation delete-stack --stack-name idv-dev-service;
-aws cloudformation delete-stack --stack-name idv-dev-repositories;
+aws cloudformation delete-stack --stack-name idv-dev-verification-context-service;
 aws cloudformation delete-stack --stack-name idv-dev-network;
 ```

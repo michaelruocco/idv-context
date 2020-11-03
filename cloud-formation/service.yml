@@ -25,7 +25,7 @@ Parameters:
     Description: Number of seconds to wait between each health check.
   ImageUrl:
     Type: String
-    Default: michaelruocco/verification-context-spring-app
+    Default: michaelruocco/verification-context-spring-app:latest
     Description: The url of a docker image that will handle incoming traffic.
   ContainerPort:
     Type: Number
@@ -60,6 +60,92 @@ Conditions:
   HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
 
 Resources:
+
+  IdentityTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName:  !Sub ${EnvironmentName}-identity
+      AttributeDefinitions:
+        -
+          AttributeName: "alias"
+          AttributeType: "S"
+      KeySchema:
+        -
+          AttributeName: "alias"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "1"
+        WriteCapacityUnits: "1"
+
+  AttemptTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${EnvironmentName}-attempt
+      AttributeDefinitions:
+        - AttributeName: "idvId"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "idvId"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "1"
+        WriteCapacityUnits: "1"
+
+  ContextTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: !Sub ${EnvironmentName}-context
+      AttributeDefinitions:
+        - AttributeName: "id"
+          AttributeType: "S"
+      KeySchema:
+        - AttributeName: "id"
+          KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "1"
+        WriteCapacityUnits: "1"
+      TimeToLiveSpecification:
+        AttributeName: "ttl"
+        Enabled: true
+
+  ElasticacheSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Elasticache Security Group
+      VpcId:
+        Fn::ImportValue:
+          !Join [':', [!Ref 'StackName', 'VPCId']]
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: '6379'
+          ToPort: '6379'
+          SourceSecurityGroupId:
+            Fn::ImportValue:
+              !Join [':', [!Ref 'StackName', 'ECSSecurityGroup']]
+
+  ElasticacheSubnetGroup:
+    Type: AWS::ElastiCache::SubnetGroup
+    Properties:
+      CacheSubnetGroupName: !Sub ${EnvironmentName}-redis-subnet-group
+      Description: Cache Subnet Group
+      SubnetIds:
+        - Fn::ImportValue:
+            !Join [':', [!Ref 'StackName', 'PublicSubnetOne']]
+        - Fn::ImportValue:
+            !Join [':', [!Ref 'StackName', 'PublicSubnetTwo']]
+
+  ElastiCacheCluster:
+    Type: 'AWS::ElastiCache::CacheCluster'
+    Properties:
+      CacheSubnetGroupName: !Ref ElasticacheSubnetGroup
+      AutoMinorVersionUpgrade: 'true'
+      Engine: redis
+      CacheNodeType: cache.t2.micro
+      NumCacheNodes: '1'
+      VpcSecurityGroupIds:
+        - !GetAtt
+          - ElasticacheSecurityGroup
+          - GroupId
 
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -130,8 +216,16 @@ Resources:
             - Name: AWS_DYNAMO_DB_ENDPOINT_URI
               Value: https://dynamodb.eu-west-1.amazonaws.com
             - Name: REDIS_ENDPOINT_URI
-              # needs to be updated to url of elasticache cluster if a new one is generated
-              Value: redis://idv-el-1kzwatlzq0nx9.rlvxip.0001.euw1.cache.amazonaws.com:6379
+              Value: !Join
+                - ''
+                - - 'redis://'
+                  - !GetAtt
+                    - ElastiCacheCluster
+                    - RedisEndpoint.Address
+                  - ':'
+                  - !GetAtt
+                    - ElastiCacheCluster
+                    - RedisEndpoint.Port
           #correct log group names
           LogConfiguration:
             LogDriver: 'awslogs'

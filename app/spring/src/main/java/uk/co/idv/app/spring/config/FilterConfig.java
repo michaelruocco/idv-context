@@ -4,14 +4,16 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.Ordered;
 import uk.co.idv.app.spring.filters.logging.common.DefaultRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.common.DefaultResponseLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.context.ContextRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.context.ContextResponseLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.identity.IdentityRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.identity.IdentityResponseLoggingFilter;
-import uk.co.mruoc.spring.filter.logging.RequestMdcPopulatorFilter;
-import uk.co.mruoc.spring.filter.logging.header.HeaderMdcPopulatorFilter;
+import uk.co.mruoc.spring.filter.logging.mdc.ClearMdcFilter;
+import uk.co.mruoc.spring.filter.logging.mdc.HeaderMdcPopulatorFilter;
+import uk.co.mruoc.spring.filter.logging.mdc.RequestMdcPopulatorFilter;
 import uk.co.mruoc.spring.filter.logging.request.RequestLoggingFilter;
 import uk.co.mruoc.spring.filter.logging.response.ResponseLoggingFilter;
 import uk.co.mruoc.spring.filter.logging.uritransform.TransformRequestUriMdcPopulatorFilter;
@@ -109,6 +111,16 @@ public class FilterConfig {
         bean.setOrder(5);
         bean.addUrlPatterns("/contexts/*");
         bean.setName("getContextUriTransformerFilter");
+        return bean;
+    }
+
+    @Bean
+    public FilterRegistrationBean<ClearMdcFilter> clearMdcFilter() {
+        FilterRegistrationBean<ClearMdcFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new ClearMdcFilter());
+        bean.setOrder(Ordered.HIGHEST_PRECEDENCE);
+        bean.addUrlPatterns(allUrlPatterns());
+        bean.setName("clearMdcFilter");
         return bean;
     }
 
