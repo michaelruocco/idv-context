@@ -5,8 +5,6 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
-import uk.co.idv.app.spring.filters.logging.common.DefaultRequestLoggingFilter;
-import uk.co.idv.app.spring.filters.logging.common.DefaultResponseLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.context.ContextRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.context.ContextResponseLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.identity.IdentityRequestLoggingFilter;
@@ -87,7 +85,7 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<RequestLoggingFilter> defaultRequestLoggingFilter() {
         FilterRegistrationBean<RequestLoggingFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new DefaultRequestLoggingFilter());
+        bean.setFilter(new RequestLoggingFilter());
         bean.setOrder(3);
         bean.addUrlPatterns(getDefaultUrlPatterns());
         bean.setName("defaultRequestLoggingFilter");
@@ -97,7 +95,7 @@ public class FilterConfig {
     @Bean
     public FilterRegistrationBean<ResponseLoggingFilter> defaultResponseLoggingFilter() {
         FilterRegistrationBean<ResponseLoggingFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new DefaultResponseLoggingFilter());
+        bean.setFilter(new ResponseLoggingFilter());
         bean.setOrder(4);
         bean.addUrlPatterns(getDefaultUrlPatterns());
         bean.setName("defaultResponseLoggingFilter");

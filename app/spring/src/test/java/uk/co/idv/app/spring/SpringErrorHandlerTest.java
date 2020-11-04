@@ -12,11 +12,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class ApplicationErrorHandlerTest {
+class SpringErrorHandlerTest {
 
     private final Application application = mock(Application.class);
 
-    private final ApplicationErrorHandler handler = new ApplicationErrorHandler(application);
+    private final SpringErrorHandler handler = new SpringErrorHandler(application);
 
     @Test
     void shouldConvertThrowableToResponseEntityWithError() {

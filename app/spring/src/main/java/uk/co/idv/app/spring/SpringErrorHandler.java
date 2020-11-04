@@ -15,7 +15,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @ControllerAdvice
 @Slf4j
-public class ApplicationErrorHandler {
+public class SpringErrorHandler {
 
     private final Application application;
 
