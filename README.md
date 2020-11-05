@@ -11,8 +11,6 @@
 
 ## Todo
 
-*   Move MDC clear filter into spring filters library
-
 *   Add mandatory header validator for channel id and correlation id
 
 *   Add functionality to mask mobile numbers on post response by adding flag to policy then using json masker in
@@ -22,8 +20,8 @@
 
 *   Add postman collection to repo and run in build pipeline
 
-*   Tidy up cloud formation templates and try out creating API gateway, set specific name for cluster,
-    tidy up log stream name, set execution role for context service
+*   Tidy up cloud formation templates and try out creating API gateway, tidy up log stream name,
+    set execution role for context service
 
 *   Add specific method result types, e.g. for OTP delivery time, actual and used otp codes, verify type, 
     maybe delivery id for sending message

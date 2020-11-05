@@ -138,7 +138,6 @@ public class FilterConfig {
 
     private static String[] getDefaultUrlPatterns() {
         return new String[]{
-                "/actuator/*",
                 "/eligibility/*",
                 "/lockout-policies/*",
                 "/lockout-states/*",

@@ -2,6 +2,12 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: A network stack for deploying containers in AWS ECS.
   This stack creates a VPC with two public subnets and a loadbalancer to balance traffic between those subnets.
   Derived from a template at https://github.com/nathanpeck/aws-cloudformation-fargate.
+Parameters:
+  ClusterLabel:
+    Type: String
+    Default: idv-dev
+    Description: Name to give to the created ECS cluster
+
 Resources:
 
   VPC:
@@ -114,6 +120,8 @@ Resources:
 
   ECSCluster:
     Type: AWS::ECS::Cluster
+    Properties:
+      ClusterName: !Ref 'ClusterLabel'
 
   ECSSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -188,7 +196,6 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                  # Allow the ECS tasks to upload logs to CloudWatch
                   - 'logs:CreateLogStream'
                   - 'logs:PutLogEvents'
                 Resource: '*'
