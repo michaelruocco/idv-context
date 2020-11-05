@@ -18,6 +18,9 @@ import uk.co.mruoc.spring.filter.logging.uritransform.TransformRequestUriMdcPopu
 import uk.co.mruoc.spring.filter.logging.uritransform.UuidIdStringTransformer;
 
 import java.time.Clock;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 
 @Configuration
 public class FilterConfig {
@@ -123,7 +126,11 @@ public class FilterConfig {
     }
 
     private static String[] allUrlPatterns() {
-        return new String[]{"*"};
+        Collection<String> patterns = new ArrayList<>();
+        patterns.addAll(Arrays.asList(getContextUrlPatterns()));
+        patterns.addAll(Arrays.asList(getIdentityUrlPatterns()));
+        patterns.addAll(Arrays.asList(getDefaultUrlPatterns()));
+        return patterns.toArray(new String[0]);
     }
 
     private static String[] getContextUrlPatterns() {
