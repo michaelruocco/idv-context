@@ -1,0 +1,66 @@
+name: pipeline
+
+on:
+  push:
+    branches-ignore:
+      - 'verification-context-*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Setup JDK
+        uses: actions/setup-java@v1
+        with:
+          java-version: 11
+
+      - name: Setup SonarCloud Cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.sonar/cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
+
+      - name: Setup Gradle Cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle
+
+      - name: Print Current Version
+        run: ./gradlew currentVersion
+
+      - name: Check Dependencies
+        run: ./gradlew dependencyUpdates
+
+      - name: Build
+        run: ./gradlew clean spotlessCheck assemble
+
+      - name: Test
+        run: ./gradlew test
+
+      - name: Sonar Analysis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: ./gradlew sonarqube
+
+      - name: Codecov Coverage
+        uses: codecov/codecov-action@v1
+        with:
+          file: ./build/reports/jacoco/report.xml
+
+      - name: Codacy Coverage
+        uses: codacy/codacy-coverage-reporter-action@master
+        with:
+          project-token: ${{ secrets.CODACY_TOKEN }}
+          coverage-reports: ./build/reports/jacoco/report.xml

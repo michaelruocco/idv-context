@@ -11,6 +11,10 @@
 
 ## Todo
 
+*   Change policy repositories to store grouped by channel id as key rather than all policies together
+
+*   Add configuration option for enabling / disabling request and response logging
+
 *   Add mandatory header validator for channel id and correlation id
 
 *   Add functionality to mask mobile numbers on post response by adding flag to policy then using json masker in
@@ -94,7 +98,7 @@ aws cloudformation create-stack --stack-name idv-dev-verification-context-servic
 #### Update image used by running task
 
 ```aws
-aws ecs update-service --cluster <cluster name> --service <service name> --force-new-deployment
+aws ecs update-service --cluster idv-dev --service verification-context --force-new-deployment
 ```
 
 #### Deleting AWS resources
