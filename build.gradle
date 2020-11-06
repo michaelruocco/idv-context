@@ -149,6 +149,8 @@ dependencyUpdates.resolutionStrategy {
 
 sonarqube {
     properties {
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.organization", "michaelruocco"
         property "sonar.projectKey", "michaelruocco_verification-context"
         property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/report.xml"
     }
