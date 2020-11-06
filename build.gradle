@@ -147,6 +147,7 @@ dependencyUpdates.resolutionStrategy {
     }
 }
 
+project.tasks["sonarqube"].dependsOn codeCoverageReport
 sonarqube {
     properties {
         property "sonar.host.url", "https://sonarcloud.io"
