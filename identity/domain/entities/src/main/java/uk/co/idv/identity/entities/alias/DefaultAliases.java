@@ -73,19 +73,6 @@ public class DefaultAliases implements Aliases {
         return new DefaultAliases(updated);
     }
 
-    private void validate(Alias alias) {
-        if (!isValid(alias)) {
-            throw new IdvIdAlreadyPresentException(getIdvId(), alias);
-        }
-    }
-
-    private boolean isValid(Alias alias) {
-        if (alias.isIdvId() && hasIdvId()) {
-            return getIdvId().equals(alias);
-        }
-        return true;
-    }
-
     @Override
     public Aliases notPresent(Aliases comparison) {
         return new DefaultAliases(CollectionUtils.subtract(this.values, comparison.asCollection()));
@@ -154,6 +141,19 @@ public class DefaultAliases implements Aliases {
 
     private Stream<Alias> getAliasesByType(String type) {
         return values.stream().filter(alias -> alias.isType(type));
+    }
+
+    private void validate(Alias alias) {
+        if (!isValid(alias)) {
+            throw new IdvIdAlreadyPresentException(getIdvId(), alias);
+        }
+    }
+
+    private boolean isValid(Alias alias) {
+        if (alias.isIdvId() && hasIdvId()) {
+            return getIdvId().equals(alias);
+        }
+        return true;
     }
 
 }

@@ -1,6 +1,7 @@
 package uk.co.idv.app.spring.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,6 +24,7 @@ import java.util.Arrays;
 import java.util.Collection;
 
 @Configuration
+@Slf4j
 public class FilterConfig {
 
     @Bean
@@ -52,6 +54,7 @@ public class FilterConfig {
         bean.setOrder(3);
         bean.addUrlPatterns(getContextUrlPatterns());
         bean.setName("contextRequestLoggingFilter");
+        bean.setEnabled(requestLoggingEnabled());
         return bean;
     }
 
@@ -62,6 +65,7 @@ public class FilterConfig {
         bean.setOrder(4);
         bean.addUrlPatterns(getContextUrlPatterns());
         bean.setName("contextResponseLoggingFilter");
+        bean.setEnabled(responseLoggingEnabled());
         return bean;
     }
 
@@ -72,6 +76,7 @@ public class FilterConfig {
         bean.setOrder(3);
         bean.addUrlPatterns(getIdentityUrlPatterns());
         bean.setName("identityRequestLoggingFilter");
+        bean.setEnabled(requestLoggingEnabled());
         return bean;
     }
 
@@ -82,6 +87,7 @@ public class FilterConfig {
         bean.setOrder(4);
         bean.addUrlPatterns(getIdentityUrlPatterns());
         bean.setName("identityResponseLoggingFilter");
+        bean.setEnabled(responseLoggingEnabled());
         return bean;
     }
 
@@ -92,6 +98,7 @@ public class FilterConfig {
         bean.setOrder(3);
         bean.addUrlPatterns(getDefaultUrlPatterns());
         bean.setName("defaultRequestLoggingFilter");
+        bean.setEnabled(requestLoggingEnabled());
         return bean;
     }
 
@@ -102,6 +109,7 @@ public class FilterConfig {
         bean.setOrder(4);
         bean.addUrlPatterns(getDefaultUrlPatterns());
         bean.setName("defaultResponseLoggingFilter");
+        bean.setEnabled(responseLoggingEnabled());
         return bean;
     }
 
@@ -150,6 +158,20 @@ public class FilterConfig {
                 "/lockout-states/*",
                 "/context-policies/*"
         };
+    }
+
+    private static boolean requestLoggingEnabled() {
+        return loadBooleanSystemProperty("request.logging.enabled");
+    }
+
+    private static boolean responseLoggingEnabled() {
+        return loadBooleanSystemProperty("response.logging.enabled");
+    }
+
+    private static boolean loadBooleanSystemProperty(String key) {
+        boolean enabled = Boolean.parseBoolean(System.getProperty(key, "false"));
+        log.info("loaded {} value {}", key, enabled);
+        return enabled;
     }
 
 }

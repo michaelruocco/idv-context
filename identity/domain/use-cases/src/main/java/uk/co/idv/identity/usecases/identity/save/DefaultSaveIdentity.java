@@ -15,21 +15,17 @@ public class DefaultSaveIdentity implements SaveIdentity {
     @Override
     public Identity save(Identity updated, Identity existing) {
         Identity save = saveStrategy.prepare(updated, existing);
-        if (isUnchanged(save, existing)) {
-            logUnchanged(save, existing);
-            return save;
+        if (hasChanged(save, existing)) {
+            repository.update(save, existing);
         }
-        repository.update(save, existing);
         return save;
     }
 
-    private boolean isUnchanged(Identity save, Identity existing) {
-        return save.equals(existing);
-    }
-
-    private void logUnchanged(Identity save, Identity existing) {
-        log.info("skipping identity update as identity is unchanged {}", existing.getIdvIdValue());
+    private boolean hasChanged(Identity save, Identity existing) {
+        boolean changed = !save.equals(existing);
+        log.info("identity changed {} {}", changed, save.getIdvIdValue());
         log.debug("updated {} existing {}", save, existing);
+        return changed;
     }
 
 }

@@ -1,7 +1,6 @@
 package uk.co.idv.identity.entities.emailaddress;
 
 import lombok.EqualsAndHashCode;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import java.util.Arrays;
@@ -10,7 +9,6 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.stream.Stream;
 
-@RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class EmailAddresses implements Iterable<String> {
@@ -19,6 +17,10 @@ public class EmailAddresses implements Iterable<String> {
 
     public EmailAddresses(String... values) {
         this(Arrays.asList(values));
+    }
+
+    public EmailAddresses(Collection<String> values) {
+        this.values = new LinkedHashSet<>(values);
     }
 
     @Override

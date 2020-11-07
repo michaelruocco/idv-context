@@ -98,8 +98,8 @@ public class DynamoIdentityRepository implements IdentityRepository {
 
     private void deleteEntriesForRemovedAliases(Identity updated, Identity existing) {
         Aliases aliasesToRemove = existing.getAliasesNotPresent(updated);
-        log.info("aliases to remove {}", aliasesToRemove);
         if (aliasesToRemove.isEmpty()) {
+            log.info("skipping deleting aliases, none to remove");
             return;
         }
         delete(aliasesToRemove);

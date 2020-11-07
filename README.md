@@ -13,8 +13,6 @@
 
 *   Change policy repositories to store grouped by channel id as key rather than all policies together
 
-*   Add configuration option for enabling / disabling request and response logging
-
 *   Add mandatory header validator for channel id and correlation id
 
 *   Add functionality to mask mobile numbers on post response by adding flag to policy then using json masker in

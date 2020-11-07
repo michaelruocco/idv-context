@@ -1,7 +1,6 @@
 package uk.co.idv.identity.entities.phonenumber;
 
 import lombok.EqualsAndHashCode;
-import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 import java.util.Arrays;
@@ -10,7 +9,6 @@ import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.stream.Stream;
 
-@RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
 public class PhoneNumbers implements Iterable<PhoneNumber> {
@@ -19,6 +17,10 @@ public class PhoneNumbers implements Iterable<PhoneNumber> {
 
     public PhoneNumbers(PhoneNumber... numbers) {
         this(Arrays.asList(numbers));
+    }
+
+    public PhoneNumbers(Collection<PhoneNumber> values) {
+        this.numbers = new LinkedHashSet<>(values);
     }
 
     public Iterator<PhoneNumber> iterator() {

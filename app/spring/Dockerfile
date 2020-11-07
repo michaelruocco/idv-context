@@ -8,7 +8,9 @@ ENV SERVER_PORT=80 \
     SIM_SWAP_EXECUTOR_THREAD_POOL_SIZE=100 \
     ASYNC_SIM_SWAP_THREAD_POOL_SIZE=50 \
     CONTEXT_EXPIRY_THREAD_POOL_SIZE=50 \
-    RESPONSE_FILTERING_ENABLED=false
+    RESPONSE_FILTERING_ENABLED=false \
+    REQUEST_LOGGING_ENABLED=false \
+    RESPONSE_LOGGING_ENABLED=false
 
 COPY build/libs/verification-context-spring-app-*.jar /opt/app.jar
 
@@ -25,4 +27,6 @@ CMD java \
   -Dasync.sim.swap.thread.pool.size=${ASYNC_SIM_SWAP_THREAD_POOL_SIZE} \
   -Dcontext.expiry.thread.pool.size=${CONTEXT_EXPIRY_THREAD_POOL_SIZE} \
   -Dresponse.filtering.enabled=${RESPONSE_FILTERING_ENABLED} \
+  -Drequest.logging.enabled=${REQUEST_LOGGING_ENABLED} \
+  -Dresponse.logging.enabled=${RESPONSE_LOGGING_ENABLED} \
   -jar /opt/app.jar

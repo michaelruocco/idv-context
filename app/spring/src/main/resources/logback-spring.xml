@@ -2,26 +2,28 @@
 <configuration>
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
     <springProperty scope="context" name="springAppName" source="spring.application.name"/>
-    <appender name="Console-Standard" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="console-standard" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %msg [%X{request-method}:%X{request-uri}:%X{transformed-request-uri}:%X{request-duration}:%X{request-status}:%X{correlation-id}:%X{channel-id}:%X{context-id}]%n</pattern>
         </encoder>
     </appender>
-    <appender name="Console-Json" class="ch.qos.logback.core.ConsoleAppender">
+    <appender name="console-json" class="ch.qos.logback.core.ConsoleAppender">
         <layout class="ch.qos.logback.contrib.json.classic.JsonLayout">
             <jsonFormatter class="ch.qos.logback.contrib.jackson.JacksonJsonFormatter"/>
             <timestampFormat>yyyy-MM-dd'T'HH:mm:ss.SSSX</timestampFormat>
             <appendLineSeparator>true</appendLineSeparator>
         </layout>
     </appender>
+
     <springProfile name="!local">
         <root level="info">
-            <appender-ref ref="Console-Json"/>
+            <appender-ref ref="console-json"/>
         </root>
     </springProfile>
     <springProfile name="local">
         <root level="info">
-            <appender-ref ref="Console-Standard"/>
+            <appender-ref ref="console-standard"/>
         </root>
+        <logger name="uk.co.idv" level="debug"/>
     </springProfile>
 </configuration>
