@@ -34,11 +34,11 @@ Parameters:
       is binding to.
   ContainerCpu:
     Type: Number
-    Default: 256
+    Default: 1024
     Description: How much CPU to give the container. 1024 is 1 CPU.
   ContainerMemory:
     Type: Number
-    Default: 512
+    Default: 2048
     Description: How much memory in megabytes to give the container.
   Path:
     Type: String
@@ -65,6 +65,7 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName:  !Sub ${EnvironmentName}-identity
+      BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         -
           AttributeName: "alias"
@@ -73,37 +74,30 @@ Resources:
         -
           AttributeName: "alias"
           KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits: "1"
-        WriteCapacityUnits: "1"
 
   AttemptTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: !Sub ${EnvironmentName}-attempt
+      BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: "idvId"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "idvId"
           KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits: "1"
-        WriteCapacityUnits: "1"
 
   ContextTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: !Sub ${EnvironmentName}-context
+      BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: "id"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "id"
           KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits: "1"
-        WriteCapacityUnits: "1"
       TimeToLiveSpecification:
         AttributeName: "ttl"
         Enabled: true
@@ -226,7 +220,6 @@ Resources:
                   - !GetAtt
                     - ElastiCacheCluster
                     - RedisEndpoint.Port
-          #correct log group names
           LogConfiguration:
             LogDriver: 'awslogs'
             Options:
