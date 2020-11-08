@@ -65,7 +65,6 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName:  !Sub ${EnvironmentName}-identity
-      BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         -
           AttributeName: "alias"
@@ -74,24 +73,28 @@ Resources:
         -
           AttributeName: "alias"
           KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
 
   AttemptTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: !Sub ${EnvironmentName}-attempt
-      BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: "idvId"
           AttributeType: "S"
       KeySchema:
         - AttributeName: "idvId"
           KeyType: "HASH"
+      ProvisionedThroughput:
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
 
   ContextTable:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: !Sub ${EnvironmentName}-context
-      BillingMode: PAY_PER_REQUEST
       AttributeDefinitions:
         - AttributeName: "id"
           AttributeType: "S"
@@ -101,6 +104,9 @@ Resources:
       TimeToLiveSpecification:
         AttributeName: "ttl"
         Enabled: true
+      ProvisionedThroughput:
+        ReadCapacityUnits: "5"
+        WriteCapacityUnits: "5"
 
   ElasticacheSecurityGroup:
     Type: AWS::EC2::SecurityGroup

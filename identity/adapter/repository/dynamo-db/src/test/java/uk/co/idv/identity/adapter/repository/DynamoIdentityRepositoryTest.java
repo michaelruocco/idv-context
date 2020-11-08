@@ -31,7 +31,10 @@ class DynamoIdentityRepositoryTest {
     private final IdentityConverter converter = mock(IdentityConverter.class);
     private final DynamoDB dynamoDb = mock(DynamoDB.class);
 
-    private final DynamoIdentityRepository repository = new DynamoIdentityRepository(converter, dynamoDb);
+    private final DynamoIdentityRepository repository = DynamoIdentityRepository.builder()
+            .converter(converter)
+            .dynamoDb(dynamoDb)
+            .build();
 
     @Test
     void createShouldUpdateItems() {

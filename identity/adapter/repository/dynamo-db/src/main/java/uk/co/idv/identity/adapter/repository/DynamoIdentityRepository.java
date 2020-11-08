@@ -54,32 +54,16 @@ public class DynamoIdentityRepository implements IdentityRepository {
 
     @Override
     public Identities load(Aliases aliases) {
-        Instant start = Instant.now();
-        TableKeysAndAttributes keysAndAttributes = converter.toKeys(aliases);
-        try {
-            BatchGetItemOutcome outcome = dynamoDb.batchGetItem(keysAndAttributes);
-            errorIfUnprocessedItems(outcome);
-            return converter.toIdentities(outcome);
-        } finally {
-            log.info("took {}ms to load identities using aliases {}",
-                    millisBetweenNowAnd(start),
-                    aliases);
-        }
+        return loadUsingOneOrMoreAliases(aliases);
     }
 
     @Override
     public void delete(Aliases aliases) {
-        Instant start = Instant.now();
-        TableWriteItems items = converter.toBatchDeleteItems(aliases);
-        try {
-            BatchWriteItemOutcome outcome = dynamoDb.batchWriteItem(items);
-            errorIfUnprocessedItems(outcome);
-        } finally {
-            log.info("took {}ms to delete {} items using aliases {} items",
-                    millisBetweenNowAnd(start),
-                    items.getPrimaryKeysToDelete().size(),
-                    aliases);
+        if (aliases.isEmpty()) {
+            log.info("skipping deleting aliases, none to delete");
+            return;
         }
+        deleteUsingOneOrMoreAliases(aliases);
     }
 
     private void batchUpdateItems(Identity updated) {
@@ -98,17 +82,41 @@ public class DynamoIdentityRepository implements IdentityRepository {
 
     private void deleteEntriesForRemovedAliases(Identity updated, Identity existing) {
         Aliases aliasesToRemove = existing.getAliasesNotPresent(updated);
-        if (aliasesToRemove.isEmpty()) {
-            log.info("skipping deleting aliases, none to remove");
-            return;
-        }
         delete(aliasesToRemove);
+    }
+
+    private Identities loadUsingOneOrMoreAliases(Aliases aliases) {
+        Instant start = Instant.now();
+        TableKeysAndAttributes keysAndAttributes = converter.toKeys(aliases);
+        try {
+            BatchGetItemOutcome outcome = dynamoDb.batchGetItem(keysAndAttributes);
+            errorIfUnprocessedItems(outcome);
+            return converter.toIdentities(outcome);
+        } finally {
+            log.info("took {}ms to load identities using aliases {}",
+                    millisBetweenNowAnd(start),
+                    aliases);
+        }
     }
 
     private void errorIfUnprocessedItems(BatchGetItemOutcome outcome) {
         Map<String, KeysAndAttributes> keys = outcome.getUnprocessedKeys();
         if (!keys.isEmpty()) {
             throw new DynamoBatchGetException(outcome);
+        }
+    }
+
+    private void deleteUsingOneOrMoreAliases(Aliases aliases) {
+        Instant start = Instant.now();
+        TableWriteItems items = converter.toBatchDeleteItems(aliases);
+        try {
+            BatchWriteItemOutcome outcome = dynamoDb.batchWriteItem(items);
+            errorIfUnprocessedItems(outcome);
+        } finally {
+            log.info("took {}ms to delete {} items using aliases {} items",
+                    millisBetweenNowAnd(start),
+                    items.getPrimaryKeysToDelete().size(),
+                    aliases);
         }
     }
 
