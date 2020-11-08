@@ -59,6 +59,7 @@ dependencies {
     implementation "commons-io:commons-io:2.8.0"
     implementation "ch.qos.logback.contrib:logback-json-classic:${logbackJsonVersion}"
     implementation "ch.qos.logback.contrib:logback-jackson:${logbackJsonVersion}"
+    implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
 
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
     testImplementation testFixtures(project(":lockout-entities"))

@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.document.BatchGetItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.BatchWriteItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
 import com.amazonaws.services.dynamodbv2.document.Item;
+import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
 import com.amazonaws.services.dynamodbv2.model.KeysAndAttributes;
@@ -28,10 +29,11 @@ import static org.mockito.Mockito.mock;
 
 class DynamoIdentityRepositoryTest {
 
-    private final IdentityConverter converter = mock(IdentityConverter.class);
+    private final DynamoIdentityConverter converter = mock(DynamoIdentityConverter.class);
     private final DynamoDB dynamoDb = mock(DynamoDB.class);
+    private final Table table = mock(Table.class);
 
-    private final DynamoIdentityRepository repository = new DynamoIdentityRepository(converter, dynamoDb);
+    private final DynamoIdentityRepository repository = new DynamoIdentityRepository(converter, dynamoDb, table);
 
     @Test
     void createShouldUpdateItems() {

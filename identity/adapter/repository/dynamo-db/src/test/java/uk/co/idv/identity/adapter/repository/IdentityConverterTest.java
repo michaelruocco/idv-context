@@ -32,7 +32,7 @@ class IdentityConverterTest {
     private final Table table = mock(Table.class);
     private final IdentityItemConverter itemConverter = mock(IdentityItemConverter.class);
 
-    private final IdentityConverter converter = new IdentityConverter(table, itemConverter);
+    private final DynamoIdentityConverter converter = new DynamoIdentityConverter(table, itemConverter);
 
     @BeforeEach
     void setUp() {

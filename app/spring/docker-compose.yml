@@ -15,6 +15,17 @@ services:
     image: redis
     container_name: redis
 
+  mongo:
+    image: mongo
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: welcome
+      MONGO_INITDB_DATABASE: idv
+    volumes:
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
   verification-context-app:
     image: michaelruocco/verification-context-spring-app
     container_name: verification-context-app
@@ -26,7 +37,9 @@ services:
       - AWS_SECRET_KEY=123
       - AWS_DYNAMO_DB_ENDPOINT_URI=http://aws-services:4566
       - REDIS_ENDPOINT_URI=redis://redis:6379
+      - MONGO_CONNECTION_STRING=mongodb://idv:welcome01@mongo:27017/idv
       - SPRING_PROFILES_ACTIVE=local
     depends_on:
       - aws-services
       - redis
+      - mongo

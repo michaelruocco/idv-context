@@ -1,0 +1,8 @@
+dependencies {
+    api "org.mongodb:mongo-java-driver:${mongoVersion}"
+    implementation project(":identity-json")
+    implementation project(":common-use-cases")
+
+    testImplementation testFixtures(project(":identity-entities"))
+    testImplementation testFixtures(project(":identity-use-cases"))
+}

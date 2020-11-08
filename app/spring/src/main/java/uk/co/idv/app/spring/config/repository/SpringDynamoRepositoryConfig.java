@@ -7,8 +7,8 @@ import uk.co.idv.context.adapter.dynamo.EnvironmentDynamoTablesFactory;
 import uk.co.idv.context.adapter.dynamo.DynamoTables;
 import uk.co.idv.context.config.repository.dynamo.DynamoContextRepositoryConfig;
 import uk.co.idv.context.usecases.context.ContextRepository;
-import uk.co.idv.identity.config.repository.dynamo.DynamoIdentityRepositoryConfig;
-import uk.co.idv.identity.usecases.identity.IdentityRepository;
+//import uk.co.idv.identity.config.repository.dynamo.DynamoIdentityRepositoryConfig;
+//import uk.co.idv.identity.usecases.identity.IdentityRepository;
 import uk.co.idv.lockout.config.repository.dynamo.DynamoAttemptRepositoryConfig;
 import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
 import uk.co.mruoc.json.JsonConverter;
@@ -21,10 +21,10 @@ import static uk.co.idv.app.spring.config.repository.EnvironmentLoader.loadEnvir
 @Profile("!stubbed")
 public class SpringDynamoRepositoryConfig {
 
-    @Bean
-    public IdentityRepository identityRepository(JsonConverter jsonConverter, DynamoTables tables) {
-        return new DynamoIdentityRepositoryConfig(jsonConverter, tables).identityRepository();
-    }
+    //@Bean
+    //public IdentityRepository identityRepository(JsonConverter jsonConverter, DynamoTables tables) {
+    //    return new DynamoIdentityRepositoryConfig(jsonConverter, tables).identityRepository();
+    //}
 
     @Bean
     public AttemptRepository attemptRepository(JsonConverter jsonConverter, DynamoTables tables) {

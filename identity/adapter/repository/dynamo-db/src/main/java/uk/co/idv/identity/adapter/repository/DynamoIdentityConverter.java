@@ -19,12 +19,12 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
-public class IdentityConverter {
+public class DynamoIdentityConverter {
 
     private final Table table;
     private final IdentityItemConverter itemConverter;
 
-    public IdentityConverter(Table table, JsonConverter jsonConverter) {
+    public DynamoIdentityConverter(Table table, JsonConverter jsonConverter) {
         this(table, new IdentityItemConverter(jsonConverter));
     }
 
@@ -45,11 +45,7 @@ public class IdentityConverter {
 
     public Identities toIdentities(BatchGetItemOutcome outcome) {
         List<Item> items = outcome.getTableItems().get(table.getTableName());
-        Collection<Identity> identityCollection = items.stream()
-                .map(this::toIdentity)
-                .distinct()
-                .collect(Collectors.toList());
-        return new Identities(identityCollection);
+        return toIdentities(items);
     }
 
     public Optional<Item> toItem(Alias alias) {
@@ -72,6 +68,14 @@ public class IdentityConverter {
         return aliases.stream()
                 .map(itemConverter::toPrimaryKey)
                 .toArray(PrimaryKey[]::new);
+    }
+
+    private Identities toIdentities(Collection<Item> items) {
+        Collection<Identity> identityCollection = items.stream()
+                .map(this::toIdentity)
+                .distinct()
+                .collect(Collectors.toList());
+        return new Identities(identityCollection);
     }
 
 }

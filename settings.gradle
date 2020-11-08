@@ -24,6 +24,9 @@ project(':identity-in-memory-repository').projectDir = file('identity/adapter/re
 include ':identity-dynamo-db-repository'
 project(':identity-dynamo-db-repository').projectDir = file('identity/adapter/repository/dynamo-db')
 
+include ':identity-mongo-repository'
+project(':identity-mongo-repository').projectDir = file('identity/adapter/repository/mongo')
+
 include ':identity-json'
 project(':identity-json').projectDir = file('identity/adapter/json')
 

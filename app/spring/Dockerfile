@@ -22,6 +22,7 @@ CMD java \
   -Denvironment=${ENVIRONMENT} \
   -Daws.dynamo.db.endpoint.uri=${AWS_DYNAMO_DB_ENDPOINT_URI} \
   -Dredis.endpoint.uri=${REDIS_ENDPOINT_URI} \
+  -Dspring.data.mongodb.uri=${MONGO_CONNECTION_STRING} \
   -Dexternal.find.identity.thread.pool.size=${EXTERNAL_FIND_IDENTITY_THREAD_POOL_SIZE} \
   -Dsim.swap.executor.thread.pool.size=${SIM_SWAP_EXECUTOR_THREAD_POOL_SIZE} \
   -Dasync.sim.swap.thread.pool.size=${ASYNC_SIM_SWAP_THREAD_POOL_SIZE} \

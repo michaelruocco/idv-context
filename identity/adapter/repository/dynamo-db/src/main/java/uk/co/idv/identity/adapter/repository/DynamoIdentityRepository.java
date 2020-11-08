@@ -3,6 +3,7 @@ package uk.co.idv.identity.adapter.repository;
 import com.amazonaws.services.dynamodbv2.document.BatchGetItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.BatchWriteItemOutcome;
 import com.amazonaws.services.dynamodbv2.document.DynamoDB;
+import com.amazonaws.services.dynamodbv2.document.Table;
 import com.amazonaws.services.dynamodbv2.document.TableKeysAndAttributes;
 import com.amazonaws.services.dynamodbv2.document.TableWriteItems;
 import com.amazonaws.services.dynamodbv2.model.KeysAndAttributes;
@@ -26,8 +27,9 @@ import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetwee
 @Builder
 public class DynamoIdentityRepository implements IdentityRepository {
 
-    private final IdentityConverter converter;
+    private final DynamoIdentityConverter converter;
     private final DynamoDB dynamoDb;
+    private final Table table;
 
     @Override
     public void create(Identity updated) {
@@ -54,17 +56,10 @@ public class DynamoIdentityRepository implements IdentityRepository {
 
     @Override
     public Identities load(Aliases aliases) {
-        Instant start = Instant.now();
-        TableKeysAndAttributes keysAndAttributes = converter.toKeys(aliases);
-        try {
-            BatchGetItemOutcome outcome = dynamoDb.batchGetItem(keysAndAttributes);
-            errorIfUnprocessedItems(outcome);
-            return converter.toIdentities(outcome);
-        } finally {
-            log.info("took {}ms to load identities using aliases {}",
-                    millisBetweenNowAnd(start),
-                    aliases);
+        if (aliases.size() > 1) {
+            return loadMoreThanOneAliases(aliases);
         }
+        return loadOneOrLessAliases(aliases);
     }
 
     @Override
@@ -117,6 +112,35 @@ public class DynamoIdentityRepository implements IdentityRepository {
         if (!requests.isEmpty()) {
             throw new DynamoBatchWriteException(outcome);
         }
+    }
+
+    private Identities loadOneOrLessAliases(Aliases aliases) {
+        Optional<Alias> firstAlias = aliases.stream().findFirst();
+        return firstAlias.flatMap(this::load)
+                .map(this::toSingleIdentity)
+                .orElseGet(this::toEmptyIdentities);
+    }
+
+    private Identities loadMoreThanOneAliases(Aliases aliases) {
+        Instant start = Instant.now();
+        TableKeysAndAttributes keysAndAttributes = converter.toKeys(aliases);
+        try {
+            BatchGetItemOutcome outcome = dynamoDb.batchGetItem(keysAndAttributes);
+            errorIfUnprocessedItems(outcome);
+            return converter.toIdentities(outcome);
+        } finally {
+            log.info("took {}ms to load identities using aliases {}",
+                    millisBetweenNowAnd(start),
+                    aliases);
+        }
+    }
+
+    private Identities toSingleIdentity(Identity identity) {
+        return new Identities(identity);
+    }
+
+    private Identities toEmptyIdentities() {
+        return new Identities();
     }
 
 }

@@ -5,4 +5,5 @@ dependencies {
 
     implementation project(":identity-dynamo-db-repository")
     implementation project(":identity-in-memory-repository")
+    implementation project(":identity-mongo-repository")
 }

@@ -61,6 +61,7 @@ subprojects {
         awsSdkVersion = "1.11.895"
         jacksonVersion = "2.11.3"
         jsonAdapterVersion = "1.0.0"
+        mongoVersion = "3.12.7"
 
         junitVersion = "5.7.0"
         assertjVersion = "3.18.0"
