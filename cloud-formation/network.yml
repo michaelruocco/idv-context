@@ -84,7 +84,7 @@ Resources:
   PublicLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
-      Name: !Sub ${EnvironmentName}-lb
+      Name: !Sub ${EnvironmentName}
       Scheme: internet-facing
       Subnets:
         # The load balancer is placed into the public subnets, so that traffic
