@@ -1,15 +1,21 @@
 version: '3'
 services:
 
-  aws-services:
-    image: localstack/localstack:latest
-    container_name: aws-services
+  dynamo-db:
+    image: amazon/dynamodb-local:latest
+    container_name: dynamo-db
+
+  create-dynamo-db-tables:
+    image: mesosphere/aws-cli
     volumes:
-      - ./localstack/scripts:/docker-entrypoint-initaws.d
-      - ./localstack/tables:/opt/tables
+      - ./localstack/tables:/tmp
     environment:
-      - DEFAULT_REGION=eu-west-1
-      - SERVICES=dynamodb
+      - AWS_ACCESS_KEY_ID=abc
+      - AWS_SECRET_ACCESS_KEY=123
+      - AWS_DEFAULT_REGION=eu-west-1
+    entrypoint: /bin/sh -c "chmod +x /tmp/create-tables.sh; /tmp/create-tables.sh;"
+    depends_on:
+      - dynamo-db
 
   redis:
     image: redis
@@ -18,15 +24,19 @@ services:
   verification-context-app:
     image: michaelruocco/verification-context-spring-app
     container_name: verification-context-app
+    mem_limit: 1024m
+    mem_reservation: 1024m
     ports:
       - 8081:80
     environment:
       - SERVER_PORT=80
       - AWS_ACCESS_KEY=abc
       - AWS_SECRET_KEY=123
-      - AWS_DYNAMO_DB_ENDPOINT_URI=http://aws-services:4566
+      - AWS_DYNAMO_DB_ENDPOINT_URI=http://dynamo-db:8000
       - REDIS_ENDPOINT_URI=redis://redis:6379
       - SPRING_PROFILES_ACTIVE=local
+      - REQUEST_LOGGING_ENABLED=false
+      - RESPONSE_LOGGING_ENABLED=false
     depends_on:
-      - aws-services
+      - create-dynamo-db-tables
       - redis
