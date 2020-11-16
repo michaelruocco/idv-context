@@ -159,6 +159,10 @@ Feature: Eligibility Requests
               "value": "#uuid"
             }
           ],
+          "phoneNumbers":[
+            { "lastUpdated":"2020-08-29T20:55:12.825Z","value":"+447089111111"},
+            { "value": "+447089121212" }
+          ],
           "emailAddresses": [
             "joe.bloggs@hotmail.co.uk",
             "joebloggs@yahoo.co.uk"
@@ -236,6 +240,8 @@ Feature: Eligibility Requests
             }
           ],
           "phoneNumbers":[
+            { "lastUpdated":"2020-08-29T20:55:12.825Z","value":"+447089111111"},
+            { "value": "+447089121212" },
             { "value": "07809123456" }
           ],
           "emailAddresses": [

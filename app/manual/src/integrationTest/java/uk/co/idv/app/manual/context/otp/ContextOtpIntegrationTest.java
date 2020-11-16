@@ -68,7 +68,7 @@ class ContextOtpIntegrationTest {
                 .build();
         harness.givenIdentityExists(identity);
         harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
-
+System.out.println("CREATING CONTEXT");
         Context context = application.create(request);
 
         UUID deliveryMethodId = UUID.fromString("446846e6-bf16-4da5-af5b-9ad4a240fe5d");

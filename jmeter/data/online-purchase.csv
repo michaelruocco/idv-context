@@ -1,0 +1,11 @@
+channelId,merchantName,reference,amount,currency,cardNumber,phoneNumber,emailAddress
+abc,Amazon,0000000001,17.99,GBP,492811111111111,+4407808247741,micky.mouse@btinternet.com
+abc,Sports Direct.com,0000000002,100.00,GBP,492811111111112,07808247742,joe.bloggs@hotmail.com
+abc,Royal Mail,0000000003,25.50,GBP,492811111111113,+4407808247742,steve.austin@316.com
+abc,Amazon,0000000004,17.99,GBP,492811111111114,+4407808247744,micky.mouse@btinternet.com
+abc,Sports Direct.com,0000000005,100.00,GBP,492811111111115,07808247745,joe.bloggs@hotmail.com
+abc,Royal Mail,0000000006,25.50,GBP,492811111111116,+4407808247746,steve.austin@316.com
+abc,Amazon,0000000007,17.99,GBP,492811111111117,+4407808247747,micky.mouse@btinternet.com
+abc,Sports Direct.com,0000000008,100.00,GBP,492811111111118,07808247748,joe.bloggs@hotmail.com
+abc,Royal Mail,0000000009,25.50,GBP,492811111111119,+4407808247749,steve.austin@316.com
+abc,Amazon,0000000010,17.99,GBP,492811111111110,+4407808247710,micky.mouse@btinternet.com

@@ -39,9 +39,9 @@ public class StubExternalFindIdentityConfig implements ExternalFindIdentityConfi
     public static StubExternalFindIdentityConfig build(ExecutorService executor) {
         return StubExternalFindIdentityConfig.builder()
                 .executor(executor)
-                .timeout(Duration.ofMillis(250))
-                .phoneNumberDelay(Duration.ofMillis(400))
-                .emailAddressDelay(Duration.ofMillis(100))
+                .timeout(Duration.ofMillis(2000))
+                .phoneNumberDelay(Duration.ofMillis(1500))
+                .emailAddressDelay(Duration.ofMillis(1000))
                 .build();
     }
 
@@ -68,7 +68,8 @@ public class StubExternalFindIdentityConfig implements ExternalFindIdentityConfi
     }
 
     private static ExecutorService buildEligibilityExecutor() {
-        return Executors.newFixedThreadPool(loadThreadPoolSize());
+        return Executors.newCachedThreadPool();
+        //return Executors.newFixedThreadPool(loadThreadPoolSize());
     }
 
     private static int loadThreadPoolSize() {

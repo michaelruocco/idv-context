@@ -25,7 +25,7 @@ Feature: Actuator Requests
     * def systemProperties = response.systemProperties
     And match systemProperties contains { "server.port": "#present" }
     And match systemProperties contains { "environment": "idv-local" }
-    And match systemProperties contains { "aws.dynamo.db.endpoint.uri": "#present" }
+    And match systemProperties contains { "spring.data.mongodb.uri": "#present" }
     And match systemProperties contains { "redis.endpoint.uri": "#present" }
 
   Scenario: Get health - Returns successfully

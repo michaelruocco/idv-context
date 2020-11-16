@@ -9,9 +9,9 @@ import uk.co.idv.app.manual.adapter.app.AppAdapter;
 import uk.co.idv.app.manual.adapter.app.DefaultAppAdapter;
 import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;
 import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
-import uk.co.idv.common.adapter.json.error.handler.CommonApiErrorHandler;
 import uk.co.idv.common.adapter.json.error.handler.CompositeErrorHandler;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.method.config.AppMethodConfig;
 import uk.co.idv.method.usecases.MethodBuilders;
 
@@ -23,13 +23,18 @@ import java.util.stream.Collectors;
 public class SpringCommonDomainConfig {
 
     @Bean
-    public Clock clock() {
-        return Clock.systemUTC();
+    public Clock clock(AppAdapter appAdapter) {
+        return appAdapter.getClock();
     }
 
     @Bean
-    public ErrorHandler commonErrorHandler() {
-        return new CommonApiErrorHandler();
+    public AliasFactory aliasFactory(AppAdapter appAdapter) {
+        return appAdapter.getAliasFactory();
+    }
+
+    @Bean
+    public ErrorHandler commonErrorHandler(AppAdapter appAdapter) {
+        return appAdapter.getErrorHandler();
     }
 
     @Bean
@@ -39,10 +44,8 @@ public class SpringCommonDomainConfig {
     }
 
     @Bean
-    public AppAdapter appAdapter(RepositoryAdapter repositoryAdapter) {
-        return DefaultAppAdapter.builder()
-                .repositoryAdapter(repositoryAdapter)
-                .build();
+    public AppAdapter appAdapter() {
+        return DefaultAppAdapter.builder().build();
     }
 
     @Bean

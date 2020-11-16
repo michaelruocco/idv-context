@@ -19,6 +19,8 @@ public class AsyncFutureSimSwapEligibility implements AsyncEligibility {
     private final CompletableFuture<Eligibility> future;
     private final SimSwapConfig config;
 
+    private Eligibility eligibility;
+
     @Override
     public boolean isEligible() {
         return getEligibilityFromFuture().isEligible();
@@ -35,7 +37,10 @@ public class AsyncFutureSimSwapEligibility implements AsyncEligibility {
     }
 
     private Eligibility getEligibilityFromFuture() {
-        return FutureHandler.handle(future, buildDefaultEligibility());
+        if (future.isDone()) {
+            return FutureHandler.handle(future, buildDefaultEligibility());
+        }
+        return buildDefaultEligibility();
     }
 
     private Eligibility buildDefaultEligibility() {

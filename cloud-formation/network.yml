@@ -3,7 +3,7 @@ Description: A network stack for deploying containers in AWS ECS.
   This stack creates a VPC with two public subnets and a loadbalancer to balance traffic between those subnets.
   Derived from a template at https://github.com/nathanpeck/aws-cloudformation-fargate.
 Parameters:
-  ClusterLabel:
+  EnvironmentName:
     Type: String
     Default: idv-dev
     Description: Name to give to the created ECS cluster
@@ -84,6 +84,7 @@ Resources:
   PublicLoadBalancer:
     Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
+      Name: !Sub ${EnvironmentName}
       Scheme: internet-facing
       Subnets:
         # The load balancer is placed into the public subnets, so that traffic
@@ -121,7 +122,7 @@ Resources:
   ECSCluster:
     Type: AWS::ECS::Cluster
     Properties:
-      ClusterName: !Ref 'ClusterLabel'
+      ClusterName: !Ref 'EnvironmentName'
 
   ECSSecurityGroup:
     Type: AWS::EC2::SecurityGroup

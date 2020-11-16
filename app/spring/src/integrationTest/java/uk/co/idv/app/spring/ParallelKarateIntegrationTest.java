@@ -1,6 +1,5 @@
 package uk.co.idv.app.spring;
 
-import com.amazonaws.regions.Regions;
 import com.intuit.karate.Results;
 import com.intuit.karate.Runner;
 import lombok.extern.slf4j.Slf4j;
@@ -18,21 +17,20 @@ import static uk.co.idv.app.spring.AppRunner.waitForAppStartupToComplete;
 @Slf4j
 class ParallelKarateIntegrationTest {
 
-    private static final Regions REGION = Regions.EU_WEST_1;
     private static final String ENVIRONMENT = "idv-local";
 
     private static final int THREAD_COUNT = 4;
 
     @Container
-    public static final LocalAwsServices AWS_SERVICES = new LocalAwsServices(REGION, ENVIRONMENT);
+    public static final LocalMongo MONGO = new LocalMongo();
 
     @Container
     public static final LocalRedis REDIS = new LocalRedis();
 
     @BeforeAll
     static void setUp() {
-        setUpAws();
         setUpRedis();
+        setUpMongo();
         setUpApp();
     }
 
@@ -58,13 +56,12 @@ class ParallelKarateIntegrationTest {
         };
     }
 
-    private static void setUpAws() {
-        AWS_SERVICES.waitForStartupToComplete();
-        AWS_SERVICES.waitForDynamoTablesToActive();
-    }
-
     private static void setUpRedis() {
         REDIS.waitForStartupToComplete();
+    }
+
+    private static void setUpMongo() {
+        MONGO.waitForStartupToComplete();
     }
 
     private static void setUpApp() {
@@ -77,8 +74,8 @@ class ParallelKarateIntegrationTest {
     private static void setApplicationProperties(int serverPort) {
         System.setProperty("environment", ENVIRONMENT);
         System.setProperty("server.port", Integer.toString(serverPort));
-        System.setProperty("aws.dynamo.db.endpoint.uri", AWS_SERVICES.getDynamoEndpointUri());
         System.setProperty("redis.endpoint.uri", REDIS.getEndpointUri());
+        System.setProperty("spring.data.mongodb.uri", MONGO.getConnectionString());
         System.setProperty("response.filtering.enabled", "true");
         System.setProperty("spring.profiles.active", "local");
     }

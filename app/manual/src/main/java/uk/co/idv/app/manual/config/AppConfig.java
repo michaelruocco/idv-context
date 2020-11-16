@@ -15,8 +15,7 @@ import uk.co.idv.lockout.config.LockoutConfig;
 @Data
 public class AppConfig {
 
-    private final ExternalFindIdentityConfig externalFindIdentityConfig = StubExternalFindIdentityConfig.build();
-
+    private final ExternalFindIdentityConfig externalFindIdentityConfig;
     private final IdentityConfig identityConfig;
     private final LockoutConfig lockoutConfig;
     private final ContextConfig contextConfig;
@@ -25,6 +24,14 @@ public class AppConfig {
     public AppConfig(MethodBuilders methodBuilders,
                      RepositoryAdapter repositoryAdapter,
                      AppAdapter appAdapter) {
+        this(methodBuilders, repositoryAdapter, appAdapter, StubExternalFindIdentityConfig.build());
+    }
+
+    public AppConfig(MethodBuilders methodBuilders,
+                     RepositoryAdapter repositoryAdapter,
+                     AppAdapter appAdapter,
+                     ExternalFindIdentityConfig externalFindIdentityConfig) {
+        this.externalFindIdentityConfig = externalFindIdentityConfig;
         this.identityConfig = identityConfig(repositoryAdapter, appAdapter);
         this.lockoutConfig = lockoutConfig(repositoryAdapter, appAdapter, identityConfig);
         this.contextConfig = contextConfig(repositoryAdapter, appAdapter, methodBuilders, identityConfig, lockoutConfig);

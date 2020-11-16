@@ -54,7 +54,8 @@ public class StubSimSwapExecutorConfig implements SimSwapExecutorConfig {
     }
 
     private static ExecutorService buildSimSwapExecutor() {
-        return Executors.newFixedThreadPool(loadThreadPoolSize());
+        return Executors.newCachedThreadPool();
+        //return Executors.newFixedThreadPool(loadThreadPoolSize());
     }
 
     private static int loadThreadPoolSize() {

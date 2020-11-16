@@ -373,13 +373,13 @@ Feature: Identity Maintenance
         ],
         "emailAddresses": [
           "merge3@three.com",
-          "merge2@two.com",
           "merge1@one.com"
+          "merge2@two.com"
         ],
         "phoneNumbers": [
           { "value": "+441604333333", "lastUpdated": "2020-08-29T21:31:33.333Z" },
-          { "value": "+4407808222222", "lastUpdated": "2020-08-29T21:31:22.222Z" },
-          { "value": "+4407808111111", "lastUpdated": "2020-08-29T21:31:11.111Z" }
+          { "value": "+4407808111111", "lastUpdated": "2020-08-29T21:31:11.111Z" },
+          { "value": "+4407808222222", "lastUpdated": "2020-08-29T21:31:22.222Z" }
         ]
       }
       """

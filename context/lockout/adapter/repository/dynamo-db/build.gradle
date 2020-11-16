@@ -1,8 +1,0 @@
-dependencies {
-    api project(":common-dynamo-db")
-    implementation project(":lockout-use-cases")
-    implementation project(":lockout-json")
-
-    testImplementation testFixtures(project(":lockout-entities"))
-    testImplementation testFixtures(project(":lockout-use-cases"))
-}

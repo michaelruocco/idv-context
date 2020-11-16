@@ -7,5 +7,5 @@ dependencies {
     implementation project(":policy-in-memory-repository")
     implementation project(":lockout-in-memory-repository")
     implementation project(":lockout-redis-repository")
-    implementation project(":lockout-dynamo-db-repository")
+    implementation project(":lockout-mongo-repository")
 }

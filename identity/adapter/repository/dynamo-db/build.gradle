@@ -1,8 +1,0 @@
-dependencies {
-    api project(":common-dynamo-db")
-    implementation project(":identity-json")
-    implementation project(":common-use-cases")
-
-    testImplementation testFixtures(project(":identity-entities"))
-    testImplementation testFixtures(project(":identity-use-cases"))
-}

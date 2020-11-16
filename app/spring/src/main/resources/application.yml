@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: verification-context
+  main:
+    banner-mode: off
+
+management:
+  endpoint:
+    health:
+      show-details: always

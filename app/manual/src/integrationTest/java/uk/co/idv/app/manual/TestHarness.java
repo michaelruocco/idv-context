@@ -17,6 +17,8 @@ import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
 import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
 import uk.co.idv.context.entities.result.FacadeRecordResultRequestMother;
+import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
+import uk.co.idv.identity.config.ExternalFindIdentityConfig;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
@@ -40,6 +42,7 @@ import uk.co.idv.policy.entities.policy.key.PolicyKey;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.UUID;
+import java.util.concurrent.Executors;
 
 public class TestHarness {
 
@@ -64,12 +67,23 @@ public class TestHarness {
     );
 
     private final AppAdapter appAdapter = DefaultAppAdapter.builder()
-            .repositoryAdapter(repositoryAdapter)
             .clock(clock)
             .idGenerator(idGenerator)
             .build();
 
-    private final AppConfig appConfig = new AppConfig(methodBuilders, repositoryAdapter, appAdapter);
+    private final ExternalFindIdentityConfig externalFindIdentityConfig = StubExternalFindIdentityConfig.builder()
+            .executor(Executors.newCachedThreadPool())
+            .timeout(Duration.ofMillis(250))
+            .phoneNumberDelay(Duration.ofMillis(400))
+            .emailAddressDelay(Duration.ofMillis(100))
+            .build();
+
+    private final AppConfig appConfig = new AppConfig(
+            methodBuilders,
+            repositoryAdapter,
+            appAdapter,
+            externalFindIdentityConfig
+    );
 
     private final JsonConfig jsonConfig = new JsonConfig(new MethodMappings(new FakeMethodMapping(), new OtpMapping()));
     private final ChannelAdapter channelAdapter = new DefaultChannelAdapter(jsonConfig.getJsonConverter());

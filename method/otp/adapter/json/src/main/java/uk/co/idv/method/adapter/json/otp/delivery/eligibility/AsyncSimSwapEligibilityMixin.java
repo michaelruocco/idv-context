@@ -10,4 +10,7 @@ public interface AsyncSimSwapEligibilityMixin extends SimSwapEligibilityMixin {
     @JsonIgnore
     Future<Eligibility> getFuture();
 
+    @JsonIgnore
+    Eligibility getEligibility();
+
 }

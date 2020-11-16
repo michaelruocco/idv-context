@@ -3,7 +3,6 @@ dependencies {
     api project(":identity-json")
     implementation project(":common-use-cases")
 
-    implementation project(":identity-dynamo-db-repository")
     implementation project(":identity-in-memory-repository")
     implementation project(":identity-mongo-repository")
 }

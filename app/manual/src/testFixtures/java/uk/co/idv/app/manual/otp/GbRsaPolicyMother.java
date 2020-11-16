@@ -47,7 +47,7 @@ public interface GbRsaPolicyMother {
 
     private static SequencePolicies buildSequences() {
         MethodPolicy methodPolicy = OtpPolicyMother.builder()
-                .deliveryMethodConfigs(DeliveryMethodConfigsMother.with(SmsDeliveryMethodConfigMother.sms()))
+                .deliveryMethodConfigs(DeliveryMethodConfigsMother.with(SmsDeliveryMethodConfigMother.withAsyncSimSwap()))
                 .config(OtpConfigMother.build())
                 .build();
         return SequencePoliciesMother.withMethodPolicy(methodPolicy);

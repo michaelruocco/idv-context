@@ -4,8 +4,11 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import org.bson.Document;
 import org.bson.conversions.Bson;
+import uk.co.idv.common.mongo.MongoDurationLogger;
+import uk.co.idv.identity.adapter.repository.query.AliasesQueryBuilder;
+import uk.co.idv.identity.adapter.repository.converter.IdentityDocumentConverter;
+import uk.co.idv.identity.adapter.repository.type.IdentityDocument;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
@@ -16,26 +19,22 @@ import uk.co.idv.identity.usecases.identity.IdentityRepository;
 import java.time.Instant;
 import java.util.Optional;
 
-import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
-
 @Slf4j
 @Builder
 public class MongoIdentityRepository implements IdentityRepository {
 
-    private final MongoCollection<Document> collection;
-    private final AliasesConverter aliasesConverter;
-    private final MongoIdentityConverter identityConverter;
+    private final MongoCollection<IdentityDocument> collection;
+    private final AliasesQueryBuilder queryBuilder;
+    private final IdentityDocumentConverter identityConverter;
 
     @Override
     public Optional<Identity> load(Alias alias) {
         Instant start = Instant.now();
         try {
-            FindIterable<Document> documents = collection.find(toFindByAliasQuery(alias));
+            FindIterable<IdentityDocument> documents = collection.find(toFindByAliasQuery(alias));
             return Optional.ofNullable(documents.first()).map(this::toIdentity);
         } finally {
-            log.info("took {}ms to load identities using alias {}",
-                    millisBetweenNowAnd(start),
-                    alias);
+            MongoDurationLogger.log("load-identity-by-alias", start);
         }
     }
 
@@ -45,23 +44,31 @@ public class MongoIdentityRepository implements IdentityRepository {
         try {
             Bson query = toFindByAliasesQuery(aliases);
             log.debug("finding identities with query {}", query);
-            FindIterable<Document> documents = collection.find(query);
+            FindIterable<IdentityDocument> documents = collection.find(query);
             return toIdentities(documents);
         } finally {
-            log.info("took {}ms to load identities using aliases {}",
-                    millisBetweenNowAnd(start),
-                    aliases);
+            MongoDurationLogger.log("load-identity-by-aliases", start);
         }
     }
 
     @Override
     public void create(Identity identity) {
-        collection.insertOne(toDocument(identity));
+        Instant start = Instant.now();
+        try {
+            collection.insertOne(toDocument(identity));
+        } finally {
+            MongoDurationLogger.log("create-identity", start);
+        }
     }
 
     @Override
     public void update(Identity updated, Identity existing) {
-        collection.replaceOne(toFindByIdvIdQuery(updated.getIdvId()), toDocument(updated));
+        Instant start = Instant.now();
+        try {
+            collection.replaceOne(toFindByIdvIdQuery(updated.getIdvId()), toDocument(updated));
+        } finally {
+            MongoDurationLogger.log("update-identity", start);
+        }
     }
 
     @Override
@@ -70,35 +77,32 @@ public class MongoIdentityRepository implements IdentityRepository {
         try {
             collection.deleteMany(toFindByAliasesQuery(aliases));
         } finally {
-            log.info("took {}ms to delete {} items using aliases {} items",
-                    millisBetweenNowAnd(start),
-                    aliases.size(),
-                    aliases);
+            MongoDurationLogger.log("delete-identity-by-aliases", start);
         }
     }
 
-    private Identity toIdentity(Document document) {
+    private Identity toIdentity(IdentityDocument document) {
         return identityConverter.toIdentity(document);
     }
 
-    private Identities toIdentities(FindIterable<Document> documents) {
+    private Identities toIdentities(FindIterable<IdentityDocument> documents) {
         return identityConverter.toIdentities(documents);
     }
 
-    private Document toDocument(Identity identity) {
+    private IdentityDocument toDocument(Identity identity) {
         return identityConverter.toDocument(identity);
     }
 
     private Bson toFindByAliasesQuery(Aliases aliases) {
-        return aliasesConverter.toFindByAliasesQuery(aliases);
+        return queryBuilder.toFindByAliasesQuery(aliases);
     }
 
     private Bson toFindByAliasQuery(Alias alias) {
-        return aliasesConverter.toFindByAliasQuery(alias);
+        return queryBuilder.toFindByAliasQuery(alias);
     }
 
     private Bson toFindByIdvIdQuery(IdvId idvId) {
-        return aliasesConverter.toFindByIdvIdQuery(idvId);
+        return queryBuilder.toFindByIdvIdQuery(idvId);
     }
 
 }

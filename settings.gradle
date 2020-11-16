@@ -9,8 +9,8 @@ project(':common-use-cases').projectDir = file('common/domain/use-cases')
 include ':common-json'
 project(':common-json').projectDir = file('common/adapter/json')
 
-include ':common-dynamo-db'
-project(':common-dynamo-db').projectDir = file('common/adapter/repository/dynamo-db')
+include ':common-mongo'
+project(':common-mongo').projectDir = file('common/adapter/repository/mongo')
 
 include ':identity-entities'
 project(':identity-entities').projectDir = file('identity/domain/entities')
@@ -20,9 +20,6 @@ project(':identity-use-cases').projectDir = file('identity/domain/use-cases')
 
 include ':identity-in-memory-repository'
 project(':identity-in-memory-repository').projectDir = file('identity/adapter/repository/in-memory')
-
-include ':identity-dynamo-db-repository'
-project(':identity-dynamo-db-repository').projectDir = file('identity/adapter/repository/dynamo-db')
 
 include ':identity-mongo-repository'
 project(':identity-mongo-repository').projectDir = file('identity/adapter/repository/mongo')
@@ -66,8 +63,8 @@ project(':lockout-in-memory-repository').projectDir = file('context/lockout/adap
 include ':lockout-redis-repository'
 project(':lockout-redis-repository').projectDir = file('context/lockout/adapter/repository/redis')
 
-include ':lockout-dynamo-db-repository'
-project(':lockout-dynamo-db-repository').projectDir = file('context/lockout/adapter/repository/dynamo-db')
+include ':lockout-mongo-repository'
+project(':lockout-mongo-repository').projectDir = file('context/lockout/adapter/repository/mongo')
 
 include ':lockout-json'
 project(':lockout-json').projectDir = file('context/lockout/adapter/json')
@@ -92,6 +89,9 @@ project(':context-redis-repository').projectDir = file('context/adapter/reposito
 
 include ':context-dynamo-db-repository'
 project(':context-dynamo-db-repository').projectDir = file('context/adapter/repository/dynamo-db')
+
+include ':context-mongo-repository'
+project(':context-mongo-repository').projectDir = file('context/adapter/repository/mongo')
 
 include ':context-config'
 project(':context-config').projectDir = file('context/config')

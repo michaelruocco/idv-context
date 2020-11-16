@@ -39,7 +39,6 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-actuator"
 
     implementation project(":manual-app")
-    implementation project(":common-dynamo-db")
     implementation project(":identity-config")
     implementation project(":lockout-config")
     implementation project(":context-config")
@@ -60,6 +59,7 @@ dependencies {
     implementation "ch.qos.logback.contrib:logback-json-classic:${logbackJsonVersion}"
     implementation "ch.qos.logback.contrib:logback-jackson:${logbackJsonVersion}"
     implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
+    implementation "net.logstash.logback:logstash-logback-encoder:6.4"
 
     testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
     testImplementation testFixtures(project(":lockout-entities"))

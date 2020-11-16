@@ -1,5 +1,5 @@
 dependencies {
-    api "org.mongodb:mongo-java-driver:${mongoVersion}"
+    api project(":common-mongo")
     implementation project(":identity-json")
     implementation project(":common-use-cases")
 
