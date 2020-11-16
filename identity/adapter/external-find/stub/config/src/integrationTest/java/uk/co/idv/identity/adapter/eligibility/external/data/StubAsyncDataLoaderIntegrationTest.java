@@ -31,12 +31,11 @@ class StubAsyncDataLoaderIntegrationTest {
     private static final Duration EMAIL_ADDRESS_DELAY = Duration.ofMillis(1500);
     private static final int NUMBER_OF_RUNS = 100;
 
-    private static final ExecutorService EXECUTOR = Executors.newFixedThreadPool(NUMBER_OF_RUNS * 2);
-
     @Test
     void shouldLoadStubbedData() {
+        ExecutorService executor = Executors.newFixedThreadPool(NUMBER_OF_RUNS * 2);
         StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.builder()
-                .executor(EXECUTOR)
+                .executor(executor)
                 .phoneNumberDelay(PHONE_NUMBER_DELAY)
                 .emailAddressDelay(EMAIL_ADDRESS_DELAY)
                 .build();
@@ -51,7 +50,7 @@ class StubAsyncDataLoaderIntegrationTest {
         try {
             loadStubbedData(loader);
         } finally {
-            EXECUTOR.shutdown();
+            executor.shutdown();
             Instant end = Instant.now();
             Duration duration = Duration.between(start, end);
             log.info("took {}ms", duration.toMillis());

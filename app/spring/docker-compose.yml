@@ -4,8 +4,6 @@ services:
   redis:
     image: redis
     container_name: redis
-    ports:
-      - 6379:6379
 
   mongo:
     image: mongo
@@ -16,8 +14,6 @@ services:
       MONGO_INITDB_DATABASE: idv-local
     volumes:
       - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
-    ports:
-      - 27017:27017
 
   verification-context-app:
     image: michaelruocco/verification-context-spring-app

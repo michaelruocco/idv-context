@@ -69,14 +69,6 @@ public class StubExternalFindIdentityConfig implements ExternalFindIdentityConfi
 
     private static ExecutorService buildEligibilityExecutor() {
         return Executors.newCachedThreadPool();
-        //return Executors.newFixedThreadPool(loadThreadPoolSize());
-    }
-
-    private static int loadThreadPoolSize() {
-        String key = "external.find.identity.thread.pool.size";
-        int size = Integer.parseInt(System.getProperty(key, "100"));
-        log.info("loaded {} value {}", key, size);
-        return size;
     }
 
 }
