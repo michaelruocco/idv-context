@@ -18,7 +18,7 @@ public class MongoDurationLogger {
         long duration = millisBetweenNowAnd(start);
         MDC.put("mongo-operation", operation);
         MDC.put("mongo-duration", Long.toString(duration));
-        log.debug("{} took {}ms", operation, duration);
+        log.info("{} took {}ms", operation, duration);
         MDC.remove("mongo-operation");
         MDC.remove("mongo-duration");
     }

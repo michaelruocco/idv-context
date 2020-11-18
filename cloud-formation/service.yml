@@ -2,6 +2,9 @@ AWSTemplateFormatVersion: '2010-09-09'
 Description: Deploy a service on AWS Fargate, hosted in two public subnets and accessible via a public load balancer.
   Derived from a template at https://github.com/nathanpeck/aws-cloudformation-fargate.
 Parameters:
+  MongoConnectionString:
+    Type: String
+    Description: Connection string of the mongo database the service should connect to
   EnvironmentName:
     Type: String
     Default: idv-dev
@@ -34,11 +37,11 @@ Parameters:
       is binding to.
   ContainerCpu:
     Type: Number
-    Default: 512
+    Default: 1024
     Description: How much CPU to give the container. 1024 is 1 CPU.
   ContainerMemory:
     Type: Number
-    Default: 1024
+    Default: 2048
     Description: How much memory in megabytes to give the container.
   Path:
     Type: String
@@ -60,53 +63,6 @@ Conditions:
   HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
 
 Resources:
-
-  IdentityTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName:  !Sub ${EnvironmentName}-identity
-      AttributeDefinitions:
-        -
-          AttributeName: "alias"
-          AttributeType: "S"
-      KeySchema:
-        -
-          AttributeName: "alias"
-          KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits: "5"
-        WriteCapacityUnits: "5"
-
-  AttemptTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: !Sub ${EnvironmentName}-attempt
-      AttributeDefinitions:
-        - AttributeName: "idvId"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "idvId"
-          KeyType: "HASH"
-      ProvisionedThroughput:
-        ReadCapacityUnits: "5"
-        WriteCapacityUnits: "5"
-
-  ContextTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: !Sub ${EnvironmentName}-context
-      AttributeDefinitions:
-        - AttributeName: "id"
-          AttributeType: "S"
-      KeySchema:
-        - AttributeName: "id"
-          KeyType: "HASH"
-      TimeToLiveSpecification:
-        AttributeName: "ttl"
-        Enabled: true
-      ProvisionedThroughput:
-        ReadCapacityUnits: "5"
-        WriteCapacityUnits: "5"
 
   ElasticacheSecurityGroup:
     Type: AWS::EC2::SecurityGroup
@@ -213,8 +169,8 @@ Resources:
               Value: default
             - Name: ENVIRONMENT
               Value: !Ref 'EnvironmentName'
-            - Name: AWS_DYNAMO_DB_ENDPOINT_URI
-              Value: https://dynamodb.eu-west-1.amazonaws.com
+            - Name: MONGO_CONNECTION_STRING
+              Value: !Ref 'MongoConnectionString'
             - Name: REDIS_ENDPOINT_URI
               Value: !Join
                 - ''
@@ -226,6 +182,10 @@ Resources:
                   - !GetAtt
                     - ElastiCacheCluster
                     - RedisEndpoint.Port
+            - Name: REQUEST_LOGGING_ENABLED
+              Value: true
+            - Name: RESPONSE_LOGGING_ENABLED
+              Value: true
           LogConfiguration:
             LogDriver: 'awslogs'
             Options:

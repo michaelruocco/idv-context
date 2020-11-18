@@ -88,7 +88,7 @@ aws cloudformation create-stack --stack-name idv-dev-network --template-body fil
 
 ```aws
 //generate service resources using cloud formation (relies on network stack already being created)
-aws cloudformation create-stack --stack-name idv-dev-verification-context-service --template-body file://cloud-formation/service.yml
+aws cloudformation create-stack --stack-name idv-dev-verification-context-service --template-body file://cloud-formation/service.yml --parameters  ParameterKey=MongoConnectionString,ParameterValue=<mongo-connection-string>
 ```
 
 #### Update image used by running task

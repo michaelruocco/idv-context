@@ -1,6 +1,26 @@
 version: '3'
 services:
 
+  elk:
+    image: sebp/elk
+    container_name: elk
+    ports:
+      - 5601:5601
+    volumes:
+      - ./elastic/logstash/pipeline.conf:/etc/logstash/conf.d/pipeline.conf:ro
+
+  filebeat:
+    image: elastic/filebeat:7.9.3
+    container_name: filebeat
+    restart: on-failure
+    user: root
+    volumes:
+      - ./elastic/filebeat/docker.filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    depends_on:
+      - elk
+
   redis:
     image: redis
     container_name: redis
@@ -28,9 +48,8 @@ services:
       - AWS_SECRET_KEY=123
       - REDIS_ENDPOINT_URI=redis://redis:6379
       - MONGO_CONNECTION_STRING=mongodb://idv:welcome01@mongo:27017/idv-local
-      - SPRING_PROFILES_ACTIVE=local
-      - REQUEST_LOGGING_ENABLED=false
-      - RESPONSE_LOGGING_ENABLED=false
+      - REQUEST_LOGGING_ENABLED=true
+      - RESPONSE_LOGGING_ENABLED=true
     depends_on:
       - redis
       - mongo
