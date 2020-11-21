@@ -165,8 +165,6 @@ Resources:
           PortMappings:
             - ContainerPort: !Ref 'ContainerPort'
           Environment:
-            - Name: SPRING_PROFILES_ACTIVE
-              Value: default
             - Name: ENVIRONMENT
               Value: !Ref 'EnvironmentName'
             - Name: MONGO_CONNECTION_STRING

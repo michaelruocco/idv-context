@@ -11,14 +11,10 @@
 
 ## Todo
 
-*   Make identity data lookup delays configurable
-
 *   Add functionality to mask mobile numbers on post response by adding flag to policy then having an adapter
     check the context checking if policy flag is true and then mask all phone numbers if it is
     
 *   Add mandatory header validator for channel id and correlation id
-    
-*   Add spring app integration test for context expiry and endpoint to control time from test
 
 *   Add specific method result types, e.g. for OTP delivery time, actual and used otp codes, verify type, 
     maybe delivery id for sending message

@@ -38,11 +38,6 @@ public class SpringCommonDomainConfig {
     }
 
     @Bean
-    public Clock clock(AppAdapter appAdapter) {
-        return appAdapter.getClock();
-    }
-
-    @Bean
     public AliasFactory aliasFactory(AppAdapter appAdapter) {
         return appAdapter.getAliasFactory();
     }
@@ -59,8 +54,10 @@ public class SpringCommonDomainConfig {
     }
 
     @Bean
-    public AppAdapter appAdapter() {
-        return DefaultAppAdapter.builder().build();
+    public AppAdapter appAdapter(Clock clock) {
+        return DefaultAppAdapter.builder()
+                .clock(clock)
+                .build();
     }
 
     @Bean

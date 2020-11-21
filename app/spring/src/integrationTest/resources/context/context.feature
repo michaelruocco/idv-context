@@ -943,3 +943,68 @@ Feature: Create Requests
         "message": "#(contextId)"
       }
       """
+
+  Scenario: Create and get context - Error - context expired
+    Given url baseUrl + "/identities"
+    And request
+      """
+      {
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4927111111111116" }
+        ],
+        "phoneNumbers": [
+          { "value": "+4407808247746" }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    And url baseUrl + "/contexts"
+    And request
+      """
+      {
+        "channel": {
+          "id": "abc",
+          "country": "GB"
+        },
+        "activity": {
+          "name": "login",
+          "timestamp": "2020-09-27T06:56:47.522Z"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111116"
+          }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    * def contextId = response.id
+    And url baseUrl + "/time-offset"
+    And request
+      """
+      { "offset": 360000 }
+      """
+    And method PUT
+    And status 200
+    And url baseUrl + "/contexts/" + contextId
+    And method GET
+    And status 410
+    And match response ==
+      """
+      {
+        "title": "Context expired",
+        "message": "#notnull",
+        "status": 410,
+        "meta": {
+          "id":"#uuid",
+          "expiry":"#notnull"
+        }
+      }
+      """
+    And url baseUrl + "/time-offset"
+    And method DELETE
+    And status 200

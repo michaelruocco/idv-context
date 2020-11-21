@@ -77,7 +77,7 @@ class ParallelKarateIntegrationTest {
         System.setProperty("redis.endpoint.uri", REDIS.getEndpointUri());
         System.setProperty("spring.data.mongodb.uri", MONGO.getConnectionString());
         System.setProperty("response.filtering.enabled", "true");
-        System.setProperty("spring.profiles.active", "local,test");
+        System.setProperty("spring.profiles.active", "simple-logging,test");
     }
 
 }

@@ -14,6 +14,10 @@ public class UpdatableClock extends Clock {
 
     private Instant now;
 
+    public UpdatableClock() {
+        this(Instant.now());
+    }
+
     @Override
     public ZoneId getZone() {
         return ZoneId.systemDefault();
@@ -31,10 +35,6 @@ public class UpdatableClock extends Clock {
 
     public void plus(Duration duration) {
         now = now.plus(duration);
-    }
-
-    public void minus(Duration duration) {
-        now = now.minus(duration);
     }
 
     public void setNow(Instant now) {
