@@ -11,24 +11,27 @@
 
 ## Todo
 
-*   Add mandatory header validator for channel id and correlation id
+*   Make identity data lookup delays configurable
 
-*   Add functionality to mask mobile numbers on post response by adding flag to policy then using json masker in
-    response filter using jsonpath to see if policy flag is true
+*   Add functionality to mask mobile numbers on post response by adding flag to policy then having an adapter
+    check the context checking if policy flag is true and then mask all phone numbers if it is
+    
+*   Add mandatory header validator for channel id and correlation id
     
 *   Add spring app integration test for context expiry and endpoint to control time from test
-
-*   Add postman collection to repo and run in build pipeline
-
-*   Tidy up cloud formation templates and try out creating API gateway, tidy up log stream name,
-    set execution role for context service
 
 *   Add specific method result types, e.g. for OTP delivery time, actual and used otp codes, verify type, 
     maybe delivery id for sending message
     
-*   Make stub delays and identity lookup timeout configurable (by channel / add identity eligibility policy?)
+*   Add postman collection to repo and run in build pipeline
+    
+*   Performance tests in pipeline / nightly build
 
-*   Extract common dynamo adapter to its own separate library
+*   Add identity data lookup policy
+
+*   Tidy up cloud formation templates create and set execution role for context service (rather than being passed in)
+
+*   RSA adapter
 
 ## Useful commands
 
@@ -88,7 +91,7 @@ aws cloudformation create-stack --stack-name idv-dev-network --template-body fil
 
 ```aws
 //generate service resources using cloud formation (relies on network stack already being created)
-aws cloudformation create-stack --stack-name idv-dev-verification-context-service --template-body file://cloud-formation/service.yml --parameters  ParameterKey=MongoConnectionString,ParameterValue=<mongo-connection-string>
+aws cloudformation create-stack --stack-name idv-dev-verification-context-service --template-body file://cloud-formation/service.yml --parameters ParameterKey=MongoConnectionString,ParameterValue=<mongo-connection-string>
 ```
 
 #### Update image used by running task
