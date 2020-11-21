@@ -103,3 +103,19 @@ aws ecs update-service --cluster idv-dev --service verification-context --force-
 aws cloudformation delete-stack --stack-name idv-dev-verification-context-service;
 aws cloudformation delete-stack --stack-name idv-dev-network;
 ```
+
+#### Running JMeter tests
+
+This command should be ru
+
+```sh
+mkdir -p app/spring/build/reports/jmeter/html;
+rm -rf app/spring/build/reports/jmeter/log/*;
+jmeter --nongui \
+       --forceDeleteResultFile \
+       --addprop app/spring/src/performanceTest/jmeter/online-purchase.properties \
+       --testfile app/spring/src/performanceTest/jmeter/online-purchase.jmx \
+       --logfile app/spring/build/reports/jmeter/log/online-purchase.jtl \
+       --reportatendofloadtests \
+       --reportoutputfolder app/spring/build/reports/jmeter/html
+```

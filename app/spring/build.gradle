@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = "2.3.5.RELEASE"
+        springBootVersion = "2.4.0"
     }
 }
 
@@ -69,7 +69,6 @@ dependencies {
     integrationTestImplementation "com.intuit.karate:karate-junit5:${karateVersion}"
     integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
     integrationTestImplementation "org.testcontainers:junit-jupiter:1.15.0"
-    integrationTestImplementation "com.amazonaws:aws-java-sdk-dynamodb:${awsSdkVersion}"
 }
 
 springBoot {
@@ -102,4 +101,8 @@ task buildImage(type: DockerBuildImage) {
 
 task pushImage(type: DockerPushImage) {
     images.set(buildImage.images)
+}
+
+dockerCompose {
+    startedServices = ['verification-context-app']
 }

@@ -11,8 +11,8 @@ buildscript {
 plugins {
     id "idea"
     id "java-library"
-    id "com.diffplug.spotless" version "5.7.0"
-    id "com.github.ben-manes.versions" version "0.34.0"
+    id "com.diffplug.spotless" version "5.8.2"
+    id "com.github.ben-manes.versions" version "0.36.0"
     id "com.vanniktech.dependency.graph.generator" version "0.5.0"
     id "pl.allegro.tech.build.axion-release" version "1.12.1"
     id "org.sonarqube" version "3.0"
@@ -64,10 +64,10 @@ subprojects {
         mongoVersion = "3.12.7"
 
         junitVersion = "5.7.0"
-        assertjVersion = "3.18.0"
+        assertjVersion = "3.18.1"
         junitPioneerVersion = "1.0.0"
         mockitoVersion = "3.6.0"
-        jsonUnitAssertjVersion = "2.20.0"
+        jsonUnitAssertjVersion = "2.21.0"
         fileLoaderVersion = "6.0.1"
         awaitilityVersion = "4.0.3"
     }
