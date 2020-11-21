@@ -113,7 +113,8 @@ Feature: Context Policy Maintenance
                         "timeout": 2000,
                         "minDaysSinceSwap": 5,
                         "async": false
-                      }
+                      },
+                      "maskNumbers": false
                     }
                   }
                 ]
@@ -172,7 +173,8 @@ Feature: Context Policy Maintenance
                         "timeout": 1500,
                         "minDaysSinceSwap": 4,
                         "async": false
-                      }
+                      },
+                      "maskNumbers": false
                     }
                   }
                 ]
@@ -232,7 +234,8 @@ Feature: Context Policy Maintenance
                         "timeout": 1500,
                         "minDaysSinceSwap": 4,
                         "async": false
-                      }
+                      },
+                      "maskNumbers": false
                     }
                   }
                 ]

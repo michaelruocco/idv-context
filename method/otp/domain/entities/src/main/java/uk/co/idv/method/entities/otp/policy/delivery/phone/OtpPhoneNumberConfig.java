@@ -19,6 +19,7 @@ public class OtpPhoneNumberConfig {
     private final boolean allowInternational;
     private final LastUpdatedConfig lastUpdatedConfig;
     private final SimSwapConfig simSwapConfig;
+    private final boolean maskNumbers;
 
     public Eligibility toEligibility(OtpPhoneNumber number, Instant now) {
         if (allowInternational || number.isLocal()) {

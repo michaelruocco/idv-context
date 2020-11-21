@@ -2,6 +2,7 @@ package uk.co.idv.app.spring;
 
 import com.intuit.karate.Results;
 import com.intuit.karate.Runner;
+import com.intuit.karate.junit5.Karate;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,7 +16,7 @@ import static uk.co.idv.app.spring.AppRunner.waitForAppStartupToComplete;
 
 @Testcontainers
 @Slf4j
-class ParallelKarateIntegrationTest {
+class KarateIntegrationTest {
 
     private static final String ENVIRONMENT = "idv-local";
 
@@ -35,15 +36,21 @@ class ParallelKarateIntegrationTest {
     }
 
     @Test
-    void runFeatureTests() {
+    void runParallelFeatures() {
         String reportDir = "build/reports/karate";
         Results results = Runner.path(getFeaturePaths())
                 .reportDir(reportDir)
+                .tags("~@sequential")
                 .parallel(THREAD_COUNT);
 
         assertThat(results.getFailCount())
                 .withFailMessage(results.getErrorMessages())
                 .isZero();
+    }
+
+    @Karate.Test
+    Karate runSequentialFeatures() {
+        return Karate.run(getFeaturePaths()).tags("@sequential");
     }
 
     private static String[] getFeaturePaths() {

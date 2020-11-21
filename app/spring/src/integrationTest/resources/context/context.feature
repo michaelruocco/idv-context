@@ -336,7 +336,8 @@ Feature: Create Requests
                             "timeout": 2000,
                             "minDaysSinceSwap": 6,
                             "async": false
-                          }
+                          },
+                          "maskNumbers": false
                         }
                       }
                     ],
@@ -653,7 +654,8 @@ Feature: Create Requests
                             "timeout": 2000,
                             "minDaysSinceSwap": 6,
                             "async": false
-                          }
+                          },
+                          "maskNumbers": false
                         }
                       }
                     ],
@@ -804,7 +806,8 @@ Feature: Create Requests
                             "timeout": 2000,
                             "minDaysSinceSwap": 6,
                             "async": false
-                          }
+                          },
+                          "maskNumbers": false
                         }
                       }
                     ],
@@ -944,6 +947,7 @@ Feature: Create Requests
       }
       """
 
+  @sequential
   Scenario: Create and get context - Error - context expired
     Given url baseUrl + "/identities"
     And request
