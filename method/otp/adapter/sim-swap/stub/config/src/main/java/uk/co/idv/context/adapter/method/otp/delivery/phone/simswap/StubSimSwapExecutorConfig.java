@@ -10,26 +10,31 @@ import java.time.Clock;
 import java.time.Duration;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.function.Supplier;
 
 @Builder
 @Slf4j
 public class StubSimSwapExecutorConfig implements SimSwapExecutorConfig {
 
-    @Builder.Default
-    private final Delay delay = new Delay(Duration.ofMillis(3500));
-
+    private final Supplier<Delay> delaySupplier;
     private final Clock clock;
     private final ExecutorService executor;
 
-    public static SimSwapExecutorConfig buildDefault() {
-        return buildDefault(Clock.systemUTC());
+    public static SimSwapExecutorConfig build() {
+        return defaultBuilder().build();
     }
 
-    public static SimSwapExecutorConfig buildDefault(Clock clock) {
-        return StubSimSwapExecutorConfig.builder()
-                .executor(buildSimSwapExecutor())
-                .clock(clock)
+    public static SimSwapExecutorConfig withFixedDelay() {
+        return defaultBuilder()
+                .delaySupplier(() -> new Delay(Duration.ofMillis(3500)))
                 .build();
+    }
+
+    public static StubSimSwapExecutorConfigBuilder defaultBuilder() {
+        return StubSimSwapExecutorConfig.builder()
+                .delaySupplier(new StubSimSwapDelaySupplier())
+                .executor(buildSimSwapExecutor())
+                .clock(Clock.systemUTC());
     }
 
     public SimSwapExecutor simSwapExecutor() {
@@ -42,7 +47,7 @@ public class StubSimSwapExecutorConfig implements SimSwapExecutorConfig {
     private StubSimSwapEligibilitySupplierFactory buildSupplierFactory() {
         return StubSimSwapEligibilitySupplierFactory.builder()
                 .resultFactory(buildResultFactory())
-                .delay(delay)
+                .delaySupplier(delaySupplier)
                 .clock(clock)
                 .build();
     }

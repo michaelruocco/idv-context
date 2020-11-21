@@ -53,7 +53,7 @@ public class TestHarness {
     private final RepositoryAdapter repositoryAdapter = new InMemoryRepositoryAdapter();
 
     private final AppMethodConfig otpConfig = AppOtpConfig.builder()
-            .simSwapExecutorConfig(StubSimSwapExecutorConfig.buildDefault())
+            .simSwapExecutorConfig(StubSimSwapExecutorConfig.withFixedDelay())
             .clock(clock)
             .idGenerator(idGenerator)
             .contextRepository(repositoryAdapter.getContextRepository())

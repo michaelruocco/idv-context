@@ -21,7 +21,7 @@ class StubSimSwapEligibilitySupplierFactoryTest {
 
     private final StubSimSwapEligibilitySupplierFactory supplierFactory = StubSimSwapEligibilitySupplierFactory.builder()
             .clock(clock)
-            .delay(delay)
+            .delaySupplier(() -> delay)
             .resultFactory(resultFactory)
             .build();
 
