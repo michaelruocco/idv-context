@@ -48,6 +48,9 @@ services:
       - AWS_SECRET_KEY=123
       - REDIS_ENDPOINT_URI=redis://redis:6379
       - MONGO_CONNECTION_STRING=mongodb://idv:welcome01@mongo:27017/idv-local
+      - EXTERNAL_DATA_TIMEOUT=1000
+      - EXTERNAL_PHONE_NUMBER_DELAY=750
+      - EXTERNAL_EMAIL_ADDRESS_DELAY=500
       - REQUEST_LOGGING_ENABLED=true
       - RESPONSE_LOGGING_ENABLED=true
     depends_on:

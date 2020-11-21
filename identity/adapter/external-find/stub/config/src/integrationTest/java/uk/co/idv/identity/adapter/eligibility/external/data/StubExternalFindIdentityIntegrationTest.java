@@ -12,17 +12,11 @@ import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequestMother;
 import uk.co.idv.identity.usecases.eligibility.external.ExternalFindIdentity;
 import uk.co.idv.identity.entities.identity.FindIdentityRequest;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 class StubExternalFindIdentityIntegrationTest {
 
-    private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    private final StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.builder()
-            .executor(executor)
-            .build();
+    private final StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.withNoDelays();
     private final ExternalFindIdentity find = config.externalFindIdentity();
 
     @Test

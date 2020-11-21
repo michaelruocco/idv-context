@@ -10,7 +10,6 @@ import static org.mockito.Mockito.mock;
 
 class StubExternalFindIdentityConfigTest {
 
-    private static final Duration NO_DELAY = Duration.ZERO;
     private static final Duration OTHER_DELAY = Duration.ofMillis(5);
 
     @Test
@@ -22,27 +21,6 @@ class StubExternalFindIdentityConfigTest {
                 .build();
 
         assertThat(config.getExecutor()).isEqualTo(executor);
-    }
-
-    @Test
-    void shouldReturnNoPhoneNumberDelayIfNotSet() {
-        StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.builder().build();
-
-        assertThat(config.getPhoneNumberDelay()).isEqualTo(NO_DELAY);
-    }
-
-    @Test
-    void shouldReturnNoEmailAddressDelayIfNotSet() {
-        StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.builder().build();
-
-        assertThat(config.getEmailAddressDelay()).isEqualTo(NO_DELAY);
-    }
-
-    @Test
-    void shouldReturn2SecondTimeoutNotSet() {
-        StubExternalFindIdentityConfig config = StubExternalFindIdentityConfig.builder().build();
-
-        assertThat(config.getTimeout()).isEqualTo(Duration.ofSeconds(2));
     }
 
     @Test

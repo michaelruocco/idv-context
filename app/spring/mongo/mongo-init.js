@@ -1,15 +1,8 @@
-/*global db*/
-
 db.createUser(
     {
         user: "idv",
         pwd: "welcome01",
-        roles: [
-            {
-                role: "readWrite",
-                db: "idv-local"
-            }
-        ]
+        roles: [ { role: "readWrite", db: "idv-local" } ]
     }
 );
 
@@ -20,4 +13,3 @@ db.createCollection("attempt");
 
 db.createCollection("identity");
 db.identity.createIndex({ "aliases.value": 1, "aliases.type": 1 }, { unique: true });
-

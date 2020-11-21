@@ -21,28 +21,29 @@ import java.util.concurrent.Executors;
 @Slf4j
 public class StubExternalFindIdentityConfig implements ExternalFindIdentityConfig {
 
-    @Builder.Default
-    private final ExecutorService executor = buildEligibilityExecutor();
-
-    @Builder.Default
-    private final Duration phoneNumberDelay = Duration.ofSeconds(0);
-
-    @Builder.Default
-    private final Duration emailAddressDelay = Duration.ofSeconds(0);
-
-    @Builder.Default private final Duration timeout = Duration.ofSeconds(2);
+    private final ExecutorService executor;
+    private final Duration phoneNumberDelay;
+    private final Duration emailAddressDelay;
+    private final Duration timeout;
 
     public static StubExternalFindIdentityConfig build() {
-        return build(buildEligibilityExecutor());
+        return defaultBuilder().build();
     }
 
-    public static StubExternalFindIdentityConfig build(ExecutorService executor) {
-        return StubExternalFindIdentityConfig.builder()
-                .executor(executor)
-                .timeout(Duration.ofMillis(2000))
-                .phoneNumberDelay(Duration.ofMillis(1500))
-                .emailAddressDelay(Duration.ofMillis(1000))
+    public static StubExternalFindIdentityConfig withNoDelays() {
+        return defaultBuilder()
+                .timeout(Duration.ofSeconds(1))
+                .emailAddressDelay(Duration.ZERO)
+                .phoneNumberDelay(Duration.ZERO)
                 .build();
+    }
+
+    public static StubExternalFindIdentityConfigBuilder defaultBuilder() {
+        return StubExternalFindIdentityConfig.builder()
+                .executor(buildEligibilityExecutor())
+                .timeout(Duration.ofMillis(loadTimeout()))
+                .phoneNumberDelay(Duration.ofMillis(loadPhoneNumberDelay()))
+                .emailAddressDelay(Duration.ofMillis(loadEmailAddressDelay()));
     }
 
     public ExternalFindIdentity externalFindIdentity() {
@@ -69,6 +70,24 @@ public class StubExternalFindIdentityConfig implements ExternalFindIdentityConfi
 
     private static ExecutorService buildEligibilityExecutor() {
         return Executors.newCachedThreadPool();
+    }
+
+    private static int loadTimeout() {
+        return loadMillis("external.data.timeout", 2000);
+    }
+
+    private static int loadPhoneNumberDelay() {
+        return loadMillis("external.phone.number.delay", 1500);
+    }
+
+    private static int loadEmailAddressDelay() {
+        return loadMillis("external.email.address.delay", 1000);
+    }
+
+    private static int loadMillis(String key, long defaultValue) {
+        int size = Integer.parseInt(System.getProperty(key, Long.toString(defaultValue)));
+        log.info("loaded {} value {}", key, size);
+        return size;
     }
 
 }
