@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.adapter.json.IdentityErrorHandler;
-import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.identity.entities.alias.DefaultAliasFactory;
 import uk.co.idv.identity.usecases.eligibility.ChannelCreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.CompositeCreateEligibility;
@@ -59,11 +58,6 @@ public class DefaultIdentityConfig implements IdentityConfig {
                 .find(new FindIdentity(repository))
                 .aliasFactory(new DefaultAliasFactory())
                 .build();
-    }
-
-    @Override
-    public AliasFactory aliasFactory() {
-        return new DefaultAliasFactory();
     }
 
     @Override

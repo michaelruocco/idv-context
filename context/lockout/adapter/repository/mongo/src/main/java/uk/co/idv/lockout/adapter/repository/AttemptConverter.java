@@ -32,7 +32,7 @@ public class AttemptConverter {
     }
 
     public Bson toFindByIdvIdQuery(IdvId idvId) {
-        return eq("_id", idvId.toString());
+        return eq("_id", idvId.getValue());
     }
 
 }

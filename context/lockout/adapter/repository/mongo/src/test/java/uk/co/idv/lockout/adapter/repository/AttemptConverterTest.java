@@ -60,8 +60,8 @@ class AttemptConverterTest {
         Bson query = converter.toFindByIdvIdsQuery(idvIds);
 
         assertThat(query).hasToString("Or Filter{filters=[" +
-                "Filter{fieldName='_id', value=IdvId(value=90b585c6-170f-42a6-ac7c-83d294bdab3f)}, " +
-                "Filter{fieldName='_id', value=IdvId(value=83428996-d641-45e6-a32b-ab7c2f17ac20)}" +
+                "Filter{fieldName='_id', value=90b585c6-170f-42a6-ac7c-83d294bdab3f}, " +
+                "Filter{fieldName='_id', value=83428996-d641-45e6-a32b-ab7c2f17ac20}" +
                 "]}");
     }
 
@@ -72,7 +72,7 @@ class AttemptConverterTest {
         Bson query = converter.toFindByIdvIdQuery(idvId);
 
         assertThat(query).hasToString(
-                "Filter{fieldName='_id', value=IdvId(value=90b585c6-170f-42a6-ac7c-83d294bdab3f)}"
+                "Filter{fieldName='_id', value=90b585c6-170f-42a6-ac7c-83d294bdab3f}"
         );
     }
 
