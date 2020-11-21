@@ -1,6 +1,5 @@
 package uk.co.idv.identity.entities.identity;
 
-import java.util.Arrays;
 
 public interface IdentitiesMother {
 
@@ -16,7 +15,7 @@ public interface IdentitiesMother {
     }
 
     static Identities with(Identity... identities) {
-        return new Identities(Arrays.asList(identities));
+        return new Identities(identities);
     }
 
 }
