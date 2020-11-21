@@ -23,6 +23,8 @@
 *   Add specific method result types, e.g. for OTP delivery time, actual and used otp codes, verify type, 
     maybe delivery id for sending message
     
+*   Add client module
+    
 *   Add postman collection to repo and run in build pipeline
     
 *   Performance tests in pipeline / nightly build
