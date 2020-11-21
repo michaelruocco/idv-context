@@ -1,4 +1,4 @@
-package uk.co.idv.ockout.adapter.repository;
+package uk.co.idv.lockout.adapter.repository;
 
 import lombok.RequiredArgsConstructor;
 import org.bson.Document;
@@ -23,7 +23,7 @@ public class AttemptConverter {
 
     public Document toDocument(Attempts attempts) {
         Document document = Document.parse(converter.toJson(attempts));
-        document.put("_id", attempts.getIdvId().toString());
+        document.put("_id", attempts.getIdvId().getValue());
         return document;
     }
 

@@ -4,8 +4,8 @@ import com.mongodb.client.MongoDatabase;
 import lombok.Builder;
 import uk.co.idv.lockout.config.repository.AttemptRepositoryConfig;
 import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
-import uk.co.idv.ockout.adapter.repository.AttemptConverter;
-import uk.co.idv.ockout.adapter.repository.MongoAttemptRepository;
+import uk.co.idv.lockout.adapter.repository.AttemptConverter;
+import uk.co.idv.lockout.adapter.repository.MongoAttemptRepository;
 import uk.co.mruoc.json.JsonConverter;
 
 @Builder

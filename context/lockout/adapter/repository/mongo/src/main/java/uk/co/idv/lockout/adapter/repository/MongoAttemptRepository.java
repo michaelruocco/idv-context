@@ -1,4 +1,4 @@
-package uk.co.idv.ockout.adapter.repository;
+package uk.co.idv.lockout.adapter.repository;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
@@ -38,7 +38,8 @@ public class MongoAttemptRepository implements AttemptRepository {
     public Optional<Attempts> load(IdvId idvId) {
         Instant start = Instant.now();
         try {
-            FindIterable<Document> documents = collection.find(toFindByIdvIdQuery(idvId));
+            Bson query = toFindByIdvIdQuery(idvId);
+            FindIterable<Document> documents = collection.find(query);
             return Optional.ofNullable(documents.first()).map(this::toAttempts);
         } finally {
             MongoDurationLogger.log("load-attempts-by-idv-id", start);
