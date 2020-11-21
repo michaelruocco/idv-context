@@ -1,3 +1,5 @@
+/*global karate*/
+
 function fn() {
     var port = karate.properties["server.port"];
     var config = {

@@ -1,3 +1,5 @@
+/*global db*/
+
 db.createUser(
     {
         user: "idv",
