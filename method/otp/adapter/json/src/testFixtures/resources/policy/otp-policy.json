@@ -27,7 +27,7 @@
           "minDaysSinceSwap": 5,
           "async": false
         },
-        "maskNumbers": false
+        "maskNumbers": true
       }
     },
     {
@@ -47,7 +47,7 @@
           "minDaysSinceSwap": 5,
           "async": false
         },
-        "maskNumbers": false
+        "maskNumbers": true
       }
     },
     {

@@ -60,7 +60,8 @@ Feature: Context Policy Maintenance
                         "timeout": 2000,
                         "minDaysSinceSwap": 5,
                         "async": false
-                      }
+                      },
+                      "maskNumbers": false
                     }
                   }
                 ]

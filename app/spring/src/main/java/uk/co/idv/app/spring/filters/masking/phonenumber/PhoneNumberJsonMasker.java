@@ -1,4 +1,4 @@
-package uk.co.idv.app.spring.filters.logging.masking.phonenumber;
+package uk.co.idv.app.spring.filters.masking.phonenumber;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;

@@ -5,5 +5,5 @@
     "allowUnknown": true,
     "minDaysSinceUpdate": 5
   },
-  "maskNumbers": false
+  "maskNumbers": true
 }

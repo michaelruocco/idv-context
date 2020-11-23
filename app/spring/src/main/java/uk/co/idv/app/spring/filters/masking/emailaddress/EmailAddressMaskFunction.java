@@ -1,4 +1,4 @@
-package uk.co.idv.app.spring.filters.logging.masking.emailaddress;
+package uk.co.idv.app.spring.filters.masking.emailaddress;
 
 import uk.co.mruoc.json.mask.MaskFunction;
 import uk.co.mruoc.json.mask.string.IgnoreFirstNAndLastNCharsMasker;

@@ -13,5 +13,5 @@
     "minDaysSinceSwap": 5,
     "async": false
   },
-  "maskNumbers": false
+  "maskNumbers": true
 }

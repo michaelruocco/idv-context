@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
 import uk.co.idv.app.spring.filters.logging.context.ContextRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.context.ContextResponseLoggingFilter;
+import uk.co.idv.app.spring.filters.masking.ContextResponseMaskingFilter;
 import uk.co.idv.app.spring.filters.logging.identity.IdentityRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.identity.IdentityResponseLoggingFilter;
 import uk.co.mruoc.spring.filter.logging.mdc.ClearMdcFilter;
@@ -118,8 +119,18 @@ public class FilterConfig {
         FilterRegistrationBean<TransformRequestUriMdcPopulatorFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new TransformRequestUriMdcPopulatorFilter(new UuidIdStringTransformer()));
         bean.setOrder(5);
-        bean.addUrlPatterns("/contexts/*");
+        bean.addUrlPatterns(getContextUrlPatterns());
         bean.setName("getContextUriTransformerFilter");
+        return bean;
+    }
+
+    @Bean
+    public FilterRegistrationBean<ContextResponseMaskingFilter> contextResponseMaskingFilter(ObjectMapper mapper) {
+        FilterRegistrationBean<ContextResponseMaskingFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new ContextResponseMaskingFilter(mapper));
+        bean.setOrder(6);
+        bean.addUrlPatterns(getContextUrlPatterns());
+        bean.setName("contextResponseMaskingFilter");
         return bean;
     }
 

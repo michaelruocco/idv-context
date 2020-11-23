@@ -73,7 +73,7 @@ Feature: Create Requests
         "aliases": [
           {
             "type": "credit-card-number",
-            "value": "4927111111111111"
+            "value": "4927111111111112"
           }
         ]
       }
@@ -85,7 +85,7 @@ Feature: Create Requests
       {
         "status": 404,
         "title": "Identity not found",
-        "message": "credit-card-number|4927111111111111"
+        "message": "credit-card-number|4927111111111112"
       }
       """
 
@@ -111,7 +111,7 @@ Feature: Create Requests
       {
         "country": "GB",
         "aliases": [
-          { "type": "credit-card-number", "value": "4927111111111112" }
+          { "type": "credit-card-number", "value": "4927111111111113" }
         ]
       }
       """
@@ -133,7 +133,7 @@ Feature: Create Requests
         "aliases": [
           {
             "type": "credit-card-number",
-            "value": "4927111111111112"
+            "value": "4927111111111113"
           }
         ]
       }
@@ -198,7 +198,8 @@ Feature: Create Requests
                       "timeout": 2000,
                       "minDaysSinceSwap": 6,
                       "async": false
-                    }
+                    },
+                    "maskNumbers": false
                   }
                 }
               ]
@@ -216,7 +217,7 @@ Feature: Create Requests
       {
         "country": "GB",
         "aliases": [
-          { "type": "credit-card-number", "value": "4927111111111113" }
+          { "type": "credit-card-number", "value": "4927111111111114" }
         ],
         "phoneNumbers": [
           { "value": "+4407808247749" },
@@ -268,7 +269,7 @@ Feature: Create Requests
         "aliases": [
           {
             "type": "credit-card-number",
-            "value": "4927111111111113"
+            "value": "4927111111111114"
           }
         ]
       }
@@ -290,7 +291,7 @@ Feature: Create Requests
             "aliases": [
               {
                 "type": "credit-card-number",
-                "value": "4927111111111113"
+                "value": "4927111111111114"
               }
             ],
             "activity": {
@@ -353,7 +354,7 @@ Feature: Create Requests
             "aliases": [
               {
                 "type": "credit-card-number",
-                "value": "4927111111111113"
+                "value": "4927111111111114"
               },
               {
                 "type": "idv-id",
@@ -478,9 +479,9 @@ Feature: Create Requests
       }
       """
 
-  Scenario: Post result - Success - Result Added to context
+  Scenario: Create context - Success - Otp method returned - Masked Phone Numbers
     Given url baseUrl + "/context-policies"
-    * def contextPolicyId = "03ac7483-0006-4d99-b38f-dd33d3004e0a"
+    * def contextPolicyId = "8d6322ff-b8c8-4e2a-95b4-207fe5939f65"
     And request
       """
       {
@@ -491,43 +492,44 @@ Feature: Create Requests
           "type": "channel"
         },
         "sequencePolicies": [
-        {
-            "name": "one-time-passcode",
-            "methodPolicies": [
-              {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
+          {
+          "name": "one-time-passcode",
+          "methodPolicies": [
+            {
+              "name": "one-time-passcode",
+              "config": {
+                "maxNumberOfAttempts": 3,
+                "duration": 300000,
+                "passcodeConfig": {
+                  "length": 8,
+                  "duration": 120000,
+                  "maxNumberOfDeliveries": 2
+                }
+              },
+              "deliveryMethodConfigs": [
+                {
+                  "type": "sms",
+                  "phoneNumberConfig": {
+                    "country": "GB",
+                    "allowInternational": false,
+                    "lastUpdatedConfig": {
+                      "allowUnknown": true,
+                      "minDaysSinceUpdate": 5
+                    },
+                    "simSwapConfig": {
+                      "acceptableStatuses": [
+                        "success"
+                      ],
+                      "timeout": 2000,
+                      "minDaysSinceSwap": 6,
+                      "async": false
+                    },
+                    "maskNumbers": true
                   }
-                },
-                "deliveryMethodConfigs": [
-                  {
-                    "type": "sms",
-                    "phoneNumberConfig": {
-                      "country": "GB",
-                      "allowInternational": false,
-                      "lastUpdatedConfig": {
-                        "allowUnknown": true,
-                        "minDaysSinceUpdate": 5
-                      },
-                      "simSwapConfig": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6,
-                        "async": false
-                      }
-                    }
-                  }
-                ]
-              }
-            ]
+                }
+              ]
+            }
+          ]
           }
         ]
       }
@@ -540,9 +542,10 @@ Feature: Create Requests
       {
         "country": "GB",
         "aliases": [
-          { "type": "credit-card-number", "value": "4927111111111114" }
+          { "type": "credit-card-number", "value": "4927111111111115" }
         ],
         "phoneNumbers": [
+          { "value": "+4407808247744" },
           { "value": "+4407808247743" }
         ]
       }
@@ -550,7 +553,7 @@ Feature: Create Requests
     And method POST
     And status 201
     And url baseUrl + "/lockout-policies"
-    * def lockoutPolicyId = "c5a7a9d5-8c9d-4ddd-bd01-727d3075d147"
+    * def lockoutPolicyId = "2f96109d-2a8c-4f91-a18e-ca7b3863b4bb"
     And request
       """
       {
@@ -586,13 +589,13 @@ Feature: Create Requests
         "aliases": [
           {
             "type": "credit-card-number",
-            "value": "4927111111111114"
+            "value": "4927111111111115"
           }
         ]
       }
       """
-    And method POST
-    And status 201
+    When method POST
+    Then status 201
     And match response ==
       """
       {
@@ -608,7 +611,7 @@ Feature: Create Requests
             "aliases": [
               {
                 "type": "credit-card-number",
-                "value": "4927111111111114"
+                "value": "4927111111111115"
               }
             ],
             "activity": {
@@ -621,6 +624,270 @@ Feature: Create Requests
               "id": "#(contextPolicyId)",
               "priority": 1,
               "channelId": "context-test-channel5",
+              "type": "channel"
+            },
+            "sequencePolicies": [
+              {
+                "name": "one-time-passcode",
+                "methodPolicies": [
+                  {
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
+                      }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "sms",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": true,
+                            "minDaysSinceUpdate": 5
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success"
+                            ],
+                            "timeout": 2000,
+                            "minDaysSinceSwap": 6,
+                            "async": false
+                          },
+                          "maskNumbers": true
+                        }
+                      }
+                    ],
+                    "name": "one-time-passcode"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "idvId": "#uuid",
+            "country": "GB",
+            "aliases": [
+              {
+                "type": "credit-card-number",
+                "value": "4927111111111115"
+              },
+              {
+                "type": "idv-id",
+                "value": "#uuid"
+              }
+            ],
+            "phoneNumbers": [
+              { "value": "***********744" },
+              { "value": "***********743" }
+            ]
+          }
+        },
+        "sequences": [
+          {
+            "name": "one-time-passcode",
+            "methods": [
+              {
+                "name": "one-time-passcode",
+                "deliveryMethods": [
+                  {
+                    "id": "#uuid",
+                    "type": "sms",
+                    "value": "**********743",
+                    "eligibility": {
+                      "eligible": true,
+                      "complete": true
+                    }
+                  },
+                  {
+                    "id": "#uuid",
+                    "type": "sms",
+                    "value": "**********744",
+                    "eligibility": {
+                      "reason": "sim swap status unknown not acceptable",
+                      "eligible": false,
+                      "complete": true
+                    }
+                  }
+                ],
+                "config": {
+                  "maxNumberOfAttempts": 3,
+                  "duration": 300000,
+                  "passcodeConfig": {
+                    "length": 8,
+                    "duration": 120000,
+                    "maxNumberOfDeliveries": 2
+                  }
+                },
+                "successful": false,
+                "complete": false,
+                "eligibility": {
+                  "eligible": true
+                }
+              }
+            ],
+            "duration": 300000,
+            "eligibility": {
+              "eligible": true
+            },
+            "successful": false,
+            "complete": false
+          }
+        ],
+        "eligible": true,
+        "successful": false,
+        "complete": false
+      }
+      """
+
+  Scenario: Post result - Success - Result Added to context
+    Given url baseUrl + "/context-policies"
+    * def contextPolicyId = "03ac7483-0006-4d99-b38f-dd33d3004e0a"
+    And request
+      """
+      {
+        "key": {
+          "id": "#(contextPolicyId)",
+          "priority": 1,
+          "channelId": "context-test-channel6",
+          "type": "channel"
+        },
+        "sequencePolicies": [
+        {
+            "name": "one-time-passcode",
+            "methodPolicies": [
+              {
+                "name": "one-time-passcode",
+                "config": {
+                  "maxNumberOfAttempts": 3,
+                  "duration": 300000,
+                  "passcodeConfig": {
+                    "length": 8,
+                    "duration": 120000,
+                    "maxNumberOfDeliveries": 2
+                  }
+                },
+                "deliveryMethodConfigs": [
+                  {
+                    "type": "sms",
+                    "phoneNumberConfig": {
+                      "country": "GB",
+                      "allowInternational": false,
+                      "lastUpdatedConfig": {
+                        "allowUnknown": true,
+                        "minDaysSinceUpdate": 5
+                      },
+                      "simSwapConfig": {
+                        "acceptableStatuses": [
+                          "success"
+                        ],
+                        "timeout": 2000,
+                        "minDaysSinceSwap": 6,
+                        "async": false
+                      },
+                      "maskNumbers": false
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    And url baseUrl + "/identities"
+    And request
+      """
+      {
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4927111111111116" }
+        ],
+        "phoneNumbers": [
+          { "value": "+4407808247743" }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    And url baseUrl + "/lockout-policies"
+    * def lockoutPolicyId = "c5a7a9d5-8c9d-4ddd-bd01-727d3075d147"
+    And request
+      """
+      {
+        "key": {
+          "id": "#(lockoutPolicyId)",
+          "priority": 1,
+          "channelId": "context-test-channel6",
+          "type": "channel"
+        },
+        "stateCalculator": {
+          "maxNumberOfAttempts": 5,
+          "type": "hard-lockout"
+        },
+        "recordAttemptPolicy": {
+          "type": "always-record"
+        }
+      }
+      """
+    And method POST
+    And status 201
+    And url baseUrl + "/contexts"
+    And request
+      """
+      {
+        "channel": {
+          "id": "context-test-channel6",
+          "country": "GB"
+        },
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111116"
+          }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    And match response ==
+      """
+      {
+        "id": "#uuid",
+        "created": "#notnull",
+        "expiry": "#notnull",
+        "request": {
+          "initial": {
+            "channel": {
+              "id": "context-test-channel6",
+              "country": "GB"
+            },
+            "aliases": [
+              {
+                "type": "credit-card-number",
+                "value": "4927111111111116"
+              }
+            ],
+            "activity": {
+              "name": "default-activity",
+              "timestamp": "2020-09-27T06:56:47.522Z"
+            }
+          },
+          "policy": {
+            "key": {
+              "id": "#(contextPolicyId)",
+              "priority": 1,
+              "channelId": "context-test-channel6",
               "type": "channel"
             },
             "sequencePolicies": [
@@ -671,7 +938,7 @@ Feature: Create Requests
             "aliases": [
               {
                 "type": "credit-card-number",
-                "value": "4927111111111114"
+                "value": "4927111111111116"
               },
               {
                 "type": "idv-id",
@@ -754,13 +1021,13 @@ Feature: Create Requests
         "request": {
           "initial": {
             "channel": {
-              "id": "context-test-channel5",
+              "id": "context-test-channel6",
               "country": "GB"
             },
             "aliases": [
               {
                 "type": "credit-card-number",
-                "value": "4927111111111114"
+                "value": "4927111111111116"
               }
             ],
             "activity": {
@@ -772,7 +1039,7 @@ Feature: Create Requests
             "key": {
               "id": "#(contextPolicyId)",
               "priority": 1,
-              "channelId": "context-test-channel5",
+              "channelId": "context-test-channel6",
               "type": "channel"
             },
             "sequencePolicies": [
@@ -823,7 +1090,7 @@ Feature: Create Requests
             "aliases": [
               {
                 "type": "credit-card-number",
-                "value": "4927111111111114"
+                "value": "4927111111111116"
               },
               {
                 "type": "idv-id",
@@ -897,7 +1164,7 @@ Feature: Create Requests
       {
         "country": "GB",
         "aliases": [
-          { "type": "credit-card-number", "value": "4927111111111115" }
+          { "type": "credit-card-number", "value": "4927111111111117" }
         ],
         "phoneNumbers": [
           { "value": "+4407808247743" }
@@ -921,7 +1188,7 @@ Feature: Create Requests
         "aliases": [
           {
             "type": "credit-card-number",
-            "value": "4927111111111115"
+            "value": "4927111111111117"
           }
         ]
       }
@@ -955,7 +1222,7 @@ Feature: Create Requests
       {
         "country": "GB",
         "aliases": [
-          { "type": "credit-card-number", "value": "4927111111111116" }
+          { "type": "credit-card-number", "value": "4927111111111118" }
         ],
         "phoneNumbers": [
           { "value": "+4407808247746" }
@@ -979,7 +1246,7 @@ Feature: Create Requests
         "aliases": [
           {
             "type": "credit-card-number",
-            "value": "4927111111111116"
+            "value": "4927111111111118"
           }
         ]
       }

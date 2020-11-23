@@ -34,7 +34,7 @@ public interface OtpPhoneNumberConfigMother {
                 .allowInternational(false)
                 .lastUpdatedConfig(LastUpdatedConfigMother.unknownAllowed())
                 .simSwapConfig(SimSwapConfigMother.build())
-                .maskNumbers(false);
+                .maskNumbers(true);
     }
 
 }
