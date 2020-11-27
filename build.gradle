@@ -65,8 +65,8 @@ subprojects {
 
         junitVersion = "5.7.0"
         assertjVersion = "3.18.1"
-        junitPioneerVersion = "1.0.0"
-        mockitoVersion = "3.6.0"
+        junitPioneerVersion = "1.1.0"
+        mockitoVersion = "3.6.28"
         jsonUnitAssertjVersion = "2.21.0"
         fileLoaderVersion = "6.0.1"
         awaitilityVersion = "4.0.3"

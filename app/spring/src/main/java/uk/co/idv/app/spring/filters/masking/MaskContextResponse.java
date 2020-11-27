@@ -9,13 +9,12 @@ import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONArray;
 import uk.co.idv.app.spring.filters.masking.phonenumber.ContextPhoneNumberResponseJsonMasker;
 import uk.co.mruoc.json.mask.JsonMasker;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.function.Function;
+import uk.co.mruoc.spring.filter.rewrite.RewriteResponseBody;
+import uk.co.mruoc.spring.filter.rewrite.RewriteResponseBodyRequest;
 
 @RequiredArgsConstructor
 @Slf4j
-public class MaskContextResponse implements Function<RewriteBodyRequest, String> {
+public class MaskContextResponse implements RewriteResponseBody {
 
     private static final Configuration DEFAULT_CONFIG = Configuration.defaultConfiguration()
             .addOptions(Option.SUPPRESS_EXCEPTIONS);
@@ -28,34 +27,22 @@ public class MaskContextResponse implements Function<RewriteBodyRequest, String>
     }
 
     @Override
-    public String apply(RewriteBodyRequest rewriteRequest) {
+    public String apply(RewriteResponseBodyRequest rewriteRequest) {
         return maskNumbersIfRequired(rewriteRequest);
     }
 
-    private String maskNumbersIfRequired(RewriteBodyRequest rewriteRequest) {
-        HttpServletRequest request = rewriteRequest.getRequest();
-        RewriteResponseWrapper response = rewriteRequest.getResponse();
-        String responseBody = response.getBodyAsString();
-        if (!isPost(request) || !is2xx(response)) {
-            return responseBody;
+    private String maskNumbersIfRequired(RewriteResponseBodyRequest rewriteRequest) {
+        String body = rewriteRequest.getResponseBody();
+        if (shouldMaskNumbers(rewriteRequest)) {
+            return masker.apply(body);
         }
-        boolean maskNumbers = extractMaskNumbers(responseBody);
-        if (maskNumbers) {
-            return masker.apply(responseBody);
-        }
-        return responseBody;
+        return body;
     }
 
-    private boolean isPost(HttpServletRequest request) {
-        boolean isPost = request.getMethod().equals("POST");
-        log.info("request method is post {}", isPost);
-        return isPost;
-    }
-
-    private boolean is2xx(RewriteResponseWrapper response) {
-        boolean is2xx = response.has2xxStatus();
-        log.info("response status is 2xx {}", is2xx);
-        return is2xx;
+    private boolean shouldMaskNumbers(RewriteResponseBodyRequest rewriteRequest) {
+        return rewriteRequest.isPostRequest() &&
+                rewriteRequest.has2xxStatus() &&
+                extractMaskNumbers(rewriteRequest.getResponseBody());
     }
 
     private boolean extractMaskNumbers(String body) {
