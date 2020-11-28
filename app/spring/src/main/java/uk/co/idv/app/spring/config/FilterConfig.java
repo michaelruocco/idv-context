@@ -6,11 +6,14 @@ import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.Ordered;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import uk.co.idv.app.spring.filters.logging.context.ContextRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.context.ContextResponseLoggingFilter;
 import uk.co.idv.app.spring.filters.masking.ContextResponseMaskingFilter;
 import uk.co.idv.app.spring.filters.logging.identity.IdentityRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.identity.IdentityResponseLoggingFilter;
+import uk.co.idv.app.spring.filters.validation.ContextHeaderValidationFilter;
+import uk.co.idv.app.spring.filters.validation.DefaultHeaderValidationFilter;
 import uk.co.mruoc.spring.filter.logging.mdc.ClearMdcFilter;
 import uk.co.mruoc.spring.filter.logging.mdc.HeaderMdcPopulatorFilter;
 import uk.co.mruoc.spring.filter.logging.mdc.RequestMdcPopulatorFilter;
@@ -60,10 +63,31 @@ public class FilterConfig {
     }
 
     @Bean
+    public FilterRegistrationBean<DefaultHeaderValidationFilter> defaultHeaderValidationFilter(HandlerExceptionResolver handlerExceptionResolver) {
+        FilterRegistrationBean<DefaultHeaderValidationFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new DefaultHeaderValidationFilter(handlerExceptionResolver));
+        bean.setOrder(4);
+        bean.addUrlPatterns(getDefaultUrlPatterns());
+        bean.addUrlPatterns(getIdentityUrlPatterns());
+        bean.setName("defaultHeaderValidationFilter");
+        return bean;
+    }
+
+    @Bean
+    public FilterRegistrationBean<ContextHeaderValidationFilter> contextHeaderValidationFilter(HandlerExceptionResolver handlerExceptionResolver) {
+        FilterRegistrationBean<ContextHeaderValidationFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new ContextHeaderValidationFilter(handlerExceptionResolver));
+        bean.setOrder(4);
+        bean.addUrlPatterns(getContextUrlPatterns());
+        bean.setName("contextHeaderValidationFilter");
+        return bean;
+    }
+
+    @Bean
     public FilterRegistrationBean<ResponseLoggingFilter> contextResponseLoggingFilter(ObjectMapper mapper) {
         FilterRegistrationBean<ResponseLoggingFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new ContextResponseLoggingFilter(mapper));
-        bean.setOrder(4);
+        bean.setOrder(5);
         bean.addUrlPatterns(getContextUrlPatterns());
         bean.setName("contextResponseLoggingFilter");
         bean.setEnabled(responseLoggingEnabled());
@@ -85,7 +109,7 @@ public class FilterConfig {
     public FilterRegistrationBean<ResponseLoggingFilter> identityResponseLoggingFilter(ObjectMapper mapper) {
         FilterRegistrationBean<ResponseLoggingFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new IdentityResponseLoggingFilter(mapper));
-        bean.setOrder(4);
+        bean.setOrder(5);
         bean.addUrlPatterns(getIdentityUrlPatterns());
         bean.setName("identityResponseLoggingFilter");
         bean.setEnabled(responseLoggingEnabled());
@@ -107,7 +131,7 @@ public class FilterConfig {
     public FilterRegistrationBean<ResponseLoggingFilter> defaultResponseLoggingFilter() {
         FilterRegistrationBean<ResponseLoggingFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new ResponseLoggingFilter());
-        bean.setOrder(4);
+        bean.setOrder(5);
         bean.addUrlPatterns(getDefaultUrlPatterns());
         bean.setName("defaultResponseLoggingFilter");
         bean.setEnabled(responseLoggingEnabled());
@@ -118,7 +142,7 @@ public class FilterConfig {
     public FilterRegistrationBean<TransformRequestUriMdcPopulatorFilter> getContextUriTransformerFilter() {
         FilterRegistrationBean<TransformRequestUriMdcPopulatorFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new TransformRequestUriMdcPopulatorFilter(new UuidIdStringTransformer()));
-        bean.setOrder(5);
+        bean.setOrder(6);
         bean.addUrlPatterns(getContextUrlPatterns());
         bean.setName("getContextUriTransformerFilter");
         return bean;
@@ -128,7 +152,7 @@ public class FilterConfig {
     public FilterRegistrationBean<ContextResponseMaskingFilter> contextResponseMaskingFilter(ObjectMapper mapper) {
         FilterRegistrationBean<ContextResponseMaskingFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new ContextResponseMaskingFilter(mapper));
-        bean.setOrder(6);
+        bean.setOrder(7);
         bean.addUrlPatterns(getContextUrlPatterns());
         bean.setName("contextResponseMaskingFilter");
         return bean;

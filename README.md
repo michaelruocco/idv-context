@@ -11,18 +11,15 @@
 
 ## Todo
 
-*   Add functionality to mask mobile numbers on post response by adding flag to policy then having an adapter
-    check the context checking if policy flag is true and then mask all phone numbers if it is
-    
-*   Add mandatory header validator for channel id and correlation id
+*   Add client module
 
 *   Add specific method result types, e.g. for OTP delivery time, actual and used otp codes, verify type, 
     maybe delivery id for sending message
-    
-*   Add client module
-    
+
 *   Add postman collection to repo and run in build pipeline
-    
+
+*   Try out google cache module with a mongo repository for policies instead of redis repository
+
 *   Performance tests in pipeline / nightly build
 
 *   Add identity data lookup policy

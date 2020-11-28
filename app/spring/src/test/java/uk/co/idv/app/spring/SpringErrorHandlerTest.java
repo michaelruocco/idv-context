@@ -5,6 +5,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.common.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.badrequest.BadRequestError;
+import uk.co.mruoc.spring.filter.validation.InvalidHeaderException;
 
 import java.util.Optional;
 
@@ -24,9 +26,19 @@ class SpringErrorHandlerTest {
         Throwable cause = new Throwable();
         givenConvertedToErrorWithStatus(cause, status);
 
-        ResponseEntity<ApiError> response = handler.handleException(cause);
+        ResponseEntity<ApiError> response = handler.catchAll(cause);
 
         assertThat(response.getStatusCode()).isEqualTo(status);
+    }
+
+    @Test
+    void shouldConvertInvalidHeaderExceptionToResponseEntityWithError() {
+        InvalidHeaderException cause = new InvalidHeaderException("error-message");
+
+        ResponseEntity<ApiError> response = handler.invalidHeader(cause);
+
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+        assertThat(response.getBody()).usingRecursiveComparison().isEqualTo(new BadRequestError(cause.getMessage()));
     }
 
     private void givenConvertedToErrorWithStatus(Throwable cause, HttpStatus status) {

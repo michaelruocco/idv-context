@@ -6,6 +6,7 @@ Feature: Identity Maintenance
   Scenario: Get identity - Error - Unsupported alias type
     Given param aliasType = "ABC"
     And param aliasValue = "123"
+    And header correlation-id = "9249ff2d-0699-4445-a12d-3a29c56def39"
     When method GET
     Then status 422
     And match response ==
@@ -20,6 +21,7 @@ Feature: Identity Maintenance
   Scenario: Get identity - Error - Identity not found
     Given param aliasType = "credit-card-number"
     And param aliasValue = "4929111111111199"
+    And header correlation-id = "77f7bbf4-2b1c-4b29-a7ca-af39f0488b4f"
     When method GET
     Then status 404
     And match response ==
@@ -40,6 +42,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "f44a7631-5467-475e-8784-6fa366f146ac"
     When method POST
     Then status 400
     And match response ==
@@ -60,6 +63,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "2a3dbb1b-1987-456b-86fb-ed327fdddac6"
     When method POST
     Then status 201
     And match response ==
@@ -85,10 +89,12 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "e825b87c-6ed6-451a-abd7-a7d2e25e110c"
     And method POST
     And status 201
     And param aliasType = "credit-card-number"
     And param aliasValue = "4929111111111111"
+    And header correlation-id = "2eadbef5-90d1-4964-9b84-e23c9e6dc88f"
     When method GET
     Then status 200
     And match response ==
@@ -113,10 +119,12 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "a2965c49-d308-425c-ade9-461e4406a9a2"
     And method POST
     And status 201
     * def idvId = response.idvId
     And url baseUrl + "/identities/" + idvId
+    And header correlation-id = "c0aa4465-7405-46e1-b9e8-b2ef735db90e"
     When method GET
     Then status 200
     And match response ==
@@ -141,10 +149,11 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "b105e976-ef6d-4980-8081-210ba0d827a6"
     And method POST
     And status 201
     * def existingIdvId = response.idvId
-    * def newIdvId = "dec2f278-b7e0-44fa-ab1f-f93f942bdf4d"
+    * def newIdvId = "6c281916-e447-4c0a-8220-aaa6a6feb3c6"
     And request
       """
       {
@@ -155,6 +164,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "697ba160-f794-40e0-8e6e-d988e9c48c9c"
     When method POST
     Then status 422
     And match response ==
@@ -183,6 +193,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "db42e0bd-4b08-4c69-9635-0183bdde0eb5"
     And method POST
     And status 201
     And request
@@ -201,6 +212,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "5bc6220f-c6d4-4f4d-b25c-a23ccff1c298"
     When method POST
     Then status 201
     And match response ==
@@ -233,6 +245,7 @@ Feature: Identity Maintenance
         ],
       }
       """
+    And header correlation-id = "cf37135d-160f-40c8-8ebb-5fe6a35aba7e"
     And method POST
     And status 201
     * def idvId = response.idvId
@@ -246,6 +259,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "97249df6-f42c-4a76-8d41-fe376147367b"
     When method POST
     Then status 201
     And match response ==
@@ -270,6 +284,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "0158fe36-3e1b-4e46-90e5-9091c38ed1c7"
     And method POST
     And status 201
     And request
@@ -281,6 +296,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "d2d1c687-1179-4cf7-8cbc-cf7cc55993a9"
     And method POST
     And status 201
     And request
@@ -293,6 +309,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "fcd8207e-8cde-4855-a70a-d8e0de04edde"
     When method POST
     Then status 422
     And match response ==
@@ -324,6 +341,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "8a7ffe6f-5516-43ec-bc5f-8a0a20aabf7e"
     And method POST
     And status 201
     And request
@@ -341,6 +359,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "e7be4faa-4af6-4865-bd00-a525b0d5a1fc"
     And method POST
     And status 201
     And request
@@ -359,6 +378,7 @@ Feature: Identity Maintenance
         ]
       }
       """
+    And header correlation-id = "f21f204c-1895-4d9a-9639-5bff946187f8"
     When method POST
     Then status 201
     And match response ==

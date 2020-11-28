@@ -3,12 +3,78 @@ Feature: Create Requests
   Background:
     * url baseUrl + "/contexts"
 
-  Scenario: Create Context - Error - Context policy not configured
+  Scenario: Create Context - Error - Correlation id not provided
     Given request
       """
       {
         "channel": {
-          "id": "context-test-channel1",
+          "id": "missing-header-channel",
+          "country": "GB"
+        },
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111111"
+          }
+        ]
+      }
+      """
+    When method POST
+    Then status 400
+    And match response ==
+      """
+      {
+        "status": 400,
+        "title": "Bad request",
+        "message": "mandatory header correlation-id not provided, mandatory header channel-id not provided"
+      }
+      """
+
+  Scenario: Create Context - Error - Channel id not provided
+    Given header correlation-id = "387178fe-d93b-4114-b96f-dd77325910d0"
+    And request
+      """
+      {
+        "channel": {
+          "id": "missing-header-channel",
+          "country": "GB"
+        },
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111111"
+          }
+        ]
+      }
+      """
+    When method POST
+    Then status 400
+    And match response ==
+      """
+      {
+        "status": 400,
+        "title": "Bad request",
+        "message": "mandatory header channel-id not provided"
+      }
+      """
+
+  Scenario: Create Context - Error - Context policy not configured
+    * def channelId = "context-test-channel1"
+    Given header correlation-id = "40c6bf4d-0519-4f11-8e4f-5618e28884ee"
+    And header channel-id = channelId
+    And request
+      """
+      {
+        "channel": {
+          "id": "#(channelId)",
           "country": "GB"
         },
         "activity": {
@@ -36,34 +102,39 @@ Feature: Create Requests
             "credit-card-number"
           ],
           "activityName": "default-activity",
-          "channelId": "context-test-channel1"
+          "channelId": "#(channelId)"
         }
       }
       """
 
   Scenario: Create context - Error - Identity not found
+    * def channelId = "context-test-channel2"
     * def policyId = "18044838-364b-484c-85ab-033e27a4d002"
-    Given request
+    Given header correlation-id = "38725e3b-3ddf-4f7f-96d1-4f49a0f01478"
+    And request
       """
       {
         "key": {
           "id": "#(policyId)",
           "priority": 1,
-          "channelId": "context-test-channel2",
+          "channelId": "#(channelId)",
           "type": "channel"
         },
         "sequencePolicies": []
       }
       """
     And url baseUrl + "/context-policies"
+    And header correlation-id = "ab4ebd5c-870f-406a-ba25-0ab9403fa3b2"
     And method POST
     And status 201
+    And header correlation-id = "c27b0f0a-1e83-4bb9-a1a8-50b95d4d1138"
+    And header channel-id = channelId
     And url baseUrl + "/contexts"
     And request
       """
       {
         "channel": {
-          "id": "context-test-channel2",
+          "id": "#(channelId)",
           "country": "GB"
         },
         "activity": {
@@ -91,13 +162,15 @@ Feature: Create Requests
 
   Scenario: Create context - Error - Lockout policy not configured
     * def policyId = "c05920f8-5ebe-469e-a0a3-c7e30cc8b7f1"
-    Given request
+    * def channelId = "context-test-channel3"
+    Given header correlation-id = "bfa3f8c2-1fc3-468a-a2b6-97f6abad28cb"
+    And request
       """
       {
         "key": {
           "id": "#(policyId)",
           "priority": 1,
-          "channelId": "context-test-channel3",
+          "channelId": "#(channelId)",
           "type": "channel"
         },
         "sequencePolicies": []
@@ -106,6 +179,7 @@ Feature: Create Requests
     And url baseUrl + "/context-policies"
     And method POST
     And status 201
+    And header correlation-id = "c5ebcc3e-7189-419b-a401-9a5563ccdae6"
     And request
       """
       {
@@ -118,12 +192,14 @@ Feature: Create Requests
     And url baseUrl + "/identities"
     And method POST
     And status 201
+    And header correlation-id = "3048b1ce-0b1d-4fae-99c2-6fe0267f3136"
+    And header channel-id = channelId
     And url baseUrl + "/contexts"
     And request
       """
       {
         "channel": {
-          "id": "context-test-channel3",
+          "id": "#(channelId)",
           "country": "GB"
         },
         "activity": {
@@ -149,21 +225,23 @@ Feature: Create Requests
         "meta": {
           "activityName":"default-activity",
           "aliasTypes":["credit-card-number"],
-          "channelId":"context-test-channel3"
+          "channelId":"#(channelId)"
         }
       }
       """
 
   Scenario: Create context - Success - Otp method returned
-    Given url baseUrl + "/context-policies"
     * def contextPolicyId = "be2c6c3b-5347-4337-9194-cc5c803112a6"
+    * def channelId = "context-test-channel4"
+    Given url baseUrl + "/context-policies"
+    And header correlation-id = "1ca5443f-7172-4742-b2dc-b788e08bead4"
     And request
       """
       {
         "key": {
           "id": "#(contextPolicyId)",
           "priority": 1,
-          "channelId": "context-test-channel4",
+          "channelId": "#(channelId)",
           "type": "channel"
         },
         "sequencePolicies": [
@@ -211,6 +289,7 @@ Feature: Create Requests
       """
     And method POST
     And status 201
+    And header correlation-id = "4a326d3b-11fe-404f-8f16-2e2ded42657e"
     And url baseUrl + "/identities"
     And request
       """
@@ -234,13 +313,14 @@ Feature: Create Requests
     And status 201
     And url baseUrl + "/lockout-policies"
     * def lockoutPolicyId = "9ddbd67e-6310-42aa-abf4-007eb09e8398"
+    And header correlation-id = "20b11125-571d-48d5-a80b-83d6a236a608"
     And request
       """
       {
         "key": {
           "id": "#(lockoutPolicyId)",
           "priority": 1,
-          "channelId": "context-test-channel4",
+          "channelId": "#(channelId)",
           "type": "channel"
         },
         "stateCalculator": {
@@ -255,11 +335,13 @@ Feature: Create Requests
     And method POST
     And status 201
     And url baseUrl + "/contexts"
+    And header correlation-id = "ee4dad1b-4ed8-48a9-b628-d29f2a7d2eef"
+    And header channel-id = channelId
     And request
       """
       {
         "channel": {
-          "id": "context-test-channel4",
+          "id": "#(channelId)",
           "country": "GB"
         },
         "activity": {
@@ -285,7 +367,7 @@ Feature: Create Requests
         "request": {
           "initial": {
             "channel": {
-              "id": "context-test-channel4",
+              "id": "#(channelId)",
               "country": "GB"
             },
             "aliases": [
@@ -303,7 +385,7 @@ Feature: Create Requests
             "key": {
               "id": "#(contextPolicyId)",
               "priority": 1,
-              "channelId": "context-test-channel4",
+              "channelId": "#(channelId)",
               "type": "channel"
             },
             "sequencePolicies": [
@@ -480,15 +562,17 @@ Feature: Create Requests
       """
 
   Scenario: Create context - Success - Otp method returned - Masked Phone Numbers
-    Given url baseUrl + "/context-policies"
     * def contextPolicyId = "8d6322ff-b8c8-4e2a-95b4-207fe5939f65"
+    * def channelId = "context-test-channel5"
+    Given url baseUrl + "/context-policies"
+    And header correlation-id = "e8533e1c-99d8-48e9-a0ed-e2491e14f380"
     And request
       """
       {
         "key": {
           "id": "#(contextPolicyId)",
           "priority": 1,
-          "channelId": "context-test-channel5",
+          "channelId": "#(channelId)",
           "type": "channel"
         },
         "sequencePolicies": [
@@ -537,6 +621,7 @@ Feature: Create Requests
     And method POST
     And status 201
     And url baseUrl + "/identities"
+    And header correlation-id = "c7abb8aa-a08f-454a-aa58-0f15613fe45c"
     And request
       """
       {
@@ -554,13 +639,14 @@ Feature: Create Requests
     And status 201
     And url baseUrl + "/lockout-policies"
     * def lockoutPolicyId = "2f96109d-2a8c-4f91-a18e-ca7b3863b4bb"
+    And header correlation-id = "a764a038-eb1d-448c-b864-217524f325b9"
     And request
       """
       {
         "key": {
           "id": "#(lockoutPolicyId)",
           "priority": 1,
-          "channelId": "context-test-channel5",
+          "channelId": "#(channelId)",
           "type": "channel"
         },
         "stateCalculator": {
@@ -575,11 +661,13 @@ Feature: Create Requests
     And method POST
     And status 201
     And url baseUrl + "/contexts"
+    And header channel-id = channelId
+    And header correlation-id = "d2d8f6d9-c7af-4c42-b1f1-a72d1923144b"
     And request
       """
       {
         "channel": {
-          "id": "context-test-channel5",
+          "id": "#(channelId)",
           "country": "GB"
         },
         "activity": {
@@ -605,7 +693,7 @@ Feature: Create Requests
         "request": {
           "initial": {
             "channel": {
-              "id": "context-test-channel5",
+              "id": "#(channelId)",
               "country": "GB"
             },
             "aliases": [
@@ -623,7 +711,7 @@ Feature: Create Requests
             "key": {
               "id": "#(contextPolicyId)",
               "priority": 1,
-              "channelId": "context-test-channel5",
+              "channelId": "#(channelId)",
               "type": "channel"
             },
             "sequencePolicies": [
@@ -745,15 +833,17 @@ Feature: Create Requests
       """
 
   Scenario: Post result - Success - Result Added to context
-    Given url baseUrl + "/context-policies"
+    * def channelId = "context-test-channel6"
     * def contextPolicyId = "03ac7483-0006-4d99-b38f-dd33d3004e0a"
+    Given url baseUrl + "/context-policies"
+    And header correlation-id = "9c5fba22-c930-4195-9def-0b1b86670856"
     And request
       """
       {
         "key": {
           "id": "#(contextPolicyId)",
           "priority": 1,
-          "channelId": "context-test-channel6",
+          "channelId": "#(channelId)",
           "type": "channel"
         },
         "sequencePolicies": [
@@ -802,6 +892,7 @@ Feature: Create Requests
     And method POST
     And status 201
     And url baseUrl + "/identities"
+    And header correlation-id = "c604f2ae-d229-461c-b7c4-98c5fbd42a83"
     And request
       """
       {
@@ -817,6 +908,7 @@ Feature: Create Requests
     And method POST
     And status 201
     And url baseUrl + "/lockout-policies"
+    And header correlation-id = "5aeafa7f-28fb-4120-8f0b-e9e731bfd847"
     * def lockoutPolicyId = "c5a7a9d5-8c9d-4ddd-bd01-727d3075d147"
     And request
       """
@@ -824,7 +916,7 @@ Feature: Create Requests
         "key": {
           "id": "#(lockoutPolicyId)",
           "priority": 1,
-          "channelId": "context-test-channel6",
+          "channelId": "#(channelId)",
           "type": "channel"
         },
         "stateCalculator": {
@@ -838,12 +930,14 @@ Feature: Create Requests
       """
     And method POST
     And status 201
+    And header channel-id = channelId
+    And header correlation-id = "7e1fec16-289d-4683-a353-800ada8dbf93"
     And url baseUrl + "/contexts"
     And request
       """
       {
         "channel": {
-          "id": "context-test-channel6",
+          "id": "#(channelId)",
           "country": "GB"
         },
         "activity": {
@@ -869,7 +963,7 @@ Feature: Create Requests
         "request": {
           "initial": {
             "channel": {
-              "id": "context-test-channel6",
+              "id": "#(channelId)",
               "country": "GB"
             },
             "aliases": [
@@ -887,7 +981,7 @@ Feature: Create Requests
             "key": {
               "id": "#(contextPolicyId)",
               "priority": 1,
-              "channelId": "context-test-channel6",
+              "channelId": "#(channelId)",
               "type": "channel"
             },
             "sequencePolicies": [
@@ -1009,6 +1103,8 @@ Feature: Create Requests
         }
       }
       """
+    And header channel-id = channelId
+    And header correlation-id = "a89178af-fd6e-4c2e-ac84-cdba6d696e7c"
     And url baseUrl + "/contexts/results"
     And method PATCH
     And status 200
@@ -1021,7 +1117,7 @@ Feature: Create Requests
         "request": {
           "initial": {
             "channel": {
-              "id": "context-test-channel6",
+              "id": "#(channelId)",
               "country": "GB"
             },
             "aliases": [
@@ -1039,7 +1135,7 @@ Feature: Create Requests
             "key": {
               "id": "#(contextPolicyId)",
               "priority": 1,
-              "channelId": "context-test-channel6",
+              "channelId": "#(channelId)",
               "type": "channel"
             },
             "sequencePolicies": [
@@ -1158,7 +1254,9 @@ Feature: Create Requests
       """
 
   Scenario: Create and get context - Success - context returned
+    * def channelId = "abc"
     Given url baseUrl + "/identities"
+    And header correlation-id = "973787cf-a5ae-4d1f-8c08-e577599276d8"
     And request
       """
       {
@@ -1174,11 +1272,13 @@ Feature: Create Requests
     And method POST
     And status 201
     And url baseUrl + "/contexts"
+    And header channel-id = channelId
+    And header correlation-id = "2924560f-830a-4205-a4b7-c736cd4c7ab0"
     And request
       """
       {
         "channel": {
-          "id": "abc",
+          "id": "#(channelId)",
           "country": "GB"
         },
         "activity": {
@@ -1197,11 +1297,15 @@ Feature: Create Requests
     And status 201
     * def contextId = response.id
     And url baseUrl + "/contexts/" + contextId
+    And header channel-id = channelId
+    And header correlation-id = "d8684916-b21e-45db-ab79-7806b41cbe40"
     And method GET
     And status 200
 
   Scenario: Get context - Error - context not found
     * def contextId = "bacf1ac9-d33e-4e2f-9fff-a01bfab45bbd"
+    And header channel-id = "abc"
+    And header correlation-id = "1be07251-0ed9-469a-a929-96b454168fc9"
     Given url baseUrl + "/contexts/" + contextId
     When method GET
     Then status 404
@@ -1217,6 +1321,7 @@ Feature: Create Requests
   @sequential
   Scenario: Create and get context - Error - context expired
     Given url baseUrl + "/identities"
+    And header correlation-id = "a7f15983-d76a-4a9b-a09c-772d405f2d4d"
     And request
       """
       {
@@ -1232,11 +1337,14 @@ Feature: Create Requests
     And method POST
     And status 201
     And url baseUrl + "/contexts"
+    * def channelId = "abc"
+    And header correlation-id = "53f4b96c-3bce-4390-9f2a-889a3c9e7f54"
+    And header channel-id = channelId
     And request
       """
       {
         "channel": {
-          "id": "abc",
+          "id": "#(channelId)",
           "country": "GB"
         },
         "activity": {
@@ -1261,6 +1369,8 @@ Feature: Create Requests
       """
     And method PUT
     And status 200
+    And header correlation-id = "53f4b96c-3bce-4390-9f2a-889a3c9e7f54"
+    And header channel-id = channelId
     And url baseUrl + "/contexts/" + contextId
     And method GET
     And status 410

@@ -6,6 +6,7 @@ Feature: Context Policy Maintenance
   Scenario: Get policy - Error - Policy not found
     * def policyId = "09ff6196-dde0-4b8d-a526-f7c5b646bf9a"
     Given path "/" + policyId
+    And header correlation-id = "3a5020ef-2388-47b9-a97b-1f5eedef299f"
     When method GET
     Then status 404
     And match response ==
@@ -71,6 +72,7 @@ Feature: Context Policy Maintenance
         ]
       }
       """
+    And header correlation-id = "d4dfde15-363b-4284-b247-2108e9eab90e"
     When method POST
     Then status 201
     And match response ==
@@ -128,7 +130,7 @@ Feature: Context Policy Maintenance
     And match responseHeaders.Location contains baseUrl + "/context-policies/" + policyId
 
   Scenario: Create + Get policy - Success - Create channel/activity policy, get by id
-    * def policyId = "a347cb39-6ef8-4c80-9b6d-31d6b5f1953b"
+    * def policyId = "60f82e7a-cead-4129-934f-57c8f36db48f"
     Given request
       """
       {
@@ -185,9 +187,11 @@ Feature: Context Policy Maintenance
         ]
       }
       """
+    And header correlation-id = "a1a2f81a-1a56-4b58-8a63-409653c0ae04"
     And method POST
     And status 201
     And path "/" + policyId
+    And header correlation-id = "5f9ac453-53ce-4fd4-9ea8-99bf8b0292fc"
     When method GET
     Then status 200
     And match response ==
@@ -264,6 +268,7 @@ Feature: Context Policy Maintenance
         "sequencePolicies": []
       }
       """
+    And header correlation-id = "97438084-d6e5-4f97-a270-81445644aae3"
     And method POST
     And status 201
     * def policyId2 = "b65157d0-21c5-4fd4-975a-bb3279775be1"
@@ -302,10 +307,12 @@ Feature: Context Policy Maintenance
         ]
       }
       """
+    And header correlation-id = "104b4922-50b4-4c73-8118-be495f5f3409"
     And method POST
     And status 201
     And param channelId = "default-channel3"
     And param activityName = "default-activity"
+    And header correlation-id = "792e8ed3-4448-46c2-b1d4-c1185cca1fe8"
     When method GET
     Then status 200
     And match response ==
@@ -372,6 +379,7 @@ Feature: Context Policy Maintenance
         "sequencePolicies": []
       }
       """
+    And header correlation-id = "006667cc-7afd-4b91-b62d-5c8de7b8244c"
     And method POST
     And status 201
     And request
@@ -411,6 +419,7 @@ Feature: Context Policy Maintenance
         ]
       }
       """
+    And header correlation-id = "00745985-7bae-487c-996f-3a4ee5563cf2"
     When method PUT
     And status 200
     And match response ==
@@ -465,11 +474,14 @@ Feature: Context Policy Maintenance
         "sequencePolicies": []
       }
       """
+    And header correlation-id = "98901873-6018-4dde-b4fa-3e839555a479"
     And method POST
     And status 201
     And path "/" + policyId
+    And header correlation-id = "f9298cc6-30e5-4e6b-81fd-c2a0e738f321"
     When method DELETE
     Then status 204
     And path "/" + policyId
+    And header correlation-id = "5bef4a50-829b-4477-88ae-59e2cc4a98e8"
     And method GET
     And status 404

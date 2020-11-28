@@ -23,6 +23,7 @@ Feature: Eligibility Requests
         ]
       }
       """
+    And header correlation-id = "99f1209d-d553-4c04-b45d-e70db3367ac9"
     When method POST
     Then status 404
     And match response ==
@@ -45,6 +46,7 @@ Feature: Eligibility Requests
         ]
       }
       """
+    And header correlation-id = "94b49f61-8dfe-4edf-a14b-3e2ddc482818"
     And method POST
     And status 201
     And url baseUrl + "/eligibility"
@@ -67,6 +69,7 @@ Feature: Eligibility Requests
         ]
       }
       """
+    And header correlation-id = "6c3ccc07-29ca-4af4-8011-15b5662891ef"
     When method POST
     Then status 201
     And match response ==
@@ -123,6 +126,7 @@ Feature: Eligibility Requests
         ]
       }
       """
+    And header correlation-id = "a417402b-4188-431b-b713-8f65c40ab84d"
     When method POST
     Then status 201
     And match response ==
@@ -197,6 +201,7 @@ Feature: Eligibility Requests
         ]
       }
       """
+    And header correlation-id = "8062f857-193c-4a83-bf47-fdd5a55bd857"
     When method POST
     Then status 201
     And match response ==

@@ -6,6 +6,7 @@ Feature: Lockout Policy Maintenance
   Scenario: Get policy - Error - Policy not found
     * def policyId = "fcdb814c-dba4-4b2f-a84e-a97d3593b97b"
     Given path "/" + policyId
+    And header correlation-id = "cdc408c3-bc12-438c-9d14-f9286a99696b"
     When method GET
     Then status 404
     And match response ==
@@ -37,6 +38,7 @@ Feature: Lockout Policy Maintenance
         }
       }
       """
+    And header correlation-id = "ca28fda0-cfca-4624-b927-93eee65557c2"
     When method POST
     Then status 201
     And match response ==
@@ -82,9 +84,11 @@ Feature: Lockout Policy Maintenance
         }
       }
       """
+    And header correlation-id = "4642e333-8543-4b3a-ac35-4a5362aa101d"
     And method POST
     And status 201
     And path "/" + policyId
+    And header correlation-id = "a88eb266-75ae-4b02-a72d-2e5fed45fc5a"
     When method GET
     Then status 200
     And match response ==
@@ -131,6 +135,7 @@ Feature: Lockout Policy Maintenance
         }
       }
       """
+    And header correlation-id = "2f2e2e01-3c35-4388-a4d0-7a2f96cfcad9"
     And method POST
     And status 201
     * def policyId2 = "4382f604-bdc7-48b9-b229-44350c5fa27c"
@@ -155,10 +160,12 @@ Feature: Lockout Policy Maintenance
         }
       }
       """
+    And header correlation-id = "aa7478de-2a0e-44f1-bf6a-e5732cc682d2"
     And method POST
     And status 201
     And param channelId = "my-channel"
     And param activityName = "my-activity"
+    And header correlation-id = "d7234b1a-9afc-4045-9b94-21108fc78fbf"
     When method GET
     Then status 200
     And match response ==
@@ -222,6 +229,7 @@ Feature: Lockout Policy Maintenance
         }
       }
       """
+    And header correlation-id = "4a08c1e6-61d5-43c8-9088-e401eb4a552a"
     And method POST
     And status 201
     And request
@@ -253,6 +261,7 @@ Feature: Lockout Policy Maintenance
         }
       }
       """
+    And header correlation-id = "6e778783-56d9-41b7-91a1-01de3f7776ce"
     When method PUT
     And status 200
     And match response ==
@@ -305,11 +314,14 @@ Feature: Lockout Policy Maintenance
         }
       }
       """
+    And header correlation-id = "000dced3-a929-4b65-b25a-ac350bef27da"
     And method POST
     And status 201
     And path "/" + policyId
+    And header correlation-id = "36491e7f-adca-4939-8975-4cbba8f8d936"
     When method DELETE
     Then status 204
     And path "/" + policyId
+    And header correlation-id = "7ed8193e-6d4e-4127-85ac-9555d103f6f3"
     And method GET
     And status 404

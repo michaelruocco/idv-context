@@ -8,7 +8,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.common.adapter.json.error.ApiError;
+import uk.co.idv.common.adapter.json.error.badrequest.BadRequestError;
 import uk.co.idv.common.adapter.json.error.internalserver.InternalServerError;
+import uk.co.mruoc.spring.filter.validation.InvalidHeaderException;
 
 import java.util.Optional;
 
@@ -20,14 +22,19 @@ public class SpringErrorHandler {
     private final Application application;
 
     @ExceptionHandler(Throwable.class)
-    public ResponseEntity<ApiError> handleException(Throwable throwable) {
-        Optional<ApiError> error = application.handle(throwable);
-        return toResponseEntity(error.orElse(toInternalServerError(throwable)));
+    public ResponseEntity<ApiError> catchAll(Throwable cause) {
+        Optional<ApiError> error = application.handle(cause);
+        return toResponseEntity(error.orElse(toInternalServerError(cause)));
     }
 
-    private static ApiError toInternalServerError(Throwable throwable) {
-        log.error("unexpected error occurred", throwable);
-        return new InternalServerError(throwable.getMessage());
+    @ExceptionHandler(InvalidHeaderException.class)
+    public ResponseEntity<ApiError> invalidHeader(InvalidHeaderException cause) {
+        return toResponseEntity(new BadRequestError(cause.getMessage()));
+    }
+
+    private static ApiError toInternalServerError(Throwable cause) {
+        log.error("unexpected error occurred", cause);
+        return new InternalServerError(cause.getMessage());
     }
 
     private static ResponseEntity<ApiError> toResponseEntity(ApiError error) {
