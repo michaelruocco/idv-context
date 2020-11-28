@@ -104,7 +104,9 @@ aws cloudformation delete-stack --stack-name idv-dev-network;
 
 #### Running JMeter tests
 
-This command should be ru
+This command should be run from the parent project directory and requires the service to
+be up and running, which can be done using either the bootRun or composeUp gradle tasks
+described above.
 
 ```sh
 mkdir -p app/spring/build/reports/jmeter/html;
