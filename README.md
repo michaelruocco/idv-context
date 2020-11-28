@@ -102,7 +102,9 @@ aws cloudformation delete-stack --stack-name idv-dev-verification-context-servic
 aws cloudformation delete-stack --stack-name idv-dev-network;
 ```
 
-#### Running JMeter tests
+### JMeter
+
+#### Running performance tests
 
 This command should be run from the parent project directory and requires the service to
 be up and running, which can be done using either the bootRun or composeUp gradle tasks
