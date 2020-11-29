@@ -30,8 +30,8 @@ public class ContextExpiredError extends DefaultApiError {
 
     private static Map<String, Object> toMeta(UUID id, Instant expiry) {
         return Map.of(
-                "id", id,
-                "expiry", expiry
+                "id", id.toString(),
+                "expiry", expiry.toString()
         );
     }
 }

@@ -10,7 +10,7 @@ import java.util.UUID;
 import java.util.concurrent.Callable;
 
 @Builder
-public class DeliveryMethodEligibleAndComplete implements Callable<Boolean> {
+public class DeliveryMethodEligibleAndEligibilityComplete implements Callable<Boolean> {
 
     private final Application application;
     private final UUID contextId;

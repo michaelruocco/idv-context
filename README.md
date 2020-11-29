@@ -11,14 +11,17 @@
 
 ## Todo
 
-*   Add client module
+*   Versioning on endpoints
 
-*   Add specific method result types, e.g. for OTP delivery time, actual and used otp codes, verify type, 
-    maybe delivery id for sending message
+*   Token validation
+
+*   Add client module
 
 *   Add postman collection to repo and run in build pipeline
 
 *   Try out google cache module with a mongo repository for policies instead of redis repository
+
+*   Update performance tests to provide mandatory headers and to post results as well as creating context
 
 *   Performance tests in pipeline / nightly build
 

@@ -59,7 +59,7 @@ subprojects {
         slf4jVersion = "1.7.30"
         commonsCollectionsVersion = "4.4"
         awsSdkVersion = "1.11.895"
-        jacksonVersion = "2.11.3"
+        jacksonVersion = "2.12.0"
         jsonAdapterVersion = "1.0.0"
         mongoVersion = "3.12.7"
 

@@ -8,4 +8,8 @@ public interface InternalServerErrorMother {
         return new InternalServerError("error message");
     }
 
+    static ApiError internalServerErrorWithoutMessage() {
+        return new InternalServerError();
+    }
+
 }

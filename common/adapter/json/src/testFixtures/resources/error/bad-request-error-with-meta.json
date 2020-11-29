@@ -1,0 +1,9 @@
+{
+  "status": 400,
+  "title": "Bad request",
+  "message": "error with meta",
+  "meta": {
+    "key1": "value1",
+    "key2": "value2"
+  }
+}

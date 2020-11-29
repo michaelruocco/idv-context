@@ -1,0 +1,25 @@
+plugins {
+    id "java-test-fixtures"
+    id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+}
+
+testSets {
+    integrationTest
+}
+
+dependencies {
+    api project(":context-entities")
+    api project(":otp-entities")
+
+    implementation project(":common-json")
+    implementation project(":context-json")
+    implementation project(":otp-json")
+
+    testFixturesApi testFixtures(project(":context-entities"))
+    testFixturesApi testFixtures(project(":otp-entities"))
+    testFixturesApi testFixtures(project(":method-json"))
+    testFixturesApi testFixtures(project(":context-json"))
+    testFixturesApi testFixtures(project(":identity-json"))
+
+    integrationTestImplementation "com.github.tomakehurst:wiremock-jre8:2.27.2"
+}

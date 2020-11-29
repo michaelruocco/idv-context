@@ -6,8 +6,9 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ArgumentsSource;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
+import static org.assertj.core.api.Assertions.assertThat;
 
-class ApiErrorSerializationTest {
+class ApiErrorSerdeTest {
 
     private static final ObjectMapper MAPPER = new ObjectMapper().registerModule(new ErrorModule());
 
@@ -17,6 +18,14 @@ class ApiErrorSerializationTest {
         String json = MAPPER.writeValueAsString(error);
 
         assertThatJson(json).isEqualTo(expectedJson);
+    }
+
+    @ParameterizedTest(name = "should deserialize error {1}")
+    @ArgumentsSource(ErrorArgumentsProvider.class)
+    void shouldDeserialize(String json, ApiError expectedError) throws JsonProcessingException {
+        ApiError error = MAPPER.readValue(json, ApiError.class);
+
+        assertThat(error).usingRecursiveComparison().isEqualTo(expectedError);
     }
 
 }
