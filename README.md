@@ -16,6 +16,8 @@
 *   Add specific method result types, e.g. for OTP delivery time, actual and used otp codes, verify type, 
     maybe delivery id for sending message
 
+*   Add unit tests for identity mongo module
+
 *   Add postman collection to repo and run in build pipeline
 
 *   Try out google cache module with a mongo repository for policies instead of redis repository
