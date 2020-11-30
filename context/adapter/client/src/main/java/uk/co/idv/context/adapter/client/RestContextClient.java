@@ -8,6 +8,7 @@ import uk.co.idv.context.adapter.client.exception.ClientException;
 import uk.co.idv.context.adapter.client.logger.ClientLogger;
 import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
+import uk.co.idv.context.adapter.client.request.ClientRecordContextResultRequest;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.mruoc.json.JsonConverter;
 
@@ -27,6 +28,10 @@ import static uk.co.idv.context.adapter.client.headers.HeaderConstants.CONTENT_T
 @Slf4j
 public class RestContextClient implements ContextClient {
 
+    private static final String CREATE_CONTEXT_URL = "%s/v1/contexts";
+    private static final String GET_CONTEXT_URL = CREATE_CONTEXT_URL + "/%s";
+    private static final String RECORD_CONTEXT_RESULT_URL = CREATE_CONTEXT_URL + "/results";
+
     private final JsonConverter jsonConverter;
     private final String baseUrl;
     private final HttpClient client;
@@ -42,6 +47,13 @@ public class RestContextClient implements ContextClient {
     @Override
     public Context getContext(ClientGetContextRequest request) {
         HttpRequest httpRequest = toGetHttpRequest(request);
+        HttpResponse<String> httpResponse = send(httpRequest);
+        return toContextOrThrowError(httpResponse);
+    }
+
+    @Override
+    public Context recordResult(ClientRecordContextResultRequest request) {
+        HttpRequest httpRequest = toPatchHttpRequest(request);
         HttpResponse<String> httpResponse = send(httpRequest);
         return toContextOrThrowError(httpResponse);
     }
@@ -65,12 +77,26 @@ public class RestContextClient implements ContextClient {
                 .build();
     }
 
+    private HttpRequest toPatchHttpRequest(ClientRecordContextResultRequest request) {
+        return HttpRequest.newBuilder()
+                .headers(request.getHeadersArray())
+                .header(CONTENT_TYPE_NAME, APPLICATION_JSON)
+                .header(ACCEPT_NAME, APPLICATION_JSON)
+                .uri(buildUpdateResultUrl())
+                .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonConverter.toJson(request.getBody())))
+                .build();
+    }
+
     private URI buildCreateUri() {
-        return toUri(String.format("%s/contexts", baseUrl));
+        return toUri(String.format(CREATE_CONTEXT_URL, baseUrl));
     }
 
     private URI buildGetUrl(UUID id) {
-        return toUri(String.format("%s/contexts/%s", baseUrl, id.toString()));
+        return toUri(String.format(GET_CONTEXT_URL, baseUrl, id.toString()));
+    }
+
+    private URI buildUpdateResultUrl() {
+        return toUri(String.format(RECORD_CONTEXT_RESULT_URL, baseUrl));
     }
 
     private HttpResponse<String> send(HttpRequest request) {
