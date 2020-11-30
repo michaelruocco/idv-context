@@ -20,7 +20,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/identities")
+@RequestMapping("/v1/identities")
 public class IdentityController {
 
     private final Application application;

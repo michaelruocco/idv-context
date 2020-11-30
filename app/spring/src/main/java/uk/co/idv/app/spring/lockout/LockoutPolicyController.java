@@ -23,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/lockout-policies")
+@RequestMapping("/v1/lockout-policies")
 public class LockoutPolicyController {
 
     private final Application application;

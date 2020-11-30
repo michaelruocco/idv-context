@@ -1,7 +1,7 @@
 Feature: Context Policy Maintenance
 
   Background:
-    * url baseUrl + "/context-policies"
+    * url baseUrl + "/v1/context-policies"
 
   Scenario: Get policy - Error - Policy not found
     * def policyId = "09ff6196-dde0-4b8d-a526-f7c5b646bf9a"
@@ -127,7 +127,7 @@ Feature: Context Policy Maintenance
         ]
       }
       """
-    And match responseHeaders.Location contains baseUrl + "/context-policies/" + policyId
+    And match responseHeaders.Location contains baseUrl + "/v1/context-policies/" + policyId
 
   Scenario: Create + Get policy - Success - Create channel/activity policy, get by id
     * def policyId = "60f82e7a-cead-4129-934f-57c8f36db48f"

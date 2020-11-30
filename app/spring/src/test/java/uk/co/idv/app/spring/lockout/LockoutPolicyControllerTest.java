@@ -85,7 +85,7 @@ class LockoutPolicyControllerTest {
 
         ResponseEntity<LockoutPolicy> response = controller.create(policy);
 
-        String expectedLocation = String.format("/lockout-policies/%s", policy.getId());
+        String expectedLocation = String.format("/v1/lockout-policies/%s", policy.getId());
         assertThat(response.getHeaders()).contains(
                 entry("Location", singletonList(expectedLocation))
         );

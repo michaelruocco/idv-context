@@ -41,7 +41,7 @@ class IdentityControllerTest {
 
         ResponseEntity<Identity> response = controller.upsertIdentity(identity);
 
-        String expectedLocation = String.format("/identities/%s", expected.getIdvIdValue());
+        String expectedLocation = String.format("/v1/identities/%s", expected.getIdvIdValue());
         assertThat(response.getHeaders()).contains(
                 entry("Location", singletonList(expectedLocation))
         );

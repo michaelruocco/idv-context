@@ -22,7 +22,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/contexts")
+@RequestMapping("/v1/contexts")
 public class ContextController {
 
     private final Application application;

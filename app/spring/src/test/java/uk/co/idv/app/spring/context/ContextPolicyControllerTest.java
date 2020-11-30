@@ -85,7 +85,7 @@ class ContextPolicyControllerTest {
 
         ResponseEntity<ContextPolicy> response = controller.create(policy);
 
-        String expectedLocation = String.format("/context-policies/%s", policy.getId());
+        String expectedLocation = String.format("/v1/context-policies/%s", policy.getId());
         assertThat(response.getHeaders()).contains(
                 entry("Location", singletonList(expectedLocation))
         );

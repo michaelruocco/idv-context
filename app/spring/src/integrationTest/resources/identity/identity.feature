@@ -1,7 +1,7 @@
 Feature: Identity Maintenance
 
   Background:
-    * url baseUrl + "/identities"
+    * url baseUrl + "/v1/identities"
 
   Scenario: Get identity - Error - Unsupported alias type
     Given param aliasType = "ABC"
@@ -77,7 +77,7 @@ Feature: Identity Maintenance
         ]
       }
       """
-    And match responseHeaders.Location contains baseUrl + "/identities/" + response.idvId
+    And match responseHeaders.Location contains baseUrl + "/v1/identities/" + response.idvId
 
   Scenario: Create + Get identity - Success - Create with one alias, get by alias
     Given request
@@ -123,7 +123,7 @@ Feature: Identity Maintenance
     And method POST
     And status 201
     * def idvId = response.idvId
-    And url baseUrl + "/identities/" + idvId
+    And url baseUrl + "/v1/identities/" + idvId
     And header correlation-id = "c0aa4465-7405-46e1-b9e8-b2ef735db90e"
     When method GET
     Then status 200

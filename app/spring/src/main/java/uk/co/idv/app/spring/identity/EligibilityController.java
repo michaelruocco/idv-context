@@ -13,7 +13,7 @@ import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/eligibility")
+@RequestMapping("/v1/eligibility")
 public class EligibilityController {
 
     private final Application application;

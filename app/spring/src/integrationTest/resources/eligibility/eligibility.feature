@@ -1,7 +1,7 @@
 Feature: Eligibility Requests
 
   Background:
-    * url baseUrl + "/eligibility"
+    * url baseUrl + "/v1/eligibility"
 
   Scenario: Create eligibility - Error - Identity not found for internal data lookup
     Given request
@@ -36,7 +36,7 @@ Feature: Eligibility Requests
       """
 
   Scenario: Create eligibility - Success - Identity created for internal data lookup
-    Given url baseUrl + "/identities"
+    Given url baseUrl + "/v1/identities"
     And request
       """
       {
@@ -49,7 +49,7 @@ Feature: Eligibility Requests
     And header correlation-id = "94b49f61-8dfe-4edf-a14b-3e2ddc482818"
     And method POST
     And status 201
-    And url baseUrl + "/eligibility"
+    And url baseUrl + "/v1/eligibility"
     And request
       """
       {

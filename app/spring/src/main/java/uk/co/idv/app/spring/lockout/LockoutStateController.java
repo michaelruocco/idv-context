@@ -14,7 +14,7 @@ import uk.co.idv.lockout.entities.policy.LockoutState;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/lockout-states")
+@RequestMapping("/v1/lockout-states")
 public class LockoutStateController {
 
     private final Application application;

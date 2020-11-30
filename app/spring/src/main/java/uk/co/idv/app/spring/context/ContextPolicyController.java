@@ -23,7 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
-@RequestMapping("/context-policies")
+@RequestMapping("/v1/context-policies")
 public class ContextPolicyController {
 
     private final Application application;

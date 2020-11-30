@@ -1,7 +1,7 @@
 Feature: Lockout Policy Maintenance
 
   Background:
-    * url baseUrl + "/lockout-policies"
+    * url baseUrl + "/v1/lockout-policies"
 
   Scenario: Get policy - Error - Policy not found
     * def policyId = "fcdb814c-dba4-4b2f-a84e-a97d3593b97b"
@@ -59,7 +59,7 @@ Feature: Lockout Policy Maintenance
         }
       }
       """
-    And match responseHeaders.Location contains baseUrl + "/lockout-policies/" + policyId
+    And match responseHeaders.Location contains baseUrl + "/v1/lockout-policies/" + policyId
 
   Scenario: Create + Get policy - Success - Create channel/activity policy, get by id
     * def policyId = "796910ee-692d-4610-91b8-7bcdd34f9e22"
