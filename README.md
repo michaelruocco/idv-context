@@ -17,6 +17,8 @@
 
 *   Add client module
 
+*   Add unit tests for identity mongo module
+
 *   Add postman collection to repo and run in build pipeline
 
 *   Try out google cache module with a mongo repository for policies instead of redis repository

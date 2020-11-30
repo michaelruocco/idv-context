@@ -178,7 +178,7 @@ public class FilterConfig {
 
     private static String[] getContextUrlPatterns() {
         return new String[]{
-                "/contexts/*"
+                "/v1/contexts/*"
         };
     }
 
@@ -188,10 +188,10 @@ public class FilterConfig {
 
     private static String[] getDefaultUrlPatterns() {
         return new String[]{
-                "/eligibility/*",
-                "/lockout-policies/*",
-                "/lockout-states/*",
-                "/context-policies/*"
+                "/v1/eligibility/*",
+                "/v1/lockout-policies/*",
+                "/v1/lockout-states/*",
+                "/v1/context-policies/*"
         };
     }
 

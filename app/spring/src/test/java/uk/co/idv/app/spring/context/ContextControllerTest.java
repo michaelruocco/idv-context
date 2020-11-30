@@ -44,7 +44,7 @@ class ContextControllerTest {
 
         ResponseEntity<Context> response = controller.createContext(request);
 
-        String expectedLocation = String.format("/contexts/%s", expectedContext.getId());
+        String expectedLocation = String.format("/v1/contexts/%s", expectedContext.getId());
         assertThat(response.getHeaders()).contains(
                 entry("Location", singletonList(expectedLocation))
         );
