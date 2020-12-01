@@ -1253,6 +1253,291 @@ Feature: Create Requests
       }
       """
 
+  Scenario: Post result - Error - Should return error if result method is not next method
+    * def channelId = "context-test-channel7"
+    * def contextPolicyId = "2570c9d8-884f-43f9-9fcc-d63e084360c1"
+    Given url baseUrl + "/v1/context-policies"
+    And header correlation-id = "0f804850-3681-403a-82b7-b0bf52113451"
+    And request
+      """
+      {
+        "key": {
+          "id": "#(contextPolicyId)",
+          "priority": 1,
+          "channelId": "#(channelId)",
+          "type": "channel"
+        },
+        "sequencePolicies": [
+        {
+            "name": "one-time-passcode",
+            "methodPolicies": [
+              {
+                "name": "one-time-passcode",
+                "config": {
+                  "maxNumberOfAttempts": 3,
+                  "duration": 300000,
+                  "passcodeConfig": {
+                    "length": 8,
+                    "duration": 120000,
+                    "maxNumberOfDeliveries": 2
+                  }
+                },
+                "deliveryMethodConfigs": [
+                  {
+                    "type": "sms",
+                    "phoneNumberConfig": {
+                      "country": "GB",
+                      "allowInternational": false,
+                      "lastUpdatedConfig": {
+                        "allowUnknown": true,
+                        "minDaysSinceUpdate": 5
+                      },
+                      "simSwapConfig": {
+                        "acceptableStatuses": [
+                          "success"
+                        ],
+                        "timeout": 2000,
+                        "minDaysSinceSwap": 6,
+                        "async": false
+                      },
+                      "maskNumbers": false
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    And url baseUrl + "/v1/identities"
+    And header correlation-id = "af50579c-16a7-4b19-9399-dcb2b42f2c35"
+    And request
+      """
+      {
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4927111111111117" }
+        ],
+        "phoneNumbers": [
+          { "value": "+4407808247743" }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    And url baseUrl + "/v1/lockout-policies"
+    And header correlation-id = "c077f408-29b2-49fa-946e-1c83890d5127"
+    * def lockoutPolicyId = "f1d9b537-be1a-4ade-9100-38758d181212"
+    And request
+      """
+      {
+        "key": {
+          "id": "#(lockoutPolicyId)",
+          "priority": 1,
+          "channelId": "#(channelId)",
+          "type": "channel"
+        },
+        "stateCalculator": {
+          "maxNumberOfAttempts": 5,
+          "type": "hard-lockout"
+        },
+        "recordAttemptPolicy": {
+          "type": "always-record"
+        }
+      }
+      """
+    And method POST
+    And status 201
+    And header channel-id = channelId
+    And header correlation-id = "6adbeaae-fed8-455a-af44-4bc6ac10e11e"
+    And url baseUrl + "/v1/contexts"
+    And request
+      """
+      {
+        "channel": {
+          "id": "#(channelId)",
+          "country": "GB"
+        },
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111117"
+          }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    And match response ==
+      """
+      {
+        "id": "#uuid",
+        "created": "#notnull",
+        "expiry": "#notnull",
+        "request": {
+          "initial": {
+            "channel": {
+              "id": "#(channelId)",
+              "country": "GB"
+            },
+            "aliases": [
+              {
+                "type": "credit-card-number",
+                "value": "4927111111111117"
+              }
+            ],
+            "activity": {
+              "name": "default-activity",
+              "timestamp": "2020-09-27T06:56:47.522Z"
+            }
+          },
+          "policy": {
+            "key": {
+              "id": "#(contextPolicyId)",
+              "priority": 1,
+              "channelId": "#(channelId)",
+              "type": "channel"
+            },
+            "sequencePolicies": [
+              {
+                "name": "one-time-passcode",
+                "methodPolicies": [
+                  {
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
+                      }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "sms",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": true,
+                            "minDaysSinceUpdate": 5
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success"
+                            ],
+                            "timeout": 2000,
+                            "minDaysSinceSwap": 6,
+                            "async": false
+                          },
+                          "maskNumbers": false
+                        }
+                      }
+                    ],
+                    "name": "one-time-passcode"
+                  }
+                ]
+              }
+            ]
+          },
+          "identity": {
+            "idvId": "#uuid",
+            "country": "GB",
+            "aliases": [
+              {
+                "type": "credit-card-number",
+                "value": "4927111111111117"
+              },
+              {
+                "type": "idv-id",
+                "value": "#uuid"
+              }
+            ],
+            "phoneNumbers": [
+              { "value": "+4407808247743" }
+            ]
+          }
+        },
+        "sequences": [
+          {
+            "name": "one-time-passcode",
+            "methods": [
+              {
+                "name": "one-time-passcode",
+                "deliveryMethods": [
+                  {
+                    "id": "#uuid",
+                    "type": "sms",
+                    "value": "+447808247743",
+                    "eligibility": {
+                      "eligible": true,
+                      "complete": true
+                    }
+                  }
+                ],
+                "config": {
+                  "maxNumberOfAttempts": 3,
+                  "duration": 300000,
+                  "passcodeConfig": {
+                    "length": 8,
+                    "duration": 120000,
+                    "maxNumberOfDeliveries": 2
+                  }
+                },
+                "successful": false,
+                "complete": false,
+                "eligibility": {
+                  "eligible": true
+                }
+              }
+            ],
+            "duration": 300000,
+            "eligibility": {
+              "eligible": true
+            },
+            "successful": false,
+            "complete": false
+          }
+        ],
+        "eligible": true,
+        "successful": false,
+        "complete": false
+      }
+      """
+    * def contextId = response.id
+    And request
+      """
+      {
+        "contextId": "#(contextId)",
+        "result": {
+          "methodName": "default-method",
+          "verificationId": "64a259fa-4e63-4c32-9b3c-03649260b2a9",
+          "timestamp": "2020-09-27T06:57:47.522Z",
+          "successful": false
+        }
+      }
+      """
+    And header channel-id = channelId
+    And header correlation-id = "c7dc1d6a-66d3-4771-9a01-b5825cf77e32"
+    And url baseUrl + "/v1/contexts/results"
+    And method PATCH
+    And status 422
+    And match response ==
+      """
+      {
+        "title":"Not next method",
+        "message":"default-method",
+        "status":422
+      }
+      """
+
   Scenario: Create and get context - Success - context returned
     * def channelId = "abc"
     Given url baseUrl + "/v1/identities"
@@ -1262,7 +1547,7 @@ Feature: Create Requests
       {
         "country": "GB",
         "aliases": [
-          { "type": "credit-card-number", "value": "4927111111111117" }
+          { "type": "credit-card-number", "value": "4927111111111118" }
         ],
         "phoneNumbers": [
           { "value": "+4407808247743" }
@@ -1288,7 +1573,7 @@ Feature: Create Requests
         "aliases": [
           {
             "type": "credit-card-number",
-            "value": "4927111111111117"
+            "value": "4927111111111118"
           }
         ]
       }
@@ -1327,7 +1612,7 @@ Feature: Create Requests
       {
         "country": "GB",
         "aliases": [
-          { "type": "credit-card-number", "value": "4927111111111118" }
+          { "type": "credit-card-number", "value": "4927111111111119" }
         ],
         "phoneNumbers": [
           { "value": "+4407808247746" }
@@ -1354,7 +1639,7 @@ Feature: Create Requests
         "aliases": [
           {
             "type": "credit-card-number",
-            "value": "4927111111111118"
+            "value": "4927111111111119"
           }
         ]
       }

@@ -17,6 +17,8 @@ import uk.co.idv.context.adapter.json.context.error.contextexpired.ContextExpire
 import uk.co.idv.context.adapter.json.context.error.contextexpired.ContextExpiredErrorMother;
 import uk.co.idv.context.adapter.json.context.error.contextnotfound.ContextNotFoundErrorJsonMother;
 import uk.co.idv.context.adapter.json.context.error.contextnotfound.ContextNotFoundErrorMother;
+import uk.co.idv.context.adapter.json.context.error.notnextmethod.NotNextMethodErrorJsonMother;
+import uk.co.idv.context.adapter.json.context.error.notnextmethod.NotNextMethodErrorMother;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
@@ -25,6 +27,7 @@ import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
 import uk.co.idv.context.entities.result.FacadeRecordResultRequestMother;
 import uk.co.idv.identity.adapter.json.error.identitynotfound.IdentityNotFoundErrorJsonMother;
 import uk.co.idv.identity.adapter.json.error.identitynotfound.IdentityNotFoundErrorMother;
+import uk.co.idv.method.entities.result.ResultMother;
 import uk.co.mruoc.json.JsonConverter;
 
 import java.net.http.HttpClient;
@@ -56,7 +59,7 @@ class RestContextClientIntegrationTest {
     private static final JsonConverter JSON_CONVERTER = JsonConverterFactory.build();
     private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
 
-    private RestContextClient client;
+    private ContextClient client;
 
     @BeforeEach
     public void setUp() {
@@ -205,10 +208,79 @@ class RestContextClientIntegrationTest {
         assertThat(context).isEqualTo(ContextMother.build());
     }
 
-    //TODO test for context not found
-    //TODO test for context expired
-    //TODO test for method not next in sequence, needs handling server side
-    //TODO test for method not eligible, needs handling server side
+    @Test
+    void shouldThrowExceptionIfContextNotFoundErrorReturnedFromRecordContextResult() {
+        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.build();
+        ContextRequestHeaders headers = ContextRequestHeaders.build("abc");
+        ClientRecordContextResultRequest request = ClientRecordContextResultRequest.builder()
+                .body(recordRequest)
+                .headers(headers)
+                .build();
+
+        SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(RECORD_CONTEXT_RESULT_URL)), headers)
+                .willReturn(aResponse()
+                        .withStatus(404)
+                        .withBody(ContextNotFoundErrorJsonMother.contextNotFoundErrorJson())));
+
+        ApiErrorClientException error = catchThrowableOfType(
+                () -> client.recordResult(request),
+                ApiErrorClientException.class
+        );
+
+        assertThat(error.getError())
+                .usingRecursiveComparison()
+                .isEqualTo(ContextNotFoundErrorMother.contextNotFoundError());
+    }
+
+    @Test
+    void shouldThrowExceptionIfContextExpiredErrorReturnedFromRecordContextResult() {
+        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.build();
+        ContextRequestHeaders headers = ContextRequestHeaders.build("abc");
+        ClientRecordContextResultRequest request = ClientRecordContextResultRequest.builder()
+                .body(recordRequest)
+                .headers(headers)
+                .build();
+
+        SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(RECORD_CONTEXT_RESULT_URL)), headers)
+                .willReturn(aResponse()
+                        .withStatus(410)
+                        .withBody(ContextExpiredErrorJsonMother.contextExpiredErrorJson())));
+
+        ApiErrorClientException error = catchThrowableOfType(
+                () -> client.recordResult(request),
+                ApiErrorClientException.class
+        );
+
+        assertThat(error.getError())
+                .usingRecursiveComparison()
+                .isEqualTo(ContextExpiredErrorMother.contextExpiredError());
+    }
+
+    @Test
+    void shouldThrowExceptionIfNotNextMethodReturnedFromRecordContextResult() {
+        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+                .result(ResultMother.withMethodName("default-method"))
+                .build();
+        ContextRequestHeaders headers = ContextRequestHeaders.build("abc");
+        ClientRecordContextResultRequest request = ClientRecordContextResultRequest.builder()
+                .body(recordRequest)
+                .headers(headers)
+                .build();
+
+        SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(RECORD_CONTEXT_RESULT_URL)), headers)
+                .willReturn(aResponse()
+                        .withStatus(422)
+                        .withBody(NotNextMethodErrorJsonMother.notNextMethodErrorJson())));
+
+        ApiErrorClientException error = catchThrowableOfType(
+                () -> client.recordResult(request),
+                ApiErrorClientException.class
+        );
+
+        assertThat(error.getError())
+                .usingRecursiveComparison()
+                .isEqualTo(NotNextMethodErrorMother.notNextMethodError());
+    }
 
     @Test
     void shouldReturnContextFromSuccessfulRecordContextResult() {

@@ -21,4 +21,5 @@ dependencies {
     testFixturesApi testFixtures(project(":common-json"))
     testFixturesApi testFixtures(project(":method-entities"))
     testFixturesApi testFixtures(project(":otp-entities"))
+    testFixturesApi testFixtures(project(":policy-entities"))
 }

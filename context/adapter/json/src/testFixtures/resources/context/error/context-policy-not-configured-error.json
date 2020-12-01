@@ -1,0 +1,12 @@
+{
+  "title": "Context policy not configured",
+  "message": "Context policy not configured for channel, activity and alias combination",
+  "status": 422,
+  "meta": {
+    "activityName": "default-activity",
+    "aliasTypes": [
+      "default-alias"
+    ],
+    "channelId": "default-channel"
+  }
+}
