@@ -5,8 +5,6 @@ import com.mongodb.client.MongoCursor;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.identity.adapter.repository.converter.alias.AliasesDocumentConverter;
-import uk.co.idv.identity.adapter.repository.converter.emailaddress.EmailAddressesDocumentConverter;
 import uk.co.idv.identity.adapter.repository.converter.phonenumber.PhoneNumbersDocumentConverter;
 import uk.co.idv.identity.adapter.repository.document.IdentityDocument;
 import uk.co.idv.identity.entities.alias.AliasFactory;
@@ -21,13 +19,13 @@ import java.util.LinkedHashSet;
 @Slf4j
 public class IdentityDocumentConverter {
 
-    private final AliasesDocumentConverter aliasesConverter;
+    private final AliasDocumentConverter aliasesConverter;
     private final PhoneNumbersDocumentConverter phoneNumbersConverter;
     private final EmailAddressesDocumentConverter emailAddressesConverter;
 
     public static IdentityDocumentConverter build(AliasFactory factory) {
         return IdentityDocumentConverter.builder()
-                .aliasesConverter(new AliasesDocumentConverter(factory))
+                .aliasesConverter(new AliasDocumentConverter(factory))
                 .phoneNumbersConverter(new PhoneNumbersDocumentConverter())
                 .emailAddressesConverter(new EmailAddressesDocumentConverter())
                 .build();

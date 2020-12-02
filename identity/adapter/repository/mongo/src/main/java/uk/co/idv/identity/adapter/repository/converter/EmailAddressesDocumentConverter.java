@@ -1,4 +1,4 @@
-package uk.co.idv.identity.adapter.repository.converter.emailaddress;
+package uk.co.idv.identity.adapter.repository.converter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
