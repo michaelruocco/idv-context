@@ -1,8 +1,8 @@
-package uk.co.idv.identity.adapter.repository.converter;
+package uk.co.idv.identity.adapter.repository.converter.alias;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.adapter.repository.document.AliasDocument;
-import uk.co.idv.identity.adapter.repository.document.AliasDocumentMother;
+import uk.co.idv.identity.adapter.repository.document.alias.AliasDocumentMother;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.identity.entities.alias.Aliases;
@@ -24,7 +24,7 @@ class AliasDocumentConverterTest {
     private final AliasDocumentConverter converter = new AliasDocumentConverter(aliasFactory);
 
     @Test
-    void shouldConvertAliasToAliasDocument() {
+    void shouldConvertAliasToDocument() {
         Alias alias = CreditCardNumberMother.creditCardNumber();
 
         AliasDocument document = converter.toDocument(alias);
@@ -33,7 +33,7 @@ class AliasDocumentConverterTest {
     }
 
     @Test
-    void shouldConvertMultipleAliasesToAliasDocuments() {
+    void shouldConvertMultipleAliasesToDocuments() {
         Aliases aliases = AliasesMother.idvIdAndCreditCardNumber();
 
         Collection<AliasDocument> document = converter.toDocuments(aliases);
@@ -45,7 +45,7 @@ class AliasDocumentConverterTest {
     }
 
     @Test
-    void shouldConvertAliasDocumentToAlias() {
+    void shouldConvertDocumentToAlias() {
         AliasDocument document = AliasDocumentMother.creditCardNumber();
         Alias expectedAlias = CreditCardNumberMother.creditCardNumber();
         given(aliasFactory.build(document.getType(), document.getValue())).willReturn(expectedAlias);
@@ -56,7 +56,7 @@ class AliasDocumentConverterTest {
     }
 
     @Test
-    void shouldConvertMultipleAliasDocumentsToAliases() {
+    void shouldConvertMultipleDocumentsToAliases() {
         AliasDocument document1 = AliasDocumentMother.idvId();
         AliasDocument document2 = AliasDocumentMother.creditCardNumber();
         Alias expectedAlias1 = IdvIdMother.idvId();

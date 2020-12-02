@@ -2,8 +2,8 @@ package uk.co.idv.identity.config.repository.mongo;
 
 import com.mongodb.client.MongoDatabase;
 import lombok.Builder;
-import uk.co.idv.identity.adapter.repository.converter.IdentityDocumentConverter;
 import uk.co.idv.identity.adapter.repository.MongoIdentityRepository;
+import uk.co.idv.identity.adapter.repository.converter.IdentityDocumentsConverter;
 import uk.co.idv.identity.adapter.repository.query.AliasQueryBuilder;
 import uk.co.idv.identity.adapter.repository.document.IdentityDocument;
 import uk.co.idv.identity.config.repository.IdentityRepositoryConfig;
@@ -22,7 +22,7 @@ public class MongoIdentityRepositoryConfig implements IdentityRepositoryConfig {
     public IdentityRepository identityRepository() {
         return MongoIdentityRepository.builder()
                 .queryBuilder(new AliasQueryBuilder())
-                .identityConverter(IdentityDocumentConverter.build(aliasFactory))
+                .identityConverter(IdentityDocumentsConverter.build(aliasFactory))
                 .collection(database.getCollection(IDENTITY_TABLE_NAME, IdentityDocument.class))
                 .build();
     }

@@ -5,8 +5,8 @@ import com.mongodb.client.MongoCollection;
 import lombok.Builder;
 import org.bson.conversions.Bson;
 import uk.co.idv.common.mongo.MongoDurationLogger;
+import uk.co.idv.identity.adapter.repository.converter.IdentityDocumentsConverter;
 import uk.co.idv.identity.adapter.repository.query.AliasQueryBuilder;
-import uk.co.idv.identity.adapter.repository.converter.IdentityDocumentConverter;
 import uk.co.idv.identity.adapter.repository.document.IdentityDocument;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
@@ -23,7 +23,7 @@ public class MongoIdentityRepository implements IdentityRepository {
 
     private final MongoCollection<IdentityDocument> collection;
     private final AliasQueryBuilder queryBuilder;
-    private final IdentityDocumentConverter identityConverter;
+    private final IdentityDocumentsConverter identityConverter;
 
     @Override
     public Optional<Identity> load(Alias alias) {

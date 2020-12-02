@@ -7,7 +7,7 @@ import java.time.Instant;
 public interface PhoneNumberMother {
 
     static PhoneNumber example() {
-        return withNumber("+447089111111");
+        return builder().build();
     }
 
     static PhoneNumber example1() {

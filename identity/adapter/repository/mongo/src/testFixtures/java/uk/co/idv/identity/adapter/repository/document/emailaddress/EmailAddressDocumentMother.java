@@ -1,4 +1,4 @@
-package uk.co.idv.identity.adapter.repository.document;
+package uk.co.idv.identity.adapter.repository.document.emailaddress;
 
 import java.util.Arrays;
 import java.util.Collection;

@@ -4,7 +4,7 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import org.bson.conversions.Bson;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.adapter.repository.converter.IdentityDocumentConverter;
+import uk.co.idv.identity.adapter.repository.converter.IdentityDocumentsConverter;
 import uk.co.idv.identity.adapter.repository.query.AliasQueryBuilder;
 import uk.co.idv.identity.adapter.repository.document.IdentityDocument;
 import uk.co.idv.identity.entities.alias.Alias;
@@ -27,7 +27,7 @@ class MongoIdentityRepositoryTest {
 
     private final MongoCollection<IdentityDocument> collection = mock(MongoCollection.class);
     private final AliasQueryBuilder queryBuilder = mock(AliasQueryBuilder.class);
-    private final IdentityDocumentConverter identityConverter = mock(IdentityDocumentConverter.class);
+    private final IdentityDocumentsConverter identityConverter = mock(IdentityDocumentsConverter.class);
 
     private final MongoIdentityRepository repository = MongoIdentityRepository.builder()
             .collection(collection)

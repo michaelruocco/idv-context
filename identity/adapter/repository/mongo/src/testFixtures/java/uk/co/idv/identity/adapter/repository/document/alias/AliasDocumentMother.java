@@ -1,6 +1,15 @@
-package uk.co.idv.identity.adapter.repository.document;
+package uk.co.idv.identity.adapter.repository.document.alias;
+
+import uk.co.idv.identity.adapter.repository.document.AliasDocument;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 public interface AliasDocumentMother {
+
+    static Collection<AliasDocument> idvIdAndCreditCardNumber() {
+        return Arrays.asList(idvId(), creditCardNumber());
+    }
 
     static AliasDocument idvId() {
         return AliasDocument.builder()

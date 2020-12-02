@@ -1,7 +1,7 @@
-package uk.co.idv.identity.adapter.repository.converter;
+package uk.co.idv.identity.adapter.repository.converter.emailaddress;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.adapter.repository.document.EmailAddressDocumentMother;
+import uk.co.idv.identity.adapter.repository.document.emailaddress.EmailAddressDocumentMother;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 
