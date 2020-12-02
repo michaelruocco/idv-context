@@ -57,16 +57,15 @@ class RestContextClientIntegrationTest {
     private static final String RECORD_CONTEXT_RESULT_URL = CREATE_CONTEXT_URL + "/results";
 
     private static final JsonConverter JSON_CONVERTER = JsonConverterFactory.build();
-    private static final HttpClient HTTP_CLIENT = HttpClient.newHttpClient();
 
     private ContextClient client;
 
     @BeforeEach
     public void setUp() {
         client = RestContextClient.builder()
-                .jsonConverter(JSON_CONVERTER)
-                .client(HTTP_CLIENT)
-                .baseUrl(SERVER.getBaseUrl())
+                .requestConverter(buildRequestConverter())
+                .responseConverter(new ResponseConverter(JSON_CONVERTER))
+                .client(HttpClient.newHttpClient())
                 .logger(new DefaultClientLogger())
                 .build();
     }
@@ -299,6 +298,13 @@ class RestContextClientIntegrationTest {
         Context context = client.recordResult(request);
 
         assertThat(context).isEqualTo(ContextMother.build());
+    }
+
+    private static RequestConverter buildRequestConverter() {
+        return RequestConverter.builder()
+                .jsonConverter(JSON_CONVERTER)
+                .baseUrl(SERVER.getBaseUrl())
+                .build();
     }
 
     private static MappingBuilder configureUpdateHeaders(MappingBuilder builder, ContextRequestHeaders headers) {
