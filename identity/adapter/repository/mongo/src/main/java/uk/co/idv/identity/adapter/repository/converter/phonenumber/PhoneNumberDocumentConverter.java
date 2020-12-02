@@ -3,8 +3,8 @@ package uk.co.idv.identity.adapter.repository.converter.phonenumber;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.identity.adapter.repository.converter.InstantConverter;
-import uk.co.idv.identity.adapter.repository.type.PhoneNumberDocument;
-import uk.co.idv.identity.adapter.repository.type.PhoneNumberDocument.PhoneNumberDocumentBuilder;
+import uk.co.idv.identity.adapter.repository.document.PhoneNumberDocument;
+import uk.co.idv.identity.adapter.repository.document.PhoneNumberDocument.PhoneNumberDocumentBuilder;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumber.PhoneNumberBuilder;
 

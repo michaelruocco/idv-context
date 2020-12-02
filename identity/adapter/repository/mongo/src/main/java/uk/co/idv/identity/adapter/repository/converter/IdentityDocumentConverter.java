@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.identity.adapter.repository.converter.alias.AliasesDocumentConverter;
 import uk.co.idv.identity.adapter.repository.converter.emailaddress.EmailAddressesDocumentConverter;
 import uk.co.idv.identity.adapter.repository.converter.phonenumber.PhoneNumbersDocumentConverter;
-import uk.co.idv.identity.adapter.repository.type.IdentityDocument;
+import uk.co.idv.identity.adapter.repository.document.IdentityDocument;
 import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.identity.entities.identity.DefaultIdentity;
 import uk.co.idv.identity.entities.identity.Identities;

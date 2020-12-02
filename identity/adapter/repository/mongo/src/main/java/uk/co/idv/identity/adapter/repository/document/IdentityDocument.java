@@ -1,4 +1,4 @@
-package uk.co.idv.identity.adapter.repository.type;
+package uk.co.idv.identity.adapter.repository.document;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
