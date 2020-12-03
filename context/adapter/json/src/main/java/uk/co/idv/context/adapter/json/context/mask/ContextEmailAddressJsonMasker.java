@@ -1,4 +1,4 @@
-package uk.co.idv.app.spring.filters.masking.emailaddress;
+package uk.co.idv.context.adapter.json.context.mask;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
@@ -7,9 +7,9 @@ import uk.co.mruoc.json.mask.JsonPathFactory;
 
 import java.util.Collection;
 
-public class ContextEmailAddressResponseJsonMasker extends EmailAddressJsonMasker {
+public class ContextEmailAddressJsonMasker extends EmailAddressJsonMasker {
 
-    public ContextEmailAddressResponseJsonMasker(ObjectMapper mapper) {
+    public ContextEmailAddressJsonMasker(ObjectMapper mapper) {
         super(mapper, paths());
     }
 

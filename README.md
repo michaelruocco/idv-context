@@ -11,7 +11,8 @@
 
 ## Todo
 
-*   Move JSON masking classes into JSON module
+*   Rename mask numbers policy flag to mask sensitive data, then create masker that combines phone number and email 
+    address maskers into single masker
 
 *   Token validation
 

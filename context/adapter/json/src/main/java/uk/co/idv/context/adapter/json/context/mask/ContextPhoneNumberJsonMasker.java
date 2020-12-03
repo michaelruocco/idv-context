@@ -1,4 +1,4 @@
-package uk.co.idv.app.spring.filters.masking.phonenumber;
+package uk.co.idv.context.adapter.json.context.mask;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
@@ -7,9 +7,9 @@ import uk.co.mruoc.json.mask.JsonPathFactory;
 
 import java.util.Collection;
 
-public class ContextPhoneNumberResponseJsonMasker extends PhoneNumberJsonMasker {
+public class ContextPhoneNumberJsonMasker extends PhoneNumberJsonMasker {
 
-    public ContextPhoneNumberResponseJsonMasker(ObjectMapper mapper) {
+    public ContextPhoneNumberJsonMasker(ObjectMapper mapper) {
         super(mapper, paths());
     }
 

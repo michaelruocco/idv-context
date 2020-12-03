@@ -7,7 +7,7 @@ import com.jayway.jsonpath.Option;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.minidev.json.JSONArray;
-import uk.co.idv.app.spring.filters.masking.phonenumber.ContextPhoneNumberResponseJsonMasker;
+import uk.co.idv.context.adapter.json.context.mask.ContextPhoneNumberJsonMasker;
 import uk.co.mruoc.json.mask.JsonMasker;
 import uk.co.mruoc.spring.filter.rewrite.RewriteResponseBody;
 import uk.co.mruoc.spring.filter.rewrite.RewriteResponseBodyRequest;
@@ -23,7 +23,7 @@ public class MaskContextResponse implements RewriteResponseBody {
     private final JsonMasker masker;
 
     public MaskContextResponse(ObjectMapper mapper) {
-        this(DEFAULT_CONFIG, new ContextPhoneNumberResponseJsonMasker(mapper));
+        this(DEFAULT_CONFIG, new ContextPhoneNumberJsonMasker(mapper));
     }
 
     @Override
