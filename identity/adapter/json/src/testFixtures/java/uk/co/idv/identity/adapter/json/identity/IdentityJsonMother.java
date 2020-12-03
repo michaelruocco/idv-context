@@ -8,4 +8,12 @@ public interface IdentityJsonMother {
         return loadContentFromClasspath("identity/identity.json");
     }
 
+    static String withMaskedPhoneNumbers() {
+        return loadContentFromClasspath("identity/identity-with-masked-phone-numbers.json");
+    }
+
+    static String withMaskedEmailAddresses() {
+        return loadContentFromClasspath("identity/identity-with-masked-email-addresses.json");
+    }
+
 }

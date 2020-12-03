@@ -1,0 +1,27 @@
+{
+  "idvId": "90b585c6-170f-42a6-ac7c-83d294bdab3f",
+  "country": "GB",
+  "aliases": [
+    {
+      "type": "idv-id",
+      "value": "90b585c6-170f-42a6-ac7c-83d294bdab3f"
+    },
+    {
+      "type": "credit-card-number",
+      "value": "4929111111111111"
+    }
+  ],
+  "phoneNumbers": [
+    {
+      "value": "+447089111111",
+      "lastUpdated": "2020-08-29T20:55:12.825Z"
+    },
+    {
+      "value": "+447089121212"
+    }
+  ],
+  "emailAddresses": [
+    "joe.**************.co.uk",
+    "joeb***********.co.uk"
+  ]
+}

@@ -1,8 +1,8 @@
 package uk.co.idv.app.spring.filters.logging.identity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import uk.co.idv.app.spring.filters.masking.phonenumber.IdentityEmailAddressJsonMasker;
-import uk.co.idv.app.spring.filters.masking.phonenumber.IdentityPhoneNumberJsonMasker;
+import uk.co.idv.identity.adapter.json.identity.mask.IdentityEmailAddressJsonMasker;
+import uk.co.idv.identity.adapter.json.identity.mask.IdentityPhoneNumberJsonMasker;
 import uk.co.mruoc.spring.filter.logging.StringFunctionComposer;
 import uk.co.mruoc.spring.filter.logging.response.ResponseBodyExtractor;
 import uk.co.mruoc.spring.filter.logging.response.ResponseLoggingFilter;

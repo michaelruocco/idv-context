@@ -11,13 +11,11 @@
 
 ## Todo
 
-*   Versioning on endpoints
+*   Move JSON masking classes into JSON module
 
 *   Token validation
 
 *   Add client module
-
-*   Add unit tests for identity mongo module
 
 *   Add postman collection to repo and run in build pipeline
 

@@ -2,6 +2,7 @@ package uk.co.idv.app.spring.filters.masking.emailaddress;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
+import uk.co.idv.identity.adapter.json.emailaddress.mask.EmailAddressJsonMasker;
 import uk.co.mruoc.json.mask.JsonPathFactory;
 
 import java.util.Collection;
