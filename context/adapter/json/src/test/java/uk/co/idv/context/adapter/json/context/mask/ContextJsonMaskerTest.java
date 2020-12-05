@@ -22,7 +22,9 @@ class ContextJsonMaskerTest {
 
         String maskedJson = masker.apply(json);
 
-        assertThatJson(maskedJson).isEqualTo(ContextJsonMother.buildWithMaskedSensitiveData());
+        assertThatJson(maskedJson)
+                .whenIgnoringPaths("$.request.policy.maskSensitiveData")
+                .isEqualTo(ContextJsonMother.buildWithMaskedSensitiveData());
     }
 
 }

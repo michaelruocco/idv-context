@@ -120,7 +120,8 @@ Feature: Create Requests
           "channelId": "#(channelId)",
           "type": "channel"
         },
-        "sequencePolicies": []
+        "sequencePolicies": [],
+        "maskSensitiveData": false
       }
       """
     And url baseUrl + "/v1/context-policies"
@@ -173,7 +174,8 @@ Feature: Create Requests
           "channelId": "#(channelId)",
           "type": "channel"
         },
-        "sequencePolicies": []
+        "sequencePolicies": [],
+        "maskSensitiveData": false
       }
       """
     And url baseUrl + "/v1/context-policies"
@@ -246,45 +248,45 @@ Feature: Create Requests
         },
         "sequencePolicies": [
           {
-          "name": "one-time-passcode",
-          "methodPolicies": [
-            {
-              "name": "one-time-passcode",
-              "config": {
-                "maxNumberOfAttempts": 3,
-                "duration": 300000,
-                "passcodeConfig": {
-                  "length": 8,
-                  "duration": 120000,
-                  "maxNumberOfDeliveries": 2
-                }
-              },
-              "deliveryMethodConfigs": [
-                {
-                  "type": "sms",
-                  "phoneNumberConfig": {
-                    "country": "GB",
-                    "allowInternational": false,
-                    "lastUpdatedConfig": {
-                      "allowUnknown": true,
-                      "minDaysSinceUpdate": 5
-                    },
-                    "simSwapConfig": {
-                      "acceptableStatuses": [
-                        "success"
-                      ],
-                      "timeout": 2000,
-                      "minDaysSinceSwap": 6,
-                      "async": false
-                    },
-                    "maskNumbers": false
+            "name": "one-time-passcode",
+            "methodPolicies": [
+              {
+                "name": "one-time-passcode",
+                "config": {
+                  "maxNumberOfAttempts": 3,
+                  "duration": 300000,
+                  "passcodeConfig": {
+                    "length": 8,
+                    "duration": 120000,
+                    "maxNumberOfDeliveries": 2
                   }
-                }
-              ]
-            }
-          ]
+                },
+                "deliveryMethodConfigs": [
+                  {
+                    "type": "sms",
+                    "phoneNumberConfig": {
+                      "country": "GB",
+                      "allowInternational": false,
+                      "lastUpdatedConfig": {
+                        "allowUnknown": true,
+                        "minDaysSinceUpdate": 5
+                      },
+                      "simSwapConfig": {
+                        "acceptableStatuses": [
+                          "success"
+                        ],
+                        "timeout": 2000,
+                        "minDaysSinceSwap": 6,
+                        "async": false
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "maskSensitiveData": false
       }
       """
     And method POST
@@ -419,8 +421,7 @@ Feature: Create Requests
                             "timeout": 2000,
                             "minDaysSinceSwap": 6,
                             "async": false
-                          },
-                          "maskNumbers": false
+                          }
                         }
                       }
                     ],
@@ -428,7 +429,8 @@ Feature: Create Requests
                   }
                 ]
               }
-            ]
+            ],
+            "maskSensitiveData": false
           },
           "identity": {
             "idvId": "#uuid",
@@ -561,7 +563,7 @@ Feature: Create Requests
       }
       """
 
-  Scenario: Create context - Success - Otp method returned - Masked Phone Numbers
+  Scenario: Create context - Success - Otp method returned - Masked Sensitive Data
     * def contextPolicyId = "8d6322ff-b8c8-4e2a-95b4-207fe5939f65"
     * def channelId = "context-test-channel5"
     Given url baseUrl + "/v1/context-policies"
@@ -577,45 +579,45 @@ Feature: Create Requests
         },
         "sequencePolicies": [
           {
-          "name": "one-time-passcode",
-          "methodPolicies": [
-            {
-              "name": "one-time-passcode",
-              "config": {
-                "maxNumberOfAttempts": 3,
-                "duration": 300000,
-                "passcodeConfig": {
-                  "length": 8,
-                  "duration": 120000,
-                  "maxNumberOfDeliveries": 2
-                }
-              },
-              "deliveryMethodConfigs": [
-                {
-                  "type": "sms",
-                  "phoneNumberConfig": {
-                    "country": "GB",
-                    "allowInternational": false,
-                    "lastUpdatedConfig": {
-                      "allowUnknown": true,
-                      "minDaysSinceUpdate": 5
-                    },
-                    "simSwapConfig": {
-                      "acceptableStatuses": [
-                        "success"
-                      ],
-                      "timeout": 2000,
-                      "minDaysSinceSwap": 6,
-                      "async": false
-                    },
-                    "maskNumbers": true
+            "name": "one-time-passcode",
+            "methodPolicies": [
+              {
+                "name": "one-time-passcode",
+                "config": {
+                  "maxNumberOfAttempts": 3,
+                  "duration": 300000,
+                  "passcodeConfig": {
+                    "length": 8,
+                    "duration": 120000,
+                    "maxNumberOfDeliveries": 2
                   }
-                }
-              ]
-            }
-          ]
+                },
+                "deliveryMethodConfigs": [
+                  {
+                    "type": "sms",
+                    "phoneNumberConfig": {
+                      "country": "GB",
+                      "allowInternational": false,
+                      "lastUpdatedConfig": {
+                        "allowUnknown": true,
+                        "minDaysSinceUpdate": 5
+                      },
+                      "simSwapConfig": {
+                        "acceptableStatuses": [
+                          "success"
+                        ],
+                        "timeout": 2000,
+                        "minDaysSinceSwap": 6,
+                        "async": false
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
           }
-        ]
+        ],
+        "maskSensitiveData": true
       }
       """
     And method POST
@@ -745,8 +747,7 @@ Feature: Create Requests
                             "timeout": 2000,
                             "minDaysSinceSwap": 6,
                             "async": false
-                          },
-                          "maskNumbers": true
+                          }
                         }
                       }
                     ],
@@ -754,7 +755,8 @@ Feature: Create Requests
                   }
                 ]
               }
-            ]
+            ],
+            "maskSensitiveData": true
           },
           "identity": {
             "idvId": "#uuid",
@@ -878,15 +880,15 @@ Feature: Create Requests
                         "timeout": 2000,
                         "minDaysSinceSwap": 6,
                         "async": false
-                      },
-                      "maskNumbers": false
+                      }
                     }
                   }
                 ]
               }
             ]
           }
-        ]
+        ],
+        "maskSensitiveData": false
       }
       """
     And method POST
@@ -1015,8 +1017,7 @@ Feature: Create Requests
                             "timeout": 2000,
                             "minDaysSinceSwap": 6,
                             "async": false
-                          },
-                          "maskNumbers": false
+                          }
                         }
                       }
                     ],
@@ -1024,7 +1025,8 @@ Feature: Create Requests
                   }
                 ]
               }
-            ]
+            ],
+            "maskSensitiveData": false
           },
           "identity": {
             "idvId": "#uuid",
@@ -1169,8 +1171,7 @@ Feature: Create Requests
                             "timeout": 2000,
                             "minDaysSinceSwap": 6,
                             "async": false
-                          },
-                          "maskNumbers": false
+                          }
                         }
                       }
                     ],
@@ -1178,7 +1179,8 @@ Feature: Create Requests
                   }
                 ]
               }
-            ]
+            ],
+            "maskSensitiveData": false
           },
           "identity": {
             "idvId": "#uuid",
@@ -1299,15 +1301,15 @@ Feature: Create Requests
                         "timeout": 2000,
                         "minDaysSinceSwap": 6,
                         "async": false
-                      },
-                      "maskNumbers": false
+                      }
                     }
                   }
                 ]
               }
             ]
           }
-        ]
+        ],
+        "maskSensitiveData": false
       }
       """
     And method POST
@@ -1436,8 +1438,7 @@ Feature: Create Requests
                             "timeout": 2000,
                             "minDaysSinceSwap": 6,
                             "async": false
-                          },
-                          "maskNumbers": false
+                          }
                         }
                       }
                     ],
@@ -1445,7 +1446,8 @@ Feature: Create Requests
                   }
                 ]
               }
-            ]
+            ],
+            "maskSensitiveData": false
           },
           "identity": {
             "idvId": "#uuid",

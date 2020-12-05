@@ -178,7 +178,8 @@ Feature: Lockout State Requests
               }
             ]
           }
-        ]
+        ],
+        "maskSensitiveData": false
       }
       """
     And url baseUrl + "/v1/context-policies"
@@ -323,7 +324,8 @@ Feature: Lockout State Requests
               }
             ]
           }
-        ]
+        ],
+        "maskSensitiveData": false
       }
       """
     And url baseUrl + "/v1/context-policies"

@@ -17,10 +17,12 @@ class ContextPolicyTest {
 
     private final PolicyKey key = mock(PolicyKey.class);
     private final SequencePolicies sequencePolicies = mock(SequencePolicies.class);
+    private final boolean maskSensitiveData = true;
 
     private final ContextPolicy policy = ContextPolicy.builder()
             .key(key)
             .sequencePolicies(sequencePolicies)
+            .maskSensitiveData(maskSensitiveData)
             .build();
 
     @Test
@@ -71,6 +73,11 @@ class ContextPolicyTest {
     @Test
     void shouldReturnSequencePolicies() {
         assertThat(policy.getSequencePolicies()).isEqualTo(sequencePolicies);
+    }
+
+    @Test
+    void shouldReturnMaskSensitiveData() {
+        assertThat(policy.isMaskSensitiveData()).isEqualTo(maskSensitiveData);
     }
 
 }

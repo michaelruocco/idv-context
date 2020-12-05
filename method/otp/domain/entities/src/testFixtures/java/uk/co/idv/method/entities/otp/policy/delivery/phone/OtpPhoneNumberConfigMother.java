@@ -33,8 +33,7 @@ public interface OtpPhoneNumberConfigMother {
                 .country(CountryCode.GB)
                 .allowInternational(false)
                 .lastUpdatedConfig(LastUpdatedConfigMother.unknownAllowed())
-                .simSwapConfig(SimSwapConfigMother.build())
-                .maskNumbers(true);
+                .simSwapConfig(SimSwapConfigMother.build());
     }
 
 }
