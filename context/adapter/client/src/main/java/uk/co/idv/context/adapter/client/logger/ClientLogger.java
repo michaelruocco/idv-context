@@ -9,5 +9,6 @@ public interface ClientLogger {
 
     void log(HttpResponse<String> response);
 
+    void logDuration(long duration);
 
 }

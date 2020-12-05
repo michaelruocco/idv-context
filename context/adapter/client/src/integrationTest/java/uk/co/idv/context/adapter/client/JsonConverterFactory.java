@@ -14,18 +14,21 @@ import uk.co.mruoc.json.jackson.JacksonJsonConverter;
 public class JsonConverterFactory {
 
     public static JsonConverter build() {
-        return build(
+        return build(buildMapper());
+    }
+
+    public static JsonConverter build(ObjectMapper mapper) {
+        return new JacksonJsonConverter(mapper);
+    }
+
+    public static ObjectMapper buildMapper() {
+        return ObjectMapperFactory.build(buildModules());
+    }
+
+    private static Module[] buildModules() {
+        return new Module[] {
                 new ContextParentModule(new MethodMappings(new FakeMethodMapping(), new OtpMapping())),
                 new ErrorModule()
-        );
+        };
     }
-
-    private static JsonConverter build(Module... modules) {
-        return new JacksonJsonConverter(buildMapper(modules));
-    }
-
-    private static ObjectMapper buildMapper(Module... modules) {
-        return ObjectMapperFactory.build(modules);
-    }
-
 }

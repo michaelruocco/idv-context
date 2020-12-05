@@ -1,5 +1,6 @@
 package uk.co.idv.context.adapter.client;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.github.tomakehurst.wiremock.client.MappingBuilder;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -8,7 +9,6 @@ import uk.co.idv.common.adapter.json.error.internalserver.InternalServerErrorJso
 import uk.co.idv.common.adapter.json.error.internalserver.InternalServerErrorMother;
 import uk.co.idv.context.adapter.client.exception.ApiErrorClientException;
 import uk.co.idv.context.adapter.client.headers.ContextRequestHeaders;
-import uk.co.idv.context.adapter.client.logger.DefaultClientLogger;
 import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientRecordContextResultRequest;
@@ -30,7 +30,6 @@ import uk.co.idv.identity.adapter.json.error.identitynotfound.IdentityNotFoundEr
 import uk.co.idv.method.entities.result.ResultMother;
 import uk.co.mruoc.json.JsonConverter;
 
-import java.net.http.HttpClient;
 import java.util.UUID;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
@@ -56,18 +55,14 @@ class RestContextClientIntegrationTest {
     private static final String GET_CONTEXT_URL = CREATE_CONTEXT_URL + "/%s";
     private static final String RECORD_CONTEXT_RESULT_URL = CREATE_CONTEXT_URL + "/results";
 
-    private static final JsonConverter JSON_CONVERTER = JsonConverterFactory.build();
+    private static final ObjectMapper MAPPER = JsonConverterFactory.buildMapper();
+    private static final JsonConverter JSON_CONVERTER = JsonConverterFactory.build(MAPPER);
 
     private ContextClient client;
 
     @BeforeEach
     public void setUp() {
-        client = RestContextClient.builder()
-                .requestConverter(buildRequestConverter())
-                .responseConverter(new ResponseConverter(JSON_CONVERTER))
-                .client(HttpClient.newHttpClient())
-                .logger(new DefaultClientLogger())
-                .build();
+        client = RestContextClient.build(SERVER.getBaseUrl(), MAPPER);
     }
 
     @Test
@@ -298,13 +293,6 @@ class RestContextClientIntegrationTest {
         Context context = client.recordResult(request);
 
         assertThat(context).isEqualTo(ContextMother.build());
-    }
-
-    private static RequestConverter buildRequestConverter() {
-        return RequestConverter.builder()
-                .jsonConverter(JSON_CONVERTER)
-                .baseUrl(SERVER.getBaseUrl())
-                .build();
     }
 
     private static MappingBuilder configureUpdateHeaders(MappingBuilder builder, ContextRequestHeaders headers) {

@@ -1,6 +1,8 @@
 plugins {
     id "java-test-fixtures"
     id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+    id "maven-publish"
 }
 
 testSets {
@@ -11,6 +13,7 @@ dependencies {
     api project(":context-entities")
     api project(":otp-entities")
 
+    implementation project(":common-use-cases")
     implementation project(":common-json")
     implementation project(":context-json")
     implementation project(":otp-json")
@@ -22,4 +25,12 @@ dependencies {
     testFixturesApi testFixtures(project(":identity-json"))
 
     integrationTestImplementation "com.github.tomakehurst:wiremock-jre8:2.27.2"
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+        }
+    }
 }
