@@ -5,22 +5,24 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.identity.adapter.json.identity.IdentityJsonMother;
 import uk.co.idv.identity.adapter.json.phonenumber.PhoneNumberModule;
-import uk.co.mruoc.json.mask.JsonMasker;
+
+import java.util.function.UnaryOperator;
 
 import static net.javacrumbs.jsonunit.assertj.JsonAssertions.assertThatJson;
 
-class IdentityPhoneNumberJsonMaskerTest {
+class IdentityJsonMaskerTest {
 
     private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new PhoneNumberModule());
 
-    private final JsonMasker masker = new IdentityPhoneNumberJsonMasker(MAPPER);
+    private final UnaryOperator<String> masker = new IdentityJsonMasker(MAPPER);
 
     @Test
-    void shouldMaskPhoneNumbersInIdentityJson() {
+    void shouldMaskSensitiveDataInIdentityJson() {
         String json = IdentityJsonMother.example();
 
         String maskedJson = masker.apply(json);
 
-        assertThatJson(maskedJson).isEqualTo(IdentityJsonMother.withMaskedPhoneNumbers());
+        assertThatJson(maskedJson).isEqualTo(IdentityJsonMother.withMaskedSensitiveData());
     }
+
 }

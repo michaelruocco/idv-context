@@ -1,9 +1,7 @@
 package uk.co.idv.app.spring.filters.logging.identity;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import uk.co.idv.identity.adapter.json.identity.mask.IdentityEmailAddressJsonMasker;
-import uk.co.idv.identity.adapter.json.identity.mask.IdentityPhoneNumberJsonMasker;
-import uk.co.mruoc.spring.filter.logging.StringFunctionComposer;
+import uk.co.idv.identity.adapter.json.identity.mask.IdentityJsonMasker;
 import uk.co.mruoc.spring.filter.logging.response.ResponseBodyExtractor;
 import uk.co.mruoc.spring.filter.logging.response.ResponseLoggingFilter;
 import uk.co.mruoc.spring.filter.logging.response.TransformingResponseBodyExtractor;
@@ -15,10 +13,7 @@ public class IdentityResponseLoggingFilter extends ResponseLoggingFilter {
     }
 
     private static ResponseBodyExtractor buildResponseBodyExtractor(ObjectMapper mapper) {
-        return new TransformingResponseBodyExtractor(StringFunctionComposer.compose(
-                new IdentityPhoneNumberJsonMasker(mapper),
-                new IdentityEmailAddressJsonMasker(mapper)
-        ));
+        return new TransformingResponseBodyExtractor(new IdentityJsonMasker(mapper));
     }
 
 }

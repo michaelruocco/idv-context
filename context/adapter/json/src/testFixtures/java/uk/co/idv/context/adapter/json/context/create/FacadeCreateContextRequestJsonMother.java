@@ -12,12 +12,8 @@ public interface FacadeCreateContextRequestJsonMother {
         return loadContentFromClasspath("context/create/facade-create-context-request-with-channel-data.json");
     }
 
-    static String withMaskedChannelEmailAddresses() {
-        return loadContentFromClasspath("context/create/facade-create-context-request-with-masked-channel-email-addresses.json");
-    }
-
-    static String withMaskedChannelPhoneNumbers() {
-        return loadContentFromClasspath("context/create/facade-create-context-request-with-masked-channel-phone-numbers.json");
+    static String withMaskedSensitiveData() {
+        return loadContentFromClasspath("context/create/facade-create-context-request-with-masked-sensitive-data.json");
     }
 
 }
