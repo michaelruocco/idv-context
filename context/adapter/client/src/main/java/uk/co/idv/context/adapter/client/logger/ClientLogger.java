@@ -11,4 +11,6 @@ public interface ClientLogger {
 
     void logDuration(long duration);
 
+    void complete();
+
 }

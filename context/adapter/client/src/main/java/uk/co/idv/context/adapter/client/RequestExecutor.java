@@ -19,10 +19,14 @@ public class RequestExecutor {
     private final ClientLogger clientLogger;
 
     public HttpResponse<String> execute(HttpRequest request) {
-        clientLogger.log(request);
-        HttpResponse<String> response = send(request);
-        clientLogger.log(response);
-        return response;
+        try {
+            clientLogger.log(request);
+            HttpResponse<String> response = send(request);
+            clientLogger.log(response);
+            return response;
+        } finally {
+            clientLogger.complete();
+        }
     }
 
     private HttpResponse<String> send(HttpRequest request) {

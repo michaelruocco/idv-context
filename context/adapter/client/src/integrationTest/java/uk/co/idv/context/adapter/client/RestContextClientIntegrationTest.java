@@ -62,7 +62,11 @@ class RestContextClientIntegrationTest {
 
     @BeforeEach
     public void setUp() {
-        client = RestContextClient.build(SERVER.getBaseUrl(), MAPPER);
+        ContextClientConfig config = RestContextClientConfig.builder()
+                .baseUrl(SERVER.getBaseUrl())
+                .mapper(MAPPER)
+                .build();
+        client = RestContextClient.build(config);
     }
 
     @Test

@@ -25,11 +25,11 @@ public class RestContextClient implements ContextClient {
     private final ResponseConverter responseConverter;
     private final RequestExecutor executor;
 
-    public static ContextClient build(String baseUrl, ObjectMapper mapper) {
+    public static ContextClient build(ContextClientConfig config) {
         return RestContextClient.builder()
-                .requestConverter(toRequestConverter(baseUrl, mapper))
-                .responseConverter(toResponseConverter(mapper))
-                .executor(toRequestExecutor(mapper))
+                .requestConverter(toRequestConverter(config))
+                .responseConverter(toResponseConverter(config.getMapper()))
+                .executor(toRequestExecutor(config.getMapper()))
                 .build();
     }
 
@@ -54,10 +54,10 @@ public class RestContextClient implements ContextClient {
         return responseConverter.toContextOrThrowError(httpResponse);
     }
 
-    private static RequestConverter toRequestConverter(String baseUrl, ObjectMapper mapper) {
+    private static RequestConverter toRequestConverter(ContextClientConfig config) {
         return RequestConverter.builder()
-                .jsonConverter(new JacksonJsonConverter(mapper))
-                .baseUrl(baseUrl)
+                .jsonConverter(new JacksonJsonConverter(config.getMapper()))
+                .baseUrl(config.getBaseUrl())
                 .build();
     }
 

@@ -49,6 +49,10 @@ public class ClientBodyLogger implements ClientLogger {
     public void logDuration(long duration) {
         MDC.put(REQUEST_DURATION, Long.toString(duration));
         log.info("client request took {} ms", duration);
+    }
+
+    @Override
+    public void complete() {
         MDC.remove(REQUEST_URI);
         MDC.remove(REQUEST_METHOD);
         MDC.remove(REQUEST_STATUS);

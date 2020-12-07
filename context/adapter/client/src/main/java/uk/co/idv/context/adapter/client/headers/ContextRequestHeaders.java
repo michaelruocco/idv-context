@@ -2,8 +2,8 @@ package uk.co.idv.context.adapter.client.headers;
 
 import lombok.Builder;
 import lombok.Data;
-import org.slf4j.MDC;
 
+import java.util.Map;
 import java.util.UUID;
 
 import static uk.co.idv.context.adapter.client.headers.HeaderConstants.CHANNEL_ID_NAME;
@@ -23,10 +23,10 @@ public class ContextRequestHeaders {
                 .build();
     }
 
-    public static ContextRequestHeaders buildFromMdc() {
+    public static ContextRequestHeaders build(Map<String, String> mdc) {
         return ContextRequestHeaders.builder()
-                .channelId(MDC.get("channel-id"))
-                .correlationId(UUID.fromString(MDC.get("correlation-id")))
+                .channelId(mdc.get(CHANNEL_ID_NAME))
+                .correlationId(UUID.fromString(mdc.get(CORRELATION_ID_NAME)))
                 .build();
     }
 
