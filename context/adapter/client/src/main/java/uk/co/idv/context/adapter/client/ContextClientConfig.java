@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public interface ContextClientConfig {
 
-    String getBaseUrl();
+    String getBaseUri();
 
     ObjectMapper getMapper();
 

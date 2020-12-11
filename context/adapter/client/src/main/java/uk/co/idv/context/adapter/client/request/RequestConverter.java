@@ -1,11 +1,8 @@
-package uk.co.idv.context.adapter.client;
+package uk.co.idv.context.adapter.client.request;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.adapter.client.exception.ClientException;
-import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
-import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
-import uk.co.idv.context.adapter.client.request.ClientRecordContextResultRequest;
 import uk.co.mruoc.json.JsonConverter;
 
 import java.net.URI;
@@ -26,7 +23,7 @@ public class RequestConverter {
     private static final String RECORD_CONTEXT_RESULT_URL = CREATE_CONTEXT_URL + "/results";
 
     private final JsonConverter jsonConverter;
-    private final String baseUrl;
+    private final String baseUri;
 
     public HttpRequest toPostHttpRequest(ClientCreateContextRequest request) {
         return HttpRequest.newBuilder()
@@ -58,15 +55,15 @@ public class RequestConverter {
     }
 
     private URI buildCreateUri() {
-        return toUri(String.format(CREATE_CONTEXT_URL, baseUrl));
+        return toUri(String.format(CREATE_CONTEXT_URL, baseUri));
     }
 
     private URI buildGetUrl(UUID id) {
-        return toUri(String.format(GET_CONTEXT_URL, baseUrl, id.toString()));
+        return toUri(String.format(GET_CONTEXT_URL, baseUri, id.toString()));
     }
 
     private URI buildUpdateResultUrl() {
-        return toUri(String.format(RECORD_CONTEXT_RESULT_URL, baseUrl));
+        return toUri(String.format(RECORD_CONTEXT_RESULT_URL, baseUri));
     }
 
     private static URI toUri(String uri) {

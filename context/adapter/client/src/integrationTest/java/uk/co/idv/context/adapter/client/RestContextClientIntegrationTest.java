@@ -63,7 +63,7 @@ class RestContextClientIntegrationTest {
     @BeforeEach
     public void setUp() {
         ContextClientConfig config = RestContextClientConfig.builder()
-                .baseUrl(SERVER.getBaseUrl())
+                .baseUri(SERVER.getBaseUrl())
                 .mapper(MAPPER)
                 .build();
         client = RestContextClient.build(config);

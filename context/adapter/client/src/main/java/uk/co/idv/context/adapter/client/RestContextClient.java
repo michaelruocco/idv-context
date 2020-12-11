@@ -8,6 +8,7 @@ import uk.co.idv.context.adapter.client.logger.ClientBodyLogger;
 import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientRecordContextResultRequest;
+import uk.co.idv.context.adapter.client.request.RequestConverter;
 import uk.co.idv.context.adapter.json.context.create.mask.FacadeCreateContextRequestJsonMasker;
 import uk.co.idv.context.adapter.json.context.mask.ContextJsonMasker;
 import uk.co.idv.context.entities.context.Context;
@@ -57,7 +58,7 @@ public class RestContextClient implements ContextClient {
     private static RequestConverter toRequestConverter(ContextClientConfig config) {
         return RequestConverter.builder()
                 .jsonConverter(new JacksonJsonConverter(config.getMapper()))
-                .baseUrl(config.getBaseUrl())
+                .baseUri(config.getBaseUri())
                 .build();
     }
 
