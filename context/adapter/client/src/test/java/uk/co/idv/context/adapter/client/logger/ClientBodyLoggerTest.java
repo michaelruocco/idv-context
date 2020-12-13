@@ -5,9 +5,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.slf4j.MDC;
+import uk.co.idv.context.adapter.client.request.UriFactory;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -92,9 +91,9 @@ class ClientBodyLoggerTest {
         assertThat(MDC.get(key)).isNull();
     }
 
-    private static HttpRequest buildRequest() throws URISyntaxException {
+    private static HttpRequest buildRequest() {
         return HttpRequest.newBuilder()
-                .uri(new URI("http://localhost:8080/request-endpoint"))
+                .uri(UriFactory.toUri("http://localhost:8080/request-endpoint"))
                 .header("request-header-key", "request-header-value")
                 .POST(HttpRequest.BodyPublishers.ofString("request-body"))
                 .build();
