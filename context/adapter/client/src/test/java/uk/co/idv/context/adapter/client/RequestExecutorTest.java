@@ -44,8 +44,9 @@ class RequestExecutorTest {
         HttpResponse<String> expectedResponse = mock(HttpResponse.class);
         given(client.send(request,  HttpResponse.BodyHandlers.ofString())).willReturn(expectedResponse);
 
-        executor.execute(request);
+        HttpResponse<String> response = executor.execute(request);
 
+        assertThat(response).isEqualTo(expectedResponse);
         InOrder inOrder = inOrder(clientLogger);
         inOrder.verify(clientLogger).log(request);
         inOrder.verify(clientLogger).logDuration(any(Long.class));

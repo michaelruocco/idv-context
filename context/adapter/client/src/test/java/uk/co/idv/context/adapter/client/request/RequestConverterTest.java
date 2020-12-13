@@ -2,19 +2,16 @@ package uk.co.idv.context.adapter.client.request;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.client.exception.ClientException;
-import uk.co.idv.context.adapter.client.logger.BodyLoggingSubscriber;
 import uk.co.mruoc.json.JsonConverter;
 
 import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
-import java.net.http.HttpResponse;
-import java.util.concurrent.ExecutionException;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static uk.co.idv.context.adapter.client.request.BodyExtractor.extractBody;
 
 class RequestConverterTest {
 
@@ -173,19 +170,6 @@ class RequestConverterTest {
 
         assertThat(httpRequest.bodyPublisher()).isPresent();
         assertThat(extractBody(httpRequest.bodyPublisher().get())).isEqualTo(REQUEST_BODY);
-    }
-
-    private static String extractBody(HttpRequest.BodyPublisher publisher) {
-        try {
-            HttpResponse.BodySubscriber<String> subscriber = HttpResponse.BodySubscribers.ofString(UTF_8);
-            publisher.subscribe(new BodyLoggingSubscriber(subscriber));
-            return subscriber.getBody().toCompletableFuture().get();
-        } catch (InterruptedException e) {
-            Thread.currentThread().interrupt();
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
     }
 
 }
