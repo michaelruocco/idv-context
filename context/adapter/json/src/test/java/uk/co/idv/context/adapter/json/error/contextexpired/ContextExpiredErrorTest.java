@@ -39,8 +39,8 @@ class ContextExpiredErrorTest {
     @Test
     void shouldReturnMeta() {
         assertThat(error.getMeta()).contains(
-                entry("id", id),
-                entry("expiry", expiry)
+                entry("id", id.toString()),
+                entry("expiry", expiry.toString())
         );
     }
 

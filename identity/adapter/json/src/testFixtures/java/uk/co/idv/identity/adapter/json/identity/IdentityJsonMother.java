@@ -8,4 +8,8 @@ public interface IdentityJsonMother {
         return loadContentFromClasspath("identity/identity.json");
     }
 
+    static String withMaskedSensitiveData() {
+        return loadContentFromClasspath("identity/identity-with-masked-sensitive-data.json");
+    }
+
 }

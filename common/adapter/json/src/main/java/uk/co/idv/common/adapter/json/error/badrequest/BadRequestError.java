@@ -3,6 +3,7 @@ package uk.co.idv.common.adapter.json.error.badrequest;
 import uk.co.idv.common.adapter.json.error.DefaultApiError;
 
 import java.util.Collections;
+import java.util.Map;
 
 public class BadRequestError extends DefaultApiError {
 
@@ -10,7 +11,11 @@ public class BadRequestError extends DefaultApiError {
     private static final String TITLE = "Bad request";
 
     public BadRequestError(String message) {
-        super(STATUS, TITLE, message, Collections.emptyMap());
+        this(message, Collections.emptyMap());
+    }
+
+    public BadRequestError(String message, Map<String, Object> meta) {
+        super(STATUS, TITLE, message, meta);
     }
 
 }

@@ -1,0 +1,53 @@
+plugins {
+    id "java-test-fixtures"
+    id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
+    id "com.github.johnrengelman.shadow" version "6.1.0"
+    id "maven-publish"
+}
+
+testSets {
+    integrationTest
+}
+
+configurations {
+    compile.exclude module: "slf4j-simple"
+}
+
+ext {
+    logbackVersion = "1.2.3"
+}
+
+
+dependencies {
+    api project(":context-entities")
+    api project(":otp-entities")
+
+    implementation project(":common-use-cases")
+    implementation project(":common-json")
+    implementation project(":context-json")
+    implementation project(":otp-json")
+    implementation "com.github.michaelruocco:string-utils:${mruocStringUtilsVersion}"
+
+    testRuntimeOnly "ch.qos.logback:logback-core:${logbackVersion}"
+    testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
+
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesApi "com.github.stefanbirkner:system-lambda:${systemLambdaVersion}"
+    testFixturesApi testFixtures(project(":context-entities"))
+    testFixturesApi testFixtures(project(":otp-entities"))
+    testFixturesApi testFixtures(project(":method-json"))
+    testFixturesApi testFixtures(project(":context-json"))
+    testFixturesApi testFixtures(project(":identity-json"))
+
+    integrationTestImplementation "com.github.tomakehurst:wiremock-jre8:2.27.2"
+}
+
+publishing {
+    publications {
+        shadow(MavenPublication) { publication ->
+            project.shadow.component(publication)
+            artifactId = "${rootProject.name}-${project.name}"
+        }
+    }
+}

@@ -74,7 +74,7 @@ class ContextOtpIntegrationTest {
         UUID deliveryMethodId = UUID.fromString("446846e6-bf16-4da5-af5b-9ad4a240fe5d");
         assertThat(context.query(new DeliveryMethodEligibilityIncomplete(deliveryMethodId))).isTrue();
 
-        DeliveryMethodEligibleAndComplete deliveryMethodEligibleAndComplete = DeliveryMethodEligibleAndComplete.builder()
+        DeliveryMethodEligibleAndEligibilityComplete deliveryMethodEligible = DeliveryMethodEligibleAndEligibilityComplete.builder()
                 .application(application)
                 .contextId(context.getId())
                 .deliveryMethodId(deliveryMethodId)
@@ -83,9 +83,9 @@ class ContextOtpIntegrationTest {
         await().pollDelay(Duration.ofSeconds(3))
                 .pollInterval(Duration.ofMillis(250))
                 .atMost(Duration.ofSeconds(4))
-                .until(deliveryMethodEligibleAndComplete);
+                .until(deliveryMethodEligible);
 
-        assertThat(deliveryMethodEligibleAndComplete.isSuccessful()).isTrue();
+        assertThat(deliveryMethodEligible.isSuccessful()).isTrue();
     }
 
 }

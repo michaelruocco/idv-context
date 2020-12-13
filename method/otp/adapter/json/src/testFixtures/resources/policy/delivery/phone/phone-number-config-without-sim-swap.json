@@ -4,6 +4,5 @@
   "lastUpdatedConfig": {
     "allowUnknown": true,
     "minDaysSinceUpdate": 5
-  },
-  "maskNumbers": true
+  }
 }

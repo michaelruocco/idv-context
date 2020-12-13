@@ -7,6 +7,10 @@ import uk.co.idv.context.adapter.json.context.error.contextexpired.ContextExpire
 import uk.co.idv.context.adapter.json.context.error.contextexpired.ContextExpiredErrorMother;
 import uk.co.idv.context.adapter.json.context.error.contextnotfound.ContextNotFoundErrorJsonMother;
 import uk.co.idv.context.adapter.json.context.error.contextnotfound.ContextNotFoundErrorMother;
+import uk.co.idv.context.adapter.json.context.error.notnextmethod.NotNextMethodErrorJsonMother;
+import uk.co.idv.context.adapter.json.context.error.notnextmethod.NotNextMethodErrorMother;
+import uk.co.idv.context.adapter.json.context.error.policynotconfigured.ContextPolicyNotConfiguredErrorJsonMother;
+import uk.co.idv.context.adapter.json.context.error.policynotconfigured.ContextPolicyNotConfiguredErrorMother;
 
 import java.util.stream.Stream;
 
@@ -16,7 +20,9 @@ public class ContextApiErrorArgumentsProvider implements ArgumentsProvider {
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
                 contextExpiredErrorArguments(),
-                contextNotFoundErrorArguments()
+                contextNotFoundErrorArguments(),
+                contextPolicyNotConfiguredErrorArguments(),
+                notNextMethodErrorArguments()
         );
     }
 
@@ -31,6 +37,20 @@ public class ContextApiErrorArgumentsProvider implements ArgumentsProvider {
         return Arguments.of(
                 ContextNotFoundErrorJsonMother.contextNotFoundErrorJson(),
                 ContextNotFoundErrorMother.contextNotFoundError()
+        );
+    }
+
+    private static Arguments contextPolicyNotConfiguredErrorArguments() {
+        return Arguments.of(
+                ContextPolicyNotConfiguredErrorJsonMother.contextPolicyNotConfiguredErrorJson(),
+                ContextPolicyNotConfiguredErrorMother.contextPolicyNotConfiguredError()
+        );
+    }
+
+    private static Arguments notNextMethodErrorArguments() {
+        return Arguments.of(
+                NotNextMethodErrorJsonMother.notNextMethodErrorJson(),
+                NotNextMethodErrorMother.notNextMethodError()
         );
     }
 

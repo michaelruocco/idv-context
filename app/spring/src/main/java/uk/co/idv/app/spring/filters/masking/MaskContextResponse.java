@@ -6,11 +6,11 @@ import com.jayway.jsonpath.JsonPath;
 import com.jayway.jsonpath.Option;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.minidev.json.JSONArray;
-import uk.co.idv.app.spring.filters.masking.phonenumber.ContextPhoneNumberResponseJsonMasker;
-import uk.co.mruoc.json.mask.JsonMasker;
+import uk.co.idv.context.adapter.json.context.mask.ContextJsonMasker;
 import uk.co.mruoc.spring.filter.rewrite.RewriteResponseBody;
 import uk.co.mruoc.spring.filter.rewrite.RewriteResponseBodyRequest;
+
+import java.util.function.UnaryOperator;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -20,10 +20,10 @@ public class MaskContextResponse implements RewriteResponseBody {
             .addOptions(Option.SUPPRESS_EXCEPTIONS);
 
     private final Configuration config;
-    private final JsonMasker masker;
+    private final UnaryOperator<String> masker;
 
     public MaskContextResponse(ObjectMapper mapper) {
-        this(DEFAULT_CONFIG, new ContextPhoneNumberResponseJsonMasker(mapper));
+        this(DEFAULT_CONFIG, new ContextJsonMasker(mapper));
     }
 
     @Override
@@ -42,16 +42,15 @@ public class MaskContextResponse implements RewriteResponseBody {
     private boolean shouldMaskNumbers(RewriteResponseBodyRequest rewriteRequest) {
         return rewriteRequest.isPostRequest() &&
                 rewriteRequest.has2xxStatus() &&
-                extractMaskNumbers(rewriteRequest.getResponseBody());
+                extractMaskSensitiveData(rewriteRequest.getResponseBody());
     }
 
-    private boolean extractMaskNumbers(String body) {
-        JSONArray array = JsonPath.using(config)
+    private boolean extractMaskSensitiveData(String body) {
+        boolean maskSensitiveData = JsonPath.using(config)
                 .parse(body)
-                .read("$.request.policy.sequencePolicies[*].methodPolicies[?(@.name=='one-time-passcode')].deliveryMethodConfigs[*].phoneNumberConfig.maskNumbers");
-        boolean maskNumbers = array.stream().anyMatch(value -> value.toString().equals("true"));
-        log.info("mask numbers is {}", maskNumbers);
-        return maskNumbers;
+                .read("$.request.policy.maskSensitiveData");
+        log.info("mask sensitive data is {}", maskSensitiveData);
+        return maskSensitiveData;
     }
 
 }

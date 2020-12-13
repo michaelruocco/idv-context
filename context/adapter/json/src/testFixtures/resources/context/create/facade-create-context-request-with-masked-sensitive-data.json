@@ -1,0 +1,25 @@
+{
+  "channel": {
+    "id": "default-channel",
+    "country": "GB",
+    "phoneNumbers": [
+      {
+        "value": "**********111",
+        "lastUpdated": "2020-08-29T20:55:12.825Z"
+      }
+    ],
+    "emailAddresses": [
+      "bugs**********.co.uk"
+    ]
+  },
+  "aliases": [
+    {
+      "type": "credit-card-number",
+      "value": "4929111111111111"
+    }
+  ],
+  "activity": {
+    "name": "simple-activity",
+    "timestamp": "2020-06-06T12:36:15.179Z"
+  }
+}

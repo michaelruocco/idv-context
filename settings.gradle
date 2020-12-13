@@ -93,6 +93,9 @@ project(':context-dynamo-db-repository').projectDir = file('context/adapter/repo
 include ':context-mongo-repository'
 project(':context-mongo-repository').projectDir = file('context/adapter/repository/mongo')
 
+include ':context-client'
+project(':context-client').projectDir = file('context/adapter/client')
+
 include ':context-config'
 project(':context-config').projectDir = file('context/config')
 

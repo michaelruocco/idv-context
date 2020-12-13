@@ -27,7 +27,8 @@ public interface ContextPolicyMother {
     static ContextPolicy.ContextPolicyBuilder builder() {
         return ContextPolicy.builder()
                 .key(ChannelPolicyKeyMother.build())
-                .sequencePolicies(SequencePoliciesMother.build());
+                .sequencePolicies(SequencePoliciesMother.build())
+                .maskSensitiveData(false);
     }
 
 }

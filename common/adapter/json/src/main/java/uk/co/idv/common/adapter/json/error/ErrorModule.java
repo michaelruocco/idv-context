@@ -9,6 +9,7 @@ public class ErrorModule extends SimpleModule {
         super("error-module", Version.unknownVersion());
 
         setMixInAnnotation(ApiError.class, ApiErrorMixin.class);
+        addDeserializer(ApiError.class, new ApiErrorDeserializer());
     }
 
 }

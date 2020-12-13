@@ -10,17 +10,20 @@ import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetwee
 @Slf4j
 public class MongoDurationLogger {
 
+    private static final String OPERATION_NAME = "mongo-operation";
+    private static final String DURATION_NAME = "mongo-duration";
+
     private MongoDurationLogger() {
         // utility class
     }
 
     public static void log(String operation, Instant start) {
         long duration = millisBetweenNowAnd(start);
-        MDC.put("mongo-operation", operation);
-        MDC.put("mongo-duration", Long.toString(duration));
+        MDC.put(OPERATION_NAME, operation);
+        MDC.put(DURATION_NAME, Long.toString(duration));
         log.info("{} took {}ms", operation, duration);
-        MDC.remove("mongo-operation");
-        MDC.remove("mongo-duration");
+        MDC.remove(OPERATION_NAME);
+        MDC.remove(DURATION_NAME);
     }
 
 }

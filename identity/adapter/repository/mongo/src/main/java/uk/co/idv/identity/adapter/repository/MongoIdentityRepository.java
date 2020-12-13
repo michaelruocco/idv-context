@@ -3,12 +3,11 @@ package uk.co.idv.identity.adapter.repository;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import lombok.Builder;
-import lombok.extern.slf4j.Slf4j;
 import org.bson.conversions.Bson;
 import uk.co.idv.common.mongo.MongoDurationLogger;
-import uk.co.idv.identity.adapter.repository.query.AliasesQueryBuilder;
-import uk.co.idv.identity.adapter.repository.converter.IdentityDocumentConverter;
-import uk.co.idv.identity.adapter.repository.type.IdentityDocument;
+import uk.co.idv.identity.adapter.repository.converter.IdentityDocumentsConverter;
+import uk.co.idv.identity.adapter.repository.query.AliasQueryBuilder;
+import uk.co.idv.identity.adapter.repository.document.IdentityDocument;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
@@ -19,19 +18,19 @@ import uk.co.idv.identity.usecases.identity.IdentityRepository;
 import java.time.Instant;
 import java.util.Optional;
 
-@Slf4j
 @Builder
 public class MongoIdentityRepository implements IdentityRepository {
 
     private final MongoCollection<IdentityDocument> collection;
-    private final AliasesQueryBuilder queryBuilder;
-    private final IdentityDocumentConverter identityConverter;
+    private final AliasQueryBuilder queryBuilder;
+    private final IdentityDocumentsConverter identityConverter;
 
     @Override
     public Optional<Identity> load(Alias alias) {
         Instant start = Instant.now();
         try {
-            FindIterable<IdentityDocument> documents = collection.find(toFindByAliasQuery(alias));
+            Bson query = toFindByAliasQuery(alias);
+            FindIterable<IdentityDocument> documents = collection.find(query);
             return Optional.ofNullable(documents.first()).map(this::toIdentity);
         } finally {
             MongoDurationLogger.log("load-identity-by-alias", start);
@@ -43,7 +42,6 @@ public class MongoIdentityRepository implements IdentityRepository {
         Instant start = Instant.now();
         try {
             Bson query = toFindByAliasesQuery(aliases);
-            log.debug("finding identities with query {}", query);
             FindIterable<IdentityDocument> documents = collection.find(query);
             return toIdentities(documents);
         } finally {
@@ -55,7 +53,8 @@ public class MongoIdentityRepository implements IdentityRepository {
     public void create(Identity identity) {
         Instant start = Instant.now();
         try {
-            collection.insertOne(toDocument(identity));
+            IdentityDocument document = toDocument(identity);
+            collection.insertOne(document);
         } finally {
             MongoDurationLogger.log("create-identity", start);
         }
@@ -65,7 +64,9 @@ public class MongoIdentityRepository implements IdentityRepository {
     public void update(Identity updated, Identity existing) {
         Instant start = Instant.now();
         try {
-            collection.replaceOne(toFindByIdvIdQuery(updated.getIdvId()), toDocument(updated));
+            Bson query = toFindByIdvIdQuery(updated.getIdvId());
+            IdentityDocument document = toDocument(updated);
+            collection.replaceOne(query, document);
         } finally {
             MongoDurationLogger.log("update-identity", start);
         }
@@ -75,7 +76,8 @@ public class MongoIdentityRepository implements IdentityRepository {
     public void delete(Aliases aliases) {
         Instant start = Instant.now();
         try {
-            collection.deleteMany(toFindByAliasesQuery(aliases));
+            Bson query = toFindByAliasesQuery(aliases);
+            collection.deleteMany(query);
         } finally {
             MongoDurationLogger.log("delete-identity-by-aliases", start);
         }

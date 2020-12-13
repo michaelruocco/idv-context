@@ -8,4 +8,12 @@ public interface FacadeCreateContextRequestJsonMother {
         return loadContentFromClasspath("context/create/facade-create-context-request.json");
     }
 
+    static String withChannelData() {
+        return loadContentFromClasspath("context/create/facade-create-context-request-with-channel-data.json");
+    }
+
+    static String withMaskedSensitiveData() {
+        return loadContentFromClasspath("context/create/facade-create-context-request-with-masked-sensitive-data.json");
+    }
+
 }

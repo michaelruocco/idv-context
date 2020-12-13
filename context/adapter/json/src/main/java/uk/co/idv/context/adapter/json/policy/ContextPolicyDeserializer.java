@@ -23,6 +23,7 @@ public class ContextPolicyDeserializer extends StdDeserializer<ContextPolicy> {
         return ContextPolicy.builder()
                 .key(JsonNodeConverter.toObject(node.get("key"), parser, PolicyKey.class))
                 .sequencePolicies(JsonNodeConverter.toObject(node.get("sequencePolicies"), parser, SequencePolicies.class))
+                .maskSensitiveData(node.get("maskSensitiveData").asBoolean())
                 .build();
     }
 

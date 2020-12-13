@@ -8,4 +8,8 @@ public interface ContextJsonMother {
         return loadContentFromClasspath("context/context.json");
     }
 
+    static String buildWithMaskedSensitiveData() {
+        return loadContentFromClasspath("context/context-with-masked-sensitive-data.json");
+    }
+
 }

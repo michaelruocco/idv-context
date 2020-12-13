@@ -27,7 +27,6 @@ public class OtpPhoneNumberConfigDeserializer extends StdDeserializer<OtpPhoneNu
                 .allowInternational(node.get("allowInternational").asBoolean())
                 .lastUpdatedConfig(JsonNodeConverter.toObject(node.get("lastUpdatedConfig"), parser, LastUpdatedConfig.class))
                 .simSwapConfig(toSimSwapConfigIfPresent(node, parser))
-                .maskNumbers(node.get("maskNumbers").asBoolean())
                 .build();
     }
 
