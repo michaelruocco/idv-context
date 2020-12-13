@@ -16,10 +16,12 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 public class ClientBodyLogger implements ClientLogger {
 
     private static final String REQUEST_URI = "client-request-uri";
+    private static final String REQUEST_URI_TRANSFORMED = "client-request-uri-transformed";
     private static final String REQUEST_METHOD = "client-request-method";
     private static final String REQUEST_STATUS = "client-request-status";
     private static final String REQUEST_DURATION = "client-request-duration";
 
+    private final UnaryOperator<String> uriTransformer;
     private final UnaryOperator<String> requestMasker;
     private final UnaryOperator<String> responseMasker;
 
@@ -27,6 +29,7 @@ public class ClientBodyLogger implements ClientLogger {
     public void log(HttpRequest request) {
         URI uri = request.uri();
         MDC.put(REQUEST_URI, uri.toString());
+        MDC.put(REQUEST_URI_TRANSFORMED, uriTransformer.apply(uri.toString()));
         MDC.put(REQUEST_METHOD, request.method());
         log.info("sending-request:uri:{}:body:{}:headers:{}",
                 uri,

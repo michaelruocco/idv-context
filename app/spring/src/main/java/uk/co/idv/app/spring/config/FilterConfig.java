@@ -20,7 +20,7 @@ import uk.co.mruoc.spring.filter.logging.mdc.RequestMdcPopulatorFilter;
 import uk.co.mruoc.spring.filter.logging.request.RequestLoggingFilter;
 import uk.co.mruoc.spring.filter.logging.response.ResponseLoggingFilter;
 import uk.co.mruoc.spring.filter.logging.uritransform.TransformRequestUriMdcPopulatorFilter;
-import uk.co.mruoc.spring.filter.logging.uritransform.UuidIdStringTransformer;
+import uk.co.mruoc.string.transform.UuidIdStringTransformer;
 
 import java.time.Clock;
 import java.util.ArrayList;

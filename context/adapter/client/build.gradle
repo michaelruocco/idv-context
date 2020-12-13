@@ -17,6 +17,7 @@ dependencies {
     implementation project(":common-json")
     implementation project(":context-json")
     implementation project(":otp-json")
+    implementation "com.github.michaelruocco:string-utils:${mruocStringUtilsVersion}"
 
     testFixturesApi testFixtures(project(":context-entities"))
     testFixturesApi testFixtures(project(":otp-entities"))

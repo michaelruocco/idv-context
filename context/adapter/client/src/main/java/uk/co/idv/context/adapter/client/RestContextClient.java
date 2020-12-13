@@ -13,6 +13,7 @@ import uk.co.idv.context.adapter.json.context.create.mask.FacadeCreateContextReq
 import uk.co.idv.context.adapter.json.context.mask.ContextJsonMasker;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.mruoc.json.jackson.JacksonJsonConverter;
+import uk.co.mruoc.string.transform.UuidIdStringTransformer;
 
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -62,13 +63,6 @@ public class RestContextClient implements ContextClient {
                 .build();
     }
 
-    private static ClientLogger toClientLogger(ObjectMapper mapper) {
-        return ClientBodyLogger.builder()
-                .requestMasker(new FacadeCreateContextRequestJsonMasker(mapper))
-                .responseMasker(new ContextJsonMasker(mapper))
-                .build();
-    }
-
     private static ResponseConverter toResponseConverter(ObjectMapper mapper) {
         return new ResponseConverter(new JacksonJsonConverter(mapper));
     }
@@ -77,6 +71,14 @@ public class RestContextClient implements ContextClient {
         return RequestExecutor.builder()
                 .client(HttpClient.newHttpClient())
                 .clientLogger(toClientLogger(mapper))
+                .build();
+    }
+
+    private static ClientLogger toClientLogger(ObjectMapper mapper) {
+        return ClientBodyLogger.builder()
+                .uriTransformer(new UuidIdStringTransformer())
+                .requestMasker(new FacadeCreateContextRequestJsonMasker(mapper))
+                .responseMasker(new ContextJsonMasker(mapper))
                 .build();
     }
 

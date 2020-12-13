@@ -20,6 +20,8 @@
 
 *   Add postman collection to repo and run in build pipeline
 
+*   Create separate utilities repositories for, time-test-utils, logging-test-utils
+
 *   Try out google cache module with a mongo repository for policies instead of redis repository
 
 *   Update performance tests to provide mandatory headers and to post results as well as creating context
