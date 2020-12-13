@@ -57,6 +57,7 @@ public class ClientBodyLogger implements ClientLogger {
     @Override
     public void complete() {
         MDC.remove(REQUEST_URI);
+        MDC.remove(REQUEST_URI_TRANSFORMED);
         MDC.remove(REQUEST_METHOD);
         MDC.remove(REQUEST_STATUS);
         MDC.remove(REQUEST_DURATION);

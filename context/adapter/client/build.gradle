@@ -9,6 +9,15 @@ testSets {
     integrationTest
 }
 
+configurations {
+    compile.exclude module: "slf4j-simple"
+}
+
+ext {
+    logbackVersion = "1.2.3"
+}
+
+
 dependencies {
     api project(":context-entities")
     api project(":otp-entities")
@@ -19,6 +28,12 @@ dependencies {
     implementation project(":otp-json")
     implementation "com.github.michaelruocco:string-utils:${mruocStringUtilsVersion}"
 
+    testRuntimeOnly "ch.qos.logback:logback-core:${logbackVersion}"
+    testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
+
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesApi "com.github.stefanbirkner:system-lambda:${systemLambdaVersion}"
     testFixturesApi testFixtures(project(":context-entities"))
     testFixturesApi testFixtures(project(":otp-entities"))
     testFixturesApi testFixtures(project(":method-json"))

@@ -21,7 +21,7 @@ dependencies {
     testImplementation testFixtures(project(":policy-entities"))
     testImplementation testFixtures(project(":method-entities"))
     testImplementation testFixtures(project(":otp-entities"))
-    testImplementation "com.github.stefanbirkner:system-lambda:1.1.1"
+    testImplementation "com.github.stefanbirkner:system-lambda:${systemLambdaVersion}"
 
     testFixturesApi testFixtures(project(":context-entities"))
     testFixturesApi testFixtures(project(":policy-use-cases"))
