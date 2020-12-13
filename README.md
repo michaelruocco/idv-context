@@ -11,16 +11,12 @@
 
 ## Todo
 
-*   Rename mask numbers policy flag to mask sensitive data, then create masker that combines phone number and email 
-    address maskers into single masker
-
 *   Token validation
-
-*   Add client module
 
 *   Add postman collection to repo and run in build pipeline
 
-*   Create separate utilities repositories for, time-test-utils, logging-test-utils
+*   Create separate utilities repositories for, time-test-utils and raise PR for system lambda to return console
+    output as collection of lines
 
 *   Try out google cache module with a mongo repository for policies instead of redis repository
 
