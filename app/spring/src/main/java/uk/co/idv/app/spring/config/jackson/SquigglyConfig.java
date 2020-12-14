@@ -28,4 +28,5 @@ public class SquigglyConfig {
         Squiggly.init(mapper, new RequestSquigglyContextProvider());
         return mapper;
     }
+
 }

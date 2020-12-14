@@ -25,7 +25,7 @@ public class SpringJacksonConfig {
     }
 
     @Bean
-    public JsonConverter mapper(JsonConfig jsonConfig) {
+    public JsonConverter converter(JsonConfig jsonConfig) {
         return jsonConfig.getJsonConverter();
     }
 
