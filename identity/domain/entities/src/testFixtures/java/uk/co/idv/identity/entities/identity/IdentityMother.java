@@ -6,7 +6,6 @@ import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
-import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
@@ -28,10 +27,6 @@ public interface IdentityMother {
         return exampleBuilder().aliases(aliases).build();
     }
 
-    static Identity withPhoneNumbers(PhoneNumber... phoneNumbers) {
-        return exampleBuilder().phoneNumbers(PhoneNumbersMother.with(phoneNumbers)).build();
-    }
-
     static Identity withPhoneNumbers(PhoneNumbers phoneNumbers) {
         return exampleBuilder().phoneNumbers(phoneNumbers).build();
     }
@@ -47,6 +42,13 @@ public interface IdentityMother {
     static Identity withoutIdvId() {
         return exampleBuilder()
                 .aliases(AliasesMother.creditCardNumberOnly())
+                .build();
+    }
+
+    static Identity withEmptyData() {
+        return exampleBuilder()
+                .phoneNumbers(PhoneNumbersMother.empty())
+                .emailAddresses(EmailAddressesMother.empty())
                 .build();
     }
 

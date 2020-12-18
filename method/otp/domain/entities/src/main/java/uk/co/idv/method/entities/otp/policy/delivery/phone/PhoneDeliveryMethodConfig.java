@@ -3,7 +3,7 @@ package uk.co.idv.method.entities.otp.policy.delivery.phone;
 import com.neovisionaries.i18n.CountryCode;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.identity.entities.identity.PhoneNumbersOnly;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbersOnly;
 import uk.co.idv.identity.entities.identity.RequestedData;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumber;

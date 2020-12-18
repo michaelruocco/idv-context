@@ -1,6 +1,7 @@
 package uk.co.idv.identity.entities.identity;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumbersOnly;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -1,5 +1,6 @@
 package uk.co.idv.method.entities.otp.delivery;
 
+import uk.co.idv.identity.entities.emailaddress.EmailAddress;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
 import uk.co.idv.method.entities.otp.delivery.phone.simswap.AsyncSimSwapEligibilityMother;
@@ -38,8 +39,8 @@ public interface DeliveryMethodMother {
         return builder().type("sms").value(value).build();
     }
 
-    static DeliveryMethod emailWithValue(String value) {
-        return builder().type("email").value(value).build();
+    static DeliveryMethod emailWithValue(EmailAddress emailAddress) {
+        return builder().type("email").value(emailAddress.getValue()).build();
     }
 
     static DeliveryMethod withEligibility(Eligibility eligibility) {

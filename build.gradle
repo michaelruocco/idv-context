@@ -62,7 +62,7 @@ subprojects {
         jacksonVersion = "2.12.0"
         jsonAdapterVersion = "1.0.0"
         mongoVersion = "3.12.7"
-        mruocStringUtilsVersion = "0.1.1"
+        mruocStringUtilsVersion = "0.1.2"
         systemLambdaVersion = "1.1.1"
 
         junitVersion = "5.7.0"
