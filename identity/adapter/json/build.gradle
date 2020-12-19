@@ -5,7 +5,7 @@ plugins {
 dependencies {
     api project(":identity-use-cases")
     api project(":common-json")
-    api "com.github.michaelruocco:json-masker:1.0.5"
+    api "com.github.michaelruocco:json-masker:1.0.6"
     api "com.jayway.jsonpath:json-path:2.5.0"
 
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"

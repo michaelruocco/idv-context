@@ -5,7 +5,7 @@ import com.jayway.jsonpath.JsonPath;
 import uk.co.mruoc.json.mask.JsonMasker;
 import uk.co.mruoc.json.mask.JsonPathConfig;
 import uk.co.mruoc.json.mask.MaskFunction;
-import uk.co.mruoc.json.mask.string.IgnoreFirstNAndLastNCharsMasker;
+import uk.co.mruoc.string.mask.IgnoreFirstNAndLastNCharsMasker;
 
 import java.util.Collection;
 
