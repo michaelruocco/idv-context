@@ -8,7 +8,7 @@ import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class ProvidedPhoneNumbersAppender implements DataAppender{
+public class ProvidedPhoneNumbersAppender implements DataAppender {
 
     private final Channel channel;
 
@@ -20,11 +20,7 @@ public class ProvidedPhoneNumbersAppender implements DataAppender{
     }
 
     private Optional<PhoneNumbers> addProvidedPhoneNumbersIfPresent(PhoneNumbers phoneNumbers) {
-        if (channel instanceof PhoneNumbersProvider) {
-            PhoneNumbersProvider provider = (PhoneNumbersProvider) channel;
-            return Optional.of(phoneNumbers.add(provider.getPhoneNumbers()));
-        }
-        return Optional.empty();
+        return Optional.of(phoneNumbers.add(channel.getPhoneNumbers()));
     }
 
 }

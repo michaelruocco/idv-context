@@ -20,11 +20,7 @@ public class ProvidedEmailAddressesAppender implements DataAppender {
     }
 
     private Optional<EmailAddresses> addProvidedEmailAddressesIfPresent(EmailAddresses emailAddresses) {
-        if (channel instanceof EmailAddressesProvider) {
-            EmailAddressesProvider provider = (EmailAddressesProvider) channel;
-            return Optional.of(emailAddresses.add(provider.getEmailAddresses()));
-        }
-        return Optional.empty();
+        return Optional.of(emailAddresses.add(channel.getEmailAddresses()));
     }
 
 }

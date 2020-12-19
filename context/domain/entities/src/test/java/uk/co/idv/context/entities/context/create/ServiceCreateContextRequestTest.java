@@ -1,12 +1,14 @@
 package uk.co.idv.context.entities.context.create;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.mock;
 
 class ServiceCreateContextRequestTest {
 
@@ -118,6 +120,20 @@ class ServiceCreateContextRequestTest {
                 .build();
 
         assertThat(request.isProtectSensitiveData()).isEqualTo(policy.isProtectSensitiveData());
+    }
+
+    @Test
+    void shouldRequestWithUpdatedChannel() {
+        CreateContextRequest request = ServiceCreateContextRequestMother.build();
+        Channel channel = mock(Channel.class);
+
+        CreateContextRequest updatedRequest = request.withChannel(channel);
+
+        assertThat(updatedRequest)
+                .usingRecursiveComparison()
+                .ignoringFields("initial.channel")
+                .isEqualTo(request);
+        assertThat(updatedRequest.getChannel()).isEqualTo(channel);
     }
 
 }

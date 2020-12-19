@@ -20,21 +20,20 @@ import uk.co.idv.method.entities.method.Method;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class DefaultContextDataProtectorTest {
 
     private final Method protectedMethod = mock(Method.class);
-    private final DataProtector<PhoneNumber> phoneProtector = toFakeMasker(PhoneNumber.class,'*');
+    private final DataProtector<PhoneNumber> phoneProtector = toFakeMasker(PhoneNumber.class, '*');
     private final DataProtector<EmailAddress> emailProtector = toFakeMasker(EmailAddress.class, '-');
-
-    private final ContextDataProtector protector = DefaultContextDataProtector.builder()
-            .methodProtector(method -> protectedMethod)
-            .dataProtectors(Arrays.asList(phoneProtector, emailProtector))
-            .build();
 
     @Test
     void shouldReturnNonSensitiveFieldsUnchanged() {
+        ContextDataProtector protector = buildProtector(phoneProtector, emailProtector);
         Context context = ContextMother.build();
 
         Context protectedContext = protector.apply(context);
@@ -52,6 +51,7 @@ class DefaultContextDataProtectorTest {
 
     @Test
     void shouldMaskChannelPhoneNumbers() {
+        ContextDataProtector protector = buildProtector(phoneProtector, emailProtector);
         Context context = ContextMother.build();
 
         Context protectedContext = protector.apply(context);
@@ -62,6 +62,7 @@ class DefaultContextDataProtectorTest {
 
     @Test
     void shouldMaskChannelEmailAddresses() {
+        ContextDataProtector protector = buildProtector(phoneProtector, emailProtector);
         Context context = ContextMother.build();
 
         Context protectedContext = protector.apply(context);
@@ -72,6 +73,7 @@ class DefaultContextDataProtectorTest {
 
     @Test
     void shouldMaskIdentityPhoneNumbers() {
+        ContextDataProtector protector = buildProtector(phoneProtector, emailProtector);
         PhoneNumber phoneNumber = PhoneNumberMother.example();
         Context context = ContextMother.withIdentity(IdentityMother.withPhoneNumbers(phoneNumber));
 
@@ -83,6 +85,7 @@ class DefaultContextDataProtectorTest {
 
     @Test
     void shouldMaskIdentityEmailAddresses() {
+        ContextDataProtector protector = buildProtector(phoneProtector, emailProtector);
         EmailAddress emailAddress = EmailAddressMother.bugsBunny();
         Context context = ContextMother.withIdentity(IdentityMother.withEmailAddresses(emailAddress));
 
@@ -94,6 +97,7 @@ class DefaultContextDataProtectorTest {
 
     @Test
     void shouldMaskMethods() {
+        ContextDataProtector protector = buildProtector(phoneProtector, emailProtector);
         Sequence sequence = SequenceMother.fakeOnly();
         Context context = ContextMother.withSequences(SequencesMother.with(sequence));
 
@@ -101,6 +105,28 @@ class DefaultContextDataProtectorTest {
 
         Sequences sequences = protectedContext.getSequences();
         assertThat(sequences).containsExactly(sequence.withMethods(new Methods(protectedMethod)));
+    }
+
+    @Test
+    void shouldThrowExceptionIfNoSupportingDataProtectors() {
+        DataProtector<?> dataProtector = mock(DataProtector.class);
+        given(dataProtector.supports(any(Class.class))).willReturn(false);
+        ContextDataProtector protector = buildProtector(dataProtector);
+        Sequence sequence = SequenceMother.fakeOnly();
+        Context context = ContextMother.withSequences(SequencesMother.with(sequence));
+
+        Throwable error = catchThrowable(() -> protector.apply(context));
+
+        assertThat(error)
+                .isInstanceOf(ProtectionNotSupportedException.class)
+                .hasMessage("uk.co.idv.identity.entities.emailaddress.EmailAddress");
+    }
+
+    private ContextDataProtector buildProtector(DataProtector<?>... dataProtectors) {
+        return DefaultContextDataProtector.builder()
+                .methodProtector(method -> protectedMethod)
+                .dataProtectors(Arrays.asList(dataProtectors))
+                .build();
     }
 
     private static <T> DataProtector<T> toFakeMasker(Class<T> type, char maskChar) {
