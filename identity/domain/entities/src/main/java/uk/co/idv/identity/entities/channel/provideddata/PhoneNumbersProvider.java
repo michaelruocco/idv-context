@@ -4,6 +4,8 @@ import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
 public interface PhoneNumbersProvider {
 
-    PhoneNumbers getPhoneNumbers();
+    default PhoneNumbers getPhoneNumbers() {
+        return new PhoneNumbers();
+    }
 
 }

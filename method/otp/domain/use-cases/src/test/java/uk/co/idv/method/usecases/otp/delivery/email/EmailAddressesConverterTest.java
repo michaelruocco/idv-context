@@ -1,6 +1,7 @@
 package uk.co.idv.method.usecases.otp.delivery.email;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.identity.entities.emailaddress.EmailAddress;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
@@ -21,23 +22,30 @@ class EmailAddressesConverterTest {
     @Test
     void shouldConvertEmailAddressesToDeliveryMethods() {
         EmailDeliveryMethodConfig config = mock(EmailDeliveryMethodConfig.class);
-        String address1 = "joe.bloggs@hotmail.com";
-        String address2 = "micky.mouse@yahoo.com";
+        EmailAddress address1 = emailAddress("bugs.bunny@sky.co.uk");
+        EmailAddress address2 = emailAddress("joe.bloggs@hotmail.co.uk");
         DeliveryMethod expectedMethod1 = givenAddressConvertsTo(address1, config);
         DeliveryMethod expectedMethod2 = givenAddressConvertsTo(address2, config);
+        EmailAddresses emailAddresses = toEmailAddresses(address1, address2);
 
-        DeliveryMethods methods = addressesConverter.toDeliveryMethods(toEmailAddresses(address1, address2), config);
+        DeliveryMethods methods = addressesConverter.toDeliveryMethods(emailAddresses, config);
 
         assertThat(methods).containsExactly(expectedMethod1, expectedMethod2);
     }
 
-    private DeliveryMethod givenAddressConvertsTo(String emailAddress, EmailDeliveryMethodConfig config) {
+    private EmailAddress emailAddress(String value) {
+        EmailAddress address = mock(EmailAddress.class);
+        given(address.getValue()).willReturn(value);
+        return address;
+    }
+
+    private DeliveryMethod givenAddressConvertsTo(EmailAddress emailAddress, EmailDeliveryMethodConfig config) {
         DeliveryMethod deliveryMethod = DeliveryMethodMother.emailWithValue(emailAddress);
         given(addressConverter.toDeliveryMethod(emailAddress, config)).willReturn(deliveryMethod);
         return deliveryMethod;
     }
 
-    private EmailAddresses toEmailAddresses(String... addresses) {
+    private EmailAddresses toEmailAddresses(EmailAddress... addresses) {
         return EmailAddressesMother.with(addresses);
     }
 

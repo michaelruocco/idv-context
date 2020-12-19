@@ -7,7 +7,7 @@ import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.channel.Channel;
 
-public interface DefaultCreateContextRequestMixin extends CreateContextRequestMixin {
+public interface ServiceCreateContextRequestMixin extends CreateContextRequestMixin {
 
     @JsonIgnore
     Channel getChannel();
@@ -23,5 +23,8 @@ public interface DefaultCreateContextRequestMixin extends CreateContextRequestMi
 
     @JsonIgnore
     SequencePolicies getSequencePolicies();
+
+    @JsonIgnore
+    boolean isProtectSensitiveData();
 
 }

@@ -4,6 +4,7 @@ import com.neovisionaries.i18n.CountryCode;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
+import uk.co.idv.identity.entities.emailaddress.EmailAddress;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
@@ -28,12 +29,16 @@ public interface IdentityMother {
         return exampleBuilder().aliases(aliases).build();
     }
 
-    static Identity withPhoneNumbers(PhoneNumber... phoneNumbers) {
-        return exampleBuilder().phoneNumbers(PhoneNumbersMother.with(phoneNumbers)).build();
+    static Identity withPhoneNumbers(PhoneNumber... phoneNumber) {
+        return withPhoneNumbers(PhoneNumbersMother.with(phoneNumber));
     }
 
     static Identity withPhoneNumbers(PhoneNumbers phoneNumbers) {
         return exampleBuilder().phoneNumbers(phoneNumbers).build();
+    }
+
+    static Identity withEmailAddresses(EmailAddress... emailAddress) {
+        return withEmailAddresses(EmailAddressesMother.with(emailAddress));
     }
 
     static Identity withEmailAddresses(EmailAddresses emailAddresses) {
@@ -47,6 +52,13 @@ public interface IdentityMother {
     static Identity withoutIdvId() {
         return exampleBuilder()
                 .aliases(AliasesMother.creditCardNumberOnly())
+                .build();
+    }
+
+    static Identity withEmptyData() {
+        return exampleBuilder()
+                .phoneNumbers(PhoneNumbersMother.empty())
+                .emailAddresses(EmailAddressesMother.empty())
                 .build();
     }
 

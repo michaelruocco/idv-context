@@ -39,4 +39,7 @@ public interface ContextMixin {
     @JsonIgnore
     Duration getDuration();
 
+    @JsonIgnore
+    boolean isProtectSensitiveData();
+
 }

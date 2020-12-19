@@ -1,7 +1,7 @@
 package uk.co.idv.method.entities.otp.policy.delivery.email;
 
 import lombok.Data;
-import uk.co.idv.identity.entities.identity.EmailAddressesOnly;
+import uk.co.idv.identity.entities.emailaddress.EmailAddressesOnly;
 import uk.co.idv.identity.entities.identity.RequestedData;
 import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfig;
 

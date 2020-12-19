@@ -8,6 +8,7 @@ import uk.co.idv.context.usecases.context.ContextMethodUpdater;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.method.config.AppMethodConfig;
 import uk.co.idv.method.usecases.MethodBuilder;
+import uk.co.idv.method.usecases.protect.MethodProtector;
 import uk.co.idv.method.usecases.otp.OtpBuilder;
 import uk.co.idv.method.usecases.otp.delivery.CompositeDeliveryMethodConfigConverter;
 import uk.co.idv.method.usecases.otp.delivery.DeliveryMethodConfigsConverter;
@@ -17,6 +18,8 @@ import uk.co.idv.method.usecases.otp.delivery.phone.OtpPhoneNumberEligibilityCal
 import uk.co.idv.method.usecases.otp.delivery.phone.OtpPhoneNumbersConverter;
 import uk.co.idv.method.usecases.otp.delivery.phone.PhoneDeliveryMethodConfigConverter;
 import uk.co.idv.method.usecases.otp.delivery.phone.simswap.SimSwapExecutorConfig;
+import uk.co.idv.method.usecases.otp.protect.mask.DeliveryMethodMasker;
+import uk.co.idv.method.usecases.otp.protect.mask.OtpMasker;
 import uk.co.idv.method.usecases.otp.simswap.SimSwap;
 import uk.co.idv.method.usecases.otp.simswap.async.AsyncSimSwap;
 import uk.co.idv.method.usecases.otp.simswap.async.AsyncSimSwapUpdateContextTaskFactory;
@@ -44,6 +47,11 @@ public class AppOtpConfig implements AppMethodConfig {
                 .configsConverter(deliveryMethodConfigsConverter())
                 .simSwap(simSwap())
                 .build();
+    }
+
+    @Override
+    public MethodProtector methodProtector() {
+        return new OtpMasker(new DeliveryMethodMasker());
     }
 
     private DeliveryMethodConfigsConverter deliveryMethodConfigsConverter() {

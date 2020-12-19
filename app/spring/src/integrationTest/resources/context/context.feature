@@ -121,7 +121,7 @@ Feature: Create Requests
           "type": "channel"
         },
         "sequencePolicies": [],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And url baseUrl + "/v1/context-policies"
@@ -175,7 +175,7 @@ Feature: Create Requests
           "type": "channel"
         },
         "sequencePolicies": [],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And url baseUrl + "/v1/context-policies"
@@ -286,7 +286,7 @@ Feature: Create Requests
             ]
           }
         ],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And method POST
@@ -430,7 +430,7 @@ Feature: Create Requests
                 ]
               }
             ],
-            "maskSensitiveData": false
+            "protectSensitiveData": false
           },
           "identity": {
             "idvId": "#uuid",
@@ -617,7 +617,7 @@ Feature: Create Requests
             ]
           }
         ],
-        "maskSensitiveData": true
+        "protectSensitiveData": true
       }
       """
     And method POST
@@ -756,7 +756,7 @@ Feature: Create Requests
                 ]
               }
             ],
-            "maskSensitiveData": true
+            "protectSensitiveData": true
           },
           "identity": {
             "idvId": "#uuid",
@@ -888,7 +888,7 @@ Feature: Create Requests
             ]
           }
         ],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And method POST
@@ -1026,7 +1026,7 @@ Feature: Create Requests
                 ]
               }
             ],
-            "maskSensitiveData": false
+            "protectSensitiveData": false
           },
           "identity": {
             "idvId": "#uuid",
@@ -1180,7 +1180,7 @@ Feature: Create Requests
                 ]
               }
             ],
-            "maskSensitiveData": false
+            "protectSensitiveData": false
           },
           "identity": {
             "idvId": "#uuid",
@@ -1309,7 +1309,7 @@ Feature: Create Requests
             ]
           }
         ],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And method POST
@@ -1447,7 +1447,7 @@ Feature: Create Requests
                 ]
               }
             ],
-            "maskSensitiveData": false
+            "protectSensitiveData": false
           },
           "identity": {
             "idvId": "#uuid",

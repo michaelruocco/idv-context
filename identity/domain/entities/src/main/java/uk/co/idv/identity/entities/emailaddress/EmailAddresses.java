@@ -11,24 +11,24 @@ import java.util.stream.Stream;
 
 @ToString
 @EqualsAndHashCode
-public class EmailAddresses implements Iterable<String> {
+public class EmailAddresses implements Iterable<EmailAddress> {
 
-    private final Collection<String> values;
+    private final Collection<EmailAddress> values;
 
-    public EmailAddresses(String... values) {
+    public EmailAddresses(EmailAddress... values) {
         this(Arrays.asList(values));
     }
 
-    public EmailAddresses(Collection<String> values) {
+    public EmailAddresses(Collection<EmailAddress> values) {
         this.values = new LinkedHashSet<>(values);
     }
 
     @Override
-    public Iterator<String> iterator() {
+    public Iterator<EmailAddress> iterator() {
         return values.iterator();
     }
 
-    public Stream<String> stream() {
+    public Stream<EmailAddress> stream() {
         return values.stream();
     }
 
@@ -37,7 +37,7 @@ public class EmailAddresses implements Iterable<String> {
     }
 
     public EmailAddresses add(EmailAddresses others) {
-        Collection<String> mergedValues = new LinkedHashSet<>();
+        Collection<EmailAddress> mergedValues = new LinkedHashSet<>();
         mergedValues.addAll(this.values);
         mergedValues.addAll(others.values);
         return new EmailAddresses(mergedValues);

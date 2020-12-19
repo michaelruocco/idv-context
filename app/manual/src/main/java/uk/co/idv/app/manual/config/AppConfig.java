@@ -4,7 +4,7 @@ import lombok.Data;
 import uk.co.idv.app.manual.adapter.app.AppAdapter;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.identity.config.ExternalFindIdentityConfig;
-import uk.co.idv.method.usecases.MethodBuilders;
+import uk.co.idv.method.config.AppMethodConfigs;
 import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
 import uk.co.idv.context.config.ContextConfig;
 import uk.co.idv.identity.config.DefaultIdentityConfig;
@@ -20,14 +20,14 @@ public class AppConfig {
     private final ContextConfig contextConfig;
     private final ErrorHandler errorHandler;
 
-    public AppConfig(MethodBuilders methodBuilders,
+    public AppConfig(AppMethodConfigs appMethodConfigs,
                      RepositoryAdapter repositoryAdapter,
                      AppAdapter appAdapter,
                      ExternalFindIdentityConfig externalFindIdentityConfig) {
         this.externalFindIdentityConfig = externalFindIdentityConfig;
         this.identityConfig = identityConfig(repositoryAdapter, appAdapter);
         this.lockoutConfig = lockoutConfig(repositoryAdapter, appAdapter, identityConfig);
-        this.contextConfig = contextConfig(repositoryAdapter, appAdapter, methodBuilders, identityConfig, lockoutConfig);
+        this.contextConfig = contextConfig(repositoryAdapter, appAdapter, appMethodConfigs, identityConfig, lockoutConfig);
         this.errorHandler = appAdapter.getErrorHandler();
         identityConfig.addMergeIdentitiesHandler(lockoutConfig.getMergeIdentitiesHandler());
     }
@@ -53,16 +53,16 @@ public class AppConfig {
     }
 
     private ContextConfig contextConfig(RepositoryAdapter repositoryAdapter,
-                                       AppAdapter appAdapter,
-                                       MethodBuilders methodBuilders,
-                                       IdentityConfig identityConfig,
-                                       LockoutConfig lockoutConfig) {
+                                        AppAdapter appAdapter,
+                                        AppMethodConfigs appMethodConfigs,
+                                        IdentityConfig identityConfig,
+                                        LockoutConfig lockoutConfig) {
         return ContextConfig.builder()
                 .contextRepository(repositoryAdapter.getContextRepository())
                 .policyRepository(repositoryAdapter.getContextPolicyRepository())
                 .clock(appAdapter.getClock())
                 .idGenerator(appAdapter.getIdGenerator())
-                .methodBuilders(methodBuilders)
+                .appMethodConfigs(appMethodConfigs)
                 .createEligibility(identityConfig.createEligibility())
                 .lockoutService(lockoutConfig.lockoutService())
                 .build();

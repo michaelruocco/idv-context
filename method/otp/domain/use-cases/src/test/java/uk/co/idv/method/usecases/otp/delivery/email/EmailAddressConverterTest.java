@@ -2,6 +2,8 @@ package uk.co.idv.method.usecases.otp.delivery.email;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.usecases.id.IdGenerator;
+import uk.co.idv.identity.entities.emailaddress.EmailAddress;
+import uk.co.idv.identity.entities.emailaddress.EmailAddressMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfig;
 
@@ -13,7 +15,7 @@ import static org.mockito.Mockito.mock;
 
 class EmailAddressConverterTest {
 
-    private static final String EMAIL_ADDRESS = "joe.bloggs@hotmail.com";
+    private static final EmailAddress EMAIL_ADDRESS = EmailAddressMother.joeBloggsHotmail();
 
     private final DeliveryMethodConfig config = mock(DeliveryMethodConfig.class);
     private final IdGenerator idGenerator = mock(IdGenerator.class);
@@ -44,7 +46,7 @@ class EmailAddressConverterTest {
     void shouldPopulateValueOnDeliveryMethod() {
         DeliveryMethod method = converter.toDeliveryMethod(EMAIL_ADDRESS, config);
 
-        assertThat(method.getValue()).isEqualTo(EMAIL_ADDRESS);
+        assertThat(method.getValue()).isEqualTo(EMAIL_ADDRESS.getValue());
     }
 
     @Test

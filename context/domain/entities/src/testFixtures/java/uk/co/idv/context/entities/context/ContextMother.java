@@ -5,6 +5,7 @@ import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequenceMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.entities.context.sequence.SequencesMother;
+import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.method.entities.method.Method;
 
 import java.time.Instant;
@@ -28,6 +29,9 @@ public interface ContextMother {
         return builder().sequences(sequences).build();
     }
 
+    static Context withIdentity(Identity identity) {
+        return builder().request(ServiceCreateContextRequestMother.withIdentity(identity)).build();
+    }
     static Context withMethod(Method method) {
         Sequence sequence = SequenceMother.withMethods(method);
         return ContextMother.withSequences(SequencesMother.with(sequence));

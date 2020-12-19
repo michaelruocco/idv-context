@@ -24,11 +24,16 @@ public interface ContextPolicyMother {
         return builder().sequencePolicies(policies).build();
     }
 
+    static ContextPolicy withProtectSensitiveData(boolean protectSensitiveData) {
+        return builder().protectSensitiveData(protectSensitiveData).build();
+    }
+
+
     static ContextPolicy.ContextPolicyBuilder builder() {
         return ContextPolicy.builder()
                 .key(ChannelPolicyKeyMother.build())
                 .sequencePolicies(SequencePoliciesMother.build())
-                .maskSensitiveData(false);
+                .protectSensitiveData(false);
     }
 
 }

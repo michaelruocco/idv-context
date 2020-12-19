@@ -17,7 +17,7 @@ public class ContextPolicy implements Policy, RequestedDataProvider {
 
     private final PolicyKey key;
     private final SequencePolicies sequencePolicies;
-    private final boolean maskSensitiveData;
+    private final boolean protectSensitiveData;
 
     @Override
     public UUID getId() {

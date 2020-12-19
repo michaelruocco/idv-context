@@ -23,7 +23,7 @@ import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
-@Builder
+@Builder(toBuilder = true)
 @Data
 public class Context {
 
@@ -65,6 +65,10 @@ public class Context {
 
     public Collection<String> getAliasTypes() {
         return request.getAliasTypes();
+    }
+
+    public boolean isProtectSensitiveData() {
+        return request.isProtectSensitiveData();
     }
 
     public boolean isEligible() {

@@ -30,12 +30,12 @@ import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.adapter.json.otp.OtpMapping;
 import uk.co.idv.method.config.AppFakeMethodConfig;
 import uk.co.idv.method.config.AppMethodConfig;
+import uk.co.idv.method.config.AppMethodConfigs;
 import uk.co.idv.method.config.otp.AppOtpConfig;
 import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 import uk.co.idv.method.entities.result.Result;
 import uk.co.idv.method.entities.result.ResultMother;
-import uk.co.idv.method.usecases.MethodBuilders;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
@@ -59,11 +59,9 @@ public class TestHarness {
             .contextRepository(repositoryAdapter.getContextRepository())
             .build();
 
-    private final AppMethodConfig fakeMethodConfig = new AppFakeMethodConfig();
-
-    private final MethodBuilders methodBuilders = new MethodBuilders(
-            fakeMethodConfig.methodBuilder(),
-            otpConfig.methodBuilder()
+    private final AppMethodConfigs appMethodConfigs = new AppMethodConfigs(
+            new AppFakeMethodConfig(),
+            otpConfig
     );
 
     private final AppAdapter appAdapter = DefaultAppAdapter.builder()
@@ -79,7 +77,7 @@ public class TestHarness {
             .build();
 
     private final AppConfig appConfig = new AppConfig(
-            methodBuilders,
+            appMethodConfigs,
             repositoryAdapter,
             appAdapter,
             externalFindIdentityConfig

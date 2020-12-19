@@ -17,14 +17,14 @@ class ContextJsonMaskerTest {
     private final UnaryOperator<String> masker = new ContextJsonMasker(MAPPER);
 
     @Test
-    void shouldMaskSensitiveDataInRequest() {
+    void shouldProtectSensitiveDataInRequest() {
         String json = ContextJsonMother.build();
 
         String maskedJson = masker.apply(json);
 
         assertThatJson(maskedJson)
-                .whenIgnoringPaths("$.request.policy.maskSensitiveData")
-                .isEqualTo(ContextJsonMother.buildWithMaskedSensitiveData());
+                .whenIgnoringPaths("$.request.policy.protectSensitiveData")
+                .isEqualTo(ContextJsonMother.buildWithProtectedSensitiveData());
     }
 
 }

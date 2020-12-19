@@ -9,6 +9,8 @@ import java.util.Collection;
 
 public interface CreateContextRequest extends PolicyRequest {
 
+    CreateContextRequest withChannel(Channel channel);
+
     Channel getChannel();
 
     Aliases getAliases();

@@ -24,8 +24,8 @@ public class ContextFacade {
 
     public Context create(CreateContextRequest request) {
         Instant start = Instant.now();
-        ServiceCreateContextRequest identityRequest = identityLoader.addIdentity(request);
-        Context context = contextService.create(identityRequest);
+        ServiceCreateContextRequest serviceRequest = identityLoader.addIdentity(request);
+        Context context = contextService.create(serviceRequest);
         log.info("create context took {}ms ", millisBetweenNowAnd(start));
         return context;
     }

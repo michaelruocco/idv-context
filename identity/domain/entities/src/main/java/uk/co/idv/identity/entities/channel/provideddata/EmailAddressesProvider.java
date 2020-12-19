@@ -4,6 +4,8 @@ import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 
 public interface EmailAddressesProvider {
 
-    EmailAddresses getEmailAddresses();
+    default EmailAddresses getEmailAddresses() {
+        return new EmailAddresses();
+    }
 
 }

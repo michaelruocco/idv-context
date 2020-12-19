@@ -6,8 +6,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class EmailAddressesTest {
 
-    private final String email1 = "joe.bloggs@hotmail.co.uk";
-    private final String email2 = "joebloggs@yahoo.co.uk";
+    private final EmailAddress email1 = EmailAddressMother.joeBloggsHotmail();
+    private final EmailAddress email2 = EmailAddressMother.joeBloggsYahoo();
 
     private final EmailAddresses addresses = EmailAddressesMother.with(email1, email2);
 
@@ -35,7 +35,7 @@ class EmailAddressesTest {
 
     @Test
     void shouldAddEmailAddressesWithoutDuplicates() {
-        String email3 = "third@email.co.uk";
+        EmailAddress email3 = EmailAddressMother.of("third@email.co.uk");
         EmailAddresses otherAddresses = new EmailAddresses(email2, email3);
 
         EmailAddresses mergedAddresses = addresses.add(otherAddresses);

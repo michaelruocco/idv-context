@@ -2,6 +2,9 @@ package uk.co.idv.context.config;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.common.adapter.protector.ContextDataProtector;
+import uk.co.idv.common.adapter.protector.DefaultContextDataProtector;
+import uk.co.idv.common.adapter.protector.DataProtector;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.adapter.json.error.handler.ContextErrorHandler;
 import uk.co.idv.context.usecases.context.ContextFacade;
@@ -26,11 +29,17 @@ import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 import uk.co.idv.context.usecases.policy.ContextPoliciesPopulator;
 import uk.co.idv.context.usecases.policy.ContextPolicyRepository;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
+import uk.co.idv.identity.entities.emailaddress.EmailAddress;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
+import uk.co.idv.identity.usecases.protect.mask.EmailAddressMasker;
+import uk.co.idv.identity.usecases.protect.mask.PhoneNumberMasker;
 import uk.co.idv.lockout.usecases.LockoutService;
-import uk.co.idv.method.usecases.MethodBuilders;
+import uk.co.idv.method.config.AppMethodConfigs;
 
 import java.time.Clock;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.concurrent.Executors;
 
 @Builder
@@ -39,7 +48,7 @@ public class ContextConfig {
 
     private final Clock clock;
     private final IdGenerator idGenerator;
-    private final MethodBuilders methodBuilders;
+    private final AppMethodConfigs appMethodConfigs;
     private final ContextPolicyRepository policyRepository;
     private final ContextRepository contextRepository;
     private final CreateEligibility createEligibility;
@@ -95,7 +104,22 @@ public class ContextConfig {
                 .requestConverter(serviceCreateContextRequestConverter())
                 .sequencesBuilder(sequencesBuilder())
                 .createdHandler(contextCreated())
+                .protector(contextDataProtector())
                 .build();
+    }
+
+    private ContextDataProtector contextDataProtector() {
+        return DefaultContextDataProtector.builder()
+                .dataProtectors(dataProtectors())
+                .methodProtector(appMethodConfigs.methodProtector())
+                .build();
+    }
+
+    private Collection<DataProtector<?>> dataProtectors() {
+        return Arrays.asList(
+                new DataProtector<>(EmailAddress.class, new EmailAddressMasker()),
+                new DataProtector<>(PhoneNumber.class, new PhoneNumberMasker())
+        );
     }
 
     private FindContext findContext() {
@@ -112,7 +136,7 @@ public class ContextConfig {
     }
 
     private MethodsBuilder methodsBuilder() {
-        return new MethodsBuilder(new CompositeMethodBuilder(methodBuilders));
+        return new MethodsBuilder(new CompositeMethodBuilder(appMethodConfigs.methodBuilders()));
     }
 
     private CreateContextRequestConverter serviceCreateContextRequestConverter() {

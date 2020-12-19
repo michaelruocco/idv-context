@@ -11,6 +11,7 @@ import uk.co.idv.method.entities.result.ResultMother;
 import uk.co.idv.method.entities.result.ResultsMother;
 
 import java.util.Optional;
+import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -20,13 +21,9 @@ class OtpTest {
 
     @Test
     void shouldReturnName() {
-        String name = "my-name";
+        Otp otp = Otp.builder().build();
 
-        Otp otp = Otp.builder()
-                .name(name)
-                .build();
-
-        assertThat(otp.getName()).isEqualTo(name);
+        assertThat(otp.getName()).isEqualTo("one-time-passcode");
     }
 
     @Test
@@ -118,6 +115,24 @@ class OtpTest {
         Otp otp = OtpMother.withDeliveryMethods(deliveryMethods);
 
         Otp updated = otp.replaceDeliveryMethods(newValues);
+
+        assertThat(updated).usingRecursiveComparison()
+                .ignoringFields("deliveryMethods")
+                .isEqualTo(otp);
+        assertThat(updated.getDeliveryMethods()).isEqualTo(replaced);
+    }
+
+    @Test
+    void shouldUpdateDeliveryMethods() {
+        DeliveryMethods deliveryMethods = givenDeliveryMethods();
+        DeliveryMethods newValues = givenDeliveryMethods();
+        UnaryOperator<DeliveryMethod> update = mock(UnaryOperator.class);
+        given(deliveryMethods.update(update)).willReturn(newValues);
+        DeliveryMethods replaced = givenDeliveryMethods();
+        given(deliveryMethods.replace(newValues)).willReturn(replaced);
+        Otp otp = OtpMother.withDeliveryMethods(deliveryMethods);
+
+        Otp updated = otp.updateDeliveryMethods(update);
 
         assertThat(updated).usingRecursiveComparison()
                 .ignoringFields("deliveryMethods")

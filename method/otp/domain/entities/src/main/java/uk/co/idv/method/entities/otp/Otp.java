@@ -13,12 +13,11 @@ import uk.co.idv.method.entities.result.Results;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.function.UnaryOperator;
 
 @Builder(toBuilder = true)
 @Data
 public class Otp implements Method {
-
-    private final String name;
 
     @Getter(AccessLevel.NONE)
     private final OtpConfig config;
@@ -28,6 +27,11 @@ public class Otp implements Method {
 
     @Builder.Default
     private final DeliveryMethods deliveryMethods = new DeliveryMethods();
+
+    @Override
+    public String getName() {
+        return OtpName.NAME;
+    }
 
     @Override
     public Eligibility getEligibility() {
@@ -57,6 +61,10 @@ public class Otp implements Method {
         return toBuilder()
                 .results(results.add(result))
                 .build();
+    }
+
+    public Otp updateDeliveryMethods(UnaryOperator<DeliveryMethod> update) {
+        return replaceDeliveryMethods(deliveryMethods.update(update));
     }
 
     public Otp replaceDeliveryMethods(DeliveryMethods updated) {

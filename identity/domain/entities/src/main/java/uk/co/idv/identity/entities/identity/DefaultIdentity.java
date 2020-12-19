@@ -12,7 +12,7 @@ import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
 import java.util.UUID;
 
-@Builder
+@Builder(toBuilder = true)
 @Data
 public class DefaultIdentity implements Identity {
 
@@ -52,21 +52,21 @@ public class DefaultIdentity implements Identity {
 
     @Override
     public DefaultIdentity setIdvId(IdvId idvId) {
-        return copy()
+        return toBuilder()
                 .aliases(aliases.add(idvId))
                 .build();
     }
 
     @Override
     public DefaultIdentity removeIdvId() {
-        return copy()
+        return toBuilder()
                 .aliases(aliases.remove(getIdvId()))
                 .build();
     }
 
     @Override
     public Identity addData(Identities others) {
-        Identity merged = copy().build();
+        Identity merged = toBuilder().build();
         for (Identity existing : others) {
             merged = merged.addData(existing.removeIdvId());
         }
@@ -76,9 +76,8 @@ public class DefaultIdentity implements Identity {
     @Override
     public Identity addData(Identity other) {
         validateHasSameCountry(other);
-        return DefaultIdentity.builder()
+        return toBuilder()
                 .aliases(aliases.add(other.getAliases()))
-                .country(country)
                 .phoneNumbers(phoneNumbers.add(other.getPhoneNumbers()))
                 .emailAddresses(emailAddresses.add(other.getEmailAddresses()))
                 .build();
@@ -97,14 +96,6 @@ public class DefaultIdentity implements Identity {
 
     private boolean hasSameCountry(Identity other) {
         return country == other.getCountry();
-    }
-
-    private DefaultIdentity.DefaultIdentityBuilder copy() {
-        return DefaultIdentity.builder()
-                .aliases(aliases)
-                .country(country)
-                .phoneNumbers(phoneNumbers)
-                .emailAddresses(emailAddresses);
     }
 
 }

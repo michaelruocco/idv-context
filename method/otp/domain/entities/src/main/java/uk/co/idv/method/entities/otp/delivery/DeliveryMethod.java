@@ -2,6 +2,8 @@ package uk.co.idv.method.entities.otp.delivery;
 
 import lombok.Builder;
 import lombok.Data;
+import lombok.With;
+import uk.co.idv.identity.entities.Updatable;
 import uk.co.idv.method.entities.eligibility.AsyncEligibility;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.otp.simswap.eligibility.AsyncFutureSimSwapEligibility;
@@ -13,11 +15,14 @@ import java.util.concurrent.CompletableFuture;
 
 @Data
 @Builder
-public class DeliveryMethod {
+public class DeliveryMethod implements Updatable<DeliveryMethod> {
 
     private final UUID id;
     private final String type;
+
+    @With
     private final String value;
+
     private final Instant lastUpdated;
     private final Eligibility eligibility;
 

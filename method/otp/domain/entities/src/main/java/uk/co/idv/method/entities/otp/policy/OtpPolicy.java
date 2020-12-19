@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.identity.entities.identity.RequestedData;
 import uk.co.idv.method.entities.otp.OtpConfig;
+import uk.co.idv.method.entities.otp.OtpName;
 import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfigs;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 
@@ -14,14 +15,12 @@ import java.util.Optional;
 @Data
 public class OtpPolicy implements MethodPolicy {
 
-    public static final String NAME = "one-time-passcode";
-
     private final OtpConfig config;
     private final DeliveryMethodConfigs deliveryMethodConfigs;
 
     @Override
     public String getName() {
-        return NAME;
+        return OtpName.NAME;
     }
 
     @Override

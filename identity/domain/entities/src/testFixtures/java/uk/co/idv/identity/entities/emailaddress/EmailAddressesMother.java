@@ -1,21 +1,28 @@
 package uk.co.idv.identity.entities.emailaddress;
 
+import java.util.Arrays;
+import java.util.stream.Collectors;
+
 public interface EmailAddressesMother {
 
     static EmailAddresses empty() {
-        return with();
+        return new EmailAddresses();
     }
 
     static EmailAddresses one() {
-        return with("bugs.bunny@sky.co.uk");
+        return with(EmailAddressMother.bugsBunny());
     }
 
     static EmailAddresses two() {
-        return with("joe.bloggs@hotmail.co.uk", "joebloggs@yahoo.co.uk");
+        return with(EmailAddressMother.joeBloggsHotmail(), EmailAddressMother.joeBloggsYahoo());
     }
 
     static EmailAddresses with(String... values) {
-        return new EmailAddresses(values);
+        return new EmailAddresses(Arrays.stream(values).map(EmailAddressMother::of).collect(Collectors.toList()));
+    }
+
+    static EmailAddresses with(EmailAddress... addresses) {
+        return new EmailAddresses(addresses);
     }
 
 }

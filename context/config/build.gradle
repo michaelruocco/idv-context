@@ -10,4 +10,6 @@ dependencies {
     implementation project(":context-in-memory-repository")
     implementation project(":context-redis-repository")
     implementation project(":context-mongo-repository")
+    implementation project(":data-protector")
+    implementation project(":method-config")
 }
