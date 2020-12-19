@@ -62,6 +62,10 @@
               <stringProp name="Header.name">Correlation-ID</stringProp>
               <stringProp name="Header.value">${__UUID()}</stringProp>
             </elementProp>
+            <elementProp name="" elementType="Header">
+              <stringProp name="Header.name">Channel-ID</stringProp>
+              <stringProp name="Header.value">${channelId}</stringProp>
+            </elementProp>
           </collectionProp>
         </HeaderManager>
         <hashTree/>
@@ -139,15 +143,11 @@ vars.put(&quot;timestampUtc&quot;, Instant.now().toString());</stringProp>
             <stringProp name="DurationAssertion.duration">1800</stringProp>
           </DurationAssertion>
           <hashTree/>
-          <RegexExtractor guiclass="RegexExtractorGui" testclass="RegexExtractor" testname="context-id" enabled="true">
-            <stringProp name="RegexExtractor.useHeaders">false</stringProp>
-            <stringProp name="RegexExtractor.refname">contextId</stringProp>
-            <stringProp name="RegexExtractor.regex">id</stringProp>
-            <stringProp name="RegexExtractor.template">$1$</stringProp>
-            <stringProp name="RegexExtractor.default"></stringProp>
-            <stringProp name="RegexExtractor.match_number">1</stringProp>
-            <boolProp name="RegexExtractor.default_empty_value">true</boolProp>
-          </RegexExtractor>
+          <JSONPostProcessor guiclass="JSONPostProcessorGui" testclass="JSONPostProcessor" testname="context-id" enabled="true">
+            <stringProp name="JSONPostProcessor.referenceNames">contextId</stringProp>
+            <stringProp name="JSONPostProcessor.jsonPathExprs">$.id</stringProp>
+            <stringProp name="JSONPostProcessor.match_numbers">1</stringProp>
+          </JSONPostProcessor>
           <hashTree/>
         </hashTree>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="record-result" enabled="true">

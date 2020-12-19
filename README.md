@@ -20,8 +20,6 @@
 
 *   Try out google cache module with a mongo repository for policies instead of redis repository
 
-*   Update performance tests to provide mandatory headers and to post results as well as creating context
-
 *   Performance tests in pipeline / nightly build
 
 *   Add identity data lookup policy
