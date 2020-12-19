@@ -157,6 +157,17 @@ class ContextTest {
     }
 
     @Test
+    void shouldReturnIsProtectSensitiveDataFromCreateContextRequest() {
+        ServiceCreateContextRequest request = ServiceCreateContextRequestMother.build();
+
+        Context context = Context.builder()
+                .request(request)
+                .build();
+
+        assertThat(context.isProtectSensitiveData()).isEqualTo(request.isProtectSensitiveData());
+    }
+
+    @Test
     void shouldReturnSequences() {
         Sequences sequences = mock(Sequences.class);
 

@@ -99,7 +99,7 @@ class ServiceCreateContextRequestTest {
     }
 
     @Test
-    void shouldReturnPolicySequencePoliciesFromPolicy() {
+    void shouldReturnSequencePoliciesFromPolicy() {
         ContextPolicy policy = ContextPolicyMother.build();
 
         ServiceCreateContextRequest request = ServiceCreateContextRequest.builder()
@@ -107,6 +107,17 @@ class ServiceCreateContextRequestTest {
                 .build();
 
         assertThat(request.getSequencePolicies()).isEqualTo(policy.getSequencePolicies());
+    }
+
+    @Test
+    void shouldReturnProtectSensitiveDataFromPolicy() {
+        ContextPolicy policy = ContextPolicyMother.build();
+
+        ServiceCreateContextRequest request = ServiceCreateContextRequest.builder()
+                .policy(policy)
+                .build();
+
+        assertThat(request.isProtectSensitiveData()).isEqualTo(policy.isProtectSensitiveData());
     }
 
 }

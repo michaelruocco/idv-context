@@ -3,7 +3,7 @@ package uk.co.idv.identity.entities.emailaddress;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import lombok.With;
-import uk.co.idv.identity.entities.protect.Updatable;
+import uk.co.idv.identity.entities.Updatable;
 
 @Data
 @RequiredArgsConstructor

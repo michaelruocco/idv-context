@@ -12,6 +12,9 @@ project(':common-json').projectDir = file('common/adapter/json')
 include ':common-mongo'
 project(':common-mongo').projectDir = file('common/adapter/repository/mongo')
 
+include ':data-protector'
+project(':data-protector').projectDir = file('common/adapter/data-protector')
+
 include ':identity-entities'
 project(':identity-entities').projectDir = file('identity/domain/entities')
 

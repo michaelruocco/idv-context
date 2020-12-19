@@ -29,5 +29,5 @@
       ]
     }
   ],
-  "maskSensitiveData": false
+  "protectSensitiveData": false
 }

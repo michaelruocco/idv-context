@@ -9,9 +9,11 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.UnaryOperator;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class DeliveryMethodsTest {
@@ -117,6 +119,19 @@ class DeliveryMethodsTest {
         Optional<DeliveryMethod> found = methods.findByValue(UUID.fromString("3f1a29d7-b617-4528-bd29-4362bd5e3e58"));
 
         assertThat(found).isEmpty();
+    }
+
+    @Test
+    void shouldUpdateDeliveryMethods() {
+        UnaryOperator<DeliveryMethod> update = mock(UnaryOperator.class);
+        DeliveryMethod method = DeliveryMethodMother.withId(UUID.fromString("2cd5e569-8b84-4606-90bf-debf0c245f06"));
+        DeliveryMethods methods = new DeliveryMethods(method);
+        DeliveryMethod updated = DeliveryMethodMother.build();
+        given(update.apply(method)).willReturn(updated);
+
+        DeliveryMethods updatedMethods = methods.update(update);
+
+        assertThat(updatedMethods).containsExactly(updated);
     }
 
 }

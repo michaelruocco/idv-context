@@ -69,7 +69,7 @@ Feature: Context Policy Maintenance
             ]
           }
         ],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And header correlation-id = "d4dfde15-363b-4284-b247-2108e9eab90e"
@@ -124,7 +124,7 @@ Feature: Context Policy Maintenance
             ]
           }
         ],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And match responseHeaders.Location contains baseUrl + "/v1/context-policies/" + policyId
@@ -184,7 +184,7 @@ Feature: Context Policy Maintenance
             ]
           }
         ],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And header correlation-id = "a1a2f81a-1a56-4b58-8a63-409653c0ae04"
@@ -247,7 +247,7 @@ Feature: Context Policy Maintenance
             ]
           }
         ],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
 
@@ -266,7 +266,7 @@ Feature: Context Policy Maintenance
           "type": "channel-activity"
         },
         "sequencePolicies": [],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And header correlation-id = "97438084-d6e5-4f97-a270-81445644aae3"
@@ -306,7 +306,7 @@ Feature: Context Policy Maintenance
             ]
           }
         ],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And header correlation-id = "104b4922-50b4-4c73-8118-be495f5f3409"
@@ -331,7 +331,7 @@ Feature: Context Policy Maintenance
             "type": "channel-activity"
           },
           "sequencePolicies": [],
-          "maskSensitiveData": false
+          "protectSensitiveData": false
         },
         {
           "key": {
@@ -364,7 +364,7 @@ Feature: Context Policy Maintenance
               ]
             }
           ],
-          "maskSensitiveData": false
+          "protectSensitiveData": false
         }
       ]
       """
@@ -381,7 +381,7 @@ Feature: Context Policy Maintenance
           "type": "channel"
         },
         "sequencePolicies": [],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And header correlation-id = "006667cc-7afd-4b91-b62d-5c8de7b8244c"
@@ -422,7 +422,7 @@ Feature: Context Policy Maintenance
             ]
           }
         ],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And header correlation-id = "00745985-7bae-487c-996f-3a4ee5563cf2"
@@ -463,7 +463,7 @@ Feature: Context Policy Maintenance
             ]
           }
         ],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
 
@@ -479,7 +479,7 @@ Feature: Context Policy Maintenance
           "type": "channel"
         },
         "sequencePolicies": [],
-        "maskSensitiveData": false
+        "protectSensitiveData": false
       }
       """
     And header correlation-id = "98901873-6018-4dde-b4fa-3e839555a479"

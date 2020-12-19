@@ -35,7 +35,7 @@ class OtpPhoneNumbersConverterTest {
     }
 
     private DeliveryMethod givenNumberConvertsTo(OtpPhoneNumber number, PhoneDeliveryMethodConfig config) {
-        DeliveryMethod deliveryMethod = DeliveryMethodMother.smsWithValue(number.getValue());
+        DeliveryMethod deliveryMethod = DeliveryMethodMother.smsWithValue(number);
         given(numberConverter.toDeliveryMethod(number, config)).willReturn(deliveryMethod);
         return deliveryMethod;
     }

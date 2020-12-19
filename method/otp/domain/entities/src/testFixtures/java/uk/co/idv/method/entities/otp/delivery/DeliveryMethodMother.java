@@ -3,6 +3,7 @@ package uk.co.idv.method.entities.otp.delivery;
 import uk.co.idv.identity.entities.emailaddress.EmailAddress;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;
+import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.method.entities.otp.delivery.phone.simswap.AsyncSimSwapEligibilityMother;
 
 import java.time.Instant;
@@ -35,8 +36,8 @@ public interface DeliveryMethodMother {
         return builder().lastUpdated(null).build();
     }
 
-    static DeliveryMethod smsWithValue(String value) {
-        return builder().type("sms").value(value).build();
+    static DeliveryMethod smsWithValue(OtpPhoneNumber phoneNumber) {
+        return builder().type("sms").value(phoneNumber.getValue()).build();
     }
 
     static DeliveryMethod emailWithValue(EmailAddress emailAddress) {

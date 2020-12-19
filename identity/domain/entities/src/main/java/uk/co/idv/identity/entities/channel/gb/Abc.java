@@ -4,14 +4,12 @@ import com.neovisionaries.i18n.CountryCode;
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.identity.entities.channel.Channel;
-import uk.co.idv.identity.entities.channel.provideddata.EmailAddressesProvider;
-import uk.co.idv.identity.entities.channel.provideddata.PhoneNumbersProvider;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
 @Data
 @Builder
-public class Abc implements Channel, PhoneNumbersProvider, EmailAddressesProvider {
+public class Abc implements Channel {
 
     public static final String ID = "abc";
 

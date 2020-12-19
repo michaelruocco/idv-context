@@ -3,7 +3,7 @@ package uk.co.idv.identity.entities.phonenumber;
 import lombok.Builder;
 import lombok.Data;
 import lombok.With;
-import uk.co.idv.identity.entities.protect.Updatable;
+import uk.co.idv.identity.entities.Updatable;
 
 import java.time.Instant;
 import java.util.Optional;

@@ -30,7 +30,7 @@ public class CreateContextModule extends SimpleModule {
         this.mappings = mappings;
 
         setMixInAnnotation(CreateContextRequest.class, CreateContextRequestMixin.class);
-        setMixInAnnotation(ServiceCreateContextRequest.class, DefaultCreateContextRequestMixin.class);
+        setMixInAnnotation(ServiceCreateContextRequest.class, ServiceCreateContextRequestMixin.class);
 
         addDeserializer(FacadeCreateContextRequest.class, new FacadeCreateContextRequestDeserializer());
         addDeserializer(ServiceCreateContextRequest.class, new DefaultCreateContextRequestDeserializer());

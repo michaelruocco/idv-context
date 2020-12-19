@@ -21,7 +21,6 @@ public interface OtpMother {
 
     static Otp.OtpBuilder builder() {
         return Otp.builder()
-                .name("one-time-passcode")
                 .config(OtpConfigMother.build())
                 .deliveryMethods(DeliveryMethodsMother.oneOfEach());
     }

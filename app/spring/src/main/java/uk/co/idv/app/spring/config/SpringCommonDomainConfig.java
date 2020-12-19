@@ -12,15 +12,14 @@ import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;
 import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
 import uk.co.idv.common.adapter.json.error.handler.CompositeErrorHandler;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.method.config.AppMethodConfigs;
 import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
 import uk.co.idv.identity.config.ExternalFindIdentityConfig;
 import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.method.config.AppMethodConfig;
-import uk.co.idv.method.usecases.MethodBuilders;
 
 import java.time.Clock;
 import java.util.Collection;
-import java.util.stream.Collectors;
 
 @Configuration
 public class SpringCommonDomainConfig {
@@ -61,19 +60,16 @@ public class SpringCommonDomainConfig {
     }
 
     @Bean
-    public MethodBuilders methodBuilders(Collection<AppMethodConfig> methodConfigs) {
-        return new MethodBuilders(methodConfigs.stream()
-                .map(AppMethodConfig::methodBuilder)
-                .collect(Collectors.toList())
-        );
+    public AppMethodConfigs methodConfigs(Collection<AppMethodConfig> methodConfigs) {
+        return new AppMethodConfigs(methodConfigs);
     }
 
     @Bean
-    public AppConfig appConfig(MethodBuilders methodBuilders,
+    public AppConfig appConfig(AppMethodConfigs appMethodConfigs,
                                RepositoryAdapter repositoryAdapter,
                                AppAdapter appAdapter,
                                ExternalFindIdentityConfig externalFindIdentityConfig) {
-        return new AppConfig(methodBuilders, repositoryAdapter, appAdapter, externalFindIdentityConfig);
+        return new AppConfig(appMethodConfigs, repositoryAdapter, appAdapter, externalFindIdentityConfig);
     }
 
     @Bean

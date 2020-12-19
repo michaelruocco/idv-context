@@ -1,0 +1,15 @@
+plugins {
+    id "java-test-fixtures"
+}
+
+dependencies {
+    implementation project(":context-entities")
+    implementation project(":method-entities")
+    implementation project(":method-use-cases")
+
+    testImplementation testFixtures(project(":context-entities"))
+
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesImplementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
+}

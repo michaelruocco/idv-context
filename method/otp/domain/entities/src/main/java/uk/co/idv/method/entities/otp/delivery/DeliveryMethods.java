@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
+import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -55,6 +56,12 @@ public class DeliveryMethods implements Iterable<DeliveryMethod> {
             return new Eligible();
         }
         return new NoEligibleDeliveryMethodsAvailable();
+    }
+
+    public DeliveryMethods update(UnaryOperator<DeliveryMethod> update) {
+        return new DeliveryMethods(values.stream()
+                .map(update)
+                .collect(Collectors.toList()));
     }
 
     public DeliveryMethods replace(DeliveryMethods newValues) {

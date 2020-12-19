@@ -9,7 +9,6 @@ import org.springframework.core.Ordered;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import uk.co.idv.app.spring.filters.logging.context.ContextRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.context.ContextResponseLoggingFilter;
-import uk.co.idv.app.spring.filters.masking.ContextResponseMaskingFilter;
 import uk.co.idv.app.spring.filters.logging.identity.IdentityRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.identity.IdentityResponseLoggingFilter;
 import uk.co.idv.app.spring.filters.validation.ContextHeaderValidationFilter;
@@ -145,16 +144,6 @@ public class FilterConfig {
         bean.setOrder(6);
         bean.addUrlPatterns(getContextUrlPatterns());
         bean.setName("getContextUriTransformerFilter");
-        return bean;
-    }
-
-    @Bean
-    public FilterRegistrationBean<ContextResponseMaskingFilter> contextResponseMaskingFilter(ObjectMapper mapper) {
-        FilterRegistrationBean<ContextResponseMaskingFilter> bean = new FilterRegistrationBean<>();
-        bean.setFilter(new ContextResponseMaskingFilter(mapper));
-        bean.setOrder(7);
-        bean.addUrlPatterns(getContextUrlPatterns());
-        bean.setName("contextResponseMaskingFilter");
         return bean;
     }
 

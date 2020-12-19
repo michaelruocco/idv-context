@@ -64,6 +64,7 @@ subprojects {
         mongoVersion = "3.12.7"
         mruocStringUtilsVersion = "0.1.2"
         systemLambdaVersion = "1.1.1"
+        commonsLangVersion = "3.1"
 
         junitVersion = "5.7.0"
         assertjVersion = "3.18.1"

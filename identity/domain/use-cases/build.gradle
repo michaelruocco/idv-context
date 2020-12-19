@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     api project(":identity-entities")
+    api "com.github.michaelruocco:string-utils:${mruocStringUtilsVersion}"
 
     implementation project(":common-entities")
     implementation project(":common-use-cases")

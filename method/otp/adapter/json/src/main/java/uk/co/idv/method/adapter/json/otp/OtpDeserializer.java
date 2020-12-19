@@ -20,7 +20,6 @@ class OtpDeserializer extends StdDeserializer<Otp> {
     public Otp deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
         return Otp.builder()
-                .name(node.get("name").asText())
                 .config(JsonNodeConverter.toObject(node.get("config"), parser, OtpConfig.class))
                 .deliveryMethods(JsonNodeConverter.toObject(node.get("deliveryMethods"), parser, DeliveryMethods.class))
                 .build();

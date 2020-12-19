@@ -25,7 +25,7 @@ public interface GbRsaPolicyMother {
         return ContextPolicyMother.builder()
                 .key(buildKey(UUID.fromString("29afbb27-cc37-4ba4-810f-57915e90eac2")))
                 .sequencePolicies(buildSequences())
-                .maskSensitiveData(true)
+                .protectSensitiveData(true)
                 .build();
     }
 

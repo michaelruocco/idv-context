@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.context;
 
 import lombok.Builder;
+import uk.co.idv.common.adapter.protector.ContextDataProtector;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.sequence.Sequences;
@@ -25,13 +26,14 @@ public class CreateContext {
     private final SequencesBuilder sequencesBuilder;
     private final ContextCreatedHandler createdHandler;
     private final ContextRepository repository;
+    private final ContextDataProtector protector;
 
     public Context create(ServiceCreateContextRequest request) {
         lockoutService.validateLockoutState(request);
         Context context = buildContext(request);
         repository.save(context);
         createdHandler.created(context);
-        return context;
+        return protectIfRequired(context);
     }
 
     private Instant calculateExpiry(Instant created, Sequences sequences) {
@@ -50,5 +52,13 @@ public class CreateContext {
                 .sequences(sequences)
                 .build();
     }
+
+    private Context protectIfRequired(Context context) {
+        if (context.isProtectSensitiveData()) {
+            return protector.apply(context);
+        }
+        return context;
+    }
+
 
 }

@@ -12,13 +12,18 @@ import uk.co.idv.context.entities.policy.ContextPolicy;
 
 import java.util.Collection;
 
-@Builder
+@Builder(toBuilder = true)
 @Data
 public class ServiceCreateContextRequest implements CreateContextRequest {
 
     private final CreateContextRequest initial;
     private final ContextPolicy policy;
     private final Identity identity;
+
+    @Override
+    public CreateContextRequest withChannel(Channel channel) {
+        return toBuilder().initial(initial.withChannel(channel)).build();
+    }
 
     @Override
     public Channel getChannel() {
@@ -51,6 +56,10 @@ public class ServiceCreateContextRequest implements CreateContextRequest {
 
     public SequencePolicies getSequencePolicies() {
         return policy.getSequencePolicies();
+    }
+
+    public boolean isProtectSensitiveData() {
+        return policy.isProtectSensitiveData();
     }
 
 }

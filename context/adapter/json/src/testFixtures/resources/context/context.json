@@ -45,7 +45,7 @@
           ]
         }
       ],
-      "maskSensitiveData": false
+      "protectSensitiveData": false
     },
     "identity": {
       "idvId": "90b585c6-170f-42a6-ac7c-83d294bdab3f",

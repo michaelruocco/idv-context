@@ -45,5 +45,5 @@
       ]
     }
   ],
-  "maskSensitiveData": true
+  "protectSensitiveData": true
 }

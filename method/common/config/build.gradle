@@ -5,6 +5,7 @@ plugins {
 dependencies {
     api project(":method-json")
     api project(":method-use-cases")
+    implementation project(":method-entities")
     implementation project(":common-json")
 
     testFixturesApi testFixtures(project(":method-json"))
