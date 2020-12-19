@@ -29,7 +29,7 @@ public class MergeAttempts implements MergeIdentitiesHandler {
 
     private Collection<Attempts> loadOriginalIdentityAttempts(MergeIdentitiesEvent event) {
         return event.getOriginalIdvIds().stream()
-                .map(alias -> (IdvId) alias)
+                .map(IdvId.class::cast)
                 .map(repository::load)
                 .flatMap(Optional::stream)
                 .collect(Collectors.toList());

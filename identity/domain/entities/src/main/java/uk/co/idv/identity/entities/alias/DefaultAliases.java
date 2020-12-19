@@ -96,7 +96,7 @@ public class DefaultAliases implements Aliases {
     @Override
     public IdvId getIdvId() {
         return getAliasByType(IdvId.TYPE)
-                .map(alias -> (IdvId) alias)
+                .map(IdvId.class::cast)
                 .orElseThrow(IdvIdNotFoundException::new);
     }
 

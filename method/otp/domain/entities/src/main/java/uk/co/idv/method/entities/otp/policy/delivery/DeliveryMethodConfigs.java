@@ -60,7 +60,7 @@ public class DeliveryMethodConfigs implements Iterable<DeliveryMethodConfig>, Re
     private Stream<PhoneDeliveryMethodConfig> getPhoneConfigs() {
         return values.stream()
                 .filter(config -> config instanceof PhoneDeliveryMethodConfig)
-                .map(config -> (PhoneDeliveryMethodConfig) config);
+                .map(PhoneDeliveryMethodConfig.class::cast);
     }
 
 }
