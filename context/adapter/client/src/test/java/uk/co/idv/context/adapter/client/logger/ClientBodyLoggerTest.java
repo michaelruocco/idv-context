@@ -25,11 +25,12 @@ import static uk.co.idv.context.adapter.client.logging.LogOutputUtils.captureLog
 class ClientBodyLoggerTest {
 
     private final UnaryOperator<String> uriTransformer = s -> s.replaceFirst("endpoint", "transformed");
+    private final MdcPopulator mdcPopulator = new MdcPopulator(uriTransformer);
     private final UnaryOperator<String> requestMasker = s -> "masked-request";
     private final UnaryOperator<String> responseMasker = s -> "masked-response";
 
-    private final ClientBodyLogger logger = ClientBodyLogger.builder()
-            .uriTransformer(uriTransformer)
+    private final ClientLogger logger = BodyLoggingClientLogger.builder()
+            .mdcPopulator(mdcPopulator)
             .requestMasker(requestMasker)
             .responseMasker(responseMasker)
             .build();
@@ -49,8 +50,8 @@ class ClientBodyLoggerTest {
                 "http://localhost:8080/request-transformed:" +
                 "POST::] INFO  - sending-request:" +
                 "uri:http://localhost:8080/request-endpoint:" +
-                "body:masked-request:" +
-                "headers:{request-header-key=[request-header-value]}");
+                "headers:{request-header-key=[request-header-value]}:" +
+                "body:masked-request");
     }
 
     @Test
@@ -62,8 +63,8 @@ class ClientBodyLoggerTest {
         assertThat(logLines).containsExactly("[:::" +
                 "201:] INFO  - received-response:" +
                 "status:201:" +
-                "body:masked-response:" +
-                "headers:{response-header-key=[response-header-value]}");
+                "headers:{response-header-key=[response-header-value]}:" +
+                "body:masked-response");
     }
 
     @Test

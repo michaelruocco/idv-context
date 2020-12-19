@@ -3,8 +3,9 @@ package uk.co.idv.context.adapter.client;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.context.adapter.client.logger.BodyLoggingClientLogger;
 import uk.co.idv.context.adapter.client.logger.ClientLogger;
-import uk.co.idv.context.adapter.client.logger.ClientBodyLogger;
+import uk.co.idv.context.adapter.client.logger.MdcPopulator;
 import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientRecordContextResultRequest;
@@ -75,8 +76,8 @@ public class RestContextClient implements ContextClient {
     }
 
     private static ClientLogger toClientLogger(ObjectMapper mapper) {
-        return ClientBodyLogger.builder()
-                .uriTransformer(new UuidIdStringTransformer())
+        return BodyLoggingClientLogger.builder()
+                .mdcPopulator(new MdcPopulator(new UuidIdStringTransformer()))
                 .requestMasker(new FacadeCreateContextRequestJsonMasker(mapper))
                 .responseMasker(new ContextJsonMasker(mapper))
                 .build();
