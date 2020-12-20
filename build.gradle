@@ -133,6 +133,16 @@ task codeCoverageReport(type: JacocoReport) {
     }
 }
 
+project.tasks["sonarqube"].dependsOn codeCoverageReport
+sonarqube {
+    properties {
+        property "sonar.host.url", "https://sonarcloud.io"
+        property "sonar.organization", "michaelruocco"
+        property "sonar.projectKey", "michaelruocco_verification-context"
+        property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/report.xml"
+    }
+}
+
 codeCoverageReport.dependsOn {
     subprojects*.test
     subprojects.findAll { it.tasks.findByName("integrationTest") != null }.integrationTest
@@ -148,16 +158,6 @@ dependencyUpdates.resolutionStrategy {
                 selection.reject("Release candidate")
             }
         }
-    }
-}
-
-project.tasks["sonarqube"].dependsOn codeCoverageReport
-sonarqube {
-    properties {
-        property "sonar.host.url", "https://sonarcloud.io"
-        property "sonar.organization", "michaelruocco"
-        property "sonar.projectKey", "michaelruocco_verification-context"
-        property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/report.xml"
     }
 }
 
