@@ -1,21 +1,26 @@
 package uk.co.idv.context.entities.activity;
 
+import lombok.Builder;
 import lombok.Data;
-import lombok.RequiredArgsConstructor;
 
 import java.time.Instant;
 
-@RequiredArgsConstructor
+@Builder
 @Data
 public class Login implements Activity {
 
     public static final String NAME = "login";
 
     private final Instant timestamp;
+    private final String system;
 
     @Override
     public String getName() {
         return NAME;
+    }
+
+    public String getSystem() {
+        return system;
     }
 
 }

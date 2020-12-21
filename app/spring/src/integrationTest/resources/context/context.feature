@@ -1570,6 +1570,7 @@ Feature: Create Requests
         },
         "activity": {
           "name": "login",
+          "system": "example-system",
           "timestamp": "2020-09-27T06:56:47.522Z"
         },
         "aliases": [
@@ -1636,6 +1637,7 @@ Feature: Create Requests
         },
         "activity": {
           "name": "login",
+          "system": "example-system",
           "timestamp": "2020-09-27T06:56:47.522Z"
         },
         "aliases": [

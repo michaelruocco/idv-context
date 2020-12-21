@@ -7,4 +7,7 @@ public interface OnlinePurchaseMixin {
     @JsonIgnore
     String getCardNumberValue();
 
+    @JsonIgnore
+    String getLast4DigitsOfCardNumber();
+
 }

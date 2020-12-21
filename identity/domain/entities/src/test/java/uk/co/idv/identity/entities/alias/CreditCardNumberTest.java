@@ -23,6 +23,22 @@ class CreditCardNumberTest {
     }
 
     @Test
+    void shouldReturnLast4DigitsOfValue() {
+        CardNumber cardNumber = CreditCardNumberMother.withValue(VALUE);
+
+        assertThat(cardNumber.getLast4Digits()).isEqualTo("7890");
+    }
+
+    @Test
+    void shouldReturnLastDigitsIfValueIsShorterThan4Digits() {
+        String value = "12";
+
+        CardNumber cardNumber = CreditCardNumberMother.withValue(value);
+
+        assertThat(cardNumber.getLast4Digits()).isEqualTo(value);
+    }
+
+    @Test
     void isCardNumber() {
         Alias cardNumber = CreditCardNumberMother.withValue(VALUE);
 
