@@ -42,4 +42,37 @@ class OtpConfigTest {
         assertThat(config.getPasscodeConfig()).isEqualTo(passcodeConfig);
     }
 
+    @Test
+    void shouldReturnPasscodeLength() {
+        PasscodeConfig passcodeConfig = PasscodeConfigMother.build();
+
+        OtpConfig config = OtpConfig.builder()
+                .passcodeConfig(passcodeConfig)
+                .build();
+
+        assertThat(config.getPasscodeLength()).isEqualTo(passcodeConfig.getLength());
+    }
+
+    @Test
+    void shouldReturnPasscodeDuration() {
+        PasscodeConfig passcodeConfig = PasscodeConfigMother.build();
+
+        OtpConfig config = OtpConfig.builder()
+                .passcodeConfig(passcodeConfig)
+                .build();
+
+        assertThat(config.getPasscodeDuration()).isEqualTo(passcodeConfig.getDuration());
+    }
+
+    @Test
+    void shouldReturnMaxNumberOfPasscodeDeliveries() {
+        PasscodeConfig passcodeConfig = PasscodeConfigMother.build();
+
+        OtpConfig config = OtpConfig.builder()
+                .passcodeConfig(passcodeConfig)
+                .build();
+
+        assertThat(config.getMaxNumberOfPasscodeDeliveries()).isEqualTo(passcodeConfig.getMaxNumberOfDeliveries());
+    }
+
 }

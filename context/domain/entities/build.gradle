@@ -18,7 +18,7 @@ dependencies {
 
 publishing {
     publications {
-        shadow(MavenPublication) { publication ->
+        lib(MavenPublication) { publication ->
             from components.java
             artifactId = "${rootProject.name}-${project.name}"
         }

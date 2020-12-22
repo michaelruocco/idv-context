@@ -17,6 +17,7 @@ public class OtpPolicyModule extends SimpleModule {
         super("otp-policy-module", Version.unknownVersion());
 
         setMixInAnnotation(OtpPolicy.class, OtpPolicyMixin.class);
+        setMixInAnnotation(OtpConfig.class, OtpConfigMixin.class);
 
         addDeserializer(OtpPolicy.class, new OtpPolicyDeserializer());
         addDeserializer(OtpConfig.class, new OtpConfigDeserializer());

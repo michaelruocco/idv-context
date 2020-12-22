@@ -1,7 +1,6 @@
 plugins {
     id "java-test-fixtures"
     id "maven-publish"
-    id "com.github.johnrengelman.shadow" version "6.1.0"
 }
 
 dependencies {
@@ -27,8 +26,8 @@ java {
 
 publishing {
     publications {
-        shadow(MavenPublication) { publication ->
-            project.shadow.component(publication)
+        lib(MavenPublication) { publication ->
+            from components.java
             artifactId = "${rootProject.name}-${project.name}"
         }
     }
