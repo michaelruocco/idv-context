@@ -74,7 +74,7 @@ subprojects {
         systemLambdaVersion = "1.1.1"
         commonsLangVersion = "3.11"
         neovisionariesVersion = "1.27"
-        redissionVersion = "3.14.0"
+        redissionVersion = "3.14.1"
         jsonPathVersion = "2.5.0"
         jsonMaskerVersion = "1.0.6"
         moneyApiVersion = "1.1"
