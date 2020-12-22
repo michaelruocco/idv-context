@@ -3,7 +3,8 @@ plugins {
 }
 
 configurations {
-    compile.exclude module: "slf4j-simple"
+    testFixturesApi.setCanBeResolved(true)
+    testRuntimeOnly.exclude module: "slf4j-simple"
 }
 
 dependencies {

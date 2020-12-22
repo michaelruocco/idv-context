@@ -12,4 +12,6 @@ dependencies {
     implementation project(":context-mongo-repository")
     implementation project(":data-protector")
     implementation project(":method-config")
+    implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
+    implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
 }

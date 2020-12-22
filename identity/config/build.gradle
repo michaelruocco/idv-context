@@ -5,4 +5,5 @@ dependencies {
 
     implementation project(":identity-in-memory-repository")
     implementation project(":identity-mongo-repository")
+    implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
 }

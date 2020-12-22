@@ -7,6 +7,7 @@ dependencies {
     api project(":identity-entities")
     api project(":method-entities")
     implementation testFixtures(project(":common-entities"))
+    implementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
 
     testImplementation testFixtures(project(":identity-entities"))
     testImplementation testFixtures(project(":method-entities"))
@@ -14,6 +15,7 @@ dependencies {
     testFixturesImplementation testFixtures(project(":identity-entities"))
     testFixturesImplementation testFixtures(project(":method-entities"))
     testFixturesImplementation testFixtures(project(":common-entities"))
+    testFixturesImplementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
     testFixturesImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"

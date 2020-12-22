@@ -1,5 +1,3 @@
 dependencies{
-    api "org.mongodb:mongo-java-driver:${mongoVersion}"
-
     implementation project(":common-use-cases")
 }

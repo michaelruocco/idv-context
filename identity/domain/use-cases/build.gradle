@@ -8,7 +8,7 @@ dependencies {
 
     implementation project(":common-entities")
     implementation project(":common-use-cases")
-    implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
+    implementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
 
     testImplementation testFixtures(project(":common-entities"))
 

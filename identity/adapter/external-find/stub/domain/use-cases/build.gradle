@@ -4,6 +4,4 @@ dependencies {
     implementation project(":common-use-cases")
     implementation testFixtures(project(":common-entities"))
     implementation testFixtures(project(":identity-use-cases"))
-
-    testImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
 }

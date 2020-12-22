@@ -14,7 +14,7 @@ dependencies {
     implementation project(":identity-use-cases")
     implementation project(":common-use-cases")
     implementation "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}"
-    implementation "com.github.michaelruocco:string-utils:${mruocStringUtilsVersion}"
+    implementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
 
     testImplementation testFixtures(project(":otp-entities"))
     testImplementation testFixtures(project(":context-entities"))
