@@ -6,14 +6,17 @@ import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodsMother;
+import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodNotFoundException;
 import uk.co.idv.method.entities.result.Result;
 import uk.co.idv.method.entities.result.ResultMother;
 import uk.co.idv.method.entities.result.ResultsMother;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -138,6 +141,48 @@ class OtpTest {
                 .ignoringFields("deliveryMethods")
                 .isEqualTo(otp);
         assertThat(updated.getDeliveryMethods()).isEqualTo(replaced);
+    }
+
+    @Test
+    void shouldGetReturnTrueIfMethodWithIdIsPresent() {
+        DeliveryMethod expectedMethod = DeliveryMethodMother.build();
+        Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.with(expectedMethod));
+
+        boolean contains = otp.containsDeliveryMethod(expectedMethod.getId());
+
+        assertThat(contains).isTrue();
+    }
+
+    @Test
+    void shouldGetReturnFalseIfMethodWithIdIsNotPresent() {
+        UUID id = UUID.randomUUID();
+        Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.empty());
+
+        boolean contains = otp.containsDeliveryMethod(id);
+
+        assertThat(contains).isFalse();
+    }
+
+    @Test
+    void shouldGetDeliveryMethodFromDeliveryMethodsIfMethodWithIdIsPresent() {
+        DeliveryMethod expectedMethod = DeliveryMethodMother.build();
+        Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.with(expectedMethod));
+
+        DeliveryMethod found = otp.getDeliveryMethod(expectedMethod.getId());
+
+        assertThat(found).isEqualTo(expectedMethod);
+    }
+
+    @Test
+    void shouldThrowExceptionFromGetDeliveryMethodFromDeliveryMethodsIfMethodWithIdIsNotPresent() {
+        UUID id = UUID.randomUUID();
+        Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.empty());
+
+        Throwable error = catchThrowable(() -> otp.getDeliveryMethod(id));
+
+        assertThat(error)
+                .isInstanceOf(DeliveryMethodNotFoundException.class)
+                .hasMessage(id.toString());
     }
 
     @Test

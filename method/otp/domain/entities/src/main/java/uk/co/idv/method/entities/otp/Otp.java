@@ -8,6 +8,7 @@ import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
+import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodNotFoundException;
 import uk.co.idv.method.entities.result.Result;
 import uk.co.idv.method.entities.result.Results;
 
@@ -51,6 +52,14 @@ public class Otp implements Method {
     @Override
     public OtpConfig getConfig() {
         return config;
+    }
+
+    public boolean containsDeliveryMethod(UUID id) {
+        return findDeliveryMethod(id).isPresent();
+    }
+
+    public DeliveryMethod getDeliveryMethod(UUID id) {
+        return findDeliveryMethod(id).orElseThrow(() -> new DeliveryMethodNotFoundException(id));
     }
 
     public Optional<DeliveryMethod> findDeliveryMethod(UUID id) {
