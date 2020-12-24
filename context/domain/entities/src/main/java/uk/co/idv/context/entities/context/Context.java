@@ -95,6 +95,12 @@ public class Context {
         return sequences.stream().map(query).flatMap(Optional::stream);
     }
 
+    public Context withOnlyEligibleAndIncompleteSequences() {
+        return toBuilder()
+                .sequences(sequences.withEligibleAndIncompleteOnly())
+                .build();
+    }
+
     public boolean query(Predicate<MethodSequence> predicate) {
         return sequences.stream().anyMatch(predicate);
     }

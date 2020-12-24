@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.context.sequence;
 import uk.co.idv.method.entities.method.Method;
 
 import java.time.Duration;
+import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 import static org.mockito.BDDMockito.given;
@@ -12,6 +13,24 @@ public interface MockSequenceMother {
 
     static Sequence mockSequence() {
         return mock(Sequence.class);
+    }
+
+    static Sequence givenEligibleIncompleteSequence() {
+        Sequence sequence = givenEligibleSequence();
+        given(sequence.isComplete()).willReturn(false);
+        return sequence;
+    }
+
+    static Sequence givenIneligibleIncompleteSequence() {
+        Sequence sequence = givenIneligibleSequence();
+        given(sequence.isComplete()).willReturn(false);
+        return sequence;
+    }
+
+    static Sequence givenEligibleCompleteSequence() {
+        Sequence sequence = givenEligibleSequence();
+        given(sequence.isComplete()).willReturn(true);
+        return sequence;
     }
 
     static Sequence givenEligibleSequence() {
@@ -53,6 +72,12 @@ public interface MockSequenceMother {
     static Sequence givenSequenceWith(Duration duration) {
         Sequence sequence = mockSequence();
         given(sequence.getDuration()).willReturn(duration);
+        return sequence;
+    }
+
+    static Sequence givenSequenceWithNextMethod(Method method) {
+        Sequence sequence = mockSequence();
+        given(sequence.getNext(method.getName())).willReturn(Optional.of(method));
         return sequence;
     }
 

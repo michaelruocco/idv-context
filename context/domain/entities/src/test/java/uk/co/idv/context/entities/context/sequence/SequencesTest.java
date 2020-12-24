@@ -1,7 +1,9 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
 import java.util.function.UnaryOperator;
@@ -9,11 +11,15 @@ import java.util.function.UnaryOperator;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenCompleteSequence;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenEligibleCompleteSequence;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenEligibleIncompleteSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenEligibleSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIncompleteSequence;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIneligibleIncompleteSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIneligibleSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWith;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWithCompletedCount;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWithNextMethod;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSuccessfulSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenUnsuccessfulSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenUpdatedSequence;
@@ -160,6 +166,30 @@ class SequencesTest {
         long count = sequences.getCompletedMethodCount();
 
         assertThat(count).isEqualTo(3);
+    }
+
+    @Test
+    void shouldReturnEligibleAndIncompleteSequences() {
+        Sequence eligibleIncomplete = givenEligibleIncompleteSequence();
+        Sequence eligibleComplete = givenEligibleCompleteSequence();
+        Sequence ineligibleIncomplete = givenIneligibleIncompleteSequence();
+        Sequences sequences = SequencesMother.with(eligibleIncomplete, eligibleComplete, ineligibleIncomplete);
+
+        Sequences eligibleIncompleteSequences = sequences.withEligibleAndIncompleteOnly();
+
+        assertThat(eligibleIncompleteSequences).containsExactly(eligibleIncomplete);
+    }
+
+    @Test
+    void shouldReturnNextMethodsMatchingNameIfPresent() {
+        Method method = FakeMethodMother.build();
+        Sequence sequence1 = givenCompleteSequence();
+        Sequence sequence2 = givenSequenceWithNextMethod(method);
+        Sequences sequences = SequencesMother.with(sequence1, sequence2);
+
+        Methods methods = sequences.getNextMethods(method.getName());
+
+        assertThat(methods).containsExactly(method);
     }
 
 }
