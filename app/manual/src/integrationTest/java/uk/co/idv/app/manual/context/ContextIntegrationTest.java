@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.EligibleMethodsContext;
+import uk.co.idv.context.entities.context.EligibleMethodsContextRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.usecases.context.ContextExpiredException;
@@ -12,6 +14,8 @@ import uk.co.idv.context.usecases.policy.NoContextPoliciesConfiguredException;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
 import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
+import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
+import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -170,6 +174,27 @@ class ContextIntegrationTest {
 
         assertThat(error.getId()).isEqualTo(id);
         assertThat(error.getExpiry()).isEqualTo(created.getExpiry());
+    }
+
+    @Test
+    void shouldReturnEligibleMethodsContext() {
+        MethodPolicy policy = FakeMethodPolicyMother.build();
+        CreateContextRequest request = FacadeCreateContextRequestMother.build();
+        harness.givenContextPolicyExistsForChannel(request.getChannelId(), policy);
+        harness.givenIdentityExistsForAliases(request.getAliases());
+        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        Context created = application.create(request);
+        EligibleMethodsContextRequest eligibleMethodsRequest = EligibleMethodsContextRequest.builder()
+                .contextId(created.getId())
+                .methodName(policy.getName())
+                .build();
+
+        EligibleMethodsContext context = application.findEligibleMethodsContext(eligibleMethodsRequest);
+
+        assertThat(context.getId()).isEqualTo(created.getId());
+        assertThat(context.getActivity()).isEqualTo(created.getActivity());
+        assertThat(context.getMethods()).isEqualTo(created.getNextMethods(policy.getName()));
+        assertThat(context.isProtectSensitiveData()).isEqualTo(created.isProtectSensitiveData());
     }
 
 }

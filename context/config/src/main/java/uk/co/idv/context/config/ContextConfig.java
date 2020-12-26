@@ -12,6 +12,7 @@ import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.ContextService;
 import uk.co.idv.context.usecases.context.CreateContext;
 import uk.co.idv.context.usecases.context.CreateContextRequestConverter;
+import uk.co.idv.context.usecases.context.EligibleMethodsService;
 import uk.co.idv.context.usecases.context.FindContext;
 import uk.co.idv.context.usecases.context.MdcPopulator;
 import uk.co.idv.context.usecases.context.event.create.CompositeContextCreatedHandler;
@@ -59,6 +60,7 @@ public class ContextConfig {
                 .identityLoader(identityLoader())
                 .contextService(contextService())
                 .resultService(resultService())
+                .eligibleMethodsService(eligibleMethodsService())
                 .build();
     }
 
@@ -87,6 +89,10 @@ public class ContextConfig {
                 .repository(contextRepository)
                 .resultUpdater(new ContextResultUpdater())
                 .build();
+    }
+
+    private EligibleMethodsService eligibleMethodsService() {
+        return new EligibleMethodsService(contextService());
     }
 
     private IdentityLoader identityLoader() {

@@ -3,6 +3,10 @@ package uk.co.idv.context.usecases.context;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.EligibleMethodsContext;
+import uk.co.idv.context.entities.context.EligibleMethodsContextMother;
+import uk.co.idv.context.entities.context.EligibleMethodsContextRequest;
+import uk.co.idv.context.entities.context.EligibleMethodsContextRequestMother;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
@@ -25,11 +29,13 @@ class ContextFacadeTest {
     private final IdentityLoader identityLoader = mock(IdentityLoader.class);
     private final ContextService contextService = mock(ContextService.class);
     private final ResultService resultService = mock(ResultService.class);
+    private final EligibleMethodsService eligibleMethodsService = mock(EligibleMethodsService.class);
 
     private final ContextFacade facade = ContextFacade.builder()
             .identityLoader(identityLoader)
             .contextService(contextService)
             .resultService(resultService)
+            .eligibleMethodsService(eligibleMethodsService)
             .build();
 
     @Test
@@ -88,6 +94,17 @@ class ContextFacadeTest {
         verify(resultService).record(captor.capture());
         ServiceRecordResultRequest serviceRequest = captor.getValue();
         assertThat(serviceRequest.getResult()).isEqualTo(facadeRequest.getResult());
+    }
+
+    @Test
+    void shouldReturnEligibleMethodContext() {
+        EligibleMethodsContextRequest request = EligibleMethodsContextRequestMother.build();
+        EligibleMethodsContext expectedContext = EligibleMethodsContextMother.build();
+        given(eligibleMethodsService.find(request)).willReturn(expectedContext);
+
+        EligibleMethodsContext context = facade.findEligibleMethodsContext(request);
+
+        assertThat(context).isEqualTo(expectedContext);
     }
 
     private ServiceCreateContextRequest givenIdentityRequestLoaded(CreateContextRequest initialRequest) {
