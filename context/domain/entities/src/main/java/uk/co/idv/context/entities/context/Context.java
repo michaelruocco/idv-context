@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.With;
 import uk.co.idv.context.entities.activity.Activity;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
+import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
@@ -99,6 +100,10 @@ public class Context {
         return toBuilder()
                 .sequences(sequences.withEligibleAndIncompleteOnly())
                 .build();
+    }
+
+    public Methods getNextMethods(String methodName) {
+        return sequences.getNextMethods(methodName);
     }
 
     public boolean query(Predicate<MethodSequence> predicate) {

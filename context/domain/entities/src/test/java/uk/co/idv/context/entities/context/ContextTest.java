@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.context;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
+import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.entities.context.sequence.SequencesMother;
@@ -357,6 +358,34 @@ class ContextTest {
         assertThat(hasMoreCompletedMethods).isFalse();
     }
 
+    @Test
+    void shouldReturnEligibleIncompleteSequences() {
+        Sequences original = mock(Sequences.class);
+        Sequences eligibleIncomplete = mock(Sequences.class);
+        given(original.withEligibleAndIncompleteOnly()).willReturn(eligibleIncomplete);
+        Context context = ContextMother.withSequences(original);
+
+        Context updated = context.withOnlyEligibleAndIncompleteSequences();
+
+        assertThat(updated)
+                .usingRecursiveComparison()
+                .ignoringFields("sequences")
+                .isEqualTo(context);
+        assertThat(updated.getSequences()).isEqualTo(eligibleIncomplete);
+    }
+
+    @Test
+    void shouldReturnNextMethods() {
+        String methodName = "method-name";
+        Methods expectedNextMethods = mock(Methods.class);
+        Sequences sequences = givenSequencesWithNextMethods(methodName, expectedNextMethods);
+        Context context = ContextMother.withSequences(sequences);
+
+        Methods nextMethods = context.getNextMethods(methodName);
+
+        assertThat(nextMethods).isEqualTo(expectedNextMethods);
+    }
+
     static Sequences givenUpdatedSequences(UnaryOperator<Method> function, Sequences sequences) {
         Sequences updated = mock(Sequences.class);
         given(sequences.updateMethods(function)).willReturn(updated);
@@ -372,6 +401,12 @@ class ContextTest {
     static Sequences givenSequencesWithCompletedMethodCount(long count) {
         Sequences sequences = mock(Sequences.class);
         given(sequences.getCompletedMethodCount()).willReturn(count);
+        return sequences;
+    }
+
+    static Sequences givenSequencesWithNextMethods(String methodName, Methods methods) {
+        Sequences sequences = mock(Sequences.class);
+        given(sequences.getNextMethods(methodName)).willReturn(methods);
         return sequences;
     }
 

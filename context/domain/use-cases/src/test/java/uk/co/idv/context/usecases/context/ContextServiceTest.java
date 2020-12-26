@@ -43,4 +43,17 @@ class ContextServiceTest {
         assertThat(context).isEqualTo(expectedContext);
     }
 
+    @Test
+    void shouldFindContextWithEligibleAndIncompleteSequences() {
+        UUID id = UUID.randomUUID();
+        Context originalContext = mock(Context.class);
+        given(findContext.find(id)).willReturn(originalContext);
+        Context expectedContext = mock(Context.class);
+        given(originalContext.withOnlyEligibleAndIncompleteSequences()).willReturn(expectedContext);
+
+        Context context = service.findWithEligibleIncompleteMethods(id);
+
+        assertThat(context).isEqualTo(expectedContext);
+    }
+
 }
