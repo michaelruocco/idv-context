@@ -9,6 +9,7 @@ import uk.co.idv.context.adapter.json.context.sequence.SequenceModule;
 import uk.co.idv.context.adapter.json.error.ContextErrorModule;
 import uk.co.idv.context.adapter.json.result.RecordRequestModule;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.EligibleMethodsContext;
 import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 
@@ -29,6 +30,7 @@ public class ContextModule extends SimpleModule {
         setMixInAnnotation(Context.class, ContextMixin.class);
 
         addDeserializer(Context.class, new ContextDeserializer());
+        addDeserializer(EligibleMethodsContext.class, new EligibleMethodsContextDeserializer());
     }
 
     @Override

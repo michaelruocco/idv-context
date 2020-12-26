@@ -1,0 +1,23 @@
+{
+  "id": "2948aadc-7f63-4b00-875b-77a4e6608e5c",
+  "activity": {
+    "name": "simple-activity",
+    "timestamp": "2020-06-06T12:36:15.179Z"
+  },
+  "methods": [
+    {
+      "name": "fake-method",
+      "eligibility": {
+        "eligible": true
+      },
+      "config": {
+        "maxNumberOfAttempts": 3,
+        "duration": 300000,
+        "fakeValue": "fake"
+      },
+      "complete": false,
+      "successful": false
+    }
+  ],
+  "protectSensitiveData": true
+}
