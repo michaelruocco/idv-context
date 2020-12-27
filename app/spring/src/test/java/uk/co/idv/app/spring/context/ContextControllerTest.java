@@ -1,11 +1,14 @@
 package uk.co.idv.app.spring.context;
 
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
+import uk.co.idv.context.entities.context.NextMethods;
+import uk.co.idv.context.entities.context.NextMethodsRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
@@ -17,8 +20,10 @@ import java.util.UUID;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.entry;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.verify;
 
 class ContextControllerTest {
 
@@ -68,6 +73,40 @@ class ContextControllerTest {
         Context context = controller.recordResult(request);
 
         assertThat(context).isEqualTo(expectedContext);
+    }
+
+    @Test
+    void shouldPassIdToNextMethodsRequest() {
+        UUID id = UUID.randomUUID();
+
+        controller.getNextMethods(id, "fake-method");
+
+        ArgumentCaptor<NextMethodsRequest> captor = ArgumentCaptor.forClass(NextMethodsRequest.class);
+        verify(application).findNextMethods(captor.capture());
+        NextMethodsRequest request = captor.getValue();
+        assertThat(request.getContextId()).isEqualTo(id);
+    }
+
+    @Test
+    void shouldPassMethodNameToNextMethodsRequest() {
+        String methodName = "fake-method";
+
+        controller.getNextMethods(UUID.randomUUID(), methodName);
+
+        ArgumentCaptor<NextMethodsRequest> captor = ArgumentCaptor.forClass(NextMethodsRequest.class);
+        verify(application).findNextMethods(captor.capture());
+        NextMethodsRequest request = captor.getValue();
+        assertThat(request.getMethodName()).isEqualTo(methodName);
+    }
+
+    @Test
+    void shouldReturnNextMethods() {
+        NextMethods expectedNextMethods = mock(NextMethods.class);
+        given(application.findNextMethods(any(NextMethodsRequest.class))).willReturn(expectedNextMethods);
+
+        NextMethods nextMethods = controller.getNextMethods(UUID.randomUUID(), "fake-method");
+
+        assertThat(nextMethods).isEqualTo(expectedNextMethods);
     }
 
     private Context givenContextCreatedFor(CreateContextRequest request) {

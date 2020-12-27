@@ -6,13 +6,13 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class EligibleMethodsContextRequestTest {
+class NextMethodsRequestTest {
 
     @Test
     void shouldReturnContextId() {
         UUID contextId = UUID.randomUUID();
 
-        EligibleMethodsContextRequest request = EligibleMethodsContextRequest.builder()
+        NextMethodsRequest request = NextMethodsRequest.builder()
                 .contextId(contextId)
                 .build();
 
@@ -23,7 +23,7 @@ class EligibleMethodsContextRequestTest {
     void shouldReturnMethodName() {
         String methodName = "method-name";
 
-        EligibleMethodsContextRequest request = EligibleMethodsContextRequest.builder()
+        NextMethodsRequest request = NextMethodsRequest.builder()
                 .methodName(methodName)
                 .build();
 

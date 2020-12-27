@@ -9,13 +9,13 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 
-class EligibleMethodsContextTest {
+class NextNextMethodsTest {
 
     @Test
     void shouldReturnId() {
         UUID id = UUID.randomUUID();
 
-        EligibleMethodsContext context = EligibleMethodsContext.builder()
+        NextMethods context = NextMethods.builder()
                 .id(id)
                 .build();
 
@@ -26,7 +26,7 @@ class EligibleMethodsContextTest {
     void shouldReturnActivity() {
         Activity activity = mock(Activity.class);
 
-        EligibleMethodsContext context = EligibleMethodsContext.builder()
+        NextMethods context = NextMethods.builder()
                 .activity(activity)
                 .build();
 
@@ -37,7 +37,7 @@ class EligibleMethodsContextTest {
     void shouldReturnMethods() {
         Methods methods = mock(Methods.class);
 
-        EligibleMethodsContext context = EligibleMethodsContext.builder()
+        NextMethods context = NextMethods.builder()
                 .methods(methods)
                 .build();
 
@@ -46,7 +46,7 @@ class EligibleMethodsContextTest {
 
     @Test
     void shouldReturnProtectSensitiveData() {
-        EligibleMethodsContext context = EligibleMethodsContext.builder()
+        NextMethods context = NextMethods.builder()
                 .protectSensitiveData(true)
                 .build();
 

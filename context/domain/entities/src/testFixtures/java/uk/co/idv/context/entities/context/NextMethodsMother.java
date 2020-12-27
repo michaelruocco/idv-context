@@ -6,14 +6,14 @@ import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.util.UUID;
 
-public interface EligibleMethodsContextMother {
+public interface NextMethodsMother {
 
-    static EligibleMethodsContext build() {
+    static NextMethods build() {
         return builder().build();
     }
 
-    static EligibleMethodsContext.EligibleMethodsContextBuilder builder() {
-        return EligibleMethodsContext.builder()
+    static NextMethods.NextMethodsBuilder builder() {
+        return NextMethods.builder()
                 .id(UUID.fromString("2948aadc-7f63-4b00-875b-77a4e6608e5c"))
                 .protectSensitiveData(true)
                 .activity(DefaultActivityMother.build())

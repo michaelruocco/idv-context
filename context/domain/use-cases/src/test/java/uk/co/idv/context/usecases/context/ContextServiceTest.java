@@ -51,7 +51,7 @@ class ContextServiceTest {
         Context expectedContext = mock(Context.class);
         given(originalContext.withOnlyEligibleAndIncompleteSequences()).willReturn(expectedContext);
 
-        Context context = service.findWithEligibleIncompleteMethods(id);
+        Context context = service.findWithEligibleIncompleteSequences(id);
 
         assertThat(context).isEqualTo(expectedContext);
     }

@@ -7,7 +7,7 @@ import java.util.UUID;
 
 @Builder
 @Data
-public class EligibleMethodsContextRequest {
+public class NextMethodsRequest {
 
     private final UUID contextId;
     private final String methodName;

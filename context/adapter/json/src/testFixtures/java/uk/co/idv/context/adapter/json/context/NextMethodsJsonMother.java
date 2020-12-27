@@ -2,10 +2,10 @@ package uk.co.idv.context.adapter.json.context;
 
 import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
-public interface EligibleMethodsContextJsonMother {
+public interface NextMethodsJsonMother {
 
     static String build() {
-        return loadContentFromClasspath("context/eligible-methods-context.json");
+        return loadContentFromClasspath("context/next-methods.json");
     }
 
 }

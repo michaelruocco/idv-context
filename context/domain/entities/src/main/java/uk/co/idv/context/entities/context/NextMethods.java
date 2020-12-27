@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Builder
 @Data
-public class EligibleMethodsContext {
+public class NextMethods {
 
     private final UUID id;
     private final Activity activity;

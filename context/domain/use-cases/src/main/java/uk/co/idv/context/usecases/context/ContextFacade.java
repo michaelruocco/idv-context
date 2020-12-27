@@ -3,8 +3,8 @@ package uk.co.idv.context.usecases.context;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.EligibleMethodsContext;
-import uk.co.idv.context.entities.context.EligibleMethodsContextRequest;
+import uk.co.idv.context.entities.context.NextMethods;
+import uk.co.idv.context.entities.context.NextMethodsRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
@@ -23,7 +23,7 @@ public class ContextFacade {
     private final IdentityLoader identityLoader;
     private final ContextService contextService;
     private final ResultService resultService;
-    private final EligibleMethodsService eligibleMethodsService;
+    private final NextMethodsService nextMethodsService;
 
     public Context create(CreateContextRequest request) {
         Instant start = Instant.now();
@@ -45,8 +45,8 @@ public class ContextFacade {
         return contextService.find(id);
     }
 
-    public EligibleMethodsContext findEligibleMethodsContext(EligibleMethodsContextRequest request) {
-        return eligibleMethodsService.find(request);
+    public NextMethods findNextMethods(NextMethodsRequest request) {
+        return nextMethodsService.find(request);
     }
 
 }

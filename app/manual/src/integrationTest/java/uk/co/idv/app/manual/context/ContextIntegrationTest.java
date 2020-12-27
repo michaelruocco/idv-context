@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.EligibleMethodsContext;
-import uk.co.idv.context.entities.context.EligibleMethodsContextRequest;
+import uk.co.idv.context.entities.context.NextMethods;
+import uk.co.idv.context.entities.context.NextMethodsRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.usecases.context.ContextExpiredException;
@@ -177,24 +177,24 @@ class ContextIntegrationTest {
     }
 
     @Test
-    void shouldReturnEligibleMethodsContext() {
+    void shouldReturnNextMethods() {
         MethodPolicy policy = FakeMethodPolicyMother.build();
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(request.getChannelId(), policy);
         harness.givenIdentityExistsForAliases(request.getAliases());
         harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
         Context created = application.create(request);
-        EligibleMethodsContextRequest eligibleMethodsRequest = EligibleMethodsContextRequest.builder()
+        NextMethodsRequest nextMethodsRequest = NextMethodsRequest.builder()
                 .contextId(created.getId())
                 .methodName(policy.getName())
                 .build();
 
-        EligibleMethodsContext context = application.findEligibleMethodsContext(eligibleMethodsRequest);
+        NextMethods nextMethods = application.findNextMethods(nextMethodsRequest);
 
-        assertThat(context.getId()).isEqualTo(created.getId());
-        assertThat(context.getActivity()).isEqualTo(created.getActivity());
-        assertThat(context.getMethods()).isEqualTo(created.getNextMethods(policy.getName()));
-        assertThat(context.isProtectSensitiveData()).isEqualTo(created.isProtectSensitiveData());
+        assertThat(nextMethods.getId()).isEqualTo(created.getId());
+        assertThat(nextMethods.getActivity()).isEqualTo(created.getActivity());
+        assertThat(nextMethods.getMethods()).isEqualTo(created.getNextMethods(policy.getName()));
+        assertThat(nextMethods.isProtectSensitiveData()).isEqualTo(created.isProtectSensitiveData());
     }
 
 }

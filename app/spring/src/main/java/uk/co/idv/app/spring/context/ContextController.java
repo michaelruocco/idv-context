@@ -8,9 +8,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.NextMethods;
+import uk.co.idv.context.entities.context.NextMethodsRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
 
@@ -38,6 +41,16 @@ public class ContextController {
     @GetMapping("/{id}")
     public Context getContext(@PathVariable("id") UUID id) {
         return application.findContext(id);
+    }
+
+    @GetMapping("/{id}/nextMethods")
+    public NextMethods getNextMethods(@PathVariable("id") UUID id,
+                                      @RequestParam("methodName") String methodName) {
+        NextMethodsRequest request = NextMethodsRequest.builder()
+                .contextId(id)
+                .methodName(methodName)
+                .build();
+        return application.findNextMethods(request);
     }
 
     @PatchMapping("/results")
