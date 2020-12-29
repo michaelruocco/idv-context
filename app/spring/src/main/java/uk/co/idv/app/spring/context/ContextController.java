@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.NextMethods;
-import uk.co.idv.context.entities.context.NextMethodsRequest;
+import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
 
@@ -44,9 +44,9 @@ public class ContextController {
     }
 
     @GetMapping("/{id}/nextMethods")
-    public NextMethods getNextMethods(@PathVariable("id") UUID id,
-                                      @RequestParam("methodName") String methodName) {
-        NextMethodsRequest request = NextMethodsRequest.builder()
+    public Verification getNextMethods(@PathVariable("id") UUID id,
+                                       @RequestParam("methodName") String methodName) {
+        CreateVerificationRequest request = CreateVerificationRequest.builder()
                 .contextId(id)
                 .methodName(methodName)
                 .build();

@@ -7,8 +7,8 @@ import org.springframework.http.ResponseEntity;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
-import uk.co.idv.context.entities.context.NextMethods;
-import uk.co.idv.context.entities.context.NextMethodsRequest;
+import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
@@ -81,9 +81,9 @@ class ContextControllerTest {
 
         controller.getNextMethods(id, "fake-method");
 
-        ArgumentCaptor<NextMethodsRequest> captor = ArgumentCaptor.forClass(NextMethodsRequest.class);
+        ArgumentCaptor<CreateVerificationRequest> captor = ArgumentCaptor.forClass(CreateVerificationRequest.class);
         verify(application).findNextMethods(captor.capture());
-        NextMethodsRequest request = captor.getValue();
+        CreateVerificationRequest request = captor.getValue();
         assertThat(request.getContextId()).isEqualTo(id);
     }
 
@@ -93,20 +93,20 @@ class ContextControllerTest {
 
         controller.getNextMethods(UUID.randomUUID(), methodName);
 
-        ArgumentCaptor<NextMethodsRequest> captor = ArgumentCaptor.forClass(NextMethodsRequest.class);
+        ArgumentCaptor<CreateVerificationRequest> captor = ArgumentCaptor.forClass(CreateVerificationRequest.class);
         verify(application).findNextMethods(captor.capture());
-        NextMethodsRequest request = captor.getValue();
+        CreateVerificationRequest request = captor.getValue();
         assertThat(request.getMethodName()).isEqualTo(methodName);
     }
 
     @Test
     void shouldReturnNextMethods() {
-        NextMethods expectedNextMethods = mock(NextMethods.class);
-        given(application.findNextMethods(any(NextMethodsRequest.class))).willReturn(expectedNextMethods);
+        Verification expectedVerification = mock(Verification.class);
+        given(application.findNextMethods(any(CreateVerificationRequest.class))).willReturn(expectedVerification);
 
-        NextMethods nextMethods = controller.getNextMethods(UUID.randomUUID(), "fake-method");
+        Verification verification = controller.getNextMethods(UUID.randomUUID(), "fake-method");
 
-        assertThat(nextMethods).isEqualTo(expectedNextMethods);
+        assertThat(verification).isEqualTo(expectedVerification);
     }
 
     private Context givenContextCreatedFor(CreateContextRequest request) {

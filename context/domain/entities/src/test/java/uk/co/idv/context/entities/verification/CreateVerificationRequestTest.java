@@ -1,4 +1,4 @@
-package uk.co.idv.context.entities.context;
+package uk.co.idv.context.entities.verification;
 
 import org.junit.jupiter.api.Test;
 
@@ -6,13 +6,13 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NextMethodsRequestTest {
+class CreateVerificationRequestTest {
 
     @Test
     void shouldReturnContextId() {
         UUID contextId = UUID.randomUUID();
 
-        NextMethodsRequest request = NextMethodsRequest.builder()
+        CreateVerificationRequest request = CreateVerificationRequest.builder()
                 .contextId(contextId)
                 .build();
 
@@ -23,7 +23,7 @@ class NextMethodsRequestTest {
     void shouldReturnMethodName() {
         String methodName = "method-name";
 
-        NextMethodsRequest request = NextMethodsRequest.builder()
+        CreateVerificationRequest request = CreateVerificationRequest.builder()
                 .methodName(methodName)
                 .build();
 

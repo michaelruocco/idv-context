@@ -18,7 +18,7 @@ public interface Method {
 
     MethodConfig getConfig();
 
-    Method add(Result result);
+    Method add(Verification result);
 
     default boolean hasName(String name) {
         return getName().equals(name);

@@ -12,7 +12,7 @@ import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.ContextService;
 import uk.co.idv.context.usecases.context.CreateContext;
 import uk.co.idv.context.usecases.context.CreateContextRequestConverter;
-import uk.co.idv.context.usecases.context.NextMethodsService;
+import uk.co.idv.context.usecases.context.VerificationService;
 import uk.co.idv.context.usecases.context.FindContext;
 import uk.co.idv.context.usecases.context.MdcPopulator;
 import uk.co.idv.context.usecases.context.event.create.CompositeContextCreatedHandler;
@@ -60,7 +60,7 @@ public class ContextConfig {
                 .identityLoader(identityLoader())
                 .contextService(contextService())
                 .resultService(resultService())
-                .nextMethodsService(nextMethodsService())
+                .verificationService(verificationService())
                 .build();
     }
 
@@ -91,8 +91,12 @@ public class ContextConfig {
                 .build();
     }
 
-    private NextMethodsService nextMethodsService() {
-        return new NextMethodsService(contextService());
+    private VerificationService verificationService() {
+        return VerificationService.builder()
+                .contextService(contextService())
+                .idGenerator(idGenerator)
+                .clock(clock)
+                .build();
     }
 
     private IdentityLoader identityLoader() {

@@ -4,8 +4,8 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.NextMethods;
-import uk.co.idv.context.entities.context.NextMethodsRequest;
+import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.usecases.context.ContextExpiredException;
@@ -183,18 +183,18 @@ class ContextIntegrationTest {
         harness.givenContextPolicyExistsForChannel(request.getChannelId(), policy);
         harness.givenIdentityExistsForAliases(request.getAliases());
         harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
-        Context created = application.create(request);
-        NextMethodsRequest nextMethodsRequest = NextMethodsRequest.builder()
-                .contextId(created.getId())
+        Context context = application.create(request);
+        CreateVerificationRequest createVerificationRequest = CreateVerificationRequest.builder()
+                .contextId(context.getId())
                 .methodName(policy.getName())
                 .build();
 
-        NextMethods nextMethods = application.findNextMethods(nextMethodsRequest);
+        Verification verification = application.findNextMethods(createVerificationRequest);
 
-        assertThat(nextMethods.getId()).isEqualTo(created.getId());
-        assertThat(nextMethods.getActivity()).isEqualTo(created.getActivity());
-        assertThat(nextMethods.getMethods()).isEqualTo(created.getNextMethods(policy.getName()));
-        assertThat(nextMethods.isProtectSensitiveData()).isEqualTo(created.isProtectSensitiveData());
+        assertThat(verification.getContextId()).isEqualTo(context.getId());
+        assertThat(verification.getActivity()).isEqualTo(context.getActivity());
+        assertThat(verification.getMethods()).isEqualTo(context.getNextMethods(policy.getName()));
+        assertThat(verification.isProtectSensitiveData()).isEqualTo(context.isProtectSensitiveData());
     }
 
 }

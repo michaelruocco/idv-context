@@ -3,10 +3,10 @@ package uk.co.idv.context.usecases.context;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.NextMethods;
-import uk.co.idv.context.entities.context.NextMethodsMother;
-import uk.co.idv.context.entities.context.NextMethodsRequest;
-import uk.co.idv.context.entities.context.NextMethodsRequestMother;
+import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.verification.VerificationMother;
+import uk.co.idv.context.entities.verification.CreateVerificationRequest;
+import uk.co.idv.context.entities.verification.CreateVerificationRequestMother;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
@@ -29,13 +29,13 @@ class ContextFacadeTest {
     private final IdentityLoader identityLoader = mock(IdentityLoader.class);
     private final ContextService contextService = mock(ContextService.class);
     private final ResultService resultService = mock(ResultService.class);
-    private final NextMethodsService nextMethodsService = mock(NextMethodsService.class);
+    private final VerificationService verificationService = mock(VerificationService.class);
 
     private final ContextFacade facade = ContextFacade.builder()
             .identityLoader(identityLoader)
             .contextService(contextService)
             .resultService(resultService)
-            .nextMethodsService(nextMethodsService)
+            .verificationService(verificationService)
             .build();
 
     @Test
@@ -97,12 +97,12 @@ class ContextFacadeTest {
     }
 
     @Test
-    void shouldReturnEligibleMethodContext() {
-        NextMethodsRequest request = NextMethodsRequestMother.build();
-        NextMethods expectedContext = NextMethodsMother.build();
-        given(nextMethodsService.find(request)).willReturn(expectedContext);
+    void shouldReturnCreateVerification() {
+        CreateVerificationRequest request = CreateVerificationRequestMother.build();
+        Verification expectedContext = VerificationMother.incomplete();
+        given(verificationService.create(request)).willReturn(expectedContext);
 
-        NextMethods context = facade.findNextMethods(request);
+        Verification context = facade.createVerification(request);
 
         assertThat(context).isEqualTo(expectedContext);
     }

@@ -7,8 +7,8 @@ import uk.co.idv.common.adapter.json.error.handler.CompositeErrorHandler;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.config.ContextConfig;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.NextMethods;
-import uk.co.idv.context.entities.context.NextMethodsRequest;
+import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
@@ -159,8 +159,8 @@ public class Application {
         return contextFacade.find(id);
     }
 
-    public NextMethods findNextMethods(NextMethodsRequest request) {
-        return contextFacade.findNextMethods(request);
+    public Verification findNextMethods(CreateVerificationRequest request) {
+        return contextFacade.createVerification(request);
     }
 
     public Context record(FacadeRecordResultRequest request) {
