@@ -7,15 +7,10 @@ import uk.co.idv.common.adapter.protector.DefaultContextDataProtector;
 import uk.co.idv.common.adapter.protector.DataProtector;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.adapter.json.error.handler.ContextErrorHandler;
-import uk.co.idv.context.usecases.context.verification.CompleteVerification;
-import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.ContextService;
 import uk.co.idv.context.usecases.context.CreateContext;
 import uk.co.idv.context.usecases.context.CreateContextRequestConverter;
-import uk.co.idv.context.usecases.context.verification.CreateVerification;
-import uk.co.idv.context.usecases.context.verification.GetVerification;
-import uk.co.idv.context.usecases.context.verification.VerificationService;
 import uk.co.idv.context.usecases.context.FindContext;
 import uk.co.idv.context.usecases.context.MdcPopulator;
 import uk.co.idv.context.usecases.context.event.create.CompositeContextCreatedHandler;
@@ -56,14 +51,6 @@ public class ContextConfig {
     private final CreateEligibility createEligibility;
     private final LockoutService lockoutService;
 
-    public ContextFacade getFacade() {
-        return ContextFacade.builder()
-                .identityLoader(identityLoader())
-                .contextService(contextService())
-                .verificationService(verificationService())
-                .build();
-    }
-
     public ContextPoliciesPopulator policiesPopulator() {
         return new ContextPoliciesPopulator(policyService());
     }
@@ -76,17 +63,33 @@ public class ContextConfig {
         return new ContextErrorHandler();
     }
 
-    private ContextService contextService() {
+    public ContextService contextService() {
         return ContextService.builder()
                 .createContext(createContext())
                 .findContext(findContext())
                 .build();
     }
 
-    private IdentityLoader identityLoader() {
+    public IdentityLoader identityLoader() {
         return IdentityLoader.builder()
                 .createEligibility(createEligibility)
                 .policyService(policyService())
+                .build();
+    }
+
+    public FindContext findContext() {
+        return FindContext.builder()
+                .clock(clock)
+                .lockoutService(lockoutService())
+                .repository(contextRepository)
+                .mdcPopulator(mdcPopulator())
+                .build();
+    }
+
+    public ContextLockoutService lockoutService() {
+        return ContextLockoutService.builder()
+                .lockoutService(lockoutService)
+                .clock(clock)
                 .build();
     }
 
@@ -116,48 +119,6 @@ public class ContextConfig {
         );
     }
 
-    private VerificationService verificationService() {
-        return VerificationService.builder()
-                .createVerification(createVerification())
-                .completeVerification(completeVerification())
-                .getVerification(getVerification())
-                .build();
-    }
-
-    private CreateVerification createVerification() {
-        return CreateVerification.builder()
-                .findContext(findContext())
-                .repository(contextRepository)
-                .idGenerator(idGenerator)
-                .clock(clock)
-                .build();
-    }
-
-    private CompleteVerification completeVerification() {
-        return CompleteVerification.builder()
-                .findContext(findContext())
-                .lockoutService(lockoutService())
-                .repository(contextRepository)
-                .clock(clock)
-                .build();
-    }
-
-    private GetVerification getVerification() {
-        return GetVerification.builder()
-                .findContext(findContext())
-                .repository(contextRepository)
-                .build();
-    }
-
-    private FindContext findContext() {
-        return FindContext.builder()
-                .clock(clock)
-                .lockoutService(lockoutService())
-                .repository(contextRepository)
-                .mdcPopulator(mdcPopulator())
-                .build();
-    }
-
     private SequencesBuilder sequencesBuilder() {
         return new SequencesBuilder(new SequenceBuilder(methodsBuilder()));
     }
@@ -168,13 +129,6 @@ public class ContextConfig {
 
     private CreateContextRequestConverter serviceCreateContextRequestConverter() {
         return new CreateContextRequestConverter(idGenerator);
-    }
-
-    private ContextLockoutService lockoutService() {
-        return ContextLockoutService.builder()
-                .lockoutService(lockoutService)
-                .clock(clock)
-                .build();
     }
 
     private ContextCreatedHandler contextCreated() {

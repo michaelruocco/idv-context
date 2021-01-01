@@ -6,6 +6,7 @@ import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.CompositeErrorHandler;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.config.ContextConfig;
+import uk.co.idv.context.config.VerificationConfig;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
 import uk.co.idv.context.entities.verification.GetVerificationRequest;
@@ -180,8 +181,9 @@ public class Application {
     private void setUpContext(AppConfig appConfig) {
         ContextConfig contextConfig = appConfig.getContextConfig();
         this.contextPolicyService = contextConfig.policyService();
-        this.contextFacade = contextConfig.getFacade();
         this.contextPoliciesPopulator = contextConfig.policiesPopulator();
+        VerificationConfig verificationConfig = appConfig.getVerificationConfig();
+        this.contextFacade = verificationConfig.getFacade();
     }
 
     private void setUpLockout(AppConfig appConfig) {

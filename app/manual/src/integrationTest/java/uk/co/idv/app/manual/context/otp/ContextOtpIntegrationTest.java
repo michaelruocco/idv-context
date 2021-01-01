@@ -20,6 +20,7 @@ import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.otp.Otp;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.policy.OtpPolicyMother;
+import uk.co.idv.method.usecases.otp.delivery.DeliveryMethodEligibleAndEligibilityComplete;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import java.time.Duration;
@@ -83,8 +84,7 @@ class ContextOtpIntegrationTest {
         assertThat(eligibilityIncomplete).isTrue();
 
         DeliveryMethodEligibleAndEligibilityComplete deliveryMethodEligible = DeliveryMethodEligibleAndEligibilityComplete.builder()
-                .application(application)
-                .contextId(context.getId())
+                .methodsSupplier(toNextMethodsSupplier(context.getId()))
                 .deliveryMethodId(deliveryMethodId)
                 .build();
 
@@ -94,6 +94,13 @@ class ContextOtpIntegrationTest {
                 .until(deliveryMethodEligible);
 
         assertThat(deliveryMethodEligible.isSuccessful()).isTrue();
+    }
+
+    private NextMethodsSupplier toNextMethodsSupplier(UUID contextId) {
+        return NextMethodsSupplier.builder()
+                .application(application)
+                .contextId(contextId)
+                .build();
     }
 
 }
