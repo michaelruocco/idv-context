@@ -6,11 +6,9 @@ plugins {
 dependencies {
     api project(":identity-entities")
     api project(":method-entities")
-    implementation project(":context-entities")
     implementation testFixtures(project(":common-entities"))
     implementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
 
-    testImplementation testFixtures(project(":context-entities"))
     testImplementation testFixtures(project(":identity-entities"))
     testImplementation testFixtures(project(":method-entities"))
 

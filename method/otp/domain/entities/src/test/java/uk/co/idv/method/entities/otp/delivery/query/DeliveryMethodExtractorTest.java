@@ -1,15 +1,15 @@
 package uk.co.idv.method.entities.otp.delivery.query;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.ContextMother;
-import uk.co.idv.context.entities.context.sequence.SequencesMother;
+import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 import uk.co.idv.method.entities.otp.Otp;
 import uk.co.idv.method.entities.otp.OtpMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,60 +23,49 @@ class DeliveryMethodExtractorTest {
     private final DeliveryMethodExtractor extractor = new DeliveryMethodExtractor();
 
     @Test
-    void shouldReturnEmptyIfNoNextMethodPresent() {
-        Context context = ContextMother.withSequences(SequencesMother.empty());
+    void shouldReturnEmptyIfMethodsIsEmpty() {
+        Collection<Method> methods = Collections.emptyList();
 
-        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(context, deliveryMethodId);
-
-        assertThat(deliveryMethod).isEmpty();
-    }
-
-    @Test
-    void shouldReturnEmptyIfNextMethodNotOtp() {
-        Context context = ContextMother.withMethod(FakeMethodMother.build());
-
-        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(context, deliveryMethodId);
+        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(methods, deliveryMethodId);
 
         assertThat(deliveryMethod).isEmpty();
     }
 
     @Test
-    void shouldReturnEmptyIfMethodDoesNotHaveDeliveryMethodWithId() {
+    void shouldReturnEmptyIfMethodsDoesNotContainOtp() {
+        Collection<Method> methods = Collections.singleton(FakeMethodMother.build());
+
+        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(methods, deliveryMethodId);
+
+        assertThat(deliveryMethod).isEmpty();
+    }
+
+    @Test
+    void shouldReturnEmptyIfMethodsDoesNotContainMethodWithDeliveryMethodWithId() {
         UUID otherId = UUID.fromString("7ba9be2f-38f9-4cb0-b991-f1c474763be9");
         Otp otp = OtpMother.withDeliveryMethod(DeliveryMethodMother.withId(otherId));
-        Context context = ContextMother.withMethod(otp);
+        Collection<Method> methods = Collections.singleton(otp);
 
-        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(context, deliveryMethodId);
+        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(methods, deliveryMethodId);
 
         assertThat(deliveryMethod).isEmpty();
     }
 
     @Test
-    void shouldReturnOptionalDeliveryMethodIfIdMatches() {
+    void shouldReturnOptionalDeliveryMethodIfMethodsContainsOtpWithDeliveryMethodIdThatMatches() {
         DeliveryMethod expectedDeliveryMethod = DeliveryMethodMother.withId(deliveryMethodId);
-        Context context = ContextMother.withMethod(OtpMother.withDeliveryMethod(expectedDeliveryMethod));
+        Collection<Method> methods = Collections.singleton(OtpMother.withDeliveryMethod(expectedDeliveryMethod));
 
-        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(context, deliveryMethodId);
+        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(methods, deliveryMethodId);
 
         assertThat(deliveryMethod).contains(expectedDeliveryMethod);
     }
 
     @Test
-    void shouldThrowExceptionIfNoNextMethodPresent() {
-        Context context = ContextMother.withSequences(SequencesMother.empty());
+    void shouldThrowExceptionIfNoMethodPresent() {
+        Collection<Method> methods = Collections.emptyList();
 
-        Throwable error = catchThrowable(() -> extractor.extract(context, deliveryMethodId));
-
-        assertThat(error)
-                .isInstanceOf(DeliveryMethodNotFoundException.class)
-                .hasMessage(deliveryMethodId.toString());
-    }
-
-    @Test
-    void shouldThrowExceptionIfNextMethodIsNotOtp() {
-        Context context = ContextMother.withMethod(FakeMethodMother.build());
-
-        Throwable error = catchThrowable(() -> extractor.extract(context, deliveryMethodId));
+        Throwable error = catchThrowable(() -> extractor.extract(methods, deliveryMethodId));
 
         assertThat(error)
                 .isInstanceOf(DeliveryMethodNotFoundException.class)
@@ -84,12 +73,23 @@ class DeliveryMethodExtractorTest {
     }
 
     @Test
-    void shouldThrowExceptionIfDoesNotHaveDeliveryMethodWithId() {
+    void shouldThrowExceptionIfMethodsDoesNotContainOtp() {
+        Collection<Method> methods = Collections.singleton(FakeMethodMother.build());
+
+        Throwable error = catchThrowable(() -> extractor.extract(methods, deliveryMethodId));
+
+        assertThat(error)
+                .isInstanceOf(DeliveryMethodNotFoundException.class)
+                .hasMessage(deliveryMethodId.toString());
+    }
+
+    @Test
+    void shouldThrowExceptionMethodsDoesNotContainDeliveryMethodWithId() {
         UUID otherId = UUID.fromString("7ba9be2f-38f9-4cb0-b991-f1c474763be9");
         Otp otp = OtpMother.withDeliveryMethod(DeliveryMethodMother.withId(otherId));
-        Context context = ContextMother.withMethod(otp);
+        Collection<Method> methods = Collections.singleton(otp);
 
-        Throwable error = catchThrowable(() -> extractor.extract(context, deliveryMethodId));
+        Throwable error = catchThrowable(() -> extractor.extract(methods, deliveryMethodId));
 
         assertThat(error)
                 .isInstanceOf(DeliveryMethodNotFoundException.class)
@@ -97,11 +97,11 @@ class DeliveryMethodExtractorTest {
     }
 
     @Test
-    void shouldReturnDeliveryMethodIfIdMatches() {
+    void shouldReturnDeliveryMethodIfMethodsContainsDeliveryMethodWithIdThatMatches() {
         DeliveryMethod expectedDeliveryMethod = DeliveryMethodMother.withId(deliveryMethodId);
-        Context context = ContextMother.withMethod(OtpMother.withDeliveryMethod(expectedDeliveryMethod));
+        Collection<Method> methods = Collections.singleton(OtpMother.withDeliveryMethod(expectedDeliveryMethod));
 
-        DeliveryMethod deliveryMethod = extractor.extract(context, deliveryMethodId);
+        DeliveryMethod deliveryMethod = extractor.extract(methods, deliveryMethodId);
 
         assertThat(deliveryMethod).isEqualTo(expectedDeliveryMethod);
     }

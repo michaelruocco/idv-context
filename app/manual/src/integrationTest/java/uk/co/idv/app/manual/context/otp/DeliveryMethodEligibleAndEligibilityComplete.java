@@ -25,7 +25,7 @@ public class DeliveryMethodEligibleAndEligibilityComplete implements Callable<Bo
     @Override
     public Boolean call() {
         Context context = application.findContext(contextId);
-        DeliveryMethod deliveryMethod = extractor.extract(context, deliveryMethodId);
+        DeliveryMethod deliveryMethod = extractor.extract(context.getNextMethods(), deliveryMethodId);
         successful = deliveryMethod.isEligibilityCompleteAndEligible();
         return successful;
     }
