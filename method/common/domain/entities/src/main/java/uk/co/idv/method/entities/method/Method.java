@@ -2,7 +2,6 @@ package uk.co.idv.method.entities.method;
 
 
 import uk.co.idv.method.entities.eligibility.Eligibility;
-import uk.co.idv.method.entities.result.Result;
 
 import java.time.Duration;
 
@@ -12,13 +11,18 @@ public interface Method {
 
     Eligibility getEligibility();
 
-    boolean isComplete();
-
-    boolean isSuccessful();
-
     MethodConfig getConfig();
 
-    Method add(Verification result);
+    default boolean isComplete(MethodVerifications verifications) {
+        if (isSuccessful(verifications)) {
+            return true;
+        }
+        return verifications.countByName(getName()) >= getConfig().getMaxNumberOfAttempts();
+    }
+
+    default boolean isSuccessful(MethodVerifications verifications) {
+        return verifications.containsSuccessful(getName());
+    }
 
     default boolean hasName(String name) {
         return getName().equals(name);

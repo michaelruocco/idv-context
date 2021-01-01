@@ -9,8 +9,6 @@ import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
 import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodNotFoundException;
-import uk.co.idv.method.entities.result.Result;
-import uk.co.idv.method.entities.result.Results;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -24,9 +22,6 @@ public class Otp implements Method {
     private final OtpConfig config;
 
     @Builder.Default
-    private final Results results = new Results();
-
-    @Builder.Default
     private final DeliveryMethods deliveryMethods = new DeliveryMethods();
 
     @Override
@@ -37,16 +32,6 @@ public class Otp implements Method {
     @Override
     public Eligibility getEligibility() {
         return deliveryMethods.getEligibility();
-    }
-
-    @Override
-    public boolean isComplete() {
-        return isSuccessful() || !hasAttemptsRemaining();
-    }
-
-    @Override
-    public boolean isSuccessful() {
-        return results.containsSuccessful();
     }
 
     @Override
@@ -66,12 +51,6 @@ public class Otp implements Method {
         return deliveryMethods.findByValue(id);
     }
 
-    public Otp add(Result result) {
-        return toBuilder()
-                .results(results.add(result))
-                .build();
-    }
-
     public Otp updateDeliveryMethods(UnaryOperator<DeliveryMethod> update) {
         return replaceDeliveryMethods(deliveryMethods.update(update));
     }
@@ -80,10 +59,6 @@ public class Otp implements Method {
         return toBuilder()
                 .deliveryMethods(deliveryMethods.replace(updated))
                 .build();
-    }
-
-    private boolean hasAttemptsRemaining() {
-        return results.size() < config.getMaxNumberOfAttempts();
     }
 
 }

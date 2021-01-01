@@ -20,8 +20,4 @@ public class ContextService {
         return findContext.find(id);
     }
 
-    public Context findWithEligibleIncompleteSequences(UUID id) {
-        return find(id).withOnlyEligibleAndIncompleteSequences();
-    }
-
 }

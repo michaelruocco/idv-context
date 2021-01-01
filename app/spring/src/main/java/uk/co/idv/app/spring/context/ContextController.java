@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.context.entities.verification.GetVerificationRequest;
 import uk.co.idv.context.entities.verification.Verification;
 import uk.co.idv.context.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
-import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
 
 import java.net.URI;
 import java.util.UUID;
@@ -34,7 +34,7 @@ public class ContextController {
     public ResponseEntity<Context> createContext(@RequestBody FacadeCreateContextRequest request) {
         Context context = application.create(request);
         return ResponseEntity
-                .created(buildGetUri(context.getId()))
+                .created(buildGetContextUri(context.getId()))
                 .body(context);
     }
 
@@ -43,23 +43,35 @@ public class ContextController {
         return application.findContext(id);
     }
 
-    @GetMapping("/{id}/nextMethods")
-    public Verification getNextMethods(@PathVariable("id") UUID id,
-                                       @RequestParam("methodName") String methodName) {
-        CreateVerificationRequest request = CreateVerificationRequest.builder()
-                .contextId(id)
-                .methodName(methodName)
+    @PostMapping("/verifications")
+    public ResponseEntity<Verification> createVerification(@RequestBody CreateVerificationRequest request) {
+        Verification verification = application.create(request);
+        return ResponseEntity
+                .created(buildGetVerificationUri(request.getContextId(), verification.getId()))
+                .body(verification);
+    }
+
+    @GetMapping("/{contextId}/verifications/{verificationId}")
+    public Verification getVerification(@PathVariable("contextId") UUID contextId,
+                                        @PathVariable("verificationId") UUID verificationId) {
+        GetVerificationRequest request = GetVerificationRequest.builder()
+                .contextId(contextId)
+                .verificationId(verificationId)
                 .build();
-        return application.findNextMethods(request);
+        return application.get(request);
     }
 
-    @PatchMapping("/results")
-    public Context recordResult(@RequestBody FacadeRecordResultRequest request) {
-        return application.record(request);
+    @PatchMapping("/verifications")
+    public Verification completeVerification(@RequestBody CompleteVerificationRequest request) {
+        return application.complete(request);
     }
 
-    private static URI buildGetUri(UUID id) {
+    private static URI buildGetContextUri(UUID id) {
         return linkTo(methodOn(ContextController.class).getContext(id)).toUri();
+    }
+
+    private static URI buildGetVerificationUri(UUID contextId, UUID verificationId) {
+        return linkTo(methodOn(ContextController.class).getVerification(contextId, verificationId)).toUri();
     }
 
 }

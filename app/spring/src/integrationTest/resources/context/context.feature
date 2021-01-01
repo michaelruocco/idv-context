@@ -542,8 +542,6 @@ Feature: Create Requests
                     "maxNumberOfDeliveries": 2
                   }
                 },
-                "successful": false,
-                "complete": false,
                 "eligibility": {
                   "eligible": true
                 }
@@ -552,11 +550,10 @@ Feature: Create Requests
             "duration": 300000,
             "eligibility": {
               "eligible": true
-            },
-            "successful": false,
-            "complete": false
+            }
           }
         ],
+        "verifications": [],
         "eligible": true,
         "successful": false,
         "complete": false
@@ -813,8 +810,6 @@ Feature: Create Requests
                     "maxNumberOfDeliveries": 2
                   }
                 },
-                "successful": false,
-                "complete": false,
                 "eligibility": {
                   "eligible": true
                 }
@@ -823,18 +818,17 @@ Feature: Create Requests
             "duration": 300000,
             "eligibility": {
               "eligible": true
-            },
-            "successful": false,
-            "complete": false
+            }
           }
         ],
+        "verifications": [],
         "eligible": true,
         "successful": false,
         "complete": false
       }
       """
 
-  Scenario: Post result - Success - Result Added to context
+  Scenario: Post result - Success - Verification created and completed
     * def channelId = "context-test-channel6"
     * def contextPolicyId = "03ac7483-0006-4d99-b38f-dd33d3004e0a"
     Given url baseUrl + "/v1/context-policies"
@@ -933,7 +927,7 @@ Feature: Create Requests
     And method POST
     And status 201
     And header channel-id = channelId
-    And header correlation-id = "7e1fec16-289d-4683-a353-800ada8dbf93"
+    And header correlation-id = "5faed8ef-6e1a-492e-af01-7e249c1a3513"
     And url baseUrl + "/v1/contexts"
     And request
       """
@@ -1072,8 +1066,6 @@ Feature: Create Requests
                     "maxNumberOfDeliveries": 2
                   }
                 },
-                "successful": false,
-                "complete": false,
                 "eligibility": {
                   "eligible": true
                 }
@@ -1082,11 +1074,10 @@ Feature: Create Requests
             "duration": 300000,
             "eligibility": {
               "eligible": true
-            },
-            "successful": false,
-            "complete": false
+            }
           }
         ],
+        "verifications": [],
         "eligible": true,
         "successful": false,
         "complete": false
@@ -1097,161 +1088,72 @@ Feature: Create Requests
       """
       {
         "contextId": "#(contextId)",
-        "result": {
-          "methodName": "one-time-passcode",
-          "verificationId": "a098310e-feb3-435d-bf69-663417af08e3",
-          "timestamp": "2020-09-27T06:57:47.522Z",
-          "successful": false
-        }
+        "methodName": "one-time-passcode"
       }
       """
     And header channel-id = channelId
-    And header correlation-id = "a89178af-fd6e-4c2e-ac84-cdba6d696e7c"
-    And url baseUrl + "/v1/contexts/results"
+    And header correlation-id = "0509859d-2480-4456-8752-0768e181148c"
+    And url baseUrl + "/v1/contexts/verifications"
+    And method POST
+    And status 201
+    * def verificationId = response.id
+    And request
+      """
+      {
+        "id": "#(verificationId)",
+        "contextId": "#(contextId)",
+        "successful": true
+      }
+      """
+    And url baseUrl + "/v1/contexts/verifications"
+    And header channel-id = channelId
+    And header correlation-id = "192ebba6-c930-4ecd-b91d-e99ecbcbbac8"
     And method PATCH
     And status 200
     And match response ==
       """
       {
-        "id": "#uuid",
-        "created": "#notnull",
-        "expiry": "#notnull",
-        "request": {
-          "initial": {
-            "channel": {
-              "id": "#(channelId)",
-              "country": "GB"
-            },
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111116"
-              }
-            ],
-            "activity": {
-              "name": "default-activity",
-              "timestamp": "2020-09-27T06:56:47.522Z"
-            }
-          },
-          "policy": {
-            "key": {
-              "id": "#(contextPolicyId)",
-              "priority": 1,
-              "channelId": "#(channelId)",
-              "type": "channel"
-            },
-            "sequencePolicies": [
-              {
-                "name": "one-time-passcode",
-                "methodPolicies": [
-                  {
-                    "config": {
-                      "maxNumberOfAttempts": 3,
-                      "duration": 300000,
-                      "passcodeConfig": {
-                        "length": 8,
-                        "duration": 120000,
-                        "maxNumberOfDeliveries": 2
-                      }
-                    },
-                    "deliveryMethodConfigs": [
-                      {
-                        "type": "sms",
-                        "phoneNumberConfig": {
-                          "country": "GB",
-                          "allowInternational": false,
-                          "lastUpdatedConfig": {
-                            "allowUnknown": true,
-                            "minDaysSinceUpdate": 5
-                          },
-                          "simSwapConfig": {
-                            "acceptableStatuses": [
-                              "success"
-                            ],
-                            "timeout": 2000,
-                            "minDaysSinceSwap": 6,
-                            "async": false
-                          }
-                        }
-                      }
-                    ],
-                    "name": "one-time-passcode"
-                  }
-                ]
-              }
-            ],
-            "protectSensitiveData": false
-          },
-          "identity": {
-            "idvId": "#uuid",
-            "country": "GB",
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111116"
-              },
-              {
-                "type": "idv-id",
-                "value": "#uuid"
-              }
-            ],
-            "phoneNumbers": [
-              { "value": "+4407808247743" }
-            ]
-          }
+        "id": "#(verificationId)",
+        "contextId": "#(contextId)",
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
         },
-        "sequences": [
+        "methodName": "one-time-passcode",
+        "methods": [
           {
             "name": "one-time-passcode",
-            "methods": [
+            "deliveryMethods": [
               {
-                "name": "one-time-passcode",
-                "deliveryMethods": [
-                  {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247743",
-                    "eligibility": {
-                      "eligible": true,
-                      "complete": true
-                    }
-                  }
-                ],
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "successful": false,
-                "complete": false,
+                "id": "#uuid",
+                "type": "sms",
+                "value": "+447808247743",
                 "eligibility": {
-                  "eligible": true
-                },
-                "results": [
-                  {
-                    "methodName": "one-time-passcode",
-                    "verificationId": "a098310e-feb3-435d-bf69-663417af08e3",
-                    "timestamp": "2020-09-27T06:57:47.522Z",
-                    "successful": false
-                  }
-                ]
+                  "eligible": true,
+                  "complete": true
+                }
               }
             ],
-            "duration": 300000,
+            "config": {
+              "maxNumberOfAttempts": 3,
+              "duration": 300000,
+              "passcodeConfig": {
+                "length": 8,
+                "duration": 120000,
+                "maxNumberOfDeliveries": 2
+              }
+            },
             "eligibility": {
               "eligible": true
-            },
-            "successful": false,
-            "complete": false
+            }
           }
         ],
-        "eligible": true,
-        "successful": false,
-        "complete": false
+        "protectSensitiveData": false,
+        "created": "#notnull",
+        "expiry": "#notnull",
+        "completed": "#notnull",
+        "successful": true,
+        "complete": true
       }
       """
 
@@ -1493,8 +1395,6 @@ Feature: Create Requests
                     "maxNumberOfDeliveries": 2
                   }
                 },
-                "successful": false,
-                "complete": false,
                 "eligibility": {
                   "eligible": true
                 }
@@ -1503,11 +1403,10 @@ Feature: Create Requests
             "duration": 300000,
             "eligibility": {
               "eligible": true
-            },
-            "successful": false,
-            "complete": false
+            }
           }
         ],
+        "verifications": [],
         "eligible": true,
         "successful": false,
         "complete": false
@@ -1518,18 +1417,13 @@ Feature: Create Requests
       """
       {
         "contextId": "#(contextId)",
-        "result": {
-          "methodName": "default-method",
-          "verificationId": "64a259fa-4e63-4c32-9b3c-03649260b2a9",
-          "timestamp": "2020-09-27T06:57:47.522Z",
-          "successful": false
-        }
+        "methodName": "default-method"
       }
       """
     And header channel-id = channelId
     And header correlation-id = "c7dc1d6a-66d3-4771-9a01-b5825cf77e32"
-    And url baseUrl + "/v1/contexts/results"
-    And method PATCH
+    And url baseUrl + "/v1/contexts/verifications"
+    And method POST
     And status 422
     And match response ==
       """

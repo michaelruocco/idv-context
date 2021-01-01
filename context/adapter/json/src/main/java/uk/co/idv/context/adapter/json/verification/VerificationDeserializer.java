@@ -26,9 +26,11 @@ class VerificationDeserializer extends StdDeserializer<Verification> {
                 .id(UUID.fromString(node.get("id").asText()))
                 .contextId(UUID.fromString(node.get("contextId").asText()))
                 .activity(JsonNodeConverter.toObject(node.get("activity"), parser, Activity.class))
+                .methodName(node.get("methodName").asText())
                 .methods(JsonNodeConverter.toObject(node.get("methods"), parser, Methods.class))
                 .protectSensitiveData(node.get("protectSensitiveData").asBoolean())
                 .created(Instant.parse(node.get("created").asText()))
+                .expiry(Instant.parse(node.get("expiry").asText()))
                 .build();
     }
 

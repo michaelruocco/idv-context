@@ -6,6 +6,7 @@ import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
+import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
@@ -15,9 +16,9 @@ import uk.co.idv.identity.entities.identity.IdentityMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumberMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.method.entities.otp.GetOtpIfNextEligible;
+import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.otp.Otp;
-import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodEligibilityIncomplete;
+import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.policy.OtpPolicyMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
@@ -47,7 +48,9 @@ class ContextOtpIntegrationTest {
 
         Context context = application.create(request);
 
-        Stream<Otp> otps = context.query(new GetOtpIfNextEligible());
+        Stream<Otp> otps = context.getNextMethods("one-time-passcode").stream()
+                .map(Otp.class::cast)
+                .filter(Method::isEligible);
         assertThat(otps).hasSize(1);
     }
 
@@ -72,7 +75,12 @@ class ContextOtpIntegrationTest {
         Context context = application.create(request);
 
         UUID deliveryMethodId = UUID.fromString("446846e6-bf16-4da5-af5b-9ad4a240fe5d");
-        assertThat(context.query(new DeliveryMethodEligibilityIncomplete(deliveryMethodId))).isTrue();
+        Methods methods = context.getNextMethods("one-time-passcode");
+        boolean eligibilityIncomplete = methods.stream()
+                .map(Otp.class::cast)
+                .map(otp -> otp.getDeliveryMethod(deliveryMethodId))
+                .noneMatch(DeliveryMethod::isEligibilityComplete);
+        assertThat(eligibilityIncomplete).isTrue();
 
         DeliveryMethodEligibleAndEligibilityComplete deliveryMethodEligible = DeliveryMethodEligibleAndEligibilityComplete.builder()
                 .application(application)

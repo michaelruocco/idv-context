@@ -1,7 +1,5 @@
 {
   "name": "fake-method",
-  "complete": false,
-  "successful": false,
   "config": {
     "maxNumberOfAttempts": 3,
     "duration": 300000,

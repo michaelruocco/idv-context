@@ -7,11 +7,12 @@ import uk.co.idv.common.adapter.json.error.handler.CompositeErrorHandler;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.config.ContextConfig;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.context.entities.verification.GetVerificationRequest;
 import uk.co.idv.context.entities.verification.Verification;
 import uk.co.idv.context.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.policy.ContextPolicy;
-import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.policy.ContextPoliciesPopulator;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
@@ -159,12 +160,16 @@ public class Application {
         return contextFacade.find(id);
     }
 
-    public Verification findNextMethods(CreateVerificationRequest request) {
-        return contextFacade.createVerification(request);
+    public Verification create(CreateVerificationRequest request) {
+        return contextFacade.create(request);
     }
 
-    public Context record(FacadeRecordResultRequest request) {
-        return contextFacade.record(request);
+    public Verification get(GetVerificationRequest request) {
+        return contextFacade.get(request);
+    }
+
+    public Verification complete(CompleteVerificationRequest request) {
+        return contextFacade.complete(request);
     }
 
     public Optional<ApiError> handle(Throwable error) {

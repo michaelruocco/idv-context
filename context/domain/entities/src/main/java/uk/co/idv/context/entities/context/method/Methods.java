@@ -4,8 +4,10 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.method.entities.method.Method;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
@@ -30,11 +32,29 @@ public class Methods implements Iterable<Method> {
         return values.stream();
     }
 
+    public Duration getShortestDuration() {
+        return values.stream()
+                .map(Method::getDuration)
+                .min(Comparator.comparingLong(Duration::toMillis))
+                .orElse(Duration.ZERO);
+    }
+
+    public Methods getByName(String methodName) {
+        return new Methods(values.stream()
+                .filter(method -> method.hasName(methodName))
+                .collect(Collectors.toList())
+        );
+    }
+
     public Methods updateMethods(UnaryOperator<Method> function) {
         return new Methods(values.stream()
                 .map(function)
                 .collect(Collectors.toList())
         );
+    }
+
+    public boolean isEmpty() {
+        return values.isEmpty();
     }
 
 }

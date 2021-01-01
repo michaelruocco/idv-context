@@ -7,6 +7,7 @@ import uk.co.idv.lockout.entities.policy.LockoutStateRequest;
 import uk.co.idv.lockout.entities.policy.unlocked.UnlockedState;
 
 import java.time.Duration;
+import java.time.Instant;
 import java.util.Optional;
 
 @Slf4j
@@ -19,7 +20,9 @@ public class SoftLockoutStateFactory {
             return new UnlockedState(request.getAttempts());
         }
 
-        boolean isLocked = request.isBefore(softLock.get().calculateExpiry());
+        Instant expiry = softLock.get().calculateExpiry();
+        boolean isLocked = request.isBefore(expiry);
+        log.info("request at {} soft lock expiry at {} is locked {}", request.getTimestamp(), expiry, isLocked);
         if (!isLocked) {
             return new UnlockedState(request.getAttempts());
         }

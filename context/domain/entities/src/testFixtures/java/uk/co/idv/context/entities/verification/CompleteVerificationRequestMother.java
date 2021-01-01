@@ -1,6 +1,8 @@
 package uk.co.idv.context.entities.verification;
 
 
+import uk.co.idv.context.entities.verification.CompleteVerificationRequest.CompleteVerificationRequestBuilder;
+
 import java.time.Instant;
 import java.util.UUID;
 
@@ -10,9 +12,18 @@ public interface CompleteVerificationRequestMother {
         return builder().build();
     }
 
-    static CompleteVerificationRequest.CompleteVerificationRequestBuilder builder() {
+    static CompleteVerificationRequest withTimestamp() {
+        return builder().build();
+    }
+
+    static CompleteVerificationRequest withoutTimestamp() {
+        return builder().timestamp(null).build();
+    }
+
+    static CompleteVerificationRequestBuilder builder() {
         return CompleteVerificationRequest.builder()
-                .verificationId(UUID.fromString("81e11840-140e-45ac-a6af-40aa653a146e"))
+                .contextId(UUID.fromString("2948aadc-7f63-4b00-875b-77a4e6608e5c"))
+                .id(UUID.fromString("81e11840-140e-45ac-a6af-40aa653a146e"))
                 .successful(true)
                 .timestamp(Instant.parse("2020-09-14T20:05:05.005Z"));
     }

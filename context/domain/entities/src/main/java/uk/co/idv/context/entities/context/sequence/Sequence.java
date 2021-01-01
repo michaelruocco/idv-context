@@ -7,7 +7,7 @@ import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.eligibility.Eligible;
 import uk.co.idv.method.entities.method.Method;
-import uk.co.idv.method.entities.sequence.MethodSequence;
+import uk.co.idv.method.entities.method.MethodVerifications;
 
 import java.time.Duration;
 import java.util.Collection;
@@ -19,7 +19,7 @@ import java.util.stream.Stream;
 
 @Builder
 @Data
-public class Sequence implements MethodSequence, Iterable<Method> {
+public class Sequence implements Iterable<Method> {
 
     private final String name;
 
@@ -31,28 +31,8 @@ public class Sequence implements MethodSequence, Iterable<Method> {
         return methods.iterator();
     }
 
-    @Override
     public boolean isEligible() {
         return getEligibility().isEligible();
-    }
-
-    @Override
-    public boolean isComplete() {
-        return stream().allMatch(Method::isComplete);
-    }
-
-    @Override
-    public Optional<Method> getNext(String name) {
-        return getNext().filter(method -> method.hasName(name));
-    }
-
-    @Override
-    public Optional<Method> getNext() {
-        return stream().filter(method -> !method.isComplete()).findFirst();
-    }
-
-    public boolean isSuccessful() {
-        return stream().allMatch(Method::isSuccessful);
     }
 
     public Duration getDuration() {
@@ -63,10 +43,6 @@ public class Sequence implements MethodSequence, Iterable<Method> {
 
     public Sequence updateMethods(UnaryOperator<Method> function) {
         return withMethods(methods.updateMethods(function));
-    }
-
-    public long getCompletedCount() {
-        return stream().filter(Method::isComplete).count();
     }
 
     public Stream<Method> stream() {
@@ -81,10 +57,30 @@ public class Sequence implements MethodSequence, Iterable<Method> {
         return new SequenceIneligible(names);
     }
 
+    public Optional<Method> getNextMethod(MethodVerifications verifications) {
+        return methods.stream()
+                .filter(method -> !method.isComplete(verifications))
+                .findFirst();
+    }
+
+    public boolean isSuccessful(MethodVerifications verifications) {
+        return methods.stream().allMatch(method -> method.isSuccessful(verifications));
+    }
+
+    public boolean isComplete(MethodVerifications verifications) {
+        return methods.stream().allMatch(method -> method.isComplete(verifications));
+    }
+
+    public long completedMethodCount(MethodVerifications verifications) {
+        return methods.stream().filter(method -> method.isComplete(verifications)).count();
+    }
+
     private Collection<String> getIneligibleMethodNames() {
         return methods.stream()
                 .filter(method -> !method.isEligible())
                 .map(Method::getName)
                 .collect(Collectors.toSet());
     }
+
+
 }

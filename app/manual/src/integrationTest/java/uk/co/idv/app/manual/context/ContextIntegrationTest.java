@@ -177,7 +177,7 @@ class ContextIntegrationTest {
     }
 
     @Test
-    void shouldReturnNextMethods() {
+    void shouldCreateVerification() {
         MethodPolicy policy = FakeMethodPolicyMother.build();
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(request.getChannelId(), policy);
@@ -189,12 +189,18 @@ class ContextIntegrationTest {
                 .methodName(policy.getName())
                 .build();
 
-        Verification verification = application.findNextMethods(createVerificationRequest);
+        Verification verification = application.create(createVerificationRequest);
 
-        assertThat(verification.getContextId()).isEqualTo(context.getId());
+        assertThat(verification.getId()).isEqualTo(UUID.fromString("507cc493-6998-49a4-9614-38ba4296eab6"));
         assertThat(verification.getActivity()).isEqualTo(context.getActivity());
+        assertThat(verification.getMethodName()).isEqualTo(policy.getName());
         assertThat(verification.getMethods()).isEqualTo(context.getNextMethods(policy.getName()));
         assertThat(verification.isProtectSensitiveData()).isEqualTo(context.isProtectSensitiveData());
+        assertThat(verification.getCreated()).isEqualTo(Instant.parse("2020-10-06T21:00:00.000Z"));
+        assertThat(verification.getExpiry()).isEqualTo(verification.getCreated().plus(policy.getDuration()));
+        assertThat(verification.isComplete()).isFalse();
+        assertThat(verification.isSuccessful()).isFalse();
+        assertThat(verification.getCompleted()).isEmpty();
     }
 
 }

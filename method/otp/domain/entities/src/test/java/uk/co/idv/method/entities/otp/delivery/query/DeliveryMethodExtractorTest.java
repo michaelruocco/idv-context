@@ -1,128 +1,109 @@
 package uk.co.idv.method.entities.otp.delivery.query;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.ContextMother;
+import uk.co.idv.context.entities.context.sequence.SequencesMother;
+import uk.co.idv.method.entities.method.fake.FakeMethodMother;
+import uk.co.idv.method.entities.otp.Otp;
 import uk.co.idv.method.entities.otp.OtpMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
-import uk.co.idv.method.entities.sequence.MethodSequence;
 
 import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 class DeliveryMethodExtractorTest {
 
-    private final UUID extractorId = UUID.fromString("0c207ec2-5e3e-488c-bdcb-e40576dac35d");
+    private final UUID deliveryMethodId = UUID.fromString("0c207ec2-5e3e-488c-bdcb-e40576dac35d");
 
-    private final DeliveryMethodExtractor extractor = new DeliveryMethodExtractor(extractorId);
+    private final DeliveryMethodExtractor extractor = new DeliveryMethodExtractor();
 
     @Test
-    void shouldReturnEmptyIfNoNextMethod() {
-        MethodSequence sequence = givenSequenceWithNoNextMethod();
+    void shouldReturnEmptyIfNoNextMethodPresent() {
+        Context context = ContextMother.withSequences(SequencesMother.empty());
 
-        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(sequence);
+        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(context, deliveryMethodId);
 
         assertThat(deliveryMethod).isEmpty();
     }
 
     @Test
     void shouldReturnEmptyIfNextMethodNotOtp() {
-        MethodSequence sequence = givenSequenceWithNextMethodNotOtp();
+        Context context = ContextMother.withMethod(FakeMethodMother.build());
 
-        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(sequence);
+        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(context, deliveryMethodId);
 
         assertThat(deliveryMethod).isEmpty();
     }
 
     @Test
     void shouldReturnEmptyIfMethodDoesNotHaveDeliveryMethodWithId() {
-        MethodSequence sequence = givenSequenceWithDeliveryMethodWithOtherId();
+        UUID otherId = UUID.fromString("7ba9be2f-38f9-4cb0-b991-f1c474763be9");
+        Otp otp = OtpMother.withDeliveryMethod(DeliveryMethodMother.withId(otherId));
+        Context context = ContextMother.withMethod(otp);
 
-        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(sequence);
+        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(context, deliveryMethodId);
 
         assertThat(deliveryMethod).isEmpty();
     }
 
     @Test
     void shouldReturnOptionalDeliveryMethodIfIdMatches() {
-        DeliveryMethod expected = DeliveryMethodMother.withId(extractorId);
-        MethodSequence sequence = givenSequenceWithDeliveryMethod(expected);
+        DeliveryMethod expectedDeliveryMethod = DeliveryMethodMother.withId(deliveryMethodId);
+        Context context = ContextMother.withMethod(OtpMother.withDeliveryMethod(expectedDeliveryMethod));
 
-        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(sequence);
+        Optional<DeliveryMethod> deliveryMethod = extractor.extractOptional(context, deliveryMethodId);
 
-        assertThat(deliveryMethod).contains(expected);
+        assertThat(deliveryMethod).contains(expectedDeliveryMethod);
     }
 
     @Test
-    void shouldThrowExceptionIfNoNextMethod() {
-        MethodSequence sequence = givenSequenceWithNoNextMethod();
+    void shouldThrowExceptionIfNoNextMethodPresent() {
+        Context context = ContextMother.withSequences(SequencesMother.empty());
 
-        Throwable error = catchThrowable(() -> extractor.extract(sequence));
+        Throwable error = catchThrowable(() -> extractor.extract(context, deliveryMethodId));
 
         assertThat(error)
                 .isInstanceOf(DeliveryMethodNotFoundException.class)
-                .hasMessage(extractorId.toString());
+                .hasMessage(deliveryMethodId.toString());
     }
 
     @Test
     void shouldThrowExceptionIfNextMethodIsNotOtp() {
-        MethodSequence sequence = givenSequenceWithNextMethodNotOtp();
+        Context context = ContextMother.withMethod(FakeMethodMother.build());
 
-        Throwable error = catchThrowable(() -> extractor.extract(sequence));
+        Throwable error = catchThrowable(() -> extractor.extract(context, deliveryMethodId));
 
         assertThat(error)
                 .isInstanceOf(DeliveryMethodNotFoundException.class)
-                .hasMessage(extractorId.toString());
+                .hasMessage(deliveryMethodId.toString());
     }
 
     @Test
     void shouldThrowExceptionIfDoesNotHaveDeliveryMethodWithId() {
-        MethodSequence sequence = givenSequenceWithDeliveryMethodWithOtherId();
+        UUID otherId = UUID.fromString("7ba9be2f-38f9-4cb0-b991-f1c474763be9");
+        Otp otp = OtpMother.withDeliveryMethod(DeliveryMethodMother.withId(otherId));
+        Context context = ContextMother.withMethod(otp);
 
-        Throwable error = catchThrowable(() -> extractor.extract(sequence));
+        Throwable error = catchThrowable(() -> extractor.extract(context, deliveryMethodId));
 
         assertThat(error)
                 .isInstanceOf(DeliveryMethodNotFoundException.class)
-                .hasMessage(extractorId.toString());
+                .hasMessage(deliveryMethodId.toString());
     }
 
     @Test
     void shouldReturnDeliveryMethodIfIdMatches() {
-        DeliveryMethod expected = DeliveryMethodMother.withId(extractorId);
-        MethodSequence sequence = givenSequenceWithDeliveryMethod(expected);
+        DeliveryMethod expectedDeliveryMethod = DeliveryMethodMother.withId(deliveryMethodId);
+        Context context = ContextMother.withMethod(OtpMother.withDeliveryMethod(expectedDeliveryMethod));
 
-        DeliveryMethod deliveryMethod = extractor.extract(sequence);
+        DeliveryMethod deliveryMethod = extractor.extract(context, deliveryMethodId);
 
-        assertThat(deliveryMethod).isEqualTo(expected);
-    }
-
-    private MethodSequence givenSequenceWithNoNextMethod() {
-        MethodSequence sequence = mock(MethodSequence.class);
-        given(sequence.getNext()).willReturn(Optional.empty());
-        return sequence;
-    }
-
-    private MethodSequence givenSequenceWithNextMethodNotOtp() {
-        MethodSequence sequence = mock(MethodSequence.class);
-        given(sequence.getNext()).willReturn(Optional.of(mock(Method.class)));
-        return sequence;
-    }
-
-    private MethodSequence givenSequenceWithDeliveryMethodWithOtherId() {
-        UUID otherId = UUID.fromString("1c9f6e5f-f1b6-4b3b-a9fc-d0dc25133e59");
-        return givenSequenceWithDeliveryMethod(DeliveryMethodMother.withId(otherId));
-    }
-
-    private MethodSequence givenSequenceWithDeliveryMethod(DeliveryMethod deliveryMethod) {
-        MethodSequence sequence = mock(MethodSequence.class);
-        Method method = OtpMother.withDeliveryMethod(deliveryMethod);
-        given(sequence.getNext()).willReturn(Optional.of(method));
-        return sequence;
+        assertThat(deliveryMethod).isEqualTo(expectedDeliveryMethod);
     }
 
 }

@@ -20,7 +20,7 @@ testSets {
 }
 
 configurations {
-    testRuntimeOnly.exclude module: "slf4j-simple"
+    runtimeOnly.exclude module: "slf4j-simple"
 }
 
 ext {

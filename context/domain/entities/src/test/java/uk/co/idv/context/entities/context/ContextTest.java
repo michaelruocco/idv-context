@@ -4,20 +4,15 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.Sequences;
-import uk.co.idv.context.entities.context.sequence.SequencesMother;
+import uk.co.idv.context.entities.verification.Verifications;
 import uk.co.idv.method.entities.method.Method;
-import uk.co.idv.method.entities.sequence.MethodSequence;
+import uk.co.idv.method.entities.method.MethodVerifications;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Optional;
 import java.util.UUID;
-import java.util.function.Function;
-import java.util.function.Predicate;
 import java.util.function.UnaryOperator;
-import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -194,10 +189,12 @@ class ContextTest {
     @Test
     void shouldReturnCompleteFromSequences() {
         Sequences sequences = mock(Sequences.class);
-        given(sequences.isComplete()).willReturn(true);
+        Verifications verifications = mock(Verifications.class);
+        given(sequences.isComplete(verifications)).willReturn(true);
 
         Context context = Context.builder()
                 .sequences(sequences)
+                .verifications(verifications)
                 .build();
 
         assertThat(context.isComplete()).isTrue();
@@ -206,10 +203,12 @@ class ContextTest {
     @Test
     void shouldReturnSuccessfulFromSequences() {
         Sequences sequences = mock(Sequences.class);
-        given(sequences.isSuccessful()).willReturn(true);
+        Verifications verifications = mock(Verifications.class);
+        given(sequences.isSuccessful(verifications)).willReturn(true);
 
         Context context = Context.builder()
                 .sequences(sequences)
+                .verifications(verifications)
                 .build();
 
         assertThat(context.isSuccessful()).isTrue();
@@ -275,53 +274,48 @@ class ContextTest {
     }
 
     @Test
-    void shouldReturnTrueIfAnySequencesMatchPredicateQuery() {
-        Predicate<MethodSequence> query = mock(Predicate.class);
-        Sequence sequence1 = mock(Sequence.class);
-        Sequence sequence2 = mock(Sequence.class);
-        given(query.test(sequence1)).willReturn(false);
-        given(query.test(sequence2)).willReturn(true);
-        Context context = ContextMother.withSequences(SequencesMother.with(sequence1, sequence2));
+    void shouldReturnNextMethods() {
+        Methods expectedNextMethods = mock(Methods.class);
+        Verifications verifications = mock(Verifications.class);
+        Sequences sequences = givenSequencesWithNextMethods(verifications, expectedNextMethods);
+        Context context = ContextMother.builder()
+                .sequences(sequences)
+                .verifications(verifications)
+                .build();
 
-        boolean result = context.query(query);
+        Methods nextMethods = context.getNextMethods();
 
-        assertThat(result).isTrue();
+        assertThat(nextMethods).isEqualTo(expectedNextMethods);
     }
 
     @Test
-    void shouldReturnFalseIfNoSequencesMatchPredicateQuery() {
-        Predicate<MethodSequence> query = mock(Predicate.class);
-        Sequence sequence1 = mock(Sequence.class);
-        Sequence sequence2 = mock(Sequence.class);
-        given(query.test(sequence1)).willReturn(false);
-        given(query.test(sequence2)).willReturn(false);
-        Context context = ContextMother.withSequences(SequencesMother.with(sequence1, sequence2));
+    void shouldReturnNextMethodsMatchingName() {
+        String methodName = "fake-method";
+        Verifications verifications = mock(Verifications.class);
+        Methods nextMethods = mock(Methods.class);
+        Context context = ContextMother.builder()
+                .sequences(givenSequencesWithNextMethods(verifications, nextMethods))
+                .verifications(verifications)
+                .build();
+        Methods nextMethodsByName = mock(Methods.class);
+        given(nextMethods.getByName(methodName)).willReturn(nextMethodsByName);
 
-        boolean result = context.query(query);
+        Methods methods = context.getNextMethods(methodName);
 
-        assertThat(result).isFalse();
-    }
-
-    @Test
-    void shouldReturnResultsFromQueryFunction() {
-        Function<MethodSequence, Optional<Method>> query = mock(Function.class);
-        Sequence sequence1 = mock(Sequence.class);
-        Sequence sequence2 = mock(Sequence.class);
-        Method method1 = mock(Method.class);
-        Method method2 = mock(Method.class);
-        given(query.apply(sequence1)).willReturn(Optional.of(method1));
-        given(query.apply(sequence2)).willReturn(Optional.of(method2));
-        Context context = ContextMother.withSequences(SequencesMother.with(sequence1, sequence2));
-
-        Stream<Method> result = context.query(query);
-
-        assertThat(result).containsExactly(method1, method2);
+        assertThat(methods).isEqualTo(nextMethodsByName);
     }
 
     @Test
     void shouldReturnHasMoreCompletedSequencesTrueIfUpdatedHasMoreCompletedSequencesThanOriginal() {
-        Context original = ContextMother.withSequences(givenSequencesWithCompletedCount(1));
-        Context updated =  ContextMother.withSequences(givenSequencesWithCompletedCount(2));
+        Verifications verifications = mock(Verifications.class);
+        Context original = ContextMother.builder()
+                .sequences(givenSequencesWithCompletedCount(verifications, 1))
+                .verifications(verifications)
+                .build();
+        Context updated = ContextMother.builder()
+                .sequences(givenSequencesWithCompletedCount(verifications, 2))
+                .verifications(verifications)
+                .build();
 
         boolean hasMoreCompletedSequences = updated.hasMoreCompletedSequencesThan(original);
 
@@ -330,8 +324,9 @@ class ContextTest {
 
     @Test
     void shouldReturnHasMoreCompletedSequencesFalseIfUpdatedDoesNotHaveMoreCompletedSequencesThanOriginal() {
-        Context original = ContextMother.withSequences(givenSequencesWithCompletedCount(1));
-        Context updated =  ContextMother.withSequences(givenSequencesWithCompletedCount(1));
+        Verifications verifications = mock(Verifications.class);
+        Context original = ContextMother.withSequences(givenSequencesWithCompletedCount(verifications, 1));
+        Context updated = ContextMother.withSequences(givenSequencesWithCompletedCount(verifications, 1));
 
         boolean hasMoreCompletedSequences = updated.hasMoreCompletedSequencesThan(original);
 
@@ -340,8 +335,15 @@ class ContextTest {
 
     @Test
     void shouldReturnHasMoreCompletedMethodsTrueIfUpdatedHasMoreCompletedMethodsThanOriginal() {
-        Context original = ContextMother.withSequences(givenSequencesWithCompletedMethodCount(1));
-        Context updated =  ContextMother.withSequences(givenSequencesWithCompletedMethodCount(2));
+        Verifications verifications = mock(Verifications.class);
+        Context original = ContextMother.builder()
+                .sequences(givenSequencesWithCompletedMethodCount(verifications, 1))
+                .verifications(verifications)
+                .build();
+        Context updated = ContextMother.builder()
+                .sequences(givenSequencesWithCompletedMethodCount(verifications, 2))
+                .verifications(verifications)
+                .build();
 
         boolean hasMoreCompletedMethods = updated.hasMoreCompletedMethodsThan(original);
 
@@ -350,40 +352,13 @@ class ContextTest {
 
     @Test
     void shouldReturnHasMoreCompletedMethodsFalseIfUpdatedDoesNotHaveMoreCompletedMethodsThanOriginal() {
-        Context original = ContextMother.withSequences(givenSequencesWithCompletedMethodCount(1));
-        Context updated =  ContextMother.withSequences(givenSequencesWithCompletedMethodCount(1));
+        Verifications verifications = mock(Verifications.class);
+        Context original = ContextMother.withSequences(givenSequencesWithCompletedMethodCount(verifications, 1));
+        Context updated = ContextMother.withSequences(givenSequencesWithCompletedMethodCount(verifications, 1));
 
         boolean hasMoreCompletedMethods = updated.hasMoreCompletedMethodsThan(original);
 
         assertThat(hasMoreCompletedMethods).isFalse();
-    }
-
-    @Test
-    void shouldReturnEligibleIncompleteSequences() {
-        Sequences original = mock(Sequences.class);
-        Sequences eligibleIncomplete = mock(Sequences.class);
-        given(original.withEligibleAndIncompleteOnly()).willReturn(eligibleIncomplete);
-        Context context = ContextMother.withSequences(original);
-
-        Context updated = context.withOnlyEligibleAndIncompleteSequences();
-
-        assertThat(updated)
-                .usingRecursiveComparison()
-                .ignoringFields("sequences")
-                .isEqualTo(context);
-        assertThat(updated.getSequences()).isEqualTo(eligibleIncomplete);
-    }
-
-    @Test
-    void shouldReturnNextMethods() {
-        String methodName = "method-name";
-        Methods expectedNextMethods = mock(Methods.class);
-        Sequences sequences = givenSequencesWithNextMethods(methodName, expectedNextMethods);
-        Context context = ContextMother.withSequences(sequences);
-
-        Methods nextMethods = context.getNextMethods(methodName);
-
-        assertThat(nextMethods).isEqualTo(expectedNextMethods);
     }
 
     static Sequences givenUpdatedSequences(UnaryOperator<Method> function, Sequences sequences) {
@@ -392,21 +367,21 @@ class ContextTest {
         return updated;
     }
 
-    static Sequences givenSequencesWithCompletedCount(long count) {
+    static Sequences givenSequencesWithCompletedCount(MethodVerifications verifications, long count) {
         Sequences sequences = mock(Sequences.class);
-        given(sequences.getCompletedCount()).willReturn(count);
+        given(sequences.completedSequenceCount(verifications)).willReturn(count);
         return sequences;
     }
 
-    static Sequences givenSequencesWithCompletedMethodCount(long count) {
+    static Sequences givenSequencesWithCompletedMethodCount(MethodVerifications verifications, long count) {
         Sequences sequences = mock(Sequences.class);
-        given(sequences.getCompletedMethodCount()).willReturn(count);
+        given(sequences.completedMethodCount(verifications)).willReturn(count);
         return sequences;
     }
 
-    static Sequences givenSequencesWithNextMethods(String methodName, Methods methods) {
+    static Sequences givenSequencesWithNextMethods(MethodVerifications verifications, Methods methods) {
         Sequences sequences = mock(Sequences.class);
-        given(sequences.getNextMethods(methodName)).willReturn(methods);
+        given(sequences.getNextMethods(verifications)).willReturn(methods);
         return sequences;
     }
 

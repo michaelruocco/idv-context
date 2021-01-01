@@ -5,6 +5,7 @@ import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequenceMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.entities.context.sequence.SequencesMother;
+import uk.co.idv.context.entities.verification.VerificationsMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.method.entities.method.Method;
 
@@ -32,6 +33,7 @@ public interface ContextMother {
     static Context withIdentity(Identity identity) {
         return builder().request(ServiceCreateContextRequestMother.withIdentity(identity)).build();
     }
+
     static Context withMethod(Method method) {
         Sequence sequence = SequenceMother.withMethods(method);
         return ContextMother.withSequences(SequencesMother.with(sequence));
@@ -43,6 +45,7 @@ public interface ContextMother {
                 .created(Instant.parse("2020-09-14T20:02:02.002Z"))
                 .expiry(Instant.parse("2020-09-14T20:08:02.002Z"))
                 .request(ServiceCreateContextRequestMother.build())
+                .verifications(VerificationsMother.oneIncomplete())
                 .sequences(SequencesMother.fakeOnly());
     }
 

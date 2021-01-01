@@ -15,8 +15,10 @@ import uk.co.idv.context.adapter.method.otp.delivery.phone.simswap.StubSimSwapEx
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
-import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
-import uk.co.idv.context.entities.result.FacadeRecordResultRequestMother;
+import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.context.entities.verification.CompleteVerificationRequestMother;
+import uk.co.idv.context.entities.verification.CreateVerificationRequest;
+import uk.co.idv.context.entities.verification.Verification;
 import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
 import uk.co.idv.identity.config.ExternalFindIdentityConfig;
 import uk.co.idv.identity.entities.alias.Aliases;
@@ -34,14 +36,11 @@ import uk.co.idv.method.config.AppMethodConfigs;
 import uk.co.idv.method.config.otp.AppOtpConfig;
 import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
-import uk.co.idv.method.entities.result.Result;
-import uk.co.idv.method.entities.result.ResultMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.UUID;
 import java.util.concurrent.Executors;
 
 public class TestHarness {
@@ -137,16 +136,28 @@ public class TestHarness {
         application.create(policy);
     }
 
-    public void givenUnsuccessfulResultRecorded(UUID contextId) {
-        Result result = ResultMother.builder()
-                .methodName("fake-method")
-                .successful(false)
+    public Verification givenVerificationCompletedUnsuccessfully(CreateVerificationRequest request) {
+        Verification verification = givenVerificationCreated(request);
+        return givenVerificationCompleted(verification, false);
+    }
+
+    public Verification givenVerificationCompletedSuccessfully(CreateVerificationRequest request) {
+        Verification verification = givenVerificationCreated(request);
+        return givenVerificationCompleted(verification, true);
+    }
+
+    private Verification givenVerificationCreated(CreateVerificationRequest request) {
+        return application.create(request);
+    }
+
+    private Verification givenVerificationCompleted(Verification verification, boolean successful) {
+        CompleteVerificationRequest request = CompleteVerificationRequestMother.builder()
+                .id(verification.getId())
+                .contextId(verification.getContextId())
+                .successful(successful)
+                .timestamp(clock.instant())
                 .build();
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
-                .contextId(contextId)
-                .result(result)
-                .build();
-        application.record(recordRequest);
+        return application.complete(request);
     }
 
 }

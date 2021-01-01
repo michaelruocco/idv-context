@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.method.MethodVerifications;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -34,14 +35,6 @@ public class Sequences implements Iterable<Sequence> {
         return stream().anyMatch(Sequence::isEligible);
     }
 
-    public boolean isComplete() {
-        return stream().anyMatch(Sequence::isComplete);
-    }
-
-    public boolean isSuccessful() {
-        return stream().anyMatch(Sequence::isSuccessful);
-    }
-
     public Duration getDuration() {
         return stream()
                 .map(Sequence::getDuration)
@@ -59,28 +52,39 @@ public class Sequences implements Iterable<Sequence> {
                 .collect(Collectors.toList()));
     }
 
-    public Sequences withEligibleAndIncompleteOnly() {
-        return new Sequences(stream()
-                .filter(Sequence::isEligible)
-                .filter(sequence -> !sequence.isComplete())
-                .collect(Collectors.toList())
-        );
+    public boolean isSuccessful(MethodVerifications verifications) {
+        return values.stream().anyMatch(sequence -> sequence.isSuccessful(verifications));
     }
 
-    public Methods getNextMethods(String methodName) {
-        return new Methods(stream()
-                .map(sequence -> sequence.getNext(methodName))
+    public boolean isComplete(MethodVerifications verifications) {
+        return values.stream().anyMatch(sequence -> sequence.isComplete(verifications));
+    }
+
+    public Methods getNextMethods(MethodVerifications verifications) {
+        return new Methods(values.stream()
+                .map(sequence -> sequence.getNextMethod(verifications))
                 .flatMap(Optional::stream)
                 .collect(Collectors.toList())
         );
     }
 
-    public long getCompletedCount() {
-        return stream().filter(Sequence::isComplete).count();
+    public Collection<String> getNextMethodNames(MethodVerifications verifications) {
+        return getNextMethods(verifications).stream()
+                .map(Method::getName)
+                .collect(Collectors.toList());
     }
 
-    public long getCompletedMethodCount() {
-        return stream().mapToLong(Sequence::getCompletedCount).sum();
+    public long completedSequenceCount(MethodVerifications verifications) {
+        return values.stream()
+                .filter(sequence -> sequence.isComplete(verifications))
+                .count();
+    }
+
+    public long completedMethodCount(MethodVerifications verifications) {
+        return values.stream()
+                .map(sequence -> sequence.completedMethodCount(verifications))
+                .mapToLong(Long::longValue)
+                .sum();
     }
 
 }

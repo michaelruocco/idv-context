@@ -20,7 +20,7 @@ public class RequestConverter {
 
     private static final String CREATE_CONTEXT_URL = "%s/v1/contexts";
     private static final String GET_CONTEXT_URL = CREATE_CONTEXT_URL + "/%s";
-    private static final String RECORD_CONTEXT_RESULT_URL = CREATE_CONTEXT_URL + "/results";
+    private static final String CREATE_VERIFICATION_URL = GET_CONTEXT_URL + "/verifications";
 
     private final JsonConverter jsonConverter;
     private final String baseUri;
@@ -44,12 +44,12 @@ public class RequestConverter {
                 .build();
     }
 
-    public HttpRequest toPatchHttpRequest(ClientRecordContextResultRequest request) {
+    public HttpRequest toPatchHttpRequest(ClientCreateVerificationRequest request) {
         return HttpRequest.newBuilder()
                 .headers(request.getHeadersArray())
                 .header(CONTENT_TYPE_NAME, APPLICATION_JSON)
                 .header(ACCEPT_NAME, APPLICATION_JSON)
-                .uri(buildUpdateResultUrl())
+                .uri(buildCreateVerificationUrl(request.getContextId()))
                 .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonConverter.toJson(request.getBody())))
                 .build();
     }
@@ -58,12 +58,12 @@ public class RequestConverter {
         return toUri(String.format(CREATE_CONTEXT_URL, baseUri));
     }
 
-    private URI buildGetUrl(UUID id) {
-        return toUri(String.format(GET_CONTEXT_URL, baseUri, id.toString()));
+    private URI buildGetUrl(UUID contextId) {
+        return toUri(String.format(GET_CONTEXT_URL, baseUri, contextId.toString()));
     }
 
-    private URI buildUpdateResultUrl() {
-        return toUri(String.format(RECORD_CONTEXT_RESULT_URL, baseUri));
+    private URI buildCreateVerificationUrl(UUID contextId) {
+        return toUri(String.format(CREATE_VERIFICATION_URL, baseUri, contextId.toString()));
     }
 
     private static URI toUri(String uri) {

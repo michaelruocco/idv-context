@@ -9,8 +9,6 @@
           "duration": 300000,
           "fakeValue": "fake"
         },
-        "complete": false,
-        "successful": false,
         "eligibility":{
           "eligible": true
         }
@@ -19,8 +17,6 @@
     "duration": 300000,
     "eligibility": {
       "eligible": true
-    },
-    "complete": false,
-    "successful": false
+    }
   }
 ]

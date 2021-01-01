@@ -11,7 +11,7 @@ import uk.co.idv.context.adapter.client.exception.ApiErrorClientException;
 import uk.co.idv.context.adapter.client.headers.ContextRequestHeaders;
 import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
-import uk.co.idv.context.adapter.client.request.ClientRecordContextResultRequest;
+import uk.co.idv.context.adapter.client.request.ClientCreateVerificationRequest;
 import uk.co.idv.context.adapter.json.context.ContextJsonMother;
 import uk.co.idv.context.adapter.json.context.error.contextexpired.ContextExpiredErrorJsonMother;
 import uk.co.idv.context.adapter.json.context.error.contextexpired.ContextExpiredErrorMother;
@@ -19,15 +19,17 @@ import uk.co.idv.context.adapter.json.context.error.contextnotfound.ContextNotFo
 import uk.co.idv.context.adapter.json.context.error.contextnotfound.ContextNotFoundErrorMother;
 import uk.co.idv.context.adapter.json.context.error.notnextmethod.NotNextMethodErrorJsonMother;
 import uk.co.idv.context.adapter.json.context.error.notnextmethod.NotNextMethodErrorMother;
+import uk.co.idv.context.adapter.json.verification.VerificationJsonMother;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
-import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
-import uk.co.idv.context.entities.result.FacadeRecordResultRequestMother;
+import uk.co.idv.context.entities.verification.CreateVerificationRequest;
+import uk.co.idv.context.entities.verification.CreateVerificationRequestMother;
+import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.verification.VerificationMother;
 import uk.co.idv.identity.adapter.json.error.identitynotfound.IdentityNotFoundErrorJsonMother;
 import uk.co.idv.identity.adapter.json.error.identitynotfound.IdentityNotFoundErrorMother;
-import uk.co.idv.method.entities.result.ResultMother;
 import uk.co.mruoc.json.JsonConverter;
 
 import java.util.UUID;
@@ -46,6 +48,7 @@ import static uk.co.idv.context.adapter.client.headers.HeaderConstants.CHANNEL_I
 import static uk.co.idv.context.adapter.client.headers.HeaderConstants.CONTENT_TYPE_NAME;
 import static uk.co.idv.context.adapter.client.headers.HeaderConstants.CORRELATION_ID_NAME;
 
+//TODO add tests for get and complete verification
 class RestContextClientIntegrationTest {
 
     @RegisterExtension
@@ -53,7 +56,7 @@ class RestContextClientIntegrationTest {
 
     private static final String CREATE_CONTEXT_URL = "/v1/contexts";
     private static final String GET_CONTEXT_URL = CREATE_CONTEXT_URL + "/%s";
-    private static final String RECORD_CONTEXT_RESULT_URL = CREATE_CONTEXT_URL + "/results";
+    private static final String CREATE_VERIFICATION_URL = GET_CONTEXT_URL + "/verifications";
 
     private static final ObjectMapper MAPPER = JsonConverterFactory.buildMapper();
     private static final JsonConverter JSON_CONVERTER = JsonConverterFactory.build(MAPPER);
@@ -207,21 +210,21 @@ class RestContextClientIntegrationTest {
     }
 
     @Test
-    void shouldThrowExceptionIfContextNotFoundErrorReturnedFromRecordContextResult() {
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.build();
+    void shouldThrowExceptionIfContextNotFoundErrorReturnedFromCreateVerification() {
+        CreateVerificationRequest createRequest = CreateVerificationRequestMother.build();
         ContextRequestHeaders headers = ContextRequestHeaders.build("abc");
-        ClientRecordContextResultRequest request = ClientRecordContextResultRequest.builder()
-                .body(recordRequest)
+        ClientCreateVerificationRequest request = ClientCreateVerificationRequest.builder()
+                .body(createRequest)
                 .headers(headers)
                 .build();
 
-        SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(RECORD_CONTEXT_RESULT_URL)), headers)
+        SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(toCreateVerificationUrl(createRequest.getContextId()))), headers)
                 .willReturn(aResponse()
                         .withStatus(404)
                         .withBody(ContextNotFoundErrorJsonMother.contextNotFoundErrorJson())));
 
         ApiErrorClientException error = catchThrowableOfType(
-                () -> client.recordResult(request),
+                () -> client.createVerification(request),
                 ApiErrorClientException.class
         );
 
@@ -231,21 +234,21 @@ class RestContextClientIntegrationTest {
     }
 
     @Test
-    void shouldThrowExceptionIfContextExpiredErrorReturnedFromRecordContextResult() {
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.build();
+    void shouldThrowExceptionIfContextExpiredErrorReturnedFromCreateVerification() {
+        CreateVerificationRequest createRequest = CreateVerificationRequestMother.build();
         ContextRequestHeaders headers = ContextRequestHeaders.build("abc");
-        ClientRecordContextResultRequest request = ClientRecordContextResultRequest.builder()
-                .body(recordRequest)
+        ClientCreateVerificationRequest request = ClientCreateVerificationRequest.builder()
+                .body(createRequest)
                 .headers(headers)
                 .build();
 
-        SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(RECORD_CONTEXT_RESULT_URL)), headers)
+        SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(toCreateVerificationUrl(createRequest.getContextId()))), headers)
                 .willReturn(aResponse()
                         .withStatus(410)
                         .withBody(ContextExpiredErrorJsonMother.contextExpiredErrorJson())));
 
         ApiErrorClientException error = catchThrowableOfType(
-                () -> client.recordResult(request),
+                () -> client.createVerification(request),
                 ApiErrorClientException.class
         );
 
@@ -255,23 +258,23 @@ class RestContextClientIntegrationTest {
     }
 
     @Test
-    void shouldThrowExceptionIfNotNextMethodReturnedFromRecordContextResult() {
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
-                .result(ResultMother.withMethodName("default-method"))
+    void shouldThrowExceptionIfNotNextMethodReturnedFromCreateVerification() {
+        CreateVerificationRequest createRequest = CreateVerificationRequestMother.builder()
+                .methodName("default-method")
                 .build();
         ContextRequestHeaders headers = ContextRequestHeaders.build("abc");
-        ClientRecordContextResultRequest request = ClientRecordContextResultRequest.builder()
-                .body(recordRequest)
+        ClientCreateVerificationRequest request = ClientCreateVerificationRequest.builder()
+                .body(createRequest)
                 .headers(headers)
                 .build();
 
-        SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(RECORD_CONTEXT_RESULT_URL)), headers)
+        SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(toCreateVerificationUrl(createRequest.getContextId()))), headers)
                 .willReturn(aResponse()
                         .withStatus(422)
                         .withBody(NotNextMethodErrorJsonMother.notNextMethodErrorJson())));
 
         ApiErrorClientException error = catchThrowableOfType(
-                () -> client.recordResult(request),
+                () -> client.createVerification(request),
                 ApiErrorClientException.class
         );
 
@@ -281,22 +284,22 @@ class RestContextClientIntegrationTest {
     }
 
     @Test
-    void shouldReturnContextFromSuccessfulRecordContextResult() {
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.build();
+    void shouldReturnVerificationFromSuccessfulCreateVerification() {
+        CreateVerificationRequest createRequest = CreateVerificationRequestMother.build();
         ContextRequestHeaders headers = ContextRequestHeaders.build("abc");
-        ClientRecordContextResultRequest request = ClientRecordContextResultRequest.builder()
-                .body(recordRequest)
+        ClientCreateVerificationRequest request = ClientCreateVerificationRequest.builder()
+                .body(createRequest)
                 .headers(headers)
                 .build();
 
-        SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(RECORD_CONTEXT_RESULT_URL)), headers)
+        SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(toCreateVerificationUrl(createRequest.getContextId()))), headers)
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withBody(ContextJsonMother.build())));
+                        .withBody(VerificationJsonMother.incomplete())));
 
-        Context context = client.recordResult(request);
+        Verification verification = client.createVerification(request);
 
-        assertThat(context).isEqualTo(ContextMother.build());
+        assertThat(verification).isEqualTo(VerificationMother.incomplete());
     }
 
     private static MappingBuilder configureUpdateHeaders(MappingBuilder builder, ContextRequestHeaders headers) {
@@ -313,6 +316,10 @@ class RestContextClientIntegrationTest {
 
     private static String toGetUrl(UUID id) {
         return String.format(GET_CONTEXT_URL, id.toString());
+    }
+
+    private static String toCreateVerificationUrl(UUID id) {
+        return String.format(CREATE_VERIFICATION_URL, id.toString());
     }
 
 }

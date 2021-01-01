@@ -1,28 +1,34 @@
 package uk.co.idv.method.entities.otp.delivery.query;
 
 import lombok.RequiredArgsConstructor;
+import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.entities.method.MethodToType;
 import uk.co.idv.method.entities.otp.Otp;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
-import uk.co.idv.method.entities.sequence.MethodSequence;
 
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 public class DeliveryMethodExtractor {
 
-    private final UUID deliveryMethodId;
-
-    public DeliveryMethod extract(MethodSequence sequence) {
-        return extractOptional(sequence)
+    public DeliveryMethod extract(Context context, UUID deliveryMethodId) {
+        return extractOptional(context, deliveryMethodId)
                 .orElseThrow(() -> new DeliveryMethodNotFoundException(deliveryMethodId));
     }
 
-    public Optional<DeliveryMethod> extractOptional(MethodSequence sequence) {
-        return sequence.getNext()
-                .flatMap(new MethodToType<>(Otp.class))
-                .flatMap(otp -> otp.findDeliveryMethod(deliveryMethodId));
+    public Optional<DeliveryMethod> extractOptional(Context context, UUID deliveryMethodId) {
+        return extractOtpMethods(context)
+                .map(otp -> otp.findDeliveryMethod(deliveryMethodId))
+                .flatMap(Optional::stream)
+                .findFirst();
+    }
+
+    private Stream<Otp> extractOtpMethods(Context context) {
+        Methods methods = context.getNextMethods("one-time-passcode");
+        return methods.stream().map(new MethodToType<>(Otp.class)).flatMap(Optional::stream);
     }
 
 }

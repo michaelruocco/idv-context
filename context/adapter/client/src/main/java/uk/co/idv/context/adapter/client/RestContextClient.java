@@ -8,11 +8,12 @@ import uk.co.idv.context.adapter.client.logger.ClientLogger;
 import uk.co.idv.context.adapter.client.logger.MdcPopulator;
 import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
-import uk.co.idv.context.adapter.client.request.ClientRecordContextResultRequest;
+import uk.co.idv.context.adapter.client.request.ClientCreateVerificationRequest;
 import uk.co.idv.context.adapter.client.request.RequestConverter;
 import uk.co.idv.context.adapter.json.context.create.mask.FacadeCreateContextRequestJsonMasker;
 import uk.co.idv.context.adapter.json.context.mask.ContextJsonMasker;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.verification.Verification;
 import uk.co.mruoc.json.jackson.JacksonJsonConverter;
 import uk.co.mruoc.string.transform.UuidIdStringTransformer;
 
@@ -51,10 +52,10 @@ public class RestContextClient implements ContextClient {
     }
 
     @Override
-    public Context recordResult(ClientRecordContextResultRequest request) {
+    public Verification createVerification(ClientCreateVerificationRequest request) {
         HttpRequest httpRequest = requestConverter.toPatchHttpRequest(request);
         HttpResponse<String> httpResponse = executor.execute(httpRequest);
-        return responseConverter.toContextOrThrowError(httpResponse);
+        return responseConverter.toVerificationOrThrowError(httpResponse);
     }
 
     private static RequestConverter toRequestConverter(ContextClientConfig config) {

@@ -82,6 +82,16 @@ public class DeliveryMethods implements Iterable<DeliveryMethod> {
         return values.stream().collect(Collectors.toMap(DeliveryMethod::getId, Function.identity()));
     }
 
+    private boolean allEligibilityCompleteAndEligible() {
+        return values.stream()
+                .allMatch(DeliveryMethod::isEligibilityCompleteAndEligible);
+    }
+
+    private boolean allEligibilityIncomplete() {
+        return values.stream()
+                .noneMatch(DeliveryMethod::isEligibilityComplete);
+    }
+
     private boolean hasAtLeastOneEligible() {
         return values.stream().anyMatch(DeliveryMethod::isEligible);
     }

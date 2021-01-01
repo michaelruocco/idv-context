@@ -7,12 +7,15 @@ import uk.co.idv.common.adapter.protector.DefaultContextDataProtector;
 import uk.co.idv.common.adapter.protector.DataProtector;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.adapter.json.error.handler.ContextErrorHandler;
+import uk.co.idv.context.usecases.context.verification.CompleteVerification;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.ContextService;
 import uk.co.idv.context.usecases.context.CreateContext;
 import uk.co.idv.context.usecases.context.CreateContextRequestConverter;
-import uk.co.idv.context.usecases.context.VerificationService;
+import uk.co.idv.context.usecases.context.verification.CreateVerification;
+import uk.co.idv.context.usecases.context.verification.GetVerification;
+import uk.co.idv.context.usecases.context.verification.VerificationService;
 import uk.co.idv.context.usecases.context.FindContext;
 import uk.co.idv.context.usecases.context.MdcPopulator;
 import uk.co.idv.context.usecases.context.event.create.CompositeContextCreatedHandler;
@@ -23,8 +26,6 @@ import uk.co.idv.context.usecases.context.identity.IdentityLoader;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
 import uk.co.idv.context.usecases.context.method.CompositeMethodBuilder;
 import uk.co.idv.context.usecases.context.method.MethodsBuilder;
-import uk.co.idv.context.usecases.context.result.ContextResultUpdater;
-import uk.co.idv.context.usecases.context.result.ResultService;
 import uk.co.idv.context.usecases.context.sequence.SequenceBuilder;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 import uk.co.idv.context.usecases.policy.ContextPoliciesPopulator;
@@ -59,7 +60,6 @@ public class ContextConfig {
         return ContextFacade.builder()
                 .identityLoader(identityLoader())
                 .contextService(contextService())
-                .resultService(resultService())
                 .verificationService(verificationService())
                 .build();
     }
@@ -80,22 +80,6 @@ public class ContextConfig {
         return ContextService.builder()
                 .createContext(createContext())
                 .findContext(findContext())
-                .build();
-    }
-
-    private ResultService resultService() {
-        return ResultService.builder()
-                .lockoutService(lockoutService())
-                .repository(contextRepository)
-                .resultUpdater(new ContextResultUpdater())
-                .build();
-    }
-
-    private VerificationService verificationService() {
-        return VerificationService.builder()
-                .contextService(contextService())
-                .idGenerator(idGenerator)
-                .clock(clock)
                 .build();
     }
 
@@ -130,6 +114,39 @@ public class ContextConfig {
                 new DataProtector<>(EmailAddress.class, new EmailAddressMasker()),
                 new DataProtector<>(PhoneNumber.class, new PhoneNumberMasker())
         );
+    }
+
+    private VerificationService verificationService() {
+        return VerificationService.builder()
+                .createVerification(createVerification())
+                .completeVerification(completeVerification())
+                .getVerification(getVerification())
+                .build();
+    }
+
+    private CreateVerification createVerification() {
+        return CreateVerification.builder()
+                .findContext(findContext())
+                .repository(contextRepository)
+                .idGenerator(idGenerator)
+                .clock(clock)
+                .build();
+    }
+
+    private CompleteVerification completeVerification() {
+        return CompleteVerification.builder()
+                .findContext(findContext())
+                .lockoutService(lockoutService())
+                .repository(contextRepository)
+                .clock(clock)
+                .build();
+    }
+
+    private GetVerification getVerification() {
+        return GetVerification.builder()
+                .findContext(findContext())
+                .repository(contextRepository)
+                .build();
     }
 
     private FindContext findContext() {

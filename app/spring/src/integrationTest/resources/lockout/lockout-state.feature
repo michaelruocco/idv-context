@@ -215,17 +215,26 @@ Feature: Lockout State Requests
       """
       {
         "contextId": "#(contextId)",
-        "result": {
-          "methodName": "one-time-passcode",
-          "verificationId": "b9808fe7-26ec-415e-88db-e1bfb5d1380e",
-          "timestamp": "2020-09-27T06:57:47.522Z",
-          "successful": false
-        }
+        "methodName": "one-time-passcode"
       }
       """
-    And url baseUrl + "/v1/contexts/results"
+    And url baseUrl + "/v1/contexts/verifications"
     And header channel-id = channelId
     And header correlation-id = "66f03c6b-73f5-4342-ac23-330851265ce5"
+    And method POST
+    And status 201
+    * def verificationId = response.id
+    And request
+      """
+      {
+        "id": "#(verificationId)",
+        "contextId": "#(contextId)",
+        "successful": false
+      }
+      """
+    And url baseUrl + "/v1/contexts/verifications"
+    And header channel-id = channelId
+    And header correlation-id = "f6855884-ffc2-4966-944d-1debc7a1cc0a"
     And method PATCH
     And status 200
     And param channelId = channelId
@@ -262,10 +271,10 @@ Feature: Lockout State Requests
             ],
             "activityName": "lockout-state-activity",
             "methodName": "one-time-passcode",
-            "contextId": "#uuid",
+            "contextId": "#(contextId)",
             "channelId": "#(channelId)",
-            "verificationId": "b9808fe7-26ec-415e-88db-e1bfb5d1380e",
-            "timestamp": "2020-09-27T06:57:47.522Z",
+            "verificationId": "#(verificationId)",
+            "timestamp": "#notnull",
             "successful": false
           }
         ]
@@ -361,17 +370,26 @@ Feature: Lockout State Requests
       """
       {
         "contextId": "#(contextId)",
-        "result": {
-          "methodName": "one-time-passcode",
-          "verificationId": "b9808fe7-26ec-415e-88db-e1bfb5d1380e",
-          "timestamp": "2020-09-27T06:57:47.522Z",
-          "successful": false
-        }
+        "methodName": "one-time-passcode"
       }
       """
-    And url baseUrl + "/v1/contexts/results"
+    And url baseUrl + "/v1/contexts/verifications"
     And header channel-id = channelId
-    And header correlation-id = "16cdfbec-305d-4da5-92e4-619763e5b21c"
+    And header correlation-id = "41b9ed5d-ecd7-4b2a-8652-69471728f3b6"
+    And method POST
+    And status 201
+    * def verificationId = response.id
+    And request
+      """
+      {
+        "id": "#(verificationId)",
+        "contextId": "#(contextId)",
+        "successful": false
+      }
+      """
+    And url baseUrl + "/v1/contexts/verifications"
+    And header channel-id = channelId
+    And header correlation-id = "bf5e1e70-1aa8-4245-9fe4-2e86ae5d55d0"
     And method PATCH
     And status 200
     And request

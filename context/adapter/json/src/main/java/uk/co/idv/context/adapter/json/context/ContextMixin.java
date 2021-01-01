@@ -2,6 +2,7 @@ package uk.co.idv.context.adapter.json.context;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import uk.co.idv.context.entities.activity.Activity;
+import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.channel.Channel;
@@ -41,5 +42,8 @@ public interface ContextMixin {
 
     @JsonIgnore
     boolean isProtectSensitiveData();
+
+    @JsonIgnore
+    Methods getNextMethods();
 
 }

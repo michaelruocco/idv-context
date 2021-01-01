@@ -38,6 +38,10 @@ public class DeliveryMethod implements Updatable<DeliveryMethod> {
         return Optional.ofNullable(lastUpdated);
     }
 
+    public boolean isEligibilityCompleteAndEligible() {
+        return isEligibilityComplete() && isEligible();
+    }
+
     public boolean isEligibilityComplete() {
         if (eligibility instanceof AsyncEligibility) {
             AsyncEligibility asyncEligibility = (AsyncEligibility) eligibility;

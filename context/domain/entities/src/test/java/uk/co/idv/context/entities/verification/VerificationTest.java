@@ -24,13 +24,13 @@ class VerificationTest {
 
     @Test
     void shouldReturnContextId() {
-        UUID id = UUID.randomUUID();
+        UUID contextId = UUID.randomUUID();
 
         Verification verification = Verification.builder()
-                .contextId(id)
+                .contextId(contextId)
                 .build();
 
-        assertThat(verification.getContextId()).isEqualTo(id);
+        assertThat(verification.getContextId()).isEqualTo(contextId);
     }
 
     @Test
@@ -94,7 +94,7 @@ class VerificationTest {
                 .ignoringFields("complete", "completed", "successful")
                 .isEqualTo(verification);
         assertThat(completed.isComplete()).isTrue();
-        assertThat(completed.getCompleted()).contains(request.getTimestamp());
+        assertThat(completed.getCompleted()).contains(request.forceGetTimestamp());
     }
 
 }

@@ -122,7 +122,7 @@ class RequestConverterTest {
 
     @Test
     void shouldConvertRecordRequestToHttpPatchRequest() {
-        ClientRecordContextResultRequest request = ClientRecordContextResultRequestMother.build();
+        ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
         HttpRequest httpRequest = converter.toPatchHttpRequest(request);
@@ -132,7 +132,7 @@ class RequestConverterTest {
 
     @Test
     void shouldSetContentTypeHeaderOnHttpPatchRequest() {
-        ClientRecordContextResultRequest request = ClientRecordContextResultRequestMother.build();
+        ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
         HttpRequest httpRequest = converter.toPatchHttpRequest(request);
@@ -142,7 +142,7 @@ class RequestConverterTest {
 
     @Test
     void shouldSetAcceptHeaderOnHttpPatchRequest() {
-        ClientRecordContextResultRequest request = ClientRecordContextResultRequestMother.build();
+        ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
         HttpRequest httpRequest = converter.toPatchHttpRequest(request);
@@ -152,18 +152,18 @@ class RequestConverterTest {
 
     @Test
     void shouldSetUriOnHttpPatchRequest() {
-        ClientRecordContextResultRequest request = ClientRecordContextResultRequestMother.build();
+        ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
         HttpRequest httpRequest = converter.toPatchHttpRequest(request);
 
-        String expectedUri = String.format("%s/v1/contexts/results", BASE_URI);
+        String expectedUri = String.format("%s/v1/contexts/%s/verifications", BASE_URI, request.getContextId());
         assertThat(httpRequest.uri().toASCIIString()).isEqualTo(expectedUri);
     }
 
     @Test
     void shouldSetBodyOnHttpPatchRequest() {
-        ClientRecordContextResultRequest request = ClientRecordContextResultRequestMother.build();
+        ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
         HttpRequest httpRequest = converter.toPatchHttpRequest(request);

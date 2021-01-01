@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.sequence.Sequences;
+import uk.co.idv.context.entities.verification.Verifications;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
@@ -28,6 +29,7 @@ class ContextDeserializer extends StdDeserializer<Context> {
                 .expiry(JsonNodeConverter.toObject(node.get("expiry"), parser, Instant.class))
                 .request(JsonNodeConverter.toObject(node.get("request"), parser, ServiceCreateContextRequest.class))
                 .sequences(JsonNodeConverter.toObject(node.get("sequences"), parser, Sequences.class))
+                .verifications(JsonNodeConverter.toObject(node.get("verifications"), parser, Verifications.class))
                 .build();
     }
 

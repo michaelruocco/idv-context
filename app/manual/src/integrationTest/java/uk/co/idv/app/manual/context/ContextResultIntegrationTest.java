@@ -4,11 +4,12 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.NotNextMethodException;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
-import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
-import uk.co.idv.context.entities.result.FacadeRecordResultRequestMother;
-import uk.co.idv.context.usecases.context.result.NotNextMethodException;
+import uk.co.idv.context.entities.verification.CreateVerificationRequest;
+import uk.co.idv.context.entities.verification.CreateVerificationRequestMother;
+import uk.co.idv.context.entities.verification.Verification;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.lockout.entities.DefaultExternalLockoutRequest;
 import uk.co.idv.lockout.entities.ExternalLockoutRequest;
@@ -22,7 +23,6 @@ import uk.co.idv.lockout.entities.policy.recordattempt.RecordAttemptWhenMethodCo
 import uk.co.idv.lockout.entities.policy.soft.SoftLockoutStateCalculatorMother;
 import uk.co.idv.lockout.usecases.state.LockedOutException;
 import uk.co.idv.method.entities.result.Result;
-import uk.co.idv.method.entities.result.ResultMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -35,20 +35,21 @@ class ContextResultIntegrationTest {
     private final Application application = harness.getApplication();
 
     @Test
-    void shouldPopulateResultOnContext() {
+    void shouldPopulateVerificationOnContext() {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
         harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+        CreateVerificationRequest verificationRequest = CreateVerificationRequestMother.builder()
                 .contextId(context.getId())
-                .result(ResultMother.withMethodName("fake-method"))
+                .methodName("fake-method")
                 .build();
-        Context updated = application.record(recordRequest);
+        Verification verification = application.create(verificationRequest);
 
-        assertThat(updated.isComplete()).isTrue();
+        Context updated = application.findContext(context.getId());
+        assertThat(updated.getVerification(verification.getId())).isEqualTo(verification);
     }
 
     @Test
@@ -59,57 +60,51 @@ class ContextResultIntegrationTest {
         harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
-        Result result = ResultMother.withMethodName("another-method");
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+        CreateVerificationRequest verificationRequest = CreateVerificationRequestMother.builder()
                 .contextId(context.getId())
-                .result(result)
+                .methodName("another-method")
                 .build();
-        Throwable error = catchThrowable(() -> application.record(recordRequest));
+        Throwable error = catchThrowable(() -> application.create(verificationRequest));
 
         assertThat(error)
                 .isInstanceOf(NotNextMethodException.class)
-                .hasMessage(result.getMethodName());
+                .hasMessage(verificationRequest.getMethodName());
     }
 
     @Test
-    void shouldThrowExceptionIfAttemptToPopulateResultOnContextThatIsAlreadyComplete() {
+    void shouldThrowExceptionIfAttemptToCreateVerificationOnContextForMethodThatIsAlreadyComplete() {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
         harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
-        Result result = ResultMother.withMethodName("fake-method");
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+        CreateVerificationRequest verificationRequest = CreateVerificationRequestMother.builder()
                 .contextId(context.getId())
-                .result(result)
-                .build();
-        application.record(recordRequest);
-
-        Throwable error = catchThrowable(() -> application.record(recordRequest));
-
-        assertThat(error)
-                .isInstanceOf(NotNextMethodException.class)
-                .hasMessage(result.getMethodName());
-    }
-
-    @Test
-    void shouldRecordAttemptsWhenResultRecorded() {
-        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
-        harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
-        harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
-        Context context = application.create(createRequest);
-
-        Result result = ResultMother.builder()
                 .methodName("fake-method")
-                .successful(false)
                 .build();
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+        harness.givenVerificationCompletedSuccessfully(verificationRequest);
+
+        Throwable error = catchThrowable(() -> application.create(verificationRequest));
+
+        assertThat(error)
+                .isInstanceOf(NotNextMethodException.class)
+                .hasMessage(verificationRequest.getMethodName());
+    }
+
+    @Test
+    void shouldRecordAttemptsWhenVerificationsCompletedUnsuccessfully() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenIdentityExistsForAliases(createRequest.getAliases());
+        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        Context context = application.create(createRequest);
+
+        CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
                 .contextId(context.getId())
-                .result(result)
+                .methodName("fake-method")
                 .build();
-        application.record(recordRequest);
-        application.record(recordRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
 
         ExternalLockoutRequest lockoutRequest = DefaultExternalLockoutRequest.builder()
                 .activityName(createRequest.getActivityName())
@@ -121,23 +116,21 @@ class ContextResultIntegrationTest {
         assertThat(state.getAttempts()).hasSize(2);
     }
 
+
+
     @Test
-    void shouldRecordAttemptsWithCorrectValuesWhenAttemptRecorded() {
+    void shouldRecordAttemptsWithCorrectValuesWhenVerificationCompletedUnsuccessfully() {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
         harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
-        Result result = ResultMother.builder()
-                .methodName("fake-method")
-                .successful(false)
-                .build();
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+        CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
                 .contextId(context.getId())
-                .result(result)
+                .methodName("fake-method")
                 .build();
-        application.record(recordRequest);
+        Verification verification = harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
 
         ExternalLockoutRequest lockoutRequest = DefaultExternalLockoutRequest.builder()
                 .activityName(createRequest.getActivityName())
@@ -146,6 +139,7 @@ class ContextResultIntegrationTest {
                 .build();
         LockoutState state = application.loadLockoutState(lockoutRequest);
 
+        Result result = verification.toResult();
         Attempt attempt = state.attemptsCollection().iterator().next();
         assertThat(attempt.getVerificationId()).isEqualTo(result.getVerificationId());
         assertThat(attempt.getTimestamp()).isEqualTo(result.getTimestamp());
@@ -159,26 +153,22 @@ class ContextResultIntegrationTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenRecordingAttemptWhenLocked() {
+    void shouldThrowExceptionWhenCreatingVerificationWhenLocked() {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         Identity identity = harness.givenIdentityExistsForAliases(createRequest.getAliases());
         harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
-        Result result = ResultMother.builder()
-                .methodName("fake-method")
-                .successful(false)
-                .build();
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+        CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
                 .contextId(context.getId())
-                .result(result)
+                .methodName("fake-method")
                 .build();
-        application.record(recordRequest);
-        application.record(recordRequest);
-        application.record(recordRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
 
-        Throwable error = catchThrowable(() -> application.record(recordRequest));
+        Throwable error = catchThrowable(() -> application.create(verificationRequest));
 
         assertThat(error)
                 .isInstanceOf(LockedOutException.class)
@@ -197,15 +187,11 @@ class ContextResultIntegrationTest {
         harness.givenLockoutPolicyExists(lockoutPolicy);
         Context context = application.create(createRequest);
 
-        Result result = ResultMother.builder()
-                .methodName("fake-method")
-                .successful(false)
-                .build();
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+        CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
                 .contextId(context.getId())
-                .result(result)
+                .methodName("fake-method")
                 .build();
-        application.record(recordRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
 
         ExternalLockoutRequest lockoutRequest = DefaultExternalLockoutRequest.builder()
                 .activityName(createRequest.getActivityName())
@@ -229,15 +215,11 @@ class ContextResultIntegrationTest {
         harness.givenLockoutPolicyExists(lockoutPolicy);
         Context context = application.create(createRequest);
 
-        Result result = ResultMother.builder()
-                .methodName("fake-method")
-                .successful(false)
-                .build();
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+        CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
                 .contextId(context.getId())
-                .result(result)
+                .methodName("fake-method")
                 .build();
-        application.record(recordRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
 
         ExternalLockoutRequest lockoutRequest = DefaultExternalLockoutRequest.builder()
                 .activityName(createRequest.getActivityName())
@@ -261,18 +243,15 @@ class ContextResultIntegrationTest {
         harness.givenLockoutPolicyExists(lockoutPolicy);
         Context context = application.create(createRequest);
 
-        Result result = ResultMother.builder()
-                .methodName("fake-method")
-                .successful(false)
-                .build();
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+        CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
                 .contextId(context.getId())
-                .result(result)
+                .methodName("fake-method")
                 .build();
-        application.record(recordRequest);
-        application.record(recordRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
+
         LockedOutException error = catchThrowableOfType(
-                () -> application.record(recordRequest),
+                () -> application.create(verificationRequest),
                 LockedOutException.class
         );
 
@@ -293,47 +272,39 @@ class ContextResultIntegrationTest {
         harness.givenLockoutPolicyExists(lockoutPolicy);
         Context context = application.create(createRequest);
 
-        Result result = ResultMother.builder()
-                .methodName("fake-method")
-                .successful(false)
-                .build();
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
+        CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
                 .contextId(context.getId())
-                .result(result)
+                .methodName("fake-method")
                 .build();
-        application.record(recordRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
+
+        System.out.println("completed unsuccessful verification, creating another verification");
+
         LockedOutException error = catchThrowableOfType(
-                () -> application.record(recordRequest),
+                () -> application.create(verificationRequest),
                 LockedOutException.class
         );
 
         LockoutState state = error.getState();
         assertThat(state.isLocked()).isTrue();
-        assertThat(state.getMessage()).isEqualTo("soft lock began at 2020-10-01T19:10:22Z and expiring at 2020-10-01T19:11:22Z");
+        assertThat(state.getMessage()).isEqualTo("soft lock began at 2020-10-06T21:00:00Z and expiring at 2020-10-06T21:01:00Z");
     }
 
     @Test
-    void shouldResetLockoutStateOnSuccessfulAttempt() {
+    void shouldResetLockoutStateOnVerificationCompletedSuccessfully() {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
         harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
-        Result result = ResultMother.builder()
+        CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
+                .contextId(context.getId())
                 .methodName("fake-method")
-                .successful(false)
                 .build();
-        FacadeRecordResultRequest recordUnsuccessfulRequest = FacadeRecordResultRequestMother.builder()
-                .contextId(context.getId())
-                .result(result)
-                .build();
-        application.record(recordUnsuccessfulRequest);
-        FacadeRecordResultRequest recordSuccessfulRequest = FacadeRecordResultRequestMother.builder()
-                .contextId(context.getId())
-                .result(ResultMother.withMethodName("fake-method"))
-                .build();
-        application.record(recordSuccessfulRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
+
+        harness.givenVerificationCompletedSuccessfully(verificationRequest);
 
         ExternalLockoutRequest lockoutRequest = DefaultExternalLockoutRequest.builder()
                 .activityName(createRequest.getActivityName())

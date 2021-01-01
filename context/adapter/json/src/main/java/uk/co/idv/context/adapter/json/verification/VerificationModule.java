@@ -6,7 +6,10 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import uk.co.idv.context.adapter.json.activity.ActivityModule;
 import uk.co.idv.context.adapter.json.context.sequence.SequenceModule;
+import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.context.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.verification.Verifications;
 import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 
@@ -24,6 +27,12 @@ public class VerificationModule extends SimpleModule {
         super("verification-module", Version.unknownVersion());
         this.mappings = mappings;
 
+        setMixInAnnotation(Verifications.class, VerificationsMixin.class);
+
+        addDeserializer(CreateVerificationRequest.class, new CreateVerificationRequestDeserializer());
+        addDeserializer(CompleteVerificationRequest.class, new CompleteVerificationRequestDeserializer());
+
+        addDeserializer(Verifications.class, new VerificationsDeserializer());
         addDeserializer(Verification.class, new VerificationDeserializer());
     }
 
