@@ -8,7 +8,6 @@ import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.adapter.json.eligibility.EligibilityModule;
 import uk.co.idv.method.adapter.json.method.MethodMixin;
-import uk.co.idv.method.adapter.json.result.ResultModule;
 import uk.co.idv.method.entities.method.Method;
 
 import java.util.ArrayList;
@@ -36,7 +35,6 @@ public class MethodModule extends SimpleModule {
     @Override
     public Iterable<? extends Module> getDependencies() {
         Collection<Module> dependencies = new ArrayList<>(getMethodModules());
-        dependencies.add(new ResultModule());
         dependencies.add(new EligibilityModule());
         return dependencies;
     }

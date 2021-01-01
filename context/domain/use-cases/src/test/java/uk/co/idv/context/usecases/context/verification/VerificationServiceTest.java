@@ -1,8 +1,5 @@
 package uk.co.idv.context.usecases.context.verification;
 
-
-
-//TODO test
 class VerificationServiceTest {
 
     /*private static final Instant NOW = Instant.now();

@@ -7,7 +7,6 @@ import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.co.idv.method.adapter.json.eligibility.EligibilityModule;
 import uk.co.idv.method.adapter.json.method.MethodMixin;
-import uk.co.idv.method.adapter.json.result.ResultModule;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.fake.FakeMethod;
 import uk.co.idv.method.entities.method.fake.FakeMethodConfig;
@@ -30,8 +29,7 @@ public class FakeMethodModule extends SimpleModule {
         return Arrays.asList(
                 new Jdk8Module(),
                 new JavaTimeModule(),
-                new EligibilityModule(),
-                new ResultModule()
+                new EligibilityModule()
         );
     }
 

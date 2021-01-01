@@ -164,6 +164,7 @@ public class Application {
         return contextFacade.create(request);
     }
 
+    //TODO test
     public Verification get(GetVerificationRequest request) {
         return contextFacade.get(request);
     }

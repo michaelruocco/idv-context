@@ -97,4 +97,7 @@ class VerificationTest {
         assertThat(completed.getCompleted()).contains(request.forceGetTimestamp());
     }
 
+    //TODO test throwing exception when trying to complete after expired
+    //TODO test toResult
+
 }
