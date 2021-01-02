@@ -1,0 +1,8 @@
+dependencies {
+    implementation project(":context-entities")
+    implementation project(":method-entities")
+    implementation project(":method-use-cases")
+    implementation project(":identity-data-protector")
+
+    testImplementation testFixtures(project(":context-entities"))
+}

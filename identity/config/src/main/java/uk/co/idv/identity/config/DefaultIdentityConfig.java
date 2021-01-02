@@ -4,7 +4,11 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.adapter.json.IdentityErrorHandler;
+import uk.co.idv.identity.adapter.protect.mask.channel.ChannelMasker;
+import uk.co.idv.identity.adapter.protect.mask.identity.IdentityMasker;
 import uk.co.idv.identity.entities.alias.DefaultAliasFactory;
+import uk.co.idv.identity.entities.channel.Channel;
+import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.usecases.eligibility.ChannelCreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.CompositeCreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
@@ -26,8 +30,8 @@ import uk.co.idv.identity.usecases.identity.save.SaveIdentityStrategy;
 import uk.co.idv.identity.usecases.identity.save.external.ExternalSaveIdentityStrategy;
 import uk.co.idv.identity.usecases.identity.save.internal.InternalSaveIdentityStrategy;
 import uk.co.idv.identity.usecases.identity.update.UpdateIdentity;
-
 import java.util.Collections;
+import java.util.function.UnaryOperator;
 
 @Builder
 @Slf4j
@@ -63,6 +67,16 @@ public class DefaultIdentityConfig implements IdentityConfig {
     @Override
     public IdentityErrorHandler errorHandler() {
         return new IdentityErrorHandler();
+    }
+
+    @Override
+    public UnaryOperator<Channel> channelProtector() {
+        return new ChannelMasker();
+    }
+
+    @Override
+    public UnaryOperator<Identity> identityProtector() {
+        return new IdentityMasker();
     }
 
     @Override

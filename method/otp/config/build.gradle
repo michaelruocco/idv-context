@@ -5,4 +5,5 @@ dependencies {
     implementation project(":method-use-cases")
     implementation project(":common-use-cases")
     implementation project(":context-use-cases")
+    implementation project(":otp-data-protector")
 }

@@ -1,6 +1,7 @@
 dependencies {
     api project(":identity-use-cases")
     api project(":identity-json")
+    implementation project(":identity-data-protector")
     implementation project(":common-use-cases")
 
     implementation project(":identity-in-memory-repository")

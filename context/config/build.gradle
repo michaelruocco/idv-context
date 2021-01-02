@@ -2,6 +2,7 @@ dependencies {
     api project(":context-use-cases")
     api project(":context-json")
     api project(":otp-sim-swap-stub")
+    api project(":context-data-protector")
 
     implementation project(":identity-config")
     implementation project(":lockout-config")
@@ -10,7 +11,6 @@ dependencies {
     implementation project(":context-in-memory-repository")
     implementation project(":context-redis-repository")
     implementation project(":context-mongo-repository")
-    implementation project(":data-protector")
     implementation project(":method-config")
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
     implementation "org.mongodb:mongo-java-driver:${mongoVersion}"

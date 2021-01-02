@@ -75,8 +75,8 @@ public class AppConfig {
                 .clock(appAdapter.getClock())
                 .idGenerator(appAdapter.getIdGenerator())
                 .appMethodConfigs(appMethodConfigs)
-                .createEligibility(identityConfig.createEligibility())
                 .lockoutService(lockoutConfig.lockoutService())
+                .identityConfig(identityConfig)
                 .build();
     }
 

@@ -46,7 +46,6 @@ dependencies {
     implementation project(":method-json")
     implementation project(":otp-json")
     implementation project(":identity-external-find-stub-config")
-    implementation project(":data-protector")
     implementation "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
     implementation "org.apache.tomcat.embed:tomcat-embed-core"

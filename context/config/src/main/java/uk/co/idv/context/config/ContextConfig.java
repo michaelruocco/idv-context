@@ -2,11 +2,9 @@ package uk.co.idv.context.config;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.common.adapter.protector.ContextDataProtector;
-import uk.co.idv.common.adapter.protector.DefaultContextDataProtector;
-import uk.co.idv.common.adapter.protector.DataProtector;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.adapter.json.error.handler.ContextErrorHandler;
+import uk.co.idv.context.adapter.protect.mask.ContextDataProtector;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.ContextService;
 import uk.co.idv.context.usecases.context.CreateContext;
@@ -26,17 +24,11 @@ import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 import uk.co.idv.context.usecases.policy.ContextPoliciesPopulator;
 import uk.co.idv.context.usecases.policy.ContextPolicyRepository;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
-import uk.co.idv.identity.entities.emailaddress.EmailAddress;
-import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
-import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
-import uk.co.idv.identity.usecases.protect.mask.EmailAddressMasker;
-import uk.co.idv.identity.usecases.protect.mask.PhoneNumberMasker;
+import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.lockout.usecases.LockoutService;
 import uk.co.idv.method.config.AppMethodConfigs;
 
 import java.time.Clock;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.concurrent.Executors;
 
 @Builder
@@ -45,11 +37,11 @@ public class ContextConfig {
 
     private final Clock clock;
     private final IdGenerator idGenerator;
-    private final AppMethodConfigs appMethodConfigs;
     private final ContextPolicyRepository policyRepository;
     private final ContextRepository contextRepository;
-    private final CreateEligibility createEligibility;
     private final LockoutService lockoutService;
+    private final AppMethodConfigs appMethodConfigs;
+    private final IdentityConfig identityConfig;
 
     public ContextPoliciesPopulator policiesPopulator() {
         return new ContextPoliciesPopulator(policyService());
@@ -72,7 +64,7 @@ public class ContextConfig {
 
     public IdentityLoader identityLoader() {
         return IdentityLoader.builder()
-                .createEligibility(createEligibility)
+                .createEligibility(identityConfig.createEligibility())
                 .policyService(policyService())
                 .build();
     }
@@ -106,17 +98,11 @@ public class ContextConfig {
     }
 
     private ContextDataProtector contextDataProtector() {
-        return DefaultContextDataProtector.builder()
-                .dataProtectors(dataProtectors())
+        return ContextDataProtector.builder()
+                .identityProtector(identityConfig.identityProtector())
+                .channelProtector(identityConfig.channelProtector())
                 .methodProtector(appMethodConfigs.methodProtector())
                 .build();
-    }
-
-    private Collection<DataProtector<?>> dataProtectors() {
-        return Arrays.asList(
-                new DataProtector<>(EmailAddress.class, new EmailAddressMasker()),
-                new DataProtector<>(PhoneNumber.class, new PhoneNumberMasker())
-        );
     }
 
     private SequencesBuilder sequencesBuilder() {

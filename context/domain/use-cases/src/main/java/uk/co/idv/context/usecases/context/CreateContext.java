@@ -1,7 +1,7 @@
 package uk.co.idv.context.usecases.context;
 
 import lombok.Builder;
-import uk.co.idv.common.adapter.protector.ContextDataProtector;
+import uk.co.idv.context.adapter.protect.mask.ContextDataProtector;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.sequence.Sequences;

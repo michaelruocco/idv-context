@@ -14,4 +14,6 @@ public interface ContextClient {
 
     Verification createVerification(ClientCreateVerificationRequest request);
 
+    //TODO add complete verification
+
 }

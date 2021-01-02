@@ -2,7 +2,7 @@ package uk.co.idv.context.usecases.context;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import uk.co.idv.common.adapter.protector.ContextDataProtector;
+import uk.co.idv.context.adapter.protect.mask.ContextDataProtector;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
