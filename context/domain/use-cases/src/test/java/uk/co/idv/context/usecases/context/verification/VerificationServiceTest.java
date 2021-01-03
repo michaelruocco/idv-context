@@ -1,100 +1,62 @@
 package uk.co.idv.context.usecases.context.verification;
 
+import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.context.entities.verification.CompleteVerificationRequestMother;
+import uk.co.idv.context.entities.verification.CreateVerificationRequest;
+import uk.co.idv.context.entities.verification.CreateVerificationRequestMother;
+import uk.co.idv.context.entities.verification.GetVerificationRequest;
+import uk.co.idv.context.entities.verification.GetVerificationRequestMother;
+import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.verification.VerificationMother;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mock;
+
 class VerificationServiceTest {
 
-    /*private static final Instant NOW = Instant.now();
-
-    private final ContextService contextService = mock(ContextService.class);
-    private final IdGenerator idGenerator = mock(IdGenerator.class);
-    private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
+    private final CreateVerification createVerification = mock(CreateVerification.class);
+    private final CompleteVerification completeVerification = mock(CompleteVerification.class);
+    private final GetVerification getVerification = mock(GetVerification.class);
 
     private final VerificationService verificationService = VerificationService.builder()
-            .contextService(contextService)
-            .idGenerator(idGenerator)
-            .clock(clock)
+            .createVerification(createVerification)
+            .completeVerification(completeVerification)
+            .getVerification(getVerification)
             .build();
 
     @Test
-    void shouldGenerateIdOnCreatedVerification() {
+    void shouldCreateVerification() {
         CreateVerificationRequest request = CreateVerificationRequestMother.build();
-        UUID id = givenRandomIdGenerated();
-        givenContextFoundForId(request.getContextId());
+        Verification expected = VerificationMother.incomplete();
+        given(createVerification.create(request)).willReturn(expected);
 
-        Verification verification = verificationService.create(request);
+        Verification created = verificationService.create(request);
 
-        assertThat(verification.getId()).isEqualTo(id);
+        assertThat(created).isEqualTo(expected);
     }
 
     @Test
-    void shouldSetCreatedOnVerification() {
-        CreateVerificationRequest request = CreateVerificationRequestMother.build();
-        givenContextFoundForId(request.getContextId());
+    void shouldGetVerification() {
+        GetVerificationRequest request = GetVerificationRequestMother.build();
+        Verification expected = VerificationMother.incomplete();
+        given(getVerification.get(request)).willReturn(expected);
 
-        Verification verification = verificationService.create(request);
+        Verification verification = verificationService.get(request);
 
-        assertThat(verification.getCreated()).isEqualTo(NOW);
+        assertThat(verification).isEqualTo(expected);
     }
 
     @Test
-    void shouldPopulateContextIdOnVerification() {
-        CreateVerificationRequest request = CreateVerificationRequestMother.build();
-        Context context = givenContextFoundForId(request.getContextId());
+    void shouldCompleteVerification() {
+        CompleteVerificationRequest request = CompleteVerificationRequestMother.successful();
+        Verification expected = VerificationMother.incomplete();
+        given(completeVerification.complete(request)).willReturn(expected);
 
-        Verification verification = verificationService.create(request);
+        Verification completed = verificationService.complete(request);
 
-        assertThat(verification.getContextId()).isEqualTo(context.getId());
+        assertThat(completed).isEqualTo(expected);
     }
-
-    @Test
-    void shouldPopulateActivityOnVerification() {
-        CreateVerificationRequest request = CreateVerificationRequestMother.build();
-        Context context = givenContextFoundForId(request.getContextId());
-
-        Verification verification = verificationService.create(request);
-
-        assertThat(verification.getActivity()).isEqualTo(context.getActivity());
-    }
-
-    @Test
-    void shouldPopulateProtectSensitiveDataOnVerification() {
-        CreateVerificationRequest request = CreateVerificationRequestMother.build();
-        Context context = givenContextFoundForId(request.getContextId());
-
-        Verification verification = verificationService.create(request);
-
-        assertThat(verification.isProtectSensitiveData()).isEqualTo(context.isProtectSensitiveData());
-    }
-
-    @Test
-    void shouldPopulateMethodsOnVerification() {
-        CreateVerificationRequest request = CreateVerificationRequestMother.build();
-        Context context = givenContextFoundForId(request.getContextId());
-
-        Verification verification = verificationService.create(request);
-
-        assertThat(verification.getMethods()).isEqualTo(context.getNextMethods(request.getMethodName()));
-    }
-
-    @Test
-    void shouldNotPopulateCompletedTimeOnVerification() {
-        CreateVerificationRequest request = CreateVerificationRequestMother.build();
-        givenContextFoundForId(request.getContextId());
-
-        Verification verification = verificationService.create(request);
-
-        assertThat(verification.getCompleted()).isEmpty();
-    }
-
-    private UUID givenRandomIdGenerated() {
-        UUID id = UUID.randomUUID();
-        given(idGenerator.generate()).willReturn(id);
-        return id;
-    }
-
-    private Context givenContextFoundForId(UUID contextId) {
-        Context context = ContextMother.build();
-        given(contextService.findWithEligibleIncompleteSequences(contextId)).willReturn(context);
-        return context;
-    }*/
 
 }

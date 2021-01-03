@@ -11,8 +11,6 @@
 
 ## Todo
 
-*   Add separate karate test feature file for create/get/complete verifications
-    
 *   Token validation?
 
 *   Add postman collection to repo and run in build pipeline
