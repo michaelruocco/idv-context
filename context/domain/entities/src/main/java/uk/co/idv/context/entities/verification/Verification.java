@@ -10,7 +10,6 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
-//TODO test uncovered methods
 @Builder(toBuilder = true)
 @Data
 public class Verification {
@@ -43,6 +42,10 @@ public class Verification {
         return Optional.ofNullable(completed);
     }
 
+    public Instant forceGetCompleted() {
+        return getCompleted().orElseThrow(() -> new VerificationNotCompletedException(id));
+    }
+
     public boolean hasId(UUID otherId) {
         return id.equals(otherId);
     }
@@ -60,7 +63,7 @@ public class Verification {
                 .methodName(methodName)
                 .verificationId(id)
                 .successful(successful)
-                .timestamp(getCompleted().orElseThrow(() -> new VerificationNotCompletedException(id)))
+                .timestamp(forceGetCompleted())
                 .build();
     }
 

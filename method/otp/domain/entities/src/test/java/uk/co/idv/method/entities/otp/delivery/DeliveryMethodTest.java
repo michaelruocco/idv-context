@@ -172,7 +172,7 @@ class DeliveryMethodTest {
 
     @Test
     void shouldReturnDeliveryMethodWithUpdatedValue() {
-        String updatedValue = "+440780111111";
+        String updatedValue = "**********111";
         DeliveryMethod original = DeliveryMethodMother.build();
 
         DeliveryMethod updated = original.withValue(updatedValue);

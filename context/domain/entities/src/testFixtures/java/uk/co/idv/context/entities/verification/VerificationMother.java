@@ -15,9 +15,13 @@ public interface VerificationMother {
     }
 
     static Verification successful() {
+        return successful(Instant.parse("2020-09-14T20:04:03.003Z"));
+    }
+
+    static Verification successful(Instant completed) {
         return builder()
                 .successful(true)
-                .completed(Instant.parse("2020-09-14T20:04:03.003Z"))
+                .completed(completed)
                 .build();
     }
 
