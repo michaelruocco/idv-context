@@ -13,7 +13,6 @@ import java.util.UUID;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-//TODO test
 @Data
 @RequiredArgsConstructor
 public class Verifications implements MethodVerifications, Iterable<Verification> {

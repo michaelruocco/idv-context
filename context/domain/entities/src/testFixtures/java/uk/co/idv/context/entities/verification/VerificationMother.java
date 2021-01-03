@@ -18,6 +18,10 @@ public interface VerificationMother {
         return successful(Instant.parse("2020-09-14T20:04:03.003Z"));
     }
 
+    static Verification withMethodName(String methodName) {
+        return builder().methodName(methodName).build();
+    }
+
     static Verification successful(Instant completed) {
         return builder()
                 .successful(true)

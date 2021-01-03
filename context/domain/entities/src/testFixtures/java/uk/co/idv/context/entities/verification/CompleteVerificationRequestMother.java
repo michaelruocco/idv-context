@@ -20,6 +20,10 @@ public interface CompleteVerificationRequestMother {
         return builder().timestamp(null).build();
     }
 
+    static CompleteVerificationRequest withId(UUID id) {
+        return builder().id(id).build();
+    }
+
     static CompleteVerificationRequestBuilder builder() {
         return CompleteVerificationRequest.builder()
                 .contextId(UUID.fromString("2948aadc-7f63-4b00-875b-77a4e6608e5c"))

@@ -29,9 +29,9 @@ class MethodsTest {
         Method method2 = mock(Method.class);
         Methods methods = MethodsMother.with(method1, method2);
 
-        Collection<Method> collection = methods.getValues();
+        Collection<Method> values = methods.getValues();
 
-        assertThat(collection).contains(method1, method2);
+        assertThat(values).contains(method1, method2);
     }
 
     @Test

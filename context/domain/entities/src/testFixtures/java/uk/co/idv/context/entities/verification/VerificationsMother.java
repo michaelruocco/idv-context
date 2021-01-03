@@ -6,6 +6,10 @@ public interface VerificationsMother {
         return with(VerificationMother.incomplete());
     }
 
+    static Verifications empty() {
+        return new Verifications();
+    }
+
     static Verifications with(Verification... verifications) {
         return new Verifications(verifications);
     }
