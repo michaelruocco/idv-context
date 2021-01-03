@@ -6,7 +6,6 @@ import uk.co.idv.context.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.verification.GetVerificationRequest;
 import uk.co.idv.context.entities.verification.Verification;
 
-//TODO test
 @Builder
 public class VerificationService {
 

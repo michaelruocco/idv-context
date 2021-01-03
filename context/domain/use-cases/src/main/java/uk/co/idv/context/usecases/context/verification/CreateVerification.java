@@ -13,7 +13,6 @@ import java.time.Clock;
 import java.time.Instant;
 import java.util.UUID;
 
-//TODO test
 @Builder
 public class CreateVerification {
 
