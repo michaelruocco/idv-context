@@ -22,6 +22,17 @@ class ClientCreateContextRequestTest {
     }
 
     @Test
+    void shouldReturnHeaders() {
+        ContextRequestHeaders headers = mock(ContextRequestHeaders.class);
+
+        ClientCreateContextRequest request = ClientCreateContextRequest.builder()
+                .headers(headers)
+                .build();
+
+        assertThat(request.getHeaders()).isEqualTo(headers);
+    }
+
+    @Test
     void shouldReturnHeadersArrayFromHeaders() {
         ContextRequestHeaders headers = mock(ContextRequestHeaders.class);
         String[] headersArray = new String[0];

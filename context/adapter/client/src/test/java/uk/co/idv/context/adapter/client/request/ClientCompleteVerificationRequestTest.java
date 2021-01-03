@@ -2,8 +2,7 @@ package uk.co.idv.context.adapter.client.request;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.adapter.client.headers.ContextRequestHeaders;
-import uk.co.idv.context.entities.verification.CreateVerificationRequest;
-
+import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
 
 import java.util.UUID;
 
@@ -11,13 +10,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class ClientCreateVerificationRequestTest {
+class ClientCompleteVerificationRequestTest {
 
     @Test
     void shouldReturnBody() {
-        CreateVerificationRequest body = mock(CreateVerificationRequest.class);
+        CompleteVerificationRequest body = mock(CompleteVerificationRequest.class);
 
-        ClientCreateVerificationRequest request = ClientCreateVerificationRequest.builder()
+        ClientCompleteVerificationRequest request = ClientCompleteVerificationRequest.builder()
                 .body(body)
                 .build();
 
@@ -27,10 +26,10 @@ class ClientCreateVerificationRequestTest {
     @Test
     void shouldReturnContextIdFromBody() {
         UUID contextId = UUID.randomUUID();
-        CreateVerificationRequest body = mock(CreateVerificationRequest.class);
+        CompleteVerificationRequest body = mock(CompleteVerificationRequest.class);
         given(body.getContextId()).willReturn(contextId);
 
-        ClientCreateVerificationRequest request = ClientCreateVerificationRequest.builder()
+        ClientCompleteVerificationRequest request = ClientCompleteVerificationRequest.builder()
                 .body(body)
                 .build();
 
@@ -41,7 +40,7 @@ class ClientCreateVerificationRequestTest {
     void shouldReturnHeaders() {
         ContextRequestHeaders headers = mock(ContextRequestHeaders.class);
 
-        ClientCreateVerificationRequest request = ClientCreateVerificationRequest.builder()
+        ClientCompleteVerificationRequest request = ClientCompleteVerificationRequest.builder()
                 .headers(headers)
                 .build();
 
@@ -54,7 +53,7 @@ class ClientCreateVerificationRequestTest {
         String[] headersArray = new String[0];
         given(headers.toArray()).willReturn(headersArray);
 
-        ClientCreateVerificationRequest request = ClientCreateVerificationRequest.builder()
+        ClientCompleteVerificationRequest request = ClientCompleteVerificationRequest.builder()
                 .headers(headers)
                 .build();
 
