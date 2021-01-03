@@ -9,6 +9,7 @@ import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.context.entities.verification.CompleteVerificationResponse;
 import uk.co.idv.context.entities.verification.Verification;
 import uk.co.idv.context.entities.verification.Verifications;
 import uk.co.idv.identity.entities.alias.Aliases;

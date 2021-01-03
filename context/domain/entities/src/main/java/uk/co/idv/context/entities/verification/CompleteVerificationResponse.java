@@ -1,8 +1,8 @@
-package uk.co.idv.context.entities.context;
+package uk.co.idv.context.entities.verification;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.method.entities.result.Result;
 
 @Builder

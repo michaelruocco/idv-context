@@ -1,7 +1,7 @@
 package uk.co.idv.context.usecases.context.verification;
 
 import lombok.Builder;
-import uk.co.idv.context.entities.context.CompleteVerificationResponse;
+import uk.co.idv.context.entities.verification.CompleteVerificationResponse;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.lockout.ContextRecordAttemptRequest;
 import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
@@ -13,7 +13,6 @@ import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
 import java.time.Clock;
 import java.util.UUID;
 
-//TODO test
 @Builder
 public class CompleteVerification {
 

@@ -1,7 +1,7 @@
-package uk.co.idv.context.entities.context;
+package uk.co.idv.context.entities.verification;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.method.entities.result.Result;
 
 import static org.assertj.core.api.Assertions.assertThat;

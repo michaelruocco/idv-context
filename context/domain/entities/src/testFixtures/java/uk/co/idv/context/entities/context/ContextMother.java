@@ -5,6 +5,7 @@ import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequenceMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.entities.context.sequence.SequencesMother;
+import uk.co.idv.context.entities.verification.Verifications;
 import uk.co.idv.context.entities.verification.VerificationsMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.method.entities.method.Method;
@@ -28,6 +29,10 @@ public interface ContextMother {
 
     static Context withSequences(Sequences sequences) {
         return builder().sequences(sequences).build();
+    }
+
+    static Context withVerifications(Verifications verifications) {
+        return builder().verifications(verifications).build();
     }
 
     static Context withIdentity(Identity identity) {
