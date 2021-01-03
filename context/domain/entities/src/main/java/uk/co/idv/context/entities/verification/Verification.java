@@ -55,13 +55,6 @@ public class Verification {
         return timestamp.isAfter(expiry);
     }
 
-    public Optional<Result> toResultIfComplete() {
-        if (isComplete()) {
-            return Optional.of(toResult());
-        }
-        return Optional.empty();
-    }
-
     public Result toResult() {
         return Result.builder()
                 .methodName(methodName)
