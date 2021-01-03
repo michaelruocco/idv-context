@@ -46,9 +46,9 @@ dependencies {
     implementation project(":method-json")
     implementation project(":otp-json")
     implementation project(":identity-external-find-stub-config")
+    implementation "org.apache.tomcat.embed:tomcat-embed-core"
     implementation "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
-    implementation "org.apache.tomcat.embed:tomcat-embed-core"
     implementation "org.springframework.boot:spring-boot-actuator"
     implementation "org.springframework.boot:spring-boot-autoconfigure"
     implementation "org.springframework.boot:spring-boot"
@@ -67,7 +67,7 @@ dependencies {
     implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
     runtimeOnly "ch.qos.logback.contrib:logback-json-classic:${logbackJsonVersion}"
     runtimeOnly "ch.qos.logback.contrib:logback-jackson:${logbackJsonVersion}"
-    runtimeOnly "net.logstash.logback:logstash-logback-encoder:6.5"
+    runtimeOnly "net.logstash.logback:logstash-logback-encoder:6.6"
 
     testImplementation testFixtures(project(":lockout-entities"))
     testImplementation testFixtures(project(":context-entities"))
