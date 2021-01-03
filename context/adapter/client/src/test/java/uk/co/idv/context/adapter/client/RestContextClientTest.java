@@ -58,7 +58,7 @@ class RestContextClientTest {
     }
 
     @Test
-    void shouldCreateVerifiction() {
+    void shouldCreateVerification() {
         ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         HttpRequest httpRequest = givenConvertsToHttpRequest(request);
         HttpResponse<String> httpResponse = givenExecutingRequestReturns(httpRequest);
@@ -71,19 +71,19 @@ class RestContextClientTest {
 
     private HttpRequest givenConvertsToHttpRequest(ClientCreateContextRequest request) {
         HttpRequest httpRequest = buildHttpRequest();
-        given(requestConverter.toPostHttpRequest(request)).willReturn(httpRequest);
+        given(requestConverter.toPostContextHttpRequest(request)).willReturn(httpRequest);
         return httpRequest;
     }
 
     private HttpRequest givenConvertsToHttpRequest(ClientGetContextRequest request) {
         HttpRequest httpRequest = buildHttpRequest();
-        given(requestConverter.toGetHttpRequest(request)).willReturn(httpRequest);
+        given(requestConverter.toGetContextHttpRequest(request)).willReturn(httpRequest);
         return httpRequest;
     }
 
     private HttpRequest givenConvertsToHttpRequest(ClientCreateVerificationRequest request) {
         HttpRequest httpRequest = buildHttpRequest();
-        given(requestConverter.toPatchHttpRequest(request)).willReturn(httpRequest);
+        given(requestConverter.toPostVerificationHttpRequest(request)).willReturn(httpRequest);
         return httpRequest;
     }
 

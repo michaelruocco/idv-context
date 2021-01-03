@@ -14,7 +14,7 @@ class CompleteVerificationRequestSerdeTest {
 
     private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new VerificationModule());
 
-    @ParameterizedTest(name = "should serialize complete verification request {1}")
+    @ParameterizedTest(name = "should serialize verification request {1}")
     @ArgumentsSource(CompleteVerificationRequestArgumentsProvider.class)
     void shouldSerialize(String expectedJson, CompleteVerificationRequest request) throws JsonProcessingException {
         String json = MAPPER.writeValueAsString(request);
@@ -22,7 +22,7 @@ class CompleteVerificationRequestSerdeTest {
         assertThatJson(json).isEqualTo(expectedJson);
     }
 
-    @ParameterizedTest(name = "should deserialize complete verification request {1}")
+    @ParameterizedTest(name = "should deserialize verification request {1}")
     @ArgumentsSource(CompleteVerificationRequestArgumentsProvider.class)
     void shouldDeserialize(String json, CompleteVerificationRequest expectedRequest) throws JsonProcessingException {
         CompleteVerificationRequest request = MAPPER.readValue(json, CompleteVerificationRequest.class);

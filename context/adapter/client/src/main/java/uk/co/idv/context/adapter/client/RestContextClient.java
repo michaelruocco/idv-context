@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.adapter.client.logger.BodyLoggingClientLogger;
 import uk.co.idv.context.adapter.client.logger.ClientLogger;
 import uk.co.idv.context.adapter.client.logger.MdcPopulator;
+import uk.co.idv.context.adapter.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientCreateVerificationRequest;
@@ -39,21 +40,28 @@ public class RestContextClient implements ContextClient {
 
     @Override
     public Context createContext(ClientCreateContextRequest request) {
-        HttpRequest httpRequest = requestConverter.toPostHttpRequest(request);
+        HttpRequest httpRequest = requestConverter.toPostContextHttpRequest(request);
         HttpResponse<String> httpResponse = executor.execute(httpRequest);
         return responseConverter.toContextOrThrowError(httpResponse);
     }
 
     @Override
     public Context getContext(ClientGetContextRequest request) {
-        HttpRequest httpRequest = requestConverter.toGetHttpRequest(request);
+        HttpRequest httpRequest = requestConverter.toGetContextHttpRequest(request);
         HttpResponse<String> httpResponse = executor.execute(httpRequest);
         return responseConverter.toContextOrThrowError(httpResponse);
     }
 
     @Override
     public Verification createVerification(ClientCreateVerificationRequest request) {
-        HttpRequest httpRequest = requestConverter.toPatchHttpRequest(request);
+        HttpRequest httpRequest = requestConverter.toPostVerificationHttpRequest(request);
+        HttpResponse<String> httpResponse = executor.execute(httpRequest);
+        return responseConverter.toVerificationOrThrowError(httpResponse);
+    }
+
+    @Override
+    public Verification completeVerification(ClientCompleteVerificationRequest request) {
+        HttpRequest httpRequest = requestConverter.toPatchVerificationHttpRequest(request);
         HttpResponse<String> httpResponse = executor.execute(httpRequest);
         return responseConverter.toVerificationOrThrowError(httpResponse);
     }

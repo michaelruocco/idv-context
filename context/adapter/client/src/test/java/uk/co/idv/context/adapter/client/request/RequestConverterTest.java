@@ -32,7 +32,7 @@ class RequestConverterTest {
                 .build();
         ClientCreateContextRequest request = ClientCreateContextRequestMother.build();
 
-        Throwable error = catchThrowable(() -> invalidUriConverter.toPostHttpRequest(request));
+        Throwable error = catchThrowable(() -> invalidUriConverter.toPostContextHttpRequest(request));
 
         assertThat(error)
                 .isInstanceOf(ClientException.class)
@@ -41,132 +41,185 @@ class RequestConverterTest {
     }
 
     @Test
-    void shouldConvertCreateRequestToHttpPostRequest() {
+    void shouldConvertCreateRequestToHttpPostContextRequest() {
         ClientCreateContextRequest request = ClientCreateContextRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
-        HttpRequest httpRequest = converter.toPostHttpRequest(request);
+        HttpRequest httpRequest = converter.toPostContextHttpRequest(request);
 
         assertThat(httpRequest.method()).isEqualTo("POST");
     }
 
     @Test
-    void shouldSetContentTypeHeaderOnHttpPostRequest() {
+    void shouldSetContentTypeHeaderOnHttpPostContextRequest() {
         ClientCreateContextRequest request = ClientCreateContextRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
-        HttpRequest httpRequest = converter.toPostHttpRequest(request);
+        HttpRequest httpRequest = converter.toPostContextHttpRequest(request);
 
         assertThat(httpRequest.headers().firstValue("Content-Type")).contains("application/json");
     }
 
     @Test
-    void shouldSetAcceptHeaderOnHttpPostRequest() {
+    void shouldSetAcceptHeaderOnHttpPostContextRequest() {
         ClientCreateContextRequest request = ClientCreateContextRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
-        HttpRequest httpRequest = converter.toPostHttpRequest(request);
+        HttpRequest httpRequest = converter.toPostContextHttpRequest(request);
 
         assertThat(httpRequest.headers().firstValue("Accept")).contains("application/json");
     }
 
     @Test
-    void shouldSetUriOnHttpPostRequest() {
+    void shouldSetUriOnHttpPostContextRequest() {
         ClientCreateContextRequest request = ClientCreateContextRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
-        HttpRequest httpRequest = converter.toPostHttpRequest(request);
+        HttpRequest httpRequest = converter.toPostContextHttpRequest(request);
 
         String expectedUri = String.format("%s/v1/contexts", BASE_URI);
         assertThat(httpRequest.uri().toASCIIString()).isEqualTo(expectedUri);
     }
 
     @Test
-    void shouldSetBodyOnHttpPostRequest() {
+    void shouldSetBodyOnHttpPostContextRequest() {
         ClientCreateContextRequest request = ClientCreateContextRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
-        HttpRequest httpRequest = converter.toPostHttpRequest(request);
+        HttpRequest httpRequest = converter.toPostContextHttpRequest(request);
 
         assertThat(httpRequest.bodyPublisher()).isPresent();
         assertThat(extractBody(httpRequest.bodyPublisher().get())).isEqualTo(REQUEST_BODY);
     }
 
     @Test
-    void shouldConvertGetRequestToHttpGetRequest() {
+    void shouldConvertGetRequestToHttpGetContextRequest() {
         ClientGetContextRequest request = ClientGetContextRequestMother.build();
 
-        HttpRequest httpRequest = converter.toGetHttpRequest(request);
+        HttpRequest httpRequest = converter.toGetContextHttpRequest(request);
 
         assertThat(httpRequest.method()).isEqualTo("GET");
     }
 
     @Test
-    void shouldSetAcceptHeaderOnHttpGetRequest() {
+    void shouldSetAcceptHeaderOnHttpGetContextRequest() {
         ClientGetContextRequest request = ClientGetContextRequestMother.build();
 
-        HttpRequest httpRequest = converter.toGetHttpRequest(request);
+        HttpRequest httpRequest = converter.toGetContextHttpRequest(request);
 
         assertThat(httpRequest.headers().firstValue("Accept")).contains("application/json");
     }
 
     @Test
-    void shouldSetUriOnHttpGetRequest() {
+    void shouldSetUriOnHttpGetContextRequest() {
         ClientGetContextRequest request = ClientGetContextRequestMother.build();
 
-        HttpRequest httpRequest = converter.toGetHttpRequest(request);
+        HttpRequest httpRequest = converter.toGetContextHttpRequest(request);
 
         String expectedUri = String.format("%s/v1/contexts/%s", BASE_URI, request.getId());
         assertThat(httpRequest.uri().toASCIIString()).isEqualTo(expectedUri);
     }
 
+
     @Test
-    void shouldConvertRecordRequestToHttpPatchRequest() {
+    void shouldConvertCreateVerificationRequestToHttpPostVerificationRequest() {
         ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
-        HttpRequest httpRequest = converter.toPatchHttpRequest(request);
+        HttpRequest httpRequest = converter.toPostVerificationHttpRequest(request);
 
-        assertThat(httpRequest.method()).isEqualTo("PATCH");
+        assertThat(httpRequest.method()).isEqualTo("POST");
     }
 
     @Test
-    void shouldSetContentTypeHeaderOnHttpPatchRequest() {
+    void shouldSetContentTypeHeaderOnHttpPostVerificationRequest() {
         ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
-        HttpRequest httpRequest = converter.toPatchHttpRequest(request);
+        HttpRequest httpRequest = converter.toPostVerificationHttpRequest(request);
 
         assertThat(httpRequest.headers().firstValue("Content-Type")).contains("application/json");
     }
 
     @Test
-    void shouldSetAcceptHeaderOnHttpPatchRequest() {
+    void shouldSetAcceptHeaderOnHttpPostVerificationRequest() {
         ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
-        HttpRequest httpRequest = converter.toPatchHttpRequest(request);
+        HttpRequest httpRequest = converter.toPostVerificationHttpRequest(request);
 
         assertThat(httpRequest.headers().firstValue("Accept")).contains("application/json");
     }
 
     @Test
-    void shouldSetUriOnHttpPatchRequest() {
+    void shouldSetUriOnHttpPostVerificationRequest() {
         ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
-        HttpRequest httpRequest = converter.toPatchHttpRequest(request);
+        HttpRequest httpRequest = converter.toPostVerificationHttpRequest(request);
 
         String expectedUri = String.format("%s/v1/contexts/%s/verifications", BASE_URI, request.getContextId());
         assertThat(httpRequest.uri().toASCIIString()).isEqualTo(expectedUri);
     }
 
     @Test
-    void shouldSetBodyOnHttpPatchRequest() {
+    void shouldSetBodyOnHttpPostVerificationRequest() {
         ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
 
-        HttpRequest httpRequest = converter.toPatchHttpRequest(request);
+        HttpRequest httpRequest = converter.toPostVerificationHttpRequest(request);
+
+        assertThat(httpRequest.bodyPublisher()).isPresent();
+        assertThat(extractBody(httpRequest.bodyPublisher().get())).isEqualTo(REQUEST_BODY);
+    }
+
+    @Test
+    void shouldConvertCompleteVerificationRequestToHttpPatchVerificationRequest() {
+        ClientCompleteVerificationRequest request = ClientCompleteVerificationRequestMother.build();
+        given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
+
+        HttpRequest httpRequest = converter.toPatchVerificationHttpRequest(request);
+
+        assertThat(httpRequest.method()).isEqualTo("PATCH");
+    }
+
+    @Test
+    void shouldSetContentTypeHeaderOnHttpPatchVerificationRequest() {
+        ClientCompleteVerificationRequest request = ClientCompleteVerificationRequestMother.build();
+        given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
+
+        HttpRequest httpRequest = converter.toPatchVerificationHttpRequest(request);
+
+        assertThat(httpRequest.headers().firstValue("Content-Type")).contains("application/json");
+    }
+
+    @Test
+    void shouldSetAcceptHeaderOnHttpPatchVerificationRequest() {
+        ClientCompleteVerificationRequest request = ClientCompleteVerificationRequestMother.build();
+        given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
+
+        HttpRequest httpRequest = converter.toPatchVerificationHttpRequest(request);
+
+        assertThat(httpRequest.headers().firstValue("Accept")).contains("application/json");
+    }
+
+    @Test
+    void shouldSetUriOnHttpPatchVerificationRequest() {
+        ClientCompleteVerificationRequest request = ClientCompleteVerificationRequestMother.build();
+        given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
+
+        HttpRequest httpRequest = converter.toPatchVerificationHttpRequest(request);
+
+        String expectedUri = String.format("%s/v1/contexts/%s/verifications", BASE_URI, request.getContextId());
+        assertThat(httpRequest.uri().toASCIIString()).isEqualTo(expectedUri);
+    }
+
+    @Test
+    void shouldSetBodyOnHttpPatchVerificationRequest() {
+        ClientCompleteVerificationRequest request = ClientCompleteVerificationRequestMother.build();
+        given(jsonConverter.toJson(request.getBody())).willReturn(REQUEST_BODY);
+
+        HttpRequest httpRequest = converter.toPatchVerificationHttpRequest(request);
 
         assertThat(httpRequest.bodyPublisher()).isPresent();
         assertThat(extractBody(httpRequest.bodyPublisher().get())).isEqualTo(REQUEST_BODY);

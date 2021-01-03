@@ -11,6 +11,7 @@ import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import java.time.Instant;
+import java.util.Optional;
 import java.util.UUID;
 
 class VerificationDeserializer extends StdDeserializer<Verification> {
@@ -31,7 +32,15 @@ class VerificationDeserializer extends StdDeserializer<Verification> {
                 .protectSensitiveData(node.get("protectSensitiveData").asBoolean())
                 .created(Instant.parse(node.get("created").asText()))
                 .expiry(Instant.parse(node.get("expiry").asText()))
+                .successful(node.get("successful").asBoolean())
+                .completed(extractCompleted(node).orElse(null))
                 .build();
+    }
+
+    private static Optional<Instant> extractCompleted(JsonNode node) {
+        return Optional.ofNullable(node.get("completed"))
+                .map(JsonNode::asText)
+                .map(Instant::parse);
     }
 
 }

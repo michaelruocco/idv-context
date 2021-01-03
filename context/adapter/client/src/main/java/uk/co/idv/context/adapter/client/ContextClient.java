@@ -1,5 +1,6 @@
 package uk.co.idv.context.adapter.client;
 
+import uk.co.idv.context.adapter.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientCreateVerificationRequest;
@@ -14,6 +15,6 @@ public interface ContextClient {
 
     Verification createVerification(ClientCreateVerificationRequest request);
 
-    //TODO add complete verification
+    Verification completeVerification(ClientCompleteVerificationRequest request);
 
 }

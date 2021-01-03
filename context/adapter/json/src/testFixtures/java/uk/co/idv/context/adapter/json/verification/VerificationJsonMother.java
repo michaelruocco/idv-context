@@ -8,4 +8,8 @@ public interface VerificationJsonMother {
         return loadContentFromClasspath("verification/incomplete-verification.json");
     }
 
+    static String successful() {
+        return loadContentFromClasspath("verification/successful-verification.json");
+    }
+
 }

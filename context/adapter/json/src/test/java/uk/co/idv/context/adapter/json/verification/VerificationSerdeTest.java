@@ -2,10 +2,10 @@ package uk.co.idv.context.adapter.json.verification;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ArgumentsSource;
 import uk.co.idv.common.adapter.json.ObjectMapperFactory;
 import uk.co.idv.context.entities.verification.Verification;
-import uk.co.idv.context.entities.verification.VerificationMother;
 import uk.co.idv.method.adapter.json.fake.FakeMethodMapping;
 import uk.co.idv.method.adapter.json.method.MethodMapping;
 
@@ -16,21 +16,21 @@ class VerificationSerdeTest {
 
     private static final MethodMapping MAPPING = new FakeMethodMapping();
     private static final ObjectMapper MAPPER = ObjectMapperFactory.build(new VerificationModule(MAPPING));
-    private static final Verification VERIFICATION = VerificationMother.incomplete();
-    private static final String JSON = VerificationJsonMother.incomplete();
 
-    @Test
-    void shouldSerialize() throws JsonProcessingException {
-        String json = MAPPER.writeValueAsString(VERIFICATION);
+    @ParameterizedTest(name = "should serialize verification {1}")
+    @ArgumentsSource(VerificationArgumentsProvider.class)
+    void shouldSerialize(String expectedJson, Verification verification) throws JsonProcessingException {
+        String json = MAPPER.writeValueAsString(verification);
 
-        assertThatJson(json).isEqualTo(JSON);
+        assertThatJson(json).isEqualTo(expectedJson);
     }
 
-    @Test
-    void shouldDeserialize() throws JsonProcessingException {
-        Verification context = MAPPER.readValue(JSON, Verification.class);
+    @ParameterizedTest(name = "should deserialize verification {1}")
+    @ArgumentsSource(VerificationArgumentsProvider.class)
+    void shouldDeserialize(String json, Verification expectedVerification) throws JsonProcessingException {
+        Verification verification = MAPPER.readValue(json, Verification.class);
 
-        assertThat(context).isEqualTo(VERIFICATION);
+        assertThat(verification).isEqualTo(expectedVerification);
     }
 
 }
