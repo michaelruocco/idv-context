@@ -7,8 +7,10 @@ import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.NotNextMethodException;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
+import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.verification.CreateVerificationRequestMother;
+import uk.co.idv.context.entities.verification.GetVerificationRequest;
 import uk.co.idv.context.entities.verification.Verification;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.lockout.entities.DefaultExternalLockoutRequest;
@@ -25,11 +27,13 @@ import uk.co.idv.lockout.usecases.state.LockedOutException;
 import uk.co.idv.method.entities.result.Result;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
 
-class ContextResultIntegrationTest {
+class ContextVerificationIntegrationTest {
 
     private final TestHarness harness = new TestHarness();
     private final Application application = harness.getApplication();
@@ -53,7 +57,55 @@ class ContextResultIntegrationTest {
     }
 
     @Test
-    void shouldThrowExceptionIfResultMethodIsNotOnContext() {
+    void shouldCreateVerificationWithCorrectFields() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenIdentityExistsForAliases(createRequest.getAliases());
+        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        Context context = application.create(createRequest);
+
+        CreateVerificationRequest verificationRequest = CreateVerificationRequestMother.builder()
+                .contextId(context.getId())
+                .methodName("fake-method")
+                .build();
+        Verification verification = application.create(verificationRequest);
+
+        Methods expectedMethods = context.getNextMethods(verificationRequest.getMethodName());
+        assertThat(verification.getId()).isEqualTo(UUID.fromString("507cc493-6998-49a4-9614-38ba4296eab6"));
+        assertThat(verification.getContextId()).isEqualTo(context.getId());
+        assertThat(verification.getCreated()).isEqualTo(context.getCreated());
+        assertThat(verification.getMethodName()).isEqualTo(verificationRequest.getMethodName());
+        assertThat(verification.getMethods()).isEqualTo(expectedMethods);
+        assertThat(verification.getExpiry()).isEqualTo(context.getCreated().plus(expectedMethods.getShortestDuration()));
+        assertThat(verification.isSuccessful()).isFalse();
+        assertThat(verification.isComplete()).isFalse();
+        assertThat(verification.getCompleted()).isEmpty();
+    }
+
+    @Test
+    void shouldGetCreatedVerification() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenIdentityExistsForAliases(createRequest.getAliases());
+        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        Context context = application.create(createRequest);
+
+        CreateVerificationRequest createVerificationRequest = CreateVerificationRequestMother.builder()
+                .contextId(context.getId())
+                .methodName("fake-method")
+                .build();
+        Verification createdVerification = application.create(createVerificationRequest);
+
+        GetVerificationRequest getVerificationRequest = GetVerificationRequest.builder()
+                .contextId(context.getId())
+                .verificationId(createdVerification.getId())
+                .build();
+        Verification verification = application.get(getVerificationRequest);
+        assertThat(verification).isEqualTo(createdVerification);
+    }
+
+    @Test
+    void shouldThrowExceptionIfVerificationMethodIsNotOnContext() {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
@@ -92,7 +144,7 @@ class ContextResultIntegrationTest {
     }
 
     @Test
-    void shouldRecordAttemptsWhenVerificationsCompletedUnsuccessfully() {
+    void shouldRecordLockoutAttemptsWhenVerificationsCompletedUnsuccessfully() {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
@@ -116,10 +168,8 @@ class ContextResultIntegrationTest {
         assertThat(state.getAttempts()).hasSize(2);
     }
 
-
-
     @Test
-    void shouldRecordAttemptsWithCorrectValuesWhenVerificationCompletedUnsuccessfully() {
+    void shouldRecordLockoutAttemptsWithCorrectValuesWhenVerificationCompletedUnsuccessfully() {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
@@ -153,7 +203,7 @@ class ContextResultIntegrationTest {
     }
 
     @Test
-    void shouldThrowExceptionWhenCreatingVerificationWhenLocked() {
+    void shouldThrowExceptionWhenCreateVerificationAndIdentityIsLocked() {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         Identity identity = harness.givenIdentityExistsForAliases(createRequest.getAliases());
