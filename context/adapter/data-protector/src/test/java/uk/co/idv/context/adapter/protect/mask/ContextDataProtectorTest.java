@@ -3,7 +3,7 @@ package uk.co.idv.context.adapter.protect.mask;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.context.entities.context.method.MethodsMother;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequenceMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
@@ -68,7 +68,7 @@ class ContextDataProtectorTest {
         Context protectedContext = protector.apply(context);
 
         Sequences sequences = protectedContext.getSequences();
-        assertThat(sequences).containsExactly(sequence.withMethods(new Methods(protectedMethod)));
+        assertThat(sequences).containsExactly(sequence.withMethods(MethodsMother.with(protectedMethod)));
     }
 
 }

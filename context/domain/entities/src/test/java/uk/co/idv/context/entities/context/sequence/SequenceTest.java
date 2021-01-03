@@ -2,6 +2,7 @@ package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.context.entities.context.method.MethodsMother;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
@@ -29,7 +30,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnMethods() {
-        Methods methods = new Methods();
+        Methods methods = MethodsMother.oneFake();
 
         Sequence sequence = Sequence.builder()
                 .methods(methods)
@@ -44,7 +45,7 @@ class SequenceTest {
         Method eligible2 = FakeMethodMother.eligible();
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(eligible1, eligible2))
+                .methods(MethodsMother.with(eligible1, eligible2))
                 .build();
 
         assertThat(sequence.isEligible()).isTrue();
@@ -56,7 +57,7 @@ class SequenceTest {
         Method ineligible = FakeMethodMother.ineligible();
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(eligible, ineligible))
+                .methods(MethodsMother.with(eligible, ineligible))
                 .build();
 
         assertThat(sequence.isEligible()).isFalse();
@@ -69,7 +70,7 @@ class SequenceTest {
         Method complete2 = givenCompleteMethod(verifications);
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(complete1, complete2))
+                .methods(MethodsMother.with(complete1, complete2))
                 .build();
 
         assertThat(sequence.isComplete(verifications)).isTrue();
@@ -82,7 +83,7 @@ class SequenceTest {
         Method incomplete = givenIncompleteMethod(verifications);
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(complete, incomplete))
+                .methods(MethodsMother.with(complete, incomplete))
                 .build();
 
         assertThat(sequence.isComplete(verifications)).isFalse();
@@ -95,7 +96,7 @@ class SequenceTest {
         Method successful2 = givenSuccessfulMethod(verifications);
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(successful1, successful2))
+                .methods(MethodsMother.with(successful1, successful2))
                 .build();
 
         assertThat(sequence.isSuccessful(verifications)).isTrue();
@@ -108,7 +109,7 @@ class SequenceTest {
         Method unsuccessful = givenUnsuccessfulMethod(verifications);
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(successful, unsuccessful))
+                .methods(MethodsMother.with(successful, unsuccessful))
                 .build();
 
         assertThat(sequence.isSuccessful(verifications)).isFalse();
@@ -120,7 +121,7 @@ class SequenceTest {
         Method method2 = FakeMethodMother.withDuration(Duration.ofMinutes(3));
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(method1, method2))
+                .methods(MethodsMother.with(method1, method2))
                 .build();
 
         assertThat(sequence.getDuration()).isEqualTo(Duration.ofMinutes(5));
@@ -133,7 +134,7 @@ class SequenceTest {
         Method incomplete1 = givenIncompleteMethod(verifications);
         Method incomplete2 = givenIncompleteMethod(verifications);
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(complete, incomplete1, incomplete2))
+                .methods(MethodsMother.with(complete, incomplete1, incomplete2))
                 .build();
 
         Optional<Method> next = sequence.getNextMethod(verifications);
@@ -149,7 +150,7 @@ class SequenceTest {
         Method updatedMethod1 = givenUpdatedMethod(function, method1);
         Method updatedMethod2 = givenUpdatedMethod(function, method2);
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(method1, method2))
+                .methods(MethodsMother.with(method1, method2))
                 .build();
 
         Sequence updated = sequence.updateMethods(function);
@@ -165,7 +166,7 @@ class SequenceTest {
         Method method2 = givenIncompleteMethod(verifications);
         Method method3 = givenCompleteMethod(verifications);
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(method1, method2, method3))
+                .methods(MethodsMother.with(method1, method2, method3))
                 .build();
 
         long completedCount = sequence.completedMethodCount(verifications);
