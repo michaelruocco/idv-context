@@ -9,7 +9,6 @@ import uk.co.idv.context.usecases.context.FindContext;
 
 import java.util.UUID;
 
-//TODO test
 @Builder
 public class GetVerification {
 
