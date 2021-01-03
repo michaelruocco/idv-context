@@ -5,7 +5,6 @@ import lombok.Data;
 import uk.co.idv.context.entities.verification.Verification;
 import uk.co.idv.method.entities.result.Result;
 
-//TODO test
 @Builder
 @Data
 public class CompleteVerificationResponse {
@@ -18,11 +17,11 @@ public class CompleteVerificationResponse {
         return verification.toResult();
     }
 
-    public boolean isSequenceCompletedByResult() {
+    public boolean isSequenceCompletedByVerification() {
         return updated.hasMoreCompletedSequencesThan(original);
     }
 
-    public boolean isMethodCompletedByResult() {
+    public boolean isMethodCompletedByVerification() {
         return updated.hasMoreCompletedMethodsThan(original);
     }
 

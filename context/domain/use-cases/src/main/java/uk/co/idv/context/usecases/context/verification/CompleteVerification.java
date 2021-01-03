@@ -36,8 +36,8 @@ public class CompleteVerification {
         return ContextRecordAttemptRequest.builder()
                 .result(response.getResult())
                 .context(response.getUpdated())
-                .methodComplete(response.isMethodCompletedByResult())
-                .sequenceComplete(response.isSequenceCompletedByResult())
+                .methodComplete(response.isMethodCompletedByVerification())
+                .sequenceComplete(response.isSequenceCompletedByVerification())
                 .build();
     }
 
