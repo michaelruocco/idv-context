@@ -158,7 +158,7 @@ class RequestConverterTest {
 
         HttpRequest httpRequest = converter.toPostVerificationHttpRequest(request);
 
-        String expectedUri = String.format("%s/v1/contexts/%s/verifications", BASE_URI, request.getContextId());
+        String expectedUri = String.format("%s/v1/contexts/verifications", BASE_URI);
         assertThat(httpRequest.uri().toASCIIString()).isEqualTo(expectedUri);
     }
 
@@ -210,7 +210,7 @@ class RequestConverterTest {
 
         HttpRequest httpRequest = converter.toPatchVerificationHttpRequest(request);
 
-        String expectedUri = String.format("%s/v1/contexts/%s/verifications", BASE_URI, request.getContextId());
+        String expectedUri = String.format("%s/v1/contexts/verifications", BASE_URI);
         assertThat(httpRequest.uri().toASCIIString()).isEqualTo(expectedUri);
     }
 

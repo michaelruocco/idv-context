@@ -20,7 +20,7 @@ public class RequestConverter {
 
     private static final String POST_CONTEXT_URL = "%s/v1/contexts";
     private static final String GET_CONTEXT_URL = POST_CONTEXT_URL + "/%s";
-    private static final String VERIFICATION_URL = GET_CONTEXT_URL + "/verifications";
+    private static final String VERIFICATION_URL = POST_CONTEXT_URL + "/verifications";
 
     private final JsonConverter jsonConverter;
     private final String baseUri;
@@ -45,7 +45,7 @@ public class RequestConverter {
     public HttpRequest toPostVerificationHttpRequest(ClientCreateVerificationRequest request) {
         return httpRequestWithBodyBuilder()
                 .headers(request.getHeadersArray())
-                .uri(buildVerificationUrl(request.getContextId()))
+                .uri(buildVerificationUrl())
                 .POST(HttpRequest.BodyPublishers.ofString(jsonConverter.toJson(request.getBody())))
                 .build();
     }
@@ -53,7 +53,7 @@ public class RequestConverter {
     public HttpRequest toPatchVerificationHttpRequest(ClientCompleteVerificationRequest request) {
         return httpRequestWithBodyBuilder()
                 .headers(request.getHeadersArray())
-                .uri(buildVerificationUrl(request.getContextId()))
+                .uri(buildVerificationUrl())
                 .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonConverter.toJson(request.getBody())))
                 .build();
     }
@@ -72,8 +72,8 @@ public class RequestConverter {
         return toUri(String.format(GET_CONTEXT_URL, baseUri, contextId.toString()));
     }
 
-    private URI buildVerificationUrl(UUID contextId) {
-        return toUri(String.format(VERIFICATION_URL, baseUri, contextId.toString()));
+    private URI buildVerificationUrl() {
+        return toUri(String.format(VERIFICATION_URL, baseUri));
     }
 
     private static URI toUri(String uri) {

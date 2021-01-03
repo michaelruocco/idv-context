@@ -58,7 +58,7 @@ class RestContextClientIntegrationTest {
 
     private static final String CREATE_CONTEXT_URL = "/v1/contexts";
     private static final String GET_CONTEXT_URL = CREATE_CONTEXT_URL + "/%s";
-    private static final String CREATE_VERIFICATION_URL = GET_CONTEXT_URL + "/verifications";
+    private static final String CREATE_VERIFICATION_URL = CREATE_CONTEXT_URL + "/verifications";
 
     private static final ObjectMapper MAPPER = JsonConverterFactory.buildMapper();
     private static final JsonConverter JSON_CONVERTER = JsonConverterFactory.build(MAPPER);
