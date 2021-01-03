@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
+//TODO test uncovered methods
 @Builder(toBuilder = true)
 @Data
 public class Verification {
