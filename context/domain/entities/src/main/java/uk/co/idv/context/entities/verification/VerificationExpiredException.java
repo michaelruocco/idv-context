@@ -5,7 +5,6 @@ import lombok.Getter;
 import java.time.Instant;
 import java.util.UUID;
 
-//TODO test
 @Getter
 public class VerificationExpiredException extends RuntimeException {
 

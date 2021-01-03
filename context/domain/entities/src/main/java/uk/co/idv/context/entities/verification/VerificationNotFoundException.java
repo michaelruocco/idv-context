@@ -4,7 +4,6 @@ import lombok.Getter;
 
 import java.util.UUID;
 
-//TODO test
 @Getter
 public class VerificationNotFoundException extends RuntimeException {
 
