@@ -8,4 +8,6 @@ dependencies {
     implementation project(":lockout-in-memory-repository")
     implementation project(":lockout-redis-repository")
     implementation project(":lockout-mongo-repository")
+    implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
+    implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
 }

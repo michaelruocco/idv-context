@@ -19,6 +19,9 @@ public interface DeliveryMethodMixin {
     @JsonIgnore
     boolean isEligibilityComplete();
 
+    @JsonIgnore
+    boolean isEligibilityCompleteAndEligible();
+
     @JsonInclude(JsonInclude.Include.NON_ABSENT)
     Optional<Instant> getLastUpdated();
 

@@ -1,13 +1,29 @@
 plugins {
     id "java-test-fixtures"
+    id "maven-publish"
 }
 
 dependencies {
     api project(":identity-entities")
 
     testImplementation testFixtures(project(":common-entities"))
+    testImplementation testFixtures(project(":identity-entities"))
 
-    testFixturesApi testFixtures(project(":identity-entities"))
+    testFixturesImplementation testFixtures(project(":identity-entities"))
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+}
+
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
+publishing {
+    publications {
+        lib(MavenPublication) { publication ->
+            from components.java
+            artifactId = "${rootProject.name}-${project.name}"
+        }
+    }
 }

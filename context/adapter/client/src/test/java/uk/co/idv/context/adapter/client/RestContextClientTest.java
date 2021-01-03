@@ -5,12 +5,14 @@ import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientCreateContextRequestMother;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequestMother;
-import uk.co.idv.context.adapter.client.request.ClientRecordContextResultRequest;
-import uk.co.idv.context.adapter.client.request.ClientRecordContextResultRequestMother;
+import uk.co.idv.context.adapter.client.request.ClientCreateVerificationRequest;
+import uk.co.idv.context.adapter.client.request.ClientCreateVerificationRequestMother;
 import uk.co.idv.context.adapter.client.request.RequestConverter;
 import uk.co.idv.context.adapter.client.request.UriFactory;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
+import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.verification.VerificationMother;
 
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -56,32 +58,32 @@ class RestContextClientTest {
     }
 
     @Test
-    void shouldRecordResult() {
-        ClientRecordContextResultRequest request = ClientRecordContextResultRequestMother.build();
+    void shouldCreateVerification() {
+        ClientCreateVerificationRequest request = ClientCreateVerificationRequestMother.build();
         HttpRequest httpRequest = givenConvertsToHttpRequest(request);
         HttpResponse<String> httpResponse = givenExecutingRequestReturns(httpRequest);
-        Context expectedContext = givenConvertsToContext(httpResponse);
+        Verification expectedVerification = givenConvertsToVerification(httpResponse);
 
-        Context context = client.recordResult(request);
+        Verification verification = client.createVerification(request);
 
-        assertThat(context).isEqualTo(expectedContext);
+        assertThat(verification).isEqualTo(expectedVerification);
     }
 
     private HttpRequest givenConvertsToHttpRequest(ClientCreateContextRequest request) {
         HttpRequest httpRequest = buildHttpRequest();
-        given(requestConverter.toPostHttpRequest(request)).willReturn(httpRequest);
+        given(requestConverter.toPostContextHttpRequest(request)).willReturn(httpRequest);
         return httpRequest;
     }
 
     private HttpRequest givenConvertsToHttpRequest(ClientGetContextRequest request) {
         HttpRequest httpRequest = buildHttpRequest();
-        given(requestConverter.toGetHttpRequest(request)).willReturn(httpRequest);
+        given(requestConverter.toGetContextHttpRequest(request)).willReturn(httpRequest);
         return httpRequest;
     }
 
-    private HttpRequest givenConvertsToHttpRequest(ClientRecordContextResultRequest request) {
+    private HttpRequest givenConvertsToHttpRequest(ClientCreateVerificationRequest request) {
         HttpRequest httpRequest = buildHttpRequest();
-        given(requestConverter.toPatchHttpRequest(request)).willReturn(httpRequest);
+        given(requestConverter.toPostVerificationHttpRequest(request)).willReturn(httpRequest);
         return httpRequest;
     }
 
@@ -95,6 +97,12 @@ class RestContextClientTest {
         Context context = ContextMother.build();
         given(responseConverter.toContextOrThrowError(httpResponse)).willReturn(context);
         return context;
+    }
+
+    private Verification givenConvertsToVerification(HttpResponse<String> httpResponse) {
+        Verification verification = VerificationMother.incomplete();
+        given(responseConverter.toVerificationOrThrowError(httpResponse)).willReturn(verification);
+        return verification;
     }
 
     private static HttpRequest buildHttpRequest() {

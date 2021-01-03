@@ -2,6 +2,10 @@ plugins {
     id "java-test-fixtures"
 }
 
+configurations {
+    testFixturesApi.setCanBeResolved(true)
+}
+
 dependencies {
     api project(":method-json")
     api project(":method-use-cases")

@@ -1,7 +1,10 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.method.MethodVerifications;
+import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
 import java.util.function.UnaryOperator;
@@ -14,6 +17,7 @@ import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.giv
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenIneligibleSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWith;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWithCompletedCount;
+import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSequenceWithNextMethod;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenSuccessfulSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenUnsuccessfulSequence;
 import static uk.co.idv.context.entities.context.sequence.MockSequenceMother.givenUpdatedSequence;
@@ -69,42 +73,46 @@ class SequencesTest {
 
     @Test
     void shouldBeCompleteIfAnySequencesComplete() {
-        Sequence sequence1 = givenIncompleteSequence();
-        Sequence sequence2 = givenCompleteSequence();
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Sequence sequence1 = givenIncompleteSequence(verifications);
+        Sequence sequence2 = givenCompleteSequence(verifications);
 
         Sequences sequences = new Sequences(sequence1, sequence2);
 
-        assertThat(sequences.isComplete()).isTrue();
+        assertThat(sequences.isComplete(verifications)).isTrue();
     }
 
     @Test
-    void shouldBeIncompleteIfAllSequencesIncomplete() {
-        Sequence sequence1 = givenIncompleteSequence();
-        Sequence sequence2 = givenIncompleteSequence();
+    void shouldBeIncompleteIfAllSequencesHaveNoNextMethod() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Sequence sequence1 = givenIncompleteSequence(verifications);
+        Sequence sequence2 = givenIncompleteSequence(verifications);
 
         Sequences sequences = new Sequences(sequence1, sequence2);
 
-        assertThat(sequences.isComplete()).isFalse();
+        assertThat(sequences.isComplete(verifications)).isFalse();
     }
 
     @Test
     void shouldBeSuccessfulIfAnySequencesSuccessful() {
-        Sequence sequence1 = givenUnsuccessfulSequence();
-        Sequence sequence2 = givenSuccessfulSequence();
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Sequence sequence1 = givenUnsuccessfulSequence(verifications);
+        Sequence sequence2 = givenSuccessfulSequence(verifications);
 
         Sequences sequences = new Sequences(sequence1, sequence2);
 
-        assertThat(sequences.isSuccessful()).isTrue();
+        assertThat(sequences.isSuccessful(verifications)).isTrue();
     }
 
     @Test
     void shouldBeUnsuccessfulIfAllSequencesUnsuccessful() {
-        Sequence sequence1 = givenUnsuccessfulSequence();
-        Sequence sequence2 = givenUnsuccessfulSequence();
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Sequence sequence1 = givenUnsuccessfulSequence(verifications);
+        Sequence sequence2 = givenUnsuccessfulSequence(verifications);
 
         Sequences sequences = new Sequences(sequence1, sequence2);
 
-        assertThat(sequences.isSuccessful()).isFalse();
+        assertThat(sequences.isSuccessful(verifications)).isFalse();
     }
 
     @Test
@@ -141,25 +149,40 @@ class SequencesTest {
 
     @Test
     void shouldReturnCompletedSequencesCount() {
-        Sequence sequence1 = givenCompleteSequence();
-        Sequence sequence2 = givenCompleteSequence();
-        Sequence sequence3 = givenIncompleteSequence();
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Sequence sequence1 = givenCompleteSequence(verifications);
+        Sequence sequence2 = givenCompleteSequence(verifications);
+        Sequence sequence3 = givenIncompleteSequence(verifications);
         Sequences sequences = SequencesMother.with(sequence1, sequence2, sequence3);
 
-        long count = sequences.getCompletedCount();
+        long count = sequences.completedSequenceCount(verifications);
 
         assertThat(count).isEqualTo(2);
     }
 
     @Test
     void shouldReturnCompletedMethodCount() {
-        Sequence sequence1 = givenSequenceWithCompletedCount(2);
-        Sequence sequence2 = givenSequenceWithCompletedCount(1);
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Sequence sequence1 = givenSequenceWithCompletedCount(verifications, 2);
+        Sequence sequence2 = givenSequenceWithCompletedCount(verifications,1);
         Sequences sequences = SequencesMother.with(sequence1, sequence2);
 
-        long count = sequences.getCompletedMethodCount();
+        long count = sequences.completedMethodCount(verifications);
 
         assertThat(count).isEqualTo(3);
+    }
+
+    @Test
+    void shouldReturnNextMethodsMatchingNameIfPresent() {
+        Method method = FakeMethodMother.build();
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Sequence sequence1 = givenCompleteSequence(verifications);
+        Sequence sequence2 = givenSequenceWithNextMethod(verifications, method);
+        Sequences sequences = SequencesMother.with(sequence1, sequence2);
+
+        Methods methods = sequences.getNextMethods(verifications);
+
+        assertThat(methods).containsExactly(method);
     }
 
 }

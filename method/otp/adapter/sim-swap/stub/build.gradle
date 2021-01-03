@@ -4,4 +4,7 @@ dependencies {
     implementation project(":otp-entities")
     implementation project(":common-use-cases")
     implementation testFixtures(project(":common-entities"))
+    implementation "org.apache.commons:commons-math3:${commonsMathVersion}"
+
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
 }

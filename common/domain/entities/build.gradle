@@ -1,11 +1,21 @@
 plugins {
     id "java-test-fixtures"
+    id "maven-publish"
 }
 
 dependencies {
-    api "org.apache.commons:commons-math3:3.6.1"
-
     testFixturesCompileOnly "org.slf4j:slf4j-simple:${slf4jVersion}"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesImplementation "org.apache.commons:commons-math3:3.6.1"
+    testFixturesImplementation "org.slf4j:slf4j-api:${slf4jVersion}"
+}
+
+publishing {
+    publications {
+        lib(MavenPublication) { publication ->
+            from components.java
+            artifactId = "${rootProject.name}-${project.name}"
+        }
+    }
 }

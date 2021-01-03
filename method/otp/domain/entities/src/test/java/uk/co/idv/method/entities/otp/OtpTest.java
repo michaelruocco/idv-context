@@ -2,18 +2,20 @@ package uk.co.idv.method.entities.otp;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.method.entities.eligibility.Eligibility;
+import uk.co.idv.method.entities.method.MethodVerifications;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethodsMother;
-import uk.co.idv.method.entities.result.Result;
-import uk.co.idv.method.entities.result.ResultMother;
-import uk.co.idv.method.entities.result.ResultsMother;
+import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodNotFoundException;
 
 import java.util.Optional;
+import java.util.UUID;
 import java.util.function.UnaryOperator;
 
+import static java.lang.Integer.toUnsignedLong;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -50,49 +52,57 @@ class OtpTest {
     }
 
     @Test
-    void shouldNotBeSuccessfulIfNoSuccessfulAttempts() {
-        Otp otp = Otp.builder()
-                .build();
+    void shouldReturnSuccessful() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Otp otp = Otp.builder().build();
+        given(verifications.containsSuccessful(otp.getName())).willReturn(true);
 
-        assertThat(otp.isSuccessful()).isFalse();
+        boolean successful = otp.isSuccessful(verifications);
+
+        assertThat(successful).isTrue();
     }
 
     @Test
-    void shouldBeSuccessfulIfHasAtLeastOneSuccessfulAttempt() {
-        Otp otp = Otp.builder()
-                .results(ResultsMother.with(ResultMother.successful()))
-                .build();
-
-        assertThat(otp.isSuccessful()).isTrue();
-    }
-
-    @Test
-    void shouldNotBeCompleteIfNotSuccessfulAndHasAttemptsRemaining() {
+    void shouldBeCompleteIfSuccessfulVerificationForMethod() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
         Otp otp = Otp.builder()
                 .config(OtpConfigMother.build())
                 .build();
+        given(verifications.containsSuccessful(otp.getName())).willReturn(true);
 
-        assertThat(otp.isComplete()).isFalse();
+        boolean complete = otp.isComplete(verifications);
+
+        assertThat(complete).isTrue();
     }
 
     @Test
-    void shouldBeCompleteIfSuccessful() {
-        Otp otp = Otp.builder()
-                .results(ResultsMother.with(ResultMother.successful()))
-                .build();
-
-        assertThat(otp.isComplete()).isTrue();
-    }
-
-    @Test
-    void shouldBeCompleteIfHasMaxNumberOfFailedAttempts() {
-        OtpConfig config = OtpConfigMother.builder().maxNumberOfAttempts(2).build();
+    void shouldBeCompleteIfNoSuccessfulVerificationsForMethodAndNoAttemptsRemaining() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        OtpConfig config = OtpConfigMother.build();
         Otp otp = Otp.builder()
                 .config(config)
-                .results(ResultsMother.withUnsuccessfulAttempts(config.getMaxNumberOfAttempts()))
                 .build();
+        given(verifications.containsSuccessful(otp.getName())).willReturn(false);
+        given(verifications.countByName(otp.getName())).willReturn(toUnsignedLong(config.getMaxNumberOfAttempts()));
 
-        assertThat(otp.isComplete()).isTrue();
+        boolean complete = otp.isComplete(verifications);
+
+        assertThat(complete).isTrue();
+    }
+
+    @Test
+    void shouldNotBeCompleteIfNoSuccessfulVerificationsForMethodAndAttemptsRemaining() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        OtpConfig config = OtpConfigMother.build();
+        Otp otp = Otp.builder()
+                .config(config)
+                .build();
+        given(verifications.containsSuccessful(otp.getName())).willReturn(false);
+        given(verifications.countByName(otp.getName())).willReturn(toUnsignedLong(config.getMaxNumberOfAttempts() - 1));
+
+        boolean complete = otp.isComplete(verifications);
+
+        assertThat(complete).isFalse();
     }
 
     @Test
@@ -141,6 +151,48 @@ class OtpTest {
     }
 
     @Test
+    void shouldGetReturnTrueIfMethodWithIdIsPresent() {
+        DeliveryMethod expectedMethod = DeliveryMethodMother.build();
+        Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.with(expectedMethod));
+
+        boolean contains = otp.containsDeliveryMethod(expectedMethod.getId());
+
+        assertThat(contains).isTrue();
+    }
+
+    @Test
+    void shouldGetReturnFalseIfMethodWithIdIsNotPresent() {
+        UUID id = UUID.randomUUID();
+        Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.empty());
+
+        boolean contains = otp.containsDeliveryMethod(id);
+
+        assertThat(contains).isFalse();
+    }
+
+    @Test
+    void shouldGetDeliveryMethodFromDeliveryMethodsIfMethodWithIdIsPresent() {
+        DeliveryMethod expectedMethod = DeliveryMethodMother.build();
+        Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.with(expectedMethod));
+
+        DeliveryMethod found = otp.getDeliveryMethod(expectedMethod.getId());
+
+        assertThat(found).isEqualTo(expectedMethod);
+    }
+
+    @Test
+    void shouldThrowExceptionFromGetDeliveryMethodFromDeliveryMethodsIfMethodWithIdIsNotPresent() {
+        UUID id = UUID.randomUUID();
+        Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.empty());
+
+        Throwable error = catchThrowable(() -> otp.getDeliveryMethod(id));
+
+        assertThat(error)
+                .isInstanceOf(DeliveryMethodNotFoundException.class)
+                .hasMessage(id.toString());
+    }
+
+    @Test
     void shouldFindDeliveryMethodFromDeliveryMethods() {
         DeliveryMethod expectedMethod = DeliveryMethodMother.build();
         Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.with(expectedMethod));
@@ -148,19 +200,6 @@ class OtpTest {
         Optional<DeliveryMethod> found = otp.findDeliveryMethod(expectedMethod.getId());
 
         assertThat(found).contains(expectedMethod);
-    }
-
-    @Test
-    void shouldAddResult() {
-        Result result = ResultMother.build();
-        Otp otp = OtpMother.build();
-
-        Otp updated = otp.add(result);
-
-        assertThat(updated).usingRecursiveComparison()
-                .ignoringFields("results")
-                .isEqualTo(otp);
-        assertThat(updated.getResults()).containsExactly(result);
     }
 
     private DeliveryMethods givenDeliveryMethodsWithEligibility(Eligibility eligibility) {

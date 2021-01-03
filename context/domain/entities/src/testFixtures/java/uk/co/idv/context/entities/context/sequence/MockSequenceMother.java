@@ -1,8 +1,10 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.method.MethodVerifications;
 
 import java.time.Duration;
+import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 import static org.mockito.BDDMockito.given;
@@ -12,6 +14,24 @@ public interface MockSequenceMother {
 
     static Sequence mockSequence() {
         return mock(Sequence.class);
+    }
+
+    static Sequence givenEligibleIncompleteSequence(MethodVerifications verifications) {
+        Sequence sequence = givenEligibleSequence();
+        given(sequence.isComplete(verifications)).willReturn(false);
+        return sequence;
+    }
+
+    static Sequence givenIneligibleIncompleteSequence(MethodVerifications verifications) {
+        Sequence sequence = givenIneligibleSequence();
+        given(sequence.isComplete(verifications)).willReturn(false);
+        return sequence;
+    }
+
+    static Sequence givenEligibleCompleteSequence(MethodVerifications verifications) {
+        Sequence sequence = givenEligibleSequence();
+        given(sequence.isComplete(verifications)).willReturn(true);
+        return sequence;
     }
 
     static Sequence givenEligibleSequence() {
@@ -26,27 +46,27 @@ public interface MockSequenceMother {
         return sequence;
     }
 
-    static Sequence givenCompleteSequence() {
+    static Sequence givenCompleteSequence(MethodVerifications verifications) {
         Sequence sequence = mockSequence();
-        given(sequence.isComplete()).willReturn(true);
+        given(sequence.isComplete(verifications)).willReturn(true);
         return sequence;
     }
 
-    static Sequence givenIncompleteSequence() {
+    static Sequence givenIncompleteSequence(MethodVerifications verifications) {
         Sequence sequence = mockSequence();
-        given(sequence.isComplete()).willReturn(false);
+        given(sequence.isComplete(verifications)).willReturn(false);
         return sequence;
     }
 
-    static Sequence givenSuccessfulSequence() {
+    static Sequence givenSuccessfulSequence(MethodVerifications verifications) {
         Sequence sequence = mock(Sequence.class);
-        given(sequence.isSuccessful()).willReturn(true);
+        given(sequence.isSuccessful(verifications)).willReturn(true);
         return sequence;
     }
 
-    static Sequence givenUnsuccessfulSequence() {
+    static Sequence givenUnsuccessfulSequence(MethodVerifications verifications) {
         Sequence sequence = mockSequence();
-        given(sequence.isSuccessful()).willReturn(false);
+        given(sequence.isSuccessful(verifications)).willReturn(false);
         return sequence;
     }
 
@@ -56,15 +76,21 @@ public interface MockSequenceMother {
         return sequence;
     }
 
+    static Sequence givenSequenceWithNextMethod(MethodVerifications verifications, Method method) {
+        Sequence sequence = mockSequence();
+        given(sequence.getNextMethod(verifications)).willReturn(Optional.of(method));
+        return sequence;
+    }
+
     static Sequence givenUpdatedSequence(UnaryOperator<Method> function, Sequence sequence) {
         Sequence updated = mock(Sequence.class);
         given(sequence.updateMethods(function)).willReturn(updated);
         return updated;
     }
 
-    static Sequence givenSequenceWithCompletedCount(long count) {
+    static Sequence givenSequenceWithCompletedCount(MethodVerifications verifications, long count) {
         Sequence sequence = mockSequence();
-        given(sequence.getCompletedCount()).willReturn(count);
+        given(sequence.completedMethodCount(verifications)).willReturn(count);
         return sequence;
     }
 

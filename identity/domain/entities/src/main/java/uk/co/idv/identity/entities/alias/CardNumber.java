@@ -15,4 +15,12 @@ public abstract class CardNumber implements Alias {
         return true;
     }
 
+    public String getLast4Digits() {
+        int length = value.length();
+        if (length < 4) {
+            return value;
+        }
+        return value.substring(length - 4);
+    }
+
 }

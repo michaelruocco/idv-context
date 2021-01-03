@@ -3,6 +3,7 @@ package uk.co.idv.app.manual.config;
 import lombok.Data;
 import uk.co.idv.app.manual.adapter.app.AppAdapter;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.context.config.VerificationConfig;
 import uk.co.idv.identity.config.ExternalFindIdentityConfig;
 import uk.co.idv.method.config.AppMethodConfigs;
 import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
@@ -18,6 +19,7 @@ public class AppConfig {
     private final IdentityConfig identityConfig;
     private final LockoutConfig lockoutConfig;
     private final ContextConfig contextConfig;
+    private final VerificationConfig verificationConfig;
     private final ErrorHandler errorHandler;
 
     public AppConfig(AppMethodConfigs appMethodConfigs,
@@ -28,8 +30,18 @@ public class AppConfig {
         this.identityConfig = identityConfig(repositoryAdapter, appAdapter);
         this.lockoutConfig = lockoutConfig(repositoryAdapter, appAdapter, identityConfig);
         this.contextConfig = contextConfig(repositoryAdapter, appAdapter, appMethodConfigs, identityConfig, lockoutConfig);
+        this.verificationConfig = verificationConfig(repositoryAdapter, appAdapter, contextConfig);
         this.errorHandler = appAdapter.getErrorHandler();
         identityConfig.addMergeIdentitiesHandler(lockoutConfig.getMergeIdentitiesHandler());
+    }
+
+    private VerificationConfig verificationConfig(RepositoryAdapter repositoryAdapter, AppAdapter appAdapter, ContextConfig contextConfig) {
+        return VerificationConfig.builder()
+                .contextRepository(repositoryAdapter.getContextRepository())
+                .clock(appAdapter.getClock())
+                .idGenerator(appAdapter.getIdGenerator())
+                .contextConfig(contextConfig)
+                .build();
     }
 
     private IdentityConfig identityConfig(RepositoryAdapter repositoryAdapter,
@@ -63,8 +75,8 @@ public class AppConfig {
                 .clock(appAdapter.getClock())
                 .idGenerator(appAdapter.getIdGenerator())
                 .appMethodConfigs(appMethodConfigs)
-                .createEligibility(identityConfig.createEligibility())
                 .lockoutService(lockoutConfig.lockoutService())
+                .identityConfig(identityConfig)
                 .build();
     }
 

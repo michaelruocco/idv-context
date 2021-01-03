@@ -18,24 +18,22 @@ import static uk.co.idv.context.adapter.client.headers.HeaderConstants.CONTENT_T
 @Slf4j
 public class RequestConverter {
 
-    private static final String CREATE_CONTEXT_URL = "%s/v1/contexts";
-    private static final String GET_CONTEXT_URL = CREATE_CONTEXT_URL + "/%s";
-    private static final String RECORD_CONTEXT_RESULT_URL = CREATE_CONTEXT_URL + "/results";
+    private static final String POST_CONTEXT_URL = "%s/v1/contexts";
+    private static final String GET_CONTEXT_URL = POST_CONTEXT_URL + "/%s";
+    private static final String VERIFICATION_URL = GET_CONTEXT_URL + "/verifications";
 
     private final JsonConverter jsonConverter;
     private final String baseUri;
 
-    public HttpRequest toPostHttpRequest(ClientCreateContextRequest request) {
-        return HttpRequest.newBuilder()
+    public HttpRequest toPostContextHttpRequest(ClientCreateContextRequest request) {
+        return httpRequestWithBodyBuilder()
                 .headers(request.getHeadersArray())
-                .header(CONTENT_TYPE_NAME, APPLICATION_JSON)
-                .header(ACCEPT_NAME, APPLICATION_JSON)
                 .uri(buildCreateUri())
                 .POST(HttpRequest.BodyPublishers.ofString(jsonConverter.toJson(request.getBody())))
                 .build();
     }
 
-    public HttpRequest toGetHttpRequest(ClientGetContextRequest request) {
+    public HttpRequest toGetContextHttpRequest(ClientGetContextRequest request) {
         return HttpRequest.newBuilder()
                 .headers(request.getHeadersArray())
                 .header(ACCEPT_NAME, APPLICATION_JSON)
@@ -44,26 +42,38 @@ public class RequestConverter {
                 .build();
     }
 
-    public HttpRequest toPatchHttpRequest(ClientRecordContextResultRequest request) {
-        return HttpRequest.newBuilder()
+    public HttpRequest toPostVerificationHttpRequest(ClientCreateVerificationRequest request) {
+        return httpRequestWithBodyBuilder()
                 .headers(request.getHeadersArray())
-                .header(CONTENT_TYPE_NAME, APPLICATION_JSON)
-                .header(ACCEPT_NAME, APPLICATION_JSON)
-                .uri(buildUpdateResultUrl())
+                .uri(buildVerificationUrl(request.getContextId()))
+                .POST(HttpRequest.BodyPublishers.ofString(jsonConverter.toJson(request.getBody())))
+                .build();
+    }
+
+    public HttpRequest toPatchVerificationHttpRequest(ClientCompleteVerificationRequest request) {
+        return httpRequestWithBodyBuilder()
+                .headers(request.getHeadersArray())
+                .uri(buildVerificationUrl(request.getContextId()))
                 .method("PATCH", HttpRequest.BodyPublishers.ofString(jsonConverter.toJson(request.getBody())))
                 .build();
     }
 
+    private HttpRequest.Builder httpRequestWithBodyBuilder() {
+        return HttpRequest.newBuilder()
+                .header(CONTENT_TYPE_NAME, APPLICATION_JSON)
+                .header(ACCEPT_NAME, APPLICATION_JSON);
+    }
+
     private URI buildCreateUri() {
-        return toUri(String.format(CREATE_CONTEXT_URL, baseUri));
+        return toUri(String.format(POST_CONTEXT_URL, baseUri));
     }
 
-    private URI buildGetUrl(UUID id) {
-        return toUri(String.format(GET_CONTEXT_URL, baseUri, id.toString()));
+    private URI buildGetUrl(UUID contextId) {
+        return toUri(String.format(GET_CONTEXT_URL, baseUri, contextId.toString()));
     }
 
-    private URI buildUpdateResultUrl() {
-        return toUri(String.format(RECORD_CONTEXT_RESULT_URL, baseUri));
+    private URI buildVerificationUrl(UUID contextId) {
+        return toUri(String.format(VERIFICATION_URL, baseUri, contextId.toString()));
     }
 
     private static URI toUri(String uri) {

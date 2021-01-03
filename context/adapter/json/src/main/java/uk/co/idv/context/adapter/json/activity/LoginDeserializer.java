@@ -19,7 +19,10 @@ class LoginDeserializer extends StdDeserializer<Login> {
     @Override
     public Login deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
-        return new Login(JsonNodeConverter.toObject(node.get("timestamp"), parser, Instant.class));
+        return Login.builder()
+                .system(node.get("system").asText())
+                .timestamp(JsonNodeConverter.toObject(node.get("timestamp"), parser, Instant.class))
+                .build();
     }
 
 }

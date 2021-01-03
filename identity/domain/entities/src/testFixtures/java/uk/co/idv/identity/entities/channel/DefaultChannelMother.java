@@ -1,8 +1,10 @@
 package uk.co.idv.identity.entities.channel;
 
 import com.neovisionaries.i18n.CountryCode;
+import uk.co.idv.identity.entities.emailaddress.EmailAddress;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
@@ -16,8 +18,16 @@ public interface DefaultChannelMother {
         return builder().country(country).build();
     }
 
+    static DefaultChannel withPhoneNumbers(PhoneNumber... phoneNumbers) {
+        return builder().phoneNumbers(PhoneNumbersMother.with(phoneNumbers)).build();
+    }
+
     static DefaultChannel withPhoneNumbers(PhoneNumbers phoneNumbers) {
         return builder().phoneNumbers(phoneNumbers).build();
+    }
+
+    static DefaultChannel withEmailAddresses(EmailAddress... emailAddresses) {
+        return builder().emailAddresses(EmailAddressesMother.with(emailAddresses)).build();
     }
 
     static DefaultChannel withEmailAddresses(EmailAddresses emailAddresses) {

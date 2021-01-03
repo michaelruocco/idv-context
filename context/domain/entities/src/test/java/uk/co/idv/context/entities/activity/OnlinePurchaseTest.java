@@ -38,6 +38,15 @@ class OnlinePurchaseTest {
     }
 
     @Test
+    void shouldReturnLast4DigitsOfCardNumber() {
+        CardNumber cardNumber = CreditCardNumberMother.creditCardNumber();
+
+        OnlinePurchase activity = OnlinePurchaseMother.withCardNumber(cardNumber);
+
+        assertThat(activity.getLast4DigitsOfCardNumber()).isEqualTo(cardNumber.getLast4Digits());
+    }
+
+    @Test
     void shouldReturnCardNumberValue() {
         CardNumber cardNumber = CreditCardNumberMother.creditCardNumber();
 

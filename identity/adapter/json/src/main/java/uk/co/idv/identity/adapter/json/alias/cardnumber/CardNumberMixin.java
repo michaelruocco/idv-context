@@ -10,4 +10,7 @@ public interface CardNumberMixin {
     @JsonIgnore
     boolean isCardNumber();
 
+    @JsonIgnore
+    String getLast4Digits();
+
 }

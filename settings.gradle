@@ -12,9 +12,6 @@ project(':common-json').projectDir = file('common/adapter/json')
 include ':common-mongo'
 project(':common-mongo').projectDir = file('common/adapter/repository/mongo')
 
-include ':data-protector'
-project(':data-protector').projectDir = file('common/adapter/data-protector')
-
 include ':identity-entities'
 project(':identity-entities').projectDir = file('identity/domain/entities')
 
@@ -29,6 +26,9 @@ project(':identity-mongo-repository').projectDir = file('identity/adapter/reposi
 
 include ':identity-json'
 project(':identity-json').projectDir = file('identity/adapter/json')
+
+include ':identity-data-protector'
+project(':identity-data-protector').projectDir = file('identity/adapter/data-protector')
 
 include ':identity-external-find-stub-use-cases'
 project(':identity-external-find-stub-use-cases').projectDir = file('identity/adapter/external-find/stub/domain/use-cases')
@@ -96,6 +96,9 @@ project(':context-dynamo-db-repository').projectDir = file('context/adapter/repo
 include ':context-mongo-repository'
 project(':context-mongo-repository').projectDir = file('context/adapter/repository/mongo')
 
+include ':context-data-protector'
+project(':context-data-protector').projectDir = file('context/adapter/data-protector')
+
 include ':context-client'
 project(':context-client').projectDir = file('context/adapter/client')
 
@@ -122,6 +125,9 @@ project(':otp-use-cases').projectDir = file('method/otp/domain/use-cases')
 
 include ':otp-json'
 project(':otp-json').projectDir = file('method/otp/adapter/json')
+
+include ':otp-data-protector'
+project(':otp-data-protector').projectDir = file('method/otp/adapter/data-protector')
 
 include ':otp-sim-swap-stub'
 project(':otp-sim-swap-stub').projectDir = file('method/otp/adapter/sim-swap/stub')

@@ -8,8 +8,7 @@ import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethods;
-import uk.co.idv.method.entities.result.Result;
-import uk.co.idv.method.entities.result.Results;
+import uk.co.idv.method.entities.otp.delivery.query.DeliveryMethodNotFoundException;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -21,9 +20,6 @@ public class Otp implements Method {
 
     @Getter(AccessLevel.NONE)
     private final OtpConfig config;
-
-    @Builder.Default
-    private final Results results = new Results();
 
     @Builder.Default
     private final DeliveryMethods deliveryMethods = new DeliveryMethods();
@@ -39,28 +35,20 @@ public class Otp implements Method {
     }
 
     @Override
-    public boolean isComplete() {
-        return isSuccessful() || !hasAttemptsRemaining();
-    }
-
-    @Override
-    public boolean isSuccessful() {
-        return results.containsSuccessful();
-    }
-
-    @Override
     public OtpConfig getConfig() {
         return config;
     }
 
-    public Optional<DeliveryMethod> findDeliveryMethod(UUID id) {
-        return deliveryMethods.findByValue(id);
+    public boolean containsDeliveryMethod(UUID id) {
+        return findDeliveryMethod(id).isPresent();
     }
 
-    public Otp add(Result result) {
-        return toBuilder()
-                .results(results.add(result))
-                .build();
+    public DeliveryMethod getDeliveryMethod(UUID id) {
+        return findDeliveryMethod(id).orElseThrow(() -> new DeliveryMethodNotFoundException(id));
+    }
+
+    public Optional<DeliveryMethod> findDeliveryMethod(UUID id) {
+        return deliveryMethods.findByValue(id);
     }
 
     public Otp updateDeliveryMethods(UnaryOperator<DeliveryMethod> update) {
@@ -71,10 +59,6 @@ public class Otp implements Method {
         return toBuilder()
                 .deliveryMethods(deliveryMethods.replace(updated))
                 .build();
-    }
-
-    private boolean hasAttemptsRemaining() {
-        return results.size() < config.getMaxNumberOfAttempts();
     }
 
 }

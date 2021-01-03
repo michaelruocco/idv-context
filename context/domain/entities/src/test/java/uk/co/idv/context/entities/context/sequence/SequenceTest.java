@@ -2,7 +2,9 @@ package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.context.entities.context.method.MethodsMother;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.method.MethodVerifications;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
@@ -28,7 +30,7 @@ class SequenceTest {
 
     @Test
     void shouldReturnMethods() {
-        Methods methods = new Methods();
+        Methods methods = MethodsMother.oneFake();
 
         Sequence sequence = Sequence.builder()
                 .methods(methods)
@@ -43,7 +45,7 @@ class SequenceTest {
         Method eligible2 = FakeMethodMother.eligible();
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(eligible1, eligible2))
+                .methods(MethodsMother.with(eligible1, eligible2))
                 .build();
 
         assertThat(sequence.isEligible()).isTrue();
@@ -55,7 +57,7 @@ class SequenceTest {
         Method ineligible = FakeMethodMother.ineligible();
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(eligible, ineligible))
+                .methods(MethodsMother.with(eligible, ineligible))
                 .build();
 
         assertThat(sequence.isEligible()).isFalse();
@@ -63,50 +65,54 @@ class SequenceTest {
 
     @Test
     void shouldReturnCompleteIfAllMethodsComplete() {
-        Method complete1 = FakeMethodMother.complete();
-        Method complete2 = FakeMethodMother.complete();
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method complete1 = givenCompleteMethod(verifications);
+        Method complete2 = givenCompleteMethod(verifications);
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(complete1, complete2))
+                .methods(MethodsMother.with(complete1, complete2))
                 .build();
 
-        assertThat(sequence.isComplete()).isTrue();
+        assertThat(sequence.isComplete(verifications)).isTrue();
     }
 
     @Test
     void shouldReturnIncompleteIfAtLeastOnMethodIsNotComplete() {
-        Method complete = FakeMethodMother.complete();
-        Method incomplete = FakeMethodMother.incomplete();
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method complete = givenCompleteMethod(verifications);
+        Method incomplete = givenIncompleteMethod(verifications);
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(complete, incomplete))
+                .methods(MethodsMother.with(complete, incomplete))
                 .build();
 
-        assertThat(sequence.isComplete()).isFalse();
+        assertThat(sequence.isComplete(verifications)).isFalse();
     }
 
     @Test
     void shouldReturnSuccessfulIfAllMethodsSuccessful() {
-        Method successful1 = FakeMethodMother.successful();
-        Method successful2 = FakeMethodMother.successful();
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method successful1 = givenSuccessfulMethod(verifications);
+        Method successful2 = givenSuccessfulMethod(verifications);
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(successful1, successful2))
+                .methods(MethodsMother.with(successful1, successful2))
                 .build();
 
-        assertThat(sequence.isSuccessful()).isTrue();
+        assertThat(sequence.isSuccessful(verifications)).isTrue();
     }
 
     @Test
     void shouldReturnUnsuccessfulIfAtLeastOnMethodIsNotSuccessful() {
-        Method successful = FakeMethodMother.successful();
-        Method unsuccessful = FakeMethodMother.unsuccessful();
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method successful = givenSuccessfulMethod(verifications);
+        Method unsuccessful = givenUnsuccessfulMethod(verifications);
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(successful, unsuccessful))
+                .methods(MethodsMother.with(successful, unsuccessful))
                 .build();
 
-        assertThat(sequence.isSuccessful()).isFalse();
+        assertThat(sequence.isSuccessful(verifications)).isFalse();
     }
 
     @Test
@@ -115,7 +121,7 @@ class SequenceTest {
         Method method2 = FakeMethodMother.withDuration(Duration.ofMinutes(3));
 
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(method1, method2))
+                .methods(MethodsMother.with(method1, method2))
                 .build();
 
         assertThat(sequence.getDuration()).isEqualTo(Duration.ofMinutes(5));
@@ -123,48 +129,17 @@ class SequenceTest {
 
     @Test
     void shouldReturnNextIncompleteMethod() {
-        Method complete = FakeMethodMother.complete();
-        Method incomplete1 = FakeMethodMother.incomplete();
-        Method incomplete2 = FakeMethodMother.incomplete();
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method complete = givenCompleteMethod(verifications);
+        Method incomplete1 = givenIncompleteMethod(verifications);
+        Method incomplete2 = givenIncompleteMethod(verifications);
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(complete, incomplete1, incomplete2))
+                .methods(MethodsMother.with(complete, incomplete1, incomplete2))
                 .build();
 
-        Optional<Method> next = sequence.getNext();
+        Optional<Method> next = sequence.getNextMethod(verifications);
 
         assertThat(next).contains(incomplete1);
-    }
-
-    @Test
-    void shouldReturnNextIncompleteMethodIfNameMatches() {
-        Method complete = FakeMethodMother.complete();
-        Method incomplete = FakeMethodMother.builder()
-                .name("method1")
-                .overrideComplete(false)
-                .build();
-        Sequence sequence = Sequence.builder()
-                .methods(new Methods(complete, incomplete))
-                .build();
-
-        Optional<Method> next = sequence.getNext(incomplete.getName());
-
-        assertThat(next).contains(incomplete);
-    }
-
-    @Test
-    void shouldNotReturnNextIncompleteMethodIfNameDoesNotMatch() {
-        Method complete = FakeMethodMother.complete();
-        Method incomplete = FakeMethodMother.builder()
-                .name("method1")
-                .overrideComplete(false)
-                .build();
-        Sequence sequence = Sequence.builder()
-                .methods(new Methods(complete, incomplete))
-                .build();
-
-        Optional<Method> next = sequence.getNext("other-name");
-
-        assertThat(next).isEmpty();
     }
 
     @Test
@@ -175,7 +150,7 @@ class SequenceTest {
         Method updatedMethod1 = givenUpdatedMethod(function, method1);
         Method updatedMethod2 = givenUpdatedMethod(function, method2);
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(method1, method2))
+                .methods(MethodsMother.with(method1, method2))
                 .build();
 
         Sequence updated = sequence.updateMethods(function);
@@ -185,17 +160,42 @@ class SequenceTest {
     }
 
     @Test
-    void shouldReturnCompletedCount() {
-        Method method1 = FakeMethodMother.complete();
-        Method method2 = FakeMethodMother.complete();
-        Method method3 = FakeMethodMother.incomplete();
+    void shouldReturnCompletedMethodCount() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method method1 = givenCompleteMethod(verifications);
+        Method method2 = givenIncompleteMethod(verifications);
+        Method method3 = givenCompleteMethod(verifications);
         Sequence sequence = Sequence.builder()
-                .methods(new Methods(method1, method2, method3))
+                .methods(MethodsMother.with(method1, method2, method3))
                 .build();
 
-        long completedCount = sequence.getCompletedCount();
+        long completedCount = sequence.completedMethodCount(verifications);
 
         assertThat(completedCount).isEqualTo(2);
+    }
+
+    private static Method givenSuccessfulMethod(MethodVerifications verifications) {
+        Method method = mock(Method.class);
+        given(method.isSuccessful(verifications)).willReturn(true);
+        return method;
+    }
+
+    private static Method givenUnsuccessfulMethod(MethodVerifications verifications) {
+        Method method = mock(Method.class);
+        given(method.isSuccessful(verifications)).willReturn(false);
+        return method;
+    }
+
+    private static Method givenCompleteMethod(MethodVerifications verifications) {
+        Method method = mock(Method.class);
+        given(method.isComplete(verifications)).willReturn(true);
+        return method;
+    }
+
+    private static Method givenIncompleteMethod(MethodVerifications verifications) {
+        Method method = mock(Method.class);
+        given(method.isComplete(verifications)).willReturn(false);
+        return method;
     }
 
     static Method givenUpdatedMethod(UnaryOperator<Method> function, Method method) {

@@ -10,13 +10,13 @@ testSets {
 }
 
 configurations {
-    compile.exclude module: "slf4j-simple"
+    testFixturesApi.setCanBeResolved(true)
+    testRuntimeOnly.exclude module: "slf4j-simple"
 }
 
 ext {
     logbackVersion = "1.2.3"
 }
-
 
 dependencies {
     api project(":context-entities")
@@ -27,9 +27,13 @@ dependencies {
     implementation project(":context-json")
     implementation project(":otp-json")
     implementation "com.github.michaelruocco:string-utils:${mruocStringUtilsVersion}"
+    implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
+    implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
 
     testRuntimeOnly "ch.qos.logback:logback-core:${logbackVersion}"
     testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
+    testImplementation "com.github.stefanbirkner:system-lambda:${systemLambdaVersion}"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
 
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"

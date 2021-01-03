@@ -6,7 +6,11 @@ dependencies {
     api project(":common-mongo")
     implementation project(":identity-json")
     implementation project(":common-use-cases")
+    implementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
+    implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
 
     testImplementation testFixtures(project(":identity-entities"))
     testImplementation testFixtures(project(":identity-use-cases"))
+
+    testFixturesImplementation "org.mongodb:mongo-java-driver:${mongoVersion}"
 }

@@ -6,9 +6,8 @@ import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
-import uk.co.idv.context.entities.result.FacadeRecordResultRequest;
-import uk.co.idv.context.entities.result.FacadeRecordResultRequestMother;
-import uk.co.idv.context.usecases.context.result.NotNextMethodException;
+import uk.co.idv.context.entities.verification.CreateVerificationRequest;
+import uk.co.idv.context.entities.verification.CreateVerificationRequestMother;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
@@ -19,8 +18,8 @@ import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
 import uk.co.idv.lockout.entities.DefaultExternalLockoutRequest;
 import uk.co.idv.lockout.entities.ExternalLockoutRequest;
 import uk.co.idv.lockout.entities.policy.LockoutState;
-import uk.co.idv.method.entities.result.Result;
-import uk.co.idv.method.entities.result.ResultMother;
+import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
+import uk.co.idv.method.entities.policy.MethodPolicy;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -31,81 +30,15 @@ class ContextMergeLockoutAttemptsTest {
     private final Application application = harness.getApplication();
 
     @Test
-    void shouldPopulateResultOnContext() {
+    void shouldRecordAttemptsWhenVerificationsCompletedUnsuccessfully() {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
         harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
-                .contextId(context.getId())
-                .result(ResultMother.withMethodName("fake-method"))
-                .build();
-        Context updated = application.record(recordRequest);
-
-        assertThat(updated.isComplete()).isTrue();
-    }
-
-    @Test
-    void shouldThrowExceptionIfResultMethodIsNotOnContext() {
-        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
-        harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
-        harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
-        Context context = application.create(createRequest);
-
-        Result result = ResultMother.withMethodName("another-method");
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
-                .contextId(context.getId())
-                .result(result)
-                .build();
-        Throwable error = catchThrowable(() -> application.record(recordRequest));
-
-        assertThat(error)
-                .isInstanceOf(NotNextMethodException.class)
-                .hasMessage(result.getMethodName());
-    }
-
-    @Test
-    void shouldThrowExceptionIfAttemptToPopulateResultOnContextThatIsAlreadyComplete() {
-        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
-        harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
-        harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
-        Context context = application.create(createRequest);
-        Result result = ResultMother.withMethodName("fake-method");
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
-                .contextId(context.getId())
-                .result(result)
-                .build();
-        application.record(recordRequest);
-
-        Throwable error = catchThrowable(() -> application.record(recordRequest));
-
-        assertThat(error)
-                .isInstanceOf(NotNextMethodException.class)
-                .hasMessage(result.getMethodName());
-    }
-
-    @Test
-    void shouldRecordAttemptsWhenResultRecorded() {
-        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
-        harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
-        harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
-        Context context = application.create(createRequest);
-
-        Result result = ResultMother.builder()
-                .methodName("fake-method")
-                .successful(false)
-                .build();
-        FacadeRecordResultRequest recordRequest = FacadeRecordResultRequestMother.builder()
-                .contextId(context.getId())
-                .result(result)
-                .build();
-        application.record(recordRequest);
-        application.record(recordRequest);
+        harness.givenVerificationCompletedUnsuccessfully(CreateVerificationRequestMother.withContextId(context.getId()));
+        harness.givenVerificationCompletedUnsuccessfully(CreateVerificationRequestMother.withContextId(context.getId()));
 
         ExternalLockoutRequest lockoutRequest = DefaultExternalLockoutRequest.builder()
                 .activityName(createRequest.getActivityName())
@@ -148,14 +81,19 @@ class ContextMergeLockoutAttemptsTest {
     }
 
     private Context recordUnsuccessfulAttemptForIdentityWithAlias(Alias alias) {
+        MethodPolicy methodPolicy = FakeMethodPolicyMother.build();
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.builder()
                 .aliases(AliasesMother.with(alias))
                 .build();
-        harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenContextPolicyExistsForChannel(createRequest.getChannelId(), methodPolicy);
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
         harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
-        harness.givenUnsuccessfulResultRecorded(context.getId());
+        CreateVerificationRequest request = CreateVerificationRequest.builder()
+                .contextId(context.getId())
+                .methodName(methodPolicy.getName())
+                .build();
+        harness.givenVerificationCompletedUnsuccessfully(request);
         return context;
     }
 

@@ -1,7 +1,8 @@
 dependencies {
     api project(":lockout-use-cases")
     api project(":lockout-json")
-    api "org.redisson:redisson:3.14.0"
+    api "org.redisson:redisson:${redissionVersion}"
+    implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
 
     testImplementation testFixtures(project(":policy-entities"))
 }

@@ -7,7 +7,7 @@ import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.co.idv.context.adapter.json.context.create.CreateContextModule;
 import uk.co.idv.context.adapter.json.context.sequence.SequenceModule;
 import uk.co.idv.context.adapter.json.error.ContextErrorModule;
-import uk.co.idv.context.adapter.json.result.RecordRequestModule;
+import uk.co.idv.context.adapter.json.verification.VerificationModule;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
@@ -37,8 +37,8 @@ public class ContextModule extends SimpleModule {
                 new ContextErrorModule(),
                 new SequenceModule(mappings),
                 new CreateContextModule(mappings),
-                new JavaTimeModule(),
-                new RecordRequestModule()
+                new VerificationModule(),
+                new JavaTimeModule()
         );
     }
 

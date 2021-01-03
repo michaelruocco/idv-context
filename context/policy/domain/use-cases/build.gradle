@@ -4,7 +4,7 @@ plugins {
 
 dependencies {
     api project(":policy-entities")
-    implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
+    testImplementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
     implementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
 

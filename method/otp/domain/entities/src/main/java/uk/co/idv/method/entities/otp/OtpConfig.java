@@ -14,4 +14,16 @@ public class OtpConfig implements MethodConfig {
     private final Duration duration;
     private final PasscodeConfig passcodeConfig;
 
+    public int getPasscodeLength() {
+        return passcodeConfig.getLength();
+    }
+
+    public Duration getPasscodeDuration() {
+        return passcodeConfig.getDuration();
+    }
+
+    public int getMaxNumberOfPasscodeDeliveries() {
+        return passcodeConfig.getMaxNumberOfDeliveries();
+    }
+
 }

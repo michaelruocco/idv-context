@@ -28,4 +28,8 @@ public class OnlinePurchase implements Activity {
         return cardNumber.getValue();
     }
 
+    public String getLast4DigitsOfCardNumber() {
+        return cardNumber.getLast4Digits();
+    }
+
 }
