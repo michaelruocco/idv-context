@@ -16,17 +16,9 @@ public class SoftLockoutStateFactory {
 
     public LockoutState build(Duration duration, LockoutStateRequest request) {
         Optional<SoftLock> softLock = calculateSoftLock(duration, request);
-        if (softLock.isEmpty()) {
+        if (softLock.isEmpty() || !isLocked(request, softLock.get())) {
             return new UnlockedState(request.getAttempts());
         }
-
-        Instant expiry = softLock.get().calculateExpiry();
-        boolean isLocked = request.isBefore(expiry);
-        log.info("request at {} soft lock expiry at {} is locked {}", request.getTimestamp(), expiry, isLocked);
-        if (!isLocked) {
-            return new UnlockedState(request.getAttempts());
-        }
-
         return SoftLockoutState.builder()
                 .attempts(request.getAttempts())
                 .lock(softLock.get())
@@ -36,6 +28,13 @@ public class SoftLockoutStateFactory {
     private static Optional<SoftLock> calculateSoftLock(Duration duration, LockoutStateRequest request) {
         return request.getMostRecentAttemptTimestamp()
                 .map(timestamp -> new SoftLock(duration, timestamp));
+    }
+
+    private static boolean isLocked(LockoutStateRequest request, SoftLock softLock) {
+        Instant expiry = softLock.calculateExpiry();
+        boolean isLocked = request.isBefore(expiry);
+        log.info("request at {} soft lock expiry at {} is locked {}", request.getTimestamp(), expiry, isLocked);
+        return isLocked;
     }
 
 }
