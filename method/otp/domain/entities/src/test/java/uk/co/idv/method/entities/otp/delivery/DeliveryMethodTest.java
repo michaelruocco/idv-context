@@ -128,6 +128,62 @@ class DeliveryMethodTest {
         assertThat(method.isEligibilityComplete()).isTrue();
     }
 
+    @Test
+    void shouldReturnTrueIfEligibilityCompleteAndEligible() {
+        Eligibility eligibility = DefaultAsyncEligibilityMother.builder()
+                .complete(true)
+                .eligible(true)
+                .build();
+
+        DeliveryMethod method = DeliveryMethod.builder()
+                .eligibility(eligibility)
+                .build();
+
+        assertThat(method.isEligibilityCompleteAndEligible()).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfEligibilityCompleteByNotEligible() {
+        Eligibility eligibility = DefaultAsyncEligibilityMother.builder()
+                .complete(true)
+                .eligible(false)
+                .build();
+
+        DeliveryMethod method = DeliveryMethod.builder()
+                .eligibility(eligibility)
+                .build();
+
+        assertThat(method.isEligibilityCompleteAndEligible()).isFalse();
+    }
+
+    @Test
+    void shouldReturnFalseIfEligibleButEligibilityNotComplete() {
+        Eligibility eligibility = DefaultAsyncEligibilityMother.builder()
+                .complete(false)
+                .eligible(true)
+                .build();
+
+        DeliveryMethod method = DeliveryMethod.builder()
+                .eligibility(eligibility)
+                .build();
+
+        assertThat(method.isEligibilityCompleteAndEligible()).isFalse();
+    }
+
+    @Test
+    void shouldReturnDeliveryMethodWithUpdatedValue() {
+        String updatedValue = "+440780111111";
+        DeliveryMethod original = DeliveryMethodMother.build();
+
+        DeliveryMethod updated = original.withValue(updatedValue);
+
+        assertThat(updated)
+                .usingRecursiveComparison()
+                .ignoringFields("value")
+                .isEqualTo(original);
+        assertThat(updated.getValue()).isEqualTo(updatedValue);
+    }
+
     private CompletableFuture<Eligibility> givenFutureReturnedFrom(AsyncFutureSimSwapEligibility eligibility) {
         CompletableFuture<Eligibility> future = mock(CompletableFuture.class);
         given(eligibility.getFuture()).willReturn(future);

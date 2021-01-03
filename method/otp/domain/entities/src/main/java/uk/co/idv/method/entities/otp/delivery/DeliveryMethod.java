@@ -38,7 +38,6 @@ public class DeliveryMethod implements Updatable<DeliveryMethod> {
         return Optional.ofNullable(lastUpdated);
     }
 
-    //TODO test all branches
     public boolean isEligibilityCompleteAndEligible() {
         return isEligibilityComplete() && isEligible();
     }
