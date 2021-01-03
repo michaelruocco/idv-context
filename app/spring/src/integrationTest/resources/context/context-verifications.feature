@@ -1,7 +1,327 @@
 Feature: Context Verifications
 
-  Scenario: Post result - Success - Verification created and completed
-    * def channelId = "context-test-channel6"
+  Scenario: Create Verification - Success - Verification created and retrieved
+    * def channelId = "verification-test-channel1"
+    * def contextPolicyId = "1aad8338-73af-4663-9325-a9f219b4c4d4"
+    Given url baseUrl + "/v1/context-policies"
+    And header correlation-id = "133d6a44-2a10-4f85-8fe0-cdbb726d9c40"
+    And request
+      """
+      {
+        "key": {
+          "id": "#(contextPolicyId)",
+          "priority": 1,
+          "channelId": "#(channelId)",
+          "type": "channel"
+        },
+        "sequencePolicies": [
+        {
+            "name": "one-time-passcode",
+            "methodPolicies": [
+              {
+                "name": "one-time-passcode",
+                "config": {
+                  "maxNumberOfAttempts": 3,
+                  "duration": 300000,
+                  "passcodeConfig": {
+                    "length": 8,
+                    "duration": 120000,
+                    "maxNumberOfDeliveries": 2
+                  }
+                },
+                "deliveryMethodConfigs": [
+                  {
+                    "type": "sms",
+                    "phoneNumberConfig": {
+                      "country": "GB",
+                      "allowInternational": false,
+                      "lastUpdatedConfig": {
+                        "allowUnknown": true,
+                        "minDaysSinceUpdate": 5
+                      },
+                      "simSwapConfig": {
+                        "acceptableStatuses": [
+                          "success"
+                        ],
+                        "timeout": 2000,
+                        "minDaysSinceSwap": 6,
+                        "async": false
+                      }
+                    }
+                  }
+                ]
+              }
+            ]
+          }
+        ],
+        "protectSensitiveData": false
+      }
+      """
+    And method POST
+    And status 201
+    And url baseUrl + "/v1/identities"
+    And header correlation-id = "5d4788d3-a532-4e7c-8292-d82245445849"
+    And request
+      """
+      {
+        "country": "GB",
+        "aliases": [
+          { "type": "credit-card-number", "value": "4927111111111131" }
+        ],
+        "phoneNumbers": [
+          { "value": "+4407808247731" }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    And url baseUrl + "/v1/lockout-policies"
+    And header correlation-id = "5483de00-1e7c-42cb-80ed-bcb9c7cd4f40"
+    * def lockoutPolicyId = "225aba85-a236-497a-a343-720a9ac392de"
+    And request
+      """
+      {
+        "key": {
+          "id": "#(lockoutPolicyId)",
+          "priority": 1,
+          "channelId": "#(channelId)",
+          "type": "channel"
+        },
+        "stateCalculator": {
+          "maxNumberOfAttempts": 5,
+          "type": "hard-lockout"
+        },
+        "recordAttemptPolicy": {
+          "type": "always-record"
+        }
+      }
+      """
+    And method POST
+    And status 201
+    And header channel-id = channelId
+    And header correlation-id = "0b0c4200-a2c7-45a2-ac9a-e31458d1ef8e"
+    And url baseUrl + "/v1/contexts"
+    And request
+      """
+      {
+        "channel": {
+          "id": "#(channelId)",
+          "country": "GB"
+        },
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111131"
+          }
+        ]
+      }
+      """
+    And method POST
+    And status 201
+    And match response ==
+      """
+      {
+        "id": "#uuid",
+        "created": "#notnull",
+        "expiry": "#notnull",
+        "request": {
+          "initial": {
+            "channel": {
+              "id": "#(channelId)",
+              "country": "GB"
+            },
+            "aliases": [
+              {
+                "type": "credit-card-number",
+                "value": "4927111111111131"
+              }
+            ],
+            "activity": {
+              "name": "default-activity",
+              "timestamp": "2020-09-27T06:56:47.522Z"
+            }
+          },
+          "policy": {
+            "key": {
+              "id": "#(contextPolicyId)",
+              "priority": 1,
+              "channelId": "#(channelId)",
+              "type": "channel"
+            },
+            "sequencePolicies": [
+              {
+                "name": "one-time-passcode",
+                "methodPolicies": [
+                  {
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
+                      }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "sms",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": true,
+                            "minDaysSinceUpdate": 5
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success"
+                            ],
+                            "timeout": 2000,
+                            "minDaysSinceSwap": 6,
+                            "async": false
+                          }
+                        }
+                      }
+                    ],
+                    "name": "one-time-passcode"
+                  }
+                ]
+              }
+            ],
+            "protectSensitiveData": false
+          },
+          "identity": {
+            "idvId": "#uuid",
+            "country": "GB",
+            "aliases": [
+              {
+                "type": "credit-card-number",
+                "value": "4927111111111131"
+              },
+              {
+                "type": "idv-id",
+                "value": "#uuid"
+              }
+            ],
+            "phoneNumbers": [
+              { "value": "+4407808247731" }
+            ]
+          }
+        },
+        "sequences": [
+          {
+            "name": "one-time-passcode",
+            "methods": [
+              {
+                "name": "one-time-passcode",
+                "deliveryMethods": [
+                  {
+                    "id": "#uuid",
+                    "type": "sms",
+                    "value": "+447808247731",
+                    "eligibility": {
+                      "eligible": true,
+                      "complete": true
+                    }
+                  }
+                ],
+                "config": {
+                  "maxNumberOfAttempts": 3,
+                  "duration": 300000,
+                  "passcodeConfig": {
+                    "length": 8,
+                    "duration": 120000,
+                    "maxNumberOfDeliveries": 2
+                  }
+                },
+                "eligibility": {
+                  "eligible": true
+                }
+              }
+            ],
+            "duration": 300000,
+            "eligibility": {
+              "eligible": true
+            }
+          }
+        ],
+        "verifications": [],
+        "eligible": true,
+        "successful": false,
+        "complete": false
+      }
+      """
+    * def contextId = response.id
+    And request
+      """
+      {
+        "contextId": "#(contextId)",
+        "methodName": "one-time-passcode"
+      }
+      """
+    And header channel-id = channelId
+    And header correlation-id = "8b6ce5a9-f960-4919-b0a7-e98a38be6b01"
+    And url baseUrl + "/v1/contexts/verifications"
+    And method POST
+    And status 201
+    * def verificationId = response.id
+    And url baseUrl + "/v1/contexts/" + contextId + "/verifications/" + verificationId
+    And header channel-id = channelId
+    And header correlation-id = "021cbad0-9274-4b27-af3a-1632f8b3e0a1"
+    And method GET
+    And status 200
+    And match response ==
+      """
+      {
+        "id": "#(verificationId)",
+        "contextId": "#(contextId)",
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
+        },
+        "methodName": "one-time-passcode",
+        "methods": [
+          {
+            "name": "one-time-passcode",
+            "deliveryMethods": [
+              {
+                "id": "#uuid",
+                "type": "sms",
+                "value": "+447808247731",
+                "eligibility": {
+                  "eligible": true,
+                  "complete": true
+                }
+              }
+            ],
+            "config": {
+              "maxNumberOfAttempts": 3,
+              "duration": 300000,
+              "passcodeConfig": {
+                "length": 8,
+                "duration": 120000,
+                "maxNumberOfDeliveries": 2
+              }
+            },
+            "eligibility": {
+              "eligible": true
+            }
+          }
+        ],
+        "protectSensitiveData": false,
+        "created": "#notnull",
+        "expiry": "#notnull",
+        "successful": false,
+        "complete": false
+      }
+      """
+
+  Scenario: Complete Verification - Success - Verification created and completed
+    * def channelId = "verification-test-channel2"
     * def contextPolicyId = "03ac7483-0006-4d99-b38f-dd33d3004e0a"
     Given url baseUrl + "/v1/context-policies"
     And header correlation-id = "9c5fba22-c930-4195-9def-0b1b86670856"
@@ -66,10 +386,10 @@ Feature: Context Verifications
       {
         "country": "GB",
         "aliases": [
-          { "type": "credit-card-number", "value": "4927111111111116" }
+          { "type": "credit-card-number", "value": "4927111111111132" }
         ],
         "phoneNumbers": [
-          { "value": "+4407808247743" }
+          { "value": "+4407808247732" }
         ]
       }
       """
@@ -115,7 +435,7 @@ Feature: Context Verifications
         "aliases": [
           {
             "type": "credit-card-number",
-            "value": "4927111111111116"
+            "value": "4927111111111132"
           }
         ]
       }
@@ -137,7 +457,7 @@ Feature: Context Verifications
             "aliases": [
               {
                 "type": "credit-card-number",
-                "value": "4927111111111116"
+                "value": "4927111111111132"
               }
             ],
             "activity": {
@@ -200,7 +520,7 @@ Feature: Context Verifications
             "aliases": [
               {
                 "type": "credit-card-number",
-                "value": "4927111111111116"
+                "value": "4927111111111132"
               },
               {
                 "type": "idv-id",
@@ -208,7 +528,7 @@ Feature: Context Verifications
               }
             ],
             "phoneNumbers": [
-              { "value": "+4407808247743" }
+              { "value": "+4407808247732" }
             ]
           }
         },
@@ -222,7 +542,7 @@ Feature: Context Verifications
                   {
                     "id": "#uuid",
                     "type": "sms",
-                    "value": "+447808247743",
+                    "value": "+447808247732",
                     "eligibility": {
                       "eligible": true,
                       "complete": true
@@ -299,7 +619,7 @@ Feature: Context Verifications
               {
                 "id": "#uuid",
                 "type": "sms",
-                "value": "+447808247743",
+                "value": "+447808247732",
                 "eligibility": {
                   "eligible": true,
                   "complete": true
@@ -329,8 +649,8 @@ Feature: Context Verifications
       }
       """
 
-  Scenario: Post result - Error - Should return error if verification method is not next method
-    * def channelId = "context-test-channel7"
+  Scenario: Create Verification - Error - Should return error if verification method is not next method
+    * def channelId = "verification-test-channel3"
     * def contextPolicyId = "2570c9d8-884f-43f9-9fcc-d63e084360c1"
     Given url baseUrl + "/v1/context-policies"
     And header correlation-id = "0f804850-3681-403a-82b7-b0bf52113451"
@@ -395,10 +715,10 @@ Feature: Context Verifications
       {
         "country": "GB",
         "aliases": [
-          { "type": "credit-card-number", "value": "4927111111111117" }
+          { "type": "credit-card-number", "value": "4927111111111133" }
         ],
         "phoneNumbers": [
-          { "value": "+4407808247743" }
+          { "value": "+4407808247733" }
         ]
       }
       """
@@ -444,7 +764,7 @@ Feature: Context Verifications
         "aliases": [
           {
             "type": "credit-card-number",
-            "value": "4927111111111117"
+            "value": "4927111111111133"
           }
         ]
       }
@@ -466,7 +786,7 @@ Feature: Context Verifications
             "aliases": [
               {
                 "type": "credit-card-number",
-                "value": "4927111111111117"
+                "value": "4927111111111133"
               }
             ],
             "activity": {
@@ -529,7 +849,7 @@ Feature: Context Verifications
             "aliases": [
               {
                 "type": "credit-card-number",
-                "value": "4927111111111117"
+                "value": "4927111111111133"
               },
               {
                 "type": "idv-id",
@@ -537,7 +857,7 @@ Feature: Context Verifications
               }
             ],
             "phoneNumbers": [
-              { "value": "+4407808247743" }
+              { "value": "+4407808247733" }
             ]
           }
         },
@@ -551,7 +871,7 @@ Feature: Context Verifications
                   {
                     "id": "#uuid",
                     "type": "sms",
-                    "value": "+447808247743",
+                    "value": "+447808247733",
                     "eligibility": {
                       "eligible": true,
                       "complete": true
