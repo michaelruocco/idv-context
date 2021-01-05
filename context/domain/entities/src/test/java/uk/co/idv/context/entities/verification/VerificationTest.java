@@ -12,6 +12,7 @@ import java.util.UUID;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
+import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class VerificationTest {
@@ -58,6 +59,30 @@ class VerificationTest {
                 .build();
 
         assertThat(verification.getMethods()).isEqualTo(methods);
+    }
+
+    @Test
+    void shouldReturnTrueIfHasMethods() {
+        Methods methods = mock(Methods.class);
+        given(methods.isEmpty()).willReturn(false);
+
+        Verification verification = Verification.builder()
+                .methods(methods)
+                .build();
+
+        assertThat(verification.hasMethods()).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfDoesNotHaveMethods() {
+        Methods methods = mock(Methods.class);
+        given(methods.isEmpty()).willReturn(true);
+
+        Verification verification = Verification.builder()
+                .methods(methods)
+                .build();
+
+        assertThat(verification.hasMethods()).isFalse();
     }
 
     @Test

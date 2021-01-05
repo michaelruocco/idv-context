@@ -54,6 +54,10 @@ public class Verification {
         return methodName.equals(otherMethodName);
     }
 
+    public boolean hasMethods() {
+        return !methods.isEmpty();
+    }
+
     public boolean hasExpired(Instant timestamp) {
         return timestamp.isAfter(expiry);
     }
