@@ -1,20 +1,13 @@
 package uk.co.idv.context.adapter.client;
 
-import uk.co.idv.context.adapter.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
-import uk.co.idv.context.adapter.client.request.ClientCreateVerificationRequest;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.verification.Verification;
 
-public interface ContextClient {
+public interface ContextClient extends VerificationClient {
 
     Context createContext(ClientCreateContextRequest request);
 
     Context getContext(ClientGetContextRequest request);
-
-    Verification createVerification(ClientCreateVerificationRequest request);
-
-    Verification completeVerification(ClientCompleteVerificationRequest request);
 
 }

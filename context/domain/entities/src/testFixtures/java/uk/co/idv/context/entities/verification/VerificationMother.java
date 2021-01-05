@@ -2,6 +2,7 @@ package uk.co.idv.context.entities.verification;
 
 import uk.co.idv.context.entities.activity.DefaultActivityMother;
 import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.context.entities.context.method.MethodsMother;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
@@ -20,6 +21,14 @@ public interface VerificationMother {
 
     static Verification withMethodName(String methodName) {
         return builder().methodName(methodName).build();
+    }
+
+    static Verification withoutMethods() {
+        return builder().methods(MethodsMother.empty()).build();
+    }
+
+    static Verification withMethod(Method method) {
+        return builder().methods(MethodsMother.with(method)).build();
     }
 
     static Verification successful(Instant completed) {

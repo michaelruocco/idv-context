@@ -97,6 +97,28 @@ class MethodsTest {
     }
 
     @Test
+    void shouldReturnTrueIfContainsMethodWithName() {
+        String methodName = "my-method";
+        Method method = FakeMethodMother.withName(methodName);
+        Methods methods = MethodsMother.with(method);
+
+        boolean containsMethod = methods.containsMethod(methodName);
+
+        assertThat(containsMethod).isTrue();
+    }
+
+    @Test
+    void shouldFalseTrueIfDoesNotContainMethodWithName() {
+        String methodName = "my-method";
+        Method method = FakeMethodMother.withName("other-name");
+        Methods methods = MethodsMother.with(method);
+
+        boolean containsMethod = methods.containsMethod(methodName);
+
+        assertThat(containsMethod).isFalse();
+    }
+
+    @Test
     void shouldReturnMethodsWithUpdatesApplied() {
         Method method1 = FakeMethodMother.withName("my-method");
         Method method2 = FakeMethodMother.withName("my-other-method");

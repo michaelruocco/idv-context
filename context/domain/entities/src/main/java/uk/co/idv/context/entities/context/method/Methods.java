@@ -39,6 +39,10 @@ public class Methods implements Iterable<Method> {
                 .orElse(Duration.ZERO);
     }
 
+    public boolean containsMethod(String methodName) {
+        return !getByName(methodName).isEmpty();
+    }
+
     public Methods getByName(String methodName) {
         return new Methods(values.stream()
                 .filter(method -> method.hasName(methodName))

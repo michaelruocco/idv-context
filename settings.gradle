@@ -90,9 +90,6 @@ project(':context-json').projectDir = file('context/adapter/json')
 include ':context-redis-repository'
 project(':context-redis-repository').projectDir = file('context/adapter/repository/redis')
 
-include ':context-dynamo-db-repository'
-project(':context-dynamo-db-repository').projectDir = file('context/adapter/repository/dynamo-db')
-
 include ':context-mongo-repository'
 project(':context-mongo-repository').projectDir = file('context/adapter/repository/mongo')
 
