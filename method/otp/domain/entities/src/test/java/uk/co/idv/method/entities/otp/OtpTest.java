@@ -151,7 +151,7 @@ class OtpTest {
     }
 
     @Test
-    void shouldGetReturnTrueIfMethodWithIdIsPresent() {
+    void shouldReturnTrueIfMethodWithIdIsPresent() {
         DeliveryMethod expectedMethod = DeliveryMethodMother.build();
         Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.with(expectedMethod));
 
@@ -161,13 +161,43 @@ class OtpTest {
     }
 
     @Test
-    void shouldGetReturnFalseIfMethodWithIdIsNotPresent() {
+    void shouldReturnFalseIfMethodWithIdIsNotPresent() {
         UUID id = UUID.randomUUID();
         Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.empty());
 
         boolean contains = otp.containsDeliveryMethod(id);
 
         assertThat(contains).isFalse();
+    }
+
+    @Test
+    void shouldReturnTrueIfMethodWithIdIsPresentAndEligible() {
+        DeliveryMethod expectedMethod = DeliveryMethodMother.eligible();
+        Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.with(expectedMethod));
+
+        boolean containsEligible = otp.containsEligibleDeliveryMethod(expectedMethod.getId());
+
+        assertThat(containsEligible).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfMethodWithIdIsPresentAndButNotEligible() {
+        DeliveryMethod expectedMethod = DeliveryMethodMother.ineligible();
+        Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.with(expectedMethod));
+
+        boolean containsEligible = otp.containsEligibleDeliveryMethod(expectedMethod.getId());
+
+        assertThat(containsEligible).isFalse();
+    }
+
+    @Test
+    void shouldReturnContainsEligibleFalseIfMethodWithIdIsNotPresent() {
+        Otp otp = OtpMother.withDeliveryMethods(DeliveryMethodsMother.empty());
+        UUID id = UUID.fromString("4040c594-0dad-4bbc-b8d3-24a064b5d34a");
+
+        boolean containsEligible = otp.containsEligibleDeliveryMethod(id);
+
+        assertThat(containsEligible).isFalse();
     }
 
     @Test

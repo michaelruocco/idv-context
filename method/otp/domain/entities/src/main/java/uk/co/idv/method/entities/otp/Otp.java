@@ -47,6 +47,12 @@ public class Otp implements Method {
         return findDeliveryMethod(id).orElseThrow(() -> new DeliveryMethodNotFoundException(id));
     }
 
+    public boolean containsEligibleDeliveryMethod(UUID id) {
+        return findDeliveryMethod(id)
+                .map(DeliveryMethod::isEligible)
+                .orElse(false);
+    }
+
     public Optional<DeliveryMethod> findDeliveryMethod(UUID id) {
         return deliveryMethods.findByValue(id);
     }
