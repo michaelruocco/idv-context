@@ -1,5 +1,6 @@
 plugins {
     id "java-test-fixtures"
+    id "maven-publish"
 }
 
 configurations {
@@ -27,4 +28,13 @@ dependencies {
     testFixturesApi testFixtures(project(":common-json"))
     testFixturesImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
     testFixturesImplementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
+}
+
+publishing {
+    publications {
+        lib(MavenPublication) { publication ->
+            from components.java
+            artifactId = "${rootProject.name}-${project.name}"
+        }
+    }
 }

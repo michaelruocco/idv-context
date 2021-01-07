@@ -35,6 +35,7 @@ dependencies {
     integrationTestImplementation testFixtures(project(":otp-use-cases"))
     integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
     integrationTestImplementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
+    integrationTestImplementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
 
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"

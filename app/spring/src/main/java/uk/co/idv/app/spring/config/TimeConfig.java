@@ -3,7 +3,7 @@ package uk.co.idv.app.spring.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import uk.co.idv.app.spring.time.OffsetClock;
+import uk.co.mruoc.test.clock.OffsetClock;
 
 import java.time.Clock;
 

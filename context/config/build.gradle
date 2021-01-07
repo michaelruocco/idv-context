@@ -2,7 +2,6 @@ dependencies {
     api project(":context-use-cases")
     api project(":context-json")
     api project(":otp-sim-swap-stub")
-    api project(":context-data-protector")
 
     implementation project(":identity-config")
     implementation project(":lockout-config")

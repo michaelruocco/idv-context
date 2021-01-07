@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.protect.mask;
+package uk.co.idv.context.usecases.context.protect;
 
 import lombok.Builder;
 import uk.co.idv.context.entities.context.Context;

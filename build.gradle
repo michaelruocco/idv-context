@@ -88,6 +88,7 @@ subprojects {
         jsonUnitAssertjVersion = "2.22.0"
         fileLoaderVersion = "6.0.1"
         awaitilityVersion = "4.0.3"
+        testingClocksVersion = "0.1.4"
     }
 
     dependencies {

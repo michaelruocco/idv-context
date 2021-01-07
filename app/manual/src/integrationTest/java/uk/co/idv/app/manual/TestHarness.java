@@ -7,7 +7,6 @@ import uk.co.idv.app.manual.adapter.app.AppAdapter;
 import uk.co.idv.app.manual.adapter.app.DefaultAppAdapter;
 import uk.co.idv.app.manual.adapter.repository.InMemoryRepositoryAdapter;
 import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
-import uk.co.idv.app.manual.clock.UpdatableClock;
 import uk.co.idv.app.manual.config.JsonConfig;
 import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.common.usecases.id.NonRandomIdGenerator;
@@ -38,6 +37,7 @@ import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
+import uk.co.mruoc.test.clock.OverridableClock;
 
 import java.time.Duration;
 import java.time.Instant;
@@ -47,7 +47,7 @@ public class TestHarness {
 
     private static final Instant NOW = Instant.parse("2020-10-06T21:00:00.000Z");
 
-    private final UpdatableClock clock = new UpdatableClock(NOW);
+    private final OverridableClock clock = new OverridableClock(NOW);
     private final IdGenerator idGenerator = new NonRandomIdGenerator();
     private final RepositoryAdapter repositoryAdapter = new InMemoryRepositoryAdapter();
 

@@ -2,7 +2,6 @@ package uk.co.idv.context.usecases.context;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import uk.co.idv.context.adapter.protect.mask.ContextDataProtector;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
@@ -13,6 +12,7 @@ import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.usecases.context.event.create.ContextCreatedHandler;
 import uk.co.idv.context.usecases.context.expiry.ExpiryCalculator;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
+import uk.co.idv.context.usecases.context.protect.ContextDataProtector;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 import uk.co.idv.lockout.usecases.state.LockedOutException;
 

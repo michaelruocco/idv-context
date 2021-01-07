@@ -1,7 +1,6 @@
 package uk.co.idv.context.usecases.context;
 
 import lombok.Builder;
-import uk.co.idv.context.adapter.protect.mask.ContextDataProtector;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.sequence.Sequences;
@@ -9,6 +8,7 @@ import uk.co.idv.context.entities.context.sequence.SequencesRequest;
 import uk.co.idv.context.usecases.context.event.create.ContextCreatedHandler;
 import uk.co.idv.context.usecases.context.expiry.ExpiryCalculator;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
+import uk.co.idv.context.usecases.context.protect.ContextDataProtector;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 
 import java.time.Clock;
