@@ -3,6 +3,8 @@ plugins {
     id "maven-publish"
 }
 
+apply from: rootProject.file('publish.gradle')
+
 configurations {
     testFixturesApi.setCanBeResolved(true)
 }
@@ -28,20 +30,4 @@ dependencies {
     testFixturesApi testFixtures(project(":common-json"))
     testFixturesImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
     testFixturesImplementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
-}
-
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
-publishing {
-    publications {
-        lib(MavenPublication) { publication ->
-            from components.java
-            artifactId = "${rootProject.name}-${project.name}"
-            suppressPomMetadataWarningsFor('testFixturesApiElements')
-            suppressPomMetadataWarningsFor('testFixturesRuntimeElements')
-        }
-    }
 }

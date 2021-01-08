@@ -3,6 +3,8 @@ plugins {
     id "maven-publish"
 }
 
+apply from: rootProject.file('publish.gradle')
+
 dependencies {
     implementation project(":common-json")
     implementation project(":method-entities")
@@ -26,20 +28,4 @@ dependencies {
     testFixturesImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}"
     testFixturesImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
     testFixturesImplementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
-}
-
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
-publishing {
-    publications {
-        lib(MavenPublication) { publication ->
-            from components.java
-            artifactId = "${rootProject.name}-${project.name}"
-            suppressPomMetadataWarningsFor('testFixturesApiElements')
-            suppressPomMetadataWarningsFor('testFixturesRuntimeElements')
-        }
-    }
 }

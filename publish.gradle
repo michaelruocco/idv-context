@@ -1,6 +1,30 @@
+apply plugin: "com.jfrog.bintray"
+
 java {
     withJavadocJar()
     withSourcesJar()
+}
+
+def pomConfig = {
+    licenses {
+        license {
+            name "MIT License"
+            url "https://opensource.org/licenses/MIT"
+            distribution "repo"
+        }
+    }
+
+    developers {
+        developer {
+            id "mruoc"
+            name "Michael Ruocco"
+            email "michael.ruocco@hotmail.com"
+        }
+    }
+
+    scm {
+        url "https://github.com/michaelruocco/verification-context"
+    }
 }
 
 publishing {
@@ -8,8 +32,60 @@ publishing {
         lib(MavenPublication) { publication ->
             from components.java
             artifactId = "${rootProject.name}-${project.name}"
+            pom.withXml {
+                def root = asNode()
+                root.appendNode("description", "Template repo to speed up creating new library projects")
+                root.appendNode("name", "testing-clocks")
+                root.appendNode("url", "https://github.com/michaelruocco/testing-clocks")
+                root.children().last() + pomConfig
+            }
             suppressPomMetadataWarningsFor('testFixturesApiElements')
             suppressPomMetadataWarningsFor('testFixturesRuntimeElements')
         }
     }
+}
+
+bintray {
+    user = System.getenv("BINTRAY_USER")
+    key = System.getenv("BINTRAY_KEY")
+    publications = ["lib"]
+    publish = true
+    pkg {
+        repo = "maven"
+        name = "${rootProject.name}-${project.name}"
+        userOrg = "michaelruocco"
+        licenses = ["mit"]
+        vcsUrl = "https://github.com/michaelruocco/verification-context.git"
+        version {
+            name = "${rootProject.name}-${project.name}"
+            desc = project.version
+            released = new Date()
+            gpg {
+                sign = true
+            }
+            mavenCentralSync {
+                sync = true
+            }
+        }
+    }
+}
+
+artifactory {
+    contextUrl = "http://oss.jfrog.org"
+    publish {
+        repository {
+            repoKey = "oss-snapshot-local"
+            username = System.getenv("BINTRAY_USER")
+            password = System.getenv("BINTRAY_KEY")
+        }
+        defaults {
+            publications("lib")
+            publishArtifacts = true
+            publishPom = true
+        }
+    }
+    resolve {
+        repoKey = "jcenter"
+    }
+    clientConfig.info.setBuildNumber(System.getProperty("build.number"))
 }
