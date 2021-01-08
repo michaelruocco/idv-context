@@ -3,6 +3,8 @@ plugins {
     id "maven-publish"
 }
 
+apply from: rootProject.file('publish.gradle')
+
 dependencies {
     implementation "org.apache.commons:commons-lang3:${commonsLangVersion}"
     implementation "org.apache.commons:commons-collections4:${commonsCollectionsVersion}"
@@ -11,20 +13,4 @@ dependencies {
     testFixturesImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
-}
-
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
-publishing {
-    publications {
-        lib(MavenPublication) { publication ->
-            from components.java
-            artifactId = "${rootProject.name}-${project.name}"
-            suppressPomMetadataWarningsFor('testFixturesApiElements')
-            suppressPomMetadataWarningsFor('testFixturesRuntimeElements')
-        }
-    }
 }

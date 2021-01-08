@@ -3,6 +3,8 @@ plugins {
     id "maven-publish"
 }
 
+apply from: rootProject.file('publish.gradle')
+
 dependencies {
     api project(":identity-entities")
     api project(":policy-entities")
@@ -12,20 +14,4 @@ dependencies {
     testFixturesApi testFixtures(project(":identity-entities"))
     testFixturesApi testFixtures(project(":policy-entities"))
     testFixturesImplementation "org.mockito:mockito-core:${mockitoVersion}"
-}
-
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
-
-publishing {
-    publications {
-        lib(MavenPublication) { publication ->
-            from components.java
-            artifactId = "${rootProject.name}-${project.name}"
-            suppressPomMetadataWarningsFor('testFixturesApiElements')
-            suppressPomMetadataWarningsFor('testFixturesRuntimeElements')
-        }
-    }
 }
