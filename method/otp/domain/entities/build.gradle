@@ -31,6 +31,8 @@ publishing {
         lib(MavenPublication) { publication ->
             from components.java
             artifactId = "${rootProject.name}-${project.name}"
+            suppressPomMetadataWarningsFor('testFixturesApiElements')
+            suppressPomMetadataWarningsFor('testFixturesRuntimeElements')
         }
     }
 }

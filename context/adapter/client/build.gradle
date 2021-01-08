@@ -46,11 +46,18 @@ dependencies {
     integrationTestImplementation "com.github.tomakehurst:wiremock-jre8:2.27.2"
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 publishing {
     publications {
         lib(MavenPublication) { publication ->
             from components.java
             artifactId = "${rootProject.name}-${project.name}"
+            suppressPomMetadataWarningsFor('testFixturesApiElements')
+            suppressPomMetadataWarningsFor('testFixturesRuntimeElements')
         }
     }
 }

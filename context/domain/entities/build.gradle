@@ -21,11 +21,18 @@ dependencies {
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 publishing {
     publications {
         lib(MavenPublication) { publication ->
             from components.java
             artifactId = "${rootProject.name}-${project.name}"
+            suppressPomMetadataWarningsFor('testFixturesApiElements')
+            suppressPomMetadataWarningsFor('testFixturesRuntimeElements')
         }
     }
 }
