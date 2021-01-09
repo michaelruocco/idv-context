@@ -2,8 +2,6 @@ plugins {
     id "java-test-fixtures"
 }
 
-apply from: rootProject.file('publish.gradle')
-
 dependencies {
     testFixturesCompileOnly "org.slf4j:slf4j-simple:${slf4jVersion}"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"

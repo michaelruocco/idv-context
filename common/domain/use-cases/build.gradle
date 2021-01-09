@@ -1,9 +1,6 @@
 plugins {
     id "java-test-fixtures"
-    id "maven-publish"
 }
-
-apply from: rootProject.file('publish.gradle')
 
 dependencies {
     testFixturesRuntimeOnly "org.slf4j:slf4j-simple:${slf4jVersion}"

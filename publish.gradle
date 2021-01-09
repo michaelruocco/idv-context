@@ -7,7 +7,7 @@ java {
     withSourcesJar()
 }
 
-def pomConfig = {
+project.ext.pomConfig = {
     licenses {
         license {
             name "MIT License"
@@ -29,24 +29,6 @@ def pomConfig = {
     }
 }
 
-publishing {
-    publications {
-        lib(MavenPublication) { publication ->
-            from components.java
-            artifactId = "${rootProject.name}-${project.name}"
-            pom.withXml {
-                def root = asNode()
-                root.appendNode("description", "Template repo to speed up creating new library projects")
-                root.appendNode("name", "testing-clocks")
-                root.appendNode("url", "https://github.com/michaelruocco/testing-clocks")
-                root.children().last() + pomConfig
-            }
-            suppressPomMetadataWarningsFor('testFixturesApiElements')
-            suppressPomMetadataWarningsFor('testFixturesRuntimeElements')
-        }
-    }
-}
-
 bintray {
     user = System.getenv("BINTRAY_USER")
     key = System.getenv("BINTRAY_KEY")
@@ -54,12 +36,12 @@ bintray {
     publish = true
     pkg {
         repo = "maven"
-        name = "${rootProject.name}-${project.name}"
+        name = "${project.name}"
         userOrg = "michaelruocco"
         licenses = ["mit"]
         vcsUrl = "https://github.com/michaelruocco/verification-context.git"
         version {
-            name = "${rootProject.name}-${project.name}"
+            name = "${project.name}"
             desc = project.version
             released = new Date()
             gpg {
