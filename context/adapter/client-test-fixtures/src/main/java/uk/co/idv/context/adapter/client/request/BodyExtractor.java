@@ -10,6 +10,10 @@ import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class BodyExtractor {
 
+    private BodyExtractor() {
+        // utility class
+    }
+
     public static String extractBody(HttpRequest.BodyPublisher publisher) {
         try {
             HttpResponse.BodySubscriber<String> subscriber = HttpResponse.BodySubscribers.ofString(UTF_8);

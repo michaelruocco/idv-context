@@ -5,6 +5,10 @@ import java.net.URISyntaxException;
 
 public class UriFactory {
 
+    private UriFactory() {
+        // utility class
+    }
+
     public static URI toUri(String uri) {
         try {
             return new URI(uri);
