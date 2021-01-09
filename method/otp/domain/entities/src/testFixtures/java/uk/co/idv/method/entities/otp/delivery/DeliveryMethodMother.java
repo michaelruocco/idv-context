@@ -27,6 +27,13 @@ public interface DeliveryMethodMother {
         return withEligibility(EligibilityMother.eligible());
     }
 
+    static DeliveryMethod ineligible(UUID id) {
+        return builder()
+                .id(id)
+                .eligibility(EligibilityMother.ineligible())
+                .build();
+    }
+
     static DeliveryMethod ineligible() {
         return withEligibility(EligibilityMother.ineligible());
     }
