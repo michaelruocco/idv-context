@@ -3,7 +3,9 @@ plugins {
     id "maven-publish"
 }
 
-apply from: rootProject.file('publish.gradle')
+ext {
+    artifactName = "verification-context-client-test-fixtures"
+}
 
 dependencies {
     api "com.github.stefanbirkner:system-lambda:${systemLambdaVersion}"
@@ -17,10 +19,7 @@ dependencies {
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
+apply from: rootProject.file('publish.gradle')
 
 shadowJar {
     dependencies {
@@ -38,11 +37,11 @@ publishing {
     publications {
         lib(MavenPublication) { publication ->
             project.shadow.component(publication)
-            artifactId "${project.name}"
+            artifactId "${artifactName}"
             pom.withXml {
                 def root = asNode()
                 root.appendNode("description", "Verification context client library test fixtures")
-                root.appendNode("name", "${project.name}")
+                root.appendNode("name", "${artifactName}")
                 root.appendNode("url", "https://github.com/michaelruocco/verification-context")
                 root.children().last() + project.pomConfig
             }

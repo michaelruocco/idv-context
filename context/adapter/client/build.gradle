@@ -4,7 +4,10 @@ plugins {
     id "maven-publish"
 }
 
-apply from: rootProject.file('publish.gradle')
+ext {
+    logbackVersion = "1.2.3"
+    artifactName = "verification-context-client"
+}
 
 testSets {
     integrationTest
@@ -13,10 +16,6 @@ testSets {
 configurations {
     testFixturesApi.setCanBeResolved(true)
     testRuntimeOnly.exclude module: "slf4j-simple"
-}
-
-ext {
-    logbackVersion = "1.2.3"
 }
 
 dependencies {
@@ -40,10 +39,7 @@ dependencies {
     integrationTestImplementation "com.github.tomakehurst:wiremock-jre8:2.27.2"
 }
 
-java {
-    withJavadocJar()
-    withSourcesJar()
-}
+apply from: rootProject.file('publish.gradle')
 
 shadowJar {
     dependencies {
@@ -59,11 +55,11 @@ publishing {
     publications {
         lib(MavenPublication) { publication ->
             project.shadow.component(publication)
-            artifactId "${project.name}"
+            artifactId "${artifactName}"
             pom.withXml {
                 def root = asNode()
                 root.appendNode("description", "Verification context client library")
-                root.appendNode("name", "${project.name}")
+                root.appendNode("name", "${artifactName}")
                 root.appendNode("url", "https://github.com/michaelruocco/verification-context")
                 root.children().last() + project.pomConfig
             }

@@ -65,7 +65,6 @@ subprojects {
         testSetsPluginVersion = "3.0.1"
         shadowPluginVersion = "6.1.0"
 
-
         lombokVersion = "1.18.16"
         slf4jVersion = "1.7.30"
         commonsCollectionsVersion = "4.4"

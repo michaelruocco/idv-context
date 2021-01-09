@@ -10,10 +10,14 @@ plugins {
     id "io.spring.dependency-management" version "1.0.10.RELEASE"
     id "com.bmuschko.docker-remote-api" version "6.6.1"
     id "com.avast.gradle.docker-compose" version "0.14.0"
+    id "maven-publish"
 }
 
-import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
-import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+ext {
+    karateVersion = "0.9.6"
+    logbackJsonVersion = "0.1.5"
+    artifactName = "${rootProject.name}-${project.name}"
+}
 
 testSets {
     integrationTest
@@ -21,11 +25,6 @@ testSets {
 
 configurations {
     runtimeOnly.exclude module: "slf4j-simple"
-}
-
-ext {
-    karateVersion = "0.9.6"
-    logbackJsonVersion = "0.1.5"
 }
 
 repositories {
@@ -100,6 +99,24 @@ integrationTest {
     systemProperty "aws.secretKey", "123"
 }
 
+apply from: rootProject.file('publish.gradle')
+
+publishing {
+    publications {
+        lib(MavenPublication) { publication ->
+            artifact bootJar
+            artifactId "${artifactName}"
+            pom.withXml {
+                def root = asNode()
+                root.appendNode("description", "Verification context spring application")
+                root.appendNode("name", "${artifactName}")
+                root.appendNode("url", "https://github.com/michaelruocco/verification-context")
+                root.children().last() + project.pomConfig
+            }
+        }
+    }
+}
+
 docker {
     registryCredentials {
         username.set(System.getenv("DOCKER_USERNAME"))
@@ -107,9 +124,12 @@ docker {
     }
 }
 
+import com.bmuschko.gradle.docker.tasks.image.DockerBuildImage
+import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
+
 task buildImage(type: DockerBuildImage) {
     inputDir.set(file("."))
-    images.add("michaelruocco/verification-context-spring-app:latest")
+    images.add("michaelruocco/${artifactName}:latest")
 }
 
 task pushImage(type: DockerPushImage) {
