@@ -41,7 +41,7 @@ bintray {
         licenses = ["mit"]
         vcsUrl = "https://github.com/michaelruocco/verification-context.git"
         version {
-            name = "${project.artifactName}"
+            name = project.version
             desc = project.version
             released = new Date()
             gpg {
