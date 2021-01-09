@@ -37,6 +37,8 @@ publishing {
     publications {
         lib(MavenPublication) { publication ->
             project.shadow.component(publication)
+            artifact sourcesJar
+            artifact javadocJar
             artifactId "${artifactName}"
             pom.withXml {
                 def root = asNode()

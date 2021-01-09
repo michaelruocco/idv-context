@@ -105,6 +105,8 @@ publishing {
     publications {
         lib(MavenPublication) { publication ->
             artifact bootJar
+            artifact sourcesJar
+            artifact javadocJar
             artifactId "${artifactName}"
             pom.withXml {
                 def root = asNode()
