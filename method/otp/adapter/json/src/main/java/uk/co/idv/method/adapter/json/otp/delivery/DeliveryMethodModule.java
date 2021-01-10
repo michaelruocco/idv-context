@@ -3,6 +3,7 @@ package uk.co.idv.method.adapter.json.otp.delivery;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import uk.co.idv.method.adapter.json.eligibility.EligibilityModule;
 import uk.co.idv.method.adapter.json.otp.delivery.eligibility.SimSwapEligibilityModule;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
@@ -26,7 +27,8 @@ public class DeliveryMethodModule extends SimpleModule {
     public Iterable<? extends Module> getDependencies() {
         return Arrays.asList(
                 new EligibilityModule(),
-                new SimSwapEligibilityModule()
+                new SimSwapEligibilityModule(),
+                new JavaTimeModule()
         );
     }
 

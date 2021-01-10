@@ -11,11 +11,11 @@ dependencies {
     api project(":identity-json")
     api project(":common-json")
 
-    implementation "org.zalando:jackson-datatype-money:1.2.1"
     implementation project(":policy-json")
     implementation project(":method-entities")
     implementation project(":otp-entities")
     implementation project(":method-json")
+    implementation "org.zalando:jackson-datatype-money:1.2.1"
     implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
     implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
