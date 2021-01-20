@@ -126,4 +126,38 @@ class AttemptTest {
         assertThat(attempt.getTimestamp()).isEqualTo(timestamp);
     }
 
+    @Test
+    void shouldReturnTrueIfOccurredAfterStartAndBeforeEnd() {
+        Instant timestamp = Instant.now();
+        Instant start = timestamp.minusMillis(1);
+        Instant end = timestamp.plusMillis(1);
+        Attempt attempt = builder.timestamp(timestamp).build();
+
+        boolean between = attempt.occurredBetween(start, end);
+
+        assertThat(between).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfDidNotOccurAfterStart() {
+        Instant timestamp = Instant.now();
+        Instant end = timestamp.plusMillis(1);
+        Attempt attempt = builder.timestamp(timestamp).build();
+
+        boolean between = attempt.occurredBetween(timestamp, end);
+
+        assertThat(between).isFalse();
+    }
+
+    @Test
+    void shouldReturnFalseIfDidNotOccurBeforeEnd() {
+        Instant timestamp = Instant.now();
+        Instant start = timestamp.minusMillis(1);
+        Attempt attempt = builder.timestamp(timestamp).build();
+
+        boolean between = attempt.occurredBetween(start, timestamp);
+
+        assertThat(between).isFalse();
+    }
+
 }

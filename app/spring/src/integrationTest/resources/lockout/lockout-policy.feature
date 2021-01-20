@@ -30,8 +30,11 @@ Feature: Lockout Policy Maintenance
           "type": "channel"
         },
         "stateCalculator": {
-          "maxNumberOfAttempts": 5,
-          "type": "hard-lockout"
+          "type": "hard-lockout",
+          "attemptsFilter": {
+            "type": "all-attempts"
+          },
+          "maxNumberOfAttempts": 5
         },
         "recordAttemptPolicy": {
           "type": "always-record"
@@ -51,8 +54,11 @@ Feature: Lockout Policy Maintenance
           "type": "channel"
         },
         "stateCalculator": {
-          "maxNumberOfAttempts": 5,
-          "type": "hard-lockout"
+          "type": "hard-lockout",
+          "attemptsFilter": {
+            "type": "all-attempts"
+          },
+          "maxNumberOfAttempts": 5
         },
         "recordAttemptPolicy": {
           "type": "always-record"
@@ -76,8 +82,12 @@ Feature: Lockout Policy Maintenance
           "type": "channel-activity"
         },
         "stateCalculator": {
-          "maxNumberOfAttempts": 5,
-          "type": "hard-lockout"
+          "type": "hard-lockout",
+          "attemptsFilter": {
+            "type": "all-attempts"
+          },
+          "maxNumberOfAttempts": 5
+
         },
         "recordAttemptPolicy": {
           "type": "always-record"
@@ -104,8 +114,11 @@ Feature: Lockout Policy Maintenance
           "type": "channel-activity"
         },
         "stateCalculator": {
-          "maxNumberOfAttempts": 5,
-          "type": "hard-lockout"
+          "type": "hard-lockout",
+          "attemptsFilter": {
+            "type": "all-attempts"
+          },
+          "maxNumberOfAttempts": 5
         },
         "recordAttemptPolicy": {
           "type": "always-record"
@@ -128,7 +141,10 @@ Feature: Lockout Policy Maintenance
           "type": "channel-activity"
         },
         "stateCalculator": {
-          "type": "non-locking"
+          "type": "non-locking",
+          "attemptsFilter": {
+            "type": "all-attempts"
+          }
         },
         "recordAttemptPolicy": {
           "type": "never-record"
@@ -150,6 +166,9 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "recurring-soft-lockout",
+          "attemptsFilter": {
+            "type": "all-attempts"
+          },
           "interval": {
             "numberOfAttempts": 1,
             "duration": 60000
@@ -197,6 +216,9 @@ Feature: Lockout Policy Maintenance
           },
           "stateCalculator": {
             "type": "recurring-soft-lockout",
+            "attemptsFilter": {
+              "type": "all-attempts"
+            },
             "interval": {
               "numberOfAttempts": 1,
               "duration": 60000
@@ -221,8 +243,11 @@ Feature: Lockout Policy Maintenance
           "type": "channel"
         },
         "stateCalculator": {
-          "maxNumberOfAttempts": 5,
-          "type": "hard-lockout"
+          "type": "hard-lockout",
+          "attemptsFilter": {
+            "type": "all-attempts"
+          },
+          "maxNumberOfAttempts": 5
         },
         "recordAttemptPolicy": {
           "type": "always-record"
@@ -245,6 +270,9 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "soft-lockout",
+          "attemptsFilter": {
+            "type": "all-attempts"
+          },
           "intervals": [
             {
               "numberOfAttempts": 1,
@@ -277,6 +305,9 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "soft-lockout",
+          "attemptsFilter": {
+            "type": "all-attempts"
+          },
           "intervals": [
             {
               "numberOfAttempts": 1,
@@ -306,8 +337,11 @@ Feature: Lockout Policy Maintenance
           "type": "channel"
         },
         "stateCalculator": {
-          "maxNumberOfAttempts": 5,
-          "type": "hard-lockout"
+          "type": "hard-lockout",
+          "attemptsFilter": {
+            "type": "all-attempts"
+          },
+          "maxNumberOfAttempts": 5
         },
         "recordAttemptPolicy": {
           "type": "always-record"

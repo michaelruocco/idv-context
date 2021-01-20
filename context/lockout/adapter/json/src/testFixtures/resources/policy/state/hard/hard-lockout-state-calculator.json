@@ -1,4 +1,7 @@
 {
-  "maxNumberOfAttempts": 3,
-  "type": "hard-lockout"
+  "type": "hard-lockout",
+  "attemptsFilter": {
+    "type": "all-attempts"
+  },
+  "maxNumberOfAttempts": 3
 }

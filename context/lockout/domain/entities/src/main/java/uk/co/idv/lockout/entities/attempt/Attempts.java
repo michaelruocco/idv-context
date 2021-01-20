@@ -49,6 +49,13 @@ public class Attempts implements Iterable<Attempt> {
         return values.size();
     }
 
+    public Attempts occurredBetween(Instant start, Instant end) {
+        return withValues(values.stream()
+                .filter(attempt -> attempt.occurredBetween(start, end))
+                .collect(Collectors.toList())
+        );
+    }
+
     public Attempts add(Attempt attempt) {
         validate(attempt.getIdvId());
         return withValues(addToAttempts(attempt));

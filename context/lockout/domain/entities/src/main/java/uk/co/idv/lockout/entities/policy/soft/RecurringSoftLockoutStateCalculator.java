@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.lockout.entities.attempt.Attempts;
+import uk.co.idv.lockout.entities.policy.AllAttemptsFilter;
 import uk.co.idv.lockout.entities.policy.LockoutState;
 import uk.co.idv.lockout.entities.policy.LockoutStateCalculator;
 import uk.co.idv.lockout.entities.policy.LockoutStateRequest;
@@ -18,12 +20,17 @@ public class RecurringSoftLockoutStateCalculator implements LockoutStateCalculat
     public static final String TYPE = "recurring-soft-lockout";
 
     private final SoftLockInterval interval;
+    private final AttemptsFilter attemptsFilter;
 
     @Getter(AccessLevel.NONE)
     private final SoftLockoutStateFactory stateFactory;
 
     public RecurringSoftLockoutStateCalculator(SoftLockInterval interval) {
-        this(interval, new SoftLockoutStateFactory());
+        this(interval, new AllAttemptsFilter());
+    }
+
+    public RecurringSoftLockoutStateCalculator(SoftLockInterval interval, AttemptsFilter attemptsFilter) {
+        this(interval, attemptsFilter, new SoftLockoutStateFactory());
     }
 
     @Override
@@ -33,13 +40,14 @@ public class RecurringSoftLockoutStateCalculator implements LockoutStateCalculat
 
     @Override
     public LockoutState calculate(LockoutStateRequest request) {
+        Attempts attempts = attemptsFilter.apply(request.getAttempts());
         log.debug("calculating recurring soft lockout state with {} attempts against interval {}",
-                request.getNumberOfAttempts(),
+                attempts.size(),
                 interval);
-        if (isLocked(request.getNumberOfAttempts())) {
-            return stateFactory.build(interval.getDuration(), request);
+        if (isLocked(attempts.size())) {
+            return stateFactory.build(interval.getDuration(), request.getTimestamp(), attempts);
         }
-        return new UnlockedState(request.getAttempts());
+        return new UnlockedState(attempts);
     }
 
     private boolean isLocked(int numberOfAttempts) {

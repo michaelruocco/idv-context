@@ -1,4 +1,8 @@
 {
+  "type": "soft-lockout",
+  "attemptsFilter": {
+    "type": "all-attempts"
+  },
   "intervals": [
     {
       "numberOfAttempts": 1,
@@ -8,6 +12,5 @@
       "numberOfAttempts": 2,
       "duration": 120000
     }
-  ],
-  "type": "soft-lockout"
+  ]
 }

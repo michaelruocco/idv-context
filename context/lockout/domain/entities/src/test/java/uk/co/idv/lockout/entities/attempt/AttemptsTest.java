@@ -10,6 +10,7 @@ import uk.co.idv.policy.entities.policy.key.PolicyKey;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 import uk.co.idv.lockout.entities.attempt.Attempts.AttemptsBuilder;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.Arrays;
 import java.util.Collection;
@@ -239,6 +240,21 @@ class AttemptsTest {
         assertThat(collection)
                 .isInstanceOf(UnmodifiableCollection.class)
                 .containsExactlyElementsOf(attempts);
+    }
+
+    @Test
+    void shouldReturnAttemptsThatOccurredBetweenStartAndEnd() {
+        Instant start = Instant.now();
+        Instant end = start.plus(Duration.ofHours(1));
+        Attempt expectedAttempt = AttemptMother.withTimestamp(end.minusMillis(1));
+        Attempts attempts = AttemptsMother.withAttempts(
+                AttemptMother.build(),
+                expectedAttempt
+        );
+
+        Attempts between = attempts.occurredBetween(start, end);
+
+        assertThat(between).containsExactly(expectedAttempt);
     }
 
 }

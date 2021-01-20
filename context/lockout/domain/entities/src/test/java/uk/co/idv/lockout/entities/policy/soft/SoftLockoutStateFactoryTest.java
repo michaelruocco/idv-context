@@ -1,23 +1,19 @@
 package uk.co.idv.lockout.entities.policy.soft;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.lockout.entities.attempt.AttemptMother;
 import uk.co.idv.lockout.entities.attempt.Attempts;
 import uk.co.idv.lockout.entities.attempt.AttemptsMother;
 import uk.co.idv.lockout.entities.policy.LockoutState;
-import uk.co.idv.lockout.entities.policy.LockoutStateRequest;
 import uk.co.idv.lockout.entities.policy.unlocked.UnlockedState;
 
 import java.time.Duration;
 import java.time.Instant;
-import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 
 class SoftLockoutStateFactoryTest {
 
-    private final LockoutStateRequest request = mock(LockoutStateRequest.class);
     private final Duration duration = Duration.ofMinutes(5);
 
     private final SoftLockoutStateFactory factory = new SoftLockoutStateFactory();
@@ -25,23 +21,20 @@ class SoftLockoutStateFactoryTest {
     @Test
     void shouldReturnUnlockedStateThereAreNoAttempts() {
         Attempts attempts = AttemptsMother.empty();
-        given(request.getAttempts()).willReturn(attempts);
-        given(request.getMostRecentAttemptTimestamp()).willReturn(Optional.empty());
+        Instant requestTime = Instant.now();
 
-        LockoutState state = factory.build(duration, request);
+        LockoutState state = factory.build(duration, requestTime, attempts);
 
         assertThat(state).isInstanceOf(UnlockedState.class);
         assertThat(state.getAttempts()).isEmpty();
     }
     @Test
     void shouldReturnUnlockedStateIfNewAttemptIsAfterExpiry() {
-        Attempts attempts = AttemptsMother.build();
         Instant expiry = Instant.now();
-        givenExpiry(expiry);
-        givenNewAttemptAfter(expiry);
-        given(request.getAttempts()).willReturn(attempts);
+        Instant requestTime = expiry.plusMillis(1);
+        Attempts attempts = givenAttemptsWithExpiry(expiry);
 
-        LockoutState state = factory.build(duration, request);
+        LockoutState state = factory.build(duration, requestTime, attempts);
 
         assertThat(state).isInstanceOf(UnlockedState.class);
         assertThat(state.getAttempts()).isEqualTo(attempts);
@@ -49,29 +42,19 @@ class SoftLockoutStateFactoryTest {
 
     @Test
     void shouldReturnSoftLockoutStateIfNewAttemptIsBeforeExpiry() {
-        Attempts attempts = AttemptsMother.build();
         Instant expiry = Instant.now();
-        givenExpiry(expiry);
-        givenNewAttemptBefore(expiry);
-        given(request.getAttempts()).willReturn(attempts);
+        Instant requestTime = expiry.minusMillis(1);
+        Attempts attempts = givenAttemptsWithExpiry(expiry);
 
-        SoftLockoutState state = (SoftLockoutState) factory.build(duration, request);
+        SoftLockoutState state = (SoftLockoutState) factory.build(duration, requestTime, attempts);
 
         assertThat(state.getExpiry()).isEqualTo(expiry);
         assertThat(state.getDuration()).isEqualTo(duration);
         assertThat(state.getAttempts()).isEqualTo(attempts);
     }
 
-    private void givenExpiry(Instant expiry) {
-        given(request.getMostRecentAttemptTimestamp()).willReturn(Optional.of(expiry.minus(duration)));
-    }
-
-    private void givenNewAttemptAfter(Instant expiry) {
-        given(request.isBefore(expiry)).willReturn(false);
-    }
-
-    private void givenNewAttemptBefore(Instant expiry) {
-        given(request.isBefore(expiry)).willReturn(true);
+    private Attempts givenAttemptsWithExpiry(Instant expiry) {
+        return AttemptsMother.withAttempts(AttemptMother.withTimestamp(expiry.minus(duration)));
     }
 
 }
