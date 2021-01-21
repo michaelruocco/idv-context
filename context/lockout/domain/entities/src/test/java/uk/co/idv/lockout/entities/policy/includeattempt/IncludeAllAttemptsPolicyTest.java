@@ -1,15 +1,14 @@
-package uk.co.idv.lockout.entities.policy.soft;
+package uk.co.idv.lockout.entities.policy.includeattempt;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.lockout.entities.attempt.Attempts;
 import uk.co.idv.lockout.entities.attempt.AttemptsMother;
-import uk.co.idv.lockout.entities.policy.AllAttemptsFilter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class AllAttemptsFilterTest {
+class IncludeAllAttemptsPolicyTest {
 
-    private final AttemptsFilter filter = new AllAttemptsFilter();
+    private final IncludeAttemptsPolicy filter = new IncludeAllAttemptsPolicy();
 
     @Test
     void shouldReturnType() {

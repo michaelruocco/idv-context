@@ -7,7 +7,7 @@
   },
   "stateCalculator": {
     "type": "recurring-soft-lockout",
-    "attemptsFilter": {
+    "includeAttemptsPolicy": {
       "type": "all-attempts"
     },
     "interval": {

@@ -6,10 +6,11 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.lockout.entities.attempt.Attempts;
-import uk.co.idv.lockout.entities.policy.AllAttemptsFilter;
+import uk.co.idv.lockout.entities.policy.includeattempt.IncludeAllAttemptsPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutState;
 import uk.co.idv.lockout.entities.policy.LockoutStateCalculator;
 import uk.co.idv.lockout.entities.policy.LockoutStateRequest;
+import uk.co.idv.lockout.entities.policy.includeattempt.IncludeAttemptsPolicy;
 import uk.co.idv.lockout.entities.policy.unlocked.UnlockedState;
 
 @Slf4j
@@ -20,17 +21,17 @@ public class RecurringSoftLockoutStateCalculator implements LockoutStateCalculat
     public static final String TYPE = "recurring-soft-lockout";
 
     private final SoftLockInterval interval;
-    private final AttemptsFilter attemptsFilter;
+    private final IncludeAttemptsPolicy includeAttemptsPolicy;
 
     @Getter(AccessLevel.NONE)
     private final SoftLockoutStateFactory stateFactory;
 
     public RecurringSoftLockoutStateCalculator(SoftLockInterval interval) {
-        this(interval, new AllAttemptsFilter());
+        this(interval, new IncludeAllAttemptsPolicy());
     }
 
-    public RecurringSoftLockoutStateCalculator(SoftLockInterval interval, AttemptsFilter attemptsFilter) {
-        this(interval, attemptsFilter, new SoftLockoutStateFactory());
+    public RecurringSoftLockoutStateCalculator(SoftLockInterval interval, IncludeAttemptsPolicy includeAttemptsPolicy) {
+        this(interval, includeAttemptsPolicy, new SoftLockoutStateFactory());
     }
 
     @Override
@@ -40,7 +41,7 @@ public class RecurringSoftLockoutStateCalculator implements LockoutStateCalculat
 
     @Override
     public LockoutState calculate(LockoutStateRequest request) {
-        Attempts attempts = attemptsFilter.apply(request.getAttempts());
+        Attempts attempts = includeAttemptsPolicy.apply(request.getAttempts());
         log.debug("calculating recurring soft lockout state with {} attempts against interval {}",
                 attempts.size(),
                 interval);

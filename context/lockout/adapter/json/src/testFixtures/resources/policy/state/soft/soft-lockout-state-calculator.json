@@ -1,6 +1,6 @@
 {
   "type": "soft-lockout",
-  "attemptsFilter": {
+  "includeAttemptsPolicy": {
     "type": "all-attempts"
   },
   "intervals": [

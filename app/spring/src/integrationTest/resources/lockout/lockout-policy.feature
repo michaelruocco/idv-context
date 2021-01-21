@@ -31,7 +31,7 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "hard-lockout",
-          "attemptsFilter": {
+          "includeAttemptsPolicy": {
             "type": "all-attempts"
           },
           "maxNumberOfAttempts": 5
@@ -55,7 +55,7 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "hard-lockout",
-          "attemptsFilter": {
+          "includeAttemptsPolicy": {
             "type": "all-attempts"
           },
           "maxNumberOfAttempts": 5
@@ -83,7 +83,7 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "hard-lockout",
-          "attemptsFilter": {
+          "includeAttemptsPolicy": {
             "type": "all-attempts"
           },
           "maxNumberOfAttempts": 5
@@ -115,7 +115,7 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "hard-lockout",
-          "attemptsFilter": {
+          "includeAttemptsPolicy": {
             "type": "all-attempts"
           },
           "maxNumberOfAttempts": 5
@@ -142,7 +142,7 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "non-locking",
-          "attemptsFilter": {
+          "includeAttemptsPolicy": {
             "type": "all-attempts"
           }
         },
@@ -166,7 +166,7 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "recurring-soft-lockout",
-          "attemptsFilter": {
+          "includeAttemptsPolicy": {
             "type": "all-attempts"
           },
           "interval": {
@@ -216,7 +216,7 @@ Feature: Lockout Policy Maintenance
           },
           "stateCalculator": {
             "type": "recurring-soft-lockout",
-            "attemptsFilter": {
+            "includeAttemptsPolicy": {
               "type": "all-attempts"
             },
             "interval": {
@@ -244,7 +244,7 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "hard-lockout",
-          "attemptsFilter": {
+          "includeAttemptsPolicy": {
             "type": "all-attempts"
           },
           "maxNumberOfAttempts": 5
@@ -270,7 +270,7 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "soft-lockout",
-          "attemptsFilter": {
+          "includeAttemptsPolicy": {
             "type": "all-attempts"
           },
           "intervals": [
@@ -305,7 +305,7 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "soft-lockout",
-          "attemptsFilter": {
+          "includeAttemptsPolicy": {
             "type": "all-attempts"
           },
           "intervals": [
@@ -338,7 +338,7 @@ Feature: Lockout Policy Maintenance
         },
         "stateCalculator": {
           "type": "hard-lockout",
-          "attemptsFilter": {
+          "includeAttemptsPolicy": {
             "type": "all-attempts"
           },
           "maxNumberOfAttempts": 5
