@@ -34,7 +34,7 @@ class ContextMergeLockoutAttemptsTest {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
         harness.givenVerificationCompletedUnsuccessfully(CreateVerificationRequestMother.withContextId(context.getId()));
@@ -87,7 +87,7 @@ class ContextMergeLockoutAttemptsTest {
                 .build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId(), methodPolicy);
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
         CreateVerificationRequest request = CreateVerificationRequest.builder()
                 .contextId(context.getId())

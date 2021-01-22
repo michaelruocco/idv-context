@@ -37,8 +37,16 @@ public class Attempt implements PolicyRequest {
         return this.aliases.containsOneOf(aliasesToCheck);
     }
 
-    public boolean occurredBetween(Instant start, Instant end) {
-        return timestamp.isAfter(start) && timestamp.isBefore(end);
+    public boolean occurredBetweenInclusive(Instant start, Instant end) {
+        return occurredOnOrAfter(start) && occurredOnOrBefore(end);
+    }
+
+    public boolean occurredOnOrAfter(Instant start) {
+        return timestamp.isAfter(start) || timestamp.equals(start);
+    }
+
+    public boolean occurredOnOrBefore(Instant end) {
+        return timestamp.isBefore(end) || timestamp.equals(end);
     }
 
 }

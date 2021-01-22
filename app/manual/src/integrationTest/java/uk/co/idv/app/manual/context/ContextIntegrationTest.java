@@ -65,7 +65,7 @@ class ContextIntegrationTest {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(request.getChannelId());
         harness.givenIdentityExistsForAliases(request.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(request.getChannelId());
 
         Context context = application.create(request);
 
@@ -77,7 +77,7 @@ class ContextIntegrationTest {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(request.getChannelId());
         harness.givenIdentityExistsForAliases(request.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(request.getChannelId());
 
         Context context = application.create(request);
 
@@ -89,7 +89,7 @@ class ContextIntegrationTest {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(request.getChannelId());
         harness.givenIdentityExistsForAliases(request.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(request.getChannelId());
 
         Context context = application.create(request);
 
@@ -103,7 +103,7 @@ class ContextIntegrationTest {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(request.getChannelId());
         harness.givenIdentityExistsForAliases(request.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(request.getChannelId());
 
         Context context = application.create(request);
 
@@ -115,7 +115,7 @@ class ContextIntegrationTest {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(request.getChannelId());
         harness.givenIdentityExistsForAliases(request.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(request.getChannelId());
 
         Context context = application.create(request);
 
@@ -127,7 +127,7 @@ class ContextIntegrationTest {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(request.getChannelId());
         Identity expectedIdentity = harness.givenIdentityExistsForAliases(request.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(request.getChannelId());
 
         Context context = application.create(request);
 
@@ -150,7 +150,7 @@ class ContextIntegrationTest {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(request.getChannelId());
         harness.givenIdentityExistsForAliases(request.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(request.getChannelId());
         Context created = application.create(request);
 
         Context loaded = application.findContext(created.getId());
@@ -163,7 +163,7 @@ class ContextIntegrationTest {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(request.getChannelId());
         harness.givenIdentityExistsForAliases(request.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(request.getChannelId());
         Context created = application.create(request);
         UUID id = created.getId();
         harness.fastForwardTimeBy(created.getDuration().plusMinutes(1).plusMillis(1));
@@ -182,7 +182,7 @@ class ContextIntegrationTest {
         CreateContextRequest request = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(request.getChannelId(), policy);
         harness.givenIdentityExistsForAliases(request.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(request.getChannelId());
         Context context = application.create(request);
         CreateVerificationRequest createVerificationRequest = CreateVerificationRequest.builder()
                 .contextId(context.getId())

@@ -27,6 +27,7 @@ import uk.co.idv.lockout.usecases.state.LockedOutException;
 import uk.co.idv.method.entities.result.Result;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 
+import java.time.Duration;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -43,7 +44,7 @@ class ContextVerificationIntegrationTest {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
         CreateVerificationRequest verificationRequest = CreateVerificationRequestMother.builder()
@@ -61,7 +62,7 @@ class ContextVerificationIntegrationTest {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
         CreateVerificationRequest verificationRequest = CreateVerificationRequestMother.builder()
@@ -87,7 +88,7 @@ class ContextVerificationIntegrationTest {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
         CreateVerificationRequest createVerificationRequest = CreateVerificationRequestMother.builder()
@@ -109,7 +110,7 @@ class ContextVerificationIntegrationTest {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
         CreateVerificationRequest verificationRequest = CreateVerificationRequestMother.builder()
@@ -128,7 +129,7 @@ class ContextVerificationIntegrationTest {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
         CreateVerificationRequest verificationRequest = CreateVerificationRequestMother.builder()
                 .contextId(context.getId())
@@ -148,7 +149,7 @@ class ContextVerificationIntegrationTest {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
         CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
@@ -173,7 +174,7 @@ class ContextVerificationIntegrationTest {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
         CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
@@ -207,7 +208,7 @@ class ContextVerificationIntegrationTest {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         Identity identity = harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
         CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
@@ -311,6 +312,37 @@ class ContextVerificationIntegrationTest {
     }
 
     @Test
+    void shouldLockShouldExpireIfIncludeAttemptsWithinDurationFilterAppliedToPolicyAndDurationHasPassed() {
+        CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
+        harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenIdentityExistsForAliases(createRequest.getAliases());
+        harness.givenHardLockoutPolicyWithIncludeAttemptsWithin24HoursExistsForChannel(createRequest.getChannelId());
+        Context context = application.create(createRequest);
+
+        CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()
+                .contextId(context.getId())
+                .methodName("fake-method")
+                .build();
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
+        harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
+
+        ExternalLockoutRequest lockoutRequest = DefaultExternalLockoutRequest.builder()
+                .activityName(createRequest.getActivityName())
+                .aliases(createRequest.getAliases())
+                .channelId(createRequest.getChannelId())
+                .build();
+        LockoutState initialState = application.loadLockoutState(lockoutRequest);
+
+        assertThat(initialState.isLocked()).isTrue();
+
+        harness.fastForwardTimeBy(Duration.ofHours(24).plusMillis(1));
+
+        LockoutState stateAfter24Hours = application.loadLockoutState(lockoutRequest);
+        assertThat(stateAfter24Hours.isLocked()).isFalse();
+    }
+
+    @Test
     void shouldBeLockedIfSoftLockoutPolicyConfiguredAndBoundaryAttemptsReached() {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
@@ -345,7 +377,7 @@ class ContextVerificationIntegrationTest {
         CreateContextRequest createRequest = FacadeCreateContextRequestMother.build();
         harness.givenContextPolicyExistsForChannel(createRequest.getChannelId());
         harness.givenIdentityExistsForAliases(createRequest.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(createRequest.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(createRequest.getChannelId());
         Context context = application.create(createRequest);
 
         CreateVerificationRequest verificationRequest = CreateVerificationRequest.builder()

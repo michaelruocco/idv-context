@@ -133,29 +133,53 @@ class AttemptTest {
         Instant end = timestamp.plusMillis(1);
         Attempt attempt = builder.timestamp(timestamp).build();
 
-        boolean between = attempt.occurredBetween(start, end);
+        boolean between = attempt.occurredBetweenInclusive(start, end);
 
         assertThat(between).isTrue();
     }
 
     @Test
-    void shouldReturnFalseIfDidNotOccurAfterStart() {
+    void shouldReturnTrueIfOccurredAtStart() {
         Instant timestamp = Instant.now();
         Instant end = timestamp.plusMillis(1);
         Attempt attempt = builder.timestamp(timestamp).build();
 
-        boolean between = attempt.occurredBetween(timestamp, end);
+        boolean between = attempt.occurredBetweenInclusive(timestamp, end);
+
+        assertThat(between).isTrue();
+    }
+
+    @Test
+    void shouldReturnTrueIfOccurredAtEnd() {
+        Instant timestamp = Instant.now();
+        Instant start = timestamp.minusMillis(1);
+        Attempt attempt = builder.timestamp(timestamp).build();
+
+        boolean between = attempt.occurredBetweenInclusive(start, timestamp);
+
+        assertThat(between).isTrue();
+    }
+
+    @Test
+    void shouldReturnFalseIfOccurredBeforeStart() {
+        Instant timestamp = Instant.now();
+        Instant start = timestamp.plusMillis(1);
+        Instant end = timestamp.plusMillis(2);
+        Attempt attempt = builder.timestamp(timestamp).build();
+
+        boolean between = attempt.occurredBetweenInclusive(start, end);
 
         assertThat(between).isFalse();
     }
 
     @Test
-    void shouldReturnFalseIfDidNotOccurBeforeEnd() {
+    void shouldReturnFalseIfOccurredAfterEnd() {
         Instant timestamp = Instant.now();
-        Instant start = timestamp.minusMillis(1);
+        Instant start = timestamp.minusMillis(2);
+        Instant end = timestamp.minusMillis(1);
         Attempt attempt = builder.timestamp(timestamp).build();
 
-        boolean between = attempt.occurredBetween(start, timestamp);
+        boolean between = attempt.occurredBetweenInclusive(start, end);
 
         assertThat(between).isFalse();
     }

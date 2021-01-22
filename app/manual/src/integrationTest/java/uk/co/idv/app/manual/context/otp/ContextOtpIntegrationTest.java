@@ -45,7 +45,7 @@ class ContextOtpIntegrationTest {
         application.create(policy);
         harness.givenContextPolicyExistsForChannel(request.getChannelId(), OtpPolicyMother.build());
         harness.givenIdentityExistsForAliases(request.getAliases());
-        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(request.getChannelId());
 
         Context context = application.create(request);
 
@@ -71,7 +71,7 @@ class ContextOtpIntegrationTest {
                 .emailAddresses(EmailAddressesMother.empty())
                 .build();
         harness.givenIdentityExists(identity);
-        harness.givenLockoutPolicyExistsForChannel(request.getChannelId());
+        harness.givenHardLockoutPolicyExistsForChannel(request.getChannelId());
 
         Context context = application.create(request);
 

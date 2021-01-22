@@ -25,7 +25,10 @@ import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
 import uk.co.idv.lockout.entities.policy.AttemptsFilter;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
-import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
+import uk.co.idv.lockout.entities.policy.hard.HardLockoutPolicyMother;
+import uk.co.idv.lockout.entities.policy.hard.HardLockoutStateCalculatorMother;
+import uk.co.idv.lockout.entities.policy.includeattempt.IncludeAttemptsPolicy;
+import uk.co.idv.lockout.entities.policy.includeattempt.IncludeAttemptsWithinDurationPolicyMother;
 import uk.co.idv.method.adapter.json.fake.FakeMethodMapping;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.adapter.json.otp.OtpMapping;
@@ -124,12 +127,20 @@ public class TestHarness {
         return application.update(identity);
     }
 
-    public void givenLockoutPolicyExistsForChannel(String channelId) {
+    public void givenHardLockoutPolicyWithIncludeAttemptsWithin24HoursExistsForChannel(String channelId) {
+        IncludeAttemptsPolicy includeAttemptsPolicy = IncludeAttemptsWithinDurationPolicyMother.withClock(clock);
         PolicyKey key = ChannelPolicyKeyMother.withChannelId(channelId);
-        LockoutPolicy policy = LockoutPolicyMother.builder()
+        LockoutPolicy policy = HardLockoutPolicyMother.builder()
                 .key(key)
                 .attemptsFilter(new AttemptsFilter(key))
+                .stateCalculator(HardLockoutStateCalculatorMother.withIncludeAttemptsPolicy(includeAttemptsPolicy))
                 .build();
+        givenLockoutPolicyExists(policy);
+    }
+
+    public void givenHardLockoutPolicyExistsForChannel(String channelId) {
+        PolicyKey key = ChannelPolicyKeyMother.withChannelId(channelId);
+        LockoutPolicy policy = HardLockoutPolicyMother.withKey(key);
         givenLockoutPolicyExists(policy);
     }
 

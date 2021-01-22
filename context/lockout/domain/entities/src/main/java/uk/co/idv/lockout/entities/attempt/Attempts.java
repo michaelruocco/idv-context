@@ -51,7 +51,7 @@ public class Attempts implements Iterable<Attempt> {
 
     public Attempts occurredBetween(Instant start, Instant end) {
         return withValues(values.stream()
-                .filter(attempt -> attempt.occurredBetween(start, end))
+                .filter(attempt -> attempt.occurredBetweenInclusive(start, end))
                 .collect(Collectors.toList())
         );
     }

@@ -31,11 +31,10 @@ class IncludeAttemptsWithinDurationPolicyTest {
     }
 
     @Test
-    void shouldNotIncludeAttemptsThatOccurredAtCutoffOrBefore() {
+    void shouldNotIncludeAttemptsThatOccurredBeforeCutoff() {
         Instant cutoff = NOW.minus(duration);
-        Attempt atCutoff = AttemptMother.withTimestamp(cutoff);
         Attempt beforeCutoff = AttemptMother.withTimestamp(cutoff.minusMillis(1));
-        Attempts attempts = AttemptsMother.withAttempts(atCutoff, beforeCutoff);
+        Attempts attempts = AttemptsMother.withAttempts(beforeCutoff);
 
         Attempts filtered = filter.apply(attempts);
 
@@ -43,10 +42,9 @@ class IncludeAttemptsWithinDurationPolicyTest {
     }
 
     @Test
-    void shouldNotIncludeAttemptsThatOccurredNowOrInFuture() {
-        Attempt atNow = AttemptMother.withTimestamp(NOW);
+    void shouldNotIncludeAttemptsThatOccurredInFuture() {
         Attempt inFuture = AttemptMother.withTimestamp(NOW.plusMillis(1));
-        Attempts attempts = AttemptsMother.withAttempts(atNow, inFuture);
+        Attempts attempts = AttemptsMother.withAttempts(inFuture);
 
         Attempts filtered = filter.apply(attempts);
 

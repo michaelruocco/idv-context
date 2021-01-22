@@ -8,7 +8,12 @@ import uk.co.idv.app.manual.otp.GbRsaPolicyMother;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
 import uk.co.idv.lockout.entities.policy.hard.HardLockoutPolicyMother;
+import uk.co.idv.lockout.entities.policy.hard.HardLockoutStateCalculator;
 import uk.co.idv.lockout.entities.policy.hard.HardLockoutStateCalculatorMother;
+import uk.co.idv.lockout.entities.policy.includeattempt.IncludeAllAttemptsPolicy;
+import uk.co.idv.lockout.entities.policy.includeattempt.IncludeAttemptsWithinDurationPolicyMother;
+import uk.co.idv.lockout.entities.policy.recordattempt.AlwaysRecordAttemptPolicy;
+import uk.co.idv.lockout.entities.policy.recordattempt.RecordAttemptWhenMethodCompletePolicy;
 import uk.co.idv.policy.entities.policy.Policies;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
@@ -20,6 +25,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
+import static uk.co.idv.lockout.entities.policy.hard.HardLockoutStateCalculatorMother.withIncludeAttemptsPolicy;
 
 class LockoutPolicyIntegrationTest {
 
@@ -110,6 +116,32 @@ class LockoutPolicyIntegrationTest {
         LockoutPolicy initial = HardLockoutPolicyMother.withMaxNumberOfAttempts(2);
         application.create(initial);
         LockoutPolicy update = HardLockoutPolicyMother.withMaxNumberOfAttempts(4);
+
+        application.update(update);
+
+        LockoutPolicy loaded = application.loadLockoutPolicy(update.getId());
+        assertThat(loaded).isEqualTo(update);
+    }
+
+    @Test
+    void shouldUpdateRecordAttemptPolicyWithinPolicy() {
+        LockoutPolicy initial = HardLockoutPolicyMother.withRecordAttemptPolicy(new AlwaysRecordAttemptPolicy());
+        application.create(initial);
+        LockoutPolicy update = HardLockoutPolicyMother.withRecordAttemptPolicy(new RecordAttemptWhenMethodCompletePolicy());
+
+        application.update(update);
+
+        LockoutPolicy loaded = application.loadLockoutPolicy(update.getId());
+        assertThat(loaded).isEqualTo(update);
+    }
+
+    @Test
+    void shouldUpdateIncludeAttemptPolicyOnLockoutStateCalculatorWithinPolicy() {
+        HardLockoutStateCalculator initialStateCalculator = withIncludeAttemptsPolicy(new IncludeAllAttemptsPolicy());
+        LockoutPolicy initial = HardLockoutPolicyMother.withStateCalculator(initialStateCalculator);
+        application.create(initial);
+        HardLockoutStateCalculator updateStateCalculator = withIncludeAttemptsPolicy(IncludeAttemptsWithinDurationPolicyMother.build());
+        LockoutPolicy update = HardLockoutPolicyMother.withStateCalculator(updateStateCalculator);
 
         application.update(update);
 
