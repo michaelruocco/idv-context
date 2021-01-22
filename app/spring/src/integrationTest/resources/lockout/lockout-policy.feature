@@ -271,7 +271,8 @@ Feature: Lockout Policy Maintenance
         "stateCalculator": {
           "type": "soft-lockout",
           "includeAttemptsPolicy": {
-            "type": "all-attempts"
+            "type": "within-duration",
+            "duration": 86400000
           },
           "intervals": [
             {
@@ -306,7 +307,8 @@ Feature: Lockout Policy Maintenance
         "stateCalculator": {
           "type": "soft-lockout",
           "includeAttemptsPolicy": {
-            "type": "all-attempts"
+            "type": "within-duration",
+            "duration": 86400000
           },
           "intervals": [
             {

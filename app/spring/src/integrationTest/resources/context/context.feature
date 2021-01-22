@@ -327,6 +327,9 @@ Feature: Context Creation
         },
         "stateCalculator": {
           "maxNumberOfAttempts": 5,
+          "includeAttemptsPolicy": {
+            "type": "all-attempts"
+          },
           "type": "hard-lockout"
         },
         "recordAttemptPolicy": {
@@ -650,6 +653,9 @@ Feature: Context Creation
         },
         "stateCalculator": {
           "maxNumberOfAttempts": 5,
+          "includeAttemptsPolicy": {
+            "type": "all-attempts"
+          },
           "type": "hard-lockout"
         },
         "recordAttemptPolicy": {

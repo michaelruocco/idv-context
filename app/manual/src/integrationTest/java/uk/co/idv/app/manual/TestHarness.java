@@ -82,7 +82,8 @@ public class TestHarness {
             externalFindIdentityConfig
     );
 
-    private final JsonConfig jsonConfig = new JsonConfig(new MethodMappings(new FakeMethodMapping(), new OtpMapping()));
+    private final MethodMappings methodMappings = new MethodMappings(new FakeMethodMapping(), new OtpMapping());
+    private final JsonConfig jsonConfig = new JsonConfig(clock, methodMappings);
     private final ChannelAdapter channelAdapter = new DefaultChannelAdapter(jsonConfig.getJsonConverter());
 
     private final Application application = new Application(appConfig);

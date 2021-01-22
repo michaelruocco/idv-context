@@ -12,17 +12,19 @@ import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.mruoc.json.JsonConverter;
 import uk.co.mruoc.json.jackson.JacksonJsonConverter;
 
+import java.time.Clock;
+
 @Data
 public class JsonConfig {
 
     private final ObjectMapper objectMapper;
     private final JsonConverter jsonConverter;
 
-    public JsonConfig(MethodMappings mappings) {
+    public JsonConfig(Clock clock, MethodMappings mappings) {
         this.objectMapper = ObjectMapperFactory.build(
                 new ContextParentModule(mappings),
                 new IdentityParentModule(),
-                new LockoutParentModule()
+                new LockoutParentModule(clock)
         );
         this.jsonConverter = new JacksonJsonConverter(objectMapper);
     }

@@ -15,6 +15,9 @@ Feature: Lockout State Requests
         },
         "stateCalculator": {
           "type": "hard-lockout",
+          "includeAttemptsPolicy": {
+            "type": "all-attempts"
+          },
           "maxNumberOfAttempts": 2
         },
         "recordAttemptPolicy": {

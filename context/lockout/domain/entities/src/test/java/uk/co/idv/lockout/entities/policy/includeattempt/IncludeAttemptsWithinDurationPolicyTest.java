@@ -13,14 +13,14 @@ import java.time.ZoneId;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class IncludeWithinDurationAttemptsPolicyTest {
+class IncludeAttemptsWithinDurationPolicyTest {
 
     private static final Instant NOW = Instant.now();
 
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
     private final Duration duration = Duration.ofMinutes(5);
 
-    private final IncludeWithinDurationAttemptsPolicy filter = IncludeWithinDurationAttemptsPolicy.builder()
+    private final IncludeAttemptsWithinDurationPolicy filter = IncludeAttemptsWithinDurationPolicy.builder()
             .clock(clock)
             .duration(duration)
             .build();

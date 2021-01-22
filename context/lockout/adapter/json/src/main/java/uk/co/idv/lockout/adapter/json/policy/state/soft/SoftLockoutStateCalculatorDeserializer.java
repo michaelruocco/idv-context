@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import uk.co.idv.lockout.entities.policy.includeattempt.IncludeAttemptsPolicy;
 import uk.co.idv.lockout.entities.policy.soft.SoftLockIntervals;
 import uk.co.idv.lockout.entities.policy.soft.SoftLockoutStateCalculator;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
@@ -18,8 +19,10 @@ public class SoftLockoutStateCalculatorDeserializer extends StdDeserializer<Soft
     @Override
     public SoftLockoutStateCalculator deserialize(JsonParser parser, DeserializationContext context) {
         JsonNode node = JsonParserConverter.toNode(parser);
-        SoftLockIntervals intervals = JsonNodeConverter.toObject(node.get("intervals"), parser, SoftLockIntervals.class);
-        return new SoftLockoutStateCalculator(intervals);
+        return SoftLockoutStateCalculator.builder()
+                .intervals(JsonNodeConverter.toObject(node.get("intervals"), parser, SoftLockIntervals.class))
+                .includeAttemptsPolicy(JsonNodeConverter.toObject(node.get("includeAttemptsPolicy"), parser, IncludeAttemptsPolicy.class))
+                .build();
     }
 
 }

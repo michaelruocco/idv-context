@@ -10,12 +10,14 @@ import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.adapter.json.otp.OtpMapping;
 import uk.co.mruoc.json.JsonConverter;
 
+import java.time.Clock;
+
 @Configuration
 public class SpringJacksonConfig {
 
     @Bean
-    public JsonConfig jsonConfig() {
-        return new JsonConfig(new MethodMappings(new OtpMapping()));
+    public JsonConfig jsonConfig(Clock clock) {
+        return new JsonConfig(clock, new MethodMappings(new OtpMapping()));
     }
 
     @Bean

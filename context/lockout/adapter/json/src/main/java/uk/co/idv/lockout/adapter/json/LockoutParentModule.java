@@ -7,20 +7,23 @@ import uk.co.idv.lockout.adapter.json.policy.LockoutPolicyModule;
 import uk.co.idv.lockout.adapter.json.policy.state.LockoutStateModule;
 import uk.co.idv.lockout.entities.ExternalLockoutRequest;
 
+import java.time.Clock;
 import java.util.Arrays;
 
 public class LockoutParentModule extends SimpleModule {
 
-    public LockoutParentModule() {
-        super("lockout-parent-module", Version.unknownVersion());
+    private final transient Clock clock;
 
+    public LockoutParentModule(Clock clock) {
+        super("lockout-parent-module", Version.unknownVersion());
+        this.clock = clock;
         addDeserializer(ExternalLockoutRequest.class, new ExternalLockoutRequestDeserializer());
     }
 
     @Override
     public Iterable<? extends Module> getDependencies() {
         return Arrays.asList(
-                new LockoutPolicyModule(),
+                new LockoutPolicyModule(clock),
                 new LockoutStateModule()
         );
     }

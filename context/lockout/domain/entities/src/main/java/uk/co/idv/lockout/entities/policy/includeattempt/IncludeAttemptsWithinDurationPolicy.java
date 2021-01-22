@@ -12,7 +12,7 @@ import java.time.Instant;
 
 @Builder
 @Data
-public class IncludeWithinDurationAttemptsPolicy implements IncludeAttemptsPolicy {
+public class IncludeAttemptsWithinDurationPolicy implements IncludeAttemptsPolicy {
 
     public static final String TYPE = "within-duration";
 

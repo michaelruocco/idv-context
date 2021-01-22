@@ -9,12 +9,16 @@ import uk.co.idv.lockout.adapter.json.policy.state.LockoutStateCalculatorModule;
 import uk.co.idv.policy.adapter.json.PolicyModule;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 
+import java.time.Clock;
 import java.util.Arrays;
 
 public class LockoutPolicyModule extends SimpleModule {
 
-    public LockoutPolicyModule() {
+    private final transient Clock clock;
+
+    public LockoutPolicyModule(Clock clock) {
         super("lockout-policy-module", Version.unknownVersion());
+        this.clock = clock;
         setUpLockoutPolicy();
     }
 
@@ -24,7 +28,7 @@ public class LockoutPolicyModule extends SimpleModule {
                 new PolicyModule(),
                 new PolicyErrorModule(),
                 new RecordAttemptPolicyModule(),
-                new LockoutStateCalculatorModule()
+                new LockoutStateCalculatorModule(clock)
         );
     }
 

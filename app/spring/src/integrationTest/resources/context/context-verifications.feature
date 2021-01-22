@@ -89,6 +89,9 @@ Feature: Context Verifications
         },
         "stateCalculator": {
           "maxNumberOfAttempts": 5,
+          "includeAttemptsPolicy": {
+            "type": "all-attempts"
+          },
           "type": "hard-lockout"
         },
         "recordAttemptPolicy": {
@@ -409,6 +412,9 @@ Feature: Context Verifications
         },
         "stateCalculator": {
           "maxNumberOfAttempts": 5,
+          "includeAttemptsPolicy": {
+            "type": "all-attempts"
+          },
           "type": "hard-lockout"
         },
         "recordAttemptPolicy": {
@@ -738,6 +744,9 @@ Feature: Context Verifications
         },
         "stateCalculator": {
           "maxNumberOfAttempts": 5,
+          "includeAttemptsPolicy": {
+            "type": "all-attempts"
+          },
           "type": "hard-lockout"
         },
         "recordAttemptPolicy": {

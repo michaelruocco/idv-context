@@ -1,6 +1,7 @@
 package uk.co.idv.lockout.entities.policy.soft;
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +31,7 @@ public class SoftLockoutStateCalculator implements LockoutStateCalculator {
         this(intervals, new IncludeAllAttemptsPolicy());
     }
 
+    @Builder
     public SoftLockoutStateCalculator(SoftLockIntervals intervals, IncludeAttemptsPolicy includeAttemptsPolicy) {
         this(intervals, includeAttemptsPolicy, new SoftLockoutStateFactory());
     }
