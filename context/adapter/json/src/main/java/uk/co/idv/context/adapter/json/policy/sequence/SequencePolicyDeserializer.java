@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
+import uk.co.idv.context.entities.context.sequence.nextmethods.NextMethodsPolicy;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
 import uk.co.idv.method.entities.policy.MethodPolicies;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
@@ -20,6 +21,7 @@ public class SequencePolicyDeserializer extends StdDeserializer<SequencePolicy> 
         JsonNode node = JsonParserConverter.toNode(parser);
         return SequencePolicy.builder()
                 .name(node.get("name").asText())
+                .nextMethodsPolicy(JsonNodeConverter.toObject(node.get("nextMethodsPolicy"), parser, NextMethodsPolicy.class))
                 .methodPolicies(JsonNodeConverter.toObject(node.get("methodPolicies"), parser, MethodPolicies.class))
                 .build();
     }

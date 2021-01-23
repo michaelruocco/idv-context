@@ -4,12 +4,13 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.policy.method.MethodPolicyModule;
+import uk.co.idv.context.adapter.json.policy.sequence.nextmethods.NextMethodsPolicyModule;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicies;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
 import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 
-import java.util.Collections;
+import java.util.Arrays;
 
 public class SequencePolicyModule extends SimpleModule {
 
@@ -32,7 +33,10 @@ public class SequencePolicyModule extends SimpleModule {
 
     @Override
     public Iterable<? extends Module> getDependencies() {
-        return Collections.singleton(new MethodPolicyModule(mappings));
+        return Arrays.asList(
+                new MethodPolicyModule(mappings),
+                new NextMethodsPolicyModule()
+        );
     }
 
 }

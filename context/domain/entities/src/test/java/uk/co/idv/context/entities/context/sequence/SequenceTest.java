@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.method.MethodsMother;
 import uk.co.idv.context.entities.context.method.MockMethodsMother;
+import uk.co.idv.context.entities.context.sequence.nextmethods.NextMethodsPolicy;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
 import uk.co.idv.method.entities.method.MockMethodMother;
@@ -100,28 +101,20 @@ class SequenceTest {
     }
 
     @Test
-    void shouldReturnNextIncompleteMethodsFromMethods() {
-        Method expectedMethod = FakeMethodMother.build();
+    void shouldReturnNextMethodsFromNextMethodsPolicy() {
         MethodVerifications verifications = mock(MethodVerifications.class);
+        Methods methods = mock(Methods.class);
+        NextMethodsPolicy nextMethodsPolicy = mock(NextMethodsPolicy.class);
+        Methods expectedNextMethods = mock(Methods.class);
+        given(nextMethodsPolicy.calculateNextMethods(methods, verifications)).willReturn(expectedNextMethods);
         Sequence sequence = Sequence.builder()
-                .methods(MockMethodsMother.withNextIncompleteMethod(verifications, expectedMethod))
+                .nextMethodsPolicy(nextMethodsPolicy)
+                .methods(methods)
                 .build();
 
         Methods nextMethods = sequence.getNextMethods(verifications);
 
-        assertThat(nextMethods).containsExactly(expectedMethod);
-    }
-
-    @Test
-    void shouldReturnEmptyNextIncompleteMethodsIfMethodsDoesNotHaveNextIncompleteMethod() {
-        MethodVerifications verifications = mock(MethodVerifications.class);
-        Sequence sequence = Sequence.builder()
-                .methods(MockMethodsMother.withoutNextIncompleteMethod(verifications))
-                .build();
-
-        Methods nextMethods = sequence.getNextMethods(verifications);
-
-        assertThat(nextMethods).isEmpty();
+        assertThat(nextMethods).isEqualTo(expectedNextMethods);
     }
 
     @Test

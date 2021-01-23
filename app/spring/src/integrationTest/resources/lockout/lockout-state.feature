@@ -161,6 +161,9 @@ Feature: Lockout State Requests
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -316,6 +319,9 @@ Feature: Lockout State Requests
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",

@@ -88,6 +88,13 @@ public class Methods implements Iterable<Method> {
         );
     }
 
+    public Methods getAllIncompleteMethods(MethodVerifications verifications) {
+        return new Methods(values.stream()
+                .filter(method -> !method.isComplete(verifications))
+                .collect(Collectors.toList())
+        );
+    }
+
     public Optional<Method> getNextIncompleteMethod(MethodVerifications verifications) {
         return values.stream()
                 .filter(method -> !method.isComplete(verifications))

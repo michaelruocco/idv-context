@@ -1,6 +1,9 @@
 [
   {
     "name": "default-sequence",
+    "nextMethodsPolicy": {
+      "type": "in-order"
+    },
     "methods": [
       {
         "name": "fake-method",
@@ -9,7 +12,7 @@
           "duration": 300000,
           "fakeValue": "fake"
         },
-        "eligibility":{
+        "eligibility": {
           "eligible": true
         }
       }

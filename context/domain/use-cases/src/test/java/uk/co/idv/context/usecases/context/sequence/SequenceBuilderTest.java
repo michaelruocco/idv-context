@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequencesRequest;
+import uk.co.idv.context.entities.context.sequence.nextmethods.NextMethodsPolicy;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
 import uk.co.idv.context.usecases.context.method.MethodsBuilder;
 import uk.co.idv.method.entities.method.MethodsRequest;
@@ -23,10 +24,22 @@ class SequenceBuilderTest {
     void shouldPopulateSequenceNameFromPolicy() {
         SequencesRequest request = mock(SequencesRequest.class);
         String expectedName = "my-name";
+        SequencePolicy sequencePolicy = givenSequencePolicyWithName(expectedName);
 
-        Sequence sequence = sequenceBuilder.build(request, givenSequencePolicyWithName(expectedName));
+        Sequence sequence = sequenceBuilder.build(request, sequencePolicy);
 
         assertThat(sequence.getName()).isEqualTo(expectedName);
+    }
+
+    @Test
+    void shouldPopulateNextMethodPolicyFromPolicy() {
+        SequencesRequest request = mock(SequencesRequest.class);
+        NextMethodsPolicy nextMethodsPolicy = mock(NextMethodsPolicy.class);
+        SequencePolicy sequencePolicy = givenSequencePolicyWithNextMethodPolicy(nextMethodsPolicy);
+
+        Sequence sequence = sequenceBuilder.build(request, sequencePolicy);
+
+        assertThat(sequence.getNextMethodsPolicy()).isEqualTo(nextMethodsPolicy);
     }
 
     @Test
@@ -45,6 +58,12 @@ class SequenceBuilderTest {
     private SequencePolicy givenSequencePolicyWithName(String name) {
         SequencePolicy policy = mock(SequencePolicy.class);
         given(policy.getName()).willReturn(name);
+        return policy;
+    }
+
+    private SequencePolicy givenSequencePolicyWithNextMethodPolicy(NextMethodsPolicy nextMethodsPolicy) {
+        SequencePolicy policy = mock(SequencePolicy.class);
+        given(policy.getNextMethodsPolicy()).willReturn(nextMethodsPolicy);
         return policy;
     }
 

@@ -249,6 +249,9 @@ Feature: Context Creation
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -396,6 +399,9 @@ Feature: Context Creation
             "sequencePolicies": [
               {
                 "name": "one-time-passcode",
+                "nextMethodsPolicy": {
+                  "type": "in-order"
+                },
                 "methodPolicies": [
                   {
                     "config": {
@@ -462,6 +468,9 @@ Feature: Context Creation
         "sequences": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methods": [
               {
                 "name": "one-time-passcode",
@@ -580,6 +589,9 @@ Feature: Context Creation
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -722,6 +734,9 @@ Feature: Context Creation
             "sequencePolicies": [
               {
                 "name": "one-time-passcode",
+                "nextMethodsPolicy": {
+                  "type": "in-order"
+                },
                 "methodPolicies": [
                   {
                     "config": {
@@ -783,6 +798,9 @@ Feature: Context Creation
         "sequences": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methods": [
               {
                 "name": "one-time-passcode",

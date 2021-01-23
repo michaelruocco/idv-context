@@ -33,6 +33,9 @@
       "sequencePolicies": [
         {
           "name": "default-sequence",
+          "nextMethodsPolicy": {
+            "type": "in-order"
+          },
           "methodPolicies": [
             {
               "name": "fake-method",
@@ -78,6 +81,9 @@
   "sequences": [
     {
       "name": "default-sequence",
+      "nextMethodsPolicy": {
+        "type": "in-order"
+      },
       "methods": [
         {
           "name": "fake-method",

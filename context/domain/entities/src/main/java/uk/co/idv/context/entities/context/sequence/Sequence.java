@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.With;
 import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.context.entities.context.sequence.nextmethods.NextMethodsPolicy;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.eligibility.Eligible;
 import uk.co.idv.method.entities.method.Method;
@@ -19,6 +20,7 @@ import java.util.function.UnaryOperator;
 public class Sequence implements Iterable<Method> {
 
     private final String name;
+    private final NextMethodsPolicy nextMethodsPolicy;
 
     @With
     private final Methods methods;
@@ -49,9 +51,7 @@ public class Sequence implements Iterable<Method> {
     }
 
     public Methods getNextMethods(MethodVerifications verifications) {
-        return methods.getNextIncompleteMethod(verifications)
-                .map(Methods::new)
-                .orElse(new Methods());
+        return nextMethodsPolicy.calculateNextMethods(methods, verifications);
     }
 
     public boolean isSuccessful(MethodVerifications verifications) {
@@ -59,6 +59,9 @@ public class Sequence implements Iterable<Method> {
     }
 
     public boolean isComplete(MethodVerifications verifications) {
+        //TODO move calculate complete method into nextMethodsPolicy
+        //for any order policy return all complete
+        //for in order return all complete + verifications in same order as methods
         return methods.allComplete(verifications);
     }
 

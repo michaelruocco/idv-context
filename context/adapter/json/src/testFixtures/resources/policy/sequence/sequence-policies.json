@@ -1,6 +1,9 @@
 [
   {
     "name": "default-sequence",
+    "nextMethodsPolicy": {
+      "type": "in-order"
+    },
     "methodPolicies": [
       {
         "name": "fake-method",

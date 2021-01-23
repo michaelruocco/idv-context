@@ -51,4 +51,16 @@ public interface MockMethodsMother {
         return methods;
     }
 
+    static Methods withAllIncompleteMethods(MethodVerifications verifications, Method... incompleteMethods) {
+        Methods methods = mock(Methods.class);
+        given(methods.getAllIncompleteMethods(verifications)).willReturn(MethodsMother.with(incompleteMethods));
+        return methods;
+    }
+
+    static Methods withoutIncompleteMethods(MethodVerifications verifications) {
+        Methods methods = mock(Methods.class);
+        given(methods.getAllIncompleteMethods(verifications)).willReturn(MethodsMother.empty());
+        return methods;
+    }
+
 }

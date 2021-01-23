@@ -238,4 +238,17 @@ class MethodsTest {
         assertThat(next).contains(incomplete1);
     }
 
+    @Test
+    void shouldReturnAllIncompleteMethods() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method complete = MockMethodMother.complete(verifications);
+        Method incomplete1 = MockMethodMother.incomplete(verifications);
+        Method incomplete2 = MockMethodMother.incomplete(verifications);
+        Methods methods = MethodsMother.with(complete, incomplete1, incomplete2);
+
+        Methods nextMethods = methods.getAllIncompleteMethods(verifications);
+
+        assertThat(nextMethods).containsExactly(incomplete1, incomplete2);
+    }
+
 }

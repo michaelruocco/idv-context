@@ -17,6 +17,9 @@ Feature: Context Verifications
         "sequencePolicies": [
         {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -158,6 +161,9 @@ Feature: Context Verifications
             "sequencePolicies": [
               {
                 "name": "one-time-passcode",
+                "nextMethodsPolicy": {
+                  "type": "in-order"
+                },
                 "methodPolicies": [
                   {
                     "config": {
@@ -218,6 +224,9 @@ Feature: Context Verifications
         "sequences": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methods": [
               {
                 "name": "one-time-passcode",
@@ -340,6 +349,9 @@ Feature: Context Verifications
         "sequencePolicies": [
         {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -481,6 +493,9 @@ Feature: Context Verifications
             "sequencePolicies": [
               {
                 "name": "one-time-passcode",
+                "nextMethodsPolicy": {
+                  "type": "in-order"
+                },
                 "methodPolicies": [
                   {
                     "config": {
@@ -541,6 +556,9 @@ Feature: Context Verifications
         "sequences": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methods": [
               {
                 "name": "one-time-passcode",
@@ -672,6 +690,9 @@ Feature: Context Verifications
         "sequencePolicies": [
         {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -813,6 +834,9 @@ Feature: Context Verifications
             "sequencePolicies": [
               {
                 "name": "one-time-passcode",
+                "nextMethodsPolicy": {
+                  "type": "in-order"
+                },
                 "methodPolicies": [
                   {
                     "config": {
@@ -873,6 +897,9 @@ Feature: Context Verifications
         "sequences": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methods": [
               {
                 "name": "one-time-passcode",

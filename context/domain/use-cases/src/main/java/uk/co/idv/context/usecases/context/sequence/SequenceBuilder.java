@@ -14,6 +14,7 @@ public class SequenceBuilder {
     public Sequence build(SequencesRequest request, SequencePolicy sequencePolicy) {
         return Sequence.builder()
                 .name(sequencePolicy.getName())
+                .nextMethodsPolicy(sequencePolicy.getNextMethodsPolicy())
                 .methods(methodsBuilder.build(request.toMethodsRequest(sequencePolicy)))
                 .build();
     }

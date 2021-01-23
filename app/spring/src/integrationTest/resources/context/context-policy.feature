@@ -32,6 +32,9 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -87,6 +90,9 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -146,6 +152,9 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -209,6 +218,9 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -285,6 +297,9 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -343,6 +358,9 @@ Feature: Context Policy Maintenance
           "sequencePolicies": [
             {
               "name": "one-time-passcode",
+              "nextMethodsPolicy": {
+                "type": "in-order"
+              },
               "methodPolicies": [
                 {
                   "name": "one-time-passcode",
@@ -401,6 +419,9 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
@@ -442,6 +463,9 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
+            "nextMethodsPolicy": {
+              "type": "in-order"
+            },
             "methodPolicies": [
               {
                 "name": "one-time-passcode",
