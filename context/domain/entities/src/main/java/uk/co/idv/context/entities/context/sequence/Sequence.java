@@ -14,7 +14,6 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Builder
@@ -48,7 +47,7 @@ public class Sequence implements Iterable<Method> {
     }
 
     public Eligibility getEligibility() {
-        Collection<String> names = getIneligibleMethodNames();
+        Collection<String> names = methods.getIneligibleNames();
         if (names.isEmpty()) {
             return new Eligible();
         }
@@ -71,13 +70,6 @@ public class Sequence implements Iterable<Method> {
 
     public long completedMethodCount(MethodVerifications verifications) {
         return methods.stream().filter(method -> method.isComplete(verifications)).count();
-    }
-
-    private Collection<String> getIneligibleMethodNames() {
-        return methods.stream()
-                .filter(method -> !method.isEligible())
-                .map(Method::getName)
-                .collect(Collectors.toSet());
     }
 
 }

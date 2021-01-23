@@ -20,4 +20,7 @@ public interface MethodsMixin {
     @JsonIgnore
     Duration getTotalDuration();
 
+    @JsonIgnore
+    Collection<String> getIneligibleNames();
+
 }

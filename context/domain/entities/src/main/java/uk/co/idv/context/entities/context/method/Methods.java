@@ -45,6 +45,13 @@ public class Methods implements Iterable<Method> {
                 .orElse(Duration.ZERO);
     }
 
+    public Collection<String> getIneligibleNames() {
+        return values.stream()
+                .filter(method -> !method.isEligible())
+                .map(Method::getName)
+                .collect(Collectors.toSet());
+    }
+
     public boolean containsMethod(String methodName) {
         return !getByName(methodName).isEmpty();
     }
