@@ -59,9 +59,6 @@ public class Sequence implements Iterable<Method> {
     }
 
     public boolean isComplete(MethodVerifications verifications) {
-        //TODO move calculate complete method into nextMethodsPolicy
-        //for any order policy return all complete
-        //for in order return all complete + verifications in same order as methods
         return methods.allComplete(verifications);
     }
 
