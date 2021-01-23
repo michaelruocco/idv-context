@@ -200,4 +200,17 @@ class MethodsTest {
         assertThat(allComplete).isFalse();
     }
 
+    @Test
+    void shouldReturnCompletedMethodCount() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method complete1 = MockMethodMother.complete(verifications);
+        Method incomplete = MockMethodMother.incomplete(verifications);
+        Method complete2 = MockMethodMother.complete(verifications);
+        Methods methods = MethodsMother.with(complete1, incomplete, complete2);
+
+        long completedCount = methods.completedCount(verifications);
+
+        assertThat(completedCount).isEqualTo(2);
+    }
+
 }

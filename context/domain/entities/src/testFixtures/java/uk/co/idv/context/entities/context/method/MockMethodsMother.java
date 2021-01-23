@@ -31,4 +31,10 @@ public interface MockMethodsMother {
         return methods;
     }
 
+    static Methods withCompletedCount(MethodVerifications verifications, long count) {
+        Methods methods = mock(Methods.class);
+        given(methods.completedCount(verifications)).willReturn(count);
+        return methods;
+    }
+
 }

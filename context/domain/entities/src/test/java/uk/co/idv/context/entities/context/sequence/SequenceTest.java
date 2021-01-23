@@ -133,18 +133,16 @@ class SequenceTest {
     }
 
     @Test
-    void shouldReturnCompletedMethodCount() {
+    void shouldReturnCompletedMethodCountFromMethods() {
+        long expectedCompletedCount = 2;
         MethodVerifications verifications = mock(MethodVerifications.class);
-        Method method1 = MockMethodMother.complete(verifications);
-        Method method2 = MockMethodMother.incomplete(verifications);
-        Method method3 = MockMethodMother.complete(verifications);
         Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(method1, method2, method3))
+                .methods(MockMethodsMother.withCompletedCount(verifications, expectedCompletedCount))
                 .build();
 
         long completedCount = sequence.completedMethodCount(verifications);
 
-        assertThat(completedCount).isEqualTo(2);
+        assertThat(completedCount).isEqualTo(expectedCompletedCount);
     }
 
 }

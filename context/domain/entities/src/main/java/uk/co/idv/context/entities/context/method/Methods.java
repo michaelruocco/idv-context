@@ -45,6 +45,10 @@ public class Methods implements Iterable<Method> {
         return values.stream().allMatch(method -> method.isComplete(verifications));
     }
 
+    public long completedCount(MethodVerifications verifications) {
+        return values.stream().filter(method -> method.isComplete(verifications)).count();
+    }
+
     public boolean isEmpty() {
         return values.isEmpty();
     }

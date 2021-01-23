@@ -64,7 +64,7 @@ public class Sequence implements Iterable<Method> {
     }
 
     public long completedMethodCount(MethodVerifications verifications) {
-        return methods.stream().filter(method -> method.isComplete(verifications)).count();
+        return methods.completedCount(verifications);
     }
 
 }
