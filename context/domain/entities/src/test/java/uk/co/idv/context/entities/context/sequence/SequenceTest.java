@@ -101,18 +101,16 @@ class SequenceTest {
     }
 
     @Test
-    void shouldReturnNextIncompleteMethod() {
+    void shouldReturnNextIncompleteMethodFromMethods() {
+        Method expectedMethod = FakeMethodMother.build();
         MethodVerifications verifications = mock(MethodVerifications.class);
-        Method complete = MockMethodMother.complete(verifications);
-        Method incomplete1 = MockMethodMother.incomplete(verifications);
-        Method incomplete2 = MockMethodMother.incomplete(verifications);
         Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(complete, incomplete1, incomplete2))
+                .methods(MockMethodsMother.withNextIncompleteMethod(verifications, expectedMethod))
                 .build();
 
         Optional<Method> next = sequence.getNextMethod(verifications);
 
-        assertThat(next).contains(incomplete1);
+        assertThat(next).contains(expectedMethod);
     }
 
     @Test

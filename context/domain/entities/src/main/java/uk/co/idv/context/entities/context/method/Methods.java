@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
+import java.util.Optional;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -85,6 +86,12 @@ public class Methods implements Iterable<Method> {
                 .map(function)
                 .collect(Collectors.toList())
         );
+    }
+
+    public Optional<Method> getNextIncompleteMethod(MethodVerifications verifications) {
+        return values.stream()
+                .filter(method -> !method.isComplete(verifications))
+                .findFirst();
     }
 
 }

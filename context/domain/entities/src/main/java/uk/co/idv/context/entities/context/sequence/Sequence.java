@@ -50,9 +50,7 @@ public class Sequence implements Iterable<Method> {
     }
 
     public Optional<Method> getNextMethod(MethodVerifications verifications) {
-        return methods.stream()
-                .filter(method -> !method.isComplete(verifications))
-                .findFirst();
+        return methods.getNextIncompleteMethod(verifications);
     }
 
     public boolean isSuccessful(MethodVerifications verifications) {

@@ -8,6 +8,7 @@ import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
 import java.util.Collection;
+import java.util.Optional;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -211,6 +212,30 @@ class MethodsTest {
         long completedCount = methods.completedCount(verifications);
 
         assertThat(completedCount).isEqualTo(2);
+    }
+
+    @Test
+    void shouldReturnEmptyIfNoNextIncompleteMethod() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method complete = MockMethodMother.complete(verifications);
+        Methods methods = MethodsMother.with(complete);
+
+        Optional<Method> next = methods.getNextIncompleteMethod(verifications);
+
+        assertThat(next).isEmpty();
+    }
+
+    @Test
+    void shouldReturnNextIncompleteMethod() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method complete = MockMethodMother.complete(verifications);
+        Method incomplete1 = MockMethodMother.incomplete(verifications);
+        Method incomplete2 = MockMethodMother.incomplete(verifications);
+        Methods methods = MethodsMother.with(complete, incomplete1, incomplete2);
+
+        Optional<Method> next = methods.getNextIncompleteMethod(verifications);
+
+        assertThat(next).contains(incomplete1);
     }
 
 }

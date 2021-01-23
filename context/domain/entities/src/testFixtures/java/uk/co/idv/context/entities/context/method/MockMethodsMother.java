@@ -1,8 +1,10 @@
 package uk.co.idv.context.entities.context.method;
 
+import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
@@ -34,6 +36,12 @@ public interface MockMethodsMother {
     static Methods withCompletedCount(MethodVerifications verifications, long count) {
         Methods methods = mock(Methods.class);
         given(methods.completedCount(verifications)).willReturn(count);
+        return methods;
+    }
+
+    static Methods withNextIncompleteMethod(MethodVerifications verifications, Method method) {
+        Methods methods = mock(Methods.class);
+        given(methods.getNextIncompleteMethod(verifications)).willReturn(Optional.of(method));
         return methods;
     }
 
