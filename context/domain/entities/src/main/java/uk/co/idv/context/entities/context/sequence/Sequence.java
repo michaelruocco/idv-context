@@ -12,7 +12,6 @@ import uk.co.idv.method.entities.method.MethodVerifications;
 import java.time.Duration;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 @Builder
@@ -49,8 +48,10 @@ public class Sequence implements Iterable<Method> {
         return new SequenceIneligible(names);
     }
 
-    public Optional<Method> getNextMethod(MethodVerifications verifications) {
-        return methods.getNextIncompleteMethod(verifications);
+    public Methods getNextMethods(MethodVerifications verifications) {
+        return methods.getNextIncompleteMethod(verifications)
+                .map(Methods::new)
+                .orElse(new Methods());
     }
 
     public boolean isSuccessful(MethodVerifications verifications) {

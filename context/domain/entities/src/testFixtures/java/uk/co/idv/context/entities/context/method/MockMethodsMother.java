@@ -45,4 +45,10 @@ public interface MockMethodsMother {
         return methods;
     }
 
+    static Methods withoutNextIncompleteMethod(MethodVerifications verifications) {
+        Methods methods = mock(Methods.class);
+        given(methods.getNextIncompleteMethod(verifications)).willReturn(Optional.empty());
+        return methods;
+    }
+
 }

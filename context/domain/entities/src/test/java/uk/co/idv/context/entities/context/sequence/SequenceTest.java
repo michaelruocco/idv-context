@@ -10,7 +10,6 @@ import uk.co.idv.method.entities.method.MockMethodMother;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
-import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -101,16 +100,28 @@ class SequenceTest {
     }
 
     @Test
-    void shouldReturnNextIncompleteMethodFromMethods() {
+    void shouldReturnNextIncompleteMethodsFromMethods() {
         Method expectedMethod = FakeMethodMother.build();
         MethodVerifications verifications = mock(MethodVerifications.class);
         Sequence sequence = Sequence.builder()
                 .methods(MockMethodsMother.withNextIncompleteMethod(verifications, expectedMethod))
                 .build();
 
-        Optional<Method> next = sequence.getNextMethod(verifications);
+        Methods nextMethods = sequence.getNextMethods(verifications);
 
-        assertThat(next).contains(expectedMethod);
+        assertThat(nextMethods).containsExactly(expectedMethod);
+    }
+
+    @Test
+    void shouldReturnEmptyNextIncompleteMethodsIfMethodsDoesNotHaveNextIncompleteMethod() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Sequence sequence = Sequence.builder()
+                .methods(MockMethodsMother.withoutNextIncompleteMethod(verifications))
+                .build();
+
+        Methods nextMethods = sequence.getNextMethods(verifications);
+
+        assertThat(nextMethods).isEmpty();
     }
 
     @Test

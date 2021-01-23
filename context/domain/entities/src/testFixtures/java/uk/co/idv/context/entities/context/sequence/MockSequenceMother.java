@@ -1,10 +1,10 @@
 package uk.co.idv.context.entities.context.sequence;
 
+import uk.co.idv.context.entities.context.method.MethodsMother;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
 
 import java.time.Duration;
-import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 import static org.mockito.BDDMockito.given;
@@ -14,24 +14,6 @@ public interface MockSequenceMother {
 
     static Sequence mockSequence() {
         return mock(Sequence.class);
-    }
-
-    static Sequence givenEligibleIncompleteSequence(MethodVerifications verifications) {
-        Sequence sequence = givenEligibleSequence();
-        given(sequence.isComplete(verifications)).willReturn(false);
-        return sequence;
-    }
-
-    static Sequence givenIneligibleIncompleteSequence(MethodVerifications verifications) {
-        Sequence sequence = givenIneligibleSequence();
-        given(sequence.isComplete(verifications)).willReturn(false);
-        return sequence;
-    }
-
-    static Sequence givenEligibleCompleteSequence(MethodVerifications verifications) {
-        Sequence sequence = givenEligibleSequence();
-        given(sequence.isComplete(verifications)).willReturn(true);
-        return sequence;
     }
 
     static Sequence givenEligibleSequence() {
@@ -49,6 +31,7 @@ public interface MockSequenceMother {
     static Sequence givenCompleteSequence(MethodVerifications verifications) {
         Sequence sequence = mockSequence();
         given(sequence.isComplete(verifications)).willReturn(true);
+        given(sequence.getNextMethods(verifications)).willReturn(MethodsMother.empty());
         return sequence;
     }
 
@@ -78,7 +61,7 @@ public interface MockSequenceMother {
 
     static Sequence givenSequenceWithNextMethod(MethodVerifications verifications, Method method) {
         Sequence sequence = mockSequence();
-        given(sequence.getNextMethod(verifications)).willReturn(Optional.of(method));
+        given(sequence.getNextMethods(verifications)).willReturn(MethodsMother.with(method));
         return sequence;
     }
 

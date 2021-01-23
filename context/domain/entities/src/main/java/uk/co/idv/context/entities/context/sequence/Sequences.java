@@ -11,7 +11,6 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Optional;
 import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -62,8 +61,8 @@ public class Sequences implements Iterable<Sequence> {
 
     public Methods getNextMethods(MethodVerifications verifications) {
         return new Methods(values.stream()
-                .map(sequence -> sequence.getNextMethod(verifications))
-                .flatMap(Optional::stream)
+                .map(sequence -> sequence.getNextMethods(verifications))
+                .flatMap(Methods::stream)
                 .collect(Collectors.toList())
         );
     }
