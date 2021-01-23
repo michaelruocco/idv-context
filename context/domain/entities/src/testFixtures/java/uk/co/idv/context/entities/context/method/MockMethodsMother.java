@@ -25,4 +25,10 @@ public interface MockMethodsMother {
         return methods;
     }
 
+    static Methods withAllComplete(MethodVerifications verifications) {
+        Methods methods = mock(Methods.class);
+        given(methods.allComplete(verifications)).willReturn(true);
+        return methods;
+    }
+
 }

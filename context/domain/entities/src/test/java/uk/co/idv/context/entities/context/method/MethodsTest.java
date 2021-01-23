@@ -153,7 +153,7 @@ class MethodsTest {
     }
 
     @Test
-    void shouldReturnTrueIfAllMethodsSuccessful() {
+    void shouldReturnAllSuccessfulIfAllMethodsSuccessful() {
         MethodVerifications verifications = mock(MethodVerifications.class);
         Method successful1 = MockMethodMother.successful(verifications);
         Method successful2 = MockMethodMother.successful(verifications);
@@ -165,7 +165,7 @@ class MethodsTest {
     }
 
     @Test
-    void shouldReturnUnsuccessfulIfAtLeastOneMethodIsNotSuccessful() {
+    void shouldReturnUnsuccessfulIfAtLeastOneMethodIsUnsuccessful() {
         MethodVerifications verifications = mock(MethodVerifications.class);
         Method successful = MockMethodMother.successful(verifications);
         Method unsuccessful = MockMethodMother.unsuccessful(verifications);
@@ -174,6 +174,30 @@ class MethodsTest {
         boolean allSuccessful = methods.allSuccessful(verifications);
 
         assertThat(allSuccessful).isFalse();
+    }
+
+    @Test
+    void shouldReturnAllCompleteIfAllMethodsComplete() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method complete1 = MockMethodMother.complete(verifications);
+        Method complete2 = MockMethodMother.complete(verifications);
+        Methods methods = MethodsMother.with(complete1, complete2);
+
+        boolean allComplete = methods.allComplete(verifications);
+
+        assertThat(allComplete).isTrue();
+    }
+
+    @Test
+    void shouldReturnIncompleteIfAtLeastOneMethodIsIncomplete() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method complete = MockMethodMother.complete(verifications);
+        Method incomplete = MockMethodMother.incomplete(verifications);
+        Methods methods = MethodsMother.with(complete, incomplete);
+
+        boolean allComplete = methods.allComplete(verifications);
+
+        assertThat(allComplete).isFalse();
     }
 
 }

@@ -53,7 +53,7 @@ class SequenceTest {
     }
 
     @Test
-    void shouldReturnIneligibleIfAtLeastOnMethodIsIneligible() {
+    void shouldReturnIneligibleIfAtLeastOneMethodIsIneligible() {
         Sequence sequence = Sequence.builder()
                 .methods(MockMethodsMother.withIneligibleMethodNames("fake-method"))
                 .build();
@@ -64,33 +64,7 @@ class SequenceTest {
     }
 
     @Test
-    void shouldReturnCompleteIfAllMethodsComplete() {
-        MethodVerifications verifications = mock(MethodVerifications.class);
-        Method complete1 = MockMethodMother.complete(verifications);
-        Method complete2 = MockMethodMother.complete(verifications);
-
-        Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(complete1, complete2))
-                .build();
-
-        assertThat(sequence.isComplete(verifications)).isTrue();
-    }
-
-    @Test
-    void shouldReturnIncompleteIfAtLeastOnMethodIsNotComplete() {
-        MethodVerifications verifications = mock(MethodVerifications.class);
-        Method complete = MockMethodMother.complete(verifications);
-        Method incomplete = MockMethodMother.incomplete(verifications);
-
-        Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(complete, incomplete))
-                .build();
-
-        assertThat(sequence.isComplete(verifications)).isFalse();
-    }
-
-    @Test
-    void shouldReturnSuccessfulMethodsAllSuccessful() {
+    void shouldReturnSuccessfulFromMethodsAllSuccessful() {
         MethodVerifications verifications = mock(MethodVerifications.class);
         Sequence sequence = Sequence.builder()
                 .methods(MockMethodsMother.withAllSuccessful(verifications))
@@ -99,6 +73,18 @@ class SequenceTest {
         boolean successful = sequence.isSuccessful(verifications);
 
         assertThat(successful).isTrue();
+    }
+
+    @Test
+    void shouldReturnCompleteFromMethodsAllComplete() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Sequence sequence = Sequence.builder()
+                .methods(MockMethodsMother.withAllComplete(verifications))
+                .build();
+
+        boolean complete = sequence.isComplete(verifications);
+
+        assertThat(complete).isTrue();
     }
 
     @Test
