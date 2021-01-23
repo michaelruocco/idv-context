@@ -108,6 +108,27 @@ class MethodsTest {
     }
 
     @Test
+    void shouldReturnLongestDurationZeroIfEmpty() {
+        Methods methods = MethodsMother.empty();
+
+        Duration duration = methods.getLongestDuration();
+
+        assertThat(duration).isEqualTo(Duration.ZERO);
+    }
+
+    @Test
+    void shouldReturnLongestDurationFromMethodWithLongestDuration() {
+        Duration longest = Duration.ofMinutes(5);
+        Method method1 = FakeMethodMother.withDuration(longest);
+        Method method2 = FakeMethodMother.withDuration(longest.minusMillis(1));
+        Methods methods = MethodsMother.with(method1, method2);
+
+        Duration duration = methods.getLongestDuration();
+
+        assertThat(duration).isEqualTo(longest);
+    }
+
+    @Test
     void shouldReturnMethodsByMethodName() {
         String methodName = "my-method";
         Method method = FakeMethodMother.withName(methodName);
@@ -166,7 +187,7 @@ class MethodsTest {
     }
 
     @Test
-    void shouldReturnUnsuccessfulIfAtLeastOneMethodIsUnsuccessful() {
+    void shouldReturnAllSuccessfulFalseIfAtLeastOneMethodIsUnsuccessful() {
         MethodVerifications verifications = mock(MethodVerifications.class);
         Method successful = MockMethodMother.successful(verifications);
         Method unsuccessful = MockMethodMother.unsuccessful(verifications);
@@ -175,6 +196,30 @@ class MethodsTest {
         boolean allSuccessful = methods.allSuccessful(verifications);
 
         assertThat(allSuccessful).isFalse();
+    }
+
+    @Test
+    void shouldReturnContainsSuccessfulTrueIfAtLeastOneMethodSuccessful() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method successful = MockMethodMother.successful(verifications);
+        Method unsuccessful = MockMethodMother.unsuccessful(verifications);
+        Methods methods = MethodsMother.with(successful, unsuccessful);
+
+        boolean containsSuccessful = methods.containsSuccessful(verifications);
+
+        assertThat(containsSuccessful).isTrue();
+    }
+
+    @Test
+    void shouldReturnContainsSuccessfulFalseIfNoMethodsSuccessful() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method unsuccessful1 = MockMethodMother.unsuccessful(verifications);
+        Method unsuccessful2 = MockMethodMother.unsuccessful(verifications);
+        Methods methods = MethodsMother.with(unsuccessful1, unsuccessful2);
+
+        boolean containsSuccessful = methods.containsSuccessful(verifications);
+
+        assertThat(containsSuccessful).isFalse();
     }
 
     @Test
@@ -212,6 +257,50 @@ class MethodsTest {
         long completedCount = methods.completedCount(verifications);
 
         assertThat(completedCount).isEqualTo(2);
+    }
+
+    @Test
+    void shouldReturnAllIneligibleIfAllMethodsIneligible() {
+        Method ineligible1 = FakeMethodMother.ineligible();
+        Method ineligible2 = FakeMethodMother.ineligible();
+        Methods methods = MethodsMother.with(ineligible1, ineligible2);
+
+        boolean allIneligible = methods.allIneligible();
+
+        assertThat(allIneligible).isTrue();
+    }
+
+    @Test
+    void shouldNotReturnAllIneligibleIfAtLeastOneMethodEligible() {
+        Method eligible = FakeMethodMother.eligible();
+        Method ineligible = FakeMethodMother.ineligible();
+        Methods methods = MethodsMother.with(eligible, ineligible);
+
+        boolean allIneligible = methods.allIneligible();
+
+        assertThat(allIneligible).isFalse();
+    }
+
+    @Test
+    void shouldReturnNamesOfIneligibleMethods() {
+        Method eligible = FakeMethodMother.eligible();
+        Method ineligible = FakeMethodMother.ineligible();
+        Methods methods = MethodsMother.with(eligible, ineligible);
+
+        Collection<String> names = methods.getIneligibleNames();
+
+        assertThat(names).containsExactly(ineligible.getName());
+    }
+
+    @Test
+    void shouldReturnEmptyIneligibleMethodNamesIfNoMethodsAreIneligible() {
+        Method eligible1 = FakeMethodMother.eligible();
+        Method eligible2 = FakeMethodMother.eligible();
+        Methods methods = MethodsMother.with(eligible1, eligible2);
+
+        Collection<String> names = methods.getIneligibleNames();
+
+        assertThat(names).isEmpty();
     }
 
     @Test

@@ -42,8 +42,16 @@ public class Methods implements Iterable<Method> {
         return values.stream().allMatch(method -> method.isSuccessful(verifications));
     }
 
+    public boolean containsSuccessful(MethodVerifications verifications) {
+        return values.stream().anyMatch(method -> method.isSuccessful(verifications));
+    }
+
     public boolean allComplete(MethodVerifications verifications) {
         return values.stream().allMatch(method -> method.isComplete(verifications));
+    }
+
+    public boolean allIneligible() {
+        return values.stream().noneMatch(Method::isEligible);
     }
 
     public long completedCount(MethodVerifications verifications) {
@@ -64,6 +72,13 @@ public class Methods implements Iterable<Method> {
         return values.stream()
                 .map(Method::getDuration)
                 .min(Comparator.comparingLong(Duration::toMillis))
+                .orElse(Duration.ZERO);
+    }
+
+    public Duration getLongestDuration() {
+        return values.stream()
+                .map(Method::getDuration)
+                .max(Comparator.comparingLong(Duration::toMillis))
                 .orElse(Duration.ZERO);
     }
 

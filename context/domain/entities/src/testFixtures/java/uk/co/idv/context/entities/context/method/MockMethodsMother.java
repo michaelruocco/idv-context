@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.context.method;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
 
+import java.time.Duration;
 import java.util.Arrays;
 import java.util.Optional;
 
@@ -18,6 +19,24 @@ public interface MockMethodsMother {
     static Methods withIneligibleMethodNames(String... names) {
         Methods methods = mock(Methods.class);
         given(methods.getIneligibleNames()).willReturn(Arrays.asList(names));
+        return methods;
+    }
+
+    static Methods withAtLeastOneEligible() {
+        Methods methods = mock(Methods.class);
+        given(methods.allIneligible()).willReturn(false);
+        return methods;
+    }
+
+    static Methods withAllIneligible() {
+        Methods methods = mock(Methods.class);
+        given(methods.allIneligible()).willReturn(true);
+        return methods;
+    }
+
+    static Methods withContainsSuccessful(MethodVerifications verifications) {
+        Methods methods = mock(Methods.class);
+        given(methods.containsSuccessful(verifications)).willReturn(true);
         return methods;
     }
 
@@ -60,6 +79,18 @@ public interface MockMethodsMother {
     static Methods withoutIncompleteMethods(MethodVerifications verifications) {
         Methods methods = mock(Methods.class);
         given(methods.getAllIncompleteMethods(verifications)).willReturn(MethodsMother.empty());
+        return methods;
+    }
+
+    static Methods withTotalDuration(Duration duration) {
+        Methods methods = mock(Methods.class);
+        given(methods.getTotalDuration()).willReturn(duration);
+        return methods;
+    }
+
+    static Methods withLongestDuration(Duration duration) {
+        Methods methods = mock(Methods.class);
+        given(methods.getLongestDuration()).willReturn(duration);
         return methods;
     }
 

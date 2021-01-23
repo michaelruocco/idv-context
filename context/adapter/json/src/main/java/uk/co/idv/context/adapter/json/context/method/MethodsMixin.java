@@ -15,6 +15,9 @@ public interface MethodsMixin {
     boolean isEmpty();
 
     @JsonIgnore
+    Duration getLongestDuration();
+
+    @JsonIgnore
     Duration getShortestDuration();
 
     @JsonIgnore
