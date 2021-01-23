@@ -32,6 +32,12 @@ public class Methods implements Iterable<Method> {
         return values.stream();
     }
 
+    public Duration getTotalDuration() {
+        return values.stream()
+                .map(Method::getDuration)
+                .reduce(Duration.ZERO, Duration::plus);
+    }
+
     public Duration getShortestDuration() {
         return values.stream()
                 .map(Method::getDuration)

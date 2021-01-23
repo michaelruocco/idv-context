@@ -116,15 +116,16 @@ class SequenceTest {
     }
 
     @Test
-    void shouldReturnSumOfMethodDurations() {
-        Method method1 = FakeMethodMother.withDuration(Duration.ofMinutes(2));
-        Method method2 = FakeMethodMother.withDuration(Duration.ofMinutes(3));
+    void shouldReturnTotalDurationFromMethodsAsSequenceDuration() {
+        Methods methods = mock(Methods.class);
+        Duration expectedDuration = Duration.ofMinutes(5);
+        given(methods.getTotalDuration()).willReturn(expectedDuration);
 
         Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(method1, method2))
+                .methods(methods)
                 .build();
 
-        assertThat(sequence.getDuration()).isEqualTo(Duration.ofMinutes(5));
+        assertThat(sequence.getDuration()).isEqualTo(expectedDuration);
     }
 
     @Test

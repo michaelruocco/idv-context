@@ -17,4 +17,7 @@ public interface MethodsMixin {
     @JsonIgnore
     Duration getShortestDuration();
 
+    @JsonIgnore
+    Duration getTotalDuration();
+
 }

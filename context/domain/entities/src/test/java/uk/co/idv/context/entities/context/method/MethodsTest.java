@@ -64,6 +64,26 @@ class MethodsTest {
     }
 
     @Test
+    void shouldReturnZeroTotalDurationIfEmpty() {
+        Methods methods = MethodsMother.empty();
+
+        Duration totalDuration = methods.getTotalDuration();
+
+        assertThat(totalDuration).isEqualTo(Duration.ZERO);
+    }
+
+    @Test
+    void shouldReturnSumOfMethodDurationsAsTotalDuration() {
+        Method method1 = FakeMethodMother.withDuration(Duration.ofMinutes(2));
+        Method method2 = FakeMethodMother.withDuration(Duration.ofMinutes(3));
+        Methods methods = MethodsMother.with(method1, method2);
+
+        Duration totalDuration = methods.getTotalDuration();
+
+        assertThat(totalDuration).isEqualTo(Duration.ofMinutes(5));
+    }
+
+    @Test
     void shouldReturnShortestDurationZeroIfEmpty() {
         Methods methods = MethodsMother.empty();
 

@@ -36,9 +36,7 @@ public class Sequence implements Iterable<Method> {
     }
 
     public Duration getDuration() {
-        return stream()
-                .map(Method::getDuration)
-                .reduce(Duration.ZERO, Duration::plus);
+        return methods.getTotalDuration();
     }
 
     public Sequence updateMethods(UnaryOperator<Method> function) {
@@ -81,6 +79,5 @@ public class Sequence implements Iterable<Method> {
                 .map(Method::getName)
                 .collect(Collectors.toSet());
     }
-
 
 }
