@@ -2,6 +2,8 @@ package uk.co.idv.context.entities.context.method;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.method.MethodVerifications;
+import uk.co.idv.method.entities.method.MockMethodMother;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
@@ -148,6 +150,30 @@ class MethodsTest {
         Methods updatedMethods = methods.updateMethods(method -> updatedMethod);
 
         assertThat(updatedMethods).containsExactly(updatedMethod, updatedMethod);
+    }
+
+    @Test
+    void shouldReturnTrueIfAllMethodsSuccessful() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method successful1 = MockMethodMother.successful(verifications);
+        Method successful2 = MockMethodMother.successful(verifications);
+        Methods methods = MethodsMother.with(successful1, successful2);
+
+        boolean allSuccessful = methods.allSuccessful(verifications);
+
+        assertThat(allSuccessful).isTrue();
+    }
+
+    @Test
+    void shouldReturnUnsuccessfulIfAtLeastOneMethodIsNotSuccessful() {
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Method successful = MockMethodMother.successful(verifications);
+        Method unsuccessful = MockMethodMother.unsuccessful(verifications);
+        Methods methods = MethodsMother.with(successful, unsuccessful);
+
+        boolean allSuccessful = methods.allSuccessful(verifications);
+
+        assertThat(allSuccessful).isFalse();
     }
 
 }

@@ -3,6 +3,7 @@ package uk.co.idv.context.entities.context.method;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.method.entities.method.Method;
+import uk.co.idv.method.entities.method.MethodVerifications;
 
 import java.time.Duration;
 import java.util.Arrays;
@@ -32,6 +33,18 @@ public class Methods implements Iterable<Method> {
         return values.stream();
     }
 
+    public boolean containsMethod(String methodName) {
+        return !getByName(methodName).isEmpty();
+    }
+
+    public boolean allSuccessful(MethodVerifications verifications) {
+        return values.stream().allMatch(method -> method.isSuccessful(verifications));
+    }
+
+    public boolean isEmpty() {
+        return values.isEmpty();
+    }
+
     public Duration getTotalDuration() {
         return values.stream()
                 .map(Method::getDuration)
@@ -52,10 +65,6 @@ public class Methods implements Iterable<Method> {
                 .collect(Collectors.toSet());
     }
 
-    public boolean containsMethod(String methodName) {
-        return !getByName(methodName).isEmpty();
-    }
-
     public Methods getByName(String methodName) {
         return new Methods(values.stream()
                 .filter(method -> method.hasName(methodName))
@@ -68,10 +77,6 @@ public class Methods implements Iterable<Method> {
                 .map(function)
                 .collect(Collectors.toList())
         );
-    }
-
-    public boolean isEmpty() {
-        return values.isEmpty();
     }
 
 }

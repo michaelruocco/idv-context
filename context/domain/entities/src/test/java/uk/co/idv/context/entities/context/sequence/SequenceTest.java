@@ -90,29 +90,15 @@ class SequenceTest {
     }
 
     @Test
-    void shouldReturnSuccessfulIfAllMethodsSuccessful() {
+    void shouldReturnSuccessfulMethodsAllSuccessful() {
         MethodVerifications verifications = mock(MethodVerifications.class);
-        Method successful1 = MockMethodMother.successful(verifications);
-        Method successful2 = MockMethodMother.successful(verifications);
-
         Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(successful1, successful2))
+                .methods(MockMethodsMother.withAllSuccessful(verifications))
                 .build();
 
-        assertThat(sequence.isSuccessful(verifications)).isTrue();
-    }
+        boolean successful = sequence.isSuccessful(verifications);
 
-    @Test
-    void shouldReturnUnsuccessfulIfAtLeastOnMethodIsNotSuccessful() {
-        MethodVerifications verifications = mock(MethodVerifications.class);
-        Method successful = MockMethodMother.successful(verifications);
-        Method unsuccessful = MockMethodMother.unsuccessful(verifications);
-
-        Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(successful, unsuccessful))
-                .build();
-
-        assertThat(sequence.isSuccessful(verifications)).isFalse();
+        assertThat(successful).isTrue();
     }
 
     @Test
