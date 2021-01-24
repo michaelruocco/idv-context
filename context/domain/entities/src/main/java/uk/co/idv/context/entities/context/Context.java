@@ -108,6 +108,7 @@ public class Context {
         return withSequences(sequences.updateMethods(function));
     }
 
+    //TODO unit test
     public Context add(Verification verification) {
         String methodName = verification.getMethodName();
         if (isNextMethod(methodName)) {
@@ -117,6 +118,7 @@ public class Context {
         throw new NotNextMethodException(methodName);
     }
 
+    //TODO unit test
     public CompleteVerificationResponse completeVerification(CompleteVerificationRequest request) {
         Verifications completed = verifications.complete(request);
         return CompleteVerificationResponse.builder()
@@ -126,10 +128,12 @@ public class Context {
                 .build();
     }
 
+    //TODO unit test
     public Context withVerifications(Verifications verifications) {
         return toBuilder().verifications(verifications).build();
     }
 
+    //TODO unit test
     public Verification getVerification(UUID id) {
         return verifications.getById(id);
     }

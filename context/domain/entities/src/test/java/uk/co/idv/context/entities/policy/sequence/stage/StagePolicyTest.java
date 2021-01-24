@@ -19,6 +19,16 @@ class StagePolicyTest {
             .build();
 
     @Test
+    void shouldReturnType() {
+        assertThat(policy.getType()).isEqualTo(type);
+    }
+
+    @Test
+    void shouldReturnMethodPolicies() {
+        assertThat(policy.getMethodPolicies()).isEqualTo(methodPolicies);
+    }
+
+    @Test
     void shouldReturnTypeName() {
         String expectedTypeName = "type-name";
         given(type.getName()).willReturn(expectedTypeName);
@@ -29,11 +39,6 @@ class StagePolicyTest {
     }
 
     @Test
-    void shouldReturnMethodPolicies() {
-        assertThat(policy.getMethodPolicies()).isEqualTo(methodPolicies);
-    }
-
-    @Test
     void shouldReturnRequestedDataFromMethodPolicies() {
         RequestedData expectedRequestedData = mock(RequestedData.class);
         given(methodPolicies.getRequestedData()).willReturn(expectedRequestedData);
@@ -41,11 +46,6 @@ class StagePolicyTest {
         RequestedData requestedData = policy.getRequestedData();
 
         assertThat(requestedData).isEqualTo(expectedRequestedData);
-    }
-
-    @Test
-    void shouldReturnCompletionPolicy() {
-        assertThat(policy.getType()).isEqualTo(type);
     }
 
 }

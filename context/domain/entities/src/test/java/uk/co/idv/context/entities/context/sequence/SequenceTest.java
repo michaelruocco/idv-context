@@ -28,6 +28,17 @@ class SequenceTest {
     }
 
     @Test
+    void shouldBeIterable() {
+        Stages stages = StagesMother.withOneFakeMethod();
+
+        Sequence sequence = Sequence.builder()
+                .stages(stages)
+                .build();
+
+        assertThat(sequence).containsExactlyElementsOf(stages);
+    }
+
+    @Test
     void shouldReturnStages() {
         Stages stages = StagesMother.withOneFakeMethod();
 

@@ -53,8 +53,8 @@ public class Stages implements Iterable<Stage> {
         return values.stream().allMatch(stage -> stage.isComplete(verifications));
     }
 
-    public long completedCount(MethodVerifications verifications) {
-        return values.stream().filter(stage -> stage.isComplete(verifications)).count();
+    public long completedMethodCount(MethodVerifications verifications) {
+        return values.stream().mapToLong(stage -> stage.completedMethodCount(verifications)).sum();
     }
 
     public Methods getNextIncompleteMethods(MethodVerifications verifications) {

@@ -21,13 +21,18 @@ import static org.mockito.Mockito.mock;
 
 class StageTest {
 
-    private final StageType typePolicy = mock(StageType.class);
+    private final StageType type = mock(StageType.class);
     private final Methods methods = mock(Methods.class);
 
     private final Stage stage = Stage.builder()
-            .type(typePolicy)
+            .type(type)
             .methods(methods)
             .build();
+
+    @Test
+    void shouldReturnType() {
+        assertThat(stage.getType()).isEqualTo(type);
+    }
 
     @Test
     void shouldReturnMethods() {
@@ -35,8 +40,13 @@ class StageTest {
     }
 
     @Test
-    void shouldReturnCompletionPolicy() {
-        assertThat(stage.getType()).isEqualTo(typePolicy);
+    void shouldReturnTypeName() {
+        String expectedTypeName = "type-name";
+        given(type.getName()).willReturn(expectedTypeName);
+
+        String typeName = stage.getTypeName();
+
+        assertThat(typeName).isEqualTo(expectedTypeName);
     }
 
     @Test
@@ -50,7 +60,7 @@ class StageTest {
     @Test
     void shouldReturnEligibilityFromPolicy() {
         Eligibility expectedEligibility = EligibilityMother.eligible();
-        given(typePolicy.calculateEligibility(methods)).willReturn(expectedEligibility);
+        given(type.calculateEligibility(methods)).willReturn(expectedEligibility);
 
         Eligibility eligibility = stage.getEligibility();
 
@@ -60,7 +70,7 @@ class StageTest {
     @Test
     void shouldReturnIsEligibleFromEligibilityFromPolicy() {
         Eligibility expectedEligibility = EligibilityMother.eligible();
-        given(typePolicy.calculateEligibility(methods)).willReturn(expectedEligibility);
+        given(type.calculateEligibility(methods)).willReturn(expectedEligibility);
 
         boolean eligible = stage.isEligible();
 
@@ -70,7 +80,7 @@ class StageTest {
     @Test
     void shouldReturnDurationFromPolicy() {
         Duration expectedDuration = Duration.ofMinutes(5);
-        given(typePolicy.calculateDuration(methods)).willReturn(expectedDuration);
+        given(type.calculateDuration(methods)).willReturn(expectedDuration);
 
         Duration duration = stage.getDuration();
 
@@ -105,7 +115,7 @@ class StageTest {
 
         Stage updatedStage = stage.updateMethods(function);
 
-        assertThat(updatedStage.getType()).isEqualTo(typePolicy);
+        assertThat(updatedStage.getType()).isEqualTo(type);
         assertThat(updatedStage.getMethods()).isEqualTo(expectedMethods);
     }
 
@@ -113,7 +123,7 @@ class StageTest {
     void shouldReturnNextMethodsFromPolicy() {
         Methods expectedMethods = mock(Methods.class);
         MethodVerifications verifications = mock(MethodVerifications.class);
-        given(typePolicy.calculateNextMethods(methods, verifications)).willReturn(expectedMethods);
+        given(type.calculateNextMethods(methods, verifications)).willReturn(expectedMethods);
 
         Methods nextMethods = stage.getNextMethods(verifications);
 
@@ -123,7 +133,7 @@ class StageTest {
     @Test
     void shouldReturnSuccessfulFromPolicy() {
         MethodVerifications verifications = mock(MethodVerifications.class);
-        given(typePolicy.calculateSuccessful(methods, verifications)).willReturn(true);
+        given(type.calculateSuccessful(methods, verifications)).willReturn(true);
 
         boolean successful = stage.isSuccessful(verifications);
 
@@ -133,7 +143,7 @@ class StageTest {
     @Test
     void shouldReturnCompleteFromPolicy() {
         MethodVerifications verifications = mock(MethodVerifications.class);
-        given(typePolicy.calculateComplete(methods, verifications)).willReturn(true);
+        given(type.calculateComplete(methods, verifications)).willReturn(true);
 
         boolean complete = stage.isComplete(verifications);
 

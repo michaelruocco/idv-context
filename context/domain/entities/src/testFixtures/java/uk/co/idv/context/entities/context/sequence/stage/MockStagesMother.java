@@ -50,7 +50,7 @@ public interface MockStagesMother {
 
     static Stages withCompletedMethodCount(MethodVerifications verifications, long completedCount) {
         Stages stages = mock(Stages.class);
-        given(stages.completedCount(verifications)).willReturn(completedCount);
+        given(stages.completedMethodCount(verifications)).willReturn(completedCount);
         return stages;
     }
 

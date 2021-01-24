@@ -61,7 +61,7 @@ public class Sequence implements Iterable<Stage> {
     }
 
     public long completedMethodCount(MethodVerifications verifications) {
-        return stages.completedCount(verifications);
+        return stages.completedMethodCount(verifications);
     }
 
 }

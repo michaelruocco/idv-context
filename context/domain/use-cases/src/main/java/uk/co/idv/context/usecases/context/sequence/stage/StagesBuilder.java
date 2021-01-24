@@ -6,6 +6,7 @@ import uk.co.idv.context.entities.context.sequence.stage.StagesRequest;
 
 import java.util.stream.Collectors;
 
+//TODO unit tests
 @RequiredArgsConstructor
 public class StagesBuilder {
 
