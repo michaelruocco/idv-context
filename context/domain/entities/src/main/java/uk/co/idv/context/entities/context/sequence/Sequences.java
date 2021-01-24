@@ -61,7 +61,7 @@ public class Sequences implements Iterable<Sequence> {
 
     public Methods getNextMethods(MethodVerifications verifications) {
         return new Methods(values.stream()
-                .map(sequence -> sequence.getNextMethods(verifications))
+                .map(sequence -> sequence.getNextIncompleteMethods(verifications))
                 .flatMap(Methods::stream)
                 .collect(Collectors.toList())
         );

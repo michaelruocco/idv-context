@@ -8,40 +8,42 @@
   "sequencePolicies": [
     {
       "name": "one-time-passcode",
-      "nextMethodsPolicy": {
-        "type": "in-order"
-      },
-      "methodPolicies": [
+      "stagePolicies": [
         {
-          "name": "one-time-passcode",
-          "config": {
-            "maxNumberOfAttempts": 3,
-            "duration": 300000,
-            "passcodeConfig": {
-              "length": 8,
-              "duration": 120000,
-              "maxNumberOfDeliveries": 2
-            }
-          },
-          "deliveryMethodConfigs": [
+          "type": "all-methods",
+          "methodPolicies": [
             {
-              "type": "sms",
-              "phoneNumberConfig": {
-                "country": "GB",
-                "allowInternational": false,
-                "lastUpdatedConfig": {
-                  "allowUnknown": true,
-                  "minDaysSinceUpdate": 5
-                },
-                "simSwapConfig": {
-                  "acceptableStatuses": [
-                    "success"
-                  ],
-                  "timeout": 2000,
-                  "minDaysSinceSwap": 5,
-                  "async": true
+              "name": "one-time-passcode",
+              "config": {
+                "maxNumberOfAttempts": 3,
+                "duration": 300000,
+                "passcodeConfig": {
+                  "length": 8,
+                  "duration": 120000,
+                  "maxNumberOfDeliveries": 2
                 }
-              }
+              },
+              "deliveryMethodConfigs": [
+                {
+                  "type": "sms",
+                  "phoneNumberConfig": {
+                    "country": "GB",
+                    "allowInternational": false,
+                    "lastUpdatedConfig": {
+                      "allowUnknown": true,
+                      "minDaysSinceUpdate": 5
+                    },
+                    "simSwapConfig": {
+                      "acceptableStatuses": [
+                        "success"
+                      ],
+                      "timeout": 2000,
+                      "minDaysSinceSwap": 5,
+                      "async": true
+                    }
+                  }
+                }
+              ]
             }
           ]
         }

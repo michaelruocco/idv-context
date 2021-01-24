@@ -31,7 +31,7 @@ public interface MockSequenceMother {
     static Sequence givenCompleteSequence(MethodVerifications verifications) {
         Sequence sequence = mockSequence();
         given(sequence.isComplete(verifications)).willReturn(true);
-        given(sequence.getNextMethods(verifications)).willReturn(MethodsMother.empty());
+        given(sequence.getNextIncompleteMethods(verifications)).willReturn(MethodsMother.empty());
         return sequence;
     }
 
@@ -61,7 +61,7 @@ public interface MockSequenceMother {
 
     static Sequence givenSequenceWithNextMethod(MethodVerifications verifications, Method method) {
         Sequence sequence = mockSequence();
-        given(sequence.getNextMethods(verifications)).willReturn(MethodsMother.with(method));
+        given(sequence.getNextIncompleteMethods(verifications)).willReturn(MethodsMother.with(method));
         return sequence;
     }
 

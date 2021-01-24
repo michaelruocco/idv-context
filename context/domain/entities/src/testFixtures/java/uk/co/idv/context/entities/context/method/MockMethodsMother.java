@@ -16,6 +16,12 @@ public interface MockMethodsMother {
         return withIneligibleMethodNames();
     }
 
+    static Methods containingMethod(String name) {
+        Methods methods = mock(Methods.class);
+        given(methods.containsMethod(name)).willReturn(true);
+        return methods;
+    }
+
     static Methods withIneligibleMethodNames(String... names) {
         Methods methods = mock(Methods.class);
         given(methods.getIneligibleNames()).willReturn(Arrays.asList(names));

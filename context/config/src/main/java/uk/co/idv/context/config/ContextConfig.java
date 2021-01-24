@@ -21,6 +21,8 @@ import uk.co.idv.context.usecases.context.method.MethodsBuilder;
 import uk.co.idv.context.usecases.context.protect.ContextDataProtector;
 import uk.co.idv.context.usecases.context.sequence.SequenceBuilder;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
+import uk.co.idv.context.usecases.context.sequence.stage.StageBuilder;
+import uk.co.idv.context.usecases.context.sequence.stage.StagesBuilder;
 import uk.co.idv.context.usecases.policy.ContextPoliciesPopulator;
 import uk.co.idv.context.usecases.policy.ContextPolicyRepository;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
@@ -106,7 +108,11 @@ public class ContextConfig {
     }
 
     private SequencesBuilder sequencesBuilder() {
-        return new SequencesBuilder(new SequenceBuilder(methodsBuilder()));
+        return new SequencesBuilder(new SequenceBuilder(stagesBuilder()));
+    }
+
+    private StagesBuilder stagesBuilder() {
+        return new StagesBuilder(new StageBuilder(methodsBuilder()));
     }
 
     private MethodsBuilder methodsBuilder() {

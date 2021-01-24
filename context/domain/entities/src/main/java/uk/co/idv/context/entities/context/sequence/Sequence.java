@@ -4,30 +4,29 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.With;
 import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.sequence.nextmethods.NextMethodsPolicy;
+import uk.co.idv.context.entities.context.sequence.stage.Stage;
+import uk.co.idv.context.entities.context.sequence.stage.Stages;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.eligibility.Eligible;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
 
 import java.time.Duration;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.function.UnaryOperator;
 
 @Builder
 @Data
-public class Sequence implements Iterable<Method> {
+public class Sequence implements Iterable<Stage> {
 
     private final String name;
-    private final NextMethodsPolicy nextMethodsPolicy;
 
     @With
-    private final Methods methods;
+    private final Stages stages;
 
     @Override
-    public Iterator<Method> iterator() {
-        return methods.iterator();
+    public Iterator<Stage> iterator() {
+        return stages.iterator();
     }
 
     public boolean isEligible() {
@@ -35,35 +34,34 @@ public class Sequence implements Iterable<Method> {
     }
 
     public Duration getDuration() {
-        return methods.getTotalDuration();
+        return stages.getTotalDuration();
     }
 
     public Sequence updateMethods(UnaryOperator<Method> function) {
-        return withMethods(methods.updateMethods(function));
+        return withStages(stages.updateMethods(function));
     }
 
     public Eligibility getEligibility() {
-        Collection<String> names = methods.getIneligibleNames();
-        if (names.isEmpty()) {
+        if (stages.allEligible()) {
             return new Eligible();
         }
-        return new SequenceIneligible(names);
+        return new SequenceIneligible(stages.getIneligibleMethodNames());
     }
 
-    public Methods getNextMethods(MethodVerifications verifications) {
-        return nextMethodsPolicy.calculateNextMethods(methods, verifications);
+    public Methods getNextIncompleteMethods(MethodVerifications verifications) {
+        return stages.getNextIncompleteMethods(verifications);
     }
 
     public boolean isSuccessful(MethodVerifications verifications) {
-        return methods.allSuccessful(verifications);
+        return stages.allSuccessful(verifications);
     }
 
     public boolean isComplete(MethodVerifications verifications) {
-        return methods.allComplete(verifications);
+        return stages.allComplete(verifications);
     }
 
     public long completedMethodCount(MethodVerifications verifications) {
-        return methods.completedCount(verifications);
+        return stages.completedCount(verifications);
     }
 
 }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.context.adapter.json.policy.method.MethodPolicyModule;
-import uk.co.idv.context.adapter.json.policy.sequence.nextmethods.NextMethodsPolicyModule;
+import uk.co.idv.context.adapter.json.policy.sequence.stage.StagePolicyModule;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicies;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
 import uk.co.idv.method.adapter.json.method.MethodMapping;
@@ -35,7 +35,7 @@ public class SequencePolicyModule extends SimpleModule {
     public Iterable<? extends Module> getDependencies() {
         return Arrays.asList(
                 new MethodPolicyModule(mappings),
-                new NextMethodsPolicyModule()
+                new StagePolicyModule()
         );
     }
 

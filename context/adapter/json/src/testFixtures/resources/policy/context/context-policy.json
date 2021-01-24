@@ -8,17 +8,19 @@
   "sequencePolicies": [
     {
       "name": "default-sequence",
-      "nextMethodsPolicy": {
-        "type": "in-order"
-      },
-      "methodPolicies": [
+      "stagePolicies": [
         {
-          "name": "fake-method",
-          "config": {
-            "maxNumberOfAttempts": 3,
-            "duration": 300000,
-            "fakeValue": "fake"
-          }
+          "type": "all-methods",
+          "methodPolicies": [
+            {
+              "name": "fake-method",
+              "config": {
+                "maxNumberOfAttempts": 3,
+                "duration": 300000,
+                "fakeValue": "fake"
+              }
+            }
+          ]
         }
       ]
     }

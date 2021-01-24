@@ -17,40 +17,42 @@ Feature: Context Verifications
         "sequencePolicies": [
         {
             "name": "one-time-passcode",
-            "nextMethodsPolicy": {
-              "type": "in-order"
-            },
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "sms",
-                    "phoneNumberConfig": {
-                      "country": "GB",
-                      "allowInternational": false,
-                      "lastUpdatedConfig": {
-                        "allowUnknown": true,
-                        "minDaysSinceUpdate": 5
-                      },
-                      "simSwapConfig": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6,
-                        "async": false
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
                       }
-                    }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "sms",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": true,
+                            "minDaysSinceUpdate": 5
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success"
+                            ],
+                            "timeout": 2000,
+                            "minDaysSinceSwap": 6,
+                            "async": false
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -161,42 +163,44 @@ Feature: Context Verifications
             "sequencePolicies": [
               {
                 "name": "one-time-passcode",
-                "nextMethodsPolicy": {
-                  "type": "in-order"
-                },
-                "methodPolicies": [
+                "stagePolicies": [
                   {
-                    "config": {
-                      "maxNumberOfAttempts": 3,
-                      "duration": 300000,
-                      "passcodeConfig": {
-                        "length": 8,
-                        "duration": 120000,
-                        "maxNumberOfDeliveries": 2
-                      }
-                    },
-                    "deliveryMethodConfigs": [
+                    "type": "all-methods",
+                    "methodPolicies": [
                       {
-                        "type": "sms",
-                        "phoneNumberConfig": {
-                          "country": "GB",
-                          "allowInternational": false,
-                          "lastUpdatedConfig": {
-                            "allowUnknown": true,
-                            "minDaysSinceUpdate": 5
-                          },
-                          "simSwapConfig": {
-                            "acceptableStatuses": [
-                              "success"
-                            ],
-                            "timeout": 2000,
-                            "minDaysSinceSwap": 6,
-                            "async": false
+                        "config": {
+                          "maxNumberOfAttempts": 3,
+                          "duration": 300000,
+                          "passcodeConfig": {
+                            "length": 8,
+                            "duration": 120000,
+                            "maxNumberOfDeliveries": 2
                           }
-                        }
+                        },
+                        "deliveryMethodConfigs": [
+                          {
+                            "type": "sms",
+                            "phoneNumberConfig": {
+                              "country": "GB",
+                              "allowInternational": false,
+                              "lastUpdatedConfig": {
+                                "allowUnknown": true,
+                                "minDaysSinceUpdate": 5
+                              },
+                              "simSwapConfig": {
+                                "acceptableStatuses": [
+                                  "success"
+                                ],
+                                "timeout": 2000,
+                                "minDaysSinceSwap": 6,
+                                "async": false
+                              }
+                            }
+                          }
+                        ],
+                        "name": "one-time-passcode"
                       }
-                    ],
-                    "name": "one-time-passcode"
+                    ]
                   }
                 ]
               }
@@ -224,35 +228,37 @@ Feature: Context Verifications
         "sequences": [
           {
             "name": "one-time-passcode",
-            "nextMethodsPolicy": {
-              "type": "in-order"
-            },
-            "methods": [
+            "stages": [
               {
-                "name": "one-time-passcode",
-                "deliveryMethods": [
+                "type": "all-methods",
+                "methods": [
                   {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247731",
+                    "name": "one-time-passcode",
+                    "deliveryMethods": [
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "+447808247731",
+                        "eligibility": {
+                          "eligible": true,
+                          "complete": true
+                        }
+                      }
+                    ],
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
+                      }
+                    },
                     "eligibility": {
-                      "eligible": true,
-                      "complete": true
+                      "eligible": true
                     }
                   }
-                ],
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "eligibility": {
-                  "eligible": true
-                }
+                ]
               }
             ],
             "duration": 300000,
@@ -347,42 +353,44 @@ Feature: Context Verifications
           "type": "channel"
         },
         "sequencePolicies": [
-        {
+          {
             "name": "one-time-passcode",
-            "nextMethodsPolicy": {
-              "type": "in-order"
-            },
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "sms",
-                    "phoneNumberConfig": {
-                      "country": "GB",
-                      "allowInternational": false,
-                      "lastUpdatedConfig": {
-                        "allowUnknown": true,
-                        "minDaysSinceUpdate": 5
-                      },
-                      "simSwapConfig": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6,
-                        "async": false
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
                       }
-                    }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "sms",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": true,
+                            "minDaysSinceUpdate": 5
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success"
+                            ],
+                            "timeout": 2000,
+                            "minDaysSinceSwap": 6,
+                            "async": false
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -493,42 +501,44 @@ Feature: Context Verifications
             "sequencePolicies": [
               {
                 "name": "one-time-passcode",
-                "nextMethodsPolicy": {
-                  "type": "in-order"
-                },
-                "methodPolicies": [
+                "stagePolicies": [
                   {
-                    "config": {
-                      "maxNumberOfAttempts": 3,
-                      "duration": 300000,
-                      "passcodeConfig": {
-                        "length": 8,
-                        "duration": 120000,
-                        "maxNumberOfDeliveries": 2
-                      }
-                    },
-                    "deliveryMethodConfigs": [
+                    "type": "all-methods",
+                    "methodPolicies": [
                       {
-                        "type": "sms",
-                        "phoneNumberConfig": {
-                          "country": "GB",
-                          "allowInternational": false,
-                          "lastUpdatedConfig": {
-                            "allowUnknown": true,
-                            "minDaysSinceUpdate": 5
-                          },
-                          "simSwapConfig": {
-                            "acceptableStatuses": [
-                              "success"
-                            ],
-                            "timeout": 2000,
-                            "minDaysSinceSwap": 6,
-                            "async": false
+                        "config": {
+                          "maxNumberOfAttempts": 3,
+                          "duration": 300000,
+                          "passcodeConfig": {
+                            "length": 8,
+                            "duration": 120000,
+                            "maxNumberOfDeliveries": 2
                           }
-                        }
+                        },
+                        "deliveryMethodConfigs": [
+                          {
+                            "type": "sms",
+                            "phoneNumberConfig": {
+                              "country": "GB",
+                              "allowInternational": false,
+                              "lastUpdatedConfig": {
+                                "allowUnknown": true,
+                                "minDaysSinceUpdate": 5
+                              },
+                              "simSwapConfig": {
+                                "acceptableStatuses": [
+                                  "success"
+                                ],
+                                "timeout": 2000,
+                                "minDaysSinceSwap": 6,
+                                "async": false
+                              }
+                            }
+                          }
+                        ],
+                        "name": "one-time-passcode"
                       }
-                    ],
-                    "name": "one-time-passcode"
+                    ]
                   }
                 ]
               }
@@ -556,35 +566,37 @@ Feature: Context Verifications
         "sequences": [
           {
             "name": "one-time-passcode",
-            "nextMethodsPolicy": {
-              "type": "in-order"
-            },
-            "methods": [
+            "stages": [
               {
-                "name": "one-time-passcode",
-                "deliveryMethods": [
+                "type": "all-methods",
+                "methods": [
                   {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247732",
+                    "name": "one-time-passcode",
+                    "deliveryMethods": [
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "+447808247732",
+                        "eligibility": {
+                          "eligible": true,
+                          "complete": true
+                        }
+                      }
+                    ],
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
+                      }
+                    },
                     "eligibility": {
-                      "eligible": true,
-                      "complete": true
+                      "eligible": true
                     }
                   }
-                ],
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "eligibility": {
-                  "eligible": true
-                }
+                ]
               }
             ],
             "duration": 300000,
@@ -688,42 +700,44 @@ Feature: Context Verifications
           "type": "channel"
         },
         "sequencePolicies": [
-        {
+          {
             "name": "one-time-passcode",
-            "nextMethodsPolicy": {
-              "type": "in-order"
-            },
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "sms",
-                    "phoneNumberConfig": {
-                      "country": "GB",
-                      "allowInternational": false,
-                      "lastUpdatedConfig": {
-                        "allowUnknown": true,
-                        "minDaysSinceUpdate": 5
-                      },
-                      "simSwapConfig": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6,
-                        "async": false
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
                       }
-                    }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "sms",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": true,
+                            "minDaysSinceUpdate": 5
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success"
+                            ],
+                            "timeout": 2000,
+                            "minDaysSinceSwap": 6,
+                            "async": false
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -834,42 +848,44 @@ Feature: Context Verifications
             "sequencePolicies": [
               {
                 "name": "one-time-passcode",
-                "nextMethodsPolicy": {
-                  "type": "in-order"
-                },
-                "methodPolicies": [
+                "stagePolicies": [
                   {
-                    "config": {
-                      "maxNumberOfAttempts": 3,
-                      "duration": 300000,
-                      "passcodeConfig": {
-                        "length": 8,
-                        "duration": 120000,
-                        "maxNumberOfDeliveries": 2
-                      }
-                    },
-                    "deliveryMethodConfigs": [
+                    "type": "all-methods",
+                    "methodPolicies": [
                       {
-                        "type": "sms",
-                        "phoneNumberConfig": {
-                          "country": "GB",
-                          "allowInternational": false,
-                          "lastUpdatedConfig": {
-                            "allowUnknown": true,
-                            "minDaysSinceUpdate": 5
-                          },
-                          "simSwapConfig": {
-                            "acceptableStatuses": [
-                              "success"
-                            ],
-                            "timeout": 2000,
-                            "minDaysSinceSwap": 6,
-                            "async": false
+                        "config": {
+                          "maxNumberOfAttempts": 3,
+                          "duration": 300000,
+                          "passcodeConfig": {
+                            "length": 8,
+                            "duration": 120000,
+                            "maxNumberOfDeliveries": 2
                           }
-                        }
+                        },
+                        "deliveryMethodConfigs": [
+                          {
+                            "type": "sms",
+                            "phoneNumberConfig": {
+                              "country": "GB",
+                              "allowInternational": false,
+                              "lastUpdatedConfig": {
+                                "allowUnknown": true,
+                                "minDaysSinceUpdate": 5
+                              },
+                              "simSwapConfig": {
+                                "acceptableStatuses": [
+                                  "success"
+                                ],
+                                "timeout": 2000,
+                                "minDaysSinceSwap": 6,
+                                "async": false
+                              }
+                            }
+                          }
+                        ],
+                        "name": "one-time-passcode"
                       }
-                    ],
-                    "name": "one-time-passcode"
+                    ]
                   }
                 ]
               }
@@ -897,35 +913,37 @@ Feature: Context Verifications
         "sequences": [
           {
             "name": "one-time-passcode",
-            "nextMethodsPolicy": {
-              "type": "in-order"
-            },
-            "methods": [
+            "stages": [
               {
-                "name": "one-time-passcode",
-                "deliveryMethods": [
+                "type": "all-methods",
+                "methods": [
                   {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247733",
+                    "name": "one-time-passcode",
+                    "deliveryMethods": [
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "+447808247733",
+                        "eligibility": {
+                          "eligible": true,
+                          "complete": true
+                        }
+                      }
+                    ],
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
+                      }
+                    },
                     "eligibility": {
-                      "eligible": true,
-                      "complete": true
+                      "eligible": true
                     }
                   }
-                ],
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "eligibility": {
-                  "eligible": true
-                }
+                ]
               }
             ],
             "duration": 300000,

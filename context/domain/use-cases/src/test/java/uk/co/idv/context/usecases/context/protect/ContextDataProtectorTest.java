@@ -8,6 +8,7 @@ import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequenceMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.context.entities.context.sequence.SequencesMother;
+import uk.co.idv.context.entities.context.sequence.stage.StagesMother;
 import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.method.entities.method.Method;
@@ -68,7 +69,7 @@ class ContextDataProtectorTest {
         Context protectedContext = protector.apply(context);
 
         Sequences sequences = protectedContext.getSequences();
-        assertThat(sequences).containsExactly(sequence.withMethods(MethodsMother.with(protectedMethod)));
+        assertThat(sequences).containsExactly(sequence.withStages(StagesMother.with(MethodsMother.with(protectedMethod))));
     }
 
 }
