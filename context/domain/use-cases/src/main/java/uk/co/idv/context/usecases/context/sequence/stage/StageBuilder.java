@@ -7,7 +7,6 @@ import uk.co.idv.context.entities.context.sequence.stage.StagesRequest;
 import uk.co.idv.context.entities.policy.sequence.stage.StagePolicy;
 import uk.co.idv.context.usecases.context.method.MethodsBuilder;
 
-//TODO unit tests
 @RequiredArgsConstructor
 public class StageBuilder {
 
