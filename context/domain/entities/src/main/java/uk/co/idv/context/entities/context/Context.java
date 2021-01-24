@@ -38,6 +38,7 @@ public class Context {
     private final Sequences sequences;
 
     @Builder.Default
+    @With
     private final Verifications verifications = new Verifications();
 
     public Channel getChannel() {
@@ -126,11 +127,6 @@ public class Context {
                 .updated(withVerifications(completed))
                 .verification(completed.getById(request.getId()))
                 .build();
-    }
-
-    //TODO unit test
-    public Context withVerifications(Verifications verifications) {
-        return toBuilder().verifications(verifications).build();
     }
 
     //TODO unit test
