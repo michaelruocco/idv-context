@@ -10,7 +10,6 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
-//TODO add unit test coverage
 @Builder(toBuilder = true)
 @Data
 public class Verification {
