@@ -84,7 +84,7 @@ subprojects {
         commonsMathVersion = "3.6.1"
 
         junitVersion = "5.7.0"
-        assertjVersion = "3.18.1"
+        assertjVersion = "3.19.0"
         junitPioneerVersion = "1.2.0"
         mockitoVersion = "3.7.7"
         jsonUnitAssertjVersion = "2.22.1"
