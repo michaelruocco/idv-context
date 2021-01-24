@@ -67,7 +67,6 @@ public class Sequences implements Iterable<Sequence> {
         );
     }
 
-    //TODO unit test
     public Collection<String> getNextMethodNames(MethodVerifications verifications) {
         return getNextMethods(verifications).stream()
                 .map(Method::getName)

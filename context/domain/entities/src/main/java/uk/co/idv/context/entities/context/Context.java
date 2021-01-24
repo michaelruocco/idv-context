@@ -118,7 +118,6 @@ public class Context {
         throw new NotNextMethodException(methodName);
     }
 
-    //TODO unit test
     public CompleteVerificationResponse completeVerification(CompleteVerificationRequest request) {
         Verifications completed = verifications.complete(request);
         return CompleteVerificationResponse.builder()

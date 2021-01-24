@@ -7,6 +7,7 @@ import uk.co.idv.method.entities.method.MethodVerifications;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
+import java.util.Collection;
 import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -173,7 +174,7 @@ class SequencesTest {
     }
 
     @Test
-    void shouldReturnNextMethodsMatchingNameIfPresent() {
+    void shouldReturnNextMethods() {
         Method method = FakeMethodMother.build();
         MethodVerifications verifications = mock(MethodVerifications.class);
         Sequence sequence1 = givenCompleteSequence(verifications);
@@ -183,6 +184,19 @@ class SequencesTest {
         Methods methods = sequences.getNextMethods(verifications);
 
         assertThat(methods).containsExactly(method);
+    }
+
+    @Test
+    void shouldReturnNextMethodsName() {
+        Method method = FakeMethodMother.build();
+        MethodVerifications verifications = mock(MethodVerifications.class);
+        Sequence sequence1 = givenCompleteSequence(verifications);
+        Sequence sequence2 = givenSequenceWithNextMethod(verifications, method);
+        Sequences sequences = SequencesMother.with(sequence1, sequence2);
+
+        Collection<String> methodNames = sequences.getNextMethodNames(verifications);
+
+        assertThat(methodNames).containsExactly(method.getName());
     }
 
 }
