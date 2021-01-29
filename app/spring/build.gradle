@@ -86,11 +86,6 @@ bootRun {
     systemProperty "response.filtering.enabled", System.properties.getOrDefault("response.filtering.enabled", "true")
 }
 
-integrationTest {
-    systemProperty "aws.accessKeyId", "abc"
-    systemProperty "aws.secretKey", "123"
-}
-
 apply from: rootProject.file('publish.gradle')
 
 publishing {
