@@ -12,6 +12,7 @@ import java.util.UUID;
 import static com.mongodb.client.model.Filters.eq;
 
 @RequiredArgsConstructor
+//TODO unit tests
 public class ContextConverter {
 
     private final JsonConverter converter;

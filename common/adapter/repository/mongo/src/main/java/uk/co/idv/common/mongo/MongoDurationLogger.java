@@ -8,6 +8,7 @@ import java.time.Instant;
 import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
 
 @Slf4j
+//TODO split this and duration calculator into separate duration-logging library
 public class MongoDurationLogger {
 
     private static final String OPERATION_NAME = "mongo-operation";
