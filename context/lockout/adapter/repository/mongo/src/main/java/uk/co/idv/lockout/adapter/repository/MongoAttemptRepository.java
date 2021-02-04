@@ -19,7 +19,7 @@ import java.util.Optional;
 public class MongoAttemptRepository implements AttemptRepository {
 
     private final MongoCollection<Document> collection;
-    private final AttemptConverter attemptConverter;
+    private final MongoAttemptConverter attemptConverter;
 
     @Override
     public void save(Attempts attempts) {

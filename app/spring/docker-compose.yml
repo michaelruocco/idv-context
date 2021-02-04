@@ -32,6 +32,8 @@ services:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: welcome
       MONGO_INITDB_DATABASE: idv-local
+    ports:
+      - 27018:27017
     volumes:
       - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 

@@ -2,16 +2,15 @@ package uk.co.idv.lockout.config.repository.mongo;
 
 import com.mongodb.client.MongoDatabase;
 import lombok.Builder;
+import uk.co.idv.lockout.adapter.repository.MongoAttemptCollection;
 import uk.co.idv.lockout.config.repository.AttemptRepositoryConfig;
 import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
-import uk.co.idv.lockout.adapter.repository.AttemptConverter;
+import uk.co.idv.lockout.adapter.repository.MongoAttemptConverter;
 import uk.co.idv.lockout.adapter.repository.MongoAttemptRepository;
 import uk.co.mruoc.json.JsonConverter;
 
 @Builder
 public class MongoAttemptRepositoryConfig implements AttemptRepositoryConfig {
-
-    public static final String ATTEMPT_TABLE_NAME = "attempt";
 
     private final JsonConverter jsonConverter;
     private final MongoDatabase database;
@@ -19,8 +18,8 @@ public class MongoAttemptRepositoryConfig implements AttemptRepositoryConfig {
     @Override
     public AttemptRepository attemptRepository() {
         return MongoAttemptRepository.builder()
-                .attemptConverter(new AttemptConverter(jsonConverter))
-                .collection(database.getCollection(ATTEMPT_TABLE_NAME))
+                .attemptConverter(new MongoAttemptConverter(jsonConverter))
+                .collection(database.getCollection(MongoAttemptCollection.NAME))
                 .build();
     }
 

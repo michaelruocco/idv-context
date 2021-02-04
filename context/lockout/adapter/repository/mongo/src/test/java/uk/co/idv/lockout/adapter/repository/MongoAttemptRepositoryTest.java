@@ -27,7 +27,7 @@ import static org.mockito.Mockito.verify;
 class MongoAttemptRepositoryTest {
 
     private final MongoCollection<Document> collection = mock(MongoCollection.class);
-    private final AttemptConverter attemptConverter = mock(AttemptConverter.class);
+    private final MongoAttemptConverter attemptConverter = mock(MongoAttemptConverter.class);
 
     private final MongoAttemptRepository repository = MongoAttemptRepository.builder()
             .collection(collection)

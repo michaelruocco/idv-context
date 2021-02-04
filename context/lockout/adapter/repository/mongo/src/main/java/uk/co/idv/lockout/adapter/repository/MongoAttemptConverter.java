@@ -11,9 +11,10 @@ import java.util.Collection;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.or;
+import static uk.co.idv.lockout.adapter.repository.MongoAttemptCollection.ID_FIELD_NAME;
 
 @RequiredArgsConstructor
-public class AttemptConverter {
+public class MongoAttemptConverter {
 
     private final JsonConverter converter;
 
@@ -23,7 +24,7 @@ public class AttemptConverter {
 
     public Document toDocument(Attempts attempts) {
         Document document = Document.parse(converter.toJson(attempts));
-        document.put("_id", attempts.getIdvId().getValue());
+        document.put(ID_FIELD_NAME, attempts.getIdvId().getValue());
         return document;
     }
 
@@ -32,7 +33,7 @@ public class AttemptConverter {
     }
 
     public Bson toFindByIdvIdQuery(IdvId idvId) {
-        return eq("_id", idvId.getValue());
+        return eq(ID_FIELD_NAME, idvId.getValue());
     }
 
 }

@@ -18,13 +18,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class AttemptConverterTest {
+class MongoAttemptConverterTest {
 
     private static final String JSON = AttemptsJsonMother.build();
 
     private final JsonConverter jsonConverter = mock(JsonConverter.class);
 
-    private final AttemptConverter converter = new AttemptConverter(jsonConverter);
+    private final MongoAttemptConverter converter = new MongoAttemptConverter(jsonConverter);
 
     @Test
     void shouldConvertDocumentToAttempts() {

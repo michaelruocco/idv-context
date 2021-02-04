@@ -8,6 +8,8 @@ import uk.co.idv.identity.entities.alias.IdvId;
 import static com.mongodb.client.model.Filters.and;
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Filters.or;
+import static uk.co.idv.identity.adapter.repository.MongoIdentityCollection.ALIASES_TYPE_INDEX_NAME;
+import static uk.co.idv.identity.adapter.repository.MongoIdentityCollection.ALIASES_VALUE_INDEX_NAME;
 
 public class AliasQueryBuilder {
 
@@ -20,8 +22,8 @@ public class AliasQueryBuilder {
             return toFindByIdvIdQuery((IdvId) alias);
         }
         return and(
-                eq("aliases.value", alias.getValue()),
-                eq("aliases.type", alias.getType())
+                eq(ALIASES_VALUE_INDEX_NAME, alias.getValue()),
+                eq(ALIASES_TYPE_INDEX_NAME, alias.getType())
         );
     }
 
