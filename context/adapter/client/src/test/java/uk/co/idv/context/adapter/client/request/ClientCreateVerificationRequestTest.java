@@ -1,7 +1,7 @@
 package uk.co.idv.context.adapter.client.request;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.adapter.client.headers.ContextRequestHeaders;
+import uk.co.idv.context.adapter.client.header.ContextRequestHeaders;
 import uk.co.idv.context.entities.verification.CreateVerificationRequest;
 
 

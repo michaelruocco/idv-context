@@ -21,3 +21,5 @@ dependencies {
     testFixturesImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testFixturesImplementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
 }
+
+apply from: rootProject.file('publish-lib.gradle')

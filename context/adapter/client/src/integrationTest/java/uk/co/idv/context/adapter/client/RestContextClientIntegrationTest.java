@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import uk.co.idv.common.adapter.json.error.internalserver.InternalServerErrorJsonMother;
 import uk.co.idv.common.adapter.json.error.internalserver.InternalServerErrorMother;
 import uk.co.idv.context.adapter.client.exception.ApiErrorClientException;
-import uk.co.idv.context.adapter.client.headers.ContextRequestHeaders;
+import uk.co.idv.context.adapter.client.header.ContextRequestHeaders;
 import uk.co.idv.context.adapter.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.context.adapter.client.request.ClientCreateContextRequest;
 import uk.co.idv.context.adapter.client.request.ClientGetContextRequest;
@@ -45,11 +45,11 @@ import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
-import static uk.co.idv.context.adapter.client.headers.HeaderConstants.ACCEPT_NAME;
-import static uk.co.idv.context.adapter.client.headers.HeaderConstants.APPLICATION_JSON;
-import static uk.co.idv.context.adapter.client.headers.HeaderConstants.CHANNEL_ID_NAME;
-import static uk.co.idv.context.adapter.client.headers.HeaderConstants.CONTENT_TYPE_NAME;
-import static uk.co.idv.context.adapter.client.headers.HeaderConstants.CORRELATION_ID_NAME;
+import static uk.co.idv.context.adapter.client.header.HeaderConstants.ACCEPT_NAME;
+import static uk.co.idv.context.adapter.client.header.HeaderConstants.APPLICATION_JSON;
+import static uk.co.idv.context.adapter.client.header.HeaderConstants.CHANNEL_ID_NAME;
+import static uk.co.idv.context.adapter.client.header.HeaderConstants.CONTENT_TYPE_NAME;
+import static uk.co.idv.context.adapter.client.header.HeaderConstants.CORRELATION_ID_NAME;
 
 class RestContextClientIntegrationTest {
 

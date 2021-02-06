@@ -3,8 +3,8 @@ package uk.co.idv.context.adapter.json.error.policynotconfigured;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.context.usecases.policy.NoContextPoliciesConfiguredException;
-import uk.co.idv.context.usecases.policy.NoContextPoliciesConfiguredExceptionMother;
+import uk.co.idv.context.entities.policy.NoContextPoliciesConfiguredException;
+import uk.co.idv.context.entities.policy.NoContextPoliciesConfiguredExceptionMother;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 
 import java.util.Optional;

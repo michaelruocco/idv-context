@@ -36,7 +36,7 @@ bintray {
     publish = true
     pkg {
         repo = "maven"
-        name = "${project.artifactName}"
+        name = project.name
         userOrg = "michaelruocco"
         licenses = ["mit"]
         vcsUrl = "https://github.com/michaelruocco/verification-context.git"

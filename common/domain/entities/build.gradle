@@ -9,3 +9,5 @@ dependencies {
     testFixturesImplementation "org.apache.commons:commons-math3:3.6.1"
     testFixturesImplementation "org.slf4j:slf4j-api:${slf4jVersion}"
 }
+
+apply from: rootProject.file('publish-lib.gradle')

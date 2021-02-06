@@ -11,3 +11,5 @@ dependencies {
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     testFixturesImplementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
 }
+
+apply from: rootProject.file('publish-lib.gradle')

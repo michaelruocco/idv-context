@@ -1,0 +1,18 @@
+apply from: rootProject.file('publish.gradle')
+
+publishing {
+    publications {
+        lib(MavenPublication) { publication ->
+            from components.java
+            suppressPomMetadataWarningsFor("testFixturesApiElements")
+            suppressPomMetadataWarningsFor("testFixturesRuntimeElements")
+            artifactId project.name
+            pom.withXml {
+                def root = asNode()
+                root.appendNode("name", project.name)
+                root.appendNode("url", "https://github.com/michaelruocco/verification-context")
+                root.children().last() + project.pomConfig
+            }
+        }
+    }
+}

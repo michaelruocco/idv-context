@@ -1,12 +1,11 @@
 plugins {
     id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
-    id "com.github.johnrengelman.shadow" version "${shadowPluginVersion}"
     id "maven-publish"
+    id "java-test-fixtures"
 }
 
 ext {
     logbackVersion = "1.2.3"
-    artifactName = "verification-context-client"
 }
 
 testSets {
@@ -32,39 +31,16 @@ dependencies {
 
     testImplementation "com.github.stefanbirkner:system-lambda:${systemLambdaVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
-    testImplementation project(":context-client-test-fixtures")
     testRuntimeOnly "ch.qos.logback:logback-core:${logbackVersion}"
     testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
 
     integrationTestImplementation "com.github.tomakehurst:wiremock-jre8:2.27.2"
+
+    testFixturesApi "uk.org.webcompere:system-stubs-jupiter:1.2.0"
+    testFixturesApi testFixtures(project(":context-entities"))
+    testFixturesApi testFixtures(project(":method-json"))
+    testFixturesApi testFixtures(project(":context-json"))
+    testFixturesApi testFixtures(project(":identity-json"))
 }
 
-apply from: rootProject.file('publish.gradle')
-
-shadowJar {
-    dependencies {
-        exclude(dependency("javax.money:money-api"))
-        exclude(dependency("org.javamoney.moneta:moneta-core"))
-        exclude(dependency("org.javamoney.moneta:moneta-convert"))
-        exclude(dependency("org.javamoney.moneta:moneta-convert-ecb"))
-        exclude(dependency("org.javamoney.moneta:moneta-convert-imf"))
-    }
-}
-
-publishing {
-    publications {
-        lib(MavenPublication) { publication ->
-            project.shadow.component(publication)
-            artifact sourcesJar
-            artifact javadocJar
-            artifactId "${artifactName}"
-            pom.withXml {
-                def root = asNode()
-                root.appendNode("description", "Verification context client library")
-                root.appendNode("name", "${artifactName}")
-                root.appendNode("url", "https://github.com/michaelruocco/verification-context")
-                root.children().last() + project.pomConfig
-            }
-        }
-    }
-}
+apply from: rootProject.file('publish-lib.gradle')

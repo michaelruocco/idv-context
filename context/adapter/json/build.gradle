@@ -7,7 +7,7 @@ configurations {
 }
 
 dependencies {
-    api project(":context-use-cases")
+    api project(":context-entities")
     api project(":identity-json")
     api project(":common-json")
 
@@ -26,7 +26,7 @@ dependencies {
     implementation "com.jayway.jsonpath:json-path:${jsonPathVersion}"
     implementation "javax.money:money-api:${moneyApiVersion}"
 
-    testImplementation testFixtures(project(":context-use-cases"))
+    //testImplementation testFixtures(project(":context-entities"))
     testImplementation testFixtures(project(":method-json"))
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
@@ -38,3 +38,5 @@ dependencies {
     testFixturesApi testFixtures(project(":policy-entities"))
     testFixturesImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
 }
+
+apply from: rootProject.file('publish-lib.gradle')

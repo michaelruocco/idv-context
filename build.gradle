@@ -34,7 +34,7 @@ allprojects {
     apply plugin: "jacoco"
     apply plugin: "nebula.lint"
 
-    group "com.github.michaelruocco"
+    group "com.github.michaelruocco.idv"
 
     repositories {
         mavenCentral()
@@ -56,7 +56,6 @@ subprojects {
     apply plugin: "com.diffplug.spotless"
 
     version = rootProject.version
-    archivesBaseName = "${rootProject.name}-${project.name}"
 
     sourceCompatibility = 13
     targetCompatibility = 13

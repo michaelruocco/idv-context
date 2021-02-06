@@ -12,10 +12,12 @@ dependencies {
 
     testFixturesApi testFixtures(project(":identity-entities"))
     testFixturesApi testFixtures(project(":method-entities"))
-    testFixturesImplementation testFixtures(project(":policy-entities"))
+    testFixturesApi testFixtures(project(":policy-entities"))
     testFixturesImplementation "org.mockito:mockito-core:${mockitoVersion}"
     testFixturesImplementation "javax.money:money-api:${moneyApiVersion}"
     testFixturesImplementation "org.javamoney.moneta:moneta-core:${monetaCoreVersion}"
     testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
+
+apply from: rootProject.file('publish-lib.gradle')

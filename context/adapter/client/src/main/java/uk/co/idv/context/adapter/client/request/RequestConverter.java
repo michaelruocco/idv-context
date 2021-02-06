@@ -10,9 +10,9 @@ import java.net.URISyntaxException;
 import java.net.http.HttpRequest;
 import java.util.UUID;
 
-import static uk.co.idv.context.adapter.client.headers.HeaderConstants.ACCEPT_NAME;
-import static uk.co.idv.context.adapter.client.headers.HeaderConstants.APPLICATION_JSON;
-import static uk.co.idv.context.adapter.client.headers.HeaderConstants.CONTENT_TYPE_NAME;
+import static uk.co.idv.context.adapter.client.header.HeaderConstants.ACCEPT_NAME;
+import static uk.co.idv.context.adapter.client.header.HeaderConstants.APPLICATION_JSON;
+import static uk.co.idv.context.adapter.client.header.HeaderConstants.CONTENT_TYPE_NAME;
 
 @Builder
 @Slf4j

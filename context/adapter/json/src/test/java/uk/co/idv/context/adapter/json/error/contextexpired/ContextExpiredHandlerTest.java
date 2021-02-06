@@ -3,8 +3,8 @@ package uk.co.idv.context.adapter.json.error.contextexpired;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.context.usecases.context.ContextExpiredException;
-import uk.co.idv.context.usecases.context.ContextExpiredExceptionMother;
+import uk.co.idv.context.entities.context.ContextExpiredException;
+import uk.co.idv.context.entities.context.ContextExpiredExceptionMother;
 
 import java.util.Optional;
 

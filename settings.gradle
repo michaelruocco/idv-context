@@ -96,9 +96,6 @@ project(':context-mongo-repository').projectDir = file('context/adapter/reposito
 include ':context-client'
 project(':context-client').projectDir = file('context/adapter/client')
 
-include ':context-client-test-fixtures'
-project(':context-client-test-fixtures').projectDir = file('context/adapter/client-test-fixtures')
-
 include ':context-config'
 project(':context-config').projectDir = file('context/config')
 

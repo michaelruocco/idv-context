@@ -26,3 +26,5 @@ dependencies {
     testFixturesImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
     testFixturesImplementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
 }
+
+apply from: rootProject.file('publish-lib.gradle')

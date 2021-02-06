@@ -2,7 +2,7 @@ package uk.co.idv.context.adapter.client.request;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.context.adapter.client.headers.ContextRequestHeaders;
+import uk.co.idv.context.adapter.client.header.ContextRequestHeaders;
 import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
 
 import java.util.UUID;

@@ -2,6 +2,8 @@ package uk.co.idv.context.usecases.context;
 
 import lombok.Builder;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.ContextExpiredException;
+import uk.co.idv.context.entities.context.ContextNotFoundException;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
 
 import java.time.Clock;
