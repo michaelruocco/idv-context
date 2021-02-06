@@ -5,11 +5,11 @@ import uk.co.idv.app.manual.Application;
 import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
+import uk.co.idv.identity.entities.identity.IdentityNotFoundException;
 import uk.co.idv.lockout.entities.DefaultExternalLockoutRequestMother;
 import uk.co.idv.lockout.entities.ExternalLockoutRequest;
+import uk.co.idv.lockout.entities.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.lockout.entities.policy.hard.HardLockoutPolicyMother;
-import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
-import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;

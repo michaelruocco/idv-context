@@ -1,5 +1,6 @@
 package uk.co.idv.lockout.usecases.policy;
 
+import uk.co.idv.lockout.entities.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.usecases.policy.NoPoliciesConfiguredHandler;
 

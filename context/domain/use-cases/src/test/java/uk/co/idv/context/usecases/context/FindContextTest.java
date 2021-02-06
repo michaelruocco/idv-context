@@ -5,7 +5,7 @@ import org.mockito.ArgumentCaptor;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
-import uk.co.idv.lockout.usecases.state.LockedOutException;
+import uk.co.idv.lockout.entities.LockedOutException;
 
 import java.time.Clock;
 import java.time.Instant;

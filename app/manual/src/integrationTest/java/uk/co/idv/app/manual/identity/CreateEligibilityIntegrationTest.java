@@ -14,11 +14,11 @@ import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
+import uk.co.idv.identity.entities.identity.IdentityNotFoundException;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumberMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequestMother;
-import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;

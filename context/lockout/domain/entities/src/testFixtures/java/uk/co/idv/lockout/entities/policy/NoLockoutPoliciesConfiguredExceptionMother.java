@@ -1,4 +1,4 @@
-package uk.co.idv.lockout.usecases.policy;
+package uk.co.idv.lockout.entities.policy;
 
 import uk.co.idv.policy.entities.policy.PolicyRequestMother;
 

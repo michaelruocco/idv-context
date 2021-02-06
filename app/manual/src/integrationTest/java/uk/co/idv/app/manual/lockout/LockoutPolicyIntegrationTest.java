@@ -15,11 +15,11 @@ import uk.co.idv.lockout.entities.policy.includeattempt.IncludeAttemptsWithinDur
 import uk.co.idv.lockout.entities.policy.recordattempt.AlwaysRecordAttemptPolicy;
 import uk.co.idv.lockout.entities.policy.recordattempt.RecordAttemptWhenMethodCompletePolicy;
 import uk.co.idv.policy.entities.policy.Policies;
+import uk.co.idv.policy.entities.policy.PolicyNotFoundException;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.entities.policy.PolicyRequestMother;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
-import uk.co.idv.policy.usecases.policy.load.PolicyNotFoundException;
 
 import java.util.UUID;
 

@@ -1,6 +1,7 @@
 package uk.co.idv.lockout.usecases.state;
 
 import lombok.Builder;
+import uk.co.idv.lockout.entities.LockedOutException;
 import uk.co.idv.lockout.entities.attempt.Attempt;
 import uk.co.idv.lockout.entities.attempt.Attempts;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;

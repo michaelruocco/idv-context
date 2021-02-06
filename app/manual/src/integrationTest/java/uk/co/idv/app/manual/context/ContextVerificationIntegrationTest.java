@@ -15,6 +15,7 @@ import uk.co.idv.context.entities.verification.Verification;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.lockout.entities.DefaultExternalLockoutRequest;
 import uk.co.idv.lockout.entities.ExternalLockoutRequest;
+import uk.co.idv.lockout.entities.LockedOutException;
 import uk.co.idv.lockout.entities.attempt.Attempt;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.LockoutPolicyMother;
@@ -23,7 +24,6 @@ import uk.co.idv.lockout.entities.policy.hard.HardLockoutStateCalculatorMother;
 import uk.co.idv.lockout.entities.policy.recordattempt.NeverRecordAttemptPolicy;
 import uk.co.idv.lockout.entities.policy.recordattempt.RecordAttemptWhenMethodCompletePolicy;
 import uk.co.idv.lockout.entities.policy.soft.SoftLockoutStateCalculatorMother;
-import uk.co.idv.lockout.usecases.state.LockedOutException;
 import uk.co.idv.method.entities.result.Result;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 

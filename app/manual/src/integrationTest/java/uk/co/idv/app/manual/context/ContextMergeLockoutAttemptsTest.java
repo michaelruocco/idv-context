@@ -14,7 +14,7 @@ import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
 import uk.co.idv.identity.entities.alias.DebitCardNumberMother;
 import uk.co.idv.identity.entities.identity.EmptyIdentityMother;
 import uk.co.idv.identity.entities.identity.Identity;
-import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
+import uk.co.idv.identity.entities.identity.IdentityNotFoundException;
 import uk.co.idv.lockout.entities.DefaultExternalLockoutRequest;
 import uk.co.idv.lockout.entities.ExternalLockoutRequest;
 import uk.co.idv.lockout.entities.policy.LockoutState;

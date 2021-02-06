@@ -1,4 +1,4 @@
-package uk.co.idv.lockout.usecases.state;
+package uk.co.idv.lockout.entities;
 
 import uk.co.idv.lockout.entities.policy.hard.HardLockoutStateMother;
 

@@ -14,7 +14,7 @@ import uk.co.idv.context.usecases.context.expiry.ExpiryCalculator;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
 import uk.co.idv.context.usecases.context.protect.ContextDataProtector;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
-import uk.co.idv.lockout.usecases.state.LockedOutException;
+import uk.co.idv.lockout.entities.LockedOutException;
 
 import java.time.Clock;
 import java.time.Duration;

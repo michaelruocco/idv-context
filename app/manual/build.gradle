@@ -28,10 +28,10 @@ dependencies {
     integrationTestImplementation project(":identity-in-memory-repository")
     integrationTestImplementation project(":lockout-in-memory-repository")
     integrationTestImplementation testFixtures(project(":method-config"))
-    integrationTestImplementation testFixtures(project(":identity-use-cases"))
-    integrationTestImplementation testFixtures(project(":lockout-use-cases"))
+    integrationTestImplementation testFixtures(project(":identity-entities"))
+    integrationTestImplementation testFixtures(project(":lockout-entities"))
     integrationTestImplementation testFixtures(project(":common-use-cases"))
-    integrationTestImplementation testFixtures(project(":method-use-cases"))
+    integrationTestImplementation testFixtures(project(":method-entities"))
     integrationTestImplementation testFixtures(project(":otp-use-cases"))
     integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
     integrationTestImplementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"

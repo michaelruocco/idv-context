@@ -12,8 +12,8 @@ import uk.co.idv.context.usecases.context.ContextExpiredException;
 import uk.co.idv.context.usecases.context.ContextNotFoundException;
 import uk.co.idv.context.usecases.policy.NoContextPoliciesConfiguredException;
 import uk.co.idv.identity.entities.identity.Identity;
-import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
-import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
+import uk.co.idv.identity.entities.identity.IdentityNotFoundException;
+import uk.co.idv.lockout.entities.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 

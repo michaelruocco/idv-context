@@ -3,9 +3,9 @@ package uk.co.idv.lockout.adapter.json.error.policynotconfigured;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.lockout.entities.policy.NoLockoutPoliciesConfiguredException;
+import uk.co.idv.lockout.entities.policy.NoLockoutPoliciesConfiguredExceptionMother;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
-import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredException;
-import uk.co.idv.lockout.usecases.policy.NoLockoutPoliciesConfiguredExceptionMother;
 
 import java.util.Optional;
 

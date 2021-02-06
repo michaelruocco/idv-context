@@ -5,8 +5,8 @@ import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.policy.adapter.json.error.policynotfound.PolicyNotFoundError;
 import uk.co.idv.lockout.config.LockoutConfig;
-import uk.co.idv.policy.usecases.policy.load.PolicyNotFoundException;
-import uk.co.idv.policy.usecases.policy.load.PolicyNotFoundExceptionMother;
+import uk.co.idv.policy.entities.policy.PolicyNotFoundException;
+import uk.co.idv.policy.entities.policy.PolicyNotFoundExceptionMother;
 
 import java.util.Optional;
 

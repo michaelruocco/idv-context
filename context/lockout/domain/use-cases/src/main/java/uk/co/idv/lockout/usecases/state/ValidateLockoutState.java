@@ -1,5 +1,6 @@
 package uk.co.idv.lockout.usecases.state;
 
+import uk.co.idv.lockout.entities.LockedOutException;
 import uk.co.idv.lockout.entities.policy.LockoutState;
 
 public class ValidateLockoutState {

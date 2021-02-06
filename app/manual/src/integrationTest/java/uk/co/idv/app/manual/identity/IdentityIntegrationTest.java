@@ -17,15 +17,15 @@ import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.alias.IdvIdMother;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.identity.entities.identity.CannotUpdateIdvIdException;
 import uk.co.idv.identity.entities.identity.CountryMismatchException;
+import uk.co.idv.identity.entities.identity.CountryNotProvidedException;
 import uk.co.idv.identity.entities.identity.EmptyIdentityMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
+import uk.co.idv.identity.entities.identity.IdentityNotFoundException;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
-import uk.co.idv.identity.usecases.identity.create.CountryNotProvidedException;
-import uk.co.idv.identity.usecases.identity.find.IdentityNotFoundException;
-import uk.co.idv.identity.usecases.identity.save.CannotUpdateIdvIdException;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
