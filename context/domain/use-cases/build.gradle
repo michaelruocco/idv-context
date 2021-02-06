@@ -26,5 +26,5 @@ dependencies {
     testImplementation "com.github.stefanbirkner:system-lambda:${systemLambdaVersion}"
 
     testFixturesApi testFixtures(project(":context-entities"))
-    testFixturesApi testFixtures(project(":policy-use-cases"))
+    testFixturesApi testFixtures(project(":policy-entities"))
 }

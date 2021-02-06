@@ -3,6 +3,7 @@ package uk.co.idv.policy.usecases.policy;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.policy.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.policy.entities.policy.MockPolicyMother;
+import uk.co.idv.policy.entities.policy.NoPoliciesConfiguredException;
 import uk.co.idv.policy.entities.policy.Policies;
 import uk.co.idv.policy.entities.policy.Policy;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;

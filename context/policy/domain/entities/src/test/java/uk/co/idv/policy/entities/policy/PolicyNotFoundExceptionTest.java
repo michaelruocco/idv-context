@@ -1,4 +1,4 @@
-package uk.co.idv.policy.usecases.policy.load;
+package uk.co.idv.policy.entities.policy;
 
 import org.junit.jupiter.api.Test;
 

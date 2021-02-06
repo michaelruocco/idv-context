@@ -1,7 +1,6 @@
-package uk.co.idv.policy.usecases.policy;
+package uk.co.idv.policy.entities.policy;
 
 import lombok.Getter;
-import uk.co.idv.policy.entities.policy.PolicyRequest;
 
 @Getter
 public class NoPoliciesConfiguredException extends RuntimeException {

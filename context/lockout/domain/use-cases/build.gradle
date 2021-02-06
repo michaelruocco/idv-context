@@ -5,10 +5,11 @@ plugins {
 dependencies {
     api project(":lockout-entities")
     api project(":policy-use-cases")
+    api project(":policy-entities")
     api project(":common-use-cases")
 
     implementation project(":identity-use-cases")
 
     testFixturesApi testFixtures(project(":lockout-entities"))
-    testFixturesApi testFixtures(project(":policy-use-cases"))
+    testFixturesApi testFixtures(project(":policy-entities"))
 }

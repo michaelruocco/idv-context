@@ -1,6 +1,4 @@
-package uk.co.idv.policy.usecases.policy;
-
-import uk.co.idv.policy.entities.policy.PolicyRequestMother;
+package uk.co.idv.policy.entities.policy;
 
 public interface NoPoliciesConfiguredExceptionMother {
 

@@ -1,4 +1,4 @@
-package uk.co.idv.policy.usecases.policy.load;
+package uk.co.idv.policy.entities.policy;
 
 
 import java.util.UUID;
