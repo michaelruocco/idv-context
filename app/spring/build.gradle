@@ -122,6 +122,7 @@ import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 task buildImage(type: DockerBuildImage) {
     inputDir.set(file("."))
     images.add("michaelruocco/${artifactName}:latest")
+    buildArgs = ["VERSION":version]
 }
 
 task pushImage(type: DockerPushImage) {
