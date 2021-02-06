@@ -1,10 +1,8 @@
-package uk.co.idv.identity.usecases.identity.find;
+package uk.co.idv.identity.entities.identity;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
-import uk.co.idv.identity.entities.identity.Identities;
-import uk.co.idv.identity.entities.identity.IdentitiesMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

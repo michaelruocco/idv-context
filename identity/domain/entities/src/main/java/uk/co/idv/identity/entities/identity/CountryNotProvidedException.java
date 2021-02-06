@@ -1,4 +1,4 @@
-package uk.co.idv.identity.usecases.identity.create;
+package uk.co.idv.identity.entities.identity;
 
 public class CountryNotProvidedException extends RuntimeException {
 

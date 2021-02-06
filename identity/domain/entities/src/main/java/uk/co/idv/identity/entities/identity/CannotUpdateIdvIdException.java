@@ -1,4 +1,4 @@
-package uk.co.idv.identity.usecases.identity.save;
+package uk.co.idv.identity.entities.identity;
 
 import lombok.Getter;
 import uk.co.idv.identity.entities.alias.IdvId;

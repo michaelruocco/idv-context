@@ -7,7 +7,7 @@ configurations {
 }
 
 dependencies {
-    api project(":identity-use-cases")
+    api project(":identity-entities")
     api project(":common-json")
     api "com.github.michaelruocco:json-masker:${jsonMaskerVersion}"
     api "com.jayway.jsonpath:json-path:${jsonPathVersion}"
@@ -23,7 +23,7 @@ dependencies {
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
     testImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
 
-    testFixturesApi testFixtures(project(":identity-use-cases"))
+    testFixturesApi testFixtures(project(":identity-entities"))
     testFixturesApi testFixtures(project(":common-json"))
     testFixturesImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
     testFixturesImplementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"

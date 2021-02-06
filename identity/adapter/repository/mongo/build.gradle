@@ -5,6 +5,7 @@ plugins {
 dependencies {
     api project(":common-mongo")
     implementation project(":identity-json")
+    implementation project(":identity-use-cases")
     implementation project(":common-use-cases")
     implementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
     implementation "org.mongodb:mongo-java-driver:${mongoVersion}"

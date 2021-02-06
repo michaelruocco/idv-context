@@ -1,4 +1,4 @@
-package uk.co.idv.identity.usecases.identity.save;
+package uk.co.idv.identity.entities.identity;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.alias.IdvId;

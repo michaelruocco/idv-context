@@ -3,6 +3,7 @@ package uk.co.idv.identity.usecases.eligibility;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequestMother;
+import uk.co.idv.identity.entities.eligibility.EligibilityNotConfiguredException;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibilityMother;
 

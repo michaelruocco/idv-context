@@ -1,4 +1,4 @@
-package uk.co.idv.identity.usecases.eligibility;
+package uk.co.idv.identity.entities.eligibility;
 
 public class EligibilityNotConfiguredException extends RuntimeException {
 
