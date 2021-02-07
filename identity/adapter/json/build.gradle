@@ -28,5 +28,3 @@ dependencies {
     testFixturesImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
     testFixturesImplementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
 }
-
-apply from: rootProject.file('publish-lib.gradle')

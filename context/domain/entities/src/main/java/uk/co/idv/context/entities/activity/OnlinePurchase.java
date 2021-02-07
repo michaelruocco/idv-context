@@ -2,7 +2,6 @@ package uk.co.idv.context.entities.activity;
 
 import lombok.Builder;
 import lombok.Data;
-import uk.co.idv.identity.entities.alias.CardNumber;
 
 import javax.money.MonetaryAmount;
 import java.time.Instant;
@@ -17,19 +16,11 @@ public class OnlinePurchase implements Activity {
     private final String merchantName;
     private final String reference;
     private final MonetaryAmount cost;
-    private final CardNumber cardNumber;
+    private final String last4DigitsOfCardNumber;
 
     @Override
     public String getName() {
         return NAME;
-    }
-
-    public String getCardNumberValue() {
-        return cardNumber.getValue();
-    }
-
-    public String getLast4DigitsOfCardNumber() {
-        return cardNumber.getLast4Digits();
     }
 
 }

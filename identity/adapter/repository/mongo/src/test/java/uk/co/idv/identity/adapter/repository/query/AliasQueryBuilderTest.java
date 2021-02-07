@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
-import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
+import uk.co.idv.identity.entities.alias.CardNumberMother;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.alias.IdvIdMother;
 
@@ -32,7 +32,7 @@ class AliasQueryBuilderTest {
 
     @Test
     void shouldBuildFindByAliasQuery() {
-        Alias alias = CreditCardNumberMother.creditCardNumber();
+        Alias alias = CardNumberMother.credit();
 
         Bson query = builder.toFindByAliasQuery(alias);
 

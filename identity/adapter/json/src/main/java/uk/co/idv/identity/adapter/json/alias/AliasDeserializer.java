@@ -5,8 +5,7 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.identity.entities.alias.Alias;
-import uk.co.idv.identity.entities.alias.CreditCardNumber;
-import uk.co.idv.identity.entities.alias.DebitCardNumber;
+import uk.co.idv.identity.entities.alias.CardNumber;
 import uk.co.idv.identity.entities.alias.DefaultAlias;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
@@ -45,8 +44,8 @@ public class AliasDeserializer extends StdDeserializer<Alias> {
     private static Map<String, Class<? extends Alias>> buildMappings() {
         return Map.of(
                 IdvId.TYPE, IdvId.class,
-                CreditCardNumber.TYPE, CreditCardNumber.class,
-                DebitCardNumber.TYPE, DebitCardNumber.class
+                CardNumber.CREDIT_TYPE, CardNumber.class,
+                CardNumber.DEBIT_TYPE, CardNumber.class
         );
     }
 

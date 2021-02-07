@@ -1,8 +1,6 @@
 package uk.co.idv.context.entities.activity;
 
 import org.javamoney.moneta.Money;
-import uk.co.idv.identity.entities.alias.CardNumber;
-import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
 
 import javax.money.MonetaryAmount;
 import java.time.Instant;
@@ -13,8 +11,8 @@ public interface OnlinePurchaseMother {
         return builder().timestamp(timestamp).build();
     }
 
-    static OnlinePurchase withCardNumber(CardNumber cardNumber) {
-        return builder().cardNumber(cardNumber).build();
+    static OnlinePurchase withLast4DigitsOfCardNumber(String cardNumber) {
+        return builder().last4DigitsOfCardNumber(cardNumber).build();
     }
 
     static OnlinePurchase withMerchantName(String merchantName) {
@@ -36,7 +34,7 @@ public interface OnlinePurchaseMother {
     static OnlinePurchase.OnlinePurchaseBuilder builder() {
         return OnlinePurchase.builder()
                 .timestamp(Instant.parse("2020-06-06T12:36:15.179Z"))
-                .cardNumber(CreditCardNumberMother.creditCardNumber())
+                .last4DigitsOfCardNumber("1111")
                 .merchantName("Amazon")
                 .reference("ABC123")
                 .cost(Money.of(10.99, "GBP"));

@@ -3,8 +3,7 @@ package uk.co.idv.identity.adapter.repository;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.AliasesMother;
-import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
-import uk.co.idv.identity.entities.alias.DebitCardNumberMother;
+import uk.co.idv.identity.entities.alias.CardNumberMother;
 import uk.co.idv.identity.entities.alias.DefaultAliasMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.identity.entities.alias.IdvIdMother;
@@ -23,7 +22,7 @@ class InMemoryIdentityRepositoryTest {
 
     @Test
     void shouldReturnEmptyOptionalIfIdentityNotFound() {
-        Alias alias = CreditCardNumberMother.creditCardNumber();
+        Alias alias = CardNumberMother.credit();
 
         assertThat(repository.load(toAliases(alias))).isEmpty();
     }
@@ -31,7 +30,7 @@ class InMemoryIdentityRepositoryTest {
     @Test
     void shouldLoadSavedIdentityByAliases() {
         Alias idvId = IdvIdMother.idvId();
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
         Identity identity = IdentityMother.withAliases(toAliases(idvId, creditCardNumber));
 
         repository.create(identity);
@@ -43,11 +42,11 @@ class InMemoryIdentityRepositoryTest {
     @Test
     void shouldNotBeAbleToLoadByAliasThatHasBeenDeleted() {
         Alias idvId = IdvIdMother.idvId();
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
         Identity original = IdentityMother.withAliases(toAliases(idvId, creditCardNumber));
         repository.create(original);
 
-        Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        Alias debitCardNumber = CardNumberMother.debit();
         Identity updated = IdentityMother.withAliases(toAliases(idvId, debitCardNumber));
         repository.update(updated, original);
 

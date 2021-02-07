@@ -5,8 +5,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
-import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
-import uk.co.idv.identity.entities.alias.DebitCardNumberMother;
+import uk.co.idv.identity.entities.alias.CardNumberMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.alias.IdvIdAlreadyPresentException;
@@ -61,7 +60,7 @@ class DefaultIdentityTest {
 
     @Test
     void shouldReturnTrueIfHasAlias() {
-        Alias alias = CreditCardNumberMother.creditCardNumber();
+        Alias alias = CardNumberMother.credit();
 
         Identity identity = IdentityMother.withAliases(alias);
 
@@ -70,11 +69,11 @@ class DefaultIdentityTest {
 
     @Test
     void shouldReturnFalseIfDoesNotHaveAlias() {
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
 
         Identity identity = IdentityMother.withAliases(creditCardNumber);
 
-        Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        Alias debitCardNumber = CardNumberMother.debit();
         assertThat(identity.hasAlias(debitCardNumber)).isFalse();
     }
 
@@ -218,8 +217,8 @@ class DefaultIdentityTest {
         Identity added = identity.addData(IdentitiesMother.with(other1, other2));
 
         assertThat(added.getAliases()).containsExactly(
-                DebitCardNumberMother.debitCardNumber(),
-                CreditCardNumberMother.creditCardNumber()
+                CardNumberMother.debit(),
+                CardNumberMother.credit()
         );
     }
 

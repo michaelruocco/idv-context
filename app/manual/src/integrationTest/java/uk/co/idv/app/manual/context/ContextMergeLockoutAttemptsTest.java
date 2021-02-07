@@ -10,8 +10,7 @@ import uk.co.idv.context.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.verification.CreateVerificationRequestMother;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.AliasesMother;
-import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
-import uk.co.idv.identity.entities.alias.DebitCardNumberMother;
+import uk.co.idv.identity.entities.alias.CardNumberMother;
 import uk.co.idv.identity.entities.identity.EmptyIdentityMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityNotFoundException;
@@ -52,10 +51,10 @@ class ContextMergeLockoutAttemptsTest {
 
     @Test
     void shouldMergeLockoutAttemptsFromTwoDifferentIdentitiesWhenMerged() {
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
         Context context1 = recordUnsuccessfulAttemptForIdentityWithAlias(creditCardNumber);
 
-        Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        Alias debitCardNumber = CardNumberMother.debit();
         Context context2 = recordUnsuccessfulAttemptForIdentityWithAlias(debitCardNumber);
 
         assertThat(context1.getIdvId()).isNotEqualTo(context2.getIdvId());

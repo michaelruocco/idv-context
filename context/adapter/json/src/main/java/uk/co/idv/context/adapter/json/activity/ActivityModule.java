@@ -18,8 +18,6 @@ public class ActivityModule extends SimpleModule {
     public ActivityModule() {
         super("activity-module", Version.unknownVersion());
 
-        setMixInAnnotation(OnlinePurchase.class, OnlinePurchaseMixin.class);
-
         addDeserializer(Activity.class, new ActivityDeserializer());
         addDeserializer(DefaultActivity.class, new DefaultActivityDeserializer());
         addDeserializer(Login.class, new LoginDeserializer());

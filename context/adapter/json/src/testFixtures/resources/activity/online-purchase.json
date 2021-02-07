@@ -6,9 +6,6 @@
     "amount": 10.99,
     "currency": "GBP"
   },
-  "cardNumber": {
-    "type": "credit-card-number",
-    "value": "4929111111111111"
-  },
+  "last4DigitsOfCardNumber": "1111",
   "name": "online-purchase"
 }

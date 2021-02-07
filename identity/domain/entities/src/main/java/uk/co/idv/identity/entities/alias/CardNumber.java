@@ -2,10 +2,14 @@ package uk.co.idv.identity.entities.alias;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import uk.co.mruoc.string.StringUtils;
 
 @RequiredArgsConstructor
 @Data
-public abstract class CardNumber implements Alias {
+public class CardNumber implements Alias {
+
+    public static final String CREDIT_TYPE = "credit-card-number";
+    public static final String DEBIT_TYPE = "debit-card-number";
 
     private final String type;
     private final String value;
@@ -16,11 +20,15 @@ public abstract class CardNumber implements Alias {
     }
 
     public String getLast4Digits() {
-        int length = value.length();
-        if (length < 4) {
-            return value;
-        }
-        return value.substring(length - 4);
+        return StringUtils.extractLastNChars(value, 4);
+    }
+
+    public static CardNumber credit(String value) {
+        return new CardNumber(CREDIT_TYPE, value);
+    }
+
+    public static CardNumber debit(String value) {
+        return new CardNumber(DEBIT_TYPE, value);
     }
 
 }

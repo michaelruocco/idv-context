@@ -2,8 +2,6 @@ package uk.co.idv.context.entities.activity;
 
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.entities.alias.CardNumber;
-import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
 
 import javax.money.MonetaryAmount;
 import java.time.Instant;
@@ -29,30 +27,12 @@ class OnlinePurchaseTest {
     }
 
     @Test
-    void shouldReturnCardNumber() {
-        CardNumber cardNumber = CreditCardNumberMother.creditCardNumber();
-
-        OnlinePurchase activity = OnlinePurchaseMother.withCardNumber(cardNumber);
-
-        assertThat(activity.getCardNumber()).isEqualTo(cardNumber);
-    }
-
-    @Test
     void shouldReturnLast4DigitsOfCardNumber() {
-        CardNumber cardNumber = CreditCardNumberMother.creditCardNumber();
+        String last4DigitsOfCardNumber = "1234";
 
-        OnlinePurchase activity = OnlinePurchaseMother.withCardNumber(cardNumber);
+        OnlinePurchase activity = OnlinePurchaseMother.withLast4DigitsOfCardNumber(last4DigitsOfCardNumber);
 
-        assertThat(activity.getLast4DigitsOfCardNumber()).isEqualTo(cardNumber.getLast4Digits());
-    }
-
-    @Test
-    void shouldReturnCardNumberValue() {
-        CardNumber cardNumber = CreditCardNumberMother.creditCardNumber();
-
-        OnlinePurchase activity = OnlinePurchaseMother.withCardNumber(cardNumber);
-
-        assertThat(activity.getCardNumberValue()).isEqualTo(cardNumber.getValue());
+        assertThat(activity.getLast4DigitsOfCardNumber()).isEqualTo(last4DigitsOfCardNumber);
     }
 
     @Test

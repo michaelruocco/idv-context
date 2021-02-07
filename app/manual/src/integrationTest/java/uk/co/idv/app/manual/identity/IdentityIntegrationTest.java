@@ -6,13 +6,11 @@ import uk.co.idv.app.manual.Application;
 import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
+import uk.co.idv.identity.entities.alias.CardNumber;
+import uk.co.idv.identity.entities.alias.CardNumberMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.identity.entities.alias.UnsupportedAliasTypeException;
 import uk.co.idv.identity.entities.alias.AliasesMother;
-import uk.co.idv.identity.entities.alias.CreditCardNumber;
-import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
-import uk.co.idv.identity.entities.alias.DebitCardNumber;
-import uk.co.idv.identity.entities.alias.DebitCardNumberMother;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.alias.IdvIdMother;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
@@ -98,7 +96,7 @@ class IdentityIntegrationTest {
 
     @Test
     void cannotUpdateIdvIdOnIdentityAfterCreation() {
-        Alias alias = CreditCardNumberMother.creditCardNumber();
+        Alias alias = CardNumberMother.credit();
         Identity initial = IdentityMother.withAliases(alias);
         Identity created = application.update(initial);
         Identity updated = IdentityMother.withAliases(alias, IdvIdMother.idvId());
@@ -115,8 +113,8 @@ class IdentityIntegrationTest {
     @Test
     void canRemoveAliasOnUpdate() {
         Alias idvId = IdvIdMother.idvId();
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
+        Alias debitCardNumber = CardNumberMother.debit();
         Identity initial = IdentityMother.withAliases(idvId, creditCardNumber, debitCardNumber);
         Identity created = application.update(initial);
 
@@ -129,9 +127,9 @@ class IdentityIntegrationTest {
 
     @Test
     void shouldMergeIdentities() {
-        CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        CardNumber creditCardNumber = CardNumberMother.credit();
         Identity creditIdentity = application.update(buildCreditIdentity(creditCardNumber));
-        DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        CardNumber debitCardNumber = CardNumberMother.debit();
         Identity debitIdentity = application.update(buildDebitIdentity(debitCardNumber));
         Identity mergeInput = buildMergeInput(creditCardNumber, debitCardNumber);
 
@@ -148,12 +146,12 @@ class IdentityIntegrationTest {
 
     @Test
     void shouldThrowExceptionIfAttemptToMergeTwoIdentitiesWithDifferentCountries() {
-        CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        CardNumber creditCardNumber = CardNumberMother.credit();
         Identity gbIdentity = application.update(EmptyIdentityMother.builder()
                 .aliases(AliasesMother.with(creditCardNumber))
                 .country(CountryCode.GB)
                 .build());
-        DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        CardNumber debitCardNumber = CardNumberMother.debit();
         Identity deIdentity = application.update(EmptyIdentityMother.builder()
                 .aliases(AliasesMother.with(debitCardNumber))
                 .country(CountryCode.DE)
@@ -171,9 +169,9 @@ class IdentityIntegrationTest {
 
     @Test
     void shouldMergeAliasesWhenMergingIdentity() {
-        CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        CardNumber creditCardNumber = CardNumberMother.credit();
         Identity creditIdentity = application.update(buildCreditIdentity(creditCardNumber));
-        DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        CardNumber debitCardNumber = CardNumberMother.debit();
         Identity debitIdentity = application.update(buildDebitIdentity(debitCardNumber));
         Identity mergeInput = buildMergeInput(creditCardNumber, debitCardNumber);
 
@@ -189,9 +187,9 @@ class IdentityIntegrationTest {
 
     @Test
     void shouldMergeEmailAddressesWhenMergingIdentity() {
-        CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        CardNumber creditCardNumber = CardNumberMother.credit();
         Identity creditIdentity = application.update(buildCreditIdentity(creditCardNumber));
-        DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        CardNumber debitCardNumber = CardNumberMother.debit();
         Identity debitIdentity = application.update(buildDebitIdentity(debitCardNumber));
         Identity mergeInput = buildMergeInput(creditCardNumber, debitCardNumber);
 
@@ -206,9 +204,9 @@ class IdentityIntegrationTest {
 
     @Test
     void shouldMergePhoneNumbersWhenMergingIdentity() {
-        CreditCardNumber creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        CardNumber creditCardNumber = CardNumberMother.credit();
         Identity creditIdentity = application.update(buildCreditIdentity(creditCardNumber));
-        DebitCardNumber debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        CardNumber debitCardNumber = CardNumberMother.debit();
         Identity debitIdentity = application.update(buildDebitIdentity(debitCardNumber));
         Identity mergeInput = buildMergeInput(creditCardNumber, debitCardNumber);
 
@@ -221,7 +219,7 @@ class IdentityIntegrationTest {
                 .containsAll(debitIdentity.getPhoneNumbers());
     }
 
-    private static Identity buildCreditIdentity(CreditCardNumber alias) {
+    private static Identity buildCreditIdentity(CardNumber alias) {
         return IdentityMother.exampleBuilder()
                 .aliases(AliasesMother.with(alias))
                 .emailAddresses(EmailAddressesMother.with("credit@email.com"))
@@ -229,7 +227,7 @@ class IdentityIntegrationTest {
                 .build();
     }
 
-    private static Identity buildDebitIdentity(DebitCardNumber alias) {
+    private static Identity buildDebitIdentity(CardNumber alias) {
         return IdentityMother.exampleBuilder()
                 .aliases(AliasesMother.with(alias))
                 .emailAddresses(EmailAddressesMother.with("debit@email.com"))

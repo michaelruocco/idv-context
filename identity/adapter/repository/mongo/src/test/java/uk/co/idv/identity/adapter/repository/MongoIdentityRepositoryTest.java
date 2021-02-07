@@ -10,7 +10,7 @@ import uk.co.idv.identity.adapter.repository.document.IdentityDocument;
 import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
-import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
+import uk.co.idv.identity.entities.alias.CardNumberMother;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.identity.Identities;
 import uk.co.idv.identity.entities.identity.Identity;
@@ -37,7 +37,7 @@ class MongoIdentityRepositoryTest {
 
     @Test
     void shouldReturnEmptyOptionalIfIdentityNotFoundByAlias() {
-        Alias alias = CreditCardNumberMother.creditCardNumber();
+        Alias alias = CardNumberMother.credit();
         Bson query = givenConvertsToQuery(alias);
         FindIterable<IdentityDocument> documents = givenReturnsDocuments(query);
         given(documents.first()).willReturn(null);
@@ -49,7 +49,7 @@ class MongoIdentityRepositoryTest {
 
     @Test
     void shouldLoadIdentityByAlias() {
-        Alias alias = CreditCardNumberMother.creditCardNumber();
+        Alias alias = CardNumberMother.credit();
         Bson query = givenConvertsToQuery(alias);
         FindIterable<IdentityDocument> documents = givenReturnsDocuments(query);
         IdentityDocument document = givenHasFirstDocument(documents);
