@@ -10,23 +10,27 @@
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_verification-context&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_verification-context)
 
 ## Todo
+    
+*   Reducing verification client dependencies to a minimum so it can be published as something like a standalone
+    jar if possible
 
-*   Token validation?
+*   Rename to IDV Context
+
+*   Update publishing to remove use of bintray and publish to maven central directly instead
 
 *   Add postman collection to repo and run in build pipeline
 
-*   Create separate utilities repositories for time-test-utils and raise PR for system lambda to return console
-    output as collection of lines
+*   Raise PR for system lambda to return console output as collection of lines
 
-*   Try out google cache module with a mongo repository for policies instead of redis repository
+*   Token validation?
+    
+*   Try out google cache module with a mongo repository for policies instead of redis repository?
 
-*   Performance tests in pipeline / nightly build
+*   Performance tests in pipeline / nightly build?
 
-*   Add identity data lookup policy
+*   Add identity data lookup policy?
 
 *   Tidy up cloud formation templates create and set execution role for context service (rather than being passed in)
-
-*   RSA adapter
 
 ## Useful commands
 

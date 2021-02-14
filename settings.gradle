@@ -93,8 +93,8 @@ project(':context-redis-repository').projectDir = file('context/adapter/reposito
 include ':context-mongo-repository'
 project(':context-mongo-repository').projectDir = file('context/adapter/repository/mongo')
 
-include ':context-client'
-project(':context-client').projectDir = file('context/adapter/client')
+include ':verification-client'
+project(':verification-client').projectDir = file('context/client/verification')
 
 include ':context-config'
 project(':context-config').projectDir = file('context/config')
