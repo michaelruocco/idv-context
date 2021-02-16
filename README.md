@@ -11,7 +11,14 @@
 
 ## Todo
     
-*   Reducing verification client dependencies to a minimum so it can be published as something like a standalone
+*   Split activities from context module into their own module
+
+*   Move Methods, Verifications, Verification, CreateVerificationRequest and CompleteVerificationRequest
+    into common methods module
+    
+*   Move verification client from context folder to methods folder
+
+*   Reduce verification client dependencies to a minimum so it can be published as something like a standalone
     jar if possible
 
 *   Rename to IDV Context

@@ -7,16 +7,16 @@ import org.springframework.http.ResponseEntity;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequestMother;
-import uk.co.idv.context.entities.verification.CreateVerificationRequestMother;
-import uk.co.idv.context.entities.verification.GetVerificationRequest;
-import uk.co.idv.context.entities.verification.Verification;
-import uk.co.idv.context.entities.verification.CreateVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequestMother;
+import uk.co.idv.method.entities.verification.CreateVerificationRequestMother;
+import uk.co.idv.method.entities.verification.GetVerificationRequest;
+import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
-import uk.co.idv.context.entities.verification.VerificationMother;
+import uk.co.idv.method.entities.verification.VerificationMother;
 
 import java.util.UUID;
 

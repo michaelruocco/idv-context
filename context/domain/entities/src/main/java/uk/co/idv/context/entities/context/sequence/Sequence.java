@@ -3,7 +3,7 @@ package uk.co.idv.context.entities.context.sequence;
 import lombok.Builder;
 import lombok.Data;
 import lombok.With;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.context.sequence.stage.Stage;
 import uk.co.idv.context.entities.context.sequence.stage.Stages;
 import uk.co.idv.method.entities.eligibility.Eligibility;

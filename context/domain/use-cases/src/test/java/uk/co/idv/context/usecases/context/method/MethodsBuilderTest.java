@@ -1,7 +1,7 @@
 package uk.co.idv.context.usecases.context.method;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodsRequest;
 import uk.co.idv.method.entities.method.MethodsRequestMother;

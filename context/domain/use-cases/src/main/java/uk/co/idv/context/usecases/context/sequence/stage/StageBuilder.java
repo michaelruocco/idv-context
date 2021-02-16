@@ -1,7 +1,7 @@
 package uk.co.idv.context.usecases.context.sequence.stage;
 
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.context.sequence.stage.Stage;
 import uk.co.idv.context.entities.context.sequence.stage.StagesRequest;
 import uk.co.idv.context.entities.policy.sequence.stage.StagePolicy;

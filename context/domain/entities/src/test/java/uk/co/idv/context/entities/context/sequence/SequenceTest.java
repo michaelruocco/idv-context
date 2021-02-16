@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.context.sequence.stage.MockStagesMother;
 import uk.co.idv.context.entities.context.sequence.stage.Stages;
 import uk.co.idv.context.entities.context.sequence.stage.StagesMother;

@@ -1,11 +1,10 @@
 package uk.co.idv.context.usecases.context.verification;
 
 import lombok.Builder;
-import uk.co.idv.context.entities.verification.CompleteVerificationResponse;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.lockout.ContextRecordAttemptRequest;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.FindContext;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
@@ -25,18 +24,19 @@ public class CompleteVerification {
         UUID contextId = request.getContextId();
         Context context = findContext.find(contextId);
         CompleteVerificationRequest requestWithTimestamp = request.withTimestampIfNotProvided(clock.instant());
-        CompleteVerificationResponse response = context.completeVerification(requestWithTimestamp);
-        lockoutService.recordAttemptIfRequired(toRecordAttemptRequest(response));
-        repository.save(response.getUpdated());
-        return response.getVerification();
+        Context updated = context.completeVerification(requestWithTimestamp);
+        Verification verification = updated.getVerification(request.getId());
+        lockoutService.recordAttemptIfRequired(toRecordAttemptRequest(context, updated, verification));
+        repository.save(updated);
+        return verification;
     }
 
-    private ContextRecordAttemptRequest toRecordAttemptRequest(CompleteVerificationResponse response) {
+    private ContextRecordAttemptRequest toRecordAttemptRequest(Context original, Context updated, Verification verification) {
         return ContextRecordAttemptRequest.builder()
-                .result(response.getResult())
-                .context(response.getUpdated())
-                .methodComplete(response.isMethodCompletedByVerification())
-                .sequenceComplete(response.isSequenceCompletedByVerification())
+                .result(verification.toResult())
+                .context(updated)
+                .methodComplete(updated.hasMoreCompletedMethodsThan(original))
+                .sequenceComplete(updated.hasMoreCompletedSequencesThan(original))
                 .build();
     }
 

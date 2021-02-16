@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation project(":activity-json")
     implementation project(":common-json")
     implementation project(":method-entities")
     implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"

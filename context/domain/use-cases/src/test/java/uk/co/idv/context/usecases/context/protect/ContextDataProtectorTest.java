@@ -3,7 +3,7 @@ package uk.co.idv.context.usecases.context.protect;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
-import uk.co.idv.context.entities.context.method.MethodsMother;
+import uk.co.idv.method.entities.method.MethodsMother;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequenceMother;
 import uk.co.idv.context.entities.context.sequence.Sequences;

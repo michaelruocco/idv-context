@@ -12,6 +12,12 @@ project(':common-json').projectDir = file('common/adapter/json')
 include ':common-mongo'
 project(':common-mongo').projectDir = file('common/adapter/repository/mongo')
 
+include ':activity-entities'
+project(':activity-entities').projectDir = file('activity/domain/entities')
+
+include ':activity-json'
+project(':activity-json').projectDir = file('activity/adapter/json')
+
 include ':identity-entities'
 project(':identity-entities').projectDir = file('identity/domain/entities')
 
@@ -93,9 +99,6 @@ project(':context-redis-repository').projectDir = file('context/adapter/reposito
 include ':context-mongo-repository'
 project(':context-mongo-repository').projectDir = file('context/adapter/repository/mongo')
 
-include ':verification-client'
-project(':verification-client').projectDir = file('context/client/verification')
-
 include ':context-config'
 project(':context-config').projectDir = file('context/config')
 
@@ -110,6 +113,9 @@ project(':method-json').projectDir = file('method/common/adapter/json')
 
 include ':method-config'
 project(':method-config').projectDir = file('method/common/config')
+
+include ':verification-client'
+project(':verification-client').projectDir = file('method/client/verification')
 
 include ':otp-entities'
 project(':otp-entities').projectDir = file('method/otp/domain/entities')

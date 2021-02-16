@@ -2,7 +2,7 @@ package uk.co.idv.context.entities.context.sequence.stage;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
 

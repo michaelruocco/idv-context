@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.app.manual.Application;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
-import uk.co.idv.context.entities.verification.GetVerificationRequest;
-import uk.co.idv.context.entities.verification.Verification;
-import uk.co.idv.context.entities.verification.CreateVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.GetVerificationRequest;
+import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequest;
 
 import java.net.URI;

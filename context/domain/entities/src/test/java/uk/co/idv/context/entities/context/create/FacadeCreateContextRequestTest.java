@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.context.create;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.activity.Activity;
-import uk.co.idv.context.entities.activity.DefaultActivityMother;
+import uk.co.idv.activity.entities.Activity;
+import uk.co.idv.activity.entities.DefaultActivityMother;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.identity.entities.channel.Channel;

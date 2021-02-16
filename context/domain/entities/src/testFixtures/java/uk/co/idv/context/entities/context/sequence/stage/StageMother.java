@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.context.sequence.stage;
 
 
-import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.MethodsMother;
+import uk.co.idv.method.entities.method.Methods;
+import uk.co.idv.method.entities.method.MethodsMother;
 import uk.co.idv.context.entities.policy.sequence.stage.AllMethodsStageTypeMother;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;

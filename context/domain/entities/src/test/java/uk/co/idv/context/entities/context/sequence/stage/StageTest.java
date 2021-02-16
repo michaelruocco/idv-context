@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.context.sequence.stage;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.policy.sequence.stage.StageType;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.eligibility.EligibilityMother;

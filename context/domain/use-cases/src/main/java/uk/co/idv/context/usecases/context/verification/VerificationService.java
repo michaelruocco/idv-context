@@ -1,10 +1,10 @@
 package uk.co.idv.context.usecases.context.verification;
 
 import lombok.Builder;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
-import uk.co.idv.context.entities.verification.CreateVerificationRequest;
-import uk.co.idv.context.entities.verification.GetVerificationRequest;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CreateVerificationRequest;
+import uk.co.idv.method.entities.verification.GetVerificationRequest;
+import uk.co.idv.method.entities.verification.Verification;
 
 @Builder
 public class VerificationService {

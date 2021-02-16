@@ -6,7 +6,7 @@ import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;

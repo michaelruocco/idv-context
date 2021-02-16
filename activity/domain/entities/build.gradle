@@ -1,0 +1,12 @@
+plugins {
+    id "java-test-fixtures"
+}
+
+dependencies {
+    api "javax.money:money-api:${moneyApiVersion}"
+
+    testImplementation "org.javamoney.moneta:moneta-core:${monetaCoreVersion}"
+
+    testFixturesImplementation "javax.money:money-api:${moneyApiVersion}"
+    testFixturesImplementation "org.javamoney.moneta:moneta-core:${monetaCoreVersion}"
+}

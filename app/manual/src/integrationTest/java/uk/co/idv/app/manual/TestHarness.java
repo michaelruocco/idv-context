@@ -14,10 +14,10 @@ import uk.co.idv.context.adapter.method.otp.delivery.phone.simswap.StubSimSwapEx
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequestMother;
-import uk.co.idv.context.entities.verification.CreateVerificationRequest;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequestMother;
+import uk.co.idv.method.entities.verification.CreateVerificationRequest;
+import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
 import uk.co.idv.identity.config.ExternalFindIdentityConfig;
 import uk.co.idv.identity.entities.alias.Aliases;

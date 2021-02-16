@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
-import uk.co.idv.context.adapter.json.activity.ActivityModule;
+import uk.co.idv.activity.adapter.json.ActivityModule;
 import uk.co.idv.context.adapter.json.policy.ContextPolicyModule;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;

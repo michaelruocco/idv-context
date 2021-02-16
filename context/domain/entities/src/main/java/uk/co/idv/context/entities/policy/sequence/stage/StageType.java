@@ -1,6 +1,6 @@
 package uk.co.idv.context.entities.policy.sequence.stage;
 
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.method.MethodVerifications;
 

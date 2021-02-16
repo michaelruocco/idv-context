@@ -1,8 +1,8 @@
 package uk.co.idv.context.entities.policy.sequence.stage;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.MockMethodsMother;
+import uk.co.idv.method.entities.method.Methods;
+import uk.co.idv.method.entities.method.MockMethodsMother;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
