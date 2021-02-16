@@ -15,7 +15,7 @@ import uk.co.idv.context.usecases.context.verification.VerificationService;
 import java.time.Instant;
 import java.util.UUID;
 
-import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.mruoc.duration.calculator.DurationCalculatorUtils.millisBetweenNowAnd;
 
 @Builder
 @Slf4j

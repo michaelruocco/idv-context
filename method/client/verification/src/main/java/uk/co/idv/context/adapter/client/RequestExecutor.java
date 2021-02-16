@@ -10,7 +10,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.Instant;
 
-import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.mruoc.duration.calculator.DurationCalculatorUtils.millisBetweenNowAnd;
 
 @Builder
 public class RequestExecutor {

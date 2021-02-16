@@ -37,5 +37,3 @@ dependencies {
     testFixturesApi testFixtures(project(":policy-entities"))
     testFixturesImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
 }
-
-apply from: rootProject.file('publish-lib.gradle')

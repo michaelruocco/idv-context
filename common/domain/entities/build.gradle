@@ -1,4 +1,6 @@
 plugins {
+    id "maven-publish"
+    id "signing"
     id "java-test-fixtures"
 }
 
@@ -10,4 +12,4 @@ dependencies {
     testFixturesImplementation "org.slf4j:slf4j-api:${slf4jVersion}"
 }
 
-apply from: rootProject.file('publish-lib.gradle')
+apply from: rootProject.file('publish.gradle')

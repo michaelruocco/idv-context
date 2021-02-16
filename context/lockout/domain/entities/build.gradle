@@ -12,5 +12,3 @@ dependencies {
     testFixturesApi testFixtures(project(":policy-entities"))
     testFixturesImplementation "org.mockito:mockito-core:${mockitoVersion}"
 }
-
-apply from: rootProject.file('publish-lib.gradle')

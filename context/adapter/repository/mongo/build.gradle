@@ -5,6 +5,7 @@ dependencies {
     implementation project(":common-use-cases")
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
     implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
+    implementation "com.github.michaelruocco:duration-logger:${durationLoggerVersion}"
 
     testImplementation testFixtures(project(":context-entities"))
 }

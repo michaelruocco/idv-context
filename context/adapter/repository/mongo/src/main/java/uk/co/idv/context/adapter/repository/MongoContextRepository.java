@@ -7,13 +7,14 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import uk.co.idv.common.mongo.MongoDurationLogger;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.usecases.context.ContextRepository;
 
 import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
+
+import static uk.co.mruoc.duration.logger.MongoMdcDurationLoggerUtils.*;
 
 @Builder
 @Slf4j
@@ -32,7 +33,7 @@ public class MongoContextRepository implements ContextRepository {
             Document document = toDocument(context);
             collection.replaceOne(query, document, options);
         } finally {
-            MongoDurationLogger.log("save-context", start);
+            logDuration("save-context", start);
         }
     }
 
@@ -43,7 +44,7 @@ public class MongoContextRepository implements ContextRepository {
             FindIterable<Document> documents = collection.find(toFindByIdQuery(id));
             return Optional.ofNullable(documents.first()).map(this::toContext);
         } finally {
-            MongoDurationLogger.log("load-context", start);
+            logDuration("load-context", start);
         }
     }
 

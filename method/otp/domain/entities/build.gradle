@@ -20,4 +20,4 @@ dependencies {
     testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
 }
 
-apply from: rootProject.file('publish-lib.gradle')
+apply from: rootProject.file('publish.gradle')

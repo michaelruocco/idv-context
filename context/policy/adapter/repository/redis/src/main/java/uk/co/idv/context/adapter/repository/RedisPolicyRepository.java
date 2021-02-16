@@ -13,7 +13,7 @@ import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.mruoc.duration.calculator.DurationCalculatorUtils.millisBetweenNowAnd;
 
 @RequiredArgsConstructor
 @Slf4j

@@ -1,6 +1,5 @@
 plugins {
     id "org.unbroken-dome.test-sets" version "${testSetsPluginVersion}"
-    id "maven-publish"
     id "java-test-fixtures"
 }
 
@@ -27,6 +26,7 @@ dependencies {
     implementation "com.github.michaelruocco:string-utils:${mruocStringUtilsVersion}"
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
+    implementation "com.github.michaelruocco:duration-logger:${durationLoggerVersion}"
 
     testImplementation "com.github.stefanbirkner:system-lambda:${systemLambdaVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
@@ -42,4 +42,4 @@ dependencies {
     testFixturesApi testFixtures(project(":identity-json"))
 }
 
-apply from: rootProject.file('publish-lib.gradle')
+apply from: rootProject.file('publish.gradle')

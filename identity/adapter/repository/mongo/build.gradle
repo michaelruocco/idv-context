@@ -9,6 +9,7 @@ dependencies {
     implementation project(":common-use-cases")
     implementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
     implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
+    implementation "com.github.michaelruocco:duration-logger:${durationLoggerVersion}"
 
     testImplementation testFixtures(project(":identity-entities"))
     testImplementation testFixtures(project(":identity-use-cases"))
