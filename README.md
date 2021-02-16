@@ -11,15 +11,9 @@
 
 ## Todo
     
-*   Split activities from context module into their own module
-
-*   Move Methods, Verifications, Verification, CreateVerificationRequest and CompleteVerificationRequest
-    into common methods module
+*   Extract IdGenerator into separate library
     
-*   Move verification client from context folder to methods folder
-
-*   Reduce verification client dependencies to a minimum so it can be published as something like a standalone
-    jar if possible
+*   Move verification client from context folder to methods folder and rename verification client package
 
 *   Rename to IDV Context
 

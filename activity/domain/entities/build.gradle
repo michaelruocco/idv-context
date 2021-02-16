@@ -10,3 +10,5 @@ dependencies {
     testFixturesImplementation "javax.money:money-api:${moneyApiVersion}"
     testFixturesImplementation "org.javamoney.moneta:moneta-core:${monetaCoreVersion}"
 }
+
+apply from: rootProject.file('publish.gradle')
