@@ -32,7 +32,7 @@ public class SpringOtpConfig {
         return AppOtpConfig.builder()
                 .simSwapExecutorConfig(simSwapExecutorConfig)
                 .clock(appAdapter.getClock())
-                .idGenerator(appAdapter.getIdGenerator())
+                .uuidGenerator(appAdapter.getUuidGenerator())
                 .contextRepository(repositoryAdapter.getContextRepository())
                 .build();
     }

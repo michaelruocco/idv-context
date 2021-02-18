@@ -8,8 +8,6 @@ import uk.co.idv.app.manual.adapter.app.DefaultAppAdapter;
 import uk.co.idv.app.manual.adapter.repository.InMemoryRepositoryAdapter;
 import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
 import uk.co.idv.app.manual.config.JsonConfig;
-import uk.co.idv.common.usecases.id.IdGenerator;
-import uk.co.idv.common.usecases.id.NonRandomIdGenerator;
 import uk.co.idv.context.adapter.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
@@ -40,6 +38,8 @@ import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
+import uk.co.mruoc.randomvalue.uuid.NonRandomUuidGenerator;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 import uk.co.mruoc.test.clock.OverridableClock;
 
 import java.time.Duration;
@@ -51,13 +51,13 @@ public class TestHarness {
     private static final Instant NOW = Instant.parse("2020-10-06T21:00:00.000Z");
 
     private final OverridableClock clock = new OverridableClock(NOW);
-    private final IdGenerator idGenerator = new NonRandomIdGenerator();
+    private final UuidGenerator uuidGenerator = new NonRandomUuidGenerator();
     private final RepositoryAdapter repositoryAdapter = new InMemoryRepositoryAdapter();
 
     private final AppMethodConfig otpConfig = AppOtpConfig.builder()
             .simSwapExecutorConfig(StubSimSwapExecutorConfig.withFixedDelay())
             .clock(clock)
-            .idGenerator(idGenerator)
+            .uuidGenerator(uuidGenerator)
             .contextRepository(repositoryAdapter.getContextRepository())
             .build();
 
@@ -68,7 +68,7 @@ public class TestHarness {
 
     private final AppAdapter appAdapter = DefaultAppAdapter.builder()
             .clock(clock)
-            .idGenerator(idGenerator)
+            .uuidGenerator(uuidGenerator)
             .build();
 
     private final ExternalFindIdentityConfig externalFindIdentityConfig = StubExternalFindIdentityConfig.builder()

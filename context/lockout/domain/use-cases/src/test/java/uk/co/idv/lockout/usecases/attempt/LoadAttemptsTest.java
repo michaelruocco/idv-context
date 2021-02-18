@@ -1,10 +1,10 @@
 package uk.co.idv.lockout.usecases.attempt;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.alias.IdvIdMother;
 import uk.co.idv.lockout.entities.attempt.Attempts;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -15,11 +15,11 @@ import static org.mockito.Mockito.mock;
 
 class LoadAttemptsTest {
 
-    private final IdGenerator idGenerator = mock(IdGenerator.class);
+    private final UuidGenerator uuidGenerator = mock(UuidGenerator.class);
     private final AttemptRepository repository = mock(AttemptRepository.class);
 
     private final LoadAttempts loader = LoadAttempts.builder()
-            .idGenerator(idGenerator)
+            .uuidGenerator(uuidGenerator)
             .repository(repository)
             .build();
 
@@ -58,7 +58,7 @@ class LoadAttemptsTest {
     }
 
     private void givenRandomIdGeneratedWithValue(UUID randomId) {
-        given(idGenerator.generate()).willReturn(randomId);
+        given(uuidGenerator.generate()).willReturn(randomId);
     }
 
 }

@@ -1,8 +1,8 @@
 package uk.co.idv.identity.usecases.identity.idvid;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.entities.alias.IdvId;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.util.UUID;
 
@@ -12,7 +12,7 @@ import static org.mockito.Mockito.mock;
 
 class IdvIdGeneratorTest {
 
-    private final IdGenerator idGenerator = mock(IdGenerator.class);
+    private final UuidGenerator idGenerator = mock(UuidGenerator.class);
 
     private final IdvIdGenerator generator = new IdvIdGenerator(idGenerator);
 

@@ -39,7 +39,7 @@ public class AppConfig {
         return VerificationConfig.builder()
                 .contextRepository(repositoryAdapter.getContextRepository())
                 .clock(appAdapter.getClock())
-                .idGenerator(appAdapter.getIdGenerator())
+                .uuidGenerator(appAdapter.getUuidGenerator())
                 .contextConfig(contextConfig)
                 .build();
     }
@@ -47,7 +47,7 @@ public class AppConfig {
     private IdentityConfig identityConfig(RepositoryAdapter repositoryAdapter,
                                           AppAdapter appAdapter) {
         return DefaultIdentityConfig.builder()
-                .idGenerator(appAdapter.getIdGenerator())
+                .uuidGenerator(appAdapter.getUuidGenerator())
                 .repository(repositoryAdapter.getIdentityRepository())
                 .externalFindIdentityConfig(externalFindIdentityConfig)
                 .build();
@@ -57,7 +57,7 @@ public class AppConfig {
                                         AppAdapter appAdapter,
                                         IdentityConfig identityConfig) {
         return LockoutConfig.builder()
-                .idGenerator(appAdapter.getIdGenerator())
+                .uuidGenerator(appAdapter.getUuidGenerator())
                 .attemptRepository(repositoryAdapter.getAttemptRepository())
                 .policyRepository(repositoryAdapter.getLockoutPolicyRepository())
                 .findIdentity(identityConfig.findIdentity())
@@ -73,7 +73,7 @@ public class AppConfig {
                 .contextRepository(repositoryAdapter.getContextRepository())
                 .policyRepository(repositoryAdapter.getContextPolicyRepository())
                 .clock(appAdapter.getClock())
-                .idGenerator(appAdapter.getIdGenerator())
+                .uuidGenerator(appAdapter.getUuidGenerator())
                 .appMethodConfigs(appMethodConfigs)
                 .lockoutService(lockoutConfig.lockoutService())
                 .identityConfig(identityConfig)

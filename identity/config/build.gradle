@@ -2,7 +2,7 @@ dependencies {
     api project(":identity-use-cases")
     api project(":identity-json")
     implementation project(":identity-data-protector")
-    implementation project(":common-use-cases")
+    implementation "com.github.michaelruocco:random-value-suppliers:${randomValueSuppliersVersion}"
 
     implementation project(":identity-in-memory-repository")
     implementation project(":identity-mongo-repository")

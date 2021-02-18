@@ -2,8 +2,6 @@ package uk.co.idv.method.config.otp;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.common.usecases.id.IdGenerator;
-import uk.co.idv.common.usecases.id.RandomIdGenerator;
 import uk.co.idv.context.usecases.context.ContextMethodUpdater;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.method.adapter.otp.protect.mask.OtpMasker;
@@ -23,6 +21,8 @@ import uk.co.idv.method.usecases.otp.simswap.SimSwap;
 import uk.co.idv.method.usecases.otp.simswap.async.AsyncSimSwap;
 import uk.co.idv.method.usecases.otp.simswap.async.AsyncSimSwapUpdateContextTaskFactory;
 import uk.co.idv.method.usecases.otp.simswap.sync.SyncSimSwap;
+import uk.co.mruoc.randomvalue.uuid.RandomUuidGenerator;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.time.Clock;
 import java.util.concurrent.Executors;
@@ -38,7 +38,7 @@ public class AppOtpConfig implements AppMethodConfig {
     private final Clock clock = Clock.systemUTC();
 
     @Builder.Default
-    private final IdGenerator idGenerator = new RandomIdGenerator();
+    private final UuidGenerator uuidGenerator = new RandomUuidGenerator();
 
     @Override
     public MethodBuilder methodBuilder() {
@@ -68,7 +68,7 @@ public class AppOtpConfig implements AppMethodConfig {
 
     private OtpPhoneNumberConverter otpPhoneNumberConverter() {
         return OtpPhoneNumberConverter.builder()
-                .idGenerator(idGenerator)
+                .uuidGenerator(uuidGenerator)
                 .eligibilityCalculator(otpPhoneNumberEligibilityCalculator())
                 .build();
     }

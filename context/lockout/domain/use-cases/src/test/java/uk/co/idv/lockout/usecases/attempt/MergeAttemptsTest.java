@@ -2,7 +2,6 @@ package uk.co.idv.lockout.usecases.attempt;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.alias.IdvId;
@@ -12,6 +11,7 @@ import uk.co.idv.lockout.entities.attempt.Attempt;
 import uk.co.idv.lockout.entities.attempt.AttemptMother;
 import uk.co.idv.lockout.entities.attempt.Attempts;
 import uk.co.idv.lockout.entities.attempt.AttemptsMother;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -32,11 +32,11 @@ class MergeAttemptsTest {
     private final Attempt originalIdvId2Attempt = AttemptMother.withIdvId(originalIdvId2);
     private final IdvId mergedIdvId = IdvIdMother.withValue("f162983f-7208-4839-af10-bc0c3b1955fa");
 
-    private final IdGenerator idGenerator = mock(IdGenerator.class);
+    private final UuidGenerator uuidGenerator = mock(UuidGenerator.class);
     private final AttemptRepository repository = mock(AttemptRepository.class);
 
     private final MergeAttempts mergeAttempts = MergeAttempts.builder()
-            .idGenerator(idGenerator)
+            .uuidGenerator(uuidGenerator)
             .repository(repository)
             .build();
 

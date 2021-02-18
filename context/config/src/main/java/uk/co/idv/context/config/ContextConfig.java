@@ -2,7 +2,6 @@ package uk.co.idv.context.config;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.adapter.json.error.handler.ContextErrorHandler;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.ContextService;
@@ -29,6 +28,7 @@ import uk.co.idv.context.usecases.policy.ContextPolicyService;
 import uk.co.idv.identity.config.IdentityConfig;
 import uk.co.idv.lockout.usecases.LockoutService;
 import uk.co.idv.method.config.AppMethodConfigs;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.time.Clock;
 import java.util.concurrent.Executors;
@@ -38,7 +38,7 @@ import java.util.concurrent.Executors;
 public class ContextConfig {
 
     private final Clock clock;
-    private final IdGenerator idGenerator;
+    private final UuidGenerator uuidGenerator;
     private final ContextPolicyRepository policyRepository;
     private final ContextRepository contextRepository;
     private final LockoutService lockoutService;
@@ -120,7 +120,7 @@ public class ContextConfig {
     }
 
     private CreateContextRequestConverter serviceCreateContextRequestConverter() {
-        return new CreateContextRequestConverter(idGenerator);
+        return new CreateContextRequestConverter(uuidGenerator);
     }
 
     private ContextCreatedHandler contextCreated() {

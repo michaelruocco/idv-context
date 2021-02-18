@@ -1,7 +1,6 @@
 package uk.co.idv.lockout.config;
 
 import lombok.Builder;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.usecases.identity.find.FindIdentity;
 import uk.co.idv.identity.usecases.identity.merge.MergeIdentitiesHandler;
 import uk.co.idv.lockout.adapter.json.error.handler.LockoutErrorHandler;
@@ -19,13 +18,14 @@ import uk.co.idv.lockout.usecases.state.LoadLockoutState;
 import uk.co.idv.lockout.usecases.state.RecordAttempt;
 import uk.co.idv.lockout.usecases.state.ResetLockoutState;
 import uk.co.idv.lockout.usecases.state.ValidateLockoutState;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.time.Clock;
 
 @Builder
 public class LockoutConfig {
 
-    private final IdGenerator idGenerator;
+    private final UuidGenerator uuidGenerator;
     private final LockoutPolicyRepository policyRepository;
     private final AttemptRepository attemptRepository;
     private final FindIdentity findIdentity;
@@ -62,7 +62,7 @@ public class LockoutConfig {
     public MergeIdentitiesHandler getMergeIdentitiesHandler() {
         return MergeAttempts.builder()
                 .repository(attemptRepository)
-                .idGenerator(idGenerator)
+                .uuidGenerator(uuidGenerator)
                 .build();
     }
 
@@ -103,7 +103,7 @@ public class LockoutConfig {
 
     private LoadAttempts loadAttempts() {
         return LoadAttempts.builder()
-                .idGenerator(idGenerator)
+                .uuidGenerator(uuidGenerator)
                 .repository(attemptRepository)
                 .build();
     }

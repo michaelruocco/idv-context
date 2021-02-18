@@ -12,7 +12,7 @@
 ## Todo
     
 *   Extract IdGenerator into separate library
-    
+
 *   Move verification client from context folder to methods folder and rename verification client package
 
 *   Rename to IDV Context

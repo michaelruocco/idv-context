@@ -24,6 +24,7 @@ dependencies {
     implementation project(":identity-external-find-stub-config")
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
+    implementation "com.github.michaelruocco:random-value-suppliers:${randomValueSuppliersVersion}"
 
     integrationTestImplementation project(":identity-in-memory-repository")
     integrationTestImplementation project(":lockout-in-memory-repository")
@@ -31,7 +32,6 @@ dependencies {
     integrationTestImplementation testFixtures(project(":identity-entities"))
     integrationTestImplementation testFixtures(project(":lockout-entities"))
     integrationTestImplementation testFixtures(project(":method-entities"))
-    integrationTestImplementation testFixtures(project(":common-use-cases"))
     integrationTestImplementation testFixtures(project(":otp-use-cases"))
     integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
     integrationTestImplementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"

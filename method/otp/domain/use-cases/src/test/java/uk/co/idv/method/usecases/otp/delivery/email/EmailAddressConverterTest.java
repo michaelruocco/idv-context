@@ -1,11 +1,11 @@
 package uk.co.idv.method.usecases.otp.delivery.email;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.entities.emailaddress.EmailAddress;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfig;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.util.UUID;
 
@@ -18,14 +18,14 @@ class EmailAddressConverterTest {
     private static final EmailAddress EMAIL_ADDRESS = EmailAddressMother.joeBloggsHotmail();
 
     private final DeliveryMethodConfig config = mock(DeliveryMethodConfig.class);
-    private final IdGenerator idGenerator = mock(IdGenerator.class);
+    private final UuidGenerator uuidGenerator = mock(UuidGenerator.class);
 
-    private final EmailAddressConverter converter = new EmailAddressConverter(idGenerator);
+    private final EmailAddressConverter converter = new EmailAddressConverter(uuidGenerator);
 
     @Test
     void shouldPopulateIdOnDeliveryMethod() {
         UUID expectedId = UUID.randomUUID();
-        given(idGenerator.generate()).willReturn(expectedId);
+        given(uuidGenerator.generate()).willReturn(expectedId);
 
         DeliveryMethod method = converter.toDeliveryMethod(EMAIL_ADDRESS, config);
 

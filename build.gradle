@@ -80,6 +80,7 @@ subprojects {
         monetaCoreVersion = "1.4.2"
         commonsMathVersion = "3.6.1"
         durationLoggerVersion = "0.1.0"
+        randomValueSuppliersVersion = "0.1.0"
 
         junitVersion = "5.7.0"
         assertjVersion = "3.19.0"
