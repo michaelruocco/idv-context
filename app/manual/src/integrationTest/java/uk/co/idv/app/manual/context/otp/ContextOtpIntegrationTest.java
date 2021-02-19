@@ -6,6 +6,7 @@ import uk.co.idv.app.manual.TestHarness;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.FacadeCreateContextRequestMother;
+import uk.co.idv.context.usecases.context.method.NextMethodsSupplier;
 import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
@@ -98,7 +99,7 @@ class ContextOtpIntegrationTest {
 
     private NextMethodsSupplier toNextMethodsSupplier(UUID contextId) {
         return NextMethodsSupplier.builder()
-                .application(application)
+                .contextFinder(application::findContext)
                 .contextId(contextId)
                 .build();
     }
