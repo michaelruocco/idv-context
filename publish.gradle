@@ -1,6 +1,5 @@
 apply plugin: "maven-publish"
 apply plugin: "signing"
-apply plugin: "io.codearte.nexus-staging"
 
 java {
     withJavadocJar()
