@@ -2,7 +2,6 @@ package uk.co.idv.context.entities.context.sequence;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.method.entities.method.DefaultMethods;
 import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
@@ -61,7 +60,7 @@ public class Sequences implements Iterable<Sequence> {
     }
 
     public Methods getNextMethods(MethodVerifications verifications) {
-        return new DefaultMethods(values.stream()
+        return new Methods(values.stream()
                 .map(sequence -> sequence.getNextIncompleteMethods(verifications))
                 .flatMap(Methods::stream)
                 .collect(Collectors.toList())

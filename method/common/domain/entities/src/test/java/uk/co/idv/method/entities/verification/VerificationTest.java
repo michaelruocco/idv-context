@@ -2,7 +2,7 @@ package uk.co.idv.method.entities.verification;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.activity.entities.Activity;
-import uk.co.idv.method.entities.method.DefaultMethods;
+import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.method.entities.result.Result;
 
 import java.time.Instant;
@@ -52,7 +52,7 @@ class VerificationTest {
 
     @Test
     void shouldReturnMethods() {
-        DefaultMethods methods = mock(DefaultMethods.class);
+        Methods methods = mock(Methods.class);
 
         Verification verification = Verification.builder()
                 .methods(methods)
@@ -63,7 +63,7 @@ class VerificationTest {
 
     @Test
     void shouldReturnTrueIfHasMethods() {
-        DefaultMethods methods = mock(DefaultMethods.class);
+        Methods methods = mock(Methods.class);
         given(methods.isEmpty()).willReturn(false);
 
         Verification verification = Verification.builder()
@@ -75,7 +75,7 @@ class VerificationTest {
 
     @Test
     void shouldReturnFalseIfDoesNotHaveMethods() {
-        DefaultMethods methods = mock(DefaultMethods.class);
+        Methods methods = mock(Methods.class);
         given(methods.isEmpty()).willReturn(true);
 
         Verification verification = Verification.builder()

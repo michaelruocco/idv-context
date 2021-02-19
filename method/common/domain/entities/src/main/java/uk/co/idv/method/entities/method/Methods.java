@@ -1,49 +1,117 @@
 package uk.co.idv.method.entities.method;
 
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
+
 import java.time.Duration;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.Optional;
 import java.util.function.UnaryOperator;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public interface Methods extends Iterable<Method> {
+@RequiredArgsConstructor
+@Data
+public class Methods implements Iterable<Method> {
+
+    private final Collection<Method> values;
+
+    public Methods(Method... methods) {
+        this(Arrays.asList(methods));
+    }
 
     @Override
-    Iterator<Method> iterator();
+    public Iterator<Method> iterator() {
+        return values.iterator();
+    }
 
-    Stream<Method> stream();
+    public Stream<Method> stream() {
+        return values.stream();
+    }
 
-    boolean containsMethod(String methodName);
+    public boolean containsMethod(String methodName) {
+        return !getByName(methodName).isEmpty();
+    }
 
-    boolean allSuccessful(MethodVerifications verifications);
+    public boolean allSuccessful(MethodVerifications verifications) {
+        return values.stream().allMatch(method -> method.isSuccessful(verifications));
+    }
 
-    boolean containsSuccessful(MethodVerifications verifications);
+    public boolean containsSuccessful(MethodVerifications verifications) {
+        return values.stream().anyMatch(method -> method.isSuccessful(verifications));
+    }
 
-    boolean allComplete(MethodVerifications verifications);
+    public boolean allComplete(MethodVerifications verifications) {
+        return values.stream().allMatch(method -> method.isComplete(verifications));
+    }
 
-    boolean allIneligible();
+    public boolean allIneligible() {
+        return values.stream().noneMatch(Method::isEligible);
+    }
 
-    long completedCount(MethodVerifications verifications);
+    public long completedCount(MethodVerifications verifications) {
+        return values.stream().filter(method -> method.isComplete(verifications)).count();
+    }
 
-    boolean isEmpty();
+    public boolean isEmpty() {
+        return values.isEmpty();
+    }
 
-    Duration getTotalDuration();
+    public Duration getTotalDuration() {
+        return values.stream()
+                .map(Method::getDuration)
+                .reduce(Duration.ZERO, Duration::plus);
+    }
 
-    Duration getShortestDuration();
+    public Duration getShortestDuration() {
+        return values.stream()
+                .map(Method::getDuration)
+                .min(Comparator.comparingLong(Duration::toMillis))
+                .orElse(Duration.ZERO);
+    }
 
-    Duration getLongestDuration();
+    public Duration getLongestDuration() {
+        return values.stream()
+                .map(Method::getDuration)
+                .max(Comparator.comparingLong(Duration::toMillis))
+                .orElse(Duration.ZERO);
+    }
 
-    Collection<String> getIneligibleNames();
+    public Collection<String> getIneligibleNames() {
+        return values.stream()
+                .filter(method -> !method.isEligible())
+                .map(Method::getName)
+                .collect(Collectors.toSet());
+    }
 
-    Methods getByName(String methodName);
+    public Methods getByName(String methodName) {
+        return new Methods(values.stream()
+                .filter(method -> method.hasName(methodName))
+                .collect(Collectors.toList())
+        );
+    }
 
-    Methods updateMethods(UnaryOperator<Method> function);
+    public Methods updateMethods(UnaryOperator<Method> function) {
+        return new Methods(values.stream()
+                .map(function)
+                .collect(Collectors.toList())
+        );
+    }
 
-    Methods getAllIncompleteMethods(MethodVerifications verifications);
+    public Methods getAllIncompleteMethods(MethodVerifications verifications) {
+        return new Methods(values.stream()
+                .filter(method -> !method.isComplete(verifications))
+                .collect(Collectors.toList())
+        );
+    }
 
-    Optional<Method> getNextIncompleteMethod(MethodVerifications verifications);
-
-    Collection<Method> getValues();
+    public Optional<Method> getNextIncompleteMethod(MethodVerifications verifications) {
+        return values.stream()
+                .filter(method -> !method.isComplete(verifications))
+                .findFirst();
+    }
 
 }

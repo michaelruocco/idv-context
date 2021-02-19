@@ -2,7 +2,6 @@ package uk.co.idv.context.entities.context.sequence.stage;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.method.entities.method.DefaultMethods;
 import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
@@ -61,7 +60,7 @@ public class Stages implements Iterable<Stage> {
     public Methods getNextIncompleteMethods(MethodVerifications verifications) {
         return getNextIncomplete(verifications)
                 .map(stage -> stage.getNextMethods(verifications))
-                .orElse(new DefaultMethods());
+                .orElse(new Methods());
     }
 
     public Optional<Stage> getNextIncomplete(MethodVerifications verifications) {

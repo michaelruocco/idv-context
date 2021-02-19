@@ -3,7 +3,6 @@ package uk.co.idv.context.entities.context;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
-import uk.co.idv.method.entities.method.DefaultMethods;
 import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequences;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
@@ -282,7 +281,7 @@ class ContextTest {
 
     @Test
     void shouldReturnNextMethods() {
-        Methods expectedNextMethods = mock(DefaultMethods.class);
+        Methods expectedNextMethods = mock(Methods.class);
         Verifications verifications = mock(Verifications.class);
         Sequences sequences = givenSequencesWithNextMethods(verifications, expectedNextMethods);
         Context context = ContextMother.builder()
@@ -299,12 +298,12 @@ class ContextTest {
     void shouldReturnNextMethodsMatchingName() {
         String methodName = "fake-method";
         Verifications verifications = mock(Verifications.class);
-        Methods nextMethods = mock(DefaultMethods.class);
+        Methods nextMethods = mock(Methods.class);
         Context context = ContextMother.builder()
                 .sequences(givenSequencesWithNextMethods(verifications, nextMethods))
                 .verifications(verifications)
                 .build();
-        Methods nextMethodsByName = mock(DefaultMethods.class);
+        Methods nextMethodsByName = mock(Methods.class);
         given(nextMethods.getByName(methodName)).willReturn(nextMethodsByName);
 
         Methods methods = context.getNextMethods(methodName);

@@ -2,7 +2,6 @@ package uk.co.idv.context.entities.policy.sequence.stage;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import uk.co.idv.method.entities.method.DefaultMethods;
 import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.context.sequence.stage.StageIneligible;
 import uk.co.idv.method.entities.eligibility.Eligibility;
@@ -38,7 +37,7 @@ public class AnyMethodStageType implements StageType {
     @Override
     public Methods calculateNextMethods(Methods methods, MethodVerifications verifications) {
         if (calculateSuccessful(methods, verifications)) {
-            return new DefaultMethods();
+            return new Methods();
         }
         return methods.getAllIncompleteMethods(verifications);
     }
