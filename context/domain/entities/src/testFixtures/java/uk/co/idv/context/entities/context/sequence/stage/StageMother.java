@@ -1,7 +1,7 @@
 package uk.co.idv.context.entities.context.sequence.stage;
 
 
-import uk.co.idv.method.entities.method.Methods;
+import uk.co.idv.method.entities.method.DefaultMethods;
 import uk.co.idv.method.entities.method.MethodsMother;
 import uk.co.idv.context.entities.policy.sequence.stage.AllMethodsStageTypeMother;
 import uk.co.idv.method.entities.method.Method;
@@ -17,7 +17,7 @@ public interface StageMother {
         return with(MethodsMother.with(methods));
     }
 
-    static Stage with(Methods methods) {
+    static Stage with(DefaultMethods methods) {
         return builder().methods(methods).build();
     }
 

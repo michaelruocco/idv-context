@@ -4,8 +4,8 @@ import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.method.adapter.json.eligibility.EligibilityModule;
-import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.Methods;
+import uk.co.idv.method.entities.method.Method;
 
 import java.util.ArrayList;
 import java.util.Collection;

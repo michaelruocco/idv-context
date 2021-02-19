@@ -1,6 +1,7 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.method.entities.method.DefaultMethods;
 import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.context.sequence.stage.MockStagesMother;
 import uk.co.idv.context.entities.context.sequence.stage.Stages;
@@ -110,7 +111,7 @@ class SequenceTest {
     @Test
     void shouldReturnNextMethodsFromNextMethodsPolicy() {
         MethodVerifications verifications = mock(MethodVerifications.class);
-        Methods expectedNextMethods = mock(Methods.class);
+        Methods expectedNextMethods = mock(DefaultMethods.class);
         Stages stages = MockStagesMother.withNextIncompleteMethods(verifications, expectedNextMethods);
         Sequence sequence = Sequence.builder()
                 .stages(stages)

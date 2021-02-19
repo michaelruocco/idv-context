@@ -1,7 +1,7 @@
 package uk.co.idv.method.entities.verification;
 
 import uk.co.idv.activity.entities.DefaultActivityMother;
-import uk.co.idv.method.entities.method.Methods;
+import uk.co.idv.method.entities.method.DefaultMethods;
 import uk.co.idv.method.entities.method.MethodsMother;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.fake.FakeMethodMother;
@@ -45,7 +45,7 @@ public interface VerificationMother {
                 .contextId(UUID.fromString("2948aadc-7f63-4b00-875b-77a4e6608e5c"))
                 .activity(DefaultActivityMother.build())
                 .methodName(method.getName())
-                .methods(new Methods(method))
+                .methods(new DefaultMethods(method))
                 .protectSensitiveData(true)
                 .created(Instant.parse("2020-09-14T20:03:03.003Z"))
                 .expiry(Instant.parse("2020-09-14T20:08:03.003Z"));

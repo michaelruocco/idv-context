@@ -4,16 +4,16 @@ import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 public interface MethodsMother {
 
-    static Methods empty() {
-        return new Methods();
+    static DefaultMethods empty() {
+        return new DefaultMethods();
     }
 
     static Methods oneFake() {
         return with(FakeMethodMother.build());
     }
 
-    static Methods with(Method... methods) {
-        return new Methods(methods);
+    static DefaultMethods with(Method... methods) {
+        return new DefaultMethods(methods);
     }
 
 }

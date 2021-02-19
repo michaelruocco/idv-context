@@ -1,6 +1,7 @@
 package uk.co.idv.context.entities.context.sequence.stage;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.method.entities.method.DefaultMethods;
 import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.policy.sequence.stage.StageType;
 import uk.co.idv.method.entities.eligibility.Eligibility;
@@ -22,7 +23,7 @@ import static org.mockito.Mockito.mock;
 class StageTest {
 
     private final StageType type = mock(StageType.class);
-    private final Methods methods = mock(Methods.class);
+    private final DefaultMethods methods = mock(DefaultMethods.class);
 
     private final Stage stage = Stage.builder()
             .type(type)
@@ -110,7 +111,7 @@ class StageTest {
     @Test
     void shouldReturnUpdatedMethods() {
         UnaryOperator<Method> function = mock(UnaryOperator.class);
-        Methods expectedMethods = mock(Methods.class);
+        Methods expectedMethods = mock(DefaultMethods.class);
         given(methods.updateMethods(function)).willReturn(expectedMethods);
 
         Stage updatedStage = stage.updateMethods(function);
@@ -121,7 +122,7 @@ class StageTest {
 
     @Test
     void shouldReturnNextMethodsFromPolicy() {
-        Methods expectedMethods = mock(Methods.class);
+        Methods expectedMethods = mock(DefaultMethods.class);
         MethodVerifications verifications = mock(MethodVerifications.class);
         given(type.calculateNextMethods(methods, verifications)).willReturn(expectedMethods);
 
