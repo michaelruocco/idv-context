@@ -5,6 +5,7 @@ import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.entities.context.ContextNotFoundException;
 import uk.co.idv.context.entities.context.ContextNotFoundExceptionMother;
+import uk.co.idv.method.adapter.json.error.contextnotfound.ContextNotFoundError;
 
 import java.util.Optional;
 

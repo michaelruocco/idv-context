@@ -1,7 +1,4 @@
-package uk.co.idv.context.adapter.json.context.error.notnextmethod;
-
-
-import uk.co.idv.context.adapter.json.error.notnextmethod.NotNextMethodError;
+package uk.co.idv.method.adapter.json.error.notnextmethod;
 
 public interface NotNextMethodErrorMother {
 

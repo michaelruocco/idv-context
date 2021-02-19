@@ -11,7 +11,7 @@
 
 ## Todo
     
-*   Extract IdGenerator into separate library
+*   Replace system-lambda library with system-stubs
 
 *   Move verification client from context folder to methods folder and rename verification client package
 

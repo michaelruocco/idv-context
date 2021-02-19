@@ -1,11 +1,11 @@
-package uk.co.idv.context.adapter.json.context.error.contextexpired;
+package uk.co.idv.method.adapter.json.error.contextexpired;
 
 import static uk.co.mruoc.file.content.ContentLoader.loadContentFromClasspath;
 
 public interface ContextExpiredErrorJsonMother {
 
     static String contextExpiredErrorJson() {
-        return loadContentFromClasspath("context/error/context-expired-error.json");
+        return loadContentFromClasspath("error/context-expired-error.json");
     }
 
 }

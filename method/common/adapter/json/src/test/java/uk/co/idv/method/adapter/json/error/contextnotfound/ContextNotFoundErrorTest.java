@@ -1,24 +1,24 @@
-package uk.co.idv.context.adapter.json.error.notnextmethod;
+package uk.co.idv.method.adapter.json.error.contextnotfound;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.error.ApiError;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class NotNextMethodErrorTest {
+class ContextNotFoundErrorTest {
 
     private static final String MESSAGE = "error-message";
 
-    private final ApiError error = new NotNextMethodError(MESSAGE);
+    private final ApiError error = new ContextNotFoundError(MESSAGE);
 
     @Test
     void shouldReturnStatus() {
-        assertThat(error.getStatus()).isEqualTo(422);
+        assertThat(error.getStatus()).isEqualTo(404);
     }
 
     @Test
     void shouldReturnTitle() {
-        assertThat(error.getTitle()).isEqualTo("Not next method");
+        assertThat(error.getTitle()).isEqualTo("Context not found");
     }
 
     @Test

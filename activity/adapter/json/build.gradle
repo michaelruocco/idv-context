@@ -12,3 +12,5 @@ dependencies {
     testFixturesApi testFixtures(project(":activity-entities"))
     testFixturesImplementation "com.github.michaelruocco:file-loader:${fileLoaderVersion}"
 }
+
+apply from: rootProject.file('publish.gradle')

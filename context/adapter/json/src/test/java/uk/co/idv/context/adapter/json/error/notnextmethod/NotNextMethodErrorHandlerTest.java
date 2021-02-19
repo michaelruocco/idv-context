@@ -5,6 +5,7 @@ import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.context.entities.context.NotNextMethodException;
 import uk.co.idv.context.entities.context.NotNextMethodExceptionMother;
+import uk.co.idv.method.adapter.json.error.notnextmethod.NotNextMethodError;
 
 import java.util.Optional;
 

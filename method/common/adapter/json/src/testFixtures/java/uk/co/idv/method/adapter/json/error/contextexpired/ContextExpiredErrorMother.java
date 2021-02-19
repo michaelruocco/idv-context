@@ -1,6 +1,4 @@
-package uk.co.idv.context.adapter.json.context.error.contextexpired;
-
-import uk.co.idv.context.adapter.json.error.contextexpired.ContextExpiredError;
+package uk.co.idv.method.adapter.json.error.contextexpired;
 
 import java.time.Instant;
 import java.util.UUID;

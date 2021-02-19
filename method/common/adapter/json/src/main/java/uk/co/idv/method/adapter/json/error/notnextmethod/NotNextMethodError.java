@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.json.error.notnextmethod;
+package uk.co.idv.method.adapter.json.error.notnextmethod;
 
 import lombok.Getter;
 import uk.co.idv.common.adapter.json.error.DefaultApiError;

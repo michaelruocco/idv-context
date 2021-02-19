@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.json.error.contextexpired;
+package uk.co.idv.method.adapter.json.error.contextexpired;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.error.ApiError;

@@ -21,7 +21,6 @@ dependencies {
     api project(":activity-entities")
 
     implementation project(":common-json")
-    implementation project(":common-use-cases")
     implementation project(":otp-json")
     implementation "com.github.michaelruocco:string-utils:${mruocStringUtilsVersion}"
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"

@@ -1,5 +1,4 @@
 dependencies {
-    api project(":common-mongo")
     implementation project(":lockout-use-cases")
     implementation project(":lockout-json")
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"

@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.json.error.contextexpired;
+package uk.co.idv.method.adapter.json.error.contextexpired;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

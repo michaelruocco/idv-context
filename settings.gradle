@@ -9,9 +9,6 @@ project(':common-use-cases').projectDir = file('common/domain/use-cases')
 include ':common-json'
 project(':common-json').projectDir = file('common/adapter/json')
 
-include ':common-mongo'
-project(':common-mongo').projectDir = file('common/adapter/repository/mongo')
-
 include ':activity-entities'
 project(':activity-entities').projectDir = file('activity/domain/entities')
 

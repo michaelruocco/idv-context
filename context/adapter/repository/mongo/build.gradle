@@ -1,5 +1,4 @@
 dependencies {
-    api project(":common-mongo")
     implementation project(":context-use-cases")
     implementation project(":context-json")
     implementation project(":common-use-cases")

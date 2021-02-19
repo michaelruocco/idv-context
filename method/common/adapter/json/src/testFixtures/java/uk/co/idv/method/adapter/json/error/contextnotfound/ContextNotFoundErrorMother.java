@@ -1,6 +1,4 @@
-package uk.co.idv.context.adapter.json.context.error.contextnotfound;
-
-import uk.co.idv.context.adapter.json.error.contextnotfound.ContextNotFoundError;
+package uk.co.idv.method.adapter.json.error.contextnotfound;
 
 public interface ContextNotFoundErrorMother {
 
