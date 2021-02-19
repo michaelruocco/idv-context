@@ -15,10 +15,6 @@ public class IncludeAttemptsWithinDurationPolicyDeserializer extends StdDeserial
 
     private final transient Clock clock;
 
-    protected IncludeAttemptsWithinDurationPolicyDeserializer() {
-        this(Clock.systemUTC());
-    }
-
     protected IncludeAttemptsWithinDurationPolicyDeserializer(Clock clock) {
         super(IncludeAttemptsWithinDurationPolicy.class);
         this.clock = clock;

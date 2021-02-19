@@ -1,4 +1,4 @@
-package uk.co.idv.context.adapter.json.context.method;
+package uk.co.idv.method.adapter.json.method;
 
 import org.junit.jupiter.api.Test;
 
