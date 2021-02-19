@@ -14,7 +14,7 @@ import java.time.Instant;
 import java.util.Optional;
 import java.util.UUID;
 
-import static uk.co.mruoc.duration.logger.MongoMdcDurationLoggerUtils.*;
+import static uk.co.mruoc.duration.logger.MongoMdcDurationLoggerUtils.logDuration;
 
 @Builder
 @Slf4j

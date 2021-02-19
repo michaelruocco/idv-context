@@ -12,25 +12,14 @@
 ## Todo
     
 *   Replace system-lambda library with system-stubs
-
-*   Move verification client from context folder to methods folder and rename verification client package
-
+*   Rename verification client packages
 *   Rename to IDV Context
-
-*   Update publishing to remove use of bintray and publish to maven central directly instead
-
 *   Add postman collection to repo and run in build pipeline
-
-*   Raise PR for system lambda to return console output as collection of lines
-
+*   Raise PR for system lambda to return console output as collection of lines?
 *   Token validation?
-    
 *   Try out google cache module with a mongo repository for policies instead of redis repository?
-
 *   Performance tests in pipeline / nightly build?
-
 *   Add identity data lookup policy?
-
 *   Tidy up cloud formation templates create and set execution role for context service (rather than being passed in)
 
 ## Useful commands
