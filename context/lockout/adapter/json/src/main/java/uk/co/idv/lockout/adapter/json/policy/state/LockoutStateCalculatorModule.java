@@ -24,7 +24,7 @@ import java.util.Collections;
 
 public class LockoutStateCalculatorModule extends SimpleModule {
 
-    private final Clock clock;
+    private final transient Clock clock;
 
     public LockoutStateCalculatorModule(Clock clock) {
         super("lockout-state-calculator-module", Version.unknownVersion());
