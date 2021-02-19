@@ -15,6 +15,8 @@
 *   Rename verification client packages
 *   Rename to IDV Context
 *   Add postman collection to repo and run in build pipeline
+*   Add publishing spring app to build pipeline
+*   Add publishing docker image to build pipeline
 *   Raise PR for system lambda to return console output as collection of lines?
 *   Token validation?
 *   Try out google cache module with a mongo repository for policies instead of redis repository?
