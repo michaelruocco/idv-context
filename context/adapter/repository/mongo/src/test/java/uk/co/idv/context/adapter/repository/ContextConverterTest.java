@@ -1,10 +1,13 @@
 package uk.co.idv.context.adapter.repository;
 
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.mruoc.json.JsonConverter;
+
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -34,7 +37,19 @@ class ContextConverterTest {
 
         Document document = converter.toDocument(context);
 
-        assertThat(document.toJson()).isEqualTo("");
+        assertThat(document.toJson()).isEqualTo(
+                "{\"_id\": \"2948aadc-7f63-4b00-875b-77a4e6608e5c\", " +
+                "\"ttl\": {\"$date\": 1600114082002}}"
+        );
+    }
+
+    @Test
+    void shouldConvertIdToFindByIdQuery() {
+        UUID id = UUID.fromString("b6b7d2a3-450c-474e-842c-a4e6013c9749");
+
+        Bson query = converter.toFindByIdQuery(id);
+
+        assertThat(query).hasToString("Filter{fieldName='_id', value=b6b7d2a3-450c-474e-842c-a4e6013c9749}");
     }
 
     private Document givenDocumentWithJson(String json) {

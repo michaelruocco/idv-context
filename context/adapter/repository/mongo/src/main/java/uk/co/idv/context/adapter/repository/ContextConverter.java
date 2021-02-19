@@ -14,7 +14,6 @@ import static uk.co.idv.context.adapter.repository.ContextCollection.ID_FIELD_NA
 import static uk.co.idv.context.adapter.repository.ContextCollection.TTL_INDEX_NAME;
 
 @RequiredArgsConstructor
-//TODO unit tests
 public class ContextConverter {
 
     private final JsonConverter converter;

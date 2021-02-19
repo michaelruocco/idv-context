@@ -18,7 +18,6 @@ import static uk.co.mruoc.duration.logger.MongoMdcDurationLoggerUtils.logDuratio
 
 @Builder
 @Slf4j
-//TODO unit tests
 public class MongoContextRepository implements ContextRepository {
 
     private final MongoCollection<Document> collection;
