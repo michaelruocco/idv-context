@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = "2.4.2"
+        springBootVersion = "2.4.3"
     }
 }
 
@@ -70,7 +70,7 @@ dependencies {
     integrationTestImplementation "com.intuit.karate:karate-core:${karateVersion}"
     integrationTestImplementation "com.intuit.karate:karate-junit5:${karateVersion}"
     integrationTestImplementation "org.awaitility:awaitility"
-    integrationTestImplementation "org.testcontainers:junit-jupiter:1.15.1"
+    integrationTestImplementation "org.testcontainers:junit-jupiter:1.15.2"
     integrationTestImplementation "junit:junit"
     integrationTestRuntimeOnly "com.intuit.karate:karate-apache:${karateVersion}"
 }

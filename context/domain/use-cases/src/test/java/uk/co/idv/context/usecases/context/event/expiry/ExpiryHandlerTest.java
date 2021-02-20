@@ -9,10 +9,10 @@ import uk.co.idv.context.entities.context.Context;
 import java.util.HashMap;
 import java.util.UUID;
 
-import static com.github.stefanbirkner.systemlambda.SystemLambda.tapSystemOut;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
+import static uk.org.webcompere.systemstubs.SystemStubs.tapSystemOut;
 
 class ExpiryHandlerTest {
 

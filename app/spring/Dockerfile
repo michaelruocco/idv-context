@@ -14,7 +14,7 @@ ENV SERVER_PORT=80 \
     REQUEST_LOGGING_ENABLED=false \
     RESPONSE_LOGGING_ENABLED=false
 
-COPY build/libs/verification-context-spring-app-${VERSION}.jar /opt/app.jar
+COPY build/libs/spring-app-${VERSION}.jar /opt/app.jar
 
 CMD java \
   -Djava.security.egd=file:/dev/./urandom \

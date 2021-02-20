@@ -10,9 +10,7 @@
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_verification-context&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_verification-context)
 
 ## Todo
-    
-*   Replace system-lambda library with system-stubs
-*   Rename verification client packages
+
 *   Rename to IDV Context
 *   Add postman collection to repo and run in build pipeline
 *   Add publishing spring app to build pipeline

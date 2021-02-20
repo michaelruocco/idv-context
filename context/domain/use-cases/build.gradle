@@ -20,5 +20,5 @@ dependencies {
     testImplementation testFixtures(project(":policy-entities"))
     testImplementation testFixtures(project(":method-entities"))
     testImplementation testFixtures(project(":otp-entities"))
-    testImplementation "com.github.stefanbirkner:system-lambda:${systemLambdaVersion}"
+    testImplementation "uk.org.webcompere:system-stubs-jupiter:${systemStubsVersion}"
 }
