@@ -23,7 +23,7 @@ plugins {
 scmVersion {
     versionCreator "versionWithBranch"
     tag {
-        prefix = "verification-context"
+        prefix = "idv-context"
     }
 }
 project.version = scmVersion.version
@@ -91,7 +91,7 @@ subprojects {
         awaitilityVersion = "4.0.3"
         testingClocksVersion = "0.1.4"
 
-        gitUrl = "https://github.com/michaelruocco/verification-context"
+        gitUrl = "https://github.com/michaelruocco/idv-context"
         pomConfig = {
             licenses {
                 license {
@@ -179,7 +179,7 @@ sonarqube {
     properties {
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.organization", "michaelruocco"
-        property "sonar.projectKey", "michaelruocco_verification-context"
+        property "sonar.projectKey", "michaelruocco_idv-context"
         property "sonar.coverage.jacoco.xmlReportPaths", "${project.buildDir}/reports/jacoco/report.xml"
     }
 }
@@ -204,12 +204,12 @@ dependencyUpdates.resolutionStrategy {
 
 import com.vanniktech.dependency.graph.generator.DependencyGraphGeneratorExtension.Generator
 
-def verificationContextGenerator = new Generator(
-        "verificationContext",
-        { dependency -> dependency.getModuleGroup().startsWith("com.github.michaelruocco") },
+def idvContextGenerator = new Generator(
+        "idvContext",
+        { dependency -> dependency.getModuleGroup().startsWith("com.github.michaelruocco.idv") },
         { dependency -> true }
 )
 
 dependencyGraphGenerator {
-    generators = [Generator.ALL, verificationContextGenerator]
+    generators = [Generator.ALL, idvContextGenerator]
 }
