@@ -1,6 +1,6 @@
 spring:
   application:
-    name: verification-context
+    name: idv-context
   main:
     banner-mode: off
 

@@ -3,8 +3,8 @@ package uk.co.idv.app.spring.config;
 import lombok.Builder;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import uk.co.idv.app.manual.Application;
-import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;
+import uk.co.idv.app.plain.Application;
+import uk.co.idv.app.plain.adapter.channel.ChannelAdapter;
 
 @Builder
 public class StartupListener implements ApplicationListener<ContextRefreshedEvent> {

@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import uk.co.idv.app.manual.Application;
+import uk.co.idv.app.plain.Application;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
 import uk.co.idv.lockout.entities.policy.soft.SoftLockoutPolicyMother;
 import uk.co.idv.policy.entities.policy.DefaultPolicyRequest;

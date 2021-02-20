@@ -6,8 +6,8 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import uk.co.idv.app.manual.adapter.repository.InMemoryRepositoryAdapter;
-import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
+import uk.co.idv.app.plain.adapter.repository.InMemoryRepositoryAdapter;
+import uk.co.idv.app.plain.adapter.repository.RepositoryAdapter;
 
 @Configuration
 @EnableAutoConfiguration(exclude = {

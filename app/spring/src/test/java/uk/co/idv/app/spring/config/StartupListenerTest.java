@@ -3,8 +3,8 @@ package uk.co.idv.app.spring.config;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.springframework.context.event.ContextRefreshedEvent;
-import uk.co.idv.app.manual.Application;
-import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;
+import uk.co.idv.app.plain.Application;
+import uk.co.idv.app.plain.adapter.channel.ChannelAdapter;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;

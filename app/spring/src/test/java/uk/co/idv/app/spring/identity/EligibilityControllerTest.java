@@ -3,7 +3,7 @@ package uk.co.idv.app.spring.identity;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import uk.co.idv.app.manual.Application;
+import uk.co.idv.app.plain.Application;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
 

@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import uk.co.idv.app.manual.Application;
+import uk.co.idv.app.plain.Application;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
 import uk.co.idv.method.entities.verification.GetVerificationRequest;

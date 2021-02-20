@@ -1,4 +1,4 @@
-# Verification Context
+# Idv Context
 
 [![Build](https://github.com/michaelruocco/verification-context/workflows/pipeline/badge.svg)](https://github.com/michaelruocco/verification-context/actions)
 [![codecov](https://codecov.io/gh/michaelruocco/verification-context/branch/master/graph/badge.svg)](https://codecov.io/gh/michaelruocco/verification-context)
@@ -11,7 +11,6 @@
 
 ## Todo
 
-*   Rename to IDV Context
 *   Add postman collection to repo and run in build pipeline
 *   Add publishing spring app to build pipeline
 *   Add publishing docker image to build pipeline

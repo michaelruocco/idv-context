@@ -10,7 +10,7 @@ Feature: Actuator Requests
     And match response.app ==
       """
       {
-        "name": "verification-context"
+        "name": "idv-context"
       }
       """
 
@@ -21,8 +21,8 @@ Feature: Actuator Requests
     And match response.build ==
       """
       {
-        "artifact": "spring-app",
-        "name": "spring-app",
+        "artifact": "idv-context-spring-app",
+        "name": "idv-context-spring-app",
         "time": "#notnull",
         "version": "#notnull",
         "group": "com.github.michaelruocco.idv"

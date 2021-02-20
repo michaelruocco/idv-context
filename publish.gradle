@@ -6,31 +6,6 @@ java {
     withSourcesJar()
 }
 
-project.ext {
-    gitUrl = "https://github.com/michaelruocco/verification-context"
-    pomConfig = {
-        licenses {
-            license {
-                name "MIT License"
-                url "https://opensource.org/licenses/MIT"
-                distribution "repo"
-            }
-        }
-
-        developers {
-            developer {
-                id "mruoc"
-                name "Michael Ruocco"
-                email "michael.ruocco@hotmail.com"
-            }
-        }
-
-        scm {
-            url project.ext.gitUrl
-        }
-    }
-}
-
 publishing {
     repositories {
         maven {
@@ -58,6 +33,13 @@ publishing {
     }
 }
 
+def toRepoUrl(version) {
+    if (version.endsWith('SNAPSHOT')) {
+        return "https://oss.sonatype.org/content/repositories/snapshots/"
+    }
+    return "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+}
+
 signing {
     def signingKey = System.getenv("OSSRH_PGP_SECRET_KEY")
     def signingPassword = System.getenv("OSSRH_PGP_SECRET_KEY_PASSWORD")
@@ -65,13 +47,6 @@ signing {
     sign publishing.publications.lib
 }
 signLibPublication.enabled = gradle.startParameter.taskNames.contains("publish")
-
-def toRepoUrl(version) {
-    if (version.endsWith('SNAPSHOT')) {
-        return "https://oss.sonatype.org/content/repositories/snapshots/"
-    }
-    return "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-}
 
 nexusStaging {
     username = System.getenv("OSSRH_USERNAME")

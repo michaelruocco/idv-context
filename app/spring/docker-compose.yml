@@ -37,9 +37,9 @@ services:
     volumes:
       - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
-  verification-context-app:
-    image: michaelruocco/verification-context-spring-app
-    container_name: verification-context-app
+  idv-context-spring-app:
+    image: michaelruocco/idv-context-spring-app
+    container_name: idv-context-spring-app
     mem_limit: 2048m
     mem_reservation: 2048m
     ports:

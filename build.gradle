@@ -90,6 +90,29 @@ subprojects {
         fileLoaderVersion = "6.0.1"
         awaitilityVersion = "4.0.3"
         testingClocksVersion = "0.1.4"
+
+        gitUrl = "https://github.com/michaelruocco/verification-context"
+        pomConfig = {
+            licenses {
+                license {
+                    name "MIT License"
+                    url "https://opensource.org/licenses/MIT"
+                    distribution "repo"
+                }
+            }
+
+            developers {
+                developer {
+                    id "mruoc"
+                    name "Michael Ruocco"
+                    email "michael.ruocco@hotmail.com"
+                }
+            }
+
+            scm {
+                url project.ext.gitUrl
+            }
+        }
     }
 
     dependencies {

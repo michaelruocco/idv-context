@@ -23,6 +23,10 @@ testSets {
 
 configurations {
     runtimeOnly.exclude module: "slf4j-simple"
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
 }
 
 repositories {
@@ -30,7 +34,7 @@ repositories {
 }
 
 dependencies {
-    implementation project(":manual-app")
+    implementation project(":idv-context-plain-app")
     implementation project(":identity-config")
     implementation project(":lockout-config")
     implementation project(":context-config")
@@ -100,7 +104,7 @@ import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 
 task buildImage(type: DockerBuildImage) {
     inputDir.set(file("."))
-    images.add("michaelruocco/${rootProject.name}-${project.name}:latest")
+    images.add("michaelruocco/${project.name}:latest")
     buildArgs = ["VERSION": version]
 }
 
@@ -109,5 +113,7 @@ task pushImage(type: DockerPushImage) {
 }
 
 dockerCompose {
-    startedServices = ['verification-context-app']
+    startedServices = ['idv-context-spring-app']
 }
+
+apply from: rootProject.file('publish.gradle')

@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import uk.co.idv.app.manual.Application;
+import uk.co.idv.app.plain.Application;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.badrequest.BadRequestError;
 import uk.co.idv.common.adapter.json.error.internalserver.InternalServerError;

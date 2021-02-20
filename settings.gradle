@@ -1,4 +1,4 @@
-rootProject.name = 'verification-context'
+rootProject.name = 'idv-context'
 
 include ':common-entities'
 project(':common-entities').projectDir = file('common/domain/entities')
@@ -135,8 +135,8 @@ project(':otp-sim-swap-stub-config').projectDir = file('method/otp/adapter/sim-s
 include ':otp-config'
 project(':otp-config').projectDir = file('method/otp/config')
 
-include ':manual-app'
-project(':manual-app').projectDir = file('app/manual')
+include ':idv-context-plain-app'
+project(':idv-context-plain-app').projectDir = file('app/plain')
 
-include ':spring-app'
-project(':spring-app').projectDir = file('app/spring')
+include ':idv-context-spring-app'
+project(':idv-context-spring-app').projectDir = file('app/spring')
