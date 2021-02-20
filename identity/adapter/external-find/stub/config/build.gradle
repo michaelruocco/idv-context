@@ -15,4 +15,5 @@ dependencies {
     implementation testFixtures(project(":identity-use-cases"))
 
     integrationTestImplementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
+    integrationTestImplementation "com.github.michaelruocco:duration-logger:${durationLoggerVersion}"
 }

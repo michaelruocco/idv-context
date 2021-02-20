@@ -18,7 +18,7 @@ public class TimeConfig {
 
     @Profile("test")
     @Bean
-    public OffsetClock testClock() {
+    public Clock testClock() {
         return new OffsetClock();
     }
 

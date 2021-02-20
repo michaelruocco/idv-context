@@ -2,6 +2,7 @@ package uk.co.idv.context.usecases.context;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.ContextNotFoundException;
 import uk.co.idv.method.entities.method.Method;
 
 import java.util.Optional;

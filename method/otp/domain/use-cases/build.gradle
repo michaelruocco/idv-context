@@ -15,6 +15,7 @@ dependencies {
     implementation project(":common-use-cases")
     implementation project(":identity-data-protector")
     implementation "com.github.michaelruocco:local-phone-number:${localPhoneNumberVersion}"
+    implementation "com.github.michaelruocco:random-value-suppliers:${randomValueSuppliersVersion}"
     implementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
 
     testImplementation testFixtures(project(":otp-entities"))

@@ -32,37 +32,42 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "sms",
-                    "phoneNumberConfig": {
-                      "country": "GB",
-                      "allowInternational": false,
-                      "lastUpdatedConfig": {
-                        "allowUnknown": true,
-                        "minDaysSinceUpdate": 5
-                      },
-                      "simSwapConfig": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 5,
-                        "async": false
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
                       }
-                    }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "sms",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": true,
+                            "minDaysSinceUpdate": 5
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success"
+                            ],
+                            "timeout": 2000,
+                            "minDaysSinceSwap": 5,
+                            "async": false
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -87,37 +92,42 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "sms",
-                    "phoneNumberConfig": {
-                      "country": "GB",
-                      "allowInternational": false,
-                      "lastUpdatedConfig": {
-                        "allowUnknown": true,
-                        "minDaysSinceUpdate": 5
-                      },
-                      "simSwapConfig": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 5,
-                        "async": false
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
                       }
-                    }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "sms",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": true,
+                            "minDaysSinceUpdate": 5
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success"
+                            ],
+                            "timeout": 2000,
+                            "minDaysSinceSwap": 5,
+                            "async": false
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -146,38 +156,43 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 2,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 6,
-                    "duration": 100000,
-                    "maxNumberOfDeliveries": 3
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "voice",
-                    "phoneNumberConfig": {
-                      "country": "GB",
-                      "allowInternational": false,
-                      "lastUpdatedConfig": {
-                        "allowUnknown": false,
-                        "minDaysSinceUpdate": 3
-                      },
-                      "simSwapConfig": {
-                        "acceptableStatuses": [
-                          "success",
-                          "timeout"
-                        ],
-                        "timeout": 1500,
-                        "minDaysSinceSwap": 4,
-                        "async": false
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 2,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 6,
+                        "duration": 100000,
+                        "maxNumberOfDeliveries": 3
                       }
-                    }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "voice",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": false,
+                            "minDaysSinceUpdate": 3
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success",
+                              "timeout"
+                            ],
+                            "timeout": 1500,
+                            "minDaysSinceSwap": 4,
+                            "async": false
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -209,38 +224,43 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 2,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 6,
-                    "duration": 100000,
-                    "maxNumberOfDeliveries": 3
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "voice",
-                    "phoneNumberConfig": {
-                      "country": "GB",
-                      "allowInternational": false,
-                      "lastUpdatedConfig": {
-                        "allowUnknown": false,
-                        "minDaysSinceUpdate": 3
-                      },
-                      "simSwapConfig": {
-                        "acceptableStatuses": [
-                          "success",
-                          "timeout"
-                        ],
-                        "timeout": 1500,
-                        "minDaysSinceSwap": 4,
-                        "async": false
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 2,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 6,
+                        "duration": 100000,
+                        "maxNumberOfDeliveries": 3
                       }
-                    }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "voice",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": false,
+                            "minDaysSinceUpdate": 3
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success",
+                              "timeout"
+                            ],
+                            "timeout": 1500,
+                            "minDaysSinceSwap": 4,
+                            "async": false
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -285,21 +305,26 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 2,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 6,
-                    "duration": 100000,
-                    "maxNumberOfDeliveries": 3
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "any-method",
+                "methodPolicies": [
                   {
-                    "type": "email"
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 2,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 6,
+                        "duration": 100000,
+                        "maxNumberOfDeliveries": 3
+                      }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "email"
+                      }
+                    ]
                   }
                 ]
               }
@@ -343,21 +368,26 @@ Feature: Context Policy Maintenance
           "sequencePolicies": [
             {
               "name": "one-time-passcode",
-              "methodPolicies": [
+              "stagePolicies": [
                 {
-                  "name": "one-time-passcode",
-                  "config": {
-                    "maxNumberOfAttempts": 2,
-                    "duration": 300000,
-                    "passcodeConfig": {
-                      "length": 6,
-                      "duration": 100000,
-                      "maxNumberOfDeliveries": 3
-                    }
-                  },
-                  "deliveryMethodConfigs": [
+                  "type": "any-method",
+                  "methodPolicies": [
                     {
-                      "type": "email"
+                      "name": "one-time-passcode",
+                      "config": {
+                        "maxNumberOfAttempts": 2,
+                        "duration": 300000,
+                        "passcodeConfig": {
+                          "length": 6,
+                          "duration": 100000,
+                          "maxNumberOfDeliveries": 3
+                        }
+                      },
+                      "deliveryMethodConfigs": [
+                        {
+                          "type": "email"
+                        }
+                      ]
                     }
                   ]
                 }
@@ -401,21 +431,26 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 2,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 6,
-                    "duration": 100000,
-                    "maxNumberOfDeliveries": 3
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "email"
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 2,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 6,
+                        "duration": 100000,
+                        "maxNumberOfDeliveries": 3
+                      }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "email"
+                      }
+                    ]
                   }
                 ]
               }
@@ -442,21 +477,26 @@ Feature: Context Policy Maintenance
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 2,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 6,
-                    "duration": 100000,
-                    "maxNumberOfDeliveries": 3
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "email"
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 2,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 6,
+                        "duration": 100000,
+                        "maxNumberOfDeliveries": 3
+                      }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "email"
+                      }
+                    ]
                   }
                 ]
               }

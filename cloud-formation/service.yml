@@ -16,7 +16,7 @@ Parameters:
       these resources are put into.
   ServiceName:
     Type: String
-    Default: verification-context
+    Default: idv-context
     Description: A human-readable name for the service.
   HealthCheckPath:
     Type: String
@@ -28,7 +28,7 @@ Parameters:
     Description: Number of seconds to wait between each health check.
   ImageUrl:
     Type: String
-    Default: michaelruocco/verification-context-spring-app:latest
+    Default: michaelruocco/idv-context-spring-app:latest
     Description: The url of a docker image that will handle incoming traffic.
   ContainerPort:
     Type: Number

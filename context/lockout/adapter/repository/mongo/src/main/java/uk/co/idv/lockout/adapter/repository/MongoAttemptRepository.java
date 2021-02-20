@@ -6,7 +6,6 @@ import com.mongodb.client.model.ReplaceOptions;
 import lombok.Builder;
 import org.bson.Document;
 import org.bson.conversions.Bson;
-import uk.co.idv.common.mongo.MongoDurationLogger;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.lockout.entities.attempt.Attempts;
 import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
@@ -15,11 +14,13 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Optional;
 
+import static uk.co.mruoc.duration.logger.MongoMdcDurationLoggerUtils.logDuration;
+
 @Builder
 public class MongoAttemptRepository implements AttemptRepository {
 
     private final MongoCollection<Document> collection;
-    private final AttemptConverter attemptConverter;
+    private final MongoAttemptConverter attemptConverter;
 
     @Override
     public void save(Attempts attempts) {
@@ -30,7 +31,7 @@ public class MongoAttemptRepository implements AttemptRepository {
             Document document = attemptConverter.toDocument(attempts);
             collection.replaceOne(query, document, options);
         } finally {
-            MongoDurationLogger.log("save-attempts", start);
+            logDuration("save-attempts", start);
         }
     }
 
@@ -42,7 +43,7 @@ public class MongoAttemptRepository implements AttemptRepository {
             FindIterable<Document> documents = collection.find(query);
             return Optional.ofNullable(documents.first()).map(this::toAttempts);
         } finally {
-            MongoDurationLogger.log("load-attempts-by-idv-id", start);
+            logDuration("load-attempts-by-idv-id", start);
         }
     }
 
@@ -59,7 +60,7 @@ public class MongoAttemptRepository implements AttemptRepository {
         try {
             collection.deleteMany(attemptConverter.toFindByIdvIdsQuery(idvIds));
         } finally {
-            MongoDurationLogger.log("delete-attempts-by-idv-ids", start);
+            logDuration("delete-attempts-by-idv-ids", start);
         }
     }
 

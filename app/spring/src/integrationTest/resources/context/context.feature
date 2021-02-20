@@ -249,37 +249,42 @@ Feature: Context Creation
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "sms",
-                    "phoneNumberConfig": {
-                      "country": "GB",
-                      "allowInternational": false,
-                      "lastUpdatedConfig": {
-                        "allowUnknown": true,
-                        "minDaysSinceUpdate": 5
-                      },
-                      "simSwapConfig": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6,
-                        "async": false
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
                       }
-                    }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "sms",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": true,
+                            "minDaysSinceUpdate": 5
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success"
+                            ],
+                            "timeout": 2000,
+                            "minDaysSinceSwap": 6,
+                            "async": false
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -327,6 +332,9 @@ Feature: Context Creation
         },
         "stateCalculator": {
           "maxNumberOfAttempts": 5,
+          "includeAttemptsPolicy": {
+            "type": "all-attempts"
+          },
           "type": "hard-lockout"
         },
         "recordAttemptPolicy": {
@@ -393,39 +401,44 @@ Feature: Context Creation
             "sequencePolicies": [
               {
                 "name": "one-time-passcode",
-                "methodPolicies": [
+                "stagePolicies": [
                   {
-                    "config": {
-                      "maxNumberOfAttempts": 3,
-                      "duration": 300000,
-                      "passcodeConfig": {
-                        "length": 8,
-                        "duration": 120000,
-                        "maxNumberOfDeliveries": 2
-                      }
-                    },
-                    "deliveryMethodConfigs": [
+                    "type": "all-methods",
+                    "methodPolicies": [
                       {
-                        "type": "sms",
-                        "phoneNumberConfig": {
-                          "country": "GB",
-                          "allowInternational": false,
-                          "lastUpdatedConfig": {
-                            "allowUnknown": true,
-                            "minDaysSinceUpdate": 5
-                          },
-                          "simSwapConfig": {
-                            "acceptableStatuses": [
-                              "success"
-                            ],
-                            "timeout": 2000,
-                            "minDaysSinceSwap": 6,
-                            "async": false
+                        "config": {
+                          "maxNumberOfAttempts": 3,
+                          "duration": 300000,
+                          "passcodeConfig": {
+                            "length": 8,
+                            "duration": 120000,
+                            "maxNumberOfDeliveries": 2
                           }
-                        }
+                        },
+                        "deliveryMethodConfigs": [
+                          {
+                            "type": "sms",
+                            "phoneNumberConfig": {
+                              "country": "GB",
+                              "allowInternational": false,
+                              "lastUpdatedConfig": {
+                                "allowUnknown": true,
+                                "minDaysSinceUpdate": 5
+                              },
+                              "simSwapConfig": {
+                                "acceptableStatuses": [
+                                  "success"
+                                ],
+                                "timeout": 2000,
+                                "minDaysSinceSwap": 6,
+                                "async": false
+                              }
+                            }
+                          }
+                        ],
+                        "name": "one-time-passcode"
                       }
-                    ],
-                    "name": "one-time-passcode"
+                    ]
                   }
                 ]
               }
@@ -459,92 +472,97 @@ Feature: Context Creation
         "sequences": [
           {
             "name": "one-time-passcode",
-            "methods": [
+            "stages": [
               {
-                "name": "one-time-passcode",
-                "deliveryMethods": [
+                "type": "all-methods",
+                "methods": [
                   {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247743",
+                    "name": "one-time-passcode",
+                    "deliveryMethods": [
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "+447808247743",
+                        "eligibility": {
+                          "eligible": true,
+                          "complete": true
+                        }
+                      },
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "+447808247744",
+                        "eligibility": {
+                          "reason": "sim swap status unknown not acceptable",
+                          "eligible": false,
+                          "complete": true
+                        }
+                      },
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "+447808247745",
+                        "eligibility": {
+                          "reason": "sim swap status timeout not acceptable",
+                          "eligible": false,
+                          "complete": false
+                        }
+                      },
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "+447808247746",
+                        "eligibility": {
+                          "reason": "#notnull",
+                          "eligible": false,
+                          "complete": true
+                        }
+                      },
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "+447808247747",
+                        "eligibility": {
+                          "reason": "sim swap status timeout is not allowed",
+                          "eligible": false,
+                          "complete": true
+                        }
+                      },
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "+447808247748",
+                        "eligibility": {
+                          "reason": "sim swap status unknown is not allowed",
+                          "eligible": false,
+                          "complete": true
+                        }
+                      },
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "+447808247749",
+                        "eligibility": {
+                          "reason": "sim swap status failure is not allowed",
+                          "eligible": false,
+                          "complete": true
+                        }
+                      }
+                    ],
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
+                      }
+                    },
                     "eligibility": {
-                      "eligible": true,
-                      "complete": true
-                    }
-                  },
-                  {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247744",
-                    "eligibility": {
-                      "reason": "sim swap status unknown not acceptable",
-                      "eligible": false,
-                      "complete": true
-                    }
-                  },
-                  {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247745",
-                    "eligibility": {
-                      "reason": "sim swap status timeout not acceptable",
-                      "eligible": false,
-                      "complete": false
-                    }
-                  },
-                  {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247746",
-                    "eligibility": {
-                      "reason": "#notnull",
-                      "eligible": false,
-                      "complete": true
-                    }
-                  },
-                  {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247747",
-                    "eligibility": {
-                      "reason": "sim swap status timeout is not allowed",
-                      "eligible": false,
-                      "complete": true
-                    }
-                  },
-                  {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247748",
-                    "eligibility": {
-                      "reason": "sim swap status unknown is not allowed",
-                      "eligible": false,
-                      "complete": true
-                    }
-                  },
-                  {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "+447808247749",
-                    "eligibility": {
-                      "reason": "sim swap status failure is not allowed",
-                      "eligible": false,
-                      "complete": true
+                      "eligible": true
                     }
                   }
-                ],
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "eligibility": {
-                  "eligible": true
-                }
+                ]
               }
             ],
             "duration": 300000,
@@ -577,37 +595,42 @@ Feature: Context Creation
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "sms",
-                    "phoneNumberConfig": {
-                      "country": "GB",
-                      "allowInternational": false,
-                      "lastUpdatedConfig": {
-                        "allowUnknown": true,
-                        "minDaysSinceUpdate": 5
-                      },
-                      "simSwapConfig": {
-                        "acceptableStatuses": [
-                          "success"
-                        ],
-                        "timeout": 2000,
-                        "minDaysSinceSwap": 6,
-                        "async": false
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
                       }
-                    }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "sms",
+                        "phoneNumberConfig": {
+                          "country": "GB",
+                          "allowInternational": false,
+                          "lastUpdatedConfig": {
+                            "allowUnknown": true,
+                            "minDaysSinceUpdate": 5
+                          },
+                          "simSwapConfig": {
+                            "acceptableStatuses": [
+                              "success"
+                            ],
+                            "timeout": 2000,
+                            "minDaysSinceSwap": 6,
+                            "async": false
+                          }
+                        }
+                      }
+                    ]
                   }
                 ]
               }
@@ -650,6 +673,9 @@ Feature: Context Creation
         },
         "stateCalculator": {
           "maxNumberOfAttempts": 5,
+          "includeAttemptsPolicy": {
+            "type": "all-attempts"
+          },
           "type": "hard-lockout"
         },
         "recordAttemptPolicy": {
@@ -716,39 +742,44 @@ Feature: Context Creation
             "sequencePolicies": [
               {
                 "name": "one-time-passcode",
-                "methodPolicies": [
+                "stagePolicies": [
                   {
-                    "config": {
-                      "maxNumberOfAttempts": 3,
-                      "duration": 300000,
-                      "passcodeConfig": {
-                        "length": 8,
-                        "duration": 120000,
-                        "maxNumberOfDeliveries": 2
-                      }
-                    },
-                    "deliveryMethodConfigs": [
+                    "type": "all-methods",
+                    "methodPolicies": [
                       {
-                        "type": "sms",
-                        "phoneNumberConfig": {
-                          "country": "GB",
-                          "allowInternational": false,
-                          "lastUpdatedConfig": {
-                            "allowUnknown": true,
-                            "minDaysSinceUpdate": 5
-                          },
-                          "simSwapConfig": {
-                            "acceptableStatuses": [
-                              "success"
-                            ],
-                            "timeout": 2000,
-                            "minDaysSinceSwap": 6,
-                            "async": false
+                        "config": {
+                          "maxNumberOfAttempts": 3,
+                          "duration": 300000,
+                          "passcodeConfig": {
+                            "length": 8,
+                            "duration": 120000,
+                            "maxNumberOfDeliveries": 2
                           }
-                        }
+                        },
+                        "deliveryMethodConfigs": [
+                          {
+                            "type": "sms",
+                            "phoneNumberConfig": {
+                              "country": "GB",
+                              "allowInternational": false,
+                              "lastUpdatedConfig": {
+                                "allowUnknown": true,
+                                "minDaysSinceUpdate": 5
+                              },
+                              "simSwapConfig": {
+                                "acceptableStatuses": [
+                                  "success"
+                                ],
+                                "timeout": 2000,
+                                "minDaysSinceSwap": 6,
+                                "async": false
+                              }
+                            }
+                          }
+                        ],
+                        "name": "one-time-passcode"
                       }
-                    ],
-                    "name": "one-time-passcode"
+                    ]
                   }
                 ]
               }
@@ -777,42 +808,47 @@ Feature: Context Creation
         "sequences": [
           {
             "name": "one-time-passcode",
-            "methods": [
+            "stages": [
               {
-                "name": "one-time-passcode",
-                "deliveryMethods": [
+                "type": "all-methods",
+                "methods": [
                   {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "**********743",
+                    "name": "one-time-passcode",
+                    "deliveryMethods": [
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "**********743",
+                        "eligibility": {
+                          "eligible": true,
+                          "complete": true
+                        }
+                      },
+                      {
+                        "id": "#uuid",
+                        "type": "sms",
+                        "value": "**********744",
+                        "eligibility": {
+                          "reason": "sim swap status unknown not acceptable",
+                          "eligible": false,
+                          "complete": true
+                        }
+                      }
+                    ],
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
+                      }
+                    },
                     "eligibility": {
-                      "eligible": true,
-                      "complete": true
-                    }
-                  },
-                  {
-                    "id": "#uuid",
-                    "type": "sms",
-                    "value": "**********744",
-                    "eligibility": {
-                      "reason": "sim swap status unknown not acceptable",
-                      "eligible": false,
-                      "complete": true
+                      "eligible": true
                     }
                   }
-                ],
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "eligibility": {
-                  "eligible": true
-                }
+                ]
               }
             ],
             "duration": 300000,

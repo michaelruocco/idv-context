@@ -1,8 +1,7 @@
 package uk.co.idv.context.entities.context.sequence;
 
-import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.method.entities.method.Method;
-import uk.co.idv.method.entities.method.fake.FakeMethodMother;
+import uk.co.idv.context.entities.context.sequence.stage.StageMother;
+import uk.co.idv.context.entities.context.sequence.stage.StagesMother;
 
 public interface SequenceMother {
 
@@ -10,18 +9,10 @@ public interface SequenceMother {
         return builder().build();
     }
 
-    static Sequence withMethods(Method... methods) {
-        return withMethods(new Methods(methods));
-    }
-
-    static Sequence withMethods(Methods methods) {
-        return builder().methods(methods).build();
-    }
-
     static Sequence.SequenceBuilder builder() {
         return Sequence.builder()
                 .name("default-sequence")
-                .methods(new Methods(FakeMethodMother.build()));
+                .stages(StagesMother.with(StageMother.fakeOnly()));
     }
 
 }

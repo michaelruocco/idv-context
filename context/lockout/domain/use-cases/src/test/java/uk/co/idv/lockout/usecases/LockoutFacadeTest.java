@@ -60,7 +60,7 @@ class LockoutFacadeTest {
 
     private LockoutState givenLockoutStateLoaded(LockoutRequest request) {
         LockoutState state = mock(LockoutState.class);
-        given(lockoutService.loadAndValidateState(request)).willReturn(state);
+        given(lockoutService.loadState(request)).willReturn(state);
         return state;
     }
 

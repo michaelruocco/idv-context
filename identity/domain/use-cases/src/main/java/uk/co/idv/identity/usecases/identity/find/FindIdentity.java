@@ -5,6 +5,8 @@ import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.identity.Identities;
 import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.identity.entities.identity.IdentityNotFoundException;
+import uk.co.idv.identity.entities.identity.MultipleIdentitiesFoundException;
 import uk.co.idv.identity.usecases.identity.IdentityRepository;
 
 

@@ -1,13 +1,13 @@
 package uk.co.idv.context.usecases.context.sequence;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequence;
 import uk.co.idv.context.entities.context.sequence.SequencesRequest;
+import uk.co.idv.context.entities.context.sequence.stage.Stages;
+import uk.co.idv.context.entities.context.sequence.stage.StagesRequest;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
-import uk.co.idv.context.usecases.context.method.MethodsBuilder;
-import uk.co.idv.method.entities.method.MethodsRequest;
-import uk.co.idv.method.entities.policy.MethodPolicies;
+import uk.co.idv.context.entities.policy.sequence.stage.StagePolicies;
+import uk.co.idv.context.usecases.context.sequence.stage.StagesBuilder;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -15,31 +15,32 @@ import static org.mockito.Mockito.mock;
 
 class SequenceBuilderTest {
 
-    private final MethodsBuilder methodsBuilder = mock(MethodsBuilder.class);
+    private final StagesBuilder stagesBuilder = mock(StagesBuilder.class);
 
-    private final SequenceBuilder sequenceBuilder = new SequenceBuilder(methodsBuilder);
+    private final SequenceBuilder sequenceBuilder = new SequenceBuilder(stagesBuilder);
 
     @Test
     void shouldPopulateSequenceNameFromPolicy() {
         SequencesRequest request = mock(SequencesRequest.class);
         String expectedName = "my-name";
+        SequencePolicy sequencePolicy = givenSequencePolicyWithName(expectedName);
 
-        Sequence sequence = sequenceBuilder.build(request, givenSequencePolicyWithName(expectedName));
+        Sequence sequence = sequenceBuilder.build(request, sequencePolicy);
 
         assertThat(sequence.getName()).isEqualTo(expectedName);
     }
 
     @Test
-    void shouldPopulateMethods() {
-        MethodPolicies methodPolicies = mock(MethodPolicies.class);
-        SequencePolicy sequencePolicy = givenSequencePolicyWithMethodPolicies(methodPolicies);
+    void shouldPopulateStages() {
+        StagePolicies stagePolicies = mock(StagePolicies.class);
+        SequencePolicy sequencePolicy = givenSequencePolicyWithStagePolicies(stagePolicies);
         SequencesRequest sequencesRequest = mock(SequencesRequest.class);
-        MethodsRequest methodsRequest = givenConvertsToMethodsRequest(sequencesRequest, sequencePolicy);
-        Methods expectedMethods = givenRequestBuildsMethods(methodsRequest);
+        StagesRequest stagesRequest = givenConvertsToStagesRequest(sequencesRequest, sequencePolicy);
+        Stages expectedStages = givenRequestBuildsStages(stagesRequest);
 
         Sequence sequence = sequenceBuilder.build(sequencesRequest, sequencePolicy);
 
-        assertThat(sequence.getMethods()).isEqualTo(expectedMethods);
+        assertThat(sequence.getStages()).isEqualTo(expectedStages);
     }
 
     private SequencePolicy givenSequencePolicyWithName(String name) {
@@ -48,22 +49,22 @@ class SequenceBuilderTest {
         return policy;
     }
 
-    private SequencePolicy givenSequencePolicyWithMethodPolicies(MethodPolicies methodPolicies) {
+    private SequencePolicy givenSequencePolicyWithStagePolicies(StagePolicies stagePolicies) {
         SequencePolicy policy = mock(SequencePolicy.class);
-        given(policy.getMethodPolicies()).willReturn(methodPolicies);
+        given(policy.getStagePolicies()).willReturn(stagePolicies);
         return policy;
     }
 
-    private MethodsRequest givenConvertsToMethodsRequest(SequencesRequest request, SequencePolicy policy) {
-        MethodsRequest methodsRequest = mock(MethodsRequest.class);
-        given(request.toMethodsRequest(policy)).willReturn(methodsRequest);
-        return methodsRequest;
+    private StagesRequest givenConvertsToStagesRequest(SequencesRequest request, SequencePolicy policy) {
+        StagesRequest stagesRequest = mock(StagesRequest.class);
+        given(request.toStagesRequest(policy)).willReturn(stagesRequest);
+        return stagesRequest;
     }
 
-    private Methods givenRequestBuildsMethods(MethodsRequest methodsRequest) {
-        Methods methods = mock(Methods.class);
-        given(methodsBuilder.build(methodsRequest)).willReturn(methods);
-        return methods;
+    private Stages givenRequestBuildsStages(StagesRequest stagesRequest) {
+        Stages stages = mock(Stages.class);
+        given(stagesBuilder.build(stagesRequest)).willReturn(stages);
+        return stages;
     }
 
 }

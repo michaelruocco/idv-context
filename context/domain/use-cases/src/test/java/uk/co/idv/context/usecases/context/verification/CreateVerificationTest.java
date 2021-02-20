@@ -1,14 +1,14 @@
 package uk.co.idv.context.usecases.context.verification;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
-import uk.co.idv.context.entities.verification.CreateVerificationRequest;
-import uk.co.idv.context.entities.verification.CreateVerificationRequestMother;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.CreateVerificationRequest;
+import uk.co.idv.method.entities.verification.CreateVerificationRequestMother;
+import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.FindContext;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -24,13 +24,13 @@ class CreateVerificationTest {
     private static final Instant NOW = Instant.now();
 
     private final FindContext findContext = mock(FindContext.class);
-    private final IdGenerator idGenerator = mock(IdGenerator.class);
+    private final UuidGenerator uuidGenerator = mock(UuidGenerator.class);
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
     private final ContextRepository repository = mock(ContextRepository.class);
 
     private final CreateVerification createVerification = CreateVerification.builder()
             .findContext(findContext)
-            .idGenerator(idGenerator)
+            .uuidGenerator(uuidGenerator)
             .clock(clock)
             .repository(repository)
             .build();
@@ -108,7 +108,7 @@ class CreateVerificationTest {
 
     private UUID givenRandomIdGenerated() {
         UUID id = UUID.randomUUID();
-        given(idGenerator.generate()).willReturn(id);
+        given(uuidGenerator.generate()).willReturn(id);
         return id;
     }
 

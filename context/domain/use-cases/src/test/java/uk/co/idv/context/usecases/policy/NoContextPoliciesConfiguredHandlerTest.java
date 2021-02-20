@@ -1,6 +1,7 @@
 package uk.co.idv.context.usecases.policy;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.policy.NoContextPoliciesConfiguredException;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.entities.policy.PolicyRequestMother;
 

@@ -1,6 +1,7 @@
 package uk.co.idv.context.entities.policy.sequence;
 
-import uk.co.idv.method.entities.policy.MethodPoliciesMother;
+import uk.co.idv.context.entities.policy.sequence.stage.StagePoliciesMother;
+import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 
 public interface SequencePolicyMother {
@@ -16,14 +17,14 @@ public interface SequencePolicyMother {
     static SequencePolicy with(MethodPolicy methodPolicy) {
         return builder()
                 .name(methodPolicy.getName())
-                .methodPolicies(MethodPoliciesMother.with(methodPolicy))
+                .stagePolicies(StagePoliciesMother.withMethodPolicy(methodPolicy))
                 .build();
     }
 
     static SequencePolicy.SequencePolicyBuilder builder() {
         return SequencePolicy.builder()
                 .name("default-sequence")
-                .methodPolicies(MethodPoliciesMother.build());
+                .stagePolicies(StagePoliciesMother.withMethodPolicy(FakeMethodPolicyMother.build()));
     }
 
 }

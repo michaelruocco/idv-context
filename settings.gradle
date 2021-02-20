@@ -1,4 +1,4 @@
-rootProject.name = 'verification-context'
+rootProject.name = 'idv-context'
 
 include ':common-entities'
 project(':common-entities').projectDir = file('common/domain/entities')
@@ -9,8 +9,11 @@ project(':common-use-cases').projectDir = file('common/domain/use-cases')
 include ':common-json'
 project(':common-json').projectDir = file('common/adapter/json')
 
-include ':common-mongo'
-project(':common-mongo').projectDir = file('common/adapter/repository/mongo')
+include ':activity-entities'
+project(':activity-entities').projectDir = file('activity/domain/entities')
+
+include ':activity-json'
+project(':activity-json').projectDir = file('activity/adapter/json')
 
 include ':identity-entities'
 project(':identity-entities').projectDir = file('identity/domain/entities')
@@ -93,12 +96,6 @@ project(':context-redis-repository').projectDir = file('context/adapter/reposito
 include ':context-mongo-repository'
 project(':context-mongo-repository').projectDir = file('context/adapter/repository/mongo')
 
-include ':context-client'
-project(':context-client').projectDir = file('context/adapter/client')
-
-include ':context-client-test-fixtures'
-project(':context-client-test-fixtures').projectDir = file('context/adapter/client-test-fixtures')
-
 include ':context-config'
 project(':context-config').projectDir = file('context/config')
 
@@ -113,6 +110,9 @@ project(':method-json').projectDir = file('method/common/adapter/json')
 
 include ':method-config'
 project(':method-config').projectDir = file('method/common/config')
+
+include ':verification-client'
+project(':verification-client').projectDir = file('method/client/verification')
 
 include ':otp-entities'
 project(':otp-entities').projectDir = file('method/otp/domain/entities')
@@ -135,8 +135,8 @@ project(':otp-sim-swap-stub-config').projectDir = file('method/otp/adapter/sim-s
 include ':otp-config'
 project(':otp-config').projectDir = file('method/otp/config')
 
-include ':manual-app'
-project(':manual-app').projectDir = file('app/manual')
+include ':idv-context-plain-app'
+project(':idv-context-plain-app').projectDir = file('app/plain')
 
-include ':spring-app'
-project(':spring-app').projectDir = file('app/spring')
+include ':idv-context-spring-app'
+project(':idv-context-spring-app').projectDir = file('app/spring')

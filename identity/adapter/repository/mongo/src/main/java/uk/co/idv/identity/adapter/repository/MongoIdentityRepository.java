@@ -4,7 +4,6 @@ import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import lombok.Builder;
 import org.bson.conversions.Bson;
-import uk.co.idv.common.mongo.MongoDurationLogger;
 import uk.co.idv.identity.adapter.repository.converter.IdentityDocumentsConverter;
 import uk.co.idv.identity.adapter.repository.query.AliasQueryBuilder;
 import uk.co.idv.identity.adapter.repository.document.IdentityDocument;
@@ -17,6 +16,8 @@ import uk.co.idv.identity.usecases.identity.IdentityRepository;
 
 import java.time.Instant;
 import java.util.Optional;
+
+import static uk.co.mruoc.duration.logger.MongoMdcDurationLoggerUtils.logDuration;
 
 @Builder
 public class MongoIdentityRepository implements IdentityRepository {
@@ -33,7 +34,7 @@ public class MongoIdentityRepository implements IdentityRepository {
             FindIterable<IdentityDocument> documents = collection.find(query);
             return Optional.ofNullable(documents.first()).map(this::toIdentity);
         } finally {
-            MongoDurationLogger.log("load-identity-by-alias", start);
+            logDuration("load-identity-by-alias", start);
         }
     }
 
@@ -45,7 +46,7 @@ public class MongoIdentityRepository implements IdentityRepository {
             FindIterable<IdentityDocument> documents = collection.find(query);
             return toIdentities(documents);
         } finally {
-            MongoDurationLogger.log("load-identity-by-aliases", start);
+            logDuration("load-identity-by-aliases", start);
         }
     }
 
@@ -56,7 +57,7 @@ public class MongoIdentityRepository implements IdentityRepository {
             IdentityDocument document = toDocument(identity);
             collection.insertOne(document);
         } finally {
-            MongoDurationLogger.log("create-identity", start);
+            logDuration("create-identity", start);
         }
     }
 
@@ -68,7 +69,7 @@ public class MongoIdentityRepository implements IdentityRepository {
             IdentityDocument document = toDocument(updated);
             collection.replaceOne(query, document);
         } finally {
-            MongoDurationLogger.log("update-identity", start);
+            logDuration("update-identity", start);
         }
     }
 
@@ -79,7 +80,7 @@ public class MongoIdentityRepository implements IdentityRepository {
             Bson query = toFindByAliasesQuery(aliases);
             collection.deleteMany(query);
         } finally {
-            MongoDurationLogger.log("delete-identity-by-aliases", start);
+            logDuration("delete-identity-by-aliases", start);
         }
     }
 

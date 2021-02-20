@@ -1,12 +1,12 @@
 package uk.co.idv.method.usecases.otp.delivery.phone;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.method.entities.eligibility.Eligibility;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumber;
 import uk.co.idv.method.entities.otp.delivery.phone.OtpPhoneNumberMother;
 import uk.co.idv.method.entities.otp.policy.delivery.phone.PhoneDeliveryMethodConfig;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.util.UUID;
 
@@ -17,18 +17,18 @@ import static org.mockito.Mockito.mock;
 class OtpPhoneNumberConverterTest {
 
     private final PhoneDeliveryMethodConfig config = mock(PhoneDeliveryMethodConfig.class);
-    private final IdGenerator idGenerator = mock(IdGenerator.class);
+    private final UuidGenerator uuidGenerator = mock(UuidGenerator.class);
     private final OtpPhoneNumberEligibilityCalculator eligibilityCalculator = mock(OtpPhoneNumberEligibilityCalculator.class);
 
     private final OtpPhoneNumberConverter converter = OtpPhoneNumberConverter.builder()
-            .idGenerator(idGenerator)
+            .uuidGenerator(uuidGenerator)
             .eligibilityCalculator(eligibilityCalculator)
             .build();
 
     @Test
     void shouldPopulateIdOnDeliveryMethod() {
         UUID expectedId = UUID.randomUUID();
-        given(idGenerator.generate()).willReturn(expectedId);
+        given(uuidGenerator.generate()).willReturn(expectedId);
         OtpPhoneNumber number = OtpPhoneNumberMother.localMobile();
 
         DeliveryMethod method = converter.toDeliveryMethod(number, config);

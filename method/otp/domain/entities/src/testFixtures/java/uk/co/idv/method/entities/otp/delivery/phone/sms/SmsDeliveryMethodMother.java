@@ -5,9 +5,14 @@ import uk.co.idv.method.entities.eligibility.EligibilityMother;
 import uk.co.idv.method.entities.otp.delivery.DeliveryMethod;
 import uk.co.idv.method.entities.otp.delivery.phone.simswap.AsyncSimSwapEligibilityMother;
 
+import java.time.Instant;
 import java.util.UUID;
 
 public interface SmsDeliveryMethodMother {
+
+    static DeliveryMethod smsWithLastUpdated() {
+        return builder().lastUpdated(Instant.parse("2020-01-01T01:01:01.001Z")).build();
+    }
 
     static DeliveryMethod sms() {
         return builder().build();

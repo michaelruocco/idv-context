@@ -3,7 +3,7 @@ package uk.co.idv.identity.adapter.eligibility.external.data;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.entities.async.Delay;
 import uk.co.idv.identity.entities.alias.AliasesMother;
-import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
+import uk.co.idv.identity.entities.alias.CardNumberMother;
 import uk.co.idv.identity.entities.alias.DefaultAliases;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.adapter.eligibility.external.data.phonenumber.StubPhoneNumberFactory;
@@ -20,7 +20,7 @@ class StubDataSupplierTest {
 
     @Test
     void shouldReturnEmptyDataIfAtLeastOneAliasValueEndsIn9() {
-        AsyncDataLoadRequest request = toRequest(AliasesMother.with(CreditCardNumberMother.withValueEndingIn9()));
+        AsyncDataLoadRequest request = toRequest(AliasesMother.with(CardNumberMother.creditWithValueEndingIn9()));
         StubDataSupplier<PhoneNumbers> supplier = buildSupplier(request);
 
         PhoneNumbers phoneNumbers = supplier.get();
@@ -30,7 +30,7 @@ class StubDataSupplierTest {
 
     @Test
     void shouldReturnPopulatedDataIfAllAliasValuesDoNotEndIn9() {
-        AsyncDataLoadRequest request = toRequest(AliasesMother.with(CreditCardNumberMother.creditCardNumber()));
+        AsyncDataLoadRequest request = toRequest(AliasesMother.with(CardNumberMother.credit()));
         StubDataSupplier<PhoneNumbers> supplier = buildSupplier(request);
 
         PhoneNumbers phoneNumbers = supplier.get();

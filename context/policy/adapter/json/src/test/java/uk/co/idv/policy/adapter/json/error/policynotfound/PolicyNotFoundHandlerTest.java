@@ -3,11 +3,10 @@ package uk.co.idv.policy.adapter.json.error.policynotfound;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.policy.usecases.policy.load.PolicyNotFoundException;
-import uk.co.idv.policy.usecases.policy.load.PolicyNotFoundExceptionMother;
+import uk.co.idv.policy.entities.policy.PolicyNotFoundException;
+import uk.co.idv.policy.entities.policy.PolicyNotFoundExceptionMother;
 
 import java.util.Optional;
-import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -17,7 +16,7 @@ class PolicyNotFoundHandlerTest {
 
     @Test
     void shouldConvertPolicyNotFoundExceptionToError() {
-        PolicyNotFoundException exception = new PolicyNotFoundException(UUID.randomUUID());
+        PolicyNotFoundException exception = PolicyNotFoundExceptionMother.build();
 
         Optional<ApiError> error = handler.apply(exception);
 

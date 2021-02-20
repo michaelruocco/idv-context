@@ -1,14 +1,14 @@
 package uk.co.idv.context.usecases.context.verification;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequestMother;
-import uk.co.idv.context.entities.verification.CreateVerificationRequest;
-import uk.co.idv.context.entities.verification.CreateVerificationRequestMother;
-import uk.co.idv.context.entities.verification.GetVerificationRequest;
-import uk.co.idv.context.entities.verification.GetVerificationRequestMother;
-import uk.co.idv.context.entities.verification.Verification;
-import uk.co.idv.context.entities.verification.VerificationMother;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequestMother;
+import uk.co.idv.method.entities.verification.CreateVerificationRequest;
+import uk.co.idv.method.entities.verification.CreateVerificationRequestMother;
+import uk.co.idv.method.entities.verification.GetVerificationRequest;
+import uk.co.idv.method.entities.verification.GetVerificationRequestMother;
+import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.VerificationMother;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;

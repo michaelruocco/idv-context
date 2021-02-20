@@ -1,0 +1,15 @@
+[
+  {
+    "type": "any-method",
+    "methodPolicies": [
+      {
+        "name": "fake-method",
+        "config": {
+          "maxNumberOfAttempts": 3,
+          "duration": 300000,
+          "fakeValue": "fake"
+        }
+      }
+    ]
+  }
+]

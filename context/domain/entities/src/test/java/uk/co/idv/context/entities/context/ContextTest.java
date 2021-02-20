@@ -3,9 +3,14 @@ package uk.co.idv.context.entities.context;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequences;
-import uk.co.idv.context.entities.verification.Verifications;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequestMother;
+import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.VerificationMother;
+import uk.co.idv.method.entities.verification.Verifications;
+import uk.co.idv.method.entities.verification.VerificationsMother;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
 
@@ -15,6 +20,7 @@ import java.util.UUID;
 import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.catchThrowable;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -359,6 +365,83 @@ class ContextTest {
         boolean hasMoreCompletedMethods = updated.hasMoreCompletedMethodsThan(original);
 
         assertThat(hasMoreCompletedMethods).isFalse();
+    }
+
+    @Test
+    void shouldReturnContextWithUpdatedVerifications() {
+        Verifications verifications = mock(Verifications.class);
+        Context original = ContextMother.build();
+
+        Context updated = original.withVerifications(verifications);
+
+        assertThat(updated)
+                .usingRecursiveComparison()
+                .ignoringFields("verifications")
+                .isEqualTo(original);
+        assertThat(updated.getVerifications()).isEqualTo(verifications);
+    }
+
+    @Test
+    void shouldAddVerificationToContextIfMatchesNextMethod() {
+        Verification verification = VerificationMother.successful();
+        Context original = ContextMother.build();
+
+        Context updated = original.add(verification);
+
+        assertThat(updated)
+                .usingRecursiveComparison()
+                .ignoringFields("verifications")
+                .isEqualTo(original);
+        assertThat(updated.getVerifications()).isEqualTo(original.getVerifications().add(verification));
+    }
+
+    @Test
+    void shouldThrowExceptionIfAddedVerificationDoesNotMatchNextMethod() {
+        String methodName = "other-method";
+        Verification verification = VerificationMother.withMethodName(methodName);
+        Context original = ContextMother.build();
+
+        Throwable error = catchThrowable(() -> original.add(verification));
+
+        assertThat(error)
+                .isInstanceOf(NotNextMethodException.class)
+                .hasMessage(methodName);
+    }
+
+    @Test
+    void shouldReturnVerificationById() {
+        Verification expectedVerification = VerificationMother.successful();
+        Context context = ContextMother.withVerifications(VerificationsMother.with(expectedVerification));
+
+        Verification verification = context.getVerification(expectedVerification.getId());
+
+        assertThat(verification).isEqualTo(expectedVerification);
+    }
+
+    @Test
+    void shouldReturnUpdatedContextWithCompletedVerification() {
+        Verification incomplete = VerificationMother.incomplete();
+        Context original = ContextMother.withVerifications(VerificationsMother.with(incomplete));
+        CompleteVerificationRequest request = CompleteVerificationRequestMother.builder()
+                .contextId(original.getId())
+                .id(incomplete.getId())
+                .successful(true)
+                .timestamp(Instant.parse("2020-09-14T20:08:02.003Z"))
+                .build();
+
+        Context updatedContext = original.completeVerification(request);
+
+        assertThat(updatedContext)
+                .usingRecursiveComparison()
+                .ignoringFields("verifications")
+                .isEqualTo(original);
+        Verification updatedVerification = updatedContext.getVerification(incomplete.getId());
+        assertThat(updatedVerification)
+                .usingRecursiveComparison()
+                .ignoringFields("completed", "successful")
+                .isEqualTo(incomplete);
+        assertThat(updatedVerification.getCompleted()).contains(request.forceGetTimestamp());
+        assertThat(updatedVerification.isSuccessful()).isTrue();
     }
 
     static Sequences givenUpdatedSequences(UnaryOperator<Method> function, Sequences sequences) {

@@ -1,16 +1,21 @@
 {
   "name": "default-sequence",
-  "methods": [
+  "stages": [
     {
-      "name": "fake-method",
-      "config": {
-        "maxNumberOfAttempts": 3,
-        "duration": 300000,
-        "fakeValue": "fake"
-      },
-      "eligibility": {
-        "eligible": true
-      }
+      "type": "all-methods",
+      "methods": [
+        {
+          "name": "fake-method",
+          "config": {
+            "maxNumberOfAttempts": 3,
+            "duration": 300000,
+            "fakeValue": "fake"
+          },
+          "eligibility": {
+            "eligible": true
+          }
+        }
+      ]
     }
   ],
   "duration": 300000,

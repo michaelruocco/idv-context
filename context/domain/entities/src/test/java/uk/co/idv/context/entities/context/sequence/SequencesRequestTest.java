@@ -1,11 +1,11 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.context.sequence.stage.StagesRequest;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicies;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicyMother;
 import uk.co.idv.identity.entities.identity.Identity;
-import uk.co.idv.method.entities.method.MethodsRequest;
 
 import java.util.UUID;
 
@@ -48,42 +48,42 @@ class SequencesRequestTest {
     }
 
     @Test
-    void shouldPopulateContextIdOnMethodsRequest() {
+    void shouldPopulateContextIdOnStagesRequest() {
         UUID id = UUID.randomUUID();
         SequencesRequest sequencesRequest = SequencesRequest.builder()
                 .contextId(id)
                 .build();
         SequencePolicy policy = SequencePolicyMother.build();
 
-        MethodsRequest methodsRequest = sequencesRequest.toMethodsRequest(policy);
+        StagesRequest stagesRequest = sequencesRequest.toStagesRequest(policy);
 
-        assertThat(methodsRequest.getContextId()).isEqualTo(id);
+        assertThat(stagesRequest.getContextId()).isEqualTo(id);
     }
 
     @Test
-    void shouldPopulateIdentityOnMethodsRequest() {
+    void shouldPopulateIdentityOnStagesRequest() {
         Identity identity = mock(Identity.class);
         SequencesRequest sequencesRequest = SequencesRequest.builder()
                 .identity(identity)
                 .build();
         SequencePolicy policy = SequencePolicyMother.build();
 
-        MethodsRequest methodsRequest = sequencesRequest.toMethodsRequest(policy);
+        StagesRequest stagesRequest = sequencesRequest.toStagesRequest(policy);
 
-        assertThat(methodsRequest.getIdentity()).isEqualTo(identity);
+        assertThat(stagesRequest.getIdentity()).isEqualTo(identity);
     }
 
     @Test
-    void shouldPopulateMethodPoliciesOnMethodsRequest() {
+    void shouldPopulateStagePoliciesOnStagesRequest() {
         Identity identity = mock(Identity.class);
         SequencesRequest sequencesRequest = SequencesRequest.builder()
                 .identity(identity)
                 .build();
         SequencePolicy policy = SequencePolicyMother.build();
 
-        MethodsRequest methodsRequest = sequencesRequest.toMethodsRequest(policy);
+        StagesRequest stagesRequest = sequencesRequest.toStagesRequest(policy);
 
-        assertThat(methodsRequest.getPolicies()).isEqualTo(policy.getMethodPolicies());
+        assertThat(stagesRequest.getPolicies()).isEqualTo(policy.getStagePolicies());
     }
 
 }

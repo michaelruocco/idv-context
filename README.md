@@ -1,32 +1,23 @@
-# Verification Context
+# Idv Context
 
-[![Build](https://github.com/michaelruocco/verification-context/workflows/pipeline/badge.svg)](https://github.com/michaelruocco/verification-context/actions)
-[![codecov](https://codecov.io/gh/michaelruocco/verification-context/branch/master/graph/badge.svg)](https://codecov.io/gh/michaelruocco/verification-context)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/40d05ca3aa5347859953cd583225eee7)](https://www.codacy.com/gh/michaelruocco/verification-context/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/verification-context&amp;utm_campaign=Badge_Grade)
-[![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/verification-context?branch=master)](https://bettercodehub.com/)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_verification-context&metric=alert_status)](https://sonarcloud.io/dashboard?id=michaelruocco_verification-context)
-[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_verification-context&metric=sqale_index)](https://sonarcloud.io/dashboard?id=michaelruocco_verification-context)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_verification-context&metric=coverage)](https://sonarcloud.io/dashboard?id=michaelruocco_verification-context)
-[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_verification-context&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_verification-context)
+[![Build](https://github.com/michaelruocco/idv-context/workflows/pipeline/badge.svg)](https://github.com/michaelruocco/idv-context/actions)
+[![codecov](https://codecov.io/gh/michaelruocco/idv-context/branch/master/graph/badge.svg)](https://codecov.io/gh/michaelruocco/idv-context)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/40d05ca3aa5347859953cd583225eee7)](https://www.codacy.com/gh/michaelruocco/idv-context/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=michaelruocco/idv-context&amp;utm_campaign=Badge_Grade)
+[![BCH compliance](https://bettercodehub.com/edge/badge/michaelruocco/idv-context?branch=master)](https://bettercodehub.com/)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_idv-context&metric=alert_status)](https://sonarcloud.io/dashboard?id=michaelruocco_idv-context)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_idv-context&metric=sqale_index)](https://sonarcloud.io/dashboard?id=michaelruocco_idv-context)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_idv-context&metric=coverage)](https://sonarcloud.io/dashboard?id=michaelruocco_idv-context)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_idv-context&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_idv-context)
 
 ## Todo
 
-*   Token validation?
-
 *   Add postman collection to repo and run in build pipeline
-
-*   Create separate utilities repositories for time-test-utils and raise PR for system lambda to return console
-    output as collection of lines
-
-*   Try out google cache module with a mongo repository for policies instead of redis repository
-
-*   Performance tests in pipeline / nightly build
-
-*   Add identity data lookup policy
-
+*   Raise PR for system lambda to return console output as collection of lines?
+*   Token validation?
+*   Try out google cache module with a mongo repository for policies instead of redis repository?
+*   Performance tests in pipeline / nightly build?
+*   Add identity data lookup policy?
 *   Tidy up cloud formation templates create and set execution role for context service (rather than being passed in)
-
-*   RSA adapter
 
 ## Useful commands
 
@@ -69,7 +60,7 @@
 ```gradle
 // generate dependency graph images at build/reports/dependency-graph
 ./gradlew generateDependencyGraph
-./gradlew generateDependencyGraphVerificationContext
+./gradlew generateDependencyGraphIdvContext
 ```
 
 ### AWS

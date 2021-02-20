@@ -7,6 +7,9 @@
   },
   "stateCalculator": {
     "type": "soft-lockout",
+    "includeAttemptsPolicy": {
+      "type": "all-attempts"
+    },
     "intervals": [
       {
         "numberOfAttempts": 1,

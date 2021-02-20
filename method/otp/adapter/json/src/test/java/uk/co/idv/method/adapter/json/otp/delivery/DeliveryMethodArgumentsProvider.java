@@ -15,6 +15,7 @@ public class DeliveryMethodArgumentsProvider implements ArgumentsProvider {
     public Stream<? extends Arguments> provideArguments(ExtensionContext context) {
         return Stream.of(
                 Arguments.of(SmsDeliveryMethodJsonMother.sms(), SmsDeliveryMethodMother.sms()),
+                Arguments.of(SmsDeliveryMethodJsonMother.smsWithLastUpdated(), SmsDeliveryMethodMother.smsWithLastUpdated()),
                 Arguments.of(VoiceDeliveryMethodJsonMother.voice(), VoiceDeliveryMethodMother.voice()),
                 Arguments.of(EmailDeliveryMethodJsonMother.email(), EmailDeliveryMethodMother.email())
         );

@@ -1,13 +1,12 @@
 dependencies {
-    api project(":common-mongo")
     implementation project(":lockout-use-cases")
     implementation project(":lockout-json")
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
     implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
+    implementation "com.github.michaelruocco:duration-logger:${durationLoggerVersion}"
 
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
     testImplementation testFixtures(project(":lockout-entities"))
-    testImplementation testFixtures(project(":lockout-use-cases"))
     testImplementation testFixtures(project(":lockout-json"))
 
 }

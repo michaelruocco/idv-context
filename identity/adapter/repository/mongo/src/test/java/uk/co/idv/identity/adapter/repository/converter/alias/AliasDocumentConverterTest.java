@@ -7,7 +7,7 @@ import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.AliasFactory;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
-import uk.co.idv.identity.entities.alias.CreditCardNumberMother;
+import uk.co.idv.identity.entities.alias.CardNumberMother;
 import uk.co.idv.identity.entities.alias.IdvIdMother;
 
 import java.util.Arrays;
@@ -25,7 +25,7 @@ class AliasDocumentConverterTest {
 
     @Test
     void shouldConvertAliasToDocument() {
-        Alias alias = CreditCardNumberMother.creditCardNumber();
+        Alias alias = CardNumberMother.credit();
 
         AliasDocument document = converter.toDocument(alias);
 
@@ -47,7 +47,7 @@ class AliasDocumentConverterTest {
     @Test
     void shouldConvertDocumentToAlias() {
         AliasDocument document = AliasDocumentMother.creditCardNumber();
-        Alias expectedAlias = CreditCardNumberMother.creditCardNumber();
+        Alias expectedAlias = CardNumberMother.credit();
         given(aliasFactory.build(document.getType(), document.getValue())).willReturn(expectedAlias);
 
         Alias alias = converter.toAlias(document);
@@ -60,7 +60,7 @@ class AliasDocumentConverterTest {
         AliasDocument document1 = AliasDocumentMother.idvId();
         AliasDocument document2 = AliasDocumentMother.creditCardNumber();
         Alias expectedAlias1 = IdvIdMother.idvId();
-        Alias expectedAlias2 = CreditCardNumberMother.creditCardNumber();
+        Alias expectedAlias2 = CardNumberMother.credit();
         given(aliasFactory.build(document1.getType(), document1.getValue())).willReturn(expectedAlias1);
         given(aliasFactory.build(document2.getType(), document2.getValue())).willReturn(expectedAlias2);
 

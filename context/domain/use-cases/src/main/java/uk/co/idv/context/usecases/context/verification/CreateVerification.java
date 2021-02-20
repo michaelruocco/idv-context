@@ -1,13 +1,13 @@
 package uk.co.idv.context.usecases.context.verification;
 
 import lombok.Builder;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.verification.CreateVerificationRequest;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.method.entities.method.Methods;
+import uk.co.idv.method.entities.verification.CreateVerificationRequest;
+import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.FindContext;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -17,7 +17,7 @@ import java.util.UUID;
 public class CreateVerification {
 
     private final FindContext findContext;
-    private final IdGenerator idGenerator;
+    private final UuidGenerator uuidGenerator;
     private final Clock clock;
     private final ContextRepository repository;
 
@@ -34,7 +34,7 @@ public class CreateVerification {
         Instant created = clock.instant();
         Methods methods = context.getNextMethods(methodName);
         return Verification.builder()
-                .id(idGenerator.generate())
+                .id(uuidGenerator.generate())
                 .contextId(context.getId())
                 .activity(context.getActivity())
                 .methodName(methodName)

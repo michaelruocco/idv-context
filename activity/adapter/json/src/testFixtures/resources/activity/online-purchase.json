@@ -1,0 +1,11 @@
+{
+  "timestamp": "2020-06-06T12:36:15.179Z",
+  "merchantName": "Amazon",
+  "reference": "ABC123",
+  "cost": {
+    "amount": 10.99,
+    "currency": "GBP"
+  },
+  "last4DigitsOfCardNumber": "1111",
+  "name": "online-purchase"
+}

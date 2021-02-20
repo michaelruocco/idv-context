@@ -13,7 +13,7 @@ class AliasesTest {
     @Test
     void shouldBeIterable() {
         Alias idvId = IdvIdMother.idvId();
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
 
         Aliases aliases = AliasesMother.with(idvId, creditCardNumber);
 
@@ -26,7 +26,7 @@ class AliasesTest {
     @Test
     void shouldReturnStream() {
         Alias idvId = IdvIdMother.idvId();
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
 
         Aliases aliases = AliasesMother.with(idvId, creditCardNumber);
 
@@ -39,7 +39,7 @@ class AliasesTest {
     @Test
     void shouldReturnSize() {
         Alias idvId = IdvIdMother.idvId();
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
 
         Aliases aliases = AliasesMother.with(idvId, creditCardNumber);
 
@@ -55,7 +55,7 @@ class AliasesTest {
 
     @Test
     void shouldThrowIdvIdNotFoundExceptionIfIdvIdNotPresent() {
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
         Aliases aliases = AliasesMother.with(creditCardNumber);
 
         Throwable error = catchThrowable(aliases::getIdvIdValue);
@@ -88,7 +88,7 @@ class AliasesTest {
 
         Aliases aliases = AliasesMother.with(idvId);
 
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
         assertThat(aliases.contains(creditCardNumber)).isFalse();
     }
 
@@ -103,7 +103,7 @@ class AliasesTest {
 
     @Test
     void shouldReturnFalseIfDoesNotContainIdvIdAlias() {
-        Alias alias = CreditCardNumberMother.creditCardNumber();
+        Alias alias = CardNumberMother.credit();
 
         Aliases aliases = AliasesMother.with(alias);
 
@@ -114,7 +114,7 @@ class AliasesTest {
     void shouldAddAlias() {
         Alias idvId = IdvIdMother.idvId();
         Aliases aliases = AliasesMother.with(idvId);
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
 
         Aliases addedAliases = aliases.add(creditCardNumber);
 
@@ -125,7 +125,7 @@ class AliasesTest {
     void shouldAddAliases() {
         Alias idvId = IdvIdMother.idvId();
         Aliases aliases = AliasesMother.with(idvId);
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
         Aliases aliasesToAdd = AliasesMother.with(creditCardNumber);
 
         Aliases addedAliases = aliases.add(aliasesToAdd);
@@ -161,7 +161,7 @@ class AliasesTest {
     @Test
     void shouldReturnAliasesNotPresent() {
         Alias idvId = IdvIdMother.idvId();
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
         Aliases aliases = AliasesMother.with(idvId, creditCardNumber);
         DefaultAliases comparison = AliasesMother.with(idvId);
 
@@ -180,7 +180,7 @@ class AliasesTest {
 
     @Test
     void shouldNotAddDuplicateAliases() {
-        Alias alias = CreditCardNumberMother.creditCardNumber();
+        Alias alias = CardNumberMother.credit();
         Aliases aliases = AliasesMother.with(alias);
 
         aliases.add(alias);
@@ -190,8 +190,8 @@ class AliasesTest {
 
     @Test
     void shouldReturnOnlyCreditCardNumberAliases() {
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
+        Alias debitCardNumber = CardNumberMother.debit();
         Aliases aliases = AliasesMother.with(creditCardNumber, debitCardNumber);
 
         Aliases creditCardNumbers = aliases.getCreditCardNumbers();
@@ -201,8 +201,8 @@ class AliasesTest {
 
     @Test
     void shouldReturnValueOfFirstAlias() {
-        Alias creditCardNumber = CreditCardNumberMother.creditCardNumber();
-        Alias debitCardNumber = DebitCardNumberMother.debitCardNumber();
+        Alias creditCardNumber = CardNumberMother.credit();
+        Alias debitCardNumber = CardNumberMother.debit();
         Aliases aliases = AliasesMother.with(creditCardNumber, debitCardNumber);
 
         String firstValue = aliases.getFirstValue();

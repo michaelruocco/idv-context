@@ -3,6 +3,7 @@ package uk.co.idv.context.usecases.context;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.context.Context;
+import uk.co.idv.context.entities.context.ContextNotFoundException;
 import uk.co.idv.method.entities.method.Method;
 
 import java.util.UUID;

@@ -2,8 +2,8 @@ package uk.co.idv.policy.usecases.policy.update;
 
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.policy.entities.policy.Policy;
+import uk.co.idv.policy.entities.policy.PolicyNotFoundException;
 import uk.co.idv.policy.usecases.policy.PolicyRepository;
-import uk.co.idv.policy.usecases.policy.load.PolicyNotFoundException;
 
 import java.util.Optional;
 import java.util.UUID;

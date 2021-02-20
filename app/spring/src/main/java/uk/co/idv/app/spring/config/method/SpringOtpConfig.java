@@ -3,8 +3,8 @@ package uk.co.idv.app.spring.config.method;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import uk.co.idv.app.manual.adapter.app.AppAdapter;
-import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
+import uk.co.idv.app.plain.adapter.app.AppAdapter;
+import uk.co.idv.app.plain.adapter.repository.RepositoryAdapter;
 import uk.co.idv.context.adapter.method.otp.delivery.phone.simswap.StubSimSwapExecutorConfig;
 import uk.co.idv.method.config.AppMethodConfig;
 import uk.co.idv.method.config.otp.AppOtpConfig;
@@ -32,7 +32,7 @@ public class SpringOtpConfig {
         return AppOtpConfig.builder()
                 .simSwapExecutorConfig(simSwapExecutorConfig)
                 .clock(appAdapter.getClock())
-                .idGenerator(appAdapter.getIdGenerator())
+                .uuidGenerator(appAdapter.getUuidGenerator())
                 .contextRepository(repositoryAdapter.getContextRepository())
                 .build();
     }

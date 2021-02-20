@@ -1,6 +1,7 @@
 package uk.co.idv.lockout.usecases.policy;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.lockout.entities.policy.NoLockoutPoliciesConfiguredException;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.entities.policy.PolicyRequestMother;
 

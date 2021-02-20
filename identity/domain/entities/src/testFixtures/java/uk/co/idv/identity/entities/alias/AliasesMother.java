@@ -9,23 +9,23 @@ public interface AliasesMother {
     }
 
     static DefaultAliases idvIdAndCreditCardNumber() {
-        return with(IdvIdMother.idvId(), CreditCardNumberMother.creditCardNumber());
+        return with(IdvIdMother.idvId(), CardNumberMother.credit());
     }
 
     static DefaultAliases idvIdAndDebitCardNumber() {
-        return with(IdvIdMother.idvId(), DebitCardNumberMother.debitCardNumber());
+        return with(IdvIdMother.idvId(), CardNumberMother.debit());
     }
 
     static DefaultAliases idvIdAndDebitCardNumber1() {
-        return with(IdvIdMother.idvId1(), DebitCardNumberMother.debitCardNumber1());
+        return with(IdvIdMother.idvId1(), CardNumberMother.debit1());
     }
 
     static DefaultAliases creditCardNumberOnly() {
-        return with(CreditCardNumberMother.creditCardNumber());
+        return with(CardNumberMother.credit());
     }
 
     static DefaultAliases debitCardNumberOnly() {
-        return with(DebitCardNumberMother.debitCardNumber());
+        return with(CardNumberMother.debit());
     }
 
     static DefaultAliases idvIdOnly() {

@@ -10,6 +10,8 @@ import uk.co.idv.identity.entities.identity.Identities;
 import uk.co.idv.identity.entities.identity.IdentitiesMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
+import uk.co.idv.identity.entities.identity.IdentityNotFoundException;
+import uk.co.idv.identity.entities.identity.MultipleIdentitiesFoundException;
 import uk.co.idv.identity.usecases.identity.IdentityRepository;
 
 import java.util.Optional;

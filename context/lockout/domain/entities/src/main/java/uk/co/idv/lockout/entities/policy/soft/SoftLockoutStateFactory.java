@@ -2,8 +2,8 @@ package uk.co.idv.lockout.entities.policy.soft;
 
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import uk.co.idv.lockout.entities.attempt.Attempts;
 import uk.co.idv.lockout.entities.policy.LockoutState;
-import uk.co.idv.lockout.entities.policy.LockoutStateRequest;
 import uk.co.idv.lockout.entities.policy.unlocked.UnlockedState;
 
 import java.time.Duration;
@@ -14,26 +14,26 @@ import java.util.Optional;
 @Data
 public class SoftLockoutStateFactory {
 
-    public LockoutState build(Duration duration, LockoutStateRequest request) {
-        Optional<SoftLock> softLock = calculateSoftLock(duration, request);
-        if (softLock.isEmpty() || !isLocked(request, softLock.get())) {
-            return new UnlockedState(request.getAttempts());
+    public LockoutState build(Duration duration, Instant requestTime, Attempts attempts) {
+        Optional<SoftLock> softLock = calculateSoftLock(duration, attempts);
+        if (softLock.isEmpty() || !isLocked(requestTime, softLock.get())) {
+            return new UnlockedState(attempts);
         }
         return SoftLockoutState.builder()
-                .attempts(request.getAttempts())
+                .attempts(attempts)
                 .lock(softLock.get())
                 .build();
     }
 
-    private static Optional<SoftLock> calculateSoftLock(Duration duration, LockoutStateRequest request) {
-        return request.getMostRecentAttemptTimestamp()
+    private static Optional<SoftLock> calculateSoftLock(Duration duration, Attempts attempts) {
+        return attempts.getMostRecentTimestamp()
                 .map(timestamp -> new SoftLock(duration, timestamp));
     }
 
-    private static boolean isLocked(LockoutStateRequest request, SoftLock softLock) {
+    private static boolean isLocked(Instant requestTime, SoftLock softLock) {
         Instant expiry = softLock.calculateExpiry();
-        boolean isLocked = request.isBefore(expiry);
-        log.info("request at {} soft lock expiry at {} is locked {}", request.getTimestamp(), expiry, isLocked);
+        boolean isLocked = requestTime.isBefore(expiry);
+        log.info("request at {} soft lock expiry at {} is locked {}", requestTime, expiry, isLocked);
         return isLocked;
     }
 

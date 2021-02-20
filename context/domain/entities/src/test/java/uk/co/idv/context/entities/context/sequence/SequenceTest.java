@@ -1,18 +1,17 @@
 package uk.co.idv.context.entities.context.sequence;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.entities.context.method.Methods;
-import uk.co.idv.context.entities.context.method.MethodsMother;
+import uk.co.idv.method.entities.method.Methods;
+import uk.co.idv.context.entities.context.sequence.stage.MockStagesMother;
+import uk.co.idv.context.entities.context.sequence.stage.Stages;
+import uk.co.idv.context.entities.context.sequence.stage.StagesMother;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.method.MethodVerifications;
-import uk.co.idv.method.entities.method.fake.FakeMethodMother;
 
 import java.time.Duration;
-import java.util.Optional;
 import java.util.function.UnaryOperator;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 class SequenceTest {
@@ -29,179 +28,125 @@ class SequenceTest {
     }
 
     @Test
-    void shouldReturnMethods() {
-        Methods methods = MethodsMother.oneFake();
+    void shouldBeIterable() {
+        Stages stages = StagesMother.withOneFakeMethod();
 
         Sequence sequence = Sequence.builder()
-                .methods(methods)
+                .stages(stages)
                 .build();
 
-        assertThat(sequence.getMethods()).isEqualTo(methods);
+        assertThat(sequence).containsExactlyElementsOf(stages);
     }
 
     @Test
-    void shouldReturnEligibleIfAllMethodsEligible() {
-        Method eligible1 = FakeMethodMother.eligible();
-        Method eligible2 = FakeMethodMother.eligible();
+    void shouldReturnStages() {
+        Stages stages = StagesMother.withOneFakeMethod();
 
         Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(eligible1, eligible2))
+                .stages(stages)
                 .build();
 
-        assertThat(sequence.isEligible()).isTrue();
+        assertThat(sequence.getStages()).isEqualTo(stages);
     }
 
     @Test
-    void shouldReturnIneligibleIfAtLeastOnMethodIsIneligible() {
-        Method eligible = FakeMethodMother.eligible();
-        Method ineligible = FakeMethodMother.ineligible();
-
+    void shouldReturnEligibleIfAllStagesEligible() {
         Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(eligible, ineligible))
+                .stages(MockStagesMother.allEligible())
                 .build();
 
-        assertThat(sequence.isEligible()).isFalse();
+        boolean eligible = sequence.isEligible();
+
+        assertThat(eligible).isTrue();
     }
 
     @Test
-    void shouldReturnCompleteIfAllMethodsComplete() {
+    void shouldReturnIneligibleIfAtLeastOneStageNotEligible() {
+        Sequence sequence = Sequence.builder()
+                .stages(MockStagesMother.notAllEligible())
+                .build();
+
+        boolean eligible = sequence.isEligible();
+
+        assertThat(eligible).isFalse();
+    }
+
+    @Test
+    void shouldReturnSuccessfulFromStagesAllSuccessful() {
         MethodVerifications verifications = mock(MethodVerifications.class);
-        Method complete1 = givenCompleteMethod(verifications);
-        Method complete2 = givenCompleteMethod(verifications);
-
         Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(complete1, complete2))
+                .stages(MockStagesMother.withAllSuccessful(verifications))
                 .build();
 
-        assertThat(sequence.isComplete(verifications)).isTrue();
+        boolean successful = sequence.isSuccessful(verifications);
+
+        assertThat(successful).isTrue();
     }
 
     @Test
-    void shouldReturnIncompleteIfAtLeastOnMethodIsNotComplete() {
+    void shouldReturnCompleteFromStagesAllComplete() {
         MethodVerifications verifications = mock(MethodVerifications.class);
-        Method complete = givenCompleteMethod(verifications);
-        Method incomplete = givenIncompleteMethod(verifications);
-
         Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(complete, incomplete))
+                .stages(MockStagesMother.withAllComplete(verifications))
                 .build();
 
-        assertThat(sequence.isComplete(verifications)).isFalse();
+        boolean complete = sequence.isComplete(verifications);
+
+        assertThat(complete).isTrue();
     }
 
     @Test
-    void shouldReturnSuccessfulIfAllMethodsSuccessful() {
+    void shouldReturnTotalDurationFromStagesAsSequenceDuration() {
+        Duration expectedDuration = Duration.ofMinutes(5);
+        Sequence sequence = Sequence.builder()
+                .stages(MockStagesMother.withTotalDuration(expectedDuration))
+                .build();
+
+        Duration totalDuration = sequence.getDuration();
+
+        assertThat(totalDuration).isEqualTo(expectedDuration);
+    }
+
+    @Test
+    void shouldReturnNextMethodsFromNextMethodsPolicy() {
         MethodVerifications verifications = mock(MethodVerifications.class);
-        Method successful1 = givenSuccessfulMethod(verifications);
-        Method successful2 = givenSuccessfulMethod(verifications);
-
+        Methods expectedNextMethods = mock(Methods.class);
+        Stages stages = MockStagesMother.withNextIncompleteMethods(verifications, expectedNextMethods);
         Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(successful1, successful2))
+                .stages(stages)
                 .build();
 
-        assertThat(sequence.isSuccessful(verifications)).isTrue();
-    }
+        Methods nextMethods = sequence.getNextIncompleteMethods(verifications);
 
-    @Test
-    void shouldReturnUnsuccessfulIfAtLeastOnMethodIsNotSuccessful() {
-        MethodVerifications verifications = mock(MethodVerifications.class);
-        Method successful = givenSuccessfulMethod(verifications);
-        Method unsuccessful = givenUnsuccessfulMethod(verifications);
-
-        Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(successful, unsuccessful))
-                .build();
-
-        assertThat(sequence.isSuccessful(verifications)).isFalse();
-    }
-
-    @Test
-    void shouldReturnSumOfMethodDurations() {
-        Method method1 = FakeMethodMother.withDuration(Duration.ofMinutes(2));
-        Method method2 = FakeMethodMother.withDuration(Duration.ofMinutes(3));
-
-        Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(method1, method2))
-                .build();
-
-        assertThat(sequence.getDuration()).isEqualTo(Duration.ofMinutes(5));
-    }
-
-    @Test
-    void shouldReturnNextIncompleteMethod() {
-        MethodVerifications verifications = mock(MethodVerifications.class);
-        Method complete = givenCompleteMethod(verifications);
-        Method incomplete1 = givenIncompleteMethod(verifications);
-        Method incomplete2 = givenIncompleteMethod(verifications);
-        Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(complete, incomplete1, incomplete2))
-                .build();
-
-        Optional<Method> next = sequence.getNextMethod(verifications);
-
-        assertThat(next).contains(incomplete1);
+        assertThat(nextMethods).isEqualTo(expectedNextMethods);
     }
 
     @Test
     void shouldUpdateMethods() {
         UnaryOperator<Method> function = mock(UnaryOperator.class);
-        Method method1 = FakeMethodMother.withName("method1");
-        Method method2 = FakeMethodMother.withName("method2");
-        Method updatedMethod1 = givenUpdatedMethod(function, method1);
-        Method updatedMethod2 = givenUpdatedMethod(function, method2);
+        Stages stages = mock(Stages.class);
+        Stages updatedStages = MockStagesMother.withUpdatedMethods(function, stages);
         Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(method1, method2))
+                .stages(stages)
                 .build();
 
         Sequence updated = sequence.updateMethods(function);
 
         assertThat(updated.getName()).isEqualTo(sequence.getName());
-        assertThat(updated).containsExactly(updatedMethod1, updatedMethod2);
+        assertThat(updated.getStages()).isEqualTo(updatedStages);
     }
 
     @Test
-    void shouldReturnCompletedMethodCount() {
+    void shouldReturnCompletedMethodCountFromMethods() {
+        long expectedCount = 2;
         MethodVerifications verifications = mock(MethodVerifications.class);
-        Method method1 = givenCompleteMethod(verifications);
-        Method method2 = givenIncompleteMethod(verifications);
-        Method method3 = givenCompleteMethod(verifications);
         Sequence sequence = Sequence.builder()
-                .methods(MethodsMother.with(method1, method2, method3))
+                .stages(MockStagesMother.withCompletedMethodCount(verifications, expectedCount))
                 .build();
 
-        long completedCount = sequence.completedMethodCount(verifications);
+        long count = sequence.completedMethodCount(verifications);
 
-        assertThat(completedCount).isEqualTo(2);
-    }
-
-    private static Method givenSuccessfulMethod(MethodVerifications verifications) {
-        Method method = mock(Method.class);
-        given(method.isSuccessful(verifications)).willReturn(true);
-        return method;
-    }
-
-    private static Method givenUnsuccessfulMethod(MethodVerifications verifications) {
-        Method method = mock(Method.class);
-        given(method.isSuccessful(verifications)).willReturn(false);
-        return method;
-    }
-
-    private static Method givenCompleteMethod(MethodVerifications verifications) {
-        Method method = mock(Method.class);
-        given(method.isComplete(verifications)).willReturn(true);
-        return method;
-    }
-
-    private static Method givenIncompleteMethod(MethodVerifications verifications) {
-        Method method = mock(Method.class);
-        given(method.isComplete(verifications)).willReturn(false);
-        return method;
-    }
-
-    static Method givenUpdatedMethod(UnaryOperator<Method> function, Method method) {
-        Method updated = mock(Method.class);
-        given(function.apply(method)).willReturn(updated);
-        return updated;
+        assertThat(count).isEqualTo(expectedCount);
     }
 
 }

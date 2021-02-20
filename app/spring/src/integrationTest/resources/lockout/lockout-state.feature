@@ -15,6 +15,9 @@ Feature: Lockout State Requests
         },
         "stateCalculator": {
           "type": "hard-lockout",
+          "includeAttemptsPolicy": {
+            "type": "all-attempts"
+          },
           "maxNumberOfAttempts": 2
         },
         "recordAttemptPolicy": {
@@ -158,21 +161,26 @@ Feature: Lockout State Requests
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "email"
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
+                      }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "email"
+                      }
+                    ]
                   }
                 ]
               }
@@ -313,21 +321,26 @@ Feature: Lockout State Requests
         "sequencePolicies": [
           {
             "name": "one-time-passcode",
-            "methodPolicies": [
+            "stagePolicies": [
               {
-                "name": "one-time-passcode",
-                "config": {
-                  "maxNumberOfAttempts": 3,
-                  "duration": 300000,
-                  "passcodeConfig": {
-                    "length": 8,
-                    "duration": 120000,
-                    "maxNumberOfDeliveries": 2
-                  }
-                },
-                "deliveryMethodConfigs": [
+                "type": "all-methods",
+                "methodPolicies": [
                   {
-                    "type": "email"
+                    "name": "one-time-passcode",
+                    "config": {
+                      "maxNumberOfAttempts": 3,
+                      "duration": 300000,
+                      "passcodeConfig": {
+                        "length": 8,
+                        "duration": 120000,
+                        "maxNumberOfDeliveries": 2
+                      }
+                    },
+                    "deliveryMethodConfigs": [
+                      {
+                        "type": "email"
+                      }
+                    ]
                   }
                 ]
               }

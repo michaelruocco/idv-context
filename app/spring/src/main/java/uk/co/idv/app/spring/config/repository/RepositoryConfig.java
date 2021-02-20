@@ -5,7 +5,7 @@ import lombok.Data;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
-import uk.co.idv.app.manual.adapter.repository.RepositoryAdapter;
+import uk.co.idv.app.plain.adapter.repository.RepositoryAdapter;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.policy.ContextPolicyRepository;
 import uk.co.idv.identity.usecases.identity.IdentityRepository;

@@ -1,9 +1,9 @@
 package uk.co.idv.context.entities.policy.sequence;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.policy.sequence.stage.StagePolicies;
 import uk.co.idv.identity.entities.identity.RequestedData;
 import uk.co.idv.identity.entities.identity.RequestedDataMother;
-import uk.co.idv.method.entities.policy.MethodPolicies;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
@@ -23,36 +23,35 @@ class SequencePolicyTest {
     }
 
     @Test
-    void shouldReturnMethodPolicies() {
-        MethodPolicies methodPolicies = givenMethodPolicies();
+    void shouldReturnStagePolicies() {
+        StagePolicies stagePolicies = givenStagePolicies();
 
         SequencePolicy policy = SequencePolicy.builder()
-                .methodPolicies(methodPolicies)
+                .stagePolicies(stagePolicies)
                 .build();
 
-        assertThat(policy.getMethodPolicies()).isEqualTo(methodPolicies);
+        assertThat(policy.getStagePolicies()).isEqualTo(stagePolicies);
     }
 
     @Test
-    void shouldReturnRequestedDataFromMethodPolicies() {
+    void shouldReturnRequestedDataFromStagePolicies() {
         RequestedData requestedData = RequestedDataMother.allRequested();
 
         SequencePolicy policy = SequencePolicy.builder()
-                .methodPolicies(givenMethodPoliciesWithRequestedData(requestedData))
+                .stagePolicies(givenStagePoliciesWithRequestedData(requestedData))
                 .build();
 
         assertThat(policy.getRequestedData()).isEqualTo(requestedData);
     }
 
-    private MethodPolicies givenMethodPoliciesWithRequestedData(RequestedData requestedData) {
-        MethodPolicies methodPolicies = givenMethodPolicies();
-        given(methodPolicies.getRequestedData()).willReturn(requestedData);
-        return methodPolicies;
+    private StagePolicies givenStagePoliciesWithRequestedData(RequestedData requestedData) {
+        StagePolicies stagePolicies = givenStagePolicies();
+        given(stagePolicies.getRequestedData()).willReturn(requestedData);
+        return stagePolicies;
     }
 
-    private MethodPolicies givenMethodPolicies() {
-        return mock(MethodPolicies.class);
+    private StagePolicies givenStagePolicies() {
+        return mock(StagePolicies.class);
     }
-
 
 }

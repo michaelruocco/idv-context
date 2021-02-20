@@ -16,7 +16,7 @@ public class LockoutFacade {
 
     public LockoutState loadState(ExternalLockoutRequest externalRequest) {
         LockoutRequest lockoutRequest = toLockoutRequest(externalRequest);
-        return lockoutService.loadAndValidateState(lockoutRequest);
+        return lockoutService.loadState(lockoutRequest);
     }
 
     public LockoutState resetState(ExternalLockoutRequest externalRequest) {

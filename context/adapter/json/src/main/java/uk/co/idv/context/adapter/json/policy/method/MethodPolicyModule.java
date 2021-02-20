@@ -39,6 +39,4 @@ public class MethodPolicyModule extends SimpleModule {
         return dependencies;
     }
 
-
-
 }

@@ -24,20 +24,22 @@ class DefaultAliasFactoryTest {
     @Test
     void shouldBuildCreditCardNumber() {
         String value = "4929001111111111";
+        String type = CardNumber.CREDIT_TYPE;
 
-        Alias alias = factory.build(CreditCardNumber.TYPE, value);
+        Alias alias = factory.build(type, value);
 
-        assertThat(alias).isInstanceOf(CreditCardNumber.class);
+        assertThat(alias.getType()).isEqualTo(type);
         assertThat(alias.getValue()).isEqualTo(value);
     }
 
     @Test
     void shouldBuildDebitCardNumber() {
         String value = "4929991111111111";
+        String type = CardNumber.DEBIT_TYPE;
 
-        Alias alias = factory.build(DebitCardNumber.TYPE, value);
+        Alias alias = factory.build(type, value);
 
-        assertThat(alias).isInstanceOf(DebitCardNumber.class);
+        assertThat(alias.getType()).isEqualTo(type);
         assertThat(alias.getValue()).isEqualTo(value);
     }
 

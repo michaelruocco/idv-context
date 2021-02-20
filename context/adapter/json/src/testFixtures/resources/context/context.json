@@ -33,14 +33,19 @@
       "sequencePolicies": [
         {
           "name": "default-sequence",
-          "methodPolicies": [
+          "stagePolicies": [
             {
-              "name": "fake-method",
-              "config": {
-                "maxNumberOfAttempts": 3,
-                "duration": 300000,
-                "fakeValue": "fake"
-              }
+              "type": "all-methods",
+              "methodPolicies": [
+                {
+                  "name": "fake-method",
+                  "config": {
+                    "maxNumberOfAttempts": 3,
+                    "duration": 300000,
+                    "fakeValue": "fake"
+                  }
+                }
+              ]
             }
           ]
         }
@@ -78,17 +83,22 @@
   "sequences": [
     {
       "name": "default-sequence",
-      "methods": [
+      "stages": [
         {
-          "name": "fake-method",
-          "config": {
-            "maxNumberOfAttempts": 3,
-            "duration": 300000,
-            "fakeValue": "fake"
-          },
-          "eligibility": {
-            "eligible": true
-          }
+          "type": "all-methods",
+          "methods": [
+            {
+              "name": "fake-method",
+              "eligibility": {
+                "eligible": true
+              },
+              "config": {
+                "maxNumberOfAttempts": 3,
+                "duration": 300000,
+                "fakeValue": "fake"
+              }
+            }
+          ]
         }
       ],
       "duration": 300000,

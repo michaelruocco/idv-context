@@ -14,7 +14,7 @@ import java.time.Instant;
 import java.util.Map;
 import java.util.function.Supplier;
 
-import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.mruoc.duration.calculator.DurationCalculatorUtils.millisBetweenNowAnd;
 
 @Builder
 @Data

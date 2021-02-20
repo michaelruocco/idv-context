@@ -3,6 +3,7 @@ plugins {
 }
 
 dependencies {
+    implementation project(":activity-json")
     implementation project(":common-json")
     implementation project(":method-entities")
     implementation "com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}"
@@ -26,3 +27,5 @@ dependencies {
     testFixturesImplementation "com.fasterxml.jackson.datatype:jackson-datatype-jsr310:${jacksonVersion}"
     testFixturesImplementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
 }
+
+apply from: rootProject.file('publish.gradle')

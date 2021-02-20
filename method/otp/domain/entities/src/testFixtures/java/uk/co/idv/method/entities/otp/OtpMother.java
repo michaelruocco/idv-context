@@ -11,8 +11,16 @@ public interface OtpMother {
         return builder().build();
     }
 
+    static Otp withEmptyDeliveryMethods() {
+        return withDeliveryMethods(DeliveryMethodsMother.empty());
+    }
+
     static Otp withDeliveryMethod(DeliveryMethod deliveryMethod) {
         return OtpMother.withDeliveryMethods(DeliveryMethodsMother.with(deliveryMethod));
+    }
+
+    static Otp withDeliveryMethods(DeliveryMethod... deliveryMethods) {
+        return builder().deliveryMethods(DeliveryMethodsMother.with(deliveryMethods)).build();
     }
 
     static Otp withDeliveryMethods(DeliveryMethods deliveryMethods) {

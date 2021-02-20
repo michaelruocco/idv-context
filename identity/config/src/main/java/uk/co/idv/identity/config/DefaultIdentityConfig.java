@@ -2,7 +2,6 @@ package uk.co.idv.identity.config;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.adapter.json.IdentityErrorHandler;
 import uk.co.idv.identity.adapter.protect.mask.channel.ChannelMasker;
 import uk.co.idv.identity.adapter.protect.mask.identity.IdentityMasker;
@@ -30,6 +29,8 @@ import uk.co.idv.identity.usecases.identity.save.SaveIdentityStrategy;
 import uk.co.idv.identity.usecases.identity.save.external.ExternalSaveIdentityStrategy;
 import uk.co.idv.identity.usecases.identity.save.internal.InternalSaveIdentityStrategy;
 import uk.co.idv.identity.usecases.identity.update.UpdateIdentity;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
+
 import java.util.Collections;
 import java.util.function.UnaryOperator;
 
@@ -39,7 +40,7 @@ public class DefaultIdentityConfig implements IdentityConfig {
 
     private final CompositeMergeIdentitiesHandler mergeHandler = new CompositeMergeIdentitiesHandler();
     private final ExternalFindIdentityConfig externalFindIdentityConfig;
-    private final IdGenerator idGenerator;
+    private final UuidGenerator uuidGenerator;
     private final IdentityRepository repository;
 
     @Override
@@ -134,7 +135,7 @@ public class DefaultIdentityConfig implements IdentityConfig {
     }
 
     private IdvIdAllocator idvIdAllocator() {
-        return new IdvIdAllocator(idGenerator);
+        return new IdvIdAllocator(uuidGenerator);
     }
 
 }

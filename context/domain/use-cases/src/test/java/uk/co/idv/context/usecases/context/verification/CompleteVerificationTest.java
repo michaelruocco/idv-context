@@ -1,17 +1,17 @@
 package uk.co.idv.context.usecases.context.verification;
 
+
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import uk.co.idv.context.entities.context.lockout.ContextRecordAttemptRequest;
-import uk.co.idv.context.entities.verification.CompleteVerificationResponse;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequestMother;
-import uk.co.idv.context.entities.verification.CompleteVerificationResponseMother;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.context.entities.context.lockout.ContextRecordAttemptRequest;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.FindContext;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequestMother;
+import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.VerificationMother;
 
 import java.time.Clock;
 import java.time.Instant;
@@ -40,15 +40,17 @@ class CompleteVerificationTest {
 
     @Test
     void shouldReturnCompletedVerification() {
-        CompleteVerificationRequest request = CompleteVerificationRequestMother.withoutTimestamp();
-        Context context = mock(Context.class);
-        given(findContext.find(request.getContextId())).willReturn(context);
-        CompleteVerificationResponse response = CompleteVerificationResponseMother.build();
-        given(context.completeVerification(request.withTimestampIfNotProvided(NOW))).willReturn(response);
+        CompleteVerificationRequest request = CompleteVerificationRequestMother.successful();
+        Context originalContext = mock(Context.class);
+        given(findContext.find(request.getContextId())).willReturn(originalContext);
+        Context updatedContext = mock(Context.class);
+        given(originalContext.completeVerification(request.withTimestampIfNotProvided(NOW))).willReturn(updatedContext);
+        Verification expectedVerification = mock(Verification.class);
+        given(updatedContext.getVerification(request.getId())).willReturn(expectedVerification);
 
         Verification verification = completeVerification.complete(request);
 
-        assertThat(verification).isEqualTo(response.getVerification());
+        assertThat(verification).isEqualTo(expectedVerification);
     }
 
     @Test
@@ -56,14 +58,16 @@ class CompleteVerificationTest {
         CompleteVerificationRequest request = CompleteVerificationRequestMother.withoutTimestamp();
         Context context = mock(Context.class);
         given(findContext.find(request.getContextId())).willReturn(context);
-        CompleteVerificationResponse response = CompleteVerificationResponseMother.build();
-        given(context.completeVerification(request.withTimestampIfNotProvided(NOW))).willReturn(response);
+        Context updatedContext = mock(Context.class);
+        given(context.completeVerification(request.withTimestampIfNotProvided(NOW))).willReturn(updatedContext);
+        Verification verification = VerificationMother.successful();
+        given(updatedContext.getVerification(request.getId())).willReturn(verification);
 
         completeVerification.complete(request);
 
         ArgumentCaptor<Context> captor = ArgumentCaptor.forClass(Context.class);
         verify(repository).save(captor.capture());
-        assertThat(captor.getValue()).isEqualTo(response.getUpdated());
+        assertThat(captor.getValue()).isEqualTo(updatedContext);
     }
 
     @Test
@@ -71,18 +75,22 @@ class CompleteVerificationTest {
         CompleteVerificationRequest request = CompleteVerificationRequestMother.withoutTimestamp();
         Context context = mock(Context.class);
         given(findContext.find(request.getContextId())).willReturn(context);
-        CompleteVerificationResponse response = CompleteVerificationResponseMother.build();
-        given(context.completeVerification(request.withTimestampIfNotProvided(NOW))).willReturn(response);
+        Context updatedContext = mock(Context.class);
+        given(context.completeVerification(request.withTimestampIfNotProvided(NOW))).willReturn(updatedContext);
+        Verification verification = VerificationMother.successful();
+        given(updatedContext.getVerification(request.getId())).willReturn(verification);
+        given(updatedContext.hasMoreCompletedMethodsThan(context)).willReturn(true);
+        given(updatedContext.hasMoreCompletedSequencesThan(context)).willReturn(true);
 
         completeVerification.complete(request);
 
         ArgumentCaptor<ContextRecordAttemptRequest> captor = ArgumentCaptor.forClass(ContextRecordAttemptRequest.class);
         verify(lockoutService).recordAttemptIfRequired(captor.capture());
         ContextRecordAttemptRequest recordAttemptRequest = captor.getValue();
-        assertThat(recordAttemptRequest.getResult()).isEqualTo(response.getResult());
-        assertThat(recordAttemptRequest.getContext()).isEqualTo(response.getUpdated());
-        assertThat(recordAttemptRequest.isMethodComplete()).isEqualTo(response.isMethodCompletedByVerification());
-        assertThat(recordAttemptRequest.isSequenceComplete()).isEqualTo(response.isSequenceCompletedByVerification());
+        assertThat(recordAttemptRequest.getResult()).isEqualTo(verification.toResult());
+        assertThat(recordAttemptRequest.getContext()).isEqualTo(updatedContext);
+        assertThat(recordAttemptRequest.isMethodComplete()).isTrue();
+        assertThat(recordAttemptRequest.isSequenceComplete()).isTrue();
     }
 
 }

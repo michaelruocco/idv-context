@@ -1,7 +1,7 @@
 package uk.co.idv.identity.usecases.identity.save.internal;
 
+import uk.co.idv.identity.entities.identity.CannotUpdateIdvIdException;
 import uk.co.idv.identity.entities.identity.Identity;
-import uk.co.idv.identity.usecases.identity.save.CannotUpdateIdvIdException;
 import uk.co.idv.identity.usecases.identity.save.SaveIdentityStrategy;
 
 public class InternalSaveIdentityStrategy implements SaveIdentityStrategy {

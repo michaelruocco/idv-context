@@ -1,8 +1,12 @@
 spring:
   application:
-    name: verification-context
+    name: idv-context
   main:
     banner-mode: off
+
+info:
+  app:
+    name: ${spring.application.name}
 
 management:
   endpoint:

@@ -3,8 +3,8 @@ package uk.co.idv.identity.adapter.json.error.updateidvid;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.identity.usecases.identity.save.CannotUpdateIdvIdException;
-import uk.co.idv.identity.usecases.identity.save.CannotUpdateIdvIdExceptionMother;
+import uk.co.idv.identity.entities.identity.CannotUpdateIdvIdException;
+import uk.co.idv.identity.entities.identity.CannotUpdateIdvIdExceptionMother;
 
 import java.util.Optional;
 

@@ -8,6 +8,7 @@ dependencies {
     implementation project(":common-entities")
     implementation project(":common-use-cases")
     implementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
+    implementation "com.github.michaelruocco:random-value-suppliers:${randomValueSuppliersVersion}"
 
     testImplementation testFixtures(project(":common-entities"))
 

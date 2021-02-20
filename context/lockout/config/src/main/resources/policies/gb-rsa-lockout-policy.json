@@ -7,6 +7,9 @@
   },
   "stateCalculator": {
     "type": "hard-lockout",
+    "includeAttemptsPolicy": {
+      "type": "all-attempts"
+    },
     "maxNumberOfAttempts": 3
   },
   "recordAttemptPolicy": {

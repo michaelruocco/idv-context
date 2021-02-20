@@ -3,7 +3,7 @@ package uk.co.idv.lockout.adapter.json.policy.state;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
-import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import uk.co.idv.lockout.adapter.json.policy.includeattempt.IncludeAttemptsPolicyModule;
 import uk.co.idv.lockout.adapter.json.policy.state.hard.HardLockoutStateCalculatorDeserializer;
 import uk.co.idv.lockout.adapter.json.policy.state.nonlocking.NonLockingStateCalculatorDeserializer;
 import uk.co.idv.lockout.adapter.json.policy.state.soft.RecurringSoftLockoutStateCalculatorDeserializer;
@@ -19,12 +19,17 @@ import uk.co.idv.lockout.entities.policy.soft.SoftLockInterval;
 import uk.co.idv.lockout.entities.policy.soft.SoftLockIntervals;
 import uk.co.idv.lockout.entities.policy.soft.SoftLockoutStateCalculator;
 
+import java.time.Clock;
 import java.util.Collections;
 
 public class LockoutStateCalculatorModule extends SimpleModule {
 
-    public LockoutStateCalculatorModule() {
+    private final transient Clock clock;
+
+    public LockoutStateCalculatorModule(Clock clock) {
         super("lockout-state-calculator-module", Version.unknownVersion());
+        this.clock = clock;
+
         setUpDefaults();
 
         setUpHardLockoutStateCalculator();
@@ -36,7 +41,7 @@ public class LockoutStateCalculatorModule extends SimpleModule {
 
     @Override
     public Iterable<? extends Module> getDependencies() {
-        return Collections.singleton(new JavaTimeModule());
+        return Collections.singleton(new IncludeAttemptsPolicyModule(clock));
     }
 
     private void setUpDefaults() {

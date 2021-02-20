@@ -4,14 +4,13 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.With;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.context.entities.activity.Activity;
+import uk.co.idv.activity.entities.Activity;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
-import uk.co.idv.context.entities.context.method.Methods;
+import uk.co.idv.method.entities.method.Methods;
 import uk.co.idv.context.entities.context.sequence.Sequences;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
-import uk.co.idv.context.entities.verification.CompleteVerificationResponse;
-import uk.co.idv.context.entities.verification.Verification;
-import uk.co.idv.context.entities.verification.Verifications;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.Verifications;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.channel.Channel;
@@ -38,6 +37,7 @@ public class Context {
     private final Sequences sequences;
 
     @Builder.Default
+    @With
     private final Verifications verifications = new Verifications();
 
     public Channel getChannel() {
@@ -117,17 +117,9 @@ public class Context {
         throw new NotNextMethodException(methodName);
     }
 
-    public CompleteVerificationResponse completeVerification(CompleteVerificationRequest request) {
+    public Context completeVerification(CompleteVerificationRequest request) {
         Verifications completed = verifications.complete(request);
-        return CompleteVerificationResponse.builder()
-                .original(this)
-                .updated(withVerifications(completed))
-                .verification(completed.getById(request.getId()))
-                .build();
-    }
-
-    public Context withVerifications(Verifications verifications) {
-        return toBuilder().verifications(verifications).build();
+        return withVerifications(completed);
     }
 
     public Verification getVerification(UUID id) {

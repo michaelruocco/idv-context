@@ -2,7 +2,7 @@ package uk.co.idv.app.spring.lockout;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import uk.co.idv.app.manual.Application;
+import uk.co.idv.app.plain.Application;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.lockout.entities.DefaultExternalLockoutRequestMother;

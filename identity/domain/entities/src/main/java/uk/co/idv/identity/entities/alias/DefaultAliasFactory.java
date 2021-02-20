@@ -6,8 +6,8 @@ public class DefaultAliasFactory implements AliasFactory {
     public Alias build(String type, String value) {
         switch(type) {
             case IdvId.TYPE: return new IdvId(value);
-            case CreditCardNumber.TYPE: return new CreditCardNumber(value);
-            case DebitCardNumber.TYPE: return new DebitCardNumber(value);
+            case CardNumber.CREDIT_TYPE: return CardNumber.credit(value);
+            case CardNumber.DEBIT_TYPE: return CardNumber.debit(value);
             default: throw new UnsupportedAliasTypeException(type);
         }
     }

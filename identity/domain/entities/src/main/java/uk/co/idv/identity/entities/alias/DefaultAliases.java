@@ -107,7 +107,7 @@ public class DefaultAliases implements Aliases {
 
     @Override
     public Aliases getCreditCardNumbers() {
-        Collection<Alias> creditCardNumbers = getAliasesByType(CreditCardNumber.TYPE).collect(Collectors.toList());
+        Collection<Alias> creditCardNumbers = getAliasesByType(CardNumber.CREDIT_TYPE).collect(Collectors.toList());
         return new DefaultAliases(creditCardNumbers);
     }
 

@@ -3,19 +3,19 @@ package uk.co.idv.context.usecases.context;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.context.Context;
-import uk.co.idv.context.entities.verification.CompleteVerificationRequest;
-import uk.co.idv.context.entities.verification.CreateVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
-import uk.co.idv.context.entities.verification.GetVerificationRequest;
-import uk.co.idv.context.entities.verification.Verification;
+import uk.co.idv.method.entities.verification.GetVerificationRequest;
+import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.context.usecases.context.identity.IdentityLoader;
 import uk.co.idv.context.usecases.context.verification.VerificationService;
 
 import java.time.Instant;
 import java.util.UUID;
 
-import static uk.co.idv.common.usecases.duration.DurationCalculator.millisBetweenNowAnd;
+import static uk.co.mruoc.duration.calculator.DurationCalculatorUtils.millisBetweenNowAnd;
 
 @Builder
 @Slf4j

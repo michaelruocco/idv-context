@@ -4,18 +4,20 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import uk.co.idv.app.manual.config.JsonConfig;
-import uk.co.idv.app.manual.adapter.channel.ChannelAdapter;
+import uk.co.idv.app.plain.config.JsonConfig;
+import uk.co.idv.app.plain.adapter.channel.ChannelAdapter;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.adapter.json.otp.OtpMapping;
 import uk.co.mruoc.json.JsonConverter;
+
+import java.time.Clock;
 
 @Configuration
 public class SpringJacksonConfig {
 
     @Bean
-    public JsonConfig jsonConfig() {
-        return new JsonConfig(new MethodMappings(new OtpMapping()));
+    public JsonConfig jsonConfig(Clock clock) {
+        return new JsonConfig(clock, new MethodMappings(new OtpMapping()));
     }
 
     @Bean

@@ -2,13 +2,13 @@ package uk.co.idv.context.config;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.usecases.context.ContextFacade;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.verification.CompleteVerification;
 import uk.co.idv.context.usecases.context.verification.CreateVerification;
 import uk.co.idv.context.usecases.context.verification.GetVerification;
 import uk.co.idv.context.usecases.context.verification.VerificationService;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.time.Clock;
 
@@ -17,7 +17,7 @@ import java.time.Clock;
 public class VerificationConfig {
 
     private final Clock clock;
-    private final IdGenerator idGenerator;
+    private final UuidGenerator uuidGenerator;
     private final ContextConfig contextConfig;
     private final ContextRepository contextRepository;
 
@@ -41,7 +41,7 @@ public class VerificationConfig {
         return CreateVerification.builder()
                 .findContext(contextConfig.findContext())
                 .repository(contextRepository)
-                .idGenerator(idGenerator)
+                .uuidGenerator(uuidGenerator)
                 .clock(clock)
                 .build();
     }

@@ -1,10 +1,10 @@
 package uk.co.idv.context.usecases.context;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequestMother;
 import uk.co.idv.context.entities.context.sequence.SequencesRequest;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.util.UUID;
 
@@ -14,9 +14,9 @@ import static org.mockito.Mockito.mock;
 
 class CreateContextRequestConverterTest {
 
-    private final IdGenerator idGenerator = mock(IdGenerator.class);
+    private final UuidGenerator uuidGenerator = mock(UuidGenerator.class);
 
-    private final CreateContextRequestConverter converter = new CreateContextRequestConverter(idGenerator);
+    private final CreateContextRequestConverter converter = new CreateContextRequestConverter(uuidGenerator);
 
     @Test
     void shouldPopulateIdOnSequencesRequest() {
@@ -48,7 +48,7 @@ class CreateContextRequestConverterTest {
 
     private UUID givenGeneratedId() {
         UUID id = UUID.randomUUID();
-        given(idGenerator.generate()).willReturn(id);
+        given(uuidGenerator.generate()).willReturn(id);
         return id;
     }
 

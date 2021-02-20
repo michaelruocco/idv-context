@@ -3,8 +3,9 @@ package uk.co.idv.context.adapter.json.error.contextnotfound;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
-import uk.co.idv.context.usecases.context.ContextNotFoundException;
-import uk.co.idv.context.usecases.context.ContextNotFoundExceptionMother;
+import uk.co.idv.context.entities.context.ContextNotFoundException;
+import uk.co.idv.context.entities.context.ContextNotFoundExceptionMother;
+import uk.co.idv.method.adapter.json.error.contextnotfound.ContextNotFoundError;
 
 import java.util.Optional;
 

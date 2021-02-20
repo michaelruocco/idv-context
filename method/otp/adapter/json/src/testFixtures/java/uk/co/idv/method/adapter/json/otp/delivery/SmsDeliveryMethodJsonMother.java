@@ -12,4 +12,8 @@ public interface SmsDeliveryMethodJsonMother {
         return loadContentFromClasspath("delivery/sms-delivery-method-ineligible.json");
     }
 
+    static String smsWithLastUpdated() {
+        return loadContentFromClasspath("delivery/sms-delivery-method-with-last-updated.json");
+    }
+
 }

@@ -2,12 +2,12 @@ package uk.co.idv.lockout.usecases.attempt;
 
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
-import uk.co.idv.common.usecases.id.IdGenerator;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.event.MergeIdentitiesEvent;
 import uk.co.idv.identity.usecases.identity.merge.MergeIdentitiesHandler;
 import uk.co.idv.lockout.entities.attempt.Attempt;
 import uk.co.idv.lockout.entities.attempt.Attempts;
+import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Slf4j
 public class MergeAttempts implements MergeIdentitiesHandler {
 
-    private final IdGenerator idGenerator;
+    private final UuidGenerator uuidGenerator;
     private final AttemptRepository repository;
 
     @Override
@@ -45,7 +45,7 @@ public class MergeAttempts implements MergeIdentitiesHandler {
         return Attempts.builder()
                 .attempts(updateIdvIds(mergedIdvId, originalAttempts))
                 .idvId(mergedIdvId)
-                .id(idGenerator.generate())
+                .id(uuidGenerator.generate())
                 .build();
     }
 

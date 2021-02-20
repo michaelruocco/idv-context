@@ -2,12 +2,12 @@ package uk.co.idv.lockout.usecases;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.alias.IdvIdMother;
+import uk.co.idv.lockout.entities.LockedOutException;
 import uk.co.idv.lockout.entities.LockoutRequest;
 import uk.co.idv.lockout.entities.LockoutRequestMother;
 import uk.co.idv.lockout.entities.policy.LockoutState;
 import uk.co.idv.lockout.entities.policy.RecordAttemptRequest;
 import uk.co.idv.lockout.usecases.state.LoadLockoutState;
-import uk.co.idv.lockout.usecases.state.LockedOutException;
 import uk.co.idv.lockout.usecases.state.RecordAttempt;
 import uk.co.idv.lockout.usecases.state.ResetLockoutState;
 import uk.co.idv.lockout.usecases.state.ValidateLockoutState;

@@ -3,7 +3,8 @@ package uk.co.idv.context.adapter.json.error.contextnotfound;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.common.adapter.json.error.handler.AbstractErrorHandler;
-import uk.co.idv.context.usecases.context.ContextNotFoundException;
+import uk.co.idv.context.entities.context.ContextNotFoundException;
+import uk.co.idv.method.adapter.json.error.contextnotfound.ContextNotFoundError;
 
 @Slf4j
 public class ContextNotFoundHandler extends AbstractErrorHandler {
