@@ -12,6 +12,7 @@
 ## Todo
 
 *   Add functionality to select policy based on channel properties e.g. valid cookie
+*   Add adapter to limit data returned in response when context created
 *   Add postman collection to repo and run in build pipeline
 *   Raise PR for system lambda to return console output as collection of lines?
 *   Token validation?
