@@ -1,6 +1,6 @@
-package uk.co.idv.policy.entities.policy.key;
+package uk.co.idv.policy.entities.policy.key.channel;
 
-import uk.co.idv.policy.entities.policy.key.ChannelPolicyKey.ChannelPolicyKeyBuilder;
+import uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKey.ChannelPolicyKeyBuilder;
 
 import java.util.UUID;
 

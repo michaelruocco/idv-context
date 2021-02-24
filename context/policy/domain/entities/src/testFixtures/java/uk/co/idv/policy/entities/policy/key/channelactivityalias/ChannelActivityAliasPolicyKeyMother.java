@@ -1,6 +1,6 @@
-package uk.co.idv.policy.entities.policy.key;
+package uk.co.idv.policy.entities.policy.key.channelactivityalias;
 
-import uk.co.idv.policy.entities.policy.key.ChannelActivityAliasPolicyKey.ChannelActivityAliasPolicyKeyBuilder;
+import uk.co.idv.policy.entities.policy.key.channelactivityalias.ChannelActivityAliasPolicyKey.ChannelActivityAliasPolicyKeyBuilder;
 
 import java.util.Collections;
 import java.util.UUID;

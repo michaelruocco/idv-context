@@ -1,29 +1,29 @@
-package uk.co.idv.policy.entities.policy.key;
+package uk.co.idv.policy.entities.policy.key.channel;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
+import uk.co.idv.policy.entities.policy.key.PolicyKeyConstants;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static uk.co.idv.policy.entities.policy.key.ChannelActivityPolicyKeyMother.build;
+import static uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKeyMother.build;
 import static uk.co.idv.policy.entities.policy.key.MockPolicyRequestMother.applyingTo;
 
-class ChannelActivityPolicyKeyTest {
+class ChannelPolicyKeyTest {
 
     @Test
     void shouldReturnType() {
-        PolicyKey key = ChannelActivityPolicyKey.builder().build();
+        PolicyKey key = ChannelPolicyKey.builder().build();
 
-        assertThat(key.getType()).isEqualTo("channel-activity");
+        assertThat(key.getType()).isEqualTo("channel");
     }
 
     @Test
     void shouldNotHaveAliasType() {
-        PolicyKey key = ChannelActivityPolicyKey.builder().build();
+        PolicyKey key = ChannelPolicyKey.builder().build();
 
         assertThat(key.hasAliasType()).isFalse();
     }
@@ -32,7 +32,7 @@ class ChannelActivityPolicyKeyTest {
     void shouldReturnId() {
         UUID id = UUID.randomUUID();
 
-        PolicyKey key = ChannelActivityPolicyKey.builder()
+        PolicyKey key = ChannelPolicyKey.builder()
                 .id(id)
                 .build();
 
@@ -43,7 +43,7 @@ class ChannelActivityPolicyKeyTest {
     void shouldReturnPriority() {
         int priority = 1;
 
-        PolicyKey key = ChannelActivityPolicyKey.builder()
+        PolicyKey key = ChannelPolicyKey.builder()
                 .priority(priority)
                 .build();
 
@@ -54,7 +54,7 @@ class ChannelActivityPolicyKeyTest {
     void shouldReturnChannelId() {
         String channelId = "my-channel";
 
-        PolicyKey key = ChannelActivityPolicyKey.builder()
+        PolicyKey key = ChannelPolicyKey.builder()
                 .channelId(channelId)
                 .build();
 
@@ -62,19 +62,15 @@ class ChannelActivityPolicyKeyTest {
     }
 
     @Test
-    void shouldReturnActivityNames() {
-        Collection<String> activityNames = Collections.singleton("my-activity");
+    void shouldReturnAllActivityName() {
+        PolicyKey key = ChannelPolicyKey.builder().build();
 
-        PolicyKey key = ChannelActivityPolicyKey.builder()
-                .activityNames(activityNames)
-                .build();
-
-        assertThat(key.getActivityNames()).isEqualTo(activityNames);
+        assertThat(key.getActivityNames()).containsExactly(PolicyKeyConstants.ALL);
     }
 
     @Test
-    void shouldReturnEmptyAliasTypes() {
-        PolicyKey key = ChannelActivityPolicyKey.builder().build();
+    void shouldReturnAllAliasType() {
+        PolicyKey key = ChannelPolicyKey.builder().build();
 
         assertThat(key.getAliasTypes()).containsExactly(PolicyKeyConstants.ALL);
     }
@@ -91,18 +87,7 @@ class ChannelActivityPolicyKeyTest {
     }
 
     @Test
-    void shouldNotApplyToPolicyRequestsWithOtherActivityName() {
-        PolicyKey key = build();
-        PolicyRequest request = applyingTo(key);
-        given(request.getActivityName()).willReturn("other-activity");
-
-        boolean applies = key.appliesTo(request);
-
-        assertThat(applies).isFalse();
-    }
-
-    @Test
-    void shouldApplyToPolicyRequestsWithMatchingChannelIdAndActivityName() {
+    void shouldApplyToPolicyRequestsWithMatchingChannelId() {
         PolicyKey key = build();
         PolicyRequest request = applyingTo(key);
 

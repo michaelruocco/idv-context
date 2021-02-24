@@ -1,6 +1,6 @@
 package uk.co.idv.policy.entities.policy;
 
-import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKeyMother;
 
 
 

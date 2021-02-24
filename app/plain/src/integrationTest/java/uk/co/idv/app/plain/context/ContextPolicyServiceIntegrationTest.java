@@ -13,7 +13,7 @@ import uk.co.idv.policy.entities.policy.Policies;
 import uk.co.idv.policy.entities.policy.PolicyNotFoundException;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.entities.policy.PolicyRequestMother;
-import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKeyMother;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
 import java.util.UUID;

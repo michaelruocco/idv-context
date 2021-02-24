@@ -1,7 +1,8 @@
-package uk.co.idv.policy.entities.policy.key;
+package uk.co.idv.policy.entities.policy.key.channelactivityalias;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
 import java.util.Collection;
 import java.util.Collections;
@@ -9,7 +10,7 @@ import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
-import static uk.co.idv.policy.entities.policy.key.ChannelActivityAliasPolicyKeyMother.build;
+import static uk.co.idv.policy.entities.policy.key.channelactivityalias.ChannelActivityAliasPolicyKeyMother.build;
 import static uk.co.idv.policy.entities.policy.key.MockPolicyRequestMother.applyingTo;
 
 class ChannelActivityAliasPolicyKeyTest {

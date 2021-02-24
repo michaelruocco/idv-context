@@ -14,7 +14,7 @@ import uk.co.idv.method.entities.otp.policy.OtpPolicyMother;
 import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfigsMother;
 import uk.co.idv.method.entities.otp.policy.delivery.email.EmailDeliveryMethodConfigMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
-import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKeyMother;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
 import java.util.UUID;

@@ -1,0 +1,10 @@
+{
+  "id": "83b6f4ef-f62a-41b3-803a-119622c99072",
+  "type": "valid-cookie",
+  "channelId": "default-channel",
+  "activityNames": [
+    "default-activity"
+  ],
+  "priority": 3,
+  "validCookie": true
+}
