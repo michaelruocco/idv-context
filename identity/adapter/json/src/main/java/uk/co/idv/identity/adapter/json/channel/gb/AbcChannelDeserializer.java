@@ -21,6 +21,7 @@ public class AbcChannelDeserializer extends StdDeserializer<Abc> {
         return Abc.builder()
                 .emailAddresses(EmailAddressExtractor.toEmailAddresses(node, parser))
                 .phoneNumbers(PhoneNumbersExtractor.toPhoneNumbers(node, parser))
+                .validCookie(node.get("validCookie").asBoolean())
                 .build();
     }
 

@@ -112,7 +112,8 @@ Feature: Eligibility Requests
       {
         "channel": {
           "id": "abc",
-          "country": "GB"
+          "country": "GB",
+          "validCookie": true
         },
         "aliases": [
           {
@@ -134,7 +135,8 @@ Feature: Eligibility Requests
       {
         "channel": {
           "id": "abc",
-          "country": "GB"
+          "country": "GB",
+          "validCookie": true
         },
         "aliases": [
           {
@@ -182,6 +184,7 @@ Feature: Eligibility Requests
         "channel": {
           "id": "abc",
           "country": "GB",
+          "validCookie": true,
           "phoneNumbers": [
             { "value": "07809123456" }
           ],
@@ -210,6 +213,7 @@ Feature: Eligibility Requests
         "channel": {
           "id": "abc",
           "country": "GB",
+          "validCookie": true,
           "phoneNumbers": [
             { "value": "07809123456" }
           ],

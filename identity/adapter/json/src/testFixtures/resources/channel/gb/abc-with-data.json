@@ -1,6 +1,7 @@
 {
   "id": "abc",
   "country": "GB",
+  "validCookie": true,
   "phoneNumbers": [
     {
       "value": "+447089111111",

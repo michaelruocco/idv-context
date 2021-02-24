@@ -1,4 +1,5 @@
 {
   "id": "abc",
-  "country": "GB"
+  "country": "GB",
+  "validCookie": true
 }

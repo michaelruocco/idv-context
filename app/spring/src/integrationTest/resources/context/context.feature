@@ -890,7 +890,8 @@ Feature: Context Creation
       {
         "channel": {
           "id": "#(channelId)",
-          "country": "GB"
+          "country": "GB",
+          "validCookie": true
         },
         "activity": {
           "name": "login",
@@ -957,7 +958,8 @@ Feature: Context Creation
       {
         "channel": {
           "id": "#(channelId)",
-          "country": "GB"
+          "country": "GB",
+          "validCookie": true
         },
         "activity": {
           "name": "login",
