@@ -12,11 +12,11 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
-class CreateContextRequestConverterTest {
+class SequencesRequestFactoryTest {
 
     private final UuidGenerator uuidGenerator = mock(UuidGenerator.class);
 
-    private final CreateContextRequestConverter converter = new CreateContextRequestConverter(uuidGenerator);
+    private final SequencesRequestFactory converter = new SequencesRequestFactory(uuidGenerator);
 
     @Test
     void shouldPopulateIdOnSequencesRequest() {

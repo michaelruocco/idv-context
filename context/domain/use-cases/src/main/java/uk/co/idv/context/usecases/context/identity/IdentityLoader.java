@@ -16,7 +16,7 @@ public class IdentityLoader {
     private final CreateEligibility createEligibility;
 
     @Builder.Default
-    private final CreateContextRequestConverter createContextRequestConverter = new CreateContextRequestConverter();
+    private final PolicyRequestFactory policyRequestFactory = new PolicyRequestFactory();
 
     public ServiceCreateContextRequest addIdentity(CreateContextRequest request) {
         ContextCreateEligibilityRequest eligibilityRequest = loadAndAddPolicy(request);
@@ -29,7 +29,7 @@ public class IdentityLoader {
     }
 
     private ContextCreateEligibilityRequest loadAndAddPolicy(CreateContextRequest request) {
-        PolicyRequest policyRequest = createContextRequestConverter.toPolicyRequest(request);
+        PolicyRequest policyRequest = policyRequestFactory.toPolicyRequest(request);
         return ContextCreateEligibilityRequest.builder()
                 .request(request)
                 .policy(policyService.loadHighestPriority(policyRequest))

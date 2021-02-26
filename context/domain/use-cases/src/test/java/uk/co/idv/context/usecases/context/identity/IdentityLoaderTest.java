@@ -24,12 +24,12 @@ class IdentityLoaderTest {
 
     private final ContextPolicyService policyService = mock(ContextPolicyService.class);
     private final CreateEligibility createEligibility = mock(CreateEligibility.class);
-    private final CreateContextRequestConverter createContextRequestConverter = mock(CreateContextRequestConverter.class);
+    private final PolicyRequestFactory policyRequestFactory = mock(PolicyRequestFactory.class);
 
     private final IdentityLoader loader = IdentityLoader.builder()
             .policyService(policyService)
             .createEligibility(createEligibility)
-            .createContextRequestConverter(createContextRequestConverter)
+            .policyRequestFactory(policyRequestFactory)
             .build();
 
     @Test
@@ -94,7 +94,7 @@ class IdentityLoaderTest {
 
     private PolicyRequest givenConvertedToPolicyRequest(CreateContextRequest request) {
         PolicyRequest policyRequest = mock(PolicyRequest.class);
-        given(createContextRequestConverter.toPolicyRequest(request)).willReturn(policyRequest);
+        given(policyRequestFactory.toPolicyRequest(request)).willReturn(policyRequest);
         return policyRequest;
     }
 

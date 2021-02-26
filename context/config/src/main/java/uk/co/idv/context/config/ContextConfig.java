@@ -6,7 +6,7 @@ import uk.co.idv.context.adapter.json.error.handler.ContextErrorHandler;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.ContextService;
 import uk.co.idv.context.usecases.context.CreateContext;
-import uk.co.idv.context.usecases.context.CreateContextRequestConverter;
+import uk.co.idv.context.usecases.context.SequencesRequestFactory;
 import uk.co.idv.context.usecases.context.FindContext;
 import uk.co.idv.context.usecases.context.MdcPopulator;
 import uk.co.idv.context.usecases.context.event.create.CompositeContextCreatedHandler;
@@ -92,7 +92,7 @@ public class ContextConfig {
                 .clock(clock)
                 .lockoutService(lockoutService())
                 .repository(contextRepository)
-                .requestConverter(serviceCreateContextRequestConverter())
+                .sequencesRequestFactory(sequencesRequestFactory())
                 .sequencesBuilder(sequencesBuilder())
                 .createdHandler(contextCreated())
                 .protector(contextDataProtector())
@@ -119,8 +119,8 @@ public class ContextConfig {
         return new MethodsBuilder(new CompositeMethodBuilder(appMethodConfigs.methodBuilders()));
     }
 
-    private CreateContextRequestConverter serviceCreateContextRequestConverter() {
-        return new CreateContextRequestConverter(uuidGenerator);
+    private SequencesRequestFactory sequencesRequestFactory() {
+        return new SequencesRequestFactory(uuidGenerator);
     }
 
     private ContextCreatedHandler contextCreated() {

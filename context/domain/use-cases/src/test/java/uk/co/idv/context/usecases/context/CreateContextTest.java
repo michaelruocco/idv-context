@@ -34,7 +34,7 @@ class CreateContextTest {
     private static final Instant NOW = Instant.parse("2020-09-13T07:14:01.050Z");
 
     private final ContextLockoutService lockoutService = mock(ContextLockoutService.class);
-    private final CreateContextRequestConverter requestConverter = mock(CreateContextRequestConverter.class);
+    private final SequencesRequestFactory sequencesRequestFactory = mock(SequencesRequestFactory.class);
     private final Clock clock = Clock.fixed(NOW, ZoneId.systemDefault());
     private final SequencesBuilder sequencesBuilder = mock(SequencesBuilder.class);
     private final ExpiryCalculator expiryCalculator = mock(ExpiryCalculator.class);
@@ -44,7 +44,7 @@ class CreateContextTest {
 
     private final CreateContext createContext = CreateContext.builder()
             .lockoutService(lockoutService)
-            .requestConverter(requestConverter)
+            .sequencesRequestFactory(sequencesRequestFactory)
             .clock(clock)
             .sequencesBuilder(sequencesBuilder)
             .expiryCalculator(expiryCalculator)
@@ -169,7 +169,7 @@ class CreateContextTest {
 
     private SequencesRequest givenConvertsToSequencesRequest(ServiceCreateContextRequest request) {
         SequencesRequest sequencesRequest = SequencesRequestMother.build();
-        given(requestConverter.toSequencesRequest(request)).willReturn(sequencesRequest);
+        given(sequencesRequestFactory.toSequencesRequest(request)).willReturn(sequencesRequest);
         return sequencesRequest;
     }
 

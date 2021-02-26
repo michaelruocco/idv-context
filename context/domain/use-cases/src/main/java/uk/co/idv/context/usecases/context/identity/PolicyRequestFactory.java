@@ -6,8 +6,7 @@ import uk.co.idv.policy.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
 import uk.co.idv.policy.entities.policy.key.validcookie.ValidCookiePolicyRequestDecorator;
 
-//TODO unit test
-public class CreateContextRequestConverter {
+public class PolicyRequestFactory {
 
     public PolicyRequest toPolicyRequest(CreateContextRequest request) {
         Channel channel = request.getChannel();
