@@ -13,6 +13,7 @@ public class FindIdentityRequestConverter {
         return AsyncDataLoadRequest.builder()
                 .timeout(timeoutProvider.getTimeout(request.getChannelId()))
                 .aliases(aliases)
+                .requestedData(request.getRequestedData())
                 .build();
     }
 

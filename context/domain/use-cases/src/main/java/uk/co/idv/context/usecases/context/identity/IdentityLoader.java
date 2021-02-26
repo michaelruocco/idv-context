@@ -7,12 +7,16 @@ import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.context.usecases.policy.ContextPolicyService;
+import uk.co.idv.policy.entities.policy.PolicyRequest;
 
 @Builder
 public class IdentityLoader {
 
     private final ContextPolicyService policyService;
     private final CreateEligibility createEligibility;
+
+    @Builder.Default
+    private final CreateContextRequestConverter createContextRequestConverter = new CreateContextRequestConverter();
 
     public ServiceCreateContextRequest addIdentity(CreateContextRequest request) {
         ContextCreateEligibilityRequest eligibilityRequest = loadAndAddPolicy(request);
@@ -25,9 +29,10 @@ public class IdentityLoader {
     }
 
     private ContextCreateEligibilityRequest loadAndAddPolicy(CreateContextRequest request) {
+        PolicyRequest policyRequest = createContextRequestConverter.toPolicyRequest(request);
         return ContextCreateEligibilityRequest.builder()
                 .request(request)
-                .policy(policyService.loadHighestPriority(request))
+                .policy(policyService.loadHighestPriority(policyRequest))
                 .build();
     }
 

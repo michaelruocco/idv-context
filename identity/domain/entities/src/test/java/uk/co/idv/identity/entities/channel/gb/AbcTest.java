@@ -3,7 +3,6 @@ package uk.co.idv.identity.entities.channel.gb;
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.channel.Channel;
-import uk.co.idv.identity.entities.channel.ValidCookieChannel;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -25,9 +24,9 @@ class AbcTest {
 
     @Test
     void shouldReturnValidCookie() {
-        ValidCookieChannel channel = AbcMother.abc();
+        Channel channel = AbcMother.abc();
 
-        assertThat(channel.hasValidCookie()).isTrue();
+        assertThat(channel.hasValidCookie()).contains(true);
     }
 
 }
