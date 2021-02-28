@@ -11,10 +11,8 @@
 
 ## Todo
 
-*   Add functionality to select policy based on channel properties e.g. valid cookie
-*   Add adapter to limit data returned in response when context created
 *   Add postman collection to repo and run in build pipeline
-*   Raise PR for system lambda to return console output as collection of lines?
+*   Raise PR for system stubs to return console output as collection of lines?
 *   Token validation?
 *   Try out google cache module with a mongo repository for policies instead of redis repository?
 *   Performance tests in pipeline / nightly build?
