@@ -136,94 +136,22 @@ Feature: Context Verifications
         "id": "#uuid",
         "created": "#notnull",
         "expiry": "#notnull",
-        "request": {
-          "initial": {
-            "channel": {
-              "id": "#(channelId)",
-              "country": "GB"
-            },
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111131"
-              }
-            ],
-            "activity": {
-              "name": "default-activity",
-              "timestamp": "2020-09-27T06:56:47.522Z"
-            }
-          },
-          "policy": {
-            "key": {
-              "id": "#(contextPolicyId)",
-              "priority": 1,
-              "channelId": "#(channelId)",
-              "type": "channel"
-            },
-            "sequencePolicies": [
-              {
-                "name": "one-time-passcode",
-                "stagePolicies": [
-                  {
-                    "type": "all-methods",
-                    "methodPolicies": [
-                      {
-                        "config": {
-                          "maxNumberOfAttempts": 3,
-                          "duration": 300000,
-                          "passcodeConfig": {
-                            "length": 8,
-                            "duration": 120000,
-                            "maxNumberOfDeliveries": 2
-                          }
-                        },
-                        "deliveryMethodConfigs": [
-                          {
-                            "type": "sms",
-                            "phoneNumberConfig": {
-                              "country": "GB",
-                              "allowInternational": false,
-                              "lastUpdatedConfig": {
-                                "allowUnknown": true,
-                                "minDaysSinceUpdate": 5
-                              },
-                              "simSwapConfig": {
-                                "acceptableStatuses": [
-                                  "success"
-                                ],
-                                "timeout": 2000,
-                                "minDaysSinceSwap": 6,
-                                "async": false
-                              }
-                            }
-                          }
-                        ],
-                        "name": "one-time-passcode"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "protectSensitiveData": false
-          },
-          "identity": {
-            "idvId": "#uuid",
-            "country": "GB",
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111131"
-              },
-              {
-                "type": "idv-id",
-                "value": "#uuid"
-              }
-            ],
-            "phoneNumbers": [
-              { "value": "+4407808247731" }
-            ]
+        "eligible": true,
+        "complete": false,
+        "successful": false,
+        "channel": {
+          "id": "#(channelId)",
+          "country": "GB"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111131"
           }
+        ],
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
         },
         "sequences": [
           {
@@ -266,11 +194,7 @@ Feature: Context Verifications
               "eligible": true
             }
           }
-        ],
-        "verifications": [],
-        "eligible": true,
-        "successful": false,
-        "complete": false
+        ]
       }
       """
     * def contextId = response.id
@@ -474,94 +398,22 @@ Feature: Context Verifications
         "id": "#uuid",
         "created": "#notnull",
         "expiry": "#notnull",
-        "request": {
-          "initial": {
-            "channel": {
-              "id": "#(channelId)",
-              "country": "GB"
-            },
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111132"
-              }
-            ],
-            "activity": {
-              "name": "default-activity",
-              "timestamp": "2020-09-27T06:56:47.522Z"
-            }
-          },
-          "policy": {
-            "key": {
-              "id": "#(contextPolicyId)",
-              "priority": 1,
-              "channelId": "#(channelId)",
-              "type": "channel"
-            },
-            "sequencePolicies": [
-              {
-                "name": "one-time-passcode",
-                "stagePolicies": [
-                  {
-                    "type": "all-methods",
-                    "methodPolicies": [
-                      {
-                        "config": {
-                          "maxNumberOfAttempts": 3,
-                          "duration": 300000,
-                          "passcodeConfig": {
-                            "length": 8,
-                            "duration": 120000,
-                            "maxNumberOfDeliveries": 2
-                          }
-                        },
-                        "deliveryMethodConfigs": [
-                          {
-                            "type": "sms",
-                            "phoneNumberConfig": {
-                              "country": "GB",
-                              "allowInternational": false,
-                              "lastUpdatedConfig": {
-                                "allowUnknown": true,
-                                "minDaysSinceUpdate": 5
-                              },
-                              "simSwapConfig": {
-                                "acceptableStatuses": [
-                                  "success"
-                                ],
-                                "timeout": 2000,
-                                "minDaysSinceSwap": 6,
-                                "async": false
-                              }
-                            }
-                          }
-                        ],
-                        "name": "one-time-passcode"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "protectSensitiveData": false
-          },
-          "identity": {
-            "idvId": "#uuid",
-            "country": "GB",
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111132"
-              },
-              {
-                "type": "idv-id",
-                "value": "#uuid"
-              }
-            ],
-            "phoneNumbers": [
-              { "value": "+4407808247732" }
-            ]
+        "eligible": true,
+        "complete": false,
+        "successful": false,
+        "channel": {
+          "id": "#(channelId)",
+          "country": "GB"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111132"
           }
+        ],
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
         },
         "sequences": [
           {
@@ -604,11 +456,7 @@ Feature: Context Verifications
               "eligible": true
             }
           }
-        ],
-        "verifications": [],
-        "eligible": true,
-        "successful": false,
-        "complete": false
+        ]
       }
       """
     * def contextId = response.id
@@ -821,94 +669,22 @@ Feature: Context Verifications
         "id": "#uuid",
         "created": "#notnull",
         "expiry": "#notnull",
-        "request": {
-          "initial": {
-            "channel": {
-              "id": "#(channelId)",
-              "country": "GB"
-            },
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111133"
-              }
-            ],
-            "activity": {
-              "name": "default-activity",
-              "timestamp": "2020-09-27T06:56:47.522Z"
-            }
-          },
-          "policy": {
-            "key": {
-              "id": "#(contextPolicyId)",
-              "priority": 1,
-              "channelId": "#(channelId)",
-              "type": "channel"
-            },
-            "sequencePolicies": [
-              {
-                "name": "one-time-passcode",
-                "stagePolicies": [
-                  {
-                    "type": "all-methods",
-                    "methodPolicies": [
-                      {
-                        "config": {
-                          "maxNumberOfAttempts": 3,
-                          "duration": 300000,
-                          "passcodeConfig": {
-                            "length": 8,
-                            "duration": 120000,
-                            "maxNumberOfDeliveries": 2
-                          }
-                        },
-                        "deliveryMethodConfigs": [
-                          {
-                            "type": "sms",
-                            "phoneNumberConfig": {
-                              "country": "GB",
-                              "allowInternational": false,
-                              "lastUpdatedConfig": {
-                                "allowUnknown": true,
-                                "minDaysSinceUpdate": 5
-                              },
-                              "simSwapConfig": {
-                                "acceptableStatuses": [
-                                  "success"
-                                ],
-                                "timeout": 2000,
-                                "minDaysSinceSwap": 6,
-                                "async": false
-                              }
-                            }
-                          }
-                        ],
-                        "name": "one-time-passcode"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "protectSensitiveData": false
-          },
-          "identity": {
-            "idvId": "#uuid",
-            "country": "GB",
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111133"
-              },
-              {
-                "type": "idv-id",
-                "value": "#uuid"
-              }
-            ],
-            "phoneNumbers": [
-              { "value": "+4407808247733" }
-            ]
+        "eligible": true,
+        "complete": false,
+        "successful": false,
+        "channel": {
+          "id": "#(channelId)",
+          "country": "GB"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111133"
           }
+        ],
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
         },
         "sequences": [
           {
@@ -951,11 +727,7 @@ Feature: Context Verifications
               "eligible": true
             }
           }
-        ],
-        "verifications": [],
-        "eligible": true,
-        "successful": false,
-        "complete": false
+        ]
       }
       """
     * def contextId = response.id

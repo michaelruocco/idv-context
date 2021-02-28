@@ -38,7 +38,7 @@ services:
       - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
   idv-context-spring-app:
-    image: michaelruocco/idv-context-spring-app
+    image: michaelruocco/idv-context-spring-app:latest
     container_name: idv-context-spring-app
     mem_limit: 2048m
     mem_reservation: 2048m

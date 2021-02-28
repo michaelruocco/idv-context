@@ -10,6 +10,7 @@ import uk.co.idv.app.plain.adapter.app.AppAdapter;
 import uk.co.idv.app.plain.adapter.app.DefaultAppAdapter;
 import uk.co.idv.app.plain.adapter.channel.ChannelAdapter;
 import uk.co.idv.app.plain.adapter.repository.RepositoryAdapter;
+import uk.co.idv.app.spring.context.ContextConverter;
 import uk.co.idv.common.adapter.json.error.handler.CompositeErrorHandler;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
 import uk.co.idv.method.config.AppMethodConfigs;
@@ -84,6 +85,11 @@ public class SpringCommonDomainConfig {
                 .application(application)
                 .channelAdapter(channelAdapter)
                 .build();
+    }
+
+    @Bean
+    public ContextConverter contextConverter() {
+        return new ContextConverter();
     }
 
 }

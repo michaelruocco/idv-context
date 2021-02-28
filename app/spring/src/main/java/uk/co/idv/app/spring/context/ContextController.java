@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.app.plain.Application;
-import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
 import uk.co.idv.method.entities.verification.GetVerificationRequest;
 import uk.co.idv.method.entities.verification.Verification;
@@ -29,18 +28,19 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class ContextController {
 
     private final Application application;
+    private final ContextConverter contextConverter;
 
     @PostMapping
-    public ResponseEntity<Context> createContext(@RequestBody FacadeCreateContextRequest request) {
-        Context context = application.create(request);
+    public ResponseEntity<ApiContext> createContext(@RequestBody FacadeCreateContextRequest request) {
+        ApiContext context = contextConverter.toApiContext(application.create(request));
         return ResponseEntity
                 .created(buildGetContextUri(context.getId()))
                 .body(context);
     }
 
     @GetMapping("/{id}")
-    public Context getContext(@PathVariable("id") UUID id) {
-        return application.findContext(id);
+    public ApiContext getContext(@PathVariable("id") UUID id) {
+        return contextConverter.toApiContext(application.findContext(id));
     }
 
     @PostMapping("/verifications")
