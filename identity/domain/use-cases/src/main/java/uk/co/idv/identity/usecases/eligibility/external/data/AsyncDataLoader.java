@@ -35,11 +35,17 @@ public class AsyncDataLoader {
     }
 
     private CompletableFuture<PhoneNumbers> loadPhoneNumbers(AsyncDataLoadRequest request) {
-        return supplyAsync(supplierFactory.phoneNumberSupplier(request));
+        if (request.phoneNumbersRequested()) {
+            return supplyAsync(supplierFactory.phoneNumberSupplier(request));
+        }
+        return CompletableFuture.completedFuture(new PhoneNumbers());
     }
 
     private CompletableFuture<EmailAddresses> loadEmailAddresses(AsyncDataLoadRequest request) {
-        return supplyAsync(supplierFactory.emailAddressSupplier(request));
+        if (request.emailAddressesRequested()) {
+            return supplyAsync(supplierFactory.emailAddressSupplier(request));
+        }
+        return CompletableFuture.completedFuture(new EmailAddresses());
     }
 
     private <T> CompletableFuture<T> supplyAsync(Supplier<T> supplier) {

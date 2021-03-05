@@ -374,100 +374,22 @@ Feature: Context Creation
         "id": "#uuid",
         "created": "#notnull",
         "expiry": "#notnull",
-        "request": {
-          "initial": {
-            "channel": {
-              "id": "#(channelId)",
-              "country": "GB"
-            },
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111114"
-              }
-            ],
-            "activity": {
-              "name": "default-activity",
-              "timestamp": "2020-09-27T06:56:47.522Z"
-            }
-          },
-          "policy": {
-            "key": {
-              "id": "#(contextPolicyId)",
-              "priority": 1,
-              "channelId": "#(channelId)",
-              "type": "channel"
-            },
-            "sequencePolicies": [
-              {
-                "name": "one-time-passcode",
-                "stagePolicies": [
-                  {
-                    "type": "all-methods",
-                    "methodPolicies": [
-                      {
-                        "config": {
-                          "maxNumberOfAttempts": 3,
-                          "duration": 300000,
-                          "passcodeConfig": {
-                            "length": 8,
-                            "duration": 120000,
-                            "maxNumberOfDeliveries": 2
-                          }
-                        },
-                        "deliveryMethodConfigs": [
-                          {
-                            "type": "sms",
-                            "phoneNumberConfig": {
-                              "country": "GB",
-                              "allowInternational": false,
-                              "lastUpdatedConfig": {
-                                "allowUnknown": true,
-                                "minDaysSinceUpdate": 5
-                              },
-                              "simSwapConfig": {
-                                "acceptableStatuses": [
-                                  "success"
-                                ],
-                                "timeout": 2000,
-                                "minDaysSinceSwap": 6,
-                                "async": false
-                              }
-                            }
-                          }
-                        ],
-                        "name": "one-time-passcode"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "protectSensitiveData": false
-          },
-          "identity": {
-            "idvId": "#uuid",
-            "country": "GB",
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111114"
-              },
-              {
-                "type": "idv-id",
-                "value": "#uuid"
-              }
-            ],
-            "phoneNumbers": [
-              { "value": "+4407808247749" },
-              { "value": "+4407808247748" },
-              { "value": "+4407808247747" },
-              { "value": "+4407808247746" },
-              { "value": "+4407808247745" },
-              { "value": "+4407808247744" },
-              { "value": "+4407808247743" }
-            ]
+        "eligible": true,
+        "complete": false,
+        "successful": false,
+        "channel": {
+          "id": "#(channelId)",
+          "country": "GB"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111114"
           }
+        ],
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
         },
         "sequences": [
           {
@@ -570,11 +492,7 @@ Feature: Context Creation
               "eligible": true
             }
           }
-        ],
-        "verifications": [],
-        "eligible": true,
-        "successful": false,
-        "complete": false
+        ]
       }
       """
 
@@ -715,95 +633,22 @@ Feature: Context Creation
         "id": "#uuid",
         "created": "#notnull",
         "expiry": "#notnull",
-        "request": {
-          "initial": {
-            "channel": {
-              "id": "#(channelId)",
-              "country": "GB"
-            },
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111115"
-              }
-            ],
-            "activity": {
-              "name": "default-activity",
-              "timestamp": "2020-09-27T06:56:47.522Z"
-            }
-          },
-          "policy": {
-            "key": {
-              "id": "#(contextPolicyId)",
-              "priority": 1,
-              "channelId": "#(channelId)",
-              "type": "channel"
-            },
-            "sequencePolicies": [
-              {
-                "name": "one-time-passcode",
-                "stagePolicies": [
-                  {
-                    "type": "all-methods",
-                    "methodPolicies": [
-                      {
-                        "config": {
-                          "maxNumberOfAttempts": 3,
-                          "duration": 300000,
-                          "passcodeConfig": {
-                            "length": 8,
-                            "duration": 120000,
-                            "maxNumberOfDeliveries": 2
-                          }
-                        },
-                        "deliveryMethodConfigs": [
-                          {
-                            "type": "sms",
-                            "phoneNumberConfig": {
-                              "country": "GB",
-                              "allowInternational": false,
-                              "lastUpdatedConfig": {
-                                "allowUnknown": true,
-                                "minDaysSinceUpdate": 5
-                              },
-                              "simSwapConfig": {
-                                "acceptableStatuses": [
-                                  "success"
-                                ],
-                                "timeout": 2000,
-                                "minDaysSinceSwap": 6,
-                                "async": false
-                              }
-                            }
-                          }
-                        ],
-                        "name": "one-time-passcode"
-                      }
-                    ]
-                  }
-                ]
-              }
-            ],
-            "protectSensitiveData": true
-          },
-          "identity": {
-            "idvId": "#uuid",
-            "country": "GB",
-            "aliases": [
-              {
-                "type": "credit-card-number",
-                "value": "4927111111111115"
-              },
-              {
-                "type": "idv-id",
-                "value": "#uuid"
-              }
-            ],
-            "phoneNumbers": [
-              { "value": "***********744" },
-              { "value": "***********743" }
-            ]
+        "eligible": true,
+        "complete": false,
+        "successful": false,
+        "channel": {
+          "id": "#(channelId)",
+          "country": "GB"
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111115"
           }
+        ],
+        "activity": {
+          "name": "default-activity",
+          "timestamp": "2020-09-27T06:56:47.522Z"
         },
         "sequences": [
           {
@@ -856,11 +701,7 @@ Feature: Context Creation
               "eligible": true
             }
           }
-        ],
-        "verifications": [],
-        "eligible": true,
-        "successful": false,
-        "complete": false
+        ]
       }
       """
 
@@ -890,7 +731,8 @@ Feature: Context Creation
       {
         "channel": {
           "id": "#(channelId)",
-          "country": "GB"
+          "country": "GB",
+          "validCookie": true
         },
         "activity": {
           "name": "login",
@@ -911,8 +753,84 @@ Feature: Context Creation
     And url baseUrl + "/v1/contexts/" + contextId
     And header channel-id = channelId
     And header correlation-id = "d8684916-b21e-45db-ab79-7806b41cbe40"
-    And method GET
+    When method GET
     And status 200
+    And match response ==
+      """
+      {
+        "id": "#uuid",
+        "created": "#notnull",
+        "expiry": "#notnull",
+        "eligible": true,
+        "complete": false,
+        "successful": false,
+        "channel": {
+          "id": "#(channelId)",
+          "country": "GB",
+          "validCookie": true
+        },
+        "aliases": [
+          {
+            "type": "credit-card-number",
+            "value": "4927111111111118"
+          }
+        ],
+        "activity": {
+          "name": "login",
+          "system": "example-system",
+          "timestamp": "2020-09-27T06:56:47.522Z"
+        },
+        "sequences": [
+          {
+            "duration":300000,
+            "name":"one-time-passcode",
+            "stages": [
+              {
+                "methods": [
+                  {
+                    "name":"one-time-passcode",
+                    "eligibility": {
+                      "eligible":true
+                    },
+                    "deliveryMethods": [
+                      {
+                        "id": "#uuid",
+                        "type": "email",
+                        "value": "joe.bloggs@hotmail.co.uk",
+                        "eligibility": {
+                          "eligible": true
+                        }
+                      },
+                      {
+                        "id": "#uuid",
+                        "type": "email",
+                        "value": "joebloggs@yahoo.co.uk",
+                        "eligibility": {
+                          "eligible":true
+                        }
+                      }
+                    ],
+                    "config": {
+                      "duration": 300000,
+                      "maxNumberOfAttempts": 3,
+                      "passcodeConfig": {
+                        "duration": 120000,
+                        "length": 8,
+                        "maxNumberOfDeliveries": 2
+                      }
+                    }
+                  }
+                ],
+                "type":"all-methods"
+              }
+            ],
+            "eligibility": {
+              "eligible": true
+            }
+          }
+        ]
+      }
+      """
 
   Scenario: Get context - Error - context not found
     * def contextId = "bacf1ac9-d33e-4e2f-9fff-a01bfab45bbd"
@@ -957,7 +875,8 @@ Feature: Context Creation
       {
         "channel": {
           "id": "#(channelId)",
-          "country": "GB"
+          "country": "GB",
+          "validCookie": true
         },
         "activity": {
           "name": "login",

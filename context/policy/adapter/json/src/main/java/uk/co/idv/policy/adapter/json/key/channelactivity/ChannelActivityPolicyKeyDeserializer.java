@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
-import uk.co.idv.policy.entities.policy.key.ChannelActivityPolicyKey;
+import uk.co.idv.policy.entities.policy.key.channelactivity.ChannelActivityPolicyKey;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
 import static uk.co.idv.policy.adapter.json.key.CommonPolicyKeyFieldDeserializer.extractActivityNames;

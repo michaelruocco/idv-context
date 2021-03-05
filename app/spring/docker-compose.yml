@@ -38,7 +38,7 @@ services:
       - ./mongo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
 
   idv-context-spring-app:
-    image: michaelruocco/idv-context-spring-app
+    image: michaelruocco/idv-context-spring-app:${APP_VERSION}
     container_name: idv-context-spring-app
     mem_limit: 2048m
     mem_reservation: 2048m
@@ -46,7 +46,6 @@ services:
       - 8081:80
     environment:
       - SERVER_PORT=80
-      - SPRING_PROFILES_ACTIVE=simple-logging
       - REDIS_ENDPOINT_URI=redis://redis:6379
       - MONGO_CONNECTION_STRING=mongodb://idv:welcome01@context-mongo:27017/idv-local
       - EXTERNAL_DATA_TIMEOUT=1000
@@ -57,3 +56,4 @@ services:
     depends_on:
       - redis
       - mongo
+      #- filebeat

@@ -9,7 +9,7 @@ public interface AbcMother {
         return builder().build();
     }
 
-    static Object withData() {
+    static Abc withData() {
         return builder()
                 .phoneNumbers(PhoneNumbersMother.two())
                 .emailAddresses(EmailAddressesMother.two())
@@ -17,7 +17,7 @@ public interface AbcMother {
     }
 
     static Abc.AbcBuilder builder() {
-        return Abc.builder();
+        return Abc.builder().validCookie(true);
     }
 
 }

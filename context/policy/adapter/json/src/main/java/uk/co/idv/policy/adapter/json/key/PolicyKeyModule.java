@@ -7,10 +7,13 @@ import uk.co.idv.policy.adapter.json.key.channel.ChannelPolicyKeyMixin;
 import uk.co.idv.policy.adapter.json.key.channelactivity.ChannelActivityPolicyKeyDeserializer;
 import uk.co.idv.policy.adapter.json.key.channelactivity.ChannelActivityPolicyKeyMixin;
 import uk.co.idv.policy.adapter.json.key.channelactivityalias.ChannelActivityAliasPolicyKeyDeserializer;
+import uk.co.idv.policy.adapter.json.key.validcookie.ValidCookiePolicyKeyDeserializer;
+import uk.co.idv.policy.adapter.json.key.validcookie.ValidCookiePolicyKeyMixin;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
-import uk.co.idv.policy.entities.policy.key.ChannelActivityAliasPolicyKey;
-import uk.co.idv.policy.entities.policy.key.ChannelActivityPolicyKey;
-import uk.co.idv.policy.entities.policy.key.ChannelPolicyKey;
+import uk.co.idv.policy.entities.policy.key.channelactivityalias.ChannelActivityAliasPolicyKey;
+import uk.co.idv.policy.entities.policy.key.channelactivity.ChannelActivityPolicyKey;
+import uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKey;
+import uk.co.idv.policy.entities.policy.key.validcookie.ValidCookiePolicyKey;
 
 public class PolicyKeyModule extends SimpleModule {
 
@@ -20,6 +23,7 @@ public class PolicyKeyModule extends SimpleModule {
         setUpChannelPolicyKey();
         setUpChannelActivityPolicyKey();
         setUpChannelActivityAliasPolicyKey();
+        setUpValidCookiePolicyKey();
     }
 
     private void setUpDefaults() {
@@ -38,6 +42,11 @@ public class PolicyKeyModule extends SimpleModule {
 
     private void setUpChannelActivityAliasPolicyKey() {
         addDeserializer(ChannelActivityAliasPolicyKey.class, new ChannelActivityAliasPolicyKeyDeserializer());
+    }
+
+    private void setUpValidCookiePolicyKey() {
+        setMixInAnnotation(ValidCookiePolicyKey.class, ValidCookiePolicyKeyMixin.class);
+        addDeserializer(ValidCookiePolicyKey.class, new ValidCookiePolicyKeyDeserializer());
     }
 
 }

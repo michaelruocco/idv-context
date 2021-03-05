@@ -78,7 +78,8 @@
                 <stringProp name="Argument.value">{&#xd;
     &quot;channel&quot;: {&#xd;
         &quot;id&quot;: &quot;${channelId}&quot;,&#xd;
-        &quot;country&quot;: &quot;GB&quot;&#xd;
+        &quot;country&quot;: &quot;GB&quot;,&#xd;
+        &quot;validCookie&quot;: true&#xd;
     },&#xd;
     &quot;activity&quot;: {&#xd;
         &quot;name&quot;: &quot;online-purchase&quot;,&#xd;
@@ -89,10 +90,7 @@
             &quot;amount&quot;: ${amount},&#xd;
             &quot;currency&quot;: &quot;${currency}&quot;&#xd;
         },&#xd;
-        &quot;cardNumber&quot;: {&#xd;
-            &quot;value&quot;: &quot;${cardNumber}&quot;,&#xd;
-            &quot;type&quot;: &quot;credit-card-number&quot;&#xd;
-        }&#xd;
+        &quot;last4DigitsOfCardNumber&quot;: &quot;${last4DigitsOfCardNumber}&quot;&#xd;
     },&#xd;
     &quot;aliases&quot;: [&#xd;
         {&#xd;
@@ -120,6 +118,16 @@
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
         <hashTree>
+          <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="set-last-4-digits-of-card" enabled="true">
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="script">def cardNumber = vars.get(&quot;cardNumber&quot;);
+def last4Digits = cardNumber.substring(cardNumber.length() - 4);
+vars.put(&quot;last4DigitsOfCardNumber&quot;, last4Digits);</stringProp>
+            <stringProp name="scriptLanguage">groovy</stringProp>
+          </JSR223PreProcessor>
+          <hashTree/>
           <BeanShellPreProcessor guiclass="TestBeanGUI" testclass="BeanShellPreProcessor" testname="utc-timestamp" enabled="true">
             <stringProp name="filename"></stringProp>
             <stringProp name="parameters"></stringProp>

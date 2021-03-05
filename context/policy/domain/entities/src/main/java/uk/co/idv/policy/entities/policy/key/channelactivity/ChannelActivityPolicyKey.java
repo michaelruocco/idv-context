@@ -1,8 +1,9 @@
-package uk.co.idv.policy.entities.policy.key;
+package uk.co.idv.policy.entities.policy.key.channelactivity;
 
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
+import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
 import java.util.Collection;
 import java.util.UUID;

@@ -5,8 +5,10 @@ import org.mockito.ArgumentCaptor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import uk.co.idv.app.plain.Application;
+import uk.co.idv.context.entities.context.ApiContext;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
+import uk.co.idv.context.usecases.context.ContextConverter;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequestMother;
 import uk.co.idv.method.entities.verification.CreateVerificationRequestMother;
@@ -31,39 +33,43 @@ import static org.mockito.Mockito.verify;
 class ContextControllerTest {
 
     private final Application application = mock(Application.class);
+    private final ContextConverter contextConverter = mock(ContextConverter.class);
 
-    private final ContextController controller = new ContextController(application);
+    private final ContextController controller = new ContextController(application, contextConverter);
 
     @Test
     void shouldCreateContext() {
         FacadeCreateContextRequest request = FacadeCreateContextRequestMother.build();
-        Context expectedContext = givenContextCreatedFor(request);
+        Context context = givenContextCreatedFor(request);
+        ApiContext expectedApiContext = givenConvertedToApiContext(context);
 
-        ResponseEntity<Context> response = controller.createContext(request);
+        ResponseEntity<ApiContext> response = controller.createContext(request);
 
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.CREATED);
-        assertThat(response.getBody()).isEqualTo(expectedContext);
+        assertThat(response.getBody()).isEqualTo(expectedApiContext);
     }
 
     @Test
     void shouldReturnLocationForCreatedContext() {
         FacadeCreateContextRequest request = FacadeCreateContextRequestMother.build();
-        Context expectedContext = givenContextCreatedFor(request);
+        Context context = givenContextCreatedFor(request);
+        ApiContext expectedApiContext = givenConvertedToApiContext(context);
 
-        ResponseEntity<Context> response = controller.createContext(request);
+        ResponseEntity<ApiContext> response = controller.createContext(request);
 
-        String expectedLocation = String.format("/v1/contexts/%s", expectedContext.getId());
+        String expectedLocation = String.format("/v1/contexts/%s", expectedApiContext.getId());
         assertThat(response.getHeaders()).contains(entry("Location", singletonList(expectedLocation)));
     }
 
     @Test
     void shouldGetContext() {
         UUID id = UUID.randomUUID();
-        Context expectedContext = givenContextLoadedFor(id);
+        Context context = givenContextLoadedFor(id);
+        ApiContext expectedApiContext = givenConvertedToApiContext(context);
 
-        Context context = controller.getContext(id);
+        ApiContext apiContext = controller.getContext(id);
 
-        assertThat(context).isEqualTo(expectedContext);
+        assertThat(apiContext).isEqualTo(expectedApiContext);
     }
 
     @Test
@@ -137,6 +143,13 @@ class ContextControllerTest {
         Context context = ContextMother.build();
         given(application.findContext(id)).willReturn(context);
         return context;
+    }
+
+    private ApiContext givenConvertedToApiContext(Context context) {
+        ApiContext apiContext = mock(ApiContext.class);
+        given(apiContext.getId()).willReturn(context.getId());
+        given(contextConverter.toApiContext(context)).willReturn(apiContext);
+        return apiContext;
     }
 
     private Verification givenVerificationCreatedFor(CreateVerificationRequest request) {

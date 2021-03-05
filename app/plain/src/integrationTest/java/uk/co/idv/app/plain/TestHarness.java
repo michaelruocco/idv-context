@@ -36,7 +36,7 @@ import uk.co.idv.method.config.AppMethodConfigs;
 import uk.co.idv.method.config.otp.AppOtpConfig;
 import uk.co.idv.method.entities.method.fake.policy.FakeMethodPolicyMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
-import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKeyMother;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 import uk.co.mruoc.randomvalue.uuid.NonRandomUuidGenerator;
 import uk.co.mruoc.randomvalue.uuid.UuidGenerator;

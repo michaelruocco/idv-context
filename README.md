@@ -8,11 +8,11 @@
 [![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_idv-context&metric=sqale_index)](https://sonarcloud.io/dashboard?id=michaelruocco_idv-context)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_idv-context&metric=coverage)](https://sonarcloud.io/dashboard?id=michaelruocco_idv-context)
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=michaelruocco_idv-context&metric=ncloc)](https://sonarcloud.io/dashboard?id=michaelruocco_idv-context)
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.michaelruocco.idv/idv-context-spring-app.svg?label=Maven%20Central)](https://search.maven.org/search?q=g:%22com.github.michaelruocco.idv%22%20AND%20a:%22idv-context-spring-app%22)
 
 ## Todo
 
-*   Add postman collection to repo and run in build pipeline
-*   Raise PR for system lambda to return console output as collection of lines?
+*   Raise PR for system stubs to return console output as collection of lines?
 *   Token validation?
 *   Try out google cache module with a mongo repository for policies instead of redis repository?
 *   Performance tests in pipeline / nightly build?

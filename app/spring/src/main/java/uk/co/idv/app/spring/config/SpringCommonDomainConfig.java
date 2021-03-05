@@ -12,6 +12,7 @@ import uk.co.idv.app.plain.adapter.channel.ChannelAdapter;
 import uk.co.idv.app.plain.adapter.repository.RepositoryAdapter;
 import uk.co.idv.common.adapter.json.error.handler.CompositeErrorHandler;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
+import uk.co.idv.context.usecases.context.ContextConverter;
 import uk.co.idv.method.config.AppMethodConfigs;
 import uk.co.idv.identity.adapter.eligibility.external.StubExternalFindIdentityConfig;
 import uk.co.idv.identity.config.ExternalFindIdentityConfig;
@@ -84,6 +85,11 @@ public class SpringCommonDomainConfig {
                 .application(application)
                 .channelAdapter(channelAdapter)
                 .build();
+    }
+
+    @Bean
+    public ContextConverter contextConverter() {
+        return new ContextConverter();
     }
 
 }

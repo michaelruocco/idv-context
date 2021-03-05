@@ -7,6 +7,7 @@ import uk.co.idv.common.usecases.async.FutureWaiter;
 import uk.co.idv.common.entities.async.SuccessfulSupplier;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.identity.entities.identity.RequestedDataMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
@@ -31,6 +32,16 @@ class AsyncDataLoaderTest {
             .supplierFactory(supplierFactory)
             .futureWaiter(futureWaiter)
             .build();
+
+    @Test
+    void shouldReturnEmptyDataIfDataNotRequested() {
+        AsyncDataLoadRequest request = AsyncDataLoadRequestMother.withRequestedData(RequestedDataMother.noneRequested());
+
+        DataFutures futures = loader.loadData(request);
+
+        assertThat(futures.getPhoneNumbersNow()).isEmpty();
+        assertThat(futures.getEmailAddressesNow()).isEmpty();
+    }
 
     @Test
     void shouldReturnEmptyDataIfSuppliersDoNotCompleteSuccessfully() {

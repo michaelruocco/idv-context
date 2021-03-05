@@ -22,4 +22,11 @@ class AbcTest {
         assertThat(channel.getCountry()).isEqualTo(CountryCode.GB);
     }
 
+    @Test
+    void shouldReturnValidCookie() {
+        Channel channel = AbcMother.abc();
+
+        assertThat(channel.hasValidCookie()).contains(true);
+    }
+
 }

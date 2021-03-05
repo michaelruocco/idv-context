@@ -8,20 +8,20 @@ import com.mongodb.client.model.Indexes;
 import org.bson.conversions.Bson;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
+import static uk.co.idv.context.adapter.repository.ContextCollection.NAME;
+import static uk.co.idv.context.adapter.repository.ContextCollection.TTL_INDEX_NAME;
 
 @ChangeLog
 public class MongoContextChangeLog {
 
-    private static final String COLLECTION_NAME = "context";
-
     @ChangeSet(order = "001", id = "create-context-collection", author = "system")
     public void createCollection(MongoDatabase database) {
-        database.createCollection(COLLECTION_NAME);
-        database.getCollection(COLLECTION_NAME).createIndex(indexKeys(), indexOptions());
+        database.createCollection(NAME);
+        database.getCollection(NAME).createIndex(indexKeys(), indexOptions());
     }
 
     private Bson indexKeys() {
-        return Indexes.ascending("ttl");
+        return Indexes.ascending(TTL_INDEX_NAME);
     }
 
     private IndexOptions indexOptions() {

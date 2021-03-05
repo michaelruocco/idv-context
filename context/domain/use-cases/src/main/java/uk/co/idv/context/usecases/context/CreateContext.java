@@ -21,7 +21,7 @@ public class CreateContext {
     private final ExpiryCalculator expiryCalculator = new ExpiryCalculator();
 
     private final ContextLockoutService lockoutService;
-    private final CreateContextRequestConverter requestConverter;
+    private final SequencesRequestFactory sequencesRequestFactory;
     private final Clock clock;
     private final SequencesBuilder sequencesBuilder;
     private final ContextCreatedHandler createdHandler;
@@ -42,7 +42,7 @@ public class CreateContext {
 
     private Context buildContext(ServiceCreateContextRequest request) {
         Instant created = clock.instant();
-        SequencesRequest sequencesRequest = requestConverter.toSequencesRequest(request);
+        SequencesRequest sequencesRequest = sequencesRequestFactory.toSequencesRequest(request);
         Sequences sequences = sequencesBuilder.build(sequencesRequest);
         return Context.builder()
                 .id(sequencesRequest.getContextId())

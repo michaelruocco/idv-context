@@ -5,9 +5,10 @@ import com.fasterxml.jackson.databind.DeserializationContext;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
-import uk.co.idv.policy.entities.policy.key.ChannelActivityAliasPolicyKey;
-import uk.co.idv.policy.entities.policy.key.ChannelActivityPolicyKey;
-import uk.co.idv.policy.entities.policy.key.ChannelPolicyKey;
+import uk.co.idv.policy.entities.policy.key.channelactivityalias.ChannelActivityAliasPolicyKey;
+import uk.co.idv.policy.entities.policy.key.channelactivity.ChannelActivityPolicyKey;
+import uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKey;
+import uk.co.idv.policy.entities.policy.key.validcookie.ValidCookiePolicyKey;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
@@ -47,7 +48,8 @@ public class PolicyKeyDeserializer extends StdDeserializer<PolicyKey> {
         return Map.of(
                 ChannelPolicyKey.TYPE, ChannelPolicyKey.class,
                 ChannelActivityPolicyKey.TYPE, ChannelActivityPolicyKey.class,
-                ChannelActivityAliasPolicyKey.TYPE, ChannelActivityAliasPolicyKey.class
+                ChannelActivityAliasPolicyKey.TYPE, ChannelActivityAliasPolicyKey.class,
+                ValidCookiePolicyKey.TYPE, ValidCookiePolicyKey.class
         );
     }
 

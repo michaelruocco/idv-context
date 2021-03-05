@@ -4,7 +4,7 @@ import uk.co.idv.lockout.entities.policy.LockoutPolicy.LockoutPolicyBuilder;
 import uk.co.idv.lockout.entities.policy.hard.HardLockoutStateCalculator;
 import uk.co.idv.lockout.entities.policy.recordattempt.AlwaysRecordAttemptPolicy;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
-import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKeyMother;
 
 public interface LockoutPolicyMother {
 

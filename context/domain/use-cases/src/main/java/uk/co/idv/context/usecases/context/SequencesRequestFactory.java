@@ -6,7 +6,7 @@ import uk.co.idv.context.entities.context.sequence.SequencesRequest;
 import uk.co.mruoc.randomvalue.uuid.UuidGenerator;
 
 @RequiredArgsConstructor
-public class CreateContextRequestConverter {
+public class SequencesRequestFactory {
 
     private final UuidGenerator uuidGenerator;
 

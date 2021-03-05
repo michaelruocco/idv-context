@@ -25,7 +25,7 @@ import uk.co.idv.lockout.entities.policy.recordattempt.NeverRecordAttemptPolicy;
 import uk.co.idv.lockout.entities.policy.recordattempt.RecordAttemptWhenMethodCompletePolicy;
 import uk.co.idv.lockout.entities.policy.soft.SoftLockoutStateCalculatorMother;
 import uk.co.idv.method.entities.result.Result;
-import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKeyMother;
 
 import java.time.Duration;
 import java.util.UUID;

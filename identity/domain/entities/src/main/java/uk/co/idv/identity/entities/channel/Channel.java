@@ -6,6 +6,8 @@ import uk.co.idv.identity.entities.channel.provideddata.PhoneNumbersProvider;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
+import java.util.Optional;
+
 public interface Channel extends EmailAddressesProvider, PhoneNumbersProvider {
 
     String getId();
@@ -23,5 +25,7 @@ public interface Channel extends EmailAddressesProvider, PhoneNumbersProvider {
     default Channel withPhoneNumbers(PhoneNumbers phoneNumbers) {
         return this;
     }
+
+    default Optional<Boolean> hasValidCookie() { return Optional.empty(); }
 
 }

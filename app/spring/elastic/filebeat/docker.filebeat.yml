@@ -5,7 +5,7 @@ filebeat.autodiscover:
       templates:
         - condition:
             contains:
-              docker.container.name: "verification-context"
+              docker.container.name: "idv-context-spring-app"
           config:
             - type: container
               format: docker

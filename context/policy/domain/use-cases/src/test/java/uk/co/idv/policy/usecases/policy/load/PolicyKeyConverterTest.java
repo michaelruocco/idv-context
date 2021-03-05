@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.policy.entities.policy.DefaultPolicyRequest;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 import uk.co.idv.policy.entities.policy.PolicyRequest;
-import uk.co.idv.policy.entities.policy.key.ChannelActivityAliasPolicyKeyMother;
-import uk.co.idv.policy.entities.policy.key.ChannelActivityPolicyKeyMother;
-import uk.co.idv.policy.entities.policy.key.ChannelPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.channelactivityalias.ChannelActivityAliasPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.channelactivity.ChannelActivityPolicyKeyMother;
+import uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKeyMother;
 
 import java.util.Collection;
 import java.util.Collections;

@@ -7,6 +7,8 @@ import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
+import java.util.Optional;
+
 @Data
 @Builder
 public class Abc implements Channel {
@@ -19,6 +21,8 @@ public class Abc implements Channel {
     @Builder.Default
     private final EmailAddresses emailAddresses = new EmailAddresses();
 
+    private final boolean validCookie;
+
     @Override
     public String getId() {
         return ID;
@@ -27,6 +31,11 @@ public class Abc implements Channel {
     @Override
     public CountryCode getCountry() {
         return CountryCode.GB;
+    }
+
+    @Override
+    public Optional<Boolean> hasValidCookie() {
+        return Optional.of(validCookie);
     }
 
 }

@@ -20,12 +20,4 @@ public interface FindIdentityRequest {
         return getChannel().getCountry();
     }
 
-    default boolean emailAddressesRequested() {
-        return getRequestedData().emailAddressesRequested();
-    }
-
-    default boolean phoneNumbersRequested() {
-        return getRequestedData().phoneNumbersRequested();
-    }
-
 }
