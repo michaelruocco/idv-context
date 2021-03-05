@@ -1,6 +1,5 @@
-package uk.co.idv.app.spring.context;
+package uk.co.idv.context.entities.context;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Data;
 import uk.co.idv.activity.entities.Activity;
@@ -24,7 +23,6 @@ public class ApiContext {
     private final Activity activity;
     private final Sequences sequences;
 
-    @JsonIgnore
     private final Verifications verifications;
 
     public boolean isEligible() {

@@ -10,6 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import uk.co.idv.app.plain.Application;
+import uk.co.idv.context.entities.context.ApiContext;
+import uk.co.idv.context.usecases.context.ContextConverter;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
 import uk.co.idv.method.entities.verification.GetVerificationRequest;
 import uk.co.idv.method.entities.verification.Verification;

@@ -1,6 +1,7 @@
-package uk.co.idv.app.spring.context;
+package uk.co.idv.context.usecases.context;
 
 import org.junit.jupiter.api.Test;
+import uk.co.idv.context.entities.context.ApiContext;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.ContextMother;
 

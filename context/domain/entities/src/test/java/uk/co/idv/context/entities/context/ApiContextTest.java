@@ -1,4 +1,4 @@
-package uk.co.idv.app.spring.context;
+package uk.co.idv.context.entities.context;
 
 import org.junit.jupiter.api.Test;
 import uk.co.idv.activity.entities.Activity;
