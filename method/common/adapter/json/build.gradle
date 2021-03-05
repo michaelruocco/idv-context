@@ -28,4 +28,4 @@ dependencies {
     testFixturesImplementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
 }
 
-apply from: rootProject.file('publish.gradle')
+apply from: rootProject.file("publish.gradle")

@@ -22,4 +22,4 @@ dependencies {
     testFixturesImplementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
 }
 
-apply from: rootProject.file('publish.gradle')
+apply from: rootProject.file("publish.gradle")

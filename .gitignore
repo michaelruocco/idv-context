@@ -3,3 +3,5 @@
 out
 build
 *.log
+responses.xml
+node_modules

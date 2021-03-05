@@ -10,6 +10,8 @@ plugins {
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id "com.bmuschko.docker-remote-api" version "6.7.0"
     id "com.avast.gradle.docker-compose" version "0.14.0"
+    id "com.moowork.node" version "1.3.1"
+    id "com.github.michaelruocco.gradle-postman-runner" version "0.1.2"
 }
 
 ext {
@@ -89,7 +91,6 @@ bootRun {
     systemProperty "server.port", System.properties.getOrDefault("server.port", "8081")
     systemProperty "request.logging.enabled", System.properties.getOrDefault("request.logging.enabled", "true")
     systemProperty "response.logging.enabled", System.properties.getOrDefault("response.logging.enabled", "true")
-    systemProperty "response.filtering.enabled", System.properties.getOrDefault("response.filtering.enabled", "true")
 }
 
 docker {
@@ -114,6 +115,13 @@ task pushImage(type: DockerPushImage) {
 
 dockerCompose {
     startedServices = ['idv-context-spring-app']
+    environment.put 'APP_VERSION', version
 }
 
-apply from: rootProject.file('publish.gradle')
+postman {
+    collections = fileTree(dir: "postman", include: "*_collection.json")
+    environment = file("postman/idv-context-local.postman_environment.json")
+    stopOnError = true
+}
+
+apply from: rootProject.file("publish.gradle")

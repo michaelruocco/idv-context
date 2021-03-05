@@ -13,4 +13,4 @@ dependencies {
     testFixturesImplementation "com.neovisionaries:nv-i18n:${neovisionariesVersion}"
 }
 
-apply from: rootProject.file('publish.gradle')
+apply from: rootProject.file("publish.gradle")

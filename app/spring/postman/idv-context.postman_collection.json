@@ -1,0 +1,1379 @@
+{
+	"info": {
+		"_postman_id": "d7e26050-0934-4513-a5b2-304e1ccf3c40",
+		"name": "idv-context",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "support",
+			"item": [
+				{
+					"name": "get-info",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{context-host}}/actuator/info",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"actuator",
+								"info"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-health",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{context-host}}/actuator/health",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"actuator",
+								"health"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "identity",
+			"item": [
+				{
+					"name": "upsert-identity",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"idvId\", json.idvId);",
+									"",
+									"pm.test(\"should return created status\", function () {",
+									"    pm.response.to.have.status(201);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Correlation-Id",
+								"value": "{{$guid}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"country\": \"GB\",\n    \"aliases\": [\n        {\n            \"type\": \"{{aliasType}}\",\n            \"value\": \"{{aliasValue}}\"\n        }\n    ],\n    \"phoneNumbers\": [\n        {\n            \"value\": \"+4407808247749\"\n        },\n        {\n            \"value\": \"+4407808247748\"\n        },\n        {\n            \"value\": \"+4407808247747\"\n        },\n        {\n            \"value\": \"+4407808247746\"\n        },\n        {\n            \"value\": \"+4407808247745\"\n        },\n        {\n            \"value\": \"+4407808247744\"\n        },\n        {\n            \"value\": \"07808247743\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{context-host}}/v1/identities",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"v1",
+								"identities"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "eligibility",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"idvId\", json.identity.idvId);",
+									"",
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(201);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Correlation-Id",
+								"value": "{{$guid}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"channel\": {\n    \"id\": \"abc\",\n    \"country\": \"GB\",\n    \"validCookie\": true\n  },\n  \"aliases\": [\n    {\n      \"type\": \"{{aliasType}}\",\n      \"value\": \"{{aliasValue}}\"\n    }\n  ],\n  \"requestedData\": [\n    \"phone-numbers\",\n    \"email-addresses\"\n  ]\n}"
+						},
+						"url": {
+							"raw": "{{context-host}}/v1/eligibility",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"v1",
+								"eligibility"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-identity-by-alias",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Correlation-Id",
+								"value": "{{$guid}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{context-host}}/v1/identities?aliasType={{aliasType}}&aliasValue={{aliasValue}}",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"v1",
+								"identities"
+							],
+							"query": [
+								{
+									"key": "aliasType",
+									"value": "{{aliasType}}"
+								},
+								{
+									"key": "aliasValue",
+									"value": "{{aliasValue}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-identity-by-id",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Correlation-Id",
+								"value": "{{$guid}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{context-host}}/v1/identities/{{idvId}}",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"v1",
+								"identities",
+								"{{idvId}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "context",
+			"item": [
+				{
+					"name": "policy",
+					"item": [
+						{
+							"name": "create-channel-level-context-policy",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"contextPolicyId\", json.key.id);",
+											"",
+											"pm.test(\"should return created status\", function () {",
+											"    pm.response.to.have.status(201);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Correlation-Id",
+										"value": "{{$guid}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"key\": {\n        \"id\": \"{{$guid}}\",\n        \"priority\": 1,\n        \"channelId\": \"{{channelId}}\",\n        \"type\": \"channel\"\n    },\n    \"sequencePolicies\": [\n        {\n            \"name\": \"one-time-passcode\",\n            \"stagePolicies\": [\n                {\n                    \"type\": \"all-methods\",\n                    \"methodPolicies\": [\n                        {\n                            \"name\": \"one-time-passcode\",\n                            \"config\": {\n                                \"maxNumberOfAttempts\": 3,\n                                \"duration\": 300000,\n                                \"passcodeConfig\": {\n                                    \"length\": 8,\n                                    \"duration\": 120000,\n                                    \"maxNumberOfDeliveries\": 2\n                                }\n                            },\n                            \"deliveryMethodConfigs\": [\n                                {\n                                    \"type\": \"email\"\n                                },\n                                {\n                                    \"type\": \"sms\",\n                                    \"phoneNumberConfig\": {\n                                        \"country\": \"GB\",\n                                        \"allowInternational\": false,\n                                        \"lastUpdatedConfig\": {\n                                            \"allowUnknown\": true,\n                                            \"minDaysSinceUpdate\": 5\n                                        },\n                                        \"simSwapConfig\": {\n                                            \"acceptableStatuses\": [\n                                                \"success\"\n                                            ],\n                                            \"timeout\": 2000,\n                                            \"minDaysSinceSwap\": 6,\n                                            \"async\": true\n                                        }\n                                    }\n                                }\n                            ]\n                        }\n                    ]\n                }\n            ]\n        }\n    ],\n    \"protectSensitiveData\": true\n}"
+								},
+								"url": {
+									"raw": "{{context-host}}/v1/context-policies",
+									"host": [
+										"{{context-host}}"
+									],
+									"path": [
+										"v1",
+										"context-policies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-context-policies",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"contextPolicyId\", json[0].key.id);",
+											"",
+											"pm.test(\"should return ok status\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Correlation-Id",
+										"value": "{{$guid}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{context-host}}/v1/context-policies",
+									"host": [
+										"{{context-host}}"
+									],
+									"path": [
+										"v1",
+										"context-policies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-context-policy",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"should return ok status\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Correlation-Id",
+										"value": "{{$guid}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"key\": {\n        \"id\": \"{{contextPolicyId}}\",\n        \"priority\": 1,\n        \"channelId\": \"{{channelId}}\",\n        \"type\": \"channel\"\n    },\n    \"sequencePolicies\": [],\n    \"protectSensitiveData\": false\n}"
+								},
+								"url": {
+									"raw": "{{context-host}}/v1/context-policies",
+									"host": [
+										"{{context-host}}"
+									],
+									"path": [
+										"v1",
+										"context-policies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-context-policy",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"should return ok status\", function () {",
+											"    pm.response.to.have.status(204);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Correlation-Id",
+										"value": "{{$guid}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{context-host}}/v1/context-policies/{{contextPolicyId}}",
+									"host": [
+										"{{context-host}}"
+									],
+									"path": [
+										"v1",
+										"context-policies",
+										"{{contextPolicyId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "create-context-online-purchase",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = JSON.parse(responseBody);",
+									"var alias = json.aliases[0];",
+									"var sequences = json.sequences;",
+									"var otpMethod = sequences[0].stages[0].methods[0];",
+									"",
+									"postman.setEnvironmentVariable(\"contextId\", json.id);",
+									"postman.setEnvironmentVariable(\"aliasType\", alias.type);",
+									"postman.setEnvironmentVariable(\"aliasValue\", alias.value);",
+									"postman.setEnvironmentVariable(\"deliveryMethodId\", otpMethod.deliveryMethods[0].id);",
+									"",
+									"pm.test(\"should return created status\", function () {",
+									"    pm.response.to.have.status(201)",
+									"})",
+									"",
+									"pm.test(\"context should contain 1 sequence\", function () {",
+									"    pm.expect(sequences.length).to.equal(1)",
+									"})",
+									"",
+									"pm.test(\"all sequences should be eligible\", function () {",
+									"    sequences.find(sequence => {",
+									"        pm.expect(sequence.eligibility.eligible).to.eql(true)",
+									"    }); ",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Correlation-Id",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Channel-Id",
+								"value": "{{channelId}}",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"channel\": {\n        \"id\": \"{{channelId}}\",\n        \"country\": \"GB\",\n        \"validCookie\": true,\n        \"phoneNumbers\": [\n            {\n                \"value\": \"07809385580\"\n            }\n        ]\n    },\n    \"activity\": {\n        \"name\": \"{{activityName}}\",\n        \"timestamp\": \"{{timestampUtc}}\",\n        \"merchantName\": \"Amazon\",\n        \"reference\": \"ABC123\",\n        \"cost\": {\n            \"amount\": 10.99,\n            \"currency\": \"GBP\"\n        },\n        \"last4DigitsOfCardNumber\": \"1111\"\n    },\n    \"aliases\": [\n        {\n            \"type\": \"{{aliasType}}\",\n            \"value\": \"{{aliasValue}}\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{context-host}}/v1/contexts",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"v1",
+								"contexts"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-context",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Correlation-Id",
+								"value": "{{$guid}}",
+								"type": "text"
+							},
+							{
+								"key": "Channel-Id",
+								"value": "{{channelId}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{context-host}}/v1/contexts/{{contextId}}",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"v1",
+								"contexts",
+								"{{contextId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "create-verification",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"var json = JSON.parse(responseBody);",
+									"",
+									"postman.setEnvironmentVariable(\"verificationId\", json.id);",
+									"",
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(201);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Correlation-Id",
+								"type": "text",
+								"value": "{{$guid}}"
+							},
+							{
+								"key": "Channel-Id",
+								"type": "text",
+								"value": "{{channelId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"contextId\": \"{{contextId}}\",\n    \"methodName\": \"one-time-passcode\"\n}"
+						},
+						"url": {
+							"raw": "{{context-host}}/v1/contexts/verifications",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"v1",
+								"contexts",
+								"verifications"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get-verification",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Correlation-Id",
+								"type": "text",
+								"value": "{{$guid}}"
+							},
+							{
+								"key": "Channel-Id",
+								"type": "text",
+								"value": "{{channelId}}"
+							}
+						],
+						"url": {
+							"raw": "{{context-host}}/v1/contexts/{{contextId}}/verifications/{{verificationId}}",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"v1",
+								"contexts",
+								"{{contextId}}",
+								"verifications",
+								"{{verificationId}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "complete-verification",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"postman.setEnvironmentVariable('timestampUtc', (new Date()).toISOString());"
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Correlation-Id",
+								"type": "text",
+								"value": "{{$guid}}"
+							},
+							{
+								"key": "Channel-Id",
+								"type": "text",
+								"value": "{{channelId}}"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"id\": \"{{verificationId}}\",\n    \"contextId\": \"{{contextId}}\",\n    \"successful\": false\n}"
+						},
+						"url": {
+							"raw": "{{context-host}}/v1/contexts/verifications",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"v1",
+								"contexts",
+								"verifications"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "lockout",
+			"item": [
+				{
+					"name": "policy",
+					"item": [
+						{
+							"name": "create-channel-level-lockout-policy",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"lockoutPolicyId\", json.key.id);",
+											"",
+											"pm.test(\"should return created status\", function () {",
+											"    pm.response.to.have.status(201);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Correlation-Id",
+										"value": "{{$guid}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"key\": {\n        \"id\": \"{{$guid}}\",\n        \"priority\": 1,\n        \"channelId\": \"{{channelId}}\",\n        \"type\": \"channel\"\n    },\n    \"stateCalculator\": {\n        \"type\": \"recurring-soft-lockout\",\n        \"includeAttemptsPolicy\": {\n            \"type\": \"all-attempts\"\n        },\n        \"interval\": {\n            \"numberOfAttempts\": 2,\n            \"duration\": 30000\n        }\n    },\n    \"recordAttemptPolicy\": {\n        \"type\": \"always-record\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{context-host}}/v1/lockout-policies",
+									"host": [
+										"{{context-host}}"
+									],
+									"path": [
+										"v1",
+										"lockout-policies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-lockout-policies",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"var json = JSON.parse(responseBody);",
+											"postman.setEnvironmentVariable(\"lockoutPolicyId\", json[0].key.id);",
+											"",
+											"pm.test(\"should return ok status\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Correlation-Id",
+										"value": "{{$guid}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{context-host}}/v1/lockout-policies",
+									"host": [
+										"{{context-host}}"
+									],
+									"path": [
+										"v1",
+										"lockout-policies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get-lockout-policy",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"should return ok status\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Correlation-Id",
+										"value": "{{$guid}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{context-host}}/v1/lockout-policies/{{lockoutPolicyId}}",
+									"host": [
+										"{{context-host}}"
+									],
+									"path": [
+										"v1",
+										"lockout-policies",
+										"{{lockoutPolicyId}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "update-lockout-policy",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"should return ok status\", function () {",
+											"    pm.response.to.have.status(200);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PUT",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Correlation-Id",
+										"value": "{{$guid}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n    \"key\": {\n        \"id\": \"{{lockoutPolicyId}}\",\n        \"priority\": 2,\n        \"channelId\": \"{{channelId}}\",\n        \"activityNames\": [\n            \"{{activityName}}\"\n        ],\n        \"type\": \"channel-activity\"\n    },\n    \"stateCalculator\": {\n        \"type\": \"recurring-soft-lockout\",\n        \"includeAttemptsPolicy\": {\n            \"type\": \"all-attempts\"\n        },\n        \"interval\": {\n            \"numberOfAttempts\": 3,\n            \"duration\": 60000\n        }\n    },\n    \"recordAttemptPolicy\": {\n        \"type\": \"always-record\"\n    }\n}"
+								},
+								"url": {
+									"raw": "{{context-host}}/v1/lockout-policies",
+									"host": [
+										"{{context-host}}"
+									],
+									"path": [
+										"v1",
+										"lockout-policies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "delete-lockout-policy",
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript"
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"should return ok status\", function () {",
+											"    pm.response.to.have.status(204);",
+											"})"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "DELETE",
+								"header": [
+									{
+										"key": "Content-Type",
+										"name": "Content-Type",
+										"type": "text",
+										"value": "application/json"
+									},
+									{
+										"key": "Correlation-Id",
+										"value": "{{$guid}}",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{context-host}}/v1/lockout-policies/{{lockoutPolicyId}}",
+									"host": [
+										"{{context-host}}"
+									],
+									"path": [
+										"v1",
+										"lockout-policies",
+										"{{lockoutPolicyId}}"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "get-lockout-state",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Correlation-Id",
+								"value": "{{$guid}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{context-host}}/v1/lockout-states?channelId={{channelId}}&activityName={{activityName}}&aliasType={{aliasType}}&aliasValue={{aliasValue}}",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"v1",
+								"lockout-states"
+							],
+							"query": [
+								{
+									"key": "channelId",
+									"value": "{{channelId}}"
+								},
+								{
+									"key": "activityName",
+									"value": "{{activityName}}"
+								},
+								{
+									"key": "aliasType",
+									"value": "{{aliasType}}"
+								},
+								{
+									"key": "aliasValue",
+									"value": "{{aliasValue}}"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "reset-lockout-state",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"should return ok status\", function () {",
+									"    pm.response.to.have.status(200);",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							},
+							{
+								"key": "Correlation-Id",
+								"value": "{{$guid}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"channelId\": \"{{channelId}}\",\n    \"activityName\": \"{{activityName}}\",\n    \"aliases\": [\n        {\n            \"type\": \"{{aliasType}}\",\n            \"value\": \"{{aliasValue}}\"\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "{{context-host}}/v1/lockout-states",
+							"host": [
+								"{{context-host}}"
+							],
+							"path": [
+								"v1",
+								"lockout-states"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
