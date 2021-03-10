@@ -2,6 +2,8 @@ package uk.co.idv.activity.entities;
 
 import org.javamoney.moneta.Money;
 import org.junit.jupiter.api.Test;
+import uk.co.idv.activity.entities.onlinepurchase.OnlinePurchase;
+import uk.co.idv.activity.entities.onlinepurchase.PurchaseCard;
 
 import javax.money.MonetaryAmount;
 import java.time.Instant;
@@ -28,11 +30,11 @@ class OnlinePurchaseTest {
 
     @Test
     void shouldReturnLast4DigitsOfCardNumber() {
-        String last4DigitsOfCardNumber = "1234";
+        PurchaseCard card = PurchaseCardMother.build();
 
-        OnlinePurchase activity = OnlinePurchaseMother.withLast4DigitsOfCardNumber(last4DigitsOfCardNumber);
+        OnlinePurchase activity = OnlinePurchaseMother.withCard(card);
 
-        assertThat(activity.getLast4DigitsOfCardNumber()).isEqualTo(last4DigitsOfCardNumber);
+        assertThat(activity.getLast4CardNumberDigits()).isEqualTo(card.getLast4NumberDigits());
     }
 
     @Test

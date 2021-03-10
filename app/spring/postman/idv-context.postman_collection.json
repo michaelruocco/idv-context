@@ -680,7 +680,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"channel\": {\n        \"id\": \"{{channelId}}\",\n        \"country\": \"GB\",\n        \"validCookie\": true,\n        \"phoneNumbers\": [\n            {\n                \"value\": \"07809385580\"\n            }\n        ]\n    },\n    \"activity\": {\n        \"name\": \"{{activityName}}\",\n        \"timestamp\": \"{{timestampUtc}}\",\n        \"merchantName\": \"Amazon\",\n        \"reference\": \"ABC123\",\n        \"cost\": {\n            \"amount\": 10.99,\n            \"currency\": \"GBP\"\n        },\n        \"last4DigitsOfCardNumber\": \"1111\"\n    },\n    \"aliases\": [\n        {\n            \"type\": \"{{aliasType}}\",\n            \"value\": \"{{aliasValue}}\"\n        }\n    ]\n}",
+							"raw": "{\n    \"channel\": {\n        \"id\": \"{{channelId}}\",\n        \"country\": \"GB\",\n        \"validCookie\": true,\n        \"phoneNumbers\": [\n            {\n                \"value\": \"07809385580\"\n            }\n        ],\n        \"emailAddresses\": [\n            \"michael.ruocco@hotmail.com\"\n        ]\n    },\n    \"activity\": {\n        \"name\": \"{{activityName}}\",\n        \"timestamp\": \"{{timestampUtc}}\",\n        \"merchantName\": \"Amazon\",\n        \"reference\": \"ABC123\",\n        \"cost\": {\n            \"amount\": 10.99,\n            \"currency\": \"GBP\"\n        },\n        \"card\": {\n           \"number\": \"4929111111111111\",\n           \"expiry\": \"2025-12\"\n        }\n    },\n    \"aliases\": [\n        {\n            \"type\": \"{{aliasType}}\",\n            \"value\": \"{{aliasValue}}\"\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
