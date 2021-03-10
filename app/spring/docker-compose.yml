@@ -46,6 +46,7 @@ services:
       - 8081:80
     environment:
       - SERVER_PORT=80
+      - SPRING_PROFILES_ACTIVE=simple-logging
       - REDIS_ENDPOINT_URI=redis://redis:6379
       - MONGO_CONNECTION_STRING=mongodb://idv:welcome01@context-mongo:27017/idv-local
       - EXTERNAL_DATA_TIMEOUT=1000
