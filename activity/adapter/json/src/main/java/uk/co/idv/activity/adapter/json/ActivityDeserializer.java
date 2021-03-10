@@ -7,7 +7,7 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import uk.co.idv.activity.entities.Activity;
 import uk.co.idv.activity.entities.DefaultActivity;
 import uk.co.idv.activity.entities.Login;
-import uk.co.idv.activity.entities.OnlinePurchase;
+import uk.co.idv.activity.entities.onlinepurchase.OnlinePurchase;
 import uk.co.mruoc.json.jackson.JsonNodeConverter;
 import uk.co.mruoc.json.jackson.JsonParserConverter;
 
