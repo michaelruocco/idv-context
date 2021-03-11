@@ -3,6 +3,8 @@ package uk.co.idv.context.usecases.context.verification;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequestMother;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
+import uk.co.idv.method.entities.verification.CompleteVerificationResultMother;
 import uk.co.idv.method.entities.verification.CreateVerificationRequest;
 import uk.co.idv.method.entities.verification.CreateVerificationRequestMother;
 import uk.co.idv.method.entities.verification.GetVerificationRequest;
@@ -51,12 +53,12 @@ class VerificationServiceTest {
     @Test
     void shouldCompleteVerification() {
         CompleteVerificationRequest request = CompleteVerificationRequestMother.successful();
-        Verification expected = VerificationMother.incomplete();
-        given(completeVerification.complete(request)).willReturn(expected);
+        CompleteVerificationResult expectedResult = CompleteVerificationResultMother.successful();
+        given(completeVerification.complete(request)).willReturn(expectedResult);
 
-        Verification completed = verificationService.complete(request);
+        CompleteVerificationResult result = verificationService.complete(request);
 
-        assertThat(completed).isEqualTo(expected);
+        assertThat(result).isEqualTo(expectedResult);
     }
 
 }

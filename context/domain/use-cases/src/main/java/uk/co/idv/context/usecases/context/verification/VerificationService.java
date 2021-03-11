@@ -2,6 +2,7 @@ package uk.co.idv.context.usecases.context.verification;
 
 import lombok.Builder;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
 import uk.co.idv.method.entities.verification.CreateVerificationRequest;
 import uk.co.idv.method.entities.verification.GetVerificationRequest;
 import uk.co.idv.method.entities.verification.Verification;
@@ -17,7 +18,7 @@ public class VerificationService {
         return createVerification.create(request);
     }
 
-    public Verification complete(CompleteVerificationRequest request) {
+    public CompleteVerificationResult complete(CompleteVerificationRequest request) {
         return completeVerification.complete(request);
     }
 

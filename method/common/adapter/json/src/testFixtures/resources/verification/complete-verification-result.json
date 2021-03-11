@@ -1,0 +1,32 @@
+{
+  "contextComplete": true,
+  "contextSuccessful": true,
+  "verification": {
+    "id": "81e11840-140e-45ac-a6af-40aa653a146e",
+    "contextId": "2948aadc-7f63-4b00-875b-77a4e6608e5c",
+    "activity": {
+      "name": "simple-activity",
+      "timestamp": "2020-06-06T12:36:15.179Z"
+    },
+    "methodName": "fake-method",
+    "methods": [
+      {
+        "name": "fake-method",
+        "eligibility": {
+          "eligible": true
+        },
+        "config": {
+          "maxNumberOfAttempts": 3,
+          "duration": 300000,
+          "fakeValue": "fake"
+        }
+      }
+    ],
+    "protectSensitiveData": true,
+    "created": "2020-09-14T20:03:03.003Z",
+    "expiry": "2020-09-14T20:08:03.003Z",
+    "completed": "2020-09-14T20:04:03.003Z",
+    "successful": true,
+    "complete": true
+  }
+}

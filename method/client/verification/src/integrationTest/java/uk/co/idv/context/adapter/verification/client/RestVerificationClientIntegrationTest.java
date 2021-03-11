@@ -17,9 +17,12 @@ import uk.co.idv.method.adapter.json.error.contextnotfound.ContextNotFoundErrorJ
 import uk.co.idv.method.adapter.json.error.contextnotfound.ContextNotFoundErrorMother;
 import uk.co.idv.method.adapter.json.error.notnextmethod.NotNextMethodErrorJsonMother;
 import uk.co.idv.method.adapter.json.error.notnextmethod.NotNextMethodErrorMother;
+import uk.co.idv.method.adapter.json.verification.CompleteVerificationResultJsonMother;
 import uk.co.idv.method.adapter.json.verification.VerificationJsonMother;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequestMother;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
+import uk.co.idv.method.entities.verification.CompleteVerificationResultMother;
 import uk.co.idv.method.entities.verification.CreateVerificationRequest;
 import uk.co.idv.method.entities.verification.CreateVerificationRequestMother;
 import uk.co.idv.method.entities.verification.Verification;
@@ -187,17 +190,17 @@ class RestVerificationClientIntegrationTest {
     }
 
     @Test
-    void shouldReturnVerificationFromSuccessfulCompleteVerification() {
+    void shouldReturnResultFromSuccessfulCompleteVerification() {
         CompleteVerificationRequest request = CompleteVerificationRequestMother.successful();
         ClientCompleteVerificationRequest clientRequest = toClientRequest(request);
         SERVER.stubFor(configureUpdateHeaders(patch(urlEqualTo(VERIFICATION_URL)), clientRequest.getHeaders())
                 .willReturn(aResponse()
                         .withStatus(200)
-                        .withBody(VerificationJsonMother.successful())));
+                        .withBody(CompleteVerificationResultJsonMother.successful())));
 
-        Verification verification = client.completeVerification(clientRequest);
+        CompleteVerificationResult result = client.completeVerification(clientRequest);
 
-        assertThat(verification).isEqualTo(VerificationMother.successful());
+        assertThat(result).isEqualTo(CompleteVerificationResultMother.successful());
     }
 
     private ClientCreateVerificationRequest toClientRequest(CreateVerificationRequest request) {

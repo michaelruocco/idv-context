@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequestMother;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
 import uk.co.idv.method.entities.verification.GetVerificationRequest;
 import uk.co.idv.method.entities.verification.GetVerificationRequestMother;
 import uk.co.idv.method.entities.verification.Verification;
@@ -77,11 +78,11 @@ class ContextFacadeTest {
     @Test
     void shouldCompleteVerification() {
         CompleteVerificationRequest request = CompleteVerificationRequestMother.successful();
-        Verification expected = givenCompletedVerification(request);
+        CompleteVerificationResult expectedResult = givenCompleteVerificationResult(request);
 
-        Verification completed = facade.complete(request);
+        CompleteVerificationResult result = facade.complete(request);
 
-        assertThat(completed).isEqualTo(expected);
+        assertThat(result).isEqualTo(expectedResult);
     }
 
     private ServiceCreateContextRequest givenIdentityRequestLoaded(CreateContextRequest initialRequest) {
@@ -114,10 +115,10 @@ class ContextFacadeTest {
         return verification;
     }
 
-    private Verification givenCompletedVerification(CompleteVerificationRequest request) {
-        Verification verification = mock(Verification.class);
-        given(verificationService.complete(request)).willReturn(verification);
-        return verification;
+    private CompleteVerificationResult givenCompleteVerificationResult(CompleteVerificationRequest request) {
+        CompleteVerificationResult result = mock(CompleteVerificationResult.class);
+        given(verificationService.complete(request)).willReturn(result);
+        return result;
     }
 
 }

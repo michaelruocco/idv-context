@@ -9,6 +9,7 @@ import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.adapter.json.method.MethodModule;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
 import uk.co.idv.method.entities.verification.CreateVerificationRequest;
 import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.method.entities.verification.Verifications;
@@ -31,6 +32,7 @@ public class VerificationModule extends SimpleModule {
 
         addDeserializer(CreateVerificationRequest.class, new CreateVerificationRequestDeserializer());
         addDeserializer(CompleteVerificationRequest.class, new CompleteVerificationRequestDeserializer());
+        addDeserializer(CompleteVerificationResult.class, new CompleteVerificationResultDeserializer());
 
         addDeserializer(Verifications.class, new VerificationsDeserializer());
         addDeserializer(Verification.class, new VerificationDeserializer());

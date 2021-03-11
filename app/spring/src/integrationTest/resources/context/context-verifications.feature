@@ -489,47 +489,51 @@ Feature: Context Verifications
     And match response ==
       """
       {
-        "id": "#(verificationId)",
-        "contextId": "#(contextId)",
-        "activity": {
-          "name": "default-activity",
-          "timestamp": "2020-09-27T06:56:47.522Z"
-        },
-        "methodName": "one-time-passcode",
-        "methods": [
-          {
-            "name": "one-time-passcode",
-            "deliveryMethods": [
-              {
-                "id": "#uuid",
-                "type": "sms",
-                "value": "+447808247732",
-                "eligibility": {
-                  "eligible": true,
-                  "complete": true
+        "contextComplete": true,
+        "contextSuccessful": true,
+        "verification": {
+          "id": "#(verificationId)",
+          "contextId": "#(contextId)",
+          "activity": {
+            "name": "default-activity",
+            "timestamp": "2020-09-27T06:56:47.522Z"
+          },
+          "methodName": "one-time-passcode",
+          "methods": [
+            {
+              "name": "one-time-passcode",
+              "deliveryMethods": [
+                {
+                  "id": "#uuid",
+                  "type": "sms",
+                  "value": "+447808247732",
+                  "eligibility": {
+                    "eligible": true,
+                    "complete": true
+                  }
                 }
+              ],
+              "config": {
+                "maxNumberOfAttempts": 3,
+                "duration": 300000,
+                "passcodeConfig": {
+                  "length": 8,
+                  "duration": 120000,
+                  "maxNumberOfDeliveries": 2
+                }
+              },
+              "eligibility": {
+                "eligible": true
               }
-            ],
-            "config": {
-              "maxNumberOfAttempts": 3,
-              "duration": 300000,
-              "passcodeConfig": {
-                "length": 8,
-                "duration": 120000,
-                "maxNumberOfDeliveries": 2
-              }
-            },
-            "eligibility": {
-              "eligible": true
             }
-          }
-        ],
-        "protectSensitiveData": false,
-        "created": "#notnull",
-        "expiry": "#notnull",
-        "completed": "#notnull",
-        "successful": true,
-        "complete": true
+          ],
+          "protectSensitiveData": false,
+          "created": "#notnull",
+          "expiry": "#notnull",
+          "completed": "#notnull",
+          "successful": true,
+          "complete": true
+        }
       }
       """
 

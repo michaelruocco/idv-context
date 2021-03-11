@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
 import uk.co.idv.method.entities.verification.CreateVerificationRequest;
 import uk.co.idv.context.entities.context.create.CreateContextRequest;
 import uk.co.idv.context.entities.context.create.ServiceCreateContextRequest;
@@ -45,7 +46,7 @@ public class ContextFacade {
         return verificationService.get(request);
     }
 
-    public Verification complete(CompleteVerificationRequest request) {
+    public CompleteVerificationResult complete(CompleteVerificationRequest request) {
         return verificationService.complete(request);
     }
 

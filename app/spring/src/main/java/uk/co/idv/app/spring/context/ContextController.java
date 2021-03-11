@@ -13,6 +13,7 @@ import uk.co.idv.app.plain.Application;
 import uk.co.idv.context.entities.context.ApiContext;
 import uk.co.idv.context.usecases.context.ContextConverter;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
 import uk.co.idv.method.entities.verification.GetVerificationRequest;
 import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.method.entities.verification.CreateVerificationRequest;
@@ -64,7 +65,7 @@ public class ContextController {
     }
 
     @PatchMapping("/verifications")
-    public Verification completeVerification(@RequestBody CompleteVerificationRequest request) {
+    public CompleteVerificationResult completeVerification(@RequestBody CompleteVerificationRequest request) {
         return application.complete(request);
     }
 
