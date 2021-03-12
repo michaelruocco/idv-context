@@ -28,12 +28,20 @@ public class VerificationModule extends SimpleModule {
         super("verification-module", Version.unknownVersion());
         this.mappings = mappings;
 
-        setMixInAnnotation(Verifications.class, VerificationsMixin.class);
-
         addDeserializer(CreateVerificationRequest.class, new CreateVerificationRequestDeserializer());
         addDeserializer(CompleteVerificationRequest.class, new CompleteVerificationRequestDeserializer());
-        addDeserializer(CompleteVerificationResult.class, new CompleteVerificationResultDeserializer());
 
+        setUpCompleteVerificationResult();
+        setUpVerifications();
+    }
+
+    private void setUpCompleteVerificationResult() {
+        setMixInAnnotation(CompleteVerificationResult.class, CompleteVerificationResultMixin.class);
+        addDeserializer(CompleteVerificationResult.class, new CompleteVerificationResultDeserializer());
+    }
+
+    private void setUpVerifications() {
+        setMixInAnnotation(Verifications.class, VerificationsMixin.class);
         addDeserializer(Verifications.class, new VerificationsDeserializer());
         addDeserializer(Verification.class, new VerificationDeserializer());
     }

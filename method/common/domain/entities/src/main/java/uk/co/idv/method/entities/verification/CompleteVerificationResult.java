@@ -11,4 +11,12 @@ public class CompleteVerificationResult {
     private final boolean contextSuccessful;
     private final Verification verification;
 
+    public boolean isVerificationComplete() {
+        return verification.isComplete();
+    }
+
+    public boolean isVerificationSuccessful() {
+        return verification.isSuccessful();
+    }
+
 }
