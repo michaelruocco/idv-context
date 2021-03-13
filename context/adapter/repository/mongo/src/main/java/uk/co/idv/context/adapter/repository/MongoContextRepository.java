@@ -2,13 +2,15 @@ package uk.co.idv.context.adapter.repository;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.usecases.context.ContextRepository;
+import uk.co.mruoc.json.JsonConverter;
 
 import java.time.Instant;
 import java.util.Optional;
@@ -16,12 +18,16 @@ import java.util.UUID;
 
 import static uk.co.mruoc.duration.logger.MongoMdcDurationLoggerUtils.logDuration;
 
-@Builder
+@RequiredArgsConstructor
 @Slf4j
 public class MongoContextRepository implements ContextRepository {
 
     private final MongoCollection<Document> collection;
     private final ContextConverter contextConverter;
+
+    public MongoContextRepository(MongoDatabase database, JsonConverter jsonConverter) {
+        this(ContextCollection.get(database), new ContextConverter(jsonConverter));
+    }
 
     @Override
     public void save(Context context) {

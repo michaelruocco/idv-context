@@ -1,16 +1,16 @@
-package uk.co.idv.lockout.adapter.repository;
+package uk.co.idv.lockout.adapter.repository.policy;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-public class MongoAttemptCollection {
+public class LockoutPolicyCollection {
 
     public static final String ID_FIELD_NAME = "_id";
 
-    private static final String NAME = "attempt";
+    private static final String NAME = "lockout-policy";
 
-    private MongoAttemptCollection() {
+    private LockoutPolicyCollection() {
         // utility class
     }
 

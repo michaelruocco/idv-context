@@ -1,16 +1,16 @@
-package uk.co.idv.lockout.adapter.repository;
+package uk.co.idv.context.adapter.repository.policy;
 
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-public class MongoAttemptCollection {
+public class ContextPolicyCollection {
 
     public static final String ID_FIELD_NAME = "_id";
 
-    private static final String NAME = "attempt";
+    private static final String NAME = "context-policy";
 
-    private MongoAttemptCollection() {
+    private ContextPolicyCollection() {
         // utility class
     }
 

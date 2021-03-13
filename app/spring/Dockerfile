@@ -12,7 +12,9 @@ ENV SERVER_PORT=80 \
     EXTERNAL_EMAIL_ADDRESS_DELAY=1000 \
     RESPONSE_FILTERING_ENABLED=false \
     REQUEST_LOGGING_ENABLED=false \
-    RESPONSE_LOGGING_ENABLED=false
+    RESPONSE_LOGGING_ENABLED=false \
+    POLICY_REFRESH_THREAD_POOL_SIZE=4 \
+    POLICY_REFRESH_DELAY=60000
 
 COPY build/libs/idv-context-spring-app-${VERSION}.jar /opt/app.jar
 
@@ -31,4 +33,6 @@ CMD java \
   -Dresponse.filtering.enabled=${RESPONSE_FILTERING_ENABLED} \
   -Drequest.logging.enabled=${REQUEST_LOGGING_ENABLED} \
   -Dresponse.logging.enabled=${RESPONSE_LOGGING_ENABLED} \
+  -Dpolicy.refresh.thread.pool.size=${POLICY_REFRESH_THREAD_POOL_SIZE} \
+  -Dpolicy.refresh.delay=${POLICY_REFRESH_DELAY} \
   -jar /opt/app.jar

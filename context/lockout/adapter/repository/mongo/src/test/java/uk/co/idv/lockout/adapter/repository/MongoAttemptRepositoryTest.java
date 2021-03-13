@@ -29,10 +29,7 @@ class MongoAttemptRepositoryTest {
     private final MongoCollection<Document> collection = mock(MongoCollection.class);
     private final MongoAttemptConverter attemptConverter = mock(MongoAttemptConverter.class);
 
-    private final MongoAttemptRepository repository = MongoAttemptRepository.builder()
-            .collection(collection)
-            .attemptConverter(attemptConverter)
-            .build();
+    private final MongoAttemptRepository repository = new MongoAttemptRepository(collection, attemptConverter);
 
     @Test
     void shouldSaveAttempts() {

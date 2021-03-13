@@ -1,0 +1,8 @@
+dependencies {
+    api project(":policy-use-cases")
+    implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
+    implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
+    implementation "com.github.michaelruocco:duration-logger:${durationLoggerVersion}"
+
+    testImplementation testFixtures(project(":policy-entities"))
+}

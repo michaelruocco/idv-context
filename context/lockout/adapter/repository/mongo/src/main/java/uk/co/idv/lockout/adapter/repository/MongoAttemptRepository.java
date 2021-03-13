@@ -2,13 +2,15 @@ package uk.co.idv.lockout.adapter.repository;
 
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.ReplaceOptions;
-import lombok.Builder;
+import lombok.RequiredArgsConstructor;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.lockout.entities.attempt.Attempts;
 import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
+import uk.co.mruoc.json.JsonConverter;
 
 import java.time.Instant;
 import java.util.Collection;
@@ -16,11 +18,15 @@ import java.util.Optional;
 
 import static uk.co.mruoc.duration.logger.MongoMdcDurationLoggerUtils.logDuration;
 
-@Builder
+@RequiredArgsConstructor
 public class MongoAttemptRepository implements AttemptRepository {
 
     private final MongoCollection<Document> collection;
     private final MongoAttemptConverter attemptConverter;
+
+    public MongoAttemptRepository(MongoDatabase database, JsonConverter jsonConverter) {
+        this(MongoAttemptCollection.get(database), new MongoAttemptConverter(jsonConverter));
+    }
 
     @Override
     public void save(Attempts attempts) {

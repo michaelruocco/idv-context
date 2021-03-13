@@ -10,21 +10,26 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class StartupListenerTest {
+class PopulatePoliciesTest {
 
     private final Application application = mock(Application.class);
     private final ChannelAdapter channelAdapter = mock(ChannelAdapter.class);
 
-    private final StartupListener listener = StartupListener.builder()
+    private final PopulatePolicies populatePolicies = PopulatePolicies.builder()
             .application(application)
             .channelAdapter(channelAdapter)
             .build();
 
     @Test
+    void shouldReturnSecondStartUpOrder() {
+        assertThat(populatePolicies.getOrder()).isEqualTo(StartupListenerOrder.SECOND);
+    }
+
+    @Test
     void shouldPassChannelAdapterToPopulatePolicies() {
         ContextRefreshedEvent event = mock(ContextRefreshedEvent.class);
 
-        listener.onApplicationEvent(event);
+        populatePolicies.onApplicationEvent(event);
 
         ArgumentCaptor<ChannelAdapter> captor = ArgumentCaptor.forClass(ChannelAdapter.class);
         verify(application).populatePolicies(captor.capture());

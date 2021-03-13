@@ -1,6 +1,7 @@
 dependencies {
     implementation project(":lockout-use-cases")
     implementation project(":lockout-json")
+    implementation project(":policy-mongo-repository")
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
     implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
     implementation "com.github.michaelruocco:duration-logger:${durationLoggerVersion}"

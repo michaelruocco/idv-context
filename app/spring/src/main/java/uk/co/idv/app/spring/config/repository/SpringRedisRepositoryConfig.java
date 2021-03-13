@@ -17,7 +17,7 @@ import uk.co.mruoc.json.JsonConverter;
 import static uk.co.idv.app.spring.config.repository.EnvironmentLoader.loadEnvironment;
 
 @Configuration
-@Profile("!stubbed")
+@Profile("redis")
 public class SpringRedisRepositoryConfig {
 
     @Bean

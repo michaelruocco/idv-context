@@ -79,9 +79,9 @@ public class SpringCommonDomainConfig {
     }
 
     @Bean
-    public StartupListener startupListener(Application application,
-                                           ChannelAdapter channelAdapter) {
-        return StartupListener.builder()
+    public PopulatePolicies populatePoliciesStartUpListener(Application application,
+                                                            ChannelAdapter channelAdapter) {
+        return PopulatePolicies.builder()
                 .application(application)
                 .channelAdapter(channelAdapter)
                 .build();
