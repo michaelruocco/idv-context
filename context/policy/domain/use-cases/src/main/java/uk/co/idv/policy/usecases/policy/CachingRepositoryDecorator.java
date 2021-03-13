@@ -17,6 +17,7 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
 
     private final Map<UUID, T> cache = new ConcurrentHashMap<>();
     private final PolicyRepository<T> repository;
+    private boolean cacheInitialized = false;
 
     @Override
     public void refresh() {
@@ -24,6 +25,7 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
         Map<UUID, T> newCache = loadNewCache();
         updateCache(newCache);
         log.info("cache size after refresh {}", cache.size());
+        cacheInitialized = true;
     }
 
     @Override
@@ -34,11 +36,13 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
 
     @Override
     public Optional<T> load(UUID id) {
+        initializeCacheIfRequired();
         return Optional.ofNullable(cache.get(id));
     }
 
     @Override
     public Policies<T> loadAll() {
+        initializeCacheIfRequired();
         return new Policies<>(cache.values());
     }
 
@@ -46,6 +50,12 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
     public void delete(UUID id) {
         cache.remove(id);
         repository.delete(id);
+    }
+
+    private void initializeCacheIfRequired() {
+        if (!cacheInitialized) {
+            refresh();
+        }
     }
 
     private Map<UUID, T> loadNewCache() {

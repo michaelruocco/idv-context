@@ -4,6 +4,7 @@ import lombok.Builder;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.core.Ordered;
+import uk.co.idv.app.spring.config.StartupListenerOrder;
 
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -24,7 +25,7 @@ public class SchedulePolicyRefresh implements ApplicationListener<ContextRefresh
 
     @Override
     public int getOrder() {
-        return 10;
+        return StartupListenerOrder.FIRST;
     }
 
     private void schedule(Runnable task) {
