@@ -22,7 +22,6 @@ import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyRepository;
 import uk.co.mruoc.json.JsonConverter;
 
-import java.util.Optional;
 import java.util.concurrent.Executors;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -47,7 +46,7 @@ public class SpringMongoRepositoryConfig {
 
     @Bean
     public MongoDatabase mongoDatabase(MongoClient client) {
-        return client.getDatabase(loadDatabaseName());
+        return client.getDatabase(connectionString.getDatabase());
     }
 
     @Bean
@@ -107,6 +106,7 @@ public class SpringMongoRepositoryConfig {
         return config.policyRepository();
     }
 
+    @Profile("!redis")
     @Bean
     public SchedulePolicyRefresh schedulePolicyRefresh(MongoContextRepositoryConfig contextConfig,
                                                        MongoLockoutRepositoryConfig lockoutConfig) {
@@ -122,16 +122,6 @@ public class SpringMongoRepositoryConfig {
         Mongobee runner = new Mongobee(connectionString.getConnectionString());
         runner.setChangeLogsScanPackage(changeLogPackageName);
         return runner;
-    }
-
-    private String loadDatabaseName() {
-        return Optional.ofNullable(connectionString.getDatabase())
-                .orElseThrow(() -> new IllegalStateException(toErrorMessage(connectionString)));
-    }
-
-    private static String toErrorMessage(ConnectionString connectionString) {
-        return String.format("mongo connection string must contain database name %s",
-                connectionString.getConnectionString());
     }
 
     private static int loadPolicyRefreshThreadPoolSize() {

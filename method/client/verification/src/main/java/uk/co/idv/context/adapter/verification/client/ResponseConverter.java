@@ -18,7 +18,6 @@ public class ResponseConverter {
         return toTypeOrThrowError(response, Verification.class);
     }
 
-    //TODO unit test
     public CompleteVerificationResult toCompleteVerificationResultOrThrowError(HttpResponse<String> response) {
         return toTypeOrThrowError(response, CompleteVerificationResult.class);
     }

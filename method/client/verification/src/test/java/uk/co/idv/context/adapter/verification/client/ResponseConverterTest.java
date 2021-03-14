@@ -3,6 +3,8 @@ package uk.co.idv.context.adapter.verification.client;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.verification.client.exception.ApiErrorClientException;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
+import uk.co.idv.method.entities.verification.CompleteVerificationResultMother;
 import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.method.entities.verification.VerificationMother;
 import uk.co.mruoc.json.JsonConverter;
@@ -45,7 +47,7 @@ class ResponseConverterTest {
     }
 
     @Test
-    void shouldThrowExceptionIfStatusCodeIsBelow2XXRange() {
+    void shouldThrowExceptionIfStatusCodeIsBelow2XXRangeForVerification() {
         HttpResponse<String> response = givenResponse(199);
         ApiError expectedError = mock(ApiError.class);
         givenResponseBodyConvertsTo(expectedError, ApiError.class);
@@ -59,13 +61,63 @@ class ResponseConverterTest {
     }
 
     @Test
-    void shouldThrowExceptionIfStatusCodeIsAbove2XXRange() {
+    void shouldThrowExceptionIfStatusCodeIsAbove2XXRangeForVerification() {
         HttpResponse<String> response = givenResponse(300);
         ApiError expectedError = mock(ApiError.class);
         givenResponseBodyConvertsTo(expectedError, ApiError.class);
 
         ApiErrorClientException exception = catchThrowableOfType(
                 () -> converter.toVerificationOrThrowError(response),
+                ApiErrorClientException.class
+        );
+
+        assertThat(exception.getError()).isEqualTo(expectedError);
+    }
+
+    @Test
+    void shouldReturnCompleteVerificationResultIfStatusCodeIs200() {
+        HttpResponse<String> response = givenResponse(200);
+        CompleteVerificationResult expectedResult = CompleteVerificationResultMother.successful();
+        givenResponseBodyConvertsTo(expectedResult, CompleteVerificationResult.class);
+
+        CompleteVerificationResult result = converter.toCompleteVerificationResultOrThrowError(response);
+
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void shouldReturnCompleteVerificationResultIfStatusCodeIs299() {
+        HttpResponse<String> response = givenResponse(299);
+        CompleteVerificationResult expectedResult = CompleteVerificationResultMother.successful();
+        givenResponseBodyConvertsTo(expectedResult, CompleteVerificationResult.class);
+
+        CompleteVerificationResult result = converter.toCompleteVerificationResultOrThrowError(response);
+
+        assertThat(result).isEqualTo(expectedResult);
+    }
+
+    @Test
+    void shouldThrowExceptionIfStatusCodeIsBelow2XXRangeForCompleteVerificationResult() {
+        HttpResponse<String> response = givenResponse(199);
+        ApiError expectedError = mock(ApiError.class);
+        givenResponseBodyConvertsTo(expectedError, ApiError.class);
+
+        ApiErrorClientException exception = catchThrowableOfType(
+                () -> converter.toCompleteVerificationResultOrThrowError(response),
+                ApiErrorClientException.class
+        );
+
+        assertThat(exception.getError()).isEqualTo(expectedError);
+    }
+
+    @Test
+    void shouldThrowExceptionIfStatusCodeIsAbove2XXRangeForCompleteVerificationResult() {
+        HttpResponse<String> response = givenResponse(300);
+        ApiError expectedError = mock(ApiError.class);
+        givenResponseBodyConvertsTo(expectedError, ApiError.class);
+
+        ApiErrorClientException exception = catchThrowableOfType(
+                () -> converter.toCompleteVerificationResultOrThrowError(response),
                 ApiErrorClientException.class
         );
 

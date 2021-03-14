@@ -1,6 +1,7 @@
 
 package uk.co.idv.app.spring.config.repository;
 
+import lombok.extern.slf4j.Slf4j;
 import org.redisson.Redisson;
 import org.redisson.api.RedissonClient;
 import org.redisson.config.Config;
@@ -18,6 +19,7 @@ import static uk.co.idv.app.spring.config.repository.EnvironmentLoader.loadEnvir
 
 @Configuration
 @Profile("redis")
+@Slf4j
 public class SpringRedisRepositoryConfig {
 
     @Bean
@@ -51,6 +53,7 @@ public class SpringRedisRepositoryConfig {
     private static RedissonClient redissionClient() {
         Config config = new Config();
         config.useSingleServer().setAddress(System.getProperty("redis.endpoint.uri", "redis://redis:6379"));
+        log.info("creating redisson client with address {}", config.useSingleServer().getAddress());
         return Redisson.create(config);
     }
 
