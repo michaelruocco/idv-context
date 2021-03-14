@@ -5,11 +5,12 @@ import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.policy.entities.policy.Policies;
 import uk.co.idv.policy.entities.policy.Policy;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -43,10 +44,8 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
 
     @Override
     public Policies<T> loadAll() {
-        log.debug("cache values before initialize {}", cache.values());
         initializeCacheIfRequired();
-        log.info("loaded all {} values from cache", cache.size());
-        log.debug("cache values after initialize {}", cache.values());
+        log.info("loading all policies {} from cache", cache.values());
         return new Policies<>(cache.values());
     }
 
@@ -57,16 +56,16 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
     }
 
     private void initializeCacheIfRequired() {
-        if (!cacheInitialized) {
-            refresh();
-            log.info("initializing cache with {} values", cache.size());
+        if (cacheInitialized) {
+            log.info("cache already initialized with {} values, not reinitializing", cache.size());
+            return;
         }
+        refresh();
+        log.info("initialized cache with {} values", cache.size());
     }
 
     private Map<UUID, T> loadNewCache() {
-        Map<UUID, T> newCache = new HashMap<>();
-        repository.loadAll().stream().forEach(policy -> newCache.put(policy.getId(), policy));
-        return newCache;
+        return repository.loadAll().stream().collect(Collectors.toMap(Policy::getId, Function.identity()));
     }
 
     private void updateCache(Map<UUID, T> newCache) {
