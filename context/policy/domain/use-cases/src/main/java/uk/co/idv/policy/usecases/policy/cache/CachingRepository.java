@@ -1,4 +1,4 @@
-package uk.co.idv.policy.usecases.policy;
+package uk.co.idv.policy.usecases.policy.cache;
 
 public interface CachingRepository extends Runnable {
 
