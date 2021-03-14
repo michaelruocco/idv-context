@@ -30,6 +30,7 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
 
     @Override
     public void save(T policy) {
+        log.debug("adding policy to cache {}", policy);
         cache.put(policy.getId(), policy);
         repository.save(policy);
     }
@@ -42,7 +43,10 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
 
     @Override
     public Policies<T> loadAll() {
+        log.debug("cache values before initialize {}", cache.values());
         initializeCacheIfRequired();
+        log.info("loaded all {} values from cache", cache.size());
+        log.debug("cache values after initialize {}", cache.values());
         return new Policies<>(cache.values());
     }
 
@@ -55,6 +59,7 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
     private void initializeCacheIfRequired() {
         if (!cacheInitialized) {
             refresh();
+            log.info("initializing cache with {} values", cache.size());
         }
     }
 
