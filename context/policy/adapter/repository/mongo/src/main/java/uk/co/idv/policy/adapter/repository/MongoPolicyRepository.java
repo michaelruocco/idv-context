@@ -20,13 +20,12 @@ import java.util.UUID;
 
 import static uk.co.mruoc.duration.logger.MongoMdcDurationLoggerUtils.logDuration;
 
-//TODO unit test
 @RequiredArgsConstructor
 @Slf4j
 public class MongoPolicyRepository<T extends Policy> implements PolicyRepository<T> {
 
     private final MongoCollection<Document> collection;
-    private final PolicyConverter<T> policyConverter;
+    private final MongoPolicyConverter<T> policyConverter;
 
     @Override
     public void save(T policy) {

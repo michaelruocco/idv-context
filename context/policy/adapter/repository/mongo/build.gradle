@@ -4,5 +4,7 @@ dependencies {
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
     implementation "com.github.michaelruocco:duration-logger:${durationLoggerVersion}"
 
+    testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
     testImplementation testFixtures(project(":policy-entities"))
+    testImplementation testFixtures(project(":policy-json"))
 }

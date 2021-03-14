@@ -11,7 +11,7 @@ import uk.co.mruoc.json.JsonConverter;
 public class MongoLockoutPolicyRepository extends MongoPolicyRepository<LockoutPolicy> implements LockoutPolicyRepository {
 
     public MongoLockoutPolicyRepository(MongoDatabase database, JsonConverter jsonConverter) {
-        super(LockoutPolicyCollection.get(database), new LockoutPolicyConverter(jsonConverter));
+        super(LockoutPolicyCollection.get(database), new MongoLockoutPolicyConverter(jsonConverter));
     }
 
 }

@@ -9,5 +9,4 @@ dependencies {
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
     testImplementation testFixtures(project(":lockout-entities"))
     testImplementation testFixtures(project(":lockout-json"))
-
 }

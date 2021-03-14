@@ -11,7 +11,7 @@ import uk.co.mruoc.json.JsonConverter;
 public class MongoContextPolicyRepository extends MongoPolicyRepository<ContextPolicy> implements ContextPolicyRepository {
 
     public MongoContextPolicyRepository(MongoDatabase database, JsonConverter jsonConverter) {
-        super(ContextPolicyCollection.get(database), new ContextPolicyConverter(jsonConverter));
+        super(ContextPolicyCollection.get(database), new MongoContextPolicyConverter(jsonConverter));
     }
 
 }

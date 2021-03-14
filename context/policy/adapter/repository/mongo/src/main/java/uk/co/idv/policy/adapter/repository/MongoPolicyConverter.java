@@ -10,9 +10,8 @@ import java.util.UUID;
 
 import static com.mongodb.client.model.Filters.eq;
 
-//TODO unit test
 @RequiredArgsConstructor
-public class PolicyConverter<T extends Policy> {
+public class MongoPolicyConverter<T extends Policy> {
 
     private final String idFieldName;
     private final Class<T> type;
