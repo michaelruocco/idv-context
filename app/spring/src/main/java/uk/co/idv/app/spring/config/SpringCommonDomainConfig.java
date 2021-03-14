@@ -8,7 +8,6 @@ import uk.co.idv.app.plain.Application;
 import uk.co.idv.app.plain.config.AppConfig;
 import uk.co.idv.app.plain.adapter.app.AppAdapter;
 import uk.co.idv.app.plain.adapter.app.DefaultAppAdapter;
-import uk.co.idv.app.plain.adapter.channel.ChannelAdapter;
 import uk.co.idv.app.plain.adapter.repository.RepositoryAdapter;
 import uk.co.idv.common.adapter.json.error.handler.CompositeErrorHandler;
 import uk.co.idv.common.adapter.json.error.handler.ErrorHandler;
@@ -76,15 +75,6 @@ public class SpringCommonDomainConfig {
     @Bean
     public Application application(AppConfig appConfig) {
         return new Application(appConfig);
-    }
-
-    @Bean
-    public PopulatePolicies populatePoliciesStartUpListener(Application application,
-                                                            ChannelAdapter channelAdapter) {
-        return PopulatePolicies.builder()
-                .application(application)
-                .channelAdapter(channelAdapter)
-                .build();
     }
 
     @Bean

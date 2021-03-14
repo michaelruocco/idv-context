@@ -19,15 +19,18 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
 
     private final Map<UUID, T> cache = new ConcurrentHashMap<>();
     private final PolicyRepository<T> repository;
-    private boolean cacheInitialized = false;
+    //private boolean cacheInitialized = false;
 
     @Override
     public void refresh() {
         log.info("cache size before refresh {}", cache.size());
         Map<UUID, T> newCache = loadNewCache();
+        if (!newCache.containsKey(UUID.fromString("98eb6d18-0d62-4883-a719-448286bc7a4b"))) {
+            log.warn("***************************** new cache does not contain default abc policy id {}", newCache.keySet());
+        }
         updateCache(newCache);
         log.info("cache size after refresh {}", cache.size());
-        cacheInitialized = true;
+        //cacheInitialized = true;
     }
 
     @Override
@@ -39,31 +42,35 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
 
     @Override
     public Optional<T> load(UUID id) {
-        initializeCacheIfRequired();
+        //initializeCacheIfRequired();
         return Optional.ofNullable(cache.get(id));
     }
 
     @Override
     public Policies<T> loadAll() {
-        initializeCacheIfRequired();
-        log.info("loading all policies {} from cache", cache.values());
+        //initializeCacheIfRequired();
+        log.info("loading all policies {} from cache", cache.size());
+        cache.values().forEach(policy -> log.info(policy.toString()));
         return new Policies<>(cache.values());
     }
 
     @Override
     public void delete(UUID id) {
+        if (id.toString().equals("98eb6d18-0d62-4883-a719-448286bc7a4b")) {
+            log.warn("***************************** DELETING abc default policy {}", id.toString());
+        }
         cache.remove(id);
         repository.delete(id);
     }
 
-    private void initializeCacheIfRequired() {
+    /*private void initializeCacheIfRequired() {
         if (cacheInitialized) {
             log.info("cache already initialized with {} values, not reinitializing", cache.size());
             return;
         }
         refresh();
         log.info("initialized cache with {} values", cache.size());
-    }
+    }*/
 
     private Map<UUID, T> loadNewCache() {
         return repository.loadAll().stream().collect(Collectors.toMap(Policy::getId, Function.identity()));
@@ -75,7 +82,10 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
     }
 
     private void removeStaleCacheEntries(Map<UUID, T> newCache) {
-        cache.keySet().stream().filter(key -> !newCache.containsKey(key)).forEach(cache::remove);
+        cache.keySet().stream()
+                .filter(key -> !newCache.containsKey(key))
+                .peek(key -> log.warn("***************************** removing stale key from cache {}", key))
+                .forEach(cache::remove);
     }
 
 }

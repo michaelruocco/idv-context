@@ -1,31 +1,30 @@
-package uk.co.idv.app.spring.config.repository;
+package uk.co.idv.app.spring.config;
 
 import lombok.Builder;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
-import org.springframework.core.Ordered;
-import uk.co.idv.app.spring.config.StartupListenerOrder;
+import uk.co.idv.app.plain.Application;
+import uk.co.idv.app.plain.adapter.channel.ChannelAdapter;
 
+import java.util.Collection;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Builder
-public class SchedulePolicyRefresh implements ApplicationListener<ContextRefreshedEvent>, Ordered {
+public class SetupPolicies implements ApplicationListener<ContextRefreshedEvent> {
 
+    private final Application application;
+    private final ChannelAdapter channelAdapter;
+
+    private final Collection<Runnable> policyRefreshTasks;
     private final ScheduledExecutorService scheduledExecutor;
     private final int policyRefreshDelay;
-    private final Runnable contextPolicyRefreshTask;
-    private final Runnable lockoutPolicyRefreshTask;
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent event) {
-        schedule(contextPolicyRefreshTask);
-        schedule(lockoutPolicyRefreshTask);
-    }
-
-    @Override
-    public int getOrder() {
-        return StartupListenerOrder.FIRST;
+        policyRefreshTasks.forEach(Runnable::run);
+        application.populatePolicies(channelAdapter);
+        policyRefreshTasks.forEach(this::schedule);
     }
 
     private void schedule(Runnable task) {

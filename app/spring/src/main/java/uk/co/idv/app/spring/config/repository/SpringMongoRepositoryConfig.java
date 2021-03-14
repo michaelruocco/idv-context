@@ -11,6 +11,9 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import uk.co.idv.app.plain.Application;
+import uk.co.idv.app.plain.adapter.channel.ChannelAdapter;
+import uk.co.idv.app.spring.config.SetupPolicies;
 import uk.co.idv.context.config.repository.mongo.MongoContextRepositoryConfig;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.policy.ContextPolicyRepository;
@@ -22,6 +25,8 @@ import uk.co.idv.lockout.usecases.attempt.AttemptRepository;
 import uk.co.idv.lockout.usecases.policy.LockoutPolicyRepository;
 import uk.co.mruoc.json.JsonConverter;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.concurrent.Executors;
 
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
@@ -108,13 +113,20 @@ public class SpringMongoRepositoryConfig {
 
     @Profile("!redis")
     @Bean
-    public SchedulePolicyRefresh schedulePolicyRefresh(MongoContextRepositoryConfig contextConfig,
-                                                       MongoLockoutRepositoryConfig lockoutConfig) {
-        return SchedulePolicyRefresh.builder()
-                .scheduledExecutor(Executors.newScheduledThreadPool(loadPolicyRefreshThreadPoolSize()))
+    public SetupPolicies setupPoliciesListener(Application application,
+                                               ChannelAdapter channelAdapter,
+                                               MongoContextRepositoryConfig contextConfig,
+                                               MongoLockoutRepositoryConfig lockoutConfig) {
+        Collection<Runnable> policyRefreshTasks = Arrays.asList(
+                contextConfig.getPolicyRefreshTask(),
+                lockoutConfig.getPolicyRefreshTask()
+        );
+        return SetupPolicies.builder()
+                .application(application)
+                .channelAdapter(channelAdapter)
+                .policyRefreshTasks(policyRefreshTasks)
                 .policyRefreshDelay(loadPolicyRefreshDelay())
-                .contextPolicyRefreshTask(contextConfig.getPolicyRefreshTask())
-                .lockoutPolicyRefreshTask(lockoutConfig.getPolicyRefreshTask())
+                .scheduledExecutor(Executors.newScheduledThreadPool(loadPolicyRefreshThreadPoolSize()))
                 .build();
     }
 
@@ -124,16 +136,16 @@ public class SpringMongoRepositoryConfig {
         return runner;
     }
 
+    private static ConnectionString loadConnectionString() {
+        return new ConnectionString(System.getProperty("spring.data.mongodb.uri"));
+    }
+
     private static int loadPolicyRefreshThreadPoolSize() {
         return Integer.parseInt(System.getProperty("policy.refresh.thread.pool.size", "4"));
     }
 
     private static int loadPolicyRefreshDelay() {
         return Integer.parseInt(System.getProperty("policy.refresh.delay", "60000"));
-    }
-
-    private static ConnectionString loadConnectionString() {
-        return new ConnectionString(System.getProperty("spring.data.mongodb.uri"));
     }
 
 }
