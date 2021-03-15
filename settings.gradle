@@ -54,6 +54,9 @@ project(':policy-in-memory-repository').projectDir = file('context/policy/adapte
 include ':policy-redis-repository'
 project(':policy-redis-repository').projectDir = file('context/policy/adapter/repository/redis')
 
+include ':policy-mongo-repository'
+project(':policy-mongo-repository').projectDir = file('context/policy/adapter/repository/mongo')
+
 include ':policy-json'
 project(':policy-json').projectDir = file('context/policy/adapter/json')
 

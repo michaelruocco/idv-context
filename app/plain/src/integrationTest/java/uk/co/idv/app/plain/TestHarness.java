@@ -169,7 +169,7 @@ public class TestHarness {
                 .successful(successful)
                 .timestamp(clock.instant())
                 .build();
-        return application.complete(request);
+        return application.complete(request).getVerification();
     }
 
 }

@@ -11,6 +11,8 @@ import uk.co.idv.context.entities.context.ContextMother;
 import uk.co.idv.context.usecases.context.ContextConverter;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequestMother;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
+import uk.co.idv.method.entities.verification.CompleteVerificationResultMother;
 import uk.co.idv.method.entities.verification.CreateVerificationRequestMother;
 import uk.co.idv.method.entities.verification.GetVerificationRequest;
 import uk.co.idv.method.entities.verification.Verification;
@@ -126,11 +128,11 @@ class ContextControllerTest {
     @Test
     void shouldCompleteVerification() {
         CompleteVerificationRequest request = CompleteVerificationRequestMother.successful();
-        Verification expectedVerification = givenCompletedVerification(request);
+        CompleteVerificationResult expectedResult = givenCompletedVerification(request);
 
-        Verification verification = controller.completeVerification(request);
+        CompleteVerificationResult result = controller.completeVerification(request);
 
-        assertThat(verification).isEqualTo(expectedVerification);
+        assertThat(result).isEqualTo(expectedResult);
     }
 
     private Context givenContextCreatedFor(CreateContextRequest request) {
@@ -158,10 +160,10 @@ class ContextControllerTest {
         return verification;
     }
 
-    private Verification givenCompletedVerification(CompleteVerificationRequest request) {
-        Verification verification = VerificationMother.successful();
-        given(application.complete(request)).willReturn(verification);
-        return verification;
+    private CompleteVerificationResult givenCompletedVerification(CompleteVerificationRequest request) {
+        CompleteVerificationResult result = CompleteVerificationResultMother.successful();
+        given(application.complete(request)).willReturn(result);
+        return result;
     }
 
 }

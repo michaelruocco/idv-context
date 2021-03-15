@@ -25,12 +25,8 @@ class KarateIntegrationTest {
     @Container
     public static final LocalMongo MONGO = new LocalMongo();
 
-    @Container
-    public static final LocalRedis REDIS = new LocalRedis();
-
     @BeforeAll
     static void setUp() {
-        setUpRedis();
         setUpMongo();
         setUpApp();
     }
@@ -63,10 +59,6 @@ class KarateIntegrationTest {
         };
     }
 
-    private static void setUpRedis() {
-        REDIS.waitForStartupToComplete();
-    }
-
     private static void setUpMongo() {
         MONGO.waitForStartupToComplete();
     }
@@ -81,7 +73,6 @@ class KarateIntegrationTest {
     private static void setApplicationProperties(int serverPort) {
         System.setProperty("environment", ENVIRONMENT);
         System.setProperty("server.port", Integer.toString(serverPort));
-        System.setProperty("redis.endpoint.uri", REDIS.getEndpointUri());
         System.setProperty("spring.data.mongodb.uri", MONGO.getConnectionString());
         System.setProperty("response.filtering.enabled", "true");
         System.setProperty("spring.profiles.active", "simple-logging,test");

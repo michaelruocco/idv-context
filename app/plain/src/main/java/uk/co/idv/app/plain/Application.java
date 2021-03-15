@@ -9,6 +9,7 @@ import uk.co.idv.context.config.ContextConfig;
 import uk.co.idv.context.config.VerificationConfig;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
 import uk.co.idv.method.entities.verification.GetVerificationRequest;
 import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.method.entities.verification.CreateVerificationRequest;
@@ -169,7 +170,7 @@ public class Application {
         return contextFacade.get(request);
     }
 
-    public Verification complete(CompleteVerificationRequest request) {
+    public CompleteVerificationResult complete(CompleteVerificationRequest request) {
         return contextFacade.complete(request);
     }
 

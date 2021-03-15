@@ -9,6 +9,7 @@ import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.adapter.json.method.MethodModule;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
 import uk.co.idv.method.entities.verification.CreateVerificationRequest;
 import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.method.entities.verification.Verifications;
@@ -27,11 +28,20 @@ public class VerificationModule extends SimpleModule {
         super("verification-module", Version.unknownVersion());
         this.mappings = mappings;
 
-        setMixInAnnotation(Verifications.class, VerificationsMixin.class);
-
         addDeserializer(CreateVerificationRequest.class, new CreateVerificationRequestDeserializer());
         addDeserializer(CompleteVerificationRequest.class, new CompleteVerificationRequestDeserializer());
 
+        setUpCompleteVerificationResult();
+        setUpVerifications();
+    }
+
+    private void setUpCompleteVerificationResult() {
+        setMixInAnnotation(CompleteVerificationResult.class, CompleteVerificationResultMixin.class);
+        addDeserializer(CompleteVerificationResult.class, new CompleteVerificationResultDeserializer());
+    }
+
+    private void setUpVerifications() {
+        setMixInAnnotation(Verifications.class, VerificationsMixin.class);
         addDeserializer(Verifications.class, new VerificationsDeserializer());
         addDeserializer(Verification.class, new VerificationDeserializer());
     }

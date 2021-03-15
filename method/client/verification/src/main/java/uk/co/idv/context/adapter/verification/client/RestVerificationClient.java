@@ -9,6 +9,7 @@ import uk.co.idv.context.adapter.verification.client.logger.MdcPopulator;
 import uk.co.idv.context.adapter.verification.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.context.adapter.verification.client.request.ClientCreateVerificationRequest;
 import uk.co.idv.context.adapter.verification.client.request.RequestConverter;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
 import uk.co.idv.method.entities.verification.Verification;
 import uk.co.mruoc.json.jackson.JacksonJsonConverter;
 import uk.co.mruoc.string.transform.UuidIdStringTransformer;
@@ -41,10 +42,10 @@ public class RestVerificationClient implements VerificationClient {
     }
 
     @Override
-    public Verification completeVerification(ClientCompleteVerificationRequest request) {
+    public CompleteVerificationResult completeVerification(ClientCompleteVerificationRequest request) {
         HttpRequest httpRequest = requestConverter.toPatchVerificationHttpRequest(request);
         HttpResponse<String> httpResponse = executor.execute(httpRequest);
-        return responseConverter.toVerificationOrThrowError(httpResponse);
+        return responseConverter.toCompleteVerificationResultOrThrowError(httpResponse);
     }
 
     private static RequestConverter toRequestConverter(VerificationClientConfig config) {

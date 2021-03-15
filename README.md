@@ -14,7 +14,6 @@
 
 *   Raise PR for system stubs to return console output as collection of lines?
 *   Token validation?
-*   Try out google cache module with a mongo repository for policies instead of redis repository?
 *   Performance tests in pipeline / nightly build?
 *   Add identity data lookup policy?
 *   Tidy up cloud formation templates create and set execution role for context service (rather than being passed in)

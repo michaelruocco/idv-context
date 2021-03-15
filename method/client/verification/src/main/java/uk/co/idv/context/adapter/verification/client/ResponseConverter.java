@@ -3,6 +3,7 @@ package uk.co.idv.context.adapter.verification.client;
 import lombok.RequiredArgsConstructor;
 import uk.co.idv.common.adapter.json.error.ApiError;
 import uk.co.idv.context.adapter.verification.client.exception.ApiErrorClientException;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
 import uk.co.idv.method.entities.verification.Verification;
 import uk.co.mruoc.json.JsonConverter;
 
@@ -15,6 +16,10 @@ public class ResponseConverter {
 
     public Verification toVerificationOrThrowError(HttpResponse<String> response) {
         return toTypeOrThrowError(response, Verification.class);
+    }
+
+    public CompleteVerificationResult toCompleteVerificationResultOrThrowError(HttpResponse<String> response) {
+        return toTypeOrThrowError(response, CompleteVerificationResult.class);
     }
 
     public <T> T toTypeOrThrowError(HttpResponse<String> response, Class<T> type) {

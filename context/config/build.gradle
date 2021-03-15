@@ -10,6 +10,7 @@ dependencies {
     implementation project(":context-in-memory-repository")
     implementation project(":context-redis-repository")
     implementation project(":context-mongo-repository")
+    implementation project(":policy-mongo-repository")
     implementation project(":method-config")
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
     implementation "com.github.michaelruocco:random-value-suppliers:${randomValueSuppliersVersion}"

@@ -4,6 +4,7 @@ import lombok.Builder;
 import uk.co.idv.context.entities.context.Context;
 import uk.co.idv.context.entities.context.lockout.ContextRecordAttemptRequest;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
+import uk.co.idv.method.entities.verification.CompleteVerificationResult;
 import uk.co.idv.method.entities.verification.Verification;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.context.FindContext;
@@ -20,7 +21,7 @@ public class CompleteVerification {
     private final ContextLockoutService lockoutService;
     private final Clock clock;
 
-    public Verification complete(CompleteVerificationRequest request) {
+    public CompleteVerificationResult complete(CompleteVerificationRequest request) {
         UUID contextId = request.getContextId();
         Context context = findContext.find(contextId);
         CompleteVerificationRequest requestWithTimestamp = request.withTimestampIfNotProvided(clock.instant());
@@ -28,7 +29,7 @@ public class CompleteVerification {
         Verification verification = updated.getVerification(request.getId());
         lockoutService.recordAttemptIfRequired(toRecordAttemptRequest(context, updated, verification));
         repository.save(updated);
-        return verification;
+        return toResult(verification, updated);
     }
 
     private ContextRecordAttemptRequest toRecordAttemptRequest(Context original, Context updated, Verification verification) {
@@ -37,6 +38,14 @@ public class CompleteVerification {
                 .context(updated)
                 .methodComplete(updated.hasMoreCompletedMethodsThan(original))
                 .sequenceComplete(updated.hasMoreCompletedSequencesThan(original))
+                .build();
+    }
+
+    private CompleteVerificationResult toResult(Verification verification, Context updated) {
+        return CompleteVerificationResult.builder()
+                .verification(verification)
+                .contextComplete(updated.isComplete())
+                .contextSuccessful(updated.isSuccessful())
                 .build();
     }
 
