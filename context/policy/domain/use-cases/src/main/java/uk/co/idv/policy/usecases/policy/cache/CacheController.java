@@ -10,7 +10,7 @@ import static org.awaitility.Awaitility.await;
 
 @Builder
 @Slf4j
-public class CacheUpdateController {
+public class CacheController {
 
     @Builder.Default
     private final Duration maxWait = Duration.ofSeconds(3);

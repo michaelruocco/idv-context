@@ -8,34 +8,38 @@ import uk.co.idv.policy.usecases.policy.PolicyRepository;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-//TODO unit test
 @RequiredArgsConstructor
 @Slf4j
 public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepository<T>, CachingRepository {
 
-    private final Map<UUID, T> cache = new ConcurrentHashMap<>();
     private final PolicyRepository<T> repository;
-    private final CacheUpdateController cacheUpdateController;
+    private final CacheController cacheController;
+    private final Map<UUID, T> cache;
+
+    public CachingRepositoryDecorator(PolicyRepository<T> repository, CacheController cacheController) {
+        this(repository, cacheController, new ConcurrentHashMap<>());
+    }
 
     @Override
     public void refresh() {
-        cacheUpdateController.startUpdate();
+        cacheController.startUpdate();
         log.info("cache size before refresh {}", cache.size());
         Map<UUID, T> newCache = loadNewCache();
         updateCache(newCache);
         log.info("cache size after refresh {}", cache.size());
-        cacheUpdateController.completeUpdate();
+        cacheController.completeUpdate();
     }
 
     @Override
     public void save(T policy) {
         log.debug("attempting to add policy to cache {}", policy.getId());
-        cacheUpdateController.waitUntilUpdateComplete();
+        cacheController.waitUntilUpdateComplete();
         cache.put(policy.getId(), policy);
         repository.save(policy);
         log.debug("policy added to cache {} and saved", policy.getId());
@@ -48,18 +52,16 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
 
     @Override
     public Policies<T> loadAll() {
-        log.info("loading all policies {} from cache", cache.size());
-        cache.values().forEach(policy -> log.info(policy.toString()));
         return new Policies<>(cache.values());
     }
 
     @Override
     public void delete(UUID id) {
         log.debug("attempting to delete policy to cache {}", id);
-        cacheUpdateController.waitUntilUpdateComplete();
+        cacheController.waitUntilUpdateComplete();
         cache.remove(id);
         repository.delete(id);
-        log.debug("policy removed {}", id);
+        log.debug("policy deleted {}", id);
     }
 
     private Map<UUID, T> loadNewCache() {
@@ -72,9 +74,10 @@ public class CachingRepositoryDecorator<T extends Policy> implements PolicyRepos
     }
 
     private void removeStaleCacheEntries(Map<UUID, T> newCache) {
-        cache.keySet().stream()
+        Set<UUID> keysToRemove =  cache.keySet().stream()
                 .filter(key -> !newCache.containsKey(key))
-                .forEach(cache::remove);
+                .collect(Collectors.toSet());
+        keysToRemove.forEach(cache::remove);
     }
 
 }

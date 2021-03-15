@@ -11,11 +11,11 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
 
-class CacheUpdateControllerTest {
+class CacheControllerTest {
 
     @Test
     void shouldSetUpdatingCacheToTrueWhenUpdateStarted() {
-        CacheUpdateController controller = CacheUpdateController.builder()
+        CacheController controller = CacheController.builder()
                 .updatingCache(new AtomicBoolean(false))
                 .build();
 
@@ -26,7 +26,7 @@ class CacheUpdateControllerTest {
 
     @Test
     void shouldSetUpdatingCacheToTrueFalseWhenUpdateCompleted() {
-        CacheUpdateController controller = CacheUpdateController.builder()
+        CacheController controller = CacheController.builder()
                 .updatingCache(new AtomicBoolean(true))
                 .build();
 
@@ -38,7 +38,7 @@ class CacheUpdateControllerTest {
     @Test
     void shouldWaitUntilUpdateIsCompleteAndThenThrowExceptionIfDoesNotComplete() {
         Duration maxWait = Duration.ofMillis(500);
-        CacheUpdateController controller = CacheUpdateController.builder()
+        CacheController controller = CacheController.builder()
                 .maxWait(maxWait)
                 .pollInterval(Duration.ofMillis(250))
                 .updatingCache(new AtomicBoolean(true))
@@ -54,7 +54,7 @@ class CacheUpdateControllerTest {
 
     @Test
     void shouldReturnImmediatelyWhenCacheIsNotUpdating() {
-        CacheUpdateController controller = CacheUpdateController.builder()
+        CacheController controller = CacheController.builder()
                 .updatingCache(new AtomicBoolean(false))
                 .build();
 
