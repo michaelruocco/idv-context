@@ -19,7 +19,7 @@ import static org.mockito.Mockito.verify;
 
 class SetupPoliciesTest {
 
-    private static final int POLICY_REFRESH_DELAY = 60000;
+    private static final int POLICY_REFRESH_DELAY = 3600000;
 
     private final Application application = mock(Application.class);
     private final ChannelAdapter channelAdapter = mock(ChannelAdapter.class);

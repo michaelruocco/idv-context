@@ -16,7 +16,7 @@ public class CacheUpdateController {
     private final Duration maxWait = Duration.ofSeconds(3);
 
     @Builder.Default
-    private final Duration pollInterval = Duration.ofMillis(500);
+    private final Duration pollInterval = Duration.ofMillis(250);
 
     private final AtomicBoolean updatingCache = new AtomicBoolean(false);
 

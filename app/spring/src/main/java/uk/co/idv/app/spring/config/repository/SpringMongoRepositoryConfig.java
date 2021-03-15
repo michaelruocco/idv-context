@@ -145,7 +145,7 @@ public class SpringMongoRepositoryConfig {
     }
 
     private static int loadPolicyRefreshDelay() {
-        return Integer.parseInt(System.getProperty("policy.refresh.delay", "60000"));
+        return Integer.parseInt(System.getProperty("policy.refresh.delay", "3600000"));
     }
 
 }
