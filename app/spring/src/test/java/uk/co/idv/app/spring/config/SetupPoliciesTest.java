@@ -12,7 +12,6 @@ import java.util.concurrent.ScheduledExecutorService;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
@@ -44,7 +43,9 @@ class SetupPoliciesTest {
         InOrder inOrder = inOrder(refreshTask1, refreshTask2, application);
         inOrder.verify(refreshTask1).run();
         inOrder.verify(refreshTask2).run();
-        inOrder.verify(application).populatePolicies(any(ChannelAdapter.class));
+        ArgumentCaptor<ChannelAdapter> captor = ArgumentCaptor.forClass(ChannelAdapter.class);
+        inOrder.verify(application).populatePolicies(captor.capture());
+        assertThat(captor.getValue()).isEqualTo(channelAdapter);
     }
 
     @Test
@@ -65,9 +66,11 @@ class SetupPoliciesTest {
         setupPolicies.onApplicationEvent(event);
 
         InOrder inOrder = inOrder(application, executor);
-        inOrder.verify(application).populatePolicies(any(ChannelAdapter.class));
+        ArgumentCaptor<ChannelAdapter> captor = ArgumentCaptor.forClass(ChannelAdapter.class);
+        inOrder.verify(application).populatePolicies(captor.capture());
         inOrder.verify(executor).scheduleWithFixedDelay(refreshTask1, 0, POLICY_REFRESH_DELAY, MILLISECONDS);
         inOrder.verify(executor).scheduleWithFixedDelay(refreshTask2, 0, POLICY_REFRESH_DELAY, MILLISECONDS);
+        assertThat(captor.getValue()).isEqualTo(channelAdapter);
     }
 
 }

@@ -123,7 +123,7 @@ class CachingRepositoryDecoratorTest {
 
         cachingDecorator.delete(cachedPolicy.getId());
 
-        assertThat(cache).isEmpty();;
+        assertThat(cache).isEmpty();
         verify(repository).delete(cachedPolicy.getId());
     }
 
