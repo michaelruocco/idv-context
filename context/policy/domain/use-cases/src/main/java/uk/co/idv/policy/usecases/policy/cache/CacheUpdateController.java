@@ -16,8 +16,12 @@ public class CacheUpdateController {
     private final Duration maxWait = Duration.ofSeconds(3);
 
     @Builder.Default
+    private final Duration pollDelay = Duration.ZERO;
+
+    @Builder.Default
     private final Duration pollInterval = Duration.ofMillis(250);
 
+    @Builder.Default
     private final AtomicBoolean updatingCache = new AtomicBoolean(false);
 
     public void startUpdate() {
@@ -30,11 +34,12 @@ public class CacheUpdateController {
 
     public void waitUntilUpdateComplete() {
         await().atMost(maxWait)
+                .pollDelay(pollDelay)
                 .pollInterval(pollInterval)
                 .until(() -> !isUpdating());
     }
 
-    private boolean isUpdating() {
+    public boolean isUpdating() {
         boolean refreshing = updatingCache.get();
         log.debug("cache refreshing during update {}", refreshing);
         return refreshing;
