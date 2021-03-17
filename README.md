@@ -82,7 +82,7 @@ aws cloudformation create-stack --stack-name idv-test-context-service --template
 #### Update image used by running task
 
 ```aws
-aws ecs update-service --cluster idv-test --service verification-context --force-new-deployment
+aws ecs update-service --cluster idv-test --service idv-context --force-new-deployment
 ```
 
 #### Deleting AWS resources
