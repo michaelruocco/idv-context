@@ -26,7 +26,7 @@ public class ContextJsonMasker extends CompositeJsonMasker {
 
         private static Collection<JsonPath> paths() {
             return JsonPathFactory.toJsonPaths(
-                    "$.sequences[*].methods[?(@.name=='one-time-passcode')].deliveryMethods[?(@.name=='email')].value",
+                    "$.sequences[*].stages[*].methods[?(@.name=='one-time-passcode')].deliveryMethods[?(@.type=='email')].value",
                     "$.channel.emailAddresses[*]"
             );
         }
@@ -41,8 +41,8 @@ public class ContextJsonMasker extends CompositeJsonMasker {
 
         private static Collection<JsonPath> paths() {
             return JsonPathFactory.toJsonPaths(
-                    "$.sequences[*].methods[?(@.name=='one-time-passcode')].deliveryMethods[?(@.type=='sms')].value",
-                    "$.sequences[*].methods[?(@.name=='one-time-passcode')].deliveryMethods[?(@.type=='voice')].value",
+                    "$.sequences[*].stages[*].methods[?(@.name=='one-time-passcode')].deliveryMethods[?(@.type=='sms')].value",
+                    "$.sequences[*].stages[*].methods[?(@.name=='one-time-passcode')].deliveryMethods[?(@.type=='voice')].value",
                     "$.channel.phoneNumbers[*].value"
             );
         }
