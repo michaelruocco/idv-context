@@ -7,11 +7,11 @@ Parameters:
     Description: Connection string of the mongo database the service should connect to
   EnvironmentName:
     Type: String
-    Default: idv-dev
+    Default: idv-test
     Description: The name of the environment to add this service to
   StackName:
     Type: String
-    Default: idv-dev-network
+    Default: idv-test-network
     Description: The name of the networking stack that
       these resources are put into.
   ServiceName:
@@ -63,45 +63,6 @@ Conditions:
   HasCustomRole: !Not [ !Equals [!Ref 'Role', ''] ]
 
 Resources:
-
-  ElasticacheSecurityGroup:
-    Type: AWS::EC2::SecurityGroup
-    Properties:
-      GroupDescription: Elasticache Security Group
-      VpcId:
-        Fn::ImportValue:
-          !Join [':', [!Ref 'StackName', 'VPCId']]
-      SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: '6379'
-          ToPort: '6379'
-          SourceSecurityGroupId:
-            Fn::ImportValue:
-              !Join [':', [!Ref 'StackName', 'ECSSecurityGroup']]
-
-  ElasticacheSubnetGroup:
-    Type: AWS::ElastiCache::SubnetGroup
-    Properties:
-      CacheSubnetGroupName: !Sub ${EnvironmentName}-redis-subnet-group
-      Description: Cache Subnet Group
-      SubnetIds:
-        - Fn::ImportValue:
-            !Join [':', [!Ref 'StackName', 'PublicSubnetOne']]
-        - Fn::ImportValue:
-            !Join [':', [!Ref 'StackName', 'PublicSubnetTwo']]
-
-  ElastiCacheCluster:
-    Type: 'AWS::ElastiCache::CacheCluster'
-    Properties:
-      CacheSubnetGroupName: !Ref ElasticacheSubnetGroup
-      AutoMinorVersionUpgrade: 'true'
-      Engine: redis
-      CacheNodeType: cache.t2.micro
-      NumCacheNodes: '1'
-      VpcSecurityGroupIds:
-        - !GetAtt
-          - ElasticacheSecurityGroup
-          - GroupId
 
   TargetGroup:
     Type: AWS::ElasticLoadBalancingV2::TargetGroup
@@ -169,17 +130,6 @@ Resources:
               Value: !Ref 'EnvironmentName'
             - Name: MONGO_CONNECTION_STRING
               Value: !Ref 'MongoConnectionString'
-            - Name: REDIS_ENDPOINT_URI
-              Value: !Join
-                - ''
-                - - 'redis://'
-                  - !GetAtt
-                    - ElastiCacheCluster
-                    - RedisEndpoint.Address
-                  - ':'
-                  - !GetAtt
-                    - ElastiCacheCluster
-                    - RedisEndpoint.Port
             - Name: REQUEST_LOGGING_ENABLED
               Value: true
             - Name: RESPONSE_LOGGING_ENABLED

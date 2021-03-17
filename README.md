@@ -71,25 +71,25 @@ A great description of how these templates work is [here](https://reflectoring.i
 
 ```aws
 //generate network resources using cloud formation
-aws cloudformation create-stack --stack-name idv-dev-network --template-body file://cloud-formation/network.yml --capabilities CAPABILITY_IAM
+aws cloudformation create-stack --stack-name idv-test-network --template-body file://cloud-formation/network.yml --capabilities CAPABILITY_IAM
 ```
 
 ```aws
 //generate service resources using cloud formation (relies on network stack already being created)
-aws cloudformation create-stack --stack-name idv-dev-verification-context-service --template-body file://cloud-formation/service.yml --parameters ParameterKey=MongoConnectionString,ParameterValue=<mongo-connection-string>
+aws cloudformation create-stack --stack-name idv-test-verification-context-service --template-body file://cloud-formation/service.yml --parameters ParameterKey=MongoConnectionString,ParameterValue=<mongo-connection-string>
 ```
 
 #### Update image used by running task
 
 ```aws
-aws ecs update-service --cluster idv-dev --service verification-context --force-new-deployment
+aws ecs update-service --cluster idv-test --service verification-context --force-new-deployment
 ```
 
 #### Deleting AWS resources
 
 ```aws
-aws cloudformation delete-stack --stack-name idv-dev-verification-context-service;
-aws cloudformation delete-stack --stack-name idv-dev-network;
+aws cloudformation delete-stack --stack-name idv-test-verification-context-service;
+aws cloudformation delete-stack --stack-name idv-test-network;
 ```
 
 ### JMeter

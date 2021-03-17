@@ -5,7 +5,7 @@ Description: A network stack for deploying containers in AWS ECS.
 Parameters:
   EnvironmentName:
     Type: String
-    Default: idv-dev
+    Default: idv-test
     Description: Name to give to the created ECS cluster
 
 Resources:
