@@ -14,7 +14,8 @@ ENV SERVER_PORT=80 \
     REQUEST_LOGGING_ENABLED=false \
     RESPONSE_LOGGING_ENABLED=false \
     POLICY_REFRESH_THREAD_POOL_SIZE=4 \
-    POLICY_REFRESH_DELAY=3600000
+    POLICY_REFRESH_DELAY=3600000 \
+    SERVER_SERVLET_CONTEXT_PATH=/ \
 
 COPY build/libs/idv-context-spring-app-${VERSION}.jar /opt/app.jar
 
@@ -35,4 +36,5 @@ CMD java \
   -Dresponse.logging.enabled=${RESPONSE_LOGGING_ENABLED} \
   -Dpolicy.refresh.thread.pool.size=${POLICY_REFRESH_THREAD_POOL_SIZE} \
   -Dpolicy.refresh.delay=${POLICY_REFRESH_DELAY} \
+  -Dserver.servlet.contextPath=${SERVER_SERVLET_CONTEXT_PATH}
   -jar /opt/app.jar
