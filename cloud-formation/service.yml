@@ -20,7 +20,7 @@ Parameters:
     Description: A human-readable name for the service.
   HealthCheckPath:
     Type: String
-    Default: /actuator/health
+    Default: /idv-context/actuator/health
     Description: Path to perform the healthcheck on each instance.
   HealthCheckIntervalSeconds:
     Type: Number
@@ -88,7 +88,8 @@ Resources:
           Type: 'forward'
       Conditions:
         - Field: path-pattern
-          Values: [!Sub ${Path}*]
+          Values:
+            - !Sub '${Path}*'
       ListenerArn:
         Fn::ImportValue:
           !Join [':', [!Ref 'StackName', 'PublicListener']]

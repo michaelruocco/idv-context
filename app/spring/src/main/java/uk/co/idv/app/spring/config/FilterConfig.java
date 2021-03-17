@@ -30,6 +30,8 @@ import java.util.Collection;
 @Slf4j
 public class FilterConfig {
 
+    private static final String CONTEXT_PATH = loadContextPath();
+
     @Bean
     public FilterRegistrationBean<HeaderMdcPopulatorFilter> headerMdcPopulator() {
         FilterRegistrationBean<HeaderMdcPopulatorFilter> bean = new FilterRegistrationBean<>();
@@ -167,21 +169,29 @@ public class FilterConfig {
 
     private static String[] getContextUrlPatterns() {
         return new String[]{
-                "/v1/contexts/*"
+                prefixContextPath("v1/contexts/*")
         };
     }
 
     private static String[] getIdentityUrlPatterns() {
-        return new String[]{"/identities/*"};
+        return new String[]{prefixContextPath("identities/*")};
     }
 
     private static String[] getDefaultUrlPatterns() {
         return new String[]{
-                "/v1/eligibility/*",
-                "/v1/lockout-policies/*",
-                "/v1/lockout-states/*",
-                "/v1/context-policies/*"
+                prefixContextPath("v1/eligibility/*"),
+                prefixContextPath("v1/lockout-policies/*"),
+                prefixContextPath("v1/lockout-states/*"),
+                prefixContextPath("v1/context-policies/*")
         };
+    }
+
+    private static String loadContextPath() {
+        return System.getProperty("server.servlet.contextPath", "/");
+    }
+
+    private static String prefixContextPath(String path) {
+        return String.format("%s%s", CONTEXT_PATH, path);
     }
 
     private static boolean requestLoggingEnabled() {
