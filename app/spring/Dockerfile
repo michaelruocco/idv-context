@@ -36,5 +36,5 @@ CMD java \
   -Dresponse.logging.enabled=${RESPONSE_LOGGING_ENABLED} \
   -Dpolicy.refresh.thread.pool.size=${POLICY_REFRESH_THREAD_POOL_SIZE} \
   -Dpolicy.refresh.delay=${POLICY_REFRESH_DELAY} \
-  -Dserver.servlet.contextPath=${SERVER_SERVLET_CONTEXT_PATH}
+  -Dserver.servlet.contextPath=${SERVER_SERVLET_CONTEXT_PATH} \
   -jar /opt/app.jar
