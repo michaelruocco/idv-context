@@ -84,7 +84,6 @@ dependencies {
     integrationTestImplementation "uk.org.webcompere:system-stubs-jupiter:${systemStubsVersion}"
     integrationTestImplementation "junit:junit"
     integrationTestRuntimeOnly "com.intuit.karate:karate-apache:${karateVersion}"
-
 }
 
 springBoot {
