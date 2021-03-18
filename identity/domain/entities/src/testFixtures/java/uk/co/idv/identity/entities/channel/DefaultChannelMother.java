@@ -36,8 +36,8 @@ public interface DefaultChannelMother {
 
     static DefaultChannel withData() {
         return builder()
-                .phoneNumbers(PhoneNumbersMother.one())
-                .emailAddresses(EmailAddressesMother.one())
+                .phoneNumbers(PhoneNumbersMother.two())
+                .emailAddresses(EmailAddressesMother.two())
                 .build();
     }
 

@@ -166,13 +166,13 @@ public class FilterConfig {
     }
 
     //TODO set up logging masking for verifications endpoint responses
-    
+
     private static String[] getContextUrlPatterns() {
         return new String[]{"/v1/contexts/*"};
     }
 
     private static String[] getIdentityUrlPatterns() {
-        return new String[]{"/identities/*"};
+        return new String[]{"/v1/identities/*"};
     }
 
     private static String[] getDefaultUrlPatterns() {

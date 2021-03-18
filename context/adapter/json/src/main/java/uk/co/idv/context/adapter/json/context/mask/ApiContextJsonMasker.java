@@ -9,18 +9,18 @@ import uk.co.mruoc.json.mask.JsonPathFactory;
 
 import java.util.Collection;
 
-public class ContextJsonMasker extends CompositeJsonMasker {
+public class ApiContextJsonMasker extends CompositeJsonMasker {
 
-    public ContextJsonMasker(ObjectMapper mapper) {
+    public ApiContextJsonMasker(ObjectMapper mapper) {
         super(
-                new ContextEmailAddressJsonMasker(mapper),
-                new ContextPhoneNumberJsonMasker(mapper)
+                new ApiContextEmailAddressJsonMasker(mapper),
+                new ApiContextPhoneNumberJsonMasker(mapper)
         );
     }
 
-    private static class ContextEmailAddressJsonMasker extends EmailAddressJsonMasker {
+    private static class ApiContextEmailAddressJsonMasker extends EmailAddressJsonMasker {
 
-        public ContextEmailAddressJsonMasker(ObjectMapper mapper) {
+        public ApiContextEmailAddressJsonMasker(ObjectMapper mapper) {
             super(mapper, paths());
         }
 
@@ -33,9 +33,9 @@ public class ContextJsonMasker extends CompositeJsonMasker {
 
     }
 
-    private static class ContextPhoneNumberJsonMasker extends PhoneNumberJsonMasker {
+    private static class ApiContextPhoneNumberJsonMasker extends PhoneNumberJsonMasker {
 
-        public ContextPhoneNumberJsonMasker(ObjectMapper mapper) {
+        public ApiContextPhoneNumberJsonMasker(ObjectMapper mapper) {
             super(mapper, paths());
         }
 
