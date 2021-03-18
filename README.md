@@ -12,6 +12,7 @@
 
 ## Todo
 
+*   Add log masking on verifications endpoint
 *   Raise PR for system stubs to return console output as collection of lines?
 *   Token validation?
 *   Performance tests in pipeline / nightly build?
@@ -76,7 +77,8 @@ aws cloudformation create-stack --stack-name idv-test-network --template-body fi
 
 ```aws
 //generate service resources using cloud formation (relies on network stack already being created)
-aws cloudformation create-stack --stack-name idv-test-context-service --template-body file://cloud-formation/service.yml --parameters ParameterKey=MongoConnectionString,ParameterValue=<mongo-connection-string>
+aws cloudformation create-stack --stack-name idv-test-context-service --template-body file://cloud-formation/context-service.yml --parameters ParameterKey=MongoConnectionString,ParameterValue=<mongo-connection-string>
+aws cloudformation create-stack --stack-name idv-test-otp-service --template-body file://cloud-formation/otp-service.yml --parameters ParameterKey=MongoConnectionString,ParameterValue=<mongo-connection-string>
 ```
 
 #### Update image used by running task
@@ -89,6 +91,7 @@ aws ecs update-service --cluster idv-test --service idv-context --force-new-depl
 
 ```aws
 aws cloudformation delete-stack --stack-name idv-test-context-service;
+aws cloudformation delete-stack --stack-name idv-test-otp-service;
 aws cloudformation delete-stack --stack-name idv-test-network;
 ```
 
