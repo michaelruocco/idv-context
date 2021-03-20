@@ -1,0 +1,61 @@
+{
+  "id": "2948aadc-7f63-4b00-875b-77a4e6608e5c",
+  "created": "2020-09-14T20:02:02.002Z",
+  "expiry": "2020-09-14T20:08:02.002Z",
+  "eligible": true,
+  "complete": false,
+  "successful": false,
+  "channel": {
+    "id": "fake-channel",
+    "country": "GB",
+    "phoneNumbers": [
+      {
+        "value": "**********111"
+      },
+      {
+        "value": "**********212"
+      }
+    ],
+    "emailAddresses": [
+      "joe.**************.co.uk",
+      "joeb***********.co.uk"
+    ]
+  },
+  "aliases": [
+    {
+      "type": "credit-card-number",
+      "value": "4929111111111111"
+    }
+  ],
+  "activity": {
+    "name": "simple-activity",
+    "timestamp": "2020-06-06T12:36:15.179Z"
+  },
+  "sequences": [
+    {
+      "name": "default-sequence",
+      "stages": [
+        {
+          "type": "all-methods",
+          "methods": [
+            {
+              "name": "fake-method",
+              "eligibility": {
+                "eligible": true
+              },
+              "config": {
+                "maxNumberOfAttempts": 3,
+                "duration": 300000,
+                "fakeValue": "fake"
+              }
+            }
+          ]
+        }
+      ],
+      "duration": 300000,
+      "eligibility": {
+        "eligible": true
+      }
+    }
+  ]
+}
