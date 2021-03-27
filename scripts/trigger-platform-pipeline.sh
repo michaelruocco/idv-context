@@ -5,7 +5,7 @@ password=$2
 
 version=$(./gradlew currentVersion -q -Prelease.quiet)
 body='{"ref": "master", "inputs": { "serviceName": "idv-context", "serviceVersion": "VERSION" } }'
-body=$(echo "$body" | sed "s|VERSION|$version|")
+body=$(echo "${body//VERSION/$version}")
 
 curl -XPOST -u "${username}:${password}" \
   -H "Accept: application/vnd.github.everest-preview+json" \
