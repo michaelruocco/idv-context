@@ -1,12 +1,10 @@
 package uk.co.idv.context.adapter.verification.client;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
-import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.extension.AfterAllCallback;
 import org.junit.jupiter.api.extension.BeforeAllCallback;
 import org.junit.jupiter.api.extension.ExtensionContext;
 
-@RequiredArgsConstructor
 public class WireMockExtension extends WireMockServer implements BeforeAllCallback, AfterAllCallback {
 
     @Override

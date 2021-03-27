@@ -13,7 +13,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import uk.co.idv.app.plain.Application;
 import uk.co.idv.app.plain.adapter.channel.ChannelAdapter;
-import uk.co.idv.app.spring.config.SetupPolicies;
 import uk.co.idv.context.config.repository.mongo.MongoContextRepositoryConfig;
 import uk.co.idv.context.usecases.context.ContextRepository;
 import uk.co.idv.context.usecases.policy.ContextPolicyRepository;
@@ -113,15 +112,15 @@ public class SpringMongoRepositoryConfig {
 
     @Profile("!redis")
     @Bean
-    public SetupPolicies setupPoliciesListener(Application application,
-                                               ChannelAdapter channelAdapter,
-                                               MongoContextRepositoryConfig contextConfig,
-                                               MongoLockoutRepositoryConfig lockoutConfig) {
+    public MongoSetupPolicies setupPoliciesListener(Application application,
+                                                    ChannelAdapter channelAdapter,
+                                                    MongoContextRepositoryConfig contextConfig,
+                                                    MongoLockoutRepositoryConfig lockoutConfig) {
         Collection<Runnable> policyRefreshTasks = Arrays.asList(
                 contextConfig.getPolicyRefreshTask(),
                 lockoutConfig.getPolicyRefreshTask()
         );
-        return SetupPolicies.builder()
+        return MongoSetupPolicies.builder()
                 .application(application)
                 .channelAdapter(channelAdapter)
                 .policyRefreshTasks(policyRefreshTasks)

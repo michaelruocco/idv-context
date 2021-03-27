@@ -1,4 +1,4 @@
-package uk.co.idv.app.spring.config;
+package uk.co.idv.app.spring.config.repository;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -16,7 +16,7 @@ import static org.mockito.Mockito.inOrder;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
-class SetupPoliciesTest {
+class MongoSetupPoliciesTest {
 
     private static final int POLICY_REFRESH_DELAY = 3600000;
 
@@ -26,7 +26,7 @@ class SetupPoliciesTest {
     private final Runnable refreshTask2 = mock(Runnable.class);
     private final ScheduledExecutorService executor = mock(ScheduledExecutorService.class);
 
-    private final SetupPolicies setupPolicies = SetupPolicies.builder()
+    private final MongoSetupPolicies setupPolicies = MongoSetupPolicies.builder()
             .application(application)
             .channelAdapter(channelAdapter)
             .policyRefreshTasks(Arrays.asList(refreshTask1, refreshTask2))
