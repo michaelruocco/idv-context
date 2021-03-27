@@ -19,7 +19,6 @@ ext {
     logbackJsonVersion = "0.1.5"
 
     imageName = "michaelruocco/${project.name}"
-    isSnapshot = "${version}".contains("SNAPSHOT")
 }
 
 testSets {
@@ -111,9 +110,6 @@ import com.bmuschko.gradle.docker.tasks.image.DockerPushImage
 task buildImage(type: DockerBuildImage) {
     inputDir.set(file("."))
     images.add("${imageName}:${version}")
-    if (!isSnapshot) {
-        images.add("${imageName}:latest")
-    }
     buildArgs = ["VERSION": version]
 }
 
@@ -123,13 +119,13 @@ task pushImage(type: DockerPushImage) {
 
 dockerCompose {
     startedServices = ['idv-context-spring-app']
-    environment.put 'APP_VERSION', version
+    environment.put 'APP_VERSION', 'latest'
 }
 
 postman {
     collections = fileTree(dir: "postman", include: "*_collection.json")
     environment = file("postman/idv-local.postman_environment.json")
-    stopOnError = true
+    stopOnError = truex
 }
 
 apply from: rootProject.file("publish.gradle")

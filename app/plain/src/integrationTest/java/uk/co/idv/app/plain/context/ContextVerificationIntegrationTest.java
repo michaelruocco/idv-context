@@ -360,8 +360,6 @@ class ContextVerificationIntegrationTest {
                 .build();
         harness.givenVerificationCompletedUnsuccessfully(verificationRequest);
 
-        System.out.println("completed unsuccessful verification, creating another verification");
-
         LockedOutException error = catchThrowableOfType(
                 () -> application.create(verificationRequest),
                 LockedOutException.class
