@@ -8,8 +8,4 @@ public interface PhoneNumbersJsonMother {
         return ContentLoader.loadContentFromClasspath("phonenumber/phone-numbers.json");
     }
 
-    static String masked() {
-        return ContentLoader.loadContentFromClasspath("phonenumber/phone-numbers-masked.json");
-    }
-
 }

@@ -74,7 +74,7 @@ subprojects {
         neovisionariesVersion = "1.28"
         redissionVersion = "3.15.2"
         jsonPathVersion = "2.5.0"
-        jsonMaskerVersion = "1.0.6"
+        jsonMaskerVersion = "1.0.7"
         moneyApiVersion = "1.1"
         monetaCoreVersion = "1.4.2"
         commonsMathVersion = "3.6.1"

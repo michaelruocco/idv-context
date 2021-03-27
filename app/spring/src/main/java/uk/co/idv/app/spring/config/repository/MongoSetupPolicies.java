@@ -1,4 +1,4 @@
-package uk.co.idv.app.spring.config;
+package uk.co.idv.app.spring.config.repository;
 
 import lombok.Builder;
 import org.springframework.context.ApplicationListener;
@@ -11,7 +11,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 @Builder
-public class SetupPolicies implements ApplicationListener<ContextRefreshedEvent> {
+public class MongoSetupPolicies implements ApplicationListener<ContextRefreshedEvent> {
 
     private final Application application;
     private final ChannelAdapter channelAdapter;

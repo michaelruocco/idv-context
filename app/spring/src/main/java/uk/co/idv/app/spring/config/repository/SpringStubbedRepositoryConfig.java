@@ -6,6 +6,8 @@ import org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import uk.co.idv.app.plain.Application;
+import uk.co.idv.app.plain.adapter.channel.ChannelAdapter;
 import uk.co.idv.app.plain.adapter.repository.InMemoryRepositoryAdapter;
 import uk.co.idv.app.plain.adapter.repository.RepositoryAdapter;
 
@@ -20,6 +22,15 @@ public class SpringStubbedRepositoryConfig {
     @Bean
     public RepositoryAdapter repositoryAdapter() {
         return new InMemoryRepositoryAdapter();
+    }
+
+    @Bean
+    public StubbedSetupPolicies setupPoliciesListener(Application application,
+                                                    ChannelAdapter channelAdapter) {
+        return StubbedSetupPolicies.builder()
+                .application(application)
+                .channelAdapter(channelAdapter)
+                .build();
     }
 
 }

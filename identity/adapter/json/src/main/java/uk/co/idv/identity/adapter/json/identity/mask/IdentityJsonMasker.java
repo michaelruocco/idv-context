@@ -2,10 +2,10 @@ package uk.co.idv.identity.adapter.json.identity.mask;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.jayway.jsonpath.JsonPath;
-import uk.co.idv.identity.adapter.json.emailaddress.mask.EmailAddressJsonMasker;
-import uk.co.idv.identity.adapter.json.phonenumber.mask.PhoneNumberJsonMasker;
 import uk.co.mruoc.json.mask.CompositeJsonMasker;
 import uk.co.mruoc.json.mask.JsonPathFactory;
+import uk.co.mruoc.json.mask.email.EmailAddressJsonMasker;
+import uk.co.mruoc.json.mask.phone.PhoneNumberJsonMasker;
 
 import java.util.Collection;
 

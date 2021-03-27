@@ -8,8 +8,4 @@ public interface EmailAddressesJsonMother {
         return ContentLoader.loadContentFromClasspath("emailaddress/email-addresses.json");
     }
 
-    static String twoMasked() {
-        return ContentLoader.loadContentFromClasspath("emailaddress/email-addresses-masked.json");
-    }
-
 }

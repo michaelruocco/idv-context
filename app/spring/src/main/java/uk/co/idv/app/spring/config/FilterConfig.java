@@ -11,6 +11,7 @@ import uk.co.idv.app.spring.filters.logging.context.ContextRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.context.ContextResponseLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.identity.IdentityRequestLoggingFilter;
 import uk.co.idv.app.spring.filters.logging.identity.IdentityResponseLoggingFilter;
+import uk.co.idv.app.spring.filters.logging.method.VerificationResponseLoggingFilter;
 import uk.co.idv.app.spring.filters.validation.ContextHeaderValidationFilter;
 import uk.co.idv.app.spring.filters.validation.DefaultHeaderValidationFilter;
 import uk.co.mruoc.spring.filter.logging.mdc.ClearMdcFilter;
@@ -116,6 +117,17 @@ public class FilterConfig {
     }
 
     @Bean
+    public FilterRegistrationBean<ResponseLoggingFilter> verificationResponseLoggingFilter(ObjectMapper mapper) {
+        FilterRegistrationBean<ResponseLoggingFilter> bean = new FilterRegistrationBean<>();
+        bean.setFilter(new VerificationResponseLoggingFilter(mapper));
+        bean.setOrder(3);
+        bean.addUrlPatterns(getVerificationUrlPatterns());
+        bean.setName("verificationResponseLoggingFilter");
+        bean.setEnabled(responseLoggingEnabled());
+        return bean;
+    }
+
+    @Bean
     public FilterRegistrationBean<RequestLoggingFilter> defaultRequestLoggingFilter() {
         FilterRegistrationBean<RequestLoggingFilter> bean = new FilterRegistrationBean<>();
         bean.setFilter(new RequestLoggingFilter());
@@ -161,6 +173,7 @@ public class FilterConfig {
         Collection<String> patterns = new ArrayList<>();
         patterns.addAll(Arrays.asList(getContextUrlPatterns()));
         patterns.addAll(Arrays.asList(getIdentityUrlPatterns()));
+        patterns.addAll(Arrays.asList(getVerificationUrlPatterns()));
         patterns.addAll(Arrays.asList(getDefaultUrlPatterns()));
         return patterns.toArray(new String[0]);
     }
@@ -173,6 +186,10 @@ public class FilterConfig {
 
     private static String[] getIdentityUrlPatterns() {
         return new String[]{"/v1/identities/*"};
+    }
+
+    private static String[] getVerificationUrlPatterns() {
+        return new String[]{"/v1/contexts/verifications/*"};
     }
 
     private static String[] getDefaultUrlPatterns() {
