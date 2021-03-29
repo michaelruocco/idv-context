@@ -27,7 +27,7 @@ dependencies {
     implementation "com.github.michaelruocco:json-adapter:${jsonAdapterVersion}"
     implementation "com.github.michaelruocco:duration-logger:${durationLoggerVersion}"
     implementation "com.github.michaelruocco:json-masker:${jsonMaskerVersion}"
-    
+
     testImplementation "uk.org.webcompere:system-stubs-jupiter:${systemStubsVersion}"
     testImplementation "org.junit.jupiter:junit-jupiter-params:${junitVersion}"
     testRuntimeOnly "ch.qos.logback:logback-core:${logbackVersion}"
