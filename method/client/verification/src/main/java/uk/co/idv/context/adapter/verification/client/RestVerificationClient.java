@@ -9,6 +9,7 @@ import uk.co.idv.context.adapter.verification.client.logger.MdcPopulator;
 import uk.co.idv.context.adapter.verification.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.context.adapter.verification.client.request.ClientCreateVerificationRequest;
 import uk.co.idv.context.adapter.verification.client.request.RequestConverter;
+import uk.co.idv.method.adapter.json.verification.mask.VerificationJsonMasker;
 import uk.co.idv.method.entities.verification.CompleteVerificationResult;
 import uk.co.idv.method.entities.verification.Verification;
 import uk.co.mruoc.json.jackson.JacksonJsonConverter;
@@ -30,7 +31,7 @@ public class RestVerificationClient implements VerificationClient {
         return RestVerificationClient.builder()
                 .requestConverter(toRequestConverter(config))
                 .responseConverter(toResponseConverter(config.getMapper()))
-                .executor(toRequestExecutor())
+                .executor(toRequestExecutor(config.getMapper()))
                 .build();
     }
 
@@ -59,18 +60,18 @@ public class RestVerificationClient implements VerificationClient {
         return new ResponseConverter(new JacksonJsonConverter(mapper));
     }
 
-    private static RequestExecutor toRequestExecutor() {
+    private static RequestExecutor toRequestExecutor(ObjectMapper mapper) {
         return RequestExecutor.builder()
                 .client(HttpClient.newHttpClient())
-                .clientLogger(toClientLogger())
+                .clientLogger(toClientLogger(mapper))
                 .build();
     }
 
-    private static ClientLogger toClientLogger() {
+    private static ClientLogger toClientLogger(ObjectMapper mapper) {
         return BodyLoggingClientLogger.builder()
                 .mdcPopulator(new MdcPopulator(new UuidIdStringTransformer()))
                 .requestMasker(s -> s)
-                .responseMasker(s -> s)
+                .responseMasker(new VerificationJsonMasker(mapper))
                 .build();
     }
 
