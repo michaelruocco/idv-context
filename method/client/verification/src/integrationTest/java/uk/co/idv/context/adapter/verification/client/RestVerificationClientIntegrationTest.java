@@ -8,7 +8,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 import uk.co.idv.common.adapter.json.error.internalserver.InternalServerErrorJsonMother;
 import uk.co.idv.common.adapter.json.error.internalserver.InternalServerErrorMother;
 import uk.co.idv.context.adapter.verification.client.exception.ApiErrorClientException;
-import uk.co.idv.context.adapter.verification.client.header.ContextRequestHeaders;
+import uk.co.idv.context.adapter.verification.client.header.IdvRequestHeaders;
 import uk.co.idv.context.adapter.verification.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.context.adapter.verification.client.request.ClientCreateVerificationRequest;
 import uk.co.idv.method.adapter.json.error.contextexpired.ContextExpiredErrorJsonMother;
@@ -35,11 +35,11 @@ import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.urlEqualTo;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowableOfType;
-import static uk.co.idv.context.adapter.verification.client.header.HeaderConstants.ACCEPT_NAME;
-import static uk.co.idv.context.adapter.verification.client.header.HeaderConstants.APPLICATION_JSON;
-import static uk.co.idv.context.adapter.verification.client.header.HeaderConstants.CHANNEL_ID_NAME;
-import static uk.co.idv.context.adapter.verification.client.header.HeaderConstants.CONTENT_TYPE_NAME;
-import static uk.co.idv.context.adapter.verification.client.header.HeaderConstants.CORRELATION_ID_NAME;
+import static uk.co.idv.context.adapter.verification.client.header.IdvHeaderConstants.ACCEPT_NAME;
+import static uk.co.idv.context.adapter.verification.client.header.IdvHeaderConstants.APPLICATION_JSON;
+import static uk.co.idv.context.adapter.verification.client.header.IdvHeaderConstants.CHANNEL_ID_NAME;
+import static uk.co.idv.context.adapter.verification.client.header.IdvHeaderConstants.CONTENT_TYPE_NAME;
+import static uk.co.idv.context.adapter.verification.client.header.IdvHeaderConstants.CORRELATION_ID_NAME;
 
 class RestVerificationClientIntegrationTest {
 
@@ -217,16 +217,18 @@ class RestVerificationClientIntegrationTest {
                 .build();
     }
 
-    private ContextRequestHeaders buildHeaders() {
-        return ContextRequestHeaders.build("abc");
+    private IdvRequestHeaders buildHeaders() {
+        return IdvRequestHeaders.builder()
+                .channelId("abc")
+                .build();
     }
 
-    private static MappingBuilder configureUpdateHeaders(MappingBuilder builder, ContextRequestHeaders headers) {
+    private static MappingBuilder configureUpdateHeaders(MappingBuilder builder, IdvRequestHeaders headers) {
         return configureGetHeaders(builder, headers)
                 .withHeader(CONTENT_TYPE_NAME, equalTo(APPLICATION_JSON));
     }
 
-    private static MappingBuilder configureGetHeaders(MappingBuilder builder, ContextRequestHeaders headers) {
+    private static MappingBuilder configureGetHeaders(MappingBuilder builder, IdvRequestHeaders headers) {
         return builder
                 .withHeader(ACCEPT_NAME, equalTo(APPLICATION_JSON))
                 .withHeader(CORRELATION_ID_NAME, equalTo(headers.getCorrelationId().toString()))

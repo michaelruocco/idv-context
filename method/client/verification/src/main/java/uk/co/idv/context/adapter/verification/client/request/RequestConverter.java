@@ -3,7 +3,7 @@ package uk.co.idv.context.adapter.verification.client.request;
 import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.context.adapter.verification.client.exception.ClientException;
-import uk.co.idv.context.adapter.verification.client.header.HeaderConstants;
+import uk.co.idv.context.adapter.verification.client.header.IdvHeaderConstants;
 import uk.co.mruoc.json.JsonConverter;
 
 import java.net.URI;
@@ -37,8 +37,8 @@ public class RequestConverter {
 
     private HttpRequest.Builder httpRequestWithBodyBuilder() {
         return HttpRequest.newBuilder()
-                .header(HeaderConstants.CONTENT_TYPE_NAME, HeaderConstants.APPLICATION_JSON)
-                .header(HeaderConstants.ACCEPT_NAME, HeaderConstants.APPLICATION_JSON);
+                .header(IdvHeaderConstants.CONTENT_TYPE_NAME, IdvHeaderConstants.APPLICATION_JSON)
+                .header(IdvHeaderConstants.ACCEPT_NAME, IdvHeaderConstants.APPLICATION_JSON);
     }
 
     private URI buildVerificationUrl() {
