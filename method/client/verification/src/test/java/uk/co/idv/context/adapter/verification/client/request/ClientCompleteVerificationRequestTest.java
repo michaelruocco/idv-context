@@ -1,7 +1,7 @@
 package uk.co.idv.context.adapter.verification.client.request;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.context.adapter.verification.client.header.ContextRequestHeaders;
+import uk.co.idv.context.adapter.verification.client.header.IdvRequestHeaders;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
 
 import java.util.UUID;
@@ -38,7 +38,7 @@ class ClientCompleteVerificationRequestTest {
 
     @Test
     void shouldReturnHeaders() {
-        ContextRequestHeaders headers = mock(ContextRequestHeaders.class);
+        IdvRequestHeaders headers = mock(IdvRequestHeaders.class);
 
         ClientCompleteVerificationRequest request = ClientCompleteVerificationRequest.builder()
                 .headers(headers)
@@ -49,7 +49,7 @@ class ClientCompleteVerificationRequestTest {
 
     @Test
     void shouldReturnHeadersArrayFromHeaders() {
-        ContextRequestHeaders headers = mock(ContextRequestHeaders.class);
+        IdvRequestHeaders headers = mock(IdvRequestHeaders.class);
         String[] headersArray = new String[0];
         given(headers.toArray()).willReturn(headersArray);
 
