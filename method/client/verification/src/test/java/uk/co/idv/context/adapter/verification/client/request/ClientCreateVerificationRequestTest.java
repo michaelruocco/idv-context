@@ -38,6 +38,19 @@ class ClientCreateVerificationRequestTest {
     }
 
     @Test
+    void shouldReturnMethodNameFromBody() {
+        String methodName = "method-name";
+        CreateVerificationRequest body = mock(CreateVerificationRequest.class);
+        given(body.getMethodName()).willReturn(methodName);
+
+        ClientCreateVerificationRequest request = ClientCreateVerificationRequest.builder()
+                .body(body)
+                .build();
+
+        assertThat(request.getMethodName()).isEqualTo(methodName);
+    }
+
+    @Test
     void shouldReturnHeaders() {
         IdvRequestHeaders headers = mock(IdvRequestHeaders.class);
 

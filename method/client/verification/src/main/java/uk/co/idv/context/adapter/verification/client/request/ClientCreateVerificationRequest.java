@@ -22,4 +22,8 @@ public class ClientCreateVerificationRequest {
         return body.getContextId();
     }
 
+    public String getMethodName() {
+        return body.getMethodName();
+    }
+
 }

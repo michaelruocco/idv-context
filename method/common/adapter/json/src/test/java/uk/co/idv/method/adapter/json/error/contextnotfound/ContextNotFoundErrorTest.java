@@ -3,13 +3,15 @@ package uk.co.idv.method.adapter.json.error.contextnotfound;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.common.adapter.json.error.ApiError;
 
+import java.util.UUID;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ContextNotFoundErrorTest {
 
-    private static final String MESSAGE = "error-message";
+    private static final UUID ID = UUID.randomUUID();
 
-    private final ApiError error = new ContextNotFoundError(MESSAGE);
+    private final ApiError error = new ContextNotFoundError(ID);
 
     @Test
     void shouldReturnStatus() {
@@ -23,7 +25,7 @@ class ContextNotFoundErrorTest {
 
     @Test
     void shouldReturnMessage() {
-        assertThat(error.getMessage()).isEqualTo(MESSAGE);
+        assertThat(error.getMessage()).isEqualTo(ID.toString());
     }
 
     @Test
