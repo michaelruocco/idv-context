@@ -37,10 +37,14 @@ dependencies {
     integrationTestImplementation "com.github.tomakehurst:wiremock-jre8:2.27.2"
     integrationTestImplementation testFixtures(project(":context-json"))
 
+    testFixturesCompileOnly "org.projectlombok:lombok:${lombokVersion}"
+    testFixturesAnnotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     testFixturesApi "uk.org.webcompere:system-stubs-jupiter:${systemStubsVersion}"
     testFixturesApi testFixtures(project(":method-entities"))
     testFixturesApi testFixtures(project(":method-json"))
     testFixturesApi testFixtures(project(":identity-json"))
+    testFixturesImplementation "org.apache.commons:commons-lang3:3.12.0"
+    testFixturesImplementation "org.awaitility:awaitility:${awaitilityVersion}"
 }
 
 apply from: rootProject.file("publish.gradle")
