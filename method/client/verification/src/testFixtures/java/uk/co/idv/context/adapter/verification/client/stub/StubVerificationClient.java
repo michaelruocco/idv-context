@@ -2,6 +2,7 @@ package uk.co.idv.context.adapter.verification.client.stub;
 
 import lombok.Builder;
 import uk.co.idv.context.adapter.verification.client.VerificationClient;
+import uk.co.idv.context.adapter.verification.client.header.DefaultIdvHeaderValidator;
 import uk.co.idv.context.adapter.verification.client.header.IdvHeaderValidator;
 import uk.co.idv.context.adapter.verification.client.request.ClientCompleteVerificationRequest;
 import uk.co.idv.context.adapter.verification.client.request.ClientCreateVerificationRequest;
@@ -16,7 +17,7 @@ import java.util.Collection;
 public class StubVerificationClient implements VerificationClient {
 
     @Builder.Default
-    private final IdvHeaderValidator headerValidator = new IdvHeaderValidator();
+    private final IdvHeaderValidator headerValidator = new DefaultIdvHeaderValidator();
 
     private final CreateVerificationScenario defaultCreateScenario;
     private final Collection<CreateVerificationScenario> createScenarios;
