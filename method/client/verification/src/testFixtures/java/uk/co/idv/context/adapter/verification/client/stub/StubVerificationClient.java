@@ -13,6 +13,8 @@ import uk.co.idv.method.entities.verification.Verification;
 
 import java.util.Collection;
 
+import static java.util.Collections.emptyList;
+
 @Builder
 public class StubVerificationClient implements VerificationClient {
 
@@ -20,10 +22,14 @@ public class StubVerificationClient implements VerificationClient {
     private final IdvHeaderValidator headerValidator = new DefaultIdvHeaderValidator();
 
     private final CreateVerificationScenario defaultCreateScenario;
-    private final Collection<CreateVerificationScenario> createScenarios;
+
+    @Builder.Default
+    private final Collection<CreateVerificationScenario> createScenarios = emptyList();
 
     private final CompleteVerificationScenario defaultCompleteScenario;
-    private final Collection<CompleteVerificationScenario> completeScenarios;
+
+    @Builder.Default
+    private final Collection<CompleteVerificationScenario> completeScenarios = emptyList();
 
     @Override
     public Verification createVerification(ClientCreateVerificationRequest request) {
