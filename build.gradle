@@ -59,7 +59,7 @@ subprojects {
     apply plugin: "java-library"
     apply plugin: "com.diffplug.spotless"
     apply plugin: 'com.adarshr.test-logger'
-    
+
     ext {
         testSetsPluginVersion = "3.0.1"
         shadowPluginVersion = "6.1.0"

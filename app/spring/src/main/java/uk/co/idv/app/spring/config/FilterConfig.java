@@ -178,8 +178,6 @@ public class FilterConfig {
         return patterns.toArray(new String[0]);
     }
 
-    //TODO set up logging masking for verifications endpoint responses
-
     private static String[] getContextUrlPatterns() {
         return new String[]{"/v1/contexts/*"};
     }
