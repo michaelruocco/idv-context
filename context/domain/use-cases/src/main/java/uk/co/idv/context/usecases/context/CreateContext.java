@@ -8,11 +8,11 @@ import uk.co.idv.context.entities.context.sequence.SequencesRequest;
 import uk.co.idv.context.usecases.context.event.create.ContextCreatedHandler;
 import uk.co.idv.context.usecases.context.expiry.ExpiryCalculator;
 import uk.co.idv.context.usecases.context.lockout.ContextLockoutService;
-import uk.co.idv.context.usecases.context.protect.ContextDataProtector;
 import uk.co.idv.context.usecases.context.sequence.SequencesBuilder;
 
 import java.time.Clock;
 import java.time.Instant;
+import java.util.function.UnaryOperator;
 
 @Builder
 public class CreateContext {
@@ -26,7 +26,7 @@ public class CreateContext {
     private final SequencesBuilder sequencesBuilder;
     private final ContextCreatedHandler createdHandler;
     private final ContextRepository repository;
-    private final ContextDataProtector protector;
+    private final UnaryOperator<Context> protector;
 
     public Context create(ServiceCreateContextRequest request) {
         lockoutService.validateLockoutState(request);

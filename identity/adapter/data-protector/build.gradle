@@ -4,3 +4,5 @@ dependencies {
 
     testImplementation testFixtures(project(":identity-entities"))
 }
+
+apply from: rootProject.file("publish.gradle")
