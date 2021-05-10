@@ -1,4 +1,4 @@
-package uk.co.idv.identity.entities.phonenumber;
+package uk.co.idv.identity.entities.mobiledevices;
 
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -11,31 +11,31 @@ import java.util.stream.Stream;
 
 @ToString
 @EqualsAndHashCode
-public class PhoneNumbers implements Iterable<PhoneNumber> {
+public class MobileDevices implements Iterable<MobileDevice> {
 
-    private final Collection<PhoneNumber> values;
+    private final Collection<MobileDevice> values;
 
-    public PhoneNumbers(PhoneNumber... values) {
+    public MobileDevices(MobileDevice... values) {
         this(Arrays.asList(values));
     }
 
-    public PhoneNumbers(Collection<PhoneNumber> values) {
+    public MobileDevices(Collection<MobileDevice> values) {
         this.values = new LinkedHashSet<>(values);
     }
 
-    public Iterator<PhoneNumber> iterator() {
+    public Iterator<MobileDevice> iterator() {
         return values.iterator();
     }
 
-    public Stream<PhoneNumber> stream() {
+    public Stream<MobileDevice> stream() {
         return values.stream();
     }
 
-    public PhoneNumbers add(PhoneNumbers others) {
-        Collection<PhoneNumber> mergedValues = new LinkedHashSet<>();
+    public MobileDevices add(MobileDevices others) {
+        Collection<MobileDevice> mergedValues = new LinkedHashSet<>();
         mergedValues.addAll(this.values);
         mergedValues.addAll(others.values);
-        return new PhoneNumbers(mergedValues);
+        return new MobileDevices(mergedValues);
     }
 
     public boolean isEmpty() {
