@@ -12,6 +12,7 @@ import uk.co.idv.identity.entities.alias.IdvIdAlreadyPresentException;
 import uk.co.idv.identity.entities.alias.IdvIdMother;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
@@ -206,6 +207,17 @@ class DefaultIdentityTest {
 
         EmailAddresses expected = identity.getEmailAddresses().add(other.getEmailAddresses());
         assertThat(added.getEmailAddresses()).containsExactlyElementsOf(expected);
+    }
+
+    @Test
+    void shouldAddAllMobileDevicesFromOtherIdentity() {
+        Identity identity = IdentityMother.withoutIdvId();
+        Identity other = IdentityMother.example1();
+
+        Identity added = identity.addData(other);
+
+        MobileDevices expected = identity.getMobileDevices().add(other.getMobileDevices());
+        assertThat(added.getMobileDevices()).containsExactlyElementsOf(expected);
     }
 
     @Test

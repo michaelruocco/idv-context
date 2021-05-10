@@ -8,6 +8,8 @@ import uk.co.idv.common.entities.async.SuccessfulSupplier;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.identity.entities.identity.RequestedDataMother;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevicesMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
@@ -41,6 +43,7 @@ class AsyncDataLoaderTest {
 
         assertThat(futures.getPhoneNumbersNow()).isEmpty();
         assertThat(futures.getEmailAddressesNow()).isEmpty();
+        assertThat(futures.getMobileDevicesNow()).isEmpty();
     }
 
     @Test
@@ -48,11 +51,13 @@ class AsyncDataLoaderTest {
         AsyncDataLoadRequest request = AsyncDataLoadRequestMother.withTimeout(TIMEOUT);
         given(supplierFactory.phoneNumberSupplier(request)).willReturn(new FailingSupplier<>());
         given(supplierFactory.emailAddressSupplier(request)).willReturn(new FailingSupplier<>());
+        given(supplierFactory.mobileDeviceSupplier(request)).willReturn(new FailingSupplier<>());
 
         DataFutures futures = loader.loadData(request);
 
         assertThat(futures.getPhoneNumbersNow()).isEmpty();
         assertThat(futures.getEmailAddressesNow()).isEmpty();
+        assertThat(futures.getMobileDevicesNow()).isEmpty();
     }
 
     @Test
@@ -61,11 +66,13 @@ class AsyncDataLoaderTest {
         Duration delayDuration = TIMEOUT.plusMillis(150);
         given(supplierFactory.phoneNumberSupplier(request)).willReturn(new DelayedSupplier<>(delayDuration, PhoneNumbersMother.two()));
         given(supplierFactory.emailAddressSupplier(request)).willReturn(new DelayedSupplier<>(delayDuration, EmailAddressesMother.one()));
+        given(supplierFactory.mobileDeviceSupplier(request)).willReturn(new DelayedSupplier<>(delayDuration, MobileDevicesMother.one()));
 
         DataFutures futures = loader.loadData(request);
 
         assertThat(futures.getPhoneNumbersNow()).isEmpty();
         assertThat(futures.getEmailAddressesNow()).isEmpty();
+        assertThat(futures.getMobileDevicesNow()).isEmpty();
     }
 
     @Test
@@ -73,13 +80,16 @@ class AsyncDataLoaderTest {
         AsyncDataLoadRequest request = AsyncDataLoadRequestMother.withTimeout(TIMEOUT);
         PhoneNumbers expectedPhoneNumbers = PhoneNumbersMother.two();
         EmailAddresses expectedEmailAddresses = EmailAddressesMother.two();
+        MobileDevices expectedMobileDevices = MobileDevicesMother.two();
         given(supplierFactory.phoneNumberSupplier(request)).willReturn(new SuccessfulSupplier<>(expectedPhoneNumbers));
         given(supplierFactory.emailAddressSupplier(request)).willReturn(new SuccessfulSupplier<>(expectedEmailAddresses));
+        given(supplierFactory.mobileDeviceSupplier(request)).willReturn(new SuccessfulSupplier<>(expectedMobileDevices));
 
         DataFutures futures = loader.loadData(request);
 
         assertThat(futures.getPhoneNumbersNow()).isEqualTo(expectedPhoneNumbers);
         assertThat(futures.getEmailAddressesNow()).isEqualTo(expectedEmailAddresses);
+        assertThat(futures.getMobileDevicesNow()).isEqualTo(expectedMobileDevices);
     }
 
 }

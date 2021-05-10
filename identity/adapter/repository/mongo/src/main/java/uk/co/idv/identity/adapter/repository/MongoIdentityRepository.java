@@ -28,7 +28,7 @@ public class MongoIdentityRepository implements IdentityRepository {
 
     @Override
     public Optional<Identity> load(Alias alias) {
-        Instant start = Instant.now();
+        var start = Instant.now();
         try {
             Bson query = toFindByAliasQuery(alias);
             FindIterable<IdentityDocument> documents = collection.find(query);
@@ -40,7 +40,7 @@ public class MongoIdentityRepository implements IdentityRepository {
 
     @Override
     public Identities load(Aliases aliases) {
-        Instant start = Instant.now();
+        var start = Instant.now();
         try {
             Bson query = toFindByAliasesQuery(aliases);
             FindIterable<IdentityDocument> documents = collection.find(query);
@@ -52,7 +52,7 @@ public class MongoIdentityRepository implements IdentityRepository {
 
     @Override
     public void create(Identity identity) {
-        Instant start = Instant.now();
+        var start = Instant.now();
         try {
             IdentityDocument document = toDocument(identity);
             collection.insertOne(document);
@@ -63,7 +63,7 @@ public class MongoIdentityRepository implements IdentityRepository {
 
     @Override
     public void update(Identity updated, Identity existing) {
-        Instant start = Instant.now();
+        var start = Instant.now();
         try {
             Bson query = toFindByIdvIdQuery(updated.getIdvId());
             IdentityDocument document = toDocument(updated);
@@ -75,7 +75,7 @@ public class MongoIdentityRepository implements IdentityRepository {
 
     @Override
     public void delete(Aliases aliases) {
-        Instant start = Instant.now();
+        var start = Instant.now();
         try {
             Bson query = toFindByAliasesQuery(aliases);
             collection.deleteMany(query);

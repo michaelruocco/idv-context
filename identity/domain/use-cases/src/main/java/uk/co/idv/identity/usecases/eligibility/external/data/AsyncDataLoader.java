@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.extern.slf4j.Slf4j;
 import uk.co.idv.common.usecases.async.FutureWaiter;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
 import java.util.concurrent.CompletableFuture;
@@ -31,6 +32,7 @@ public class AsyncDataLoader {
         return DataFutures.builder()
                 .phoneNumbers(loadPhoneNumbers(request))
                 .emailAddresses(loadEmailAddresses(request))
+                .mobileDevices(loadMobileDevices(request))
                 .build();
     }
 
@@ -46,6 +48,13 @@ public class AsyncDataLoader {
             return supplyAsync(supplierFactory.emailAddressSupplier(request));
         }
         return CompletableFuture.completedFuture(new EmailAddresses());
+    }
+
+    private CompletableFuture<MobileDevices> loadMobileDevices(AsyncDataLoadRequest request) {
+        if (request.mobileDevicesRequested()) {
+            return supplyAsync(supplierFactory.mobileDeviceSupplier(request));
+        }
+        return CompletableFuture.completedFuture(new MobileDevices());
     }
 
     private <T> CompletableFuture<T> supplyAsync(Supplier<T> supplier) {

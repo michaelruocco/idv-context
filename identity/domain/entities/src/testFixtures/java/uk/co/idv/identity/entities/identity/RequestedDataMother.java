@@ -1,7 +1,7 @@
 package uk.co.idv.identity.entities.identity;
 
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesOnly;
-import uk.co.idv.identity.entities.mobiledevices.MobileDevicesOnly;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevicesOnly;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersOnly;
 
 import java.util.Arrays;

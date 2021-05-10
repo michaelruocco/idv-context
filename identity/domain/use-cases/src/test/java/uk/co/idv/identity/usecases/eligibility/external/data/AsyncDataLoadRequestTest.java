@@ -70,4 +70,16 @@ class AsyncDataLoadRequestTest {
         assertThat(request.phoneNumbersRequested()).isTrue();
     }
 
+    @Test
+    void shouldReturnTrueIfMobileDevicesRequested() {
+        RequestedData requestedData = mock(RequestedData.class);
+        given(requestedData.mobileDevicesRequested()).willReturn(true);
+
+        AsyncDataLoadRequest request = AsyncDataLoadRequest.builder()
+                .requestedData(requestedData)
+                .build();
+
+        assertThat(request.mobileDevicesRequested()).isTrue();
+    }
+
 }

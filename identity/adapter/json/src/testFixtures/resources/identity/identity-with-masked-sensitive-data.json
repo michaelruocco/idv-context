@@ -23,5 +23,13 @@
   "emailAddresses": [
     "joe.**************.co.uk",
     "joeb***********.co.uk"
+  ],
+  "mobileDevices": [
+    {
+      "token": "8cc1121057f63af3c57bbe"
+    },
+    {
+      "token": "2dd1121057f63af3c57ccf"
+    }
   ]
 }

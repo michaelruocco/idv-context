@@ -4,13 +4,16 @@ import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.adapter.repository.converter.alias.AliasDocumentConverter;
 import uk.co.idv.identity.adapter.repository.converter.emailaddress.EmailAddressesDocumentConverter;
+import uk.co.idv.identity.adapter.repository.converter.mobiledevice.MobileDevicesDocumentConverter;
 import uk.co.idv.identity.adapter.repository.converter.phonenumber.PhoneNumberDocumentConverter;
 import uk.co.idv.identity.adapter.repository.document.AliasDocument;
 import uk.co.idv.identity.adapter.repository.document.IdentityDocument;
 import uk.co.idv.identity.adapter.repository.document.IdentityDocumentMother;
+import uk.co.idv.identity.adapter.repository.document.MobileDeviceDocument;
 import uk.co.idv.identity.adapter.repository.document.PhoneNumberDocument;
 import uk.co.idv.identity.adapter.repository.document.alias.AliasDocumentMother;
 import uk.co.idv.identity.adapter.repository.document.emailaddress.EmailAddressDocumentMother;
+import uk.co.idv.identity.adapter.repository.document.mobiledevice.MobileDeviceDocumentMother;
 import uk.co.idv.identity.adapter.repository.document.phonenumber.PhoneNumberDocumentMother;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.AliasesMother;
@@ -18,6 +21,8 @@ import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevicesMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
@@ -32,11 +37,13 @@ class IdentityDocumentConverterTest {
     private final AliasDocumentConverter aliasesConverter = mock(AliasDocumentConverter.class);
     private final PhoneNumberDocumentConverter phoneNumberConverter = mock(PhoneNumberDocumentConverter.class);
     private final EmailAddressesDocumentConverter emailAddressesConverter = mock(EmailAddressesDocumentConverter.class);
+    private final MobileDevicesDocumentConverter mobileDevicesDocumentConverter = mock(MobileDevicesDocumentConverter.class);
 
     private final IdentityDocumentConverter converter = IdentityDocumentConverter.builder()
             .aliasesConverter(aliasesConverter)
             .phoneNumberConverter(phoneNumberConverter)
             .emailAddressesConverter(emailAddressesConverter)
+            .mobileDevicesDocumentConverter(mobileDevicesDocumentConverter)
             .build();
 
     @Test
@@ -82,6 +89,17 @@ class IdentityDocumentConverterTest {
     }
 
     @Test
+    void shouldConvertMobileDeviceDocumentsToMobileDevices() {
+        IdentityDocument document = IdentityDocumentMother.example();
+        MobileDevices expectedMobileDevices = MobileDevicesMother.two();
+        given(mobileDevicesDocumentConverter.toMobileDevices(document.getMobileDevices())).willReturn(expectedMobileDevices);
+
+        Identity converted = converter.toIdentity(document);
+
+        assertThat(converted.getMobileDevices()).isEqualTo(expectedMobileDevices);
+    }
+
+    @Test
     void shouldConvertCountryToDocument() {
         Identity identity = IdentityMother.example();
 
@@ -121,6 +139,17 @@ class IdentityDocumentConverterTest {
         IdentityDocument converted = converter.toDocument(identity);
 
         assertThat(converted.getEmailAddresses()).isEqualTo(expectedDocuments);
+    }
+
+    @Test
+    void shouldConvertMobileDevicesToMobileDeviceDocuments() {
+        Identity identity = IdentityMother.example();
+        Collection<MobileDeviceDocument> expectedDocuments = MobileDeviceDocumentMother.two();
+        given(mobileDevicesDocumentConverter.toDocuments(identity.getMobileDevices())).willReturn(expectedDocuments);
+
+        IdentityDocument converted = converter.toDocument(identity);
+
+        assertThat(converted.getMobileDevices()).isEqualTo(expectedDocuments);
     }
 
 }

@@ -31,6 +31,7 @@ public class ExternalFindIdentity {
                 .country(request.getCountry())
                 .phoneNumbers(futures.getPhoneNumbersNow())
                 .emailAddresses(futures.getEmailAddressesNow())
+                .mobileDevices(futures.getMobileDevicesNow())
                 .build();
     }
 

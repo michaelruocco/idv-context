@@ -7,6 +7,9 @@ import uk.co.idv.identity.entities.alias.AliasesMother;
 import uk.co.idv.identity.entities.emailaddress.EmailAddress;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevice;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevicesMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
@@ -45,6 +48,14 @@ public interface IdentityMother {
         return exampleBuilder().emailAddresses(emailAddresses).build();
     }
 
+    static Identity withMobileDevices(MobileDevice... mobileDevices) {
+        return withMobileDevices(MobileDevicesMother.with(mobileDevices));
+    }
+
+    static Identity withMobileDevices(MobileDevices mobileDevices) {
+        return exampleBuilder().mobileDevices(mobileDevices).build();
+    }
+
     static Identity example() {
         return exampleBuilder().build();
     }
@@ -55,18 +66,12 @@ public interface IdentityMother {
                 .build();
     }
 
-    static Identity withEmptyData() {
-        return exampleBuilder()
-                .phoneNumbers(PhoneNumbersMother.empty())
-                .emailAddresses(EmailAddressesMother.empty())
-                .build();
-    }
-
     static Identity example1() {
         return exampleBuilder()
                 .aliases(AliasesMother.idvIdAndDebitCardNumber1())
                 .phoneNumbers(PhoneNumbersMother.one())
                 .emailAddresses(EmailAddressesMother.one())
+                .mobileDevices(MobileDevicesMother.one())
                 .build();
     }
 
@@ -75,7 +80,8 @@ public interface IdentityMother {
                 .country(CountryCode.GB)
                 .aliases(AliasesMother.idvIdAndCreditCardNumber())
                 .phoneNumbers(PhoneNumbersMother.two())
-                .emailAddresses(EmailAddressesMother.two());
+                .emailAddresses(EmailAddressesMother.two())
+                .mobileDevices(MobileDevicesMother.two());
     }
 
 }

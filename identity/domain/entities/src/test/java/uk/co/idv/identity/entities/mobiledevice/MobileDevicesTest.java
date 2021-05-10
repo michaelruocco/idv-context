@@ -1,4 +1,4 @@
-package uk.co.idv.identity.entities.mobiledevices;
+package uk.co.idv.identity.entities.mobiledevice;
 
 import org.junit.jupiter.api.Test;
 

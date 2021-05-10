@@ -1,4 +1,4 @@
-package uk.co.idv.identity.entities.mobiledevices;
+package uk.co.idv.identity.entities.mobiledevice;
 
 import uk.co.idv.identity.entities.identity.RequestedData;
 import uk.co.idv.identity.entities.identity.RequestedDataItems;

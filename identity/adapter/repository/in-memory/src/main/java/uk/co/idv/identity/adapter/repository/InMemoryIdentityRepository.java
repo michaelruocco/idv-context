@@ -48,7 +48,7 @@ public class InMemoryIdentityRepository implements IdentityRepository {
     }
 
     private void deleteEntriesForRemovedAliases(Identity updated, Identity existing) {
-        Aliases aliasesToRemove = existing.getAliasesNotPresent(updated);
+        var aliasesToRemove = existing.getAliasesNotPresent(updated);
         delete(aliasesToRemove);
     }
 
@@ -57,7 +57,7 @@ public class InMemoryIdentityRepository implements IdentityRepository {
     }
 
     private static Collection<String> toKeys(Identity identity) {
-        Aliases aliases = identity.getAliases();
+        var aliases = identity.getAliases();
         return toKeys(aliases);
     }
 

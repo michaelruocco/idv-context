@@ -3,7 +3,6 @@ package uk.co.idv.identity.usecases.eligibility.internal;
 import lombok.Builder;
 import uk.co.idv.identity.entities.eligibility.IdentityEligibility;
 import uk.co.idv.identity.entities.identity.FindIdentityRequest;
-import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.usecases.eligibility.CreateEligibility;
 import uk.co.idv.identity.usecases.eligibility.IdentityEligibilityFactory;
 import uk.co.idv.identity.usecases.identity.find.FindIdentity;
@@ -17,7 +16,7 @@ public class InternalCreateEligibility implements CreateEligibility {
 
     @Override
     public IdentityEligibility create(FindIdentityRequest request) {
-        Identity identity = find.find(request.getAliases());
+        var identity = find.find(request.getAliases());
         return factory.build(request, identity);
     }
 

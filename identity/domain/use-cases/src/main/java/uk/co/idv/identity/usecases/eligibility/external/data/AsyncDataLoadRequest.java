@@ -23,4 +23,8 @@ public class AsyncDataLoadRequest {
         return getRequestedData().phoneNumbersRequested();
     }
 
+    public boolean mobileDevicesRequested() {
+        return getRequestedData().mobileDevicesRequested();
+    }
+
 }

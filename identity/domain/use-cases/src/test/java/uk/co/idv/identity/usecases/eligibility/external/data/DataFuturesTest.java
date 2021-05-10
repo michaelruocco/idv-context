@@ -3,6 +3,8 @@ package uk.co.idv.identity.usecases.eligibility.external.data;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevicesMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
@@ -17,10 +19,12 @@ class DataFuturesTest {
     void shouldReturnCombinedCompletableFutures() {
         CompletableFuture<PhoneNumbers> phoneNumbersFuture = completedFuture(PhoneNumbersMother.two());
         CompletableFuture<EmailAddresses> emailAddressesFuture = completedFuture(EmailAddressesMother.two());
+        CompletableFuture<MobileDevices> mobileDevicesFuture = completedFuture(MobileDevicesMother.two());
 
         DataFutures futures = DataFutures.builder()
                 .phoneNumbers(phoneNumbersFuture)
                 .emailAddresses(emailAddressesFuture)
+                .mobileDevices(mobileDevicesFuture)
                 .build();
 
         assertThat(futures.allCombined().isDone()).isTrue();
@@ -46,6 +50,17 @@ class DataFuturesTest {
                 .build();
 
         assertThat(futures.getEmailAddressesNow()).isEqualTo(EmailAddressesMother.empty());
+    }
+
+    @Test
+    void shouldReturnEmptyDataIfMobileDeviceFutureFailed() {
+        CompletableFuture<MobileDevices> future = CompletableFuture.failedFuture(new Exception());
+
+        DataFutures futures = DataFutures.builder()
+                .mobileDevices(future)
+                .build();
+
+        assertThat(futures.getMobileDevicesNow()).isEqualTo(MobileDevicesMother.empty());
     }
 
 }
