@@ -1,10 +1,12 @@
 package uk.co.idv.method.entities.push;
 
 import org.junit.jupiter.api.Test;
-import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
 import uk.co.idv.method.entities.eligibility.Eligible;
 import uk.co.idv.method.entities.method.MethodVerifications;
 import uk.co.idv.method.entities.push.eligibility.NoMobileDevicesRegistered;
+
+import java.util.Collection;
+import java.util.Collections;
 
 import static java.lang.Integer.toUnsignedLong;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,23 +23,22 @@ class PushNotificationTest {
     }
 
     @Test
-    void shouldReturnMobileDevices() {
-        MobileDevices mobileDevices = givenMobileDevices();
+    void shouldReturnMobileDeviceTokens() {
+        Collection<String> tokens = givenMobileDeviceTokens();
 
         PushNotification pushNotification = PushNotification.builder()
-                .mobileDevices(mobileDevices)
+                .mobileDeviceTokens(tokens)
                 .build();
 
-        assertThat(pushNotification.getMobileDevices()).isEqualTo(mobileDevices);
+        assertThat(pushNotification.getMobileDeviceTokens()).isEqualTo(tokens);
     }
 
     @Test
     void shouldReturnEligibleIfMobileDevicesIsNotEmpty() {
-        MobileDevices mobileDevices = givenMobileDevices();
-        given(mobileDevices.isEmpty()).willReturn(false);
+        Collection<String> tokens = givenMobileDeviceTokens();
 
         PushNotification pushNotification = PushNotification.builder()
-                .mobileDevices(mobileDevices)
+                .mobileDeviceTokens(tokens)
                 .build();
 
         assertThat(pushNotification.getEligibility()).isEqualTo(new Eligible());
@@ -45,11 +46,10 @@ class PushNotificationTest {
 
     @Test
     void shouldReturnIneligibleIfMobileDevicesIsEmpty() {
-        MobileDevices mobileDevices = givenMobileDevices();
-        given(mobileDevices.isEmpty()).willReturn(true);
+        Collection<String> tokens = Collections.emptyList();
 
         PushNotification pushNotification = PushNotification.builder()
-                .mobileDevices(mobileDevices)
+                .mobileDeviceTokens(tokens)
                 .build();
 
         assertThat(pushNotification.getEligibility()).isEqualTo(new NoMobileDevicesRegistered());
@@ -120,8 +120,8 @@ class PushNotificationTest {
         assertThat(pushNotification.getConfig()).isEqualTo(config);
     }
 
-    private MobileDevices givenMobileDevices() {
-        return mock(MobileDevices.class);
+    private Collection<String> givenMobileDeviceTokens() {
+        return Collections.singleton("my-token");
     }
 
 }

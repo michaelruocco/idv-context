@@ -20,7 +20,7 @@ public class PushNotificationBuilder implements MethodBuilder {
         PushNotificationPolicy pushPolicy = (PushNotificationPolicy) policy;
         return PushNotification.builder()
                 .config(pushPolicy.getConfig())
-                .mobileDevices(request.getMobileDevices())
+                .mobileDeviceTokens(request.getMobileDeviceTokens())
                 .build();
     }
 

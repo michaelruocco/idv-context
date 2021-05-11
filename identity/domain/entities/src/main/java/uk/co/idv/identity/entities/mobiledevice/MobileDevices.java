@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @ToString
@@ -29,6 +30,12 @@ public class MobileDevices implements Iterable<MobileDevice> {
 
     public Stream<MobileDevice> stream() {
         return values.stream();
+    }
+
+    public Collection<String> getTokens() {
+        return stream()
+                .map(MobileDevice::getToken)
+                .collect(Collectors.toList());
     }
 
     public MobileDevices add(MobileDevices others) {

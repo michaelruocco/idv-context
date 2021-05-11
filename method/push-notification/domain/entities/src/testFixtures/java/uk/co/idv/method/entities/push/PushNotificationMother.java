@@ -1,9 +1,7 @@
 package uk.co.idv.method.entities.push;
 
-
-import uk.co.idv.identity.entities.mobiledevice.MobileDevice;
-import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
-import uk.co.idv.identity.entities.mobiledevice.MobileDevicesMother;
+import java.util.Arrays;
+import java.util.Collection;
 
 public interface PushNotificationMother {
 
@@ -11,26 +9,22 @@ public interface PushNotificationMother {
         return builder().build();
     }
 
-    static PushNotification withEmptyMobileDevices() {
-        return withMobileDevices(MobileDevicesMother.empty());
+    static PushNotification withEmptyMobileDeviceTokens() {
+        return withMobileDeviceTokens();
     }
 
-    static PushNotification withMobileDevices(MobileDevice mobileDevice) {
-        return withMobileDevices(MobileDevicesMother.with(mobileDevice));
+    static PushNotification withMobileDeviceTokens(String... tokens) {
+        return withMobileDeviceTokens(Arrays.asList(tokens));
     }
 
-    static PushNotification withMobileDevices(MobileDevice... mobileDevices) {
-        return builder().mobileDevices(MobileDevicesMother.with(mobileDevices)).build();
-    }
-
-    static PushNotification withMobileDevices(MobileDevices mobileDevices) {
-        return builder().mobileDevices(mobileDevices).build();
+    static PushNotification withMobileDeviceTokens(Collection<String> tokens) {
+        return builder().mobileDeviceTokens(tokens).build();
     }
 
     static PushNotification.PushNotificationBuilder builder() {
         return PushNotification.builder()
                 .config(PushNotificationConfigMother.build())
-                .mobileDevices(MobileDevicesMother.two());
+                .mobileDeviceTokens(Arrays.asList("8cc1121057f63af3c57bbe", "2dd1121057f63af3c57ccf"));
     }
 
 }

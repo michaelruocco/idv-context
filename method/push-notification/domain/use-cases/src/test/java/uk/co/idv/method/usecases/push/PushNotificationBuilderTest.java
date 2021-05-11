@@ -52,7 +52,7 @@ class PushNotificationBuilderTest {
 
         PushNotification pushNotification = builder.build(request, policy);
 
-        assertThat(pushNotification.getMobileDevices()).isEqualTo(request.getMobileDevices());
+        assertThat(pushNotification.getMobileDeviceTokens()).isEqualTo(request.getMobileDeviceTokens());
     }
 
     @Test
