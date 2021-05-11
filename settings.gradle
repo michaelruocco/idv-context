@@ -138,6 +138,12 @@ project(':otp-sim-swap-stub-config').projectDir = file('method/otp/adapter/sim-s
 include ':otp-config'
 project(':otp-config').projectDir = file('method/otp/config')
 
+include ':push-notification-entities'
+project(':push-notification-entities').projectDir = file('method/push-notification/domain/entities')
+
+include ':push-notification-use-cases'
+project(':push-notification-use-cases').projectDir = file('method/push-notification/domain/use-cases')
+
 include ':idv-context-plain-app'
 project(':idv-context-plain-app').projectDir = file('app/plain')
 

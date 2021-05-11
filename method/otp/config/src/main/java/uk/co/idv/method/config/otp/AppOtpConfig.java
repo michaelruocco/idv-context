@@ -102,8 +102,8 @@ public class AppOtpConfig implements AppMethodConfig {
     }
 
     private static int loadAsyncSimSwapThreadPoolSize() {
-        String key = "async.sim.swap.thread.pool.size";
-        int size = Integer.parseInt(System.getProperty(key, "50"));
+        var key = "async.sim.swap.thread.pool.size";
+        var size = Integer.parseInt(System.getProperty(key, "50"));
         log.info("loaded {} value {}", key, size);
         return size;
     }
