@@ -11,7 +11,8 @@ public class DataAppenderFactory {
     private static DataAppender[] toAppenders(Channel channel) {
         return new DataAppender[] {
                 new ProvidedEmailAddressesAppender(channel),
-                new ProvidedPhoneNumbersAppender(channel)
+                new ProvidedPhoneNumbersAppender(channel),
+                new ProvidedMobileDevicesAppender(channel)
         };
     }
 

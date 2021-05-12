@@ -57,4 +57,11 @@ class DeRsaTest {
         assertThat(rsa.getDsSessionId()).isEmpty();
     }
 
+    @Test
+    void validCookieShouldAlwaysBeEmpty() {
+        Channel rsa = DeRsaMother.rsa();
+
+        assertThat(rsa.hasValidCookie()).isEmpty();
+    }
+
 }

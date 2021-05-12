@@ -7,7 +7,7 @@ import uk.co.mruoc.json.jackson.JsonNodeConverter;
 
 import java.util.Optional;
 
-public interface PhoneNumbersExtractor {
+public interface PhoneNumberExtractor {
 
     static PhoneNumbers toPhoneNumbers(JsonNode node, JsonParser parser) {
         return Optional.ofNullable(node.get("phoneNumbers"))

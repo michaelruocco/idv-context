@@ -4,14 +4,22 @@
   "phoneNumbers": [
     {
       "value": "+447089111111",
-      "lastUpdated":"2020-08-29T20:55:12.825Z"
+      "lastUpdated": "2020-08-29T20:55:12.825Z"
     },
     {
-      "value":"+447089121212"
+      "value": "+447089121212"
     }
   ],
   "emailAddresses": [
     "joe.bloggs@hotmail.co.uk",
     "joebloggs@yahoo.co.uk"
+  ],
+  "mobileDevices": [
+    {
+      "token": "8cc1121057f63af3c57bbe"
+    },
+    {
+      "token": "2dd1121057f63af3c57ccf"
+    }
   ]
 }

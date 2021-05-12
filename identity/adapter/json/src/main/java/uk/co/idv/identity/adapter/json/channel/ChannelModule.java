@@ -9,6 +9,7 @@ import uk.co.idv.identity.adapter.json.channel.defaultchannel.DefaultChannelDese
 import uk.co.idv.identity.adapter.json.channel.gb.AbcChannelDeserializer;
 import uk.co.idv.identity.adapter.json.channel.gb.GbRsaChannelDeserializer;
 import uk.co.idv.identity.adapter.json.emailaddress.EmailAddressModule;
+import uk.co.idv.identity.adapter.json.mobiledevice.MobileDeviceModule;
 import uk.co.idv.identity.adapter.json.phonenumber.PhoneNumberModule;
 import uk.co.idv.identity.entities.channel.Channel;
 import uk.co.idv.identity.entities.channel.DefaultChannel;
@@ -32,7 +33,8 @@ public class ChannelModule extends SimpleModule {
         return Arrays.asList(
                 new Jdk8Module(),
                 new EmailAddressModule(),
-                new PhoneNumberModule()
+                new PhoneNumberModule(),
+                new MobileDeviceModule()
         );
     }
 
