@@ -45,13 +45,32 @@ class RequestedDataTest {
     }
 
     @Test
+    void shouldReturnMobileDevicesRequestedTrueIfRequested() {
+        RequestedData requestedData = RequestedDataMother.mobileDevicesOnly();
+
+        boolean isRequested = requestedData.mobileDevicesRequested();
+
+        assertThat(isRequested).isTrue();
+    }
+
+    @Test
+    void shouldReturnMobileDevicesRequestedFalseIfNotRequested() {
+        RequestedData requestedData = RequestedDataMother.noneRequested();
+
+        boolean isRequested = requestedData.mobileDevicesRequested();
+
+        assertThat(isRequested).isFalse();
+    }
+
+    @Test
 
     void shouldBeIterable() {
         RequestedData requestedData = RequestedDataMother.allRequested();
 
         assertThat(requestedData).containsExactly(
                 RequestedDataItems.EMAIL_ADDRESSES,
-                RequestedDataItems.PHONE_NUMBERS
+                RequestedDataItems.PHONE_NUMBERS,
+                RequestedDataItems.MOBILE_DEVICES
         );
     }
 
@@ -63,7 +82,8 @@ class RequestedDataTest {
 
         assertThat(items).containsExactly(
                 RequestedDataItems.EMAIL_ADDRESSES,
-                RequestedDataItems.PHONE_NUMBERS
+                RequestedDataItems.PHONE_NUMBERS,
+                RequestedDataItems.MOBILE_DEVICES
         );
     }
 
@@ -82,6 +102,15 @@ class RequestedDataTest {
 
         assertThat(requestedData).containsExactly(
                 RequestedDataItems.EMAIL_ADDRESSES
+        );
+    }
+
+    @Test
+    void shouldReturnMobileDevicesOnly() {
+        RequestedData requestedData = RequestedDataMother.mobileDevicesOnly();
+
+        assertThat(requestedData).containsExactly(
+                RequestedDataItems.MOBILE_DEVICES
         );
     }
 

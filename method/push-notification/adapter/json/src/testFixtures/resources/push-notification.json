@@ -1,0 +1,14 @@
+{
+  "name": "push-notification",
+  "mobileDeviceTokens": [
+    "8cc1121057f63af3c57bbe",
+    "2dd1121057f63af3c57ccf"
+  ],
+  "config": {
+    "maxNumberOfAttempts": 3,
+    "duration": 300000
+  },
+  "eligibility": {
+    "eligible": true
+  }
+}

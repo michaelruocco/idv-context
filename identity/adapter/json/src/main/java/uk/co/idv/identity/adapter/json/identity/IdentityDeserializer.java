@@ -6,7 +6,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.deser.std.StdDeserializer;
 import com.neovisionaries.i18n.CountryCode;
 import uk.co.idv.identity.adapter.json.emailaddress.EmailAddressExtractor;
-import uk.co.idv.identity.adapter.json.phonenumber.PhoneNumbersExtractor;
+import uk.co.idv.identity.adapter.json.mobiledevice.MobileDeviceExtractor;
+import uk.co.idv.identity.adapter.json.phonenumber.PhoneNumberExtractor;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.identity.DefaultIdentity;
 import uk.co.idv.identity.entities.identity.Identity;
@@ -27,8 +28,9 @@ public class IdentityDeserializer extends StdDeserializer<Identity> {
         return DefaultIdentity.builder()
                 .country(toCountry(node))
                 .aliases(toAliases(node, parser))
-                .phoneNumbers(PhoneNumbersExtractor.toPhoneNumbers(node, parser))
+                .phoneNumbers(PhoneNumberExtractor.toPhoneNumbers(node, parser))
                 .emailAddresses(EmailAddressExtractor.toEmailAddresses(node, parser))
+                .mobileDevices(MobileDeviceExtractor.toMobileDevices(node, parser))
                 .build();
     }
 

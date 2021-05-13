@@ -17,7 +17,7 @@ public interface ContextPolicyMother {
     }
 
     static ContextPolicy withPolicy(SequencePolicy policy) {
-        return withPolicies(SequencePoliciesMother.withSequencePolicy(policy));
+        return withPolicies(SequencePoliciesMother.withSequencePolicies(policy));
     }
 
     static ContextPolicy withPolicies(SequencePolicies policies) {

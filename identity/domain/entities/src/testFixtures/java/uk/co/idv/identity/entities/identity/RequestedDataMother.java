@@ -1,6 +1,7 @@
 package uk.co.idv.identity.entities.identity;
 
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesOnly;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevicesOnly;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersOnly;
 
 import java.util.Arrays;
@@ -23,6 +24,10 @@ public interface RequestedDataMother {
 
     static RequestedData phoneNumbersOnly() {
         return new PhoneNumbersOnly();
+    }
+
+    static RequestedData mobileDevicesOnly() {
+        return new MobileDevicesOnly();
     }
 
     static RequestedData with(String... items) {

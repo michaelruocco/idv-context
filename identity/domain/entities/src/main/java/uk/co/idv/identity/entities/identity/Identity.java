@@ -5,6 +5,7 @@ import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
 import java.util.UUID;
@@ -28,6 +29,10 @@ public interface Identity {
     PhoneNumbers getPhoneNumbers();
 
     Identity withPhoneNumbers(PhoneNumbers phoneNumbers);
+
+    MobileDevices getMobileDevices();
+
+    Identity withMobileDevices(MobileDevices mobileDevices);
 
     boolean hasIdvId();
 

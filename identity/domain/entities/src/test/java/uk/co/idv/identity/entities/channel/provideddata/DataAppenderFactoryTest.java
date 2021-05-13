@@ -7,6 +7,8 @@ import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevicesMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 
@@ -40,6 +42,19 @@ class DataAppenderFactoryTest {
 
         assertThat(updated).usingRecursiveComparison().ignoringFields("emailAddresses").isEqualTo(identity);
         assertThat(updated.getEmailAddresses()).containsExactlyElementsOf(emailAddresses);
+    }
+
+    @Test
+    void shouldBuildAppenderThatWillAppendMobileDevicesToIdentityIfProvided() {
+        MobileDevices devices = MobileDevicesMother.two();
+        Channel channel = DefaultChannelMother.withMobileDevices(devices);
+        DataAppender appender = factory.build(channel);
+        Identity identity = IdentityMother.withMobileDevices(MobileDevicesMother.empty());
+
+        Identity updated = appender.apply(identity);
+
+        assertThat(updated).usingRecursiveComparison().ignoringFields("mobileDevices").isEqualTo(identity);
+        assertThat(updated.getMobileDevices()).containsExactlyElementsOf(devices);
     }
 
 }

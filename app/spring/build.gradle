@@ -46,10 +46,12 @@ dependencies {
     implementation project(":method-config")
     implementation project(":otp-config")
     implementation project(":otp-sim-swap-stub-config")
+    implementation project(":push-notification-config")
     implementation project(":lockout-json")
     implementation project(":context-json")
     implementation project(":method-json")
     implementation project(":otp-json")
+    implementation project(":push-notification-json")
     implementation project(":identity-external-find-stub-config")
     implementation "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web"

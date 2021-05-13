@@ -15,7 +15,7 @@ public class FakeMethodMasker implements MethodProtector {
     @Override
     public Method apply(Method method) {
         if (method instanceof FakeMethod) {
-            FakeMethod fakeMethod = (FakeMethod) method;
+            var fakeMethod = (FakeMethod) method;
             return fakeMethod.withName(fakeMethod.getName() + "-masked");
         }
         throw new MethodProtectionNotSupportedException(method.getName());

@@ -48,4 +48,11 @@ class GbRsaTest {
         assertThat(rsa.getDsSessionId()).isEmpty();
     }
 
+    @Test
+    void validCookieShouldAlwaysBeEmpty() {
+        Channel rsa = GbRsaMother.rsa();
+
+        assertThat(rsa.hasValidCookie()).isEmpty();
+    }
+
 }

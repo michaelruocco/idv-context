@@ -59,19 +59,6 @@ class OtpBuilderTest {
     }
 
     @Test
-    void shouldReturnOtpMethodWithNamePopulatedFromPolicy() {
-        MethodsRequest request = MethodsRequestMother.build();
-        DeliveryMethods deliveryMethods = mock(DeliveryMethods.class);
-        OtpPolicy policy = givenOtpPolicyThatWillReturnDeliveryMethods(request, deliveryMethods);
-        String expectedName = "one-time-passcode";
-        given(policy.getName()).willReturn(expectedName);
-
-        Otp otp = builder.build(request, policy);
-
-        assertThat(otp.getName()).isEqualTo(expectedName);
-    }
-
-    @Test
     void shouldReturnOtpMethodWithDeliveryMethodsPopulated() {
         MethodsRequest request = MethodsRequestMother.build();
         DeliveryMethods expectedDeliveryMethods = mock(DeliveryMethods.class);

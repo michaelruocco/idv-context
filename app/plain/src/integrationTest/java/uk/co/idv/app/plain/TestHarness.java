@@ -12,6 +12,7 @@ import uk.co.idv.context.adapter.method.otp.delivery.phone.simswap.StubSimSwapEx
 import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
+import uk.co.idv.method.adapter.json.push.PushNotificationMapping;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequest;
 import uk.co.idv.method.entities.verification.CompleteVerificationRequestMother;
 import uk.co.idv.method.entities.verification.CreateVerificationRequest;
@@ -85,7 +86,7 @@ public class TestHarness {
             externalFindIdentityConfig
     );
 
-    private final MethodMappings methodMappings = new MethodMappings(new FakeMethodMapping(), new OtpMapping());
+    private final MethodMappings methodMappings = new MethodMappings(new FakeMethodMapping(), new OtpMapping(), new PushNotificationMapping());
     private final JsonConfig jsonConfig = new JsonConfig(clock, methodMappings);
     private final ChannelAdapter channelAdapter = new DefaultChannelAdapter(jsonConfig.getJsonConverter());
 

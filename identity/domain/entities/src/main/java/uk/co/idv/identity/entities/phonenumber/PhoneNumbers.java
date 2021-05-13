@@ -13,33 +13,33 @@ import java.util.stream.Stream;
 @EqualsAndHashCode
 public class PhoneNumbers implements Iterable<PhoneNumber> {
 
-    private final Collection<PhoneNumber> numbers;
+    private final Collection<PhoneNumber> values;
 
-    public PhoneNumbers(PhoneNumber... numbers) {
-        this(Arrays.asList(numbers));
+    public PhoneNumbers(PhoneNumber... values) {
+        this(Arrays.asList(values));
     }
 
     public PhoneNumbers(Collection<PhoneNumber> values) {
-        this.numbers = new LinkedHashSet<>(values);
+        this.values = new LinkedHashSet<>(values);
     }
 
     public Iterator<PhoneNumber> iterator() {
-        return numbers.iterator();
+        return values.iterator();
     }
 
     public Stream<PhoneNumber> stream() {
-        return numbers.stream();
+        return values.stream();
     }
 
     public PhoneNumbers add(PhoneNumbers others) {
-        Collection<PhoneNumber> mergedNumbers = new LinkedHashSet<>();
-        mergedNumbers.addAll(this.numbers);
-        mergedNumbers.addAll(others.numbers);
-        return new PhoneNumbers(mergedNumbers);
+        Collection<PhoneNumber> mergedValues = new LinkedHashSet<>();
+        mergedValues.addAll(this.values);
+        mergedValues.addAll(others.values);
+        return new PhoneNumbers(mergedValues);
     }
 
     public boolean isEmpty() {
-        return numbers.isEmpty();
+        return values.isEmpty();
     }
 
 }

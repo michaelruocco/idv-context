@@ -36,6 +36,10 @@ public class RequestedData implements Iterable<String> {
         return items.contains(RequestedDataItems.PHONE_NUMBERS);
     }
 
+    public boolean mobileDevicesRequested() {
+        return items.contains(RequestedDataItems.MOBILE_DEVICES);
+    }
+
     public Stream<String> stream() {
         return items.stream();
     }

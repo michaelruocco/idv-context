@@ -18,10 +18,10 @@ public class MergeIdentities {
     private final MergeIdentitiesHandler handler;
 
     public Identity merge(Identity identity, Identities original) {
-        Identity identityWithId = idvIdAllocator.allocateIfRequired(identity);
-        Identity merged = doMerge(identityWithId, original);
+        var identityWithId = idvIdAllocator.allocateIfRequired(identity);
+        var merged = doMerge(identityWithId, original);
         delete(original);
-        Identity saved = save(merged);
+        var saved = save(merged);
         publishMerge(saved, original);
         return saved;
     }

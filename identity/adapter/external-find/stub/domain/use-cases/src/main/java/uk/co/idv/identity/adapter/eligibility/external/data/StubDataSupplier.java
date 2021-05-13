@@ -44,9 +44,9 @@ public class StubDataSupplier<T> implements Supplier<T> {
 
     private T loadStubbedData() {
         String name = factory.getName();
-        Instant start = Instant.now();
+        var start = Instant.now();
         delay.execute();
-        T data = factory.getPopulatedData();
+        var data = factory.getPopulatedData();
         log.debug("returning stubbed {} data {} took {}ms", name, data, millisBetweenNowAnd(start));
         return data;
     }

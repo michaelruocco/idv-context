@@ -1,0 +1,7 @@
+{
+  "name": "push-notification",
+  "config": {
+    "maxNumberOfAttempts": 3,
+    "duration": 300000
+  }
+}

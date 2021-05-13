@@ -20,5 +20,6 @@ public class IdentityDocument {
     private Collection<AliasDocument> aliases;
     private Collection<String> emailAddresses;
     private Collection<PhoneNumberDocument> phoneNumbers;
+    private Collection<MobileDeviceDocument> mobileDevices;
 
 }

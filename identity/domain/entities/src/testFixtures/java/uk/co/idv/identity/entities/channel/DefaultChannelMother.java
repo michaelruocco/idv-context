@@ -4,6 +4,9 @@ import com.neovisionaries.i18n.CountryCode;
 import uk.co.idv.identity.entities.emailaddress.EmailAddress;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevice;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevicesMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumber;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
@@ -34,10 +37,19 @@ public interface DefaultChannelMother {
         return builder().emailAddresses(emailAddresses).build();
     }
 
+    static DefaultChannel withMobileDevices(MobileDevice... mobileDevices) {
+        return builder().mobileDevices(MobileDevicesMother.with(mobileDevices)).build();
+    }
+
+    static DefaultChannel withMobileDevices(MobileDevices mobileDevices) {
+        return builder().mobileDevices(mobileDevices).build();
+    }
+
     static DefaultChannel withData() {
         return builder()
                 .phoneNumbers(PhoneNumbersMother.two())
                 .emailAddresses(EmailAddressesMother.two())
+                .mobileDevices(MobileDevicesMother.two())
                 .build();
     }
 
@@ -50,7 +62,8 @@ public interface DefaultChannelMother {
                 .id("default-channel")
                 .country(CountryCode.GB)
                 .phoneNumbers(PhoneNumbersMother.empty())
-                .emailAddresses(EmailAddressesMother.empty());
+                .emailAddresses(EmailAddressesMother.empty())
+                .mobileDevices(MobileDevicesMother.empty());
     }
 
 }

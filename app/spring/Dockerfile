@@ -10,6 +10,7 @@ ENV SERVER_PORT=80 \
     EXTERNAL_DATA_TIMEOUT=2000 \
     EXTERNAL_PHONE_NUMBER_DELAY=1500 \
     EXTERNAL_EMAIL_ADDRESS_DELAY=1000 \
+    EXTERNAL_MOBILE_DEVICE_DELAY=900 \
     RESPONSE_FILTERING_ENABLED=false \
     REQUEST_LOGGING_ENABLED=false \
     RESPONSE_LOGGING_ENABLED=false \
@@ -31,6 +32,7 @@ CMD java \
   -Dexternal.data.timeout=${EXTERNAL_DATA_TIMEOUT} \
   -Dexternal.phone.number.delay=${EXTERNAL_PHONE_NUMBER_DELAY} \
   -Dexternal.email.address.delay=${EXTERNAL_EMAIL_ADDRESS_DELAY} \
+  -Dexternal.mobile.device.delay=${EXTERNAL_MOBILE_DEVICE_DELAY} \
   -Dresponse.filtering.enabled=${RESPONSE_FILTERING_ENABLED} \
   -Drequest.logging.enabled=${REQUEST_LOGGING_ENABLED} \
   -Dresponse.logging.enabled=${RESPONSE_LOGGING_ENABLED} \

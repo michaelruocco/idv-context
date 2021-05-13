@@ -15,6 +15,7 @@ import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.IdentityMother;
 import uk.co.idv.identity.entities.identity.IdentityNotFoundException;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevicesMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumberMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 import uk.co.idv.identity.entities.eligibility.CreateEligibilityRequest;
@@ -80,6 +81,7 @@ class CreateEligibilityIntegrationTest {
                 .aliases(aliases)
                 .phoneNumbers(PhoneNumbersMother.with(PhoneNumberMother.withNumber("+447890123456")))
                 .emailAddresses(EmailAddressesMother.with("test@email.com"))
+                .mobileDevices(MobileDevicesMother.with("1aa1111111a11aa1a11aaa"))
                 .build();
         Identity existing = application.update(identity);
         CreateEligibilityRequest request = CreateEligibilityRequestMother.builder()

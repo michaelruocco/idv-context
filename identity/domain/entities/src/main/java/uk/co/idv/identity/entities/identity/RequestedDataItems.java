@@ -7,6 +7,7 @@ public class RequestedDataItems {
 
     public static final String EMAIL_ADDRESSES = "email-addresses";
     public static final String PHONE_NUMBERS = "phone-numbers";
+    public static final String MOBILE_DEVICES = "mobile-devices";
 
     private RequestedDataItems() {
         // utility class
@@ -15,7 +16,8 @@ public class RequestedDataItems {
     public static Collection<String> all() {
         return Arrays.asList(
                 EMAIL_ADDRESSES,
-                PHONE_NUMBERS
+                PHONE_NUMBERS,
+                MOBILE_DEVICES
         );
     }
 

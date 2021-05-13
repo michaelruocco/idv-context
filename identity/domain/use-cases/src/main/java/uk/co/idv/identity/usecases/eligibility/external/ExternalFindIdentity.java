@@ -8,7 +8,6 @@ import uk.co.idv.identity.entities.identity.FindIdentityRequest;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.DefaultIdentity;
 import uk.co.idv.identity.usecases.eligibility.external.data.AliasLoader;
-import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoadRequest;
 import uk.co.idv.identity.usecases.eligibility.external.data.AsyncDataLoader;
 import uk.co.idv.identity.usecases.eligibility.external.data.DataFutures;
 import uk.co.idv.identity.usecases.eligibility.external.data.FindIdentityRequestConverter;
@@ -23,19 +22,20 @@ public class ExternalFindIdentity {
     private final AsyncDataLoader dataLoader;
 
     public Identity find(FindIdentityRequest request) {
-        Aliases aliases = loadAliases(request);
-        AsyncDataLoadRequest loadRequest = converter.toAsyncDataLoadRequest(aliases, request);
+        var aliases = loadAliases(request);
+        var loadRequest = converter.toAsyncDataLoadRequest(aliases, request);
         DataFutures futures = dataLoader.loadData(loadRequest);
         return DefaultIdentity.builder()
                 .aliases(aliases)
                 .country(request.getCountry())
                 .phoneNumbers(futures.getPhoneNumbersNow())
                 .emailAddresses(futures.getEmailAddressesNow())
+                .mobileDevices(futures.getMobileDevicesNow())
                 .build();
     }
 
     private Aliases loadAliases(FindIdentityRequest request) {
-        Aliases loadedAliases = aliasLoader.load(request);
+        var loadedAliases = aliasLoader.load(request);
         log.debug("loaded aliases {}", loadedAliases);
         return loadedAliases.add(request.getAliases());
     }

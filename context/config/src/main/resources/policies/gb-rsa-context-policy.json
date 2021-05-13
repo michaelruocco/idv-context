@@ -7,6 +7,23 @@
   },
   "sequencePolicies": [
     {
+      "name": "push-notification",
+      "stagePolicies": [
+        {
+          "type": "all-methods",
+          "methodPolicies": [
+            {
+              "name": "push-notification",
+              "config": {
+                "maxNumberOfAttempts": 3,
+                "duration": 300000
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
       "name": "one-time-passcode",
       "stagePolicies": [
         {

@@ -5,14 +5,14 @@ import uk.co.idv.method.entities.policy.MethodPolicy;
 public interface SequencePoliciesMother {
 
     static SequencePolicies empty() {
-        return withSequencePolicy();
+        return withSequencePolicies();
     }
 
     static SequencePolicies build() {
-        return withSequencePolicy(SequencePolicyMother.build());
+        return withSequencePolicies(SequencePolicyMother.build());
     }
 
-    static SequencePolicies withSequencePolicy(SequencePolicy... sequencePolicies) {
+    static SequencePolicies withSequencePolicies(SequencePolicy... sequencePolicies) {
         return new SequencePolicies(sequencePolicies);
     }
 

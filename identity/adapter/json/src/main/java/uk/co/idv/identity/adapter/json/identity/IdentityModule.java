@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import uk.co.idv.identity.adapter.json.alias.AliasModule;
 import uk.co.idv.identity.adapter.json.emailaddress.EmailAddressModule;
+import uk.co.idv.identity.adapter.json.mobiledevice.MobileDeviceModule;
 import uk.co.idv.identity.adapter.json.phonenumber.PhoneNumberModule;
 import uk.co.idv.identity.entities.identity.Identity;
 import uk.co.idv.identity.entities.identity.RequestedData;
@@ -24,7 +25,8 @@ public class IdentityModule extends SimpleModule {
         return Arrays.asList(
                 new AliasModule(),
                 new PhoneNumberModule(),
-                new EmailAddressModule()
+                new EmailAddressModule(),
+                new MobileDeviceModule()
         );
     }
 

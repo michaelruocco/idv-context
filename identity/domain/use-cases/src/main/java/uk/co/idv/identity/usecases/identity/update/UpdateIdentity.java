@@ -26,14 +26,11 @@ public class UpdateIdentity {
     }
 
     private Identity handle(Identity identity, Identities existing) {
-        switch (existing.size()) {
-            case 0:
-                return create.create(identity);
-            case 1:
-                return save.save(identity, existing.getFirst());
-            default:
-                return merge.merge(identity, existing);
-        }
+        return switch (existing.size()) {
+            case 0 -> create.create(identity);
+            case 1 -> save.save(identity, existing.getFirst());
+            default -> merge.merge(identity, existing);
+        };
     }
 
 }

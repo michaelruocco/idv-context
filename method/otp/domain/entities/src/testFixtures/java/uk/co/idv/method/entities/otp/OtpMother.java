@@ -16,7 +16,7 @@ public interface OtpMother {
     }
 
     static Otp withDeliveryMethod(DeliveryMethod deliveryMethod) {
-        return OtpMother.withDeliveryMethods(DeliveryMethodsMother.with(deliveryMethod));
+        return withDeliveryMethods(DeliveryMethodsMother.with(deliveryMethod));
     }
 
     static Otp withDeliveryMethods(DeliveryMethod... deliveryMethods) {

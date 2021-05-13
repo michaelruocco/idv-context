@@ -8,6 +8,7 @@ import uk.co.idv.identity.entities.alias.Alias;
 import uk.co.idv.identity.entities.alias.Aliases;
 import uk.co.idv.identity.entities.alias.IdvId;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
 import java.util.UUID;
@@ -24,6 +25,9 @@ public class DefaultIdentity implements Identity {
 
     @With
     private final EmailAddresses emailAddresses;
+
+    @With
+    private final MobileDevices mobileDevices;
 
     @Override
     public UUID getIdvIdValue() {
@@ -80,6 +84,7 @@ public class DefaultIdentity implements Identity {
                 .aliases(aliases.add(other.getAliases()))
                 .phoneNumbers(phoneNumbers.add(other.getPhoneNumbers()))
                 .emailAddresses(emailAddresses.add(other.getEmailAddresses()))
+                .mobileDevices(mobileDevices.add(other.getMobileDevices()))
                 .build();
     }
 

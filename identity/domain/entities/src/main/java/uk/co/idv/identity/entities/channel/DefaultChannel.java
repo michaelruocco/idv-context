@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.With;
 import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 
 @Builder
@@ -19,5 +20,8 @@ public class DefaultChannel implements Channel {
 
     @With
     private final EmailAddresses emailAddresses;
+
+    @With
+    private final MobileDevices mobileDevices;
 
 }

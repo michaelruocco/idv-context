@@ -8,6 +8,8 @@ import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import uk.co.idv.identity.entities.emailaddress.EmailAddressesMother;
 import uk.co.idv.identity.entities.identity.FindIdentityRequest;
 import uk.co.idv.identity.entities.identity.Identity;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
+import uk.co.idv.identity.entities.mobiledevice.MobileDevicesMother;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbers;
 import uk.co.idv.identity.entities.phonenumber.PhoneNumbersMother;
 import uk.co.idv.identity.usecases.eligibility.external.data.AliasLoader;
@@ -81,6 +83,16 @@ class ExternalFindIdentityTest {
         Identity identity = identityFinder.find(findRequest);
 
         assertThat(identity.getEmailAddresses()).isEqualTo(emailAddresses);
+    }
+
+    @Test
+    void shouldReturnMobileDevicesFromDataFutures() {
+        MobileDevices mobileDevices = MobileDevicesMother.two();
+        given(dataFutures.getMobileDevicesNow()).willReturn(mobileDevices);
+
+        Identity identity = identityFinder.find(findRequest);
+
+        assertThat(identity.getMobileDevices()).isEqualTo(mobileDevices);
     }
 
 }
