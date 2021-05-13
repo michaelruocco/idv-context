@@ -4,6 +4,8 @@ import uk.co.idv.context.entities.policy.ContextPolicy;
 import uk.co.idv.context.entities.policy.ContextPolicyMother;
 import uk.co.idv.context.entities.policy.sequence.SequencePolicies;
 import uk.co.idv.context.entities.policy.sequence.SequencePoliciesMother;
+import uk.co.idv.context.entities.policy.sequence.SequencePolicy;
+import uk.co.idv.context.entities.policy.sequence.SequencePolicyMother;
 import uk.co.idv.identity.entities.channel.gb.GbRsa;
 import uk.co.idv.lockout.entities.policy.AttemptsFilter;
 import uk.co.idv.lockout.entities.policy.LockoutPolicy;
@@ -14,6 +16,8 @@ import uk.co.idv.method.entities.otp.policy.OtpPolicyMother;
 import uk.co.idv.method.entities.otp.policy.delivery.DeliveryMethodConfigsMother;
 import uk.co.idv.method.entities.otp.policy.delivery.phone.sms.SmsDeliveryMethodConfigMother;
 import uk.co.idv.method.entities.policy.MethodPolicy;
+import uk.co.idv.method.entities.push.PushNotificationConfigMother;
+import uk.co.idv.method.entities.push.policy.PushNotificationPolicy;
 import uk.co.idv.policy.entities.policy.key.channel.ChannelPolicyKeyMother;
 import uk.co.idv.policy.entities.policy.key.PolicyKey;
 
@@ -47,11 +51,25 @@ public interface GbRsaPolicyMother {
     }
 
     private static SequencePolicies buildSequences() {
+        return SequencePoliciesMother.withSequencePolicies(
+                buildPushSequencePolicy(),
+                buildOtpSequencePolicy()
+        );
+    }
+
+    private static SequencePolicy buildPushSequencePolicy() {
+        MethodPolicy methodPolicy = PushNotificationPolicy.builder()
+                .config(PushNotificationConfigMother.build())
+                .build();
+        return SequencePolicyMother.with(methodPolicy);
+    }
+
+    private static SequencePolicy buildOtpSequencePolicy() {
         MethodPolicy methodPolicy = OtpPolicyMother.builder()
                 .deliveryMethodConfigs(DeliveryMethodConfigsMother.with(SmsDeliveryMethodConfigMother.withAsyncSimSwap()))
                 .config(OtpConfigMother.build())
                 .build();
-        return SequencePoliciesMother.withMethodPolicy(methodPolicy);
+        return SequencePolicyMother.with(methodPolicy);
     }
 
 }

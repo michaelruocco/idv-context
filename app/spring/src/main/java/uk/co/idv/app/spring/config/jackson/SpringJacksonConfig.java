@@ -8,6 +8,7 @@ import uk.co.idv.app.plain.config.JsonConfig;
 import uk.co.idv.app.plain.adapter.channel.ChannelAdapter;
 import uk.co.idv.method.adapter.json.method.MethodMappings;
 import uk.co.idv.method.adapter.json.otp.OtpMapping;
+import uk.co.idv.method.adapter.json.push.PushNotificationMapping;
 import uk.co.mruoc.json.JsonConverter;
 
 import java.time.Clock;
@@ -16,8 +17,16 @@ import java.time.Clock;
 public class SpringJacksonConfig {
 
     @Bean
-    public JsonConfig jsonConfig(Clock clock) {
-        return new JsonConfig(clock, new MethodMappings(new OtpMapping()));
+    public MethodMappings methodMappings() {
+        return new MethodMappings(
+                new OtpMapping(),
+                new PushNotificationMapping()
+        );
+    }
+
+    @Bean
+    public JsonConfig jsonConfig(Clock clock, MethodMappings methodMappings) {
+        return new JsonConfig(clock, methodMappings);
     }
 
     @Bean

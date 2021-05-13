@@ -5,6 +5,7 @@ import uk.co.idv.method.adapter.json.method.MethodMapping;
 import uk.co.idv.method.adapter.json.otp.policy.OtpPolicyModule;
 import uk.co.idv.method.entities.method.Method;
 import uk.co.idv.method.entities.otp.Otp;
+import uk.co.idv.method.entities.otp.OtpName;
 import uk.co.idv.method.entities.otp.policy.OtpPolicy;
 import uk.co.idv.method.entities.policy.MethodPolicy;
 
@@ -15,7 +16,7 @@ public class OtpMapping implements MethodMapping {
 
     @Override
     public String getName() {
-        return "one-time-passcode";
+        return OtpName.NAME;
     }
 
     @Override
