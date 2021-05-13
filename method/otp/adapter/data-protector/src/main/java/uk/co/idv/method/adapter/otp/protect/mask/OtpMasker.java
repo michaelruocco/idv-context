@@ -24,7 +24,7 @@ public class OtpMasker implements MethodProtector {
     @Override
     public Method apply(Method method) {
         if (isOtp(method)) {
-            Otp otp = (Otp) method;
+            var otp = (Otp) method;
             return otp.updateDeliveryMethods(deliveryMethodMasker);
         }
         throw new MethodNotOtpException(method.getName());

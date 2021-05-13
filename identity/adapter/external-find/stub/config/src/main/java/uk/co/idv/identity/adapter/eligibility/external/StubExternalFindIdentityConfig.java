@@ -24,6 +24,7 @@ public class StubExternalFindIdentityConfig implements ExternalFindIdentityConfi
     private final ExecutorService executor;
     private final Duration phoneNumberDelay;
     private final Duration emailAddressDelay;
+    private final Duration mobileDeviceDelay;
     private final Duration timeout;
 
     public static StubExternalFindIdentityConfig build() {
@@ -35,6 +36,7 @@ public class StubExternalFindIdentityConfig implements ExternalFindIdentityConfi
                 .timeout(Duration.ofSeconds(1))
                 .emailAddressDelay(Duration.ZERO)
                 .phoneNumberDelay(Duration.ZERO)
+                .mobileDeviceDelay(Duration.ZERO)
                 .build();
     }
 
@@ -43,7 +45,8 @@ public class StubExternalFindIdentityConfig implements ExternalFindIdentityConfi
                 .executor(buildEligibilityExecutor())
                 .timeout(Duration.ofMillis(loadTimeout()))
                 .phoneNumberDelay(Duration.ofMillis(loadPhoneNumberDelay()))
-                .emailAddressDelay(Duration.ofMillis(loadEmailAddressDelay()));
+                .emailAddressDelay(Duration.ofMillis(loadEmailAddressDelay()))
+                .mobileDeviceDelay(Duration.ofMillis(loadMobileDeviceDelay()));
     }
 
     public ExternalFindIdentity externalFindIdentity() {
@@ -65,6 +68,7 @@ public class StubExternalFindIdentityConfig implements ExternalFindIdentityConfi
         return StubDataSupplierFactory.builder()
                 .phoneNumberDelay(phoneNumberDelay)
                 .emailAddressDelay(emailAddressDelay)
+                .mobileDevicesDelay(mobileDeviceDelay)
                 .build();
     }
 
@@ -84,8 +88,12 @@ public class StubExternalFindIdentityConfig implements ExternalFindIdentityConfi
         return loadMillis("external.email.address.delay", 1000);
     }
 
+    private static int loadMobileDeviceDelay() {
+        return loadMillis("external.mobile.device.delay", 900);
+    }
+
     private static int loadMillis(String key, long defaultValue) {
-        int size = Integer.parseInt(System.getProperty(key, Long.toString(defaultValue)));
+        var size = Integer.parseInt(System.getProperty(key, Long.toString(defaultValue)));
         log.info("loaded {} value {}", key, size);
         return size;
     }
