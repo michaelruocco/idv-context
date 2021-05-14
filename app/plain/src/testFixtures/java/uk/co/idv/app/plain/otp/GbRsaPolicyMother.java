@@ -52,22 +52,22 @@ public interface GbRsaPolicyMother {
 
     private static SequencePolicies buildSequences() {
         return SequencePoliciesMother.withSequencePolicies(
-                buildPushSequencePolicy(),
-                buildOtpSequencePolicy()
+                buildOtpSequencePolicy(),
+                buildPushSequencePolicy()
         );
-    }
-
-    private static SequencePolicy buildPushSequencePolicy() {
-        MethodPolicy methodPolicy = PushNotificationPolicy.builder()
-                .config(PushNotificationConfigMother.build())
-                .build();
-        return SequencePolicyMother.with(methodPolicy);
     }
 
     private static SequencePolicy buildOtpSequencePolicy() {
         MethodPolicy methodPolicy = OtpPolicyMother.builder()
                 .deliveryMethodConfigs(DeliveryMethodConfigsMother.with(SmsDeliveryMethodConfigMother.withAsyncSimSwap()))
                 .config(OtpConfigMother.build())
+                .build();
+        return SequencePolicyMother.with(methodPolicy);
+    }
+
+    private static SequencePolicy buildPushSequencePolicy() {
+        MethodPolicy methodPolicy = PushNotificationPolicy.builder()
+                .config(PushNotificationConfigMother.build())
                 .build();
         return SequencePolicyMother.with(methodPolicy);
     }

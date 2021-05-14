@@ -13,6 +13,8 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import static uk.co.idv.identity.adapter.repository.converter.NullCollectionToEmptyList.toEmptyListIfNull;
+
 @RequiredArgsConstructor
 @Slf4j
 public class PhoneNumberDocumentConverter {
@@ -24,7 +26,7 @@ public class PhoneNumberDocumentConverter {
     }
 
     public PhoneNumbers toPhoneNumbers(Collection<PhoneNumberDocument> documents) {
-        Collection<PhoneNumber> numbers = documents.stream()
+        Collection<PhoneNumber> numbers = toEmptyListIfNull(documents).stream()
                 .map(this::toPhoneNumber)
                 .collect(Collectors.toList());
         return new PhoneNumbers(numbers);

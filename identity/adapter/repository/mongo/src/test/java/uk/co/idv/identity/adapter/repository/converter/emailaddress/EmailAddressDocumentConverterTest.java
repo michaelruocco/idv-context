@@ -9,9 +9,9 @@ import java.util.Collection;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class EmailAddressesDocumentConverterTest {
+class EmailAddressDocumentConverterTest {
 
-    private final EmailAddressesDocumentConverter converter = new EmailAddressesDocumentConverter();
+    private final EmailAddressDocumentConverter converter = new EmailAddressDocumentConverter();
 
     @Test
     void shouldConvertEmailAddressesToDocuments() {
@@ -29,6 +29,15 @@ class EmailAddressesDocumentConverterTest {
         EmailAddresses emailAddresses = converter.toEmailAddresses(documents);
 
         assertThat(emailAddresses).containsExactlyElementsOf(EmailAddressesMother.two());
+    }
+
+    @Test
+    void shouldConvertNullDocumentsListToEmptyEmailAddresses() {
+        Collection<String> documents = null;
+
+        EmailAddresses emailAddresses = converter.toEmailAddresses(documents);
+
+        assertThat(emailAddresses).isEmpty();
     }
 
 }

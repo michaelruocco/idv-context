@@ -827,6 +827,34 @@ Feature: Context Creation
             "eligibility": {
               "eligible": true
             }
+          },
+          {
+            "duration": 300000,
+            "name": "push-notification",
+            "stages": [
+              {
+                "methods": [
+                  {
+                    "name":"push-notification",
+                    "mobileDeviceTokens": [
+                      "8cc1121057f63af3c57bbe",
+                      "2dd1121057f63af3c57ccf"
+                    ],
+                    "eligibility": {
+                      "eligible": true
+                    },
+                    "config": {
+                      "duration": 300000,
+                      "maxNumberOfAttempts": 3
+                    }
+                  }
+                ],
+                "type":"all-methods"
+              }
+            ],
+            "eligibility": {
+              "eligible": true
+            }
           }
         ]
       }

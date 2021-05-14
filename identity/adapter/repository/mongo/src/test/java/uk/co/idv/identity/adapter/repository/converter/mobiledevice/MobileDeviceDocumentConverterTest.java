@@ -14,7 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MobileDeviceDocumentConverterTest {
 
-    private final MobileDevicesDocumentConverter converter = new MobileDevicesDocumentConverter();
+    private final MobileDeviceDocumentConverter converter = new MobileDeviceDocumentConverter();
 
     @Test
     void shouldConvertMultipleMobileDevicesToDocuments() {
@@ -50,6 +50,15 @@ class MobileDeviceDocumentConverterTest {
         MobileDevice device = converter.toMobileDevice(document);
 
         assertThat(device).isEqualTo(MobileDeviceMother.device1());
+    }
+
+    @Test
+    void shouldConvertNullDocumentsListToEmptyMobileDevices() {
+        Collection<MobileDeviceDocument> documents = null;
+
+        MobileDevices mobileDevices = converter.toMobileDevices(documents);
+
+        assertThat(mobileDevices).isEmpty();
     }
 
 }
