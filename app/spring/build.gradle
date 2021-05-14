@@ -121,7 +121,7 @@ task pushImage(type: DockerPushImage) {
 
 dockerCompose {
     startedServices = ['idv-context-spring-app']
-    environment.put 'APP_VERSION', 'latest'
+    environment.put 'APP_VERSION', version
 }
 
 postman {

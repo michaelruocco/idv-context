@@ -8,12 +8,14 @@ import uk.co.idv.identity.entities.emailaddress.EmailAddresses;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import static uk.co.idv.identity.adapter.repository.converter.NullCollectionToEmptyList.toEmptyListIfNull;
+
 @RequiredArgsConstructor
 @Slf4j
-public class EmailAddressesDocumentConverter {
+public class EmailAddressDocumentConverter {
 
     public EmailAddresses toEmailAddresses(Collection<String> values) {
-        return new EmailAddresses(values.stream().map(EmailAddress::new).collect(Collectors.toList()));
+        return new EmailAddresses(toEmptyListIfNull(values).stream().map(EmailAddress::new).collect(Collectors.toList()));
     }
 
     public Collection<String> toDocuments(EmailAddresses emailAddresses) {

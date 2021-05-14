@@ -165,7 +165,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"country\": \"GB\",\n    \"aliases\": [\n        {\n            \"type\": \"{{aliasType}}\",\n            \"value\": \"{{aliasValue}}\"\n        }\n    ],\n    \"phoneNumbers\": [\n        {\n            \"value\": \"+4407808247749\"\n        },\n        {\n            \"value\": \"+4407808247748\"\n        },\n        {\n            \"value\": \"+4407808247747\"\n        },\n        {\n            \"value\": \"+4407808247746\"\n        },\n        {\n            \"value\": \"+4407808247745\"\n        },\n        {\n            \"value\": \"+4407808247744\"\n        },\n        {\n            \"value\": \"07808247743\"\n        }\n    ]\n}"
+							"raw": "{\n    \"country\": \"GB\",\n    \"aliases\": [\n        {\n            \"type\": \"{{aliasType}}\",\n            \"value\": \"{{aliasValue}}\"\n        }\n    ],\n    \"phoneNumbers\": [\n        {\n            \"value\": \"+4407808247749\"\n        },\n        {\n            \"value\": \"+4407808247748\"\n        },\n        {\n            \"value\": \"+4407808247747\"\n        },\n        {\n            \"value\": \"+4407808247746\"\n        },\n        {\n            \"value\": \"+4407808247745\"\n        },\n        {\n            \"value\": \"+4407808247744\"\n        },\n        {\n            \"value\": \"07808247743\"\n        }\n    ],\n    \"mobileDevices\": [\n        {\n            \"token\": \"8cc1121057f63af3c57bbe\"\n        },\n        {\n            \"token\": \"2dd1121057f63af3c57ccf\"\n        }\n    ]\n}"
 						},
 						"url": {
 							"raw": "{{context-host}}/v1/identities",
@@ -224,7 +224,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n  \"channel\": {\n    \"id\": \"abc\",\n    \"country\": \"GB\",\n    \"validCookie\": true\n  },\n  \"aliases\": [\n    {\n      \"type\": \"{{aliasType}}\",\n      \"value\": \"{{aliasValue}}\"\n    }\n  ],\n  \"requestedData\": [\n    \"phone-numbers\",\n    \"email-addresses\"\n  ]\n}"
+							"raw": "{\n  \"channel\": {\n    \"id\": \"abc\",\n    \"country\": \"GB\",\n    \"validCookie\": true\n  },\n  \"aliases\": [\n    {\n      \"type\": \"{{aliasType}}\",\n      \"value\": \"{{aliasValue}}\"\n    }\n  ],\n  \"requestedData\": [\n    \"phone-numbers\",\n    \"email-addresses\",\n    \"mobile-devices\"\n  ]\n}"
 						},
 						"url": {
 							"raw": "{{context-host}}/v1/eligibility",
@@ -255,6 +255,9 @@
 							"listen": "test",
 							"script": {
 								"exec": [
+									"var json = JSON.parse(responseBody);",
+									"postman.setEnvironmentVariable(\"idvId\", json.idvId);",
+									"",
 									"pm.test(\"should return ok status\", function () {",
 									"    pm.response.to.have.status(200);",
 									"})"
@@ -633,8 +636,8 @@
 									"    pm.response.to.have.status(201)",
 									"})",
 									"",
-									"pm.test(\"context should contain 1 sequence\", function () {",
-									"    pm.expect(sequences.length).to.equal(1)",
+									"pm.test(\"context should contain 2 sequences\", function () {",
+									"    pm.expect(sequences.length).to.equal(2)",
 									"})",
 									"",
 									"pm.test(\"all sequences should be eligible\", function () {",

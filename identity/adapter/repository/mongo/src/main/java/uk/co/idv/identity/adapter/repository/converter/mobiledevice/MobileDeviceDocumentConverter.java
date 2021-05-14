@@ -9,12 +9,14 @@ import uk.co.idv.identity.entities.mobiledevice.MobileDevices;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
+import static uk.co.idv.identity.adapter.repository.converter.NullCollectionToEmptyList.toEmptyListIfNull;
+
 @RequiredArgsConstructor
 @Slf4j
-public class MobileDevicesDocumentConverter {
+public class MobileDeviceDocumentConverter {
 
     public MobileDevices toMobileDevices(Collection<MobileDeviceDocument> documents) {
-        Collection<MobileDevice> numbers = documents.stream()
+        Collection<MobileDevice> numbers = toEmptyListIfNull(documents).stream()
                 .map(this::toMobileDevice)
                 .collect(Collectors.toList());
         return new MobileDevices(numbers);

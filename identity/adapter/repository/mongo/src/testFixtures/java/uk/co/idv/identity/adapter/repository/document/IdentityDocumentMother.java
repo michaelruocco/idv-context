@@ -2,6 +2,7 @@ package uk.co.idv.identity.adapter.repository.document;
 
 import uk.co.idv.identity.adapter.repository.document.alias.AliasDocumentMother;
 import uk.co.idv.identity.adapter.repository.document.emailaddress.EmailAddressDocumentMother;
+import uk.co.idv.identity.adapter.repository.document.mobiledevice.MobileDeviceDocumentMother;
 import uk.co.idv.identity.adapter.repository.document.phonenumber.PhoneNumberDocumentMother;
 
 public interface IdentityDocumentMother {
@@ -13,6 +14,7 @@ public interface IdentityDocumentMother {
                 .aliases(AliasDocumentMother.idvIdAndCreditCardNumber())
                 .phoneNumbers(PhoneNumberDocumentMother.two())
                 .emailAddresses(EmailAddressDocumentMother.two())
+                .mobileDevices(MobileDeviceDocumentMother.two())
                 .build();
     }
 

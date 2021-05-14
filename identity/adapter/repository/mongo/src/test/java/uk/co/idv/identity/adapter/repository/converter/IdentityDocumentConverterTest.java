@@ -3,8 +3,8 @@ package uk.co.idv.identity.adapter.repository.converter;
 import com.neovisionaries.i18n.CountryCode;
 import org.junit.jupiter.api.Test;
 import uk.co.idv.identity.adapter.repository.converter.alias.AliasDocumentConverter;
-import uk.co.idv.identity.adapter.repository.converter.emailaddress.EmailAddressesDocumentConverter;
-import uk.co.idv.identity.adapter.repository.converter.mobiledevice.MobileDevicesDocumentConverter;
+import uk.co.idv.identity.adapter.repository.converter.emailaddress.EmailAddressDocumentConverter;
+import uk.co.idv.identity.adapter.repository.converter.mobiledevice.MobileDeviceDocumentConverter;
 import uk.co.idv.identity.adapter.repository.converter.phonenumber.PhoneNumberDocumentConverter;
 import uk.co.idv.identity.adapter.repository.document.AliasDocument;
 import uk.co.idv.identity.adapter.repository.document.IdentityDocument;
@@ -36,14 +36,14 @@ class IdentityDocumentConverterTest {
 
     private final AliasDocumentConverter aliasesConverter = mock(AliasDocumentConverter.class);
     private final PhoneNumberDocumentConverter phoneNumberConverter = mock(PhoneNumberDocumentConverter.class);
-    private final EmailAddressesDocumentConverter emailAddressesConverter = mock(EmailAddressesDocumentConverter.class);
-    private final MobileDevicesDocumentConverter mobileDevicesDocumentConverter = mock(MobileDevicesDocumentConverter.class);
+    private final EmailAddressDocumentConverter emailAddressesConverter = mock(EmailAddressDocumentConverter.class);
+    private final MobileDeviceDocumentConverter mobileDeviceDocumentConverter = mock(MobileDeviceDocumentConverter.class);
 
     private final IdentityDocumentConverter converter = IdentityDocumentConverter.builder()
-            .aliasesConverter(aliasesConverter)
+            .aliasConverter(aliasesConverter)
             .phoneNumberConverter(phoneNumberConverter)
-            .emailAddressesConverter(emailAddressesConverter)
-            .mobileDevicesDocumentConverter(mobileDevicesDocumentConverter)
+            .emailAddressConverter(emailAddressesConverter)
+            .mobileDeviceDocumentConverter(mobileDeviceDocumentConverter)
             .build();
 
     @Test
@@ -92,7 +92,7 @@ class IdentityDocumentConverterTest {
     void shouldConvertMobileDeviceDocumentsToMobileDevices() {
         IdentityDocument document = IdentityDocumentMother.example();
         MobileDevices expectedMobileDevices = MobileDevicesMother.two();
-        given(mobileDevicesDocumentConverter.toMobileDevices(document.getMobileDevices())).willReturn(expectedMobileDevices);
+        given(mobileDeviceDocumentConverter.toMobileDevices(document.getMobileDevices())).willReturn(expectedMobileDevices);
 
         Identity converted = converter.toIdentity(document);
 
@@ -145,7 +145,7 @@ class IdentityDocumentConverterTest {
     void shouldConvertMobileDevicesToMobileDeviceDocuments() {
         Identity identity = IdentityMother.example();
         Collection<MobileDeviceDocument> expectedDocuments = MobileDeviceDocumentMother.two();
-        given(mobileDevicesDocumentConverter.toDocuments(identity.getMobileDevices())).willReturn(expectedDocuments);
+        given(mobileDeviceDocumentConverter.toDocuments(identity.getMobileDevices())).willReturn(expectedDocuments);
 
         IdentityDocument converted = converter.toDocument(identity);
 

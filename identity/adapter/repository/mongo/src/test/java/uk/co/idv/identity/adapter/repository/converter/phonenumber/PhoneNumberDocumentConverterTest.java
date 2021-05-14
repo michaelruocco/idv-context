@@ -70,4 +70,13 @@ class PhoneNumberDocumentConverterTest {
         assertThat(number).isEqualTo(PhoneNumberMother.withoutLastUpdated());
     }
 
+    @Test
+    void shouldConvertNullDocumentsListToEmptyPhoneNumbers() {
+        Collection<PhoneNumberDocument> documents = null;
+
+        PhoneNumbers phoneNumbers = converter.toPhoneNumbers(documents);
+
+        assertThat(phoneNumbers).isEmpty();
+    }
+
 }
