@@ -56,7 +56,7 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-dependencies:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-web"
     implementation "org.springframework.boot:spring-boot-starter-actuator"
-    implementation "org.springframework.hateoas:spring-hateoas:1.3.0"
+    implementation "org.springframework.hateoas:spring-hateoas:1.3.1"
     implementation "com.github.bohnman:squiggly-filter-jackson:1.3.18"
     implementation "com.github.michaelruocco:spring-filters:0.1.12"
     implementation "com.github.michaelruocco:string-utils:${mruocStringUtilsVersion}"
@@ -64,7 +64,7 @@ dependencies {
     implementation "com.github.michaelruocco:testing-clocks:${testingClocksVersion}"
     implementation "com.github.michaelruocco:random-value-suppliers:${randomValueSuppliersVersion}"
     implementation "com.fasterxml.jackson.core:jackson-databind"
-    implementation "org.redisson:redisson:${redissionVersion}"
+    implementation "org.redisson:redisson:${redissonVersion}"
     implementation "org.mongodb:mongo-java-driver:${mongoVersion}"
     implementation("com.github.dalet-oss:mongobee:1.0.4") {
         exclude module: "mongo-java-driver"
@@ -72,7 +72,7 @@ dependencies {
     runtimeOnly "ch.qos.logback.contrib:logback-json-classic:${logbackJsonVersion}"
     runtimeOnly "ch.qos.logback.contrib:logback-jackson:${logbackJsonVersion}"
     runtimeOnly "net.logstash.logback:logstash-logback-encoder:6.6"
-    runtimeOnly "io.netty:netty-resolver-dns-native-macos:4.1.63.Final:osx-x86_64"
+    runtimeOnly "io.netty:netty-resolver-dns-native-macos:4.1.65.Final:osx-x86_64"
 
     testImplementation testFixtures(project(":lockout-entities"))
     testImplementation testFixtures(project(":context-entities"))
