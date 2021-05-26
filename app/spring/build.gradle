@@ -80,7 +80,7 @@ dependencies {
     integrationTestImplementation "org.junit-pioneer:junit-pioneer:${junitPioneerVersion}"
     integrationTestImplementation "com.intuit.karate:karate-core:${karateVersion}"
     integrationTestImplementation "com.intuit.karate:karate-junit5:${karateVersion}"
-    integrationTestImplementation "org.awaitility:awaitility"
+    integrationTestImplementation "org.awaitility:awaitility:${awaitilityVersion}"
     integrationTestImplementation "org.testcontainers:junit-jupiter:1.15.3"
     integrationTestImplementation "uk.org.webcompere:system-stubs-jupiter:${systemStubsVersion}"
     integrationTestImplementation "junit:junit"
