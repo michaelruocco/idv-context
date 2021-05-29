@@ -17,7 +17,7 @@ plugins {
     id "pl.allegro.tech.build.axion-release" version "1.13.2"
     id "org.sonarqube" version "3.2.0"
     id "nebula.lint" version "16.23.0"
-    id "io.codearte.nexus-staging" version "0.30.0"
+    id "io.github.gradle-nexus.publish-plugin" version "1.1.0"
     id "com.adarshr.test-logger" version "3.0.0"
 }
 
@@ -158,6 +158,16 @@ subprojects {
 
             replace 'Not enough space after while', 'while(', 'while ('
             replaceRegex 'Too much space after while', 'while +\\(', 'while ('
+        }
+    }
+}
+
+nexusPublishing {
+    packageGroup = "com.github.michaelruocco"
+    repositories {
+        sonatype {
+            username = System.getenv("OSSRH_USERNAME")
+            password = System.getenv("OSSRH_PASSWORD")
         }
     }
 }
