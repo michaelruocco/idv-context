@@ -2,7 +2,6 @@ package uk.co.idv.context.adapter.verification.client.logging;
 
 import uk.org.webcompere.systemstubs.ThrowingRunnable;
 
-import java.util.Arrays;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -15,8 +14,9 @@ public class LogOutputUtils {
     }
 
     public static Collection<String> captureLogLines(ThrowingRunnable statement) throws Exception {
-        String[] logLines = tapSystemOut(statement).split(System.lineSeparator());
-        return Arrays.stream(logLines).collect(Collectors.toList());
+        return tapSystemOut(statement)
+                .lines()
+                .collect(Collectors.toList());
     }
 
 }
