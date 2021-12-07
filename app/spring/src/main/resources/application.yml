@@ -4,11 +4,9 @@ spring:
   main:
     banner-mode: off
 
-info:
-  app:
-    name: ${spring.application.name}
-
 management:
+  endpoints:
+    web.exposure.include: health,info
   endpoint:
     health:
       show-details: always

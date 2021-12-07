@@ -12,8 +12,7 @@
 
 ## Todo
 
-*   Raise PR for system stubs to return console output as collection of lines?
-*   Token validation?
+*   Token validation
 *   Performance tests in pipeline / nightly build?
 *   Add identity data lookup policy?
 
@@ -38,15 +37,14 @@
 
 ```gradle
 // runs all tests as above but also builds application docker image and
-// then runs application docker image with AWS local stack image to provide
-// a local instance of dynamo db for the service to use for data persistence
+// then runs application docker image with dependencies running inside docker
 // service will be running on port 8081 by default
 ./gradlew clean spotlessApply build integrationTest buildImage composeUp
 ```
 
 ```gradle
 // runs spring application on your local machine on port 8081 by default
-// using an in memory repository in place of dynamo db database
+// using in memory implementations of dependencies
 ./gradlew bootRun
 ```
 

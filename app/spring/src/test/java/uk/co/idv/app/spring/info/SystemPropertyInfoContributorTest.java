@@ -2,6 +2,7 @@ package uk.co.idv.app.spring.info;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.actuate.info.Info;
+import org.springframework.boot.actuate.info.InfoContributor;
 
 import java.util.Properties;
 
@@ -13,7 +14,7 @@ class SystemPropertyInfoContributorTest {
 
     private final SecureProperties secureProperties = mock(SecureProperties.class);
 
-    private final SystemPropertyInfoContributor contributor = new SystemPropertyInfoContributor(secureProperties);
+    private final InfoContributor contributor = new SystemPropertyInfoContributor(secureProperties);
 
     @Test
     void shouldPopulateAllSystemPropertiesOnInfo() {

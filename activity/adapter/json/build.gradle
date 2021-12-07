@@ -5,7 +5,7 @@ plugins {
 dependencies {
     api project(":common-json")
     api project(":activity-entities")
-    implementation "org.zalando:jackson-datatype-money:1.2.2"
+    implementation "org.zalando:jackson-datatype-money:1.3.0"
 
     testImplementation "net.javacrumbs.json-unit:json-unit-assertj:${jsonUnitAssertjVersion}"
 

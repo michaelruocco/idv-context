@@ -15,7 +15,7 @@ dependencies {
     implementation "com.github.michaelruocco:duration-logger:${durationLoggerVersion}"
     implementation "com.github.michaelruocco:random-value-suppliers:${randomValueSuppliersVersion}"
 
-    testRuntimeOnly "ch.qos.logback:logback-classic:1.2.3"
+    testRuntimeOnly "ch.qos.logback:logback-classic:${logbackVersion}"
     testImplementation testFixtures(project(":context-entities"))
     testImplementation testFixtures(project(":policy-entities"))
     testImplementation testFixtures(project(":method-entities"))
