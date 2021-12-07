@@ -53,12 +53,6 @@
 ./gradlew dependencyUpdates
 ```
 
-```gradle
-// generate dependency graph images at build/reports/dependency-graph
-./gradlew generateDependencyGraph
-./gradlew generateDependencyGraphIdvContext
-```
-
 ### JMeter
 
 #### Running performance tests
