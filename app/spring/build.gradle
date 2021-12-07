@@ -10,8 +10,7 @@ plugins {
     id "io.spring.dependency-management" version "1.0.11.RELEASE"
     id "com.bmuschko.docker-remote-api" version "7.1.0"
     id "com.avast.gradle.docker-compose" version "0.14.11"
-    id "com.moowork.node" version "1.3.1"
-    id "com.github.michaelruocco.gradle-postman-runner" version "0.1.3"
+    id "com.github.node-gradle.node" version "3.1.1"
 }
 
 ext {
@@ -124,10 +123,19 @@ dockerCompose {
     environment.put 'APP_VERSION', version
 }
 
-postman {
-    collections = fileTree(dir: "postman", include: "*_collection.json")
-    environment = file("postman/idv-local.postman_environment.json")
-    stopOnError = true
+task installNewman(type: NpmTask) {
+    args = ['install', 'newman', '--save-dev']
+}
+
+task postman(type: NpxTask) {
+    dependsOn installNewman
+    command = 'newman'
+    args = [
+            'run',
+            '--bail', 'true',
+            '--environment', "${projectDir}/postman/idv-local.postman_environment.json",
+            "${projectDir}/postman/idv-context.postman_collection.json"
+    ]
 }
 
 apply from: rootProject.file("publish.gradle")
